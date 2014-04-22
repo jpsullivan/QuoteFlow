@@ -1,0 +1,22 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error</title>
+</head>
+<body>
+    <hgroup>
+        <h1>Error.</h1>
+        <h2>An error occurred while processing your request.</h2>
+        @if (!String.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <h3>Error Message:</h3>
+            <h5>@ViewBag.ErrorMessage</h5>
+        }
+    </hgroup>
+</body>
+</html>

@@ -1,0 +1,665 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A543D32F-4944-42AA-8E83-4AD5A150677B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QuoteFlow</RootNamespace>
+    <AssemblyName>QuoteFlow</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AnglicanGeek.MarkdownMailer">
+      <HintPath>..\packages\AnglicanGeek.MarkdownMailer.1.2\lib\net40\AnglicanGeek.MarkdownMailer.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="BundleTransformer.Core">
+      <HintPath>..\packages\BundleTransformer.Core.1.8.29\lib\net40\BundleTransformer.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BundleTransformer.Less">
+      <HintPath>..\packages\BundleTransformer.Less.1.8.29\lib\net40\BundleTransformer.Less.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BundleTransformer.UglifyJs">
+      <HintPath>..\packages\BundleTransformer.UglifyJs.1.8.29\lib\net40\BundleTransformer.UglifyJs.dll</HintPath>
+    </Reference>
+    <Reference Include="BundleTransformer.Yui">
+      <HintPath>..\packages\BundleTransformer.Yui.1.8.29\lib\net40\BundleTransformer.Yui.dll</HintPath>
+    </Reference>
+    <Reference Include="ClearScript">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.1.3\lib\net40\ClearScript.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.13\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.Rainbow">
+      <HintPath>..\lib\Dapper.Rainbow.dll</HintPath>
+    </Reference>
+    <Reference Include="DevOne.Security.Cryptography.BCrypt">
+      <HintPath>..\packages\BCrypt.1.0.0.0\lib\DevOne.Security.Cryptography.BCrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="EcmaScript.NET">
+      <HintPath>..\packages\EcmaScript.Net.1.0.1.0\lib\net20\EcmaScript.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Contrib.Mvc">
+      <HintPath>..\packages\Elmah.Contrib.Mvc.2.1\lib\net45\Elmah.Contrib.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Ado">
+      <HintPath>..\packages\Glimpse.Ado.1.7.0\lib\net45\Glimpse.Ado.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.AspNet">
+      <HintPath>..\packages\Glimpse.AspNet.1.8.1\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\packages\Glimpse.1.8.2\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc5">
+      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
+    </Reference>
+    <Reference Include="GravatarHelper">
+      <HintPath>..\packages\GravatarHelper.3.2.3\lib\Net40\GravatarHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.Core">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.Core.1.1.3\lib\net40\JavaScriptEngineSwitcher.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.V8">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.1.3\lib\net40\JavaScriptEngineSwitcher.V8.dll</HintPath>
+    </Reference>
+    <Reference Include="Jil">
+      <HintPath>..\packages\Jil.1.2.0\lib\net45\Jil.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkdownSharp">
+      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.2.1.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AnglicanGeek.WindowsAzure.ServiceRuntime.1.6\lib\net35-full\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="MiniProfiler, Version=3.0.10.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MiniProfiler.3.0.10-beta6\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler.Mvc">
+      <HintPath>..\packages\MiniProfiler.Mvc4.3.0.10-beta1\lib\net40\MiniProfiler.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Logging">
+      <HintPath>..\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc">
+      <HintPath>..\packages\Ninject.MVC4.3.2.0.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PoliteCaptcha">
+      <HintPath>..\packages\PoliteCaptcha.0.4.0.1\lib\net40\PoliteCaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="Recaptcha">
+      <HintPath>..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="Sigil">
+      <HintPath>..\packages\Sigil.4.1.0\lib\net45\Sigil.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.1.0\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.1.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="T4MVCExtensions">
+      <HintPath>..\packages\T4MVCExtensions.3.9.0\lib\net40\T4MVCExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Yahoo.Yui.Compressor">
+      <HintPath>..\packages\YUICompressor.NET.2.4.0.0\lib\NET20\Yahoo.Yui.Compressor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AppActivator.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\Container.cs" />
+    <Compile Include="App_Start\ContainerBindings.cs" />
+    <Compile Include="App_Start\MiniProfiler.cs" />
+    <Compile Include="App_Start\OwinStartup.cs" />
+    <Compile Include="Auditing\AuditActor.cs" />
+    <Compile Include="Auditing\AuditEntry.cs" />
+    <Compile Include="Auditing\AuditingService.cs" />
+    <Compile Include="Auditing\AuditRecord.cs" />
+    <Compile Include="Auditing\CloudAuditingService.cs" />
+    <Compile Include="Auditing\UserAuditRecord.cs" />
+    <Compile Include="AuthenticationController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Authentication\AuthenticatedUser.cs" />
+    <Compile Include="Authentication\AuthenticationService.cs" />
+    <Compile Include="Authentication\AuthenticationTypes.cs" />
+    <Compile Include="Authentication\AuthNinjectModule.cs" />
+    <Compile Include="Authentication\CredentialTypes.cs" />
+    <Compile Include="Authentication\ForceSslWhenAuthenticatedMiddleware.cs" />
+    <Compile Include="Authentication\Providers\Authenticator.cs" />
+    <Compile Include="Authentication\Providers\AuthenticatorConfiguration.cs" />
+    <Compile Include="Authentication\Providers\AuthenticatorUI.cs" />
+    <Compile Include="Authentication\Providers\LocalUser\LocalUserAuthenticator.cs" />
+    <Compile Include="Configuration\AppConfiguration.cs" />
+    <Compile Include="Configuration\ConfigurationService.cs" />
+    <Compile Include="Configuration\IAppConfiguration.cs" />
+    <Compile Include="Configuration\MailAddressConverter.cs" />
+    <Compile Include="Configuration\SmtpUri.cs" />
+    <Compile Include="Configuration\StorageType.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Current.cs" />
+    <Compile Include="DashboardController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Diagnostics\AuthenticationGlimpseTab.cs" />
+    <Compile Include="Diagnostics\ConcurrentInMemoryPersistenceStore.cs" />
+    <Compile Include="Diagnostics\DiagnosticsNinjectModule.cs" />
+    <Compile Include="Diagnostics\DiagnosticsService.cs" />
+    <Compile Include="Diagnostics\GlimpseRuntimePolicy.cs" />
+    <Compile Include="Diagnostics\IDiagnosticsService.cs" />
+    <Compile Include="Diagnostics\IDiagnosticsSource.cs" />
+    <Compile Include="Diagnostics\NinjectGlimpseServiceLocator.cs" />
+    <Compile Include="Diagnostics\NullDiagnosticsSource.cs" />
+    <Compile Include="Diagnostics\TraceDiagnosticsSource.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Attributes\HintAttribute.cs" />
+    <Compile Include="Infrastructure\Attributes\LayoutInjectorAttribute.cs" />
+    <Compile Include="Infrastructure\Attributes\ReadOnlyModeErrorFilter.cs" />
+    <Compile Include="Infrastructure\Attributes\RequireSslAttribute.cs" />
+    <Compile Include="Infrastructure\Attributes\RoutePrefixAttribute.cs" />
+    <Compile Include="Infrastructure\Auth\CredentialBuilder.cs" />
+    <Compile Include="Infrastructure\Auth\QuoteFlowIdentity.cs" />
+    <Compile Include="Infrastructure\Azure\AzureEntityList.cs" />
+    <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
+    <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
+    <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
+    <Compile Include="Infrastructure\Exceptions\ReadOnlyModeException.cs" />
+    <Compile Include="Infrastructure\Exceptions\TestableStorageClientException.cs" />
+    <Compile Include="Infrastructure\Extensions\AuthExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\DateExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\HtmlExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\HttpContextExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\UrlExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\UserExtensions.cs" />
+    <Compile Include="Infrastructure\Helpers\DisposableAction.cs" />
+    <Compile Include="Infrastructure\Attributes\RouteAttribute.cs" />
+    <Compile Include="Infrastructure\Helpers\EnumHelpers.cs" />
+    <Compile Include="Infrastructure\Helpers\UrlHelpers.cs" />
+    <Compile Include="Infrastructure\HttpStatusCodeWithBodyResult.cs" />
+    <Compile Include="Infrastructure\IoC\NinjectDependencyResolver.cs" />
+    <Compile Include="Infrastructure\IoC\NinjectWebApiDependencyResolver.cs" />
+    <Compile Include="Infrastructure\QuoteFlowControllerFactory.cs" />
+    <Compile Include="Infrastructure\RouteName.cs" />
+    <Compile Include="Infrastructure\SafeRedirectResult.cs" />
+    <Compile Include="Infrastructure\TableErrorLog.cs" />
+    <Compile Include="Models\Asset.cs" />
+    <Compile Include="Models\AssetImage.cs" />
+    <Compile Include="Models\AssetPrice.cs" />
+    <Compile Include="Models\Catalog.cs" />
+    <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\Credential.cs" />
+    <Compile Include="Models\EmailMessage.cs" />
+    <Compile Include="Models\Manufacturer.cs" />
+    <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\ViewModels\AccountViewModel.cs" />
+    <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
+    <Compile Include="Models\ViewModels\ForgotPasswordViewModel.cs" />
+    <Compile Include="Models\ViewModels\LogOnViewModel.cs" />
+    <Compile Include="Models\ViewModels\NavigationMenuViewModel.cs" />
+    <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\OrganizationUser.cs" />
+    <Compile Include="Models\PasswordReset.cs" />
+    <Compile Include="Models\Quote.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserActivity.cs" />
+    <Compile Include="Models\ViewModels\CatalogModels.cs" />
+    <Compile Include="Models\ViewModels\NewAssetModel.cs" />
+    <Compile Include="Models\ViewModels\PasswordResetViewModel.cs" />
+    <Compile Include="Models\ViewModels\SubHeader.cs" />
+    <Compile Include="Models\ViewModels\SubHeaderViewData.cs" />
+    <Compile Include="Models\ViewModels\UserProfileModel.cs" />
+    <Compile Include="Models\_Database.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AssetPriceService.cs" />
+    <Compile Include="Services\AssetService.cs" />
+    <Compile Include="Services\CatalogService.cs" />
+    <Compile Include="Services\CloudBlobClientWrapper.cs" />
+    <Compile Include="Services\CloudBlobContainerWrapper.cs" />
+    <Compile Include="Services\CloudBlobFileStorageService.cs" />
+    <Compile Include="Services\CloudBlobWrapper.cs" />
+    <Compile Include="Services\CloudFileReference.cs" />
+    <Compile Include="Services\ContactService.cs" />
+    <Compile Include="Services\ContentService.cs" />
+    <Compile Include="Services\CryptographyService.cs" />
+    <Compile Include="Services\FileSystemFileStorageService.cs" />
+    <Compile Include="Services\FileSystemService.cs" />
+    <Compile Include="Services\FormsAuthenticationService.cs" />
+    <Compile Include="Services\HttpContextCacheService.cs" />
+    <Compile Include="Services\Interfaces\IAssetPriceService.cs" />
+    <Compile Include="Services\Interfaces\IAssetService.cs" />
+    <Compile Include="Services\Interfaces\ICacheService.cs" />
+    <Compile Include="Services\Interfaces\ICatalogService.cs" />
+    <Compile Include="Services\Interfaces\ICloudBlobClient.cs" />
+    <Compile Include="Services\Interfaces\ICloudBlobContainer.cs" />
+    <Compile Include="Services\Interfaces\IContactService.cs" />
+    <Compile Include="Services\Interfaces\IContentService.cs" />
+    <Compile Include="Services\Interfaces\IFileReference.cs" />
+    <Compile Include="Services\Interfaces\IFileStorageService.cs" />
+    <Compile Include="Services\Interfaces\IFileSystemService.cs" />
+    <Compile Include="Services\Interfaces\IFormsAuthenticationService.cs" />
+    <Compile Include="Services\Interfaces\IManufacturerService.cs" />
+    <Compile Include="Services\Interfaces\IMessageService.cs" />
+    <Compile Include="Services\Interfaces\IOrganizationService.cs" />
+    <Compile Include="Services\Interfaces\IQuoteService.cs" />
+    <Compile Include="Services\Interfaces\ISimpleCloudBlob.cs" />
+    <Compile Include="Services\Interfaces\IUploadFileService.cs" />
+    <Compile Include="Services\Interfaces\IUserService.cs" />
+    <Compile Include="Services\LocalFileReference.cs" />
+    <Compile Include="Services\ManufacturerService.cs" />
+    <Compile Include="Services\MessageService.cs" />
+    <Compile Include="Services\OrganizationService.cs" />
+    <Compile Include="Services\QuoteService.cs" />
+    <Compile Include="Services\UploadFileService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="T4MVC.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UsersController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="App_Readme\Elmah.txt" />
+    <None Include="ClearScript.V8\ClearScriptV8-32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ClearScript.V8\ClearScriptV8-64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ClearScript.V8\v8-ia32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ClearScript.V8\v8-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Content\css\lib\aui\arrow.png" />
+    <Content Include="Content\css\lib\aui\atlassian-icons.svg" />
+    <Content Include="Content\css\lib\aui\aui-all.css" />
+    <Content Include="Content\css\lib\aui\aui-experimental.css" />
+    <Content Include="Content\css\lib\aui\aui-icon-close.png" />
+    <Content Include="Content\css\lib\aui\aui-icon-tools.gif" />
+    <Content Include="Content\css\lib\aui\aui-ie.css" />
+    <Content Include="Content\css\lib\aui\aui-ie9.css" />
+    <Content Include="Content\css\lib\aui\aui-message-icon-sprite.png" />
+    <Content Include="Content\css\lib\aui\aui-toolbar-24px.png" />
+    <Content Include="Content\css\lib\aui\aui-toolbar-button-active-bg.png" />
+    <Content Include="Content\css\lib\aui\aui-toolbar-button-inactive-bg.png" />
+    <Content Include="Content\css\lib\aui\aui.css" />
+    <Content Include="Content\css\lib\aui\bg-000-trans20.png" />
+    <Content Include="Content\css\lib\aui\bg-000-trans50.png" />
+    <Content Include="Content\css\lib\aui\bg-grippy.png" />
+    <Content Include="Content\css\lib\aui\core\icon-dropdown-active-d.png" />
+    <Content Include="Content\css\lib\aui\core\icon-dropdown-active.png" />
+    <Content Include="Content\css\lib\aui\core\icon-dropdown-d.png" />
+    <Content Include="Content\css\lib\aui\core\icon-dropdown.png" />
+    <Content Include="Content\css\lib\aui\core\icon-maximize-d.png" />
+    <Content Include="Content\css\lib\aui\core\icon-maximize.png" />
+    <Content Include="Content\css\lib\aui\core\icon-minimize-d.png" />
+    <Content Include="Content\css\lib\aui\core\icon-minimize.png" />
+    <Content Include="Content\css\lib\aui\core\icon-move-d.png" />
+    <Content Include="Content\css\lib\aui\core\icon-move.png" />
+    <Content Include="Content\css\lib\aui\core\icon-search.png" />
+    <Content Include="Content\css\lib\aui\fav_off_16.png" />
+    <Content Include="Content\css\lib\aui\fav_on_16.png" />
+    <Content Include="Content\css\lib\aui\forms\icon-date.png" />
+    <Content Include="Content\css\lib\aui\forms\icon-help.png" />
+    <Content Include="Content\css\lib\aui\forms\icon-range.png" />
+    <Content Include="Content\css\lib\aui\forms\icon-required.png" />
+    <Content Include="Content\css\lib\aui\forms\icon-users.png" />
+    <Content Include="Content\css\lib\aui\forms\icons_form.gif" />
+    <Content Include="Content\css\lib\aui\icons\aui-icon-close.png" />
+    <Content Include="Content\css\lib\aui\icons\aui-icon-tools.gif" />
+    <Content Include="Content\css\lib\aui\icons\aui-message-icon-sprite.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-dropdown-active-d.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-dropdown-active.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-dropdown-d.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-dropdown.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-maximize-d.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-maximize.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-minimize-d.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-minimize.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-move-d.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-move.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-search.png" />
+    <Content Include="Content\css\lib\aui\icons\forms\icon-date.png" />
+    <Content Include="Content\css\lib\aui\icons\forms\icon-help.png" />
+    <Content Include="Content\css\lib\aui\icons\forms\icon-range.png" />
+    <Content Include="Content\css\lib\aui\icons\forms\icon-required.png" />
+    <Content Include="Content\css\lib\aui\icons\forms\icon-users.png" />
+    <Content Include="Content\css\lib\aui\icons\messages\icon-close-inverted.png" />
+    <Content Include="Content\css\lib\aui\icons\messages\icon-close.png" />
+    <Content Include="Content\css\lib\aui\icons\messages\icon-error-white.png" />
+    <Content Include="Content\css\lib\aui\icons\messages\icon-error.png" />
+    <Content Include="Content\css\lib\aui\icons\messages\icon-generic.png" />
+    <Content Include="Content\css\lib\aui\icons\messages\icon-hint.png" />
+    <Content Include="Content\css\lib\aui\icons\messages\icon-info.png" />
+    <Content Include="Content\css\lib\aui\icons\messages\icon-success.png" />
+    <Content Include="Content\css\lib\aui\icons\messages\icon-warning.png" />
+    <Content Include="Content\css\lib\aui\icons_form.gif" />
+    <Content Include="Content\css\lib\aui\messages\icon-close-inverted.png" />
+    <Content Include="Content\css\lib\aui\messages\icon-close.png" />
+    <Content Include="Content\css\lib\aui\messages\icon-error-white.png" />
+    <Content Include="Content\css\lib\aui\messages\icon-error.png" />
+    <Content Include="Content\css\lib\aui\messages\icon-generic.png" />
+    <Content Include="Content\css\lib\aui\messages\icon-hint.png" />
+    <Content Include="Content\css\lib\aui\messages\icon-info.png" />
+    <Content Include="Content\css\lib\aui\messages\icon-success.png" />
+    <Content Include="Content\css\lib\aui\messages\icon-warning.png" />
+    <Content Include="Content\css\lib\aui\select2-spinner.gif" />
+    <Content Include="Content\css\lib\aui\select2.png" />
+    <Content Include="Content\css\lib\aui\select2x2.png" />
+    <Content Include="Content\css\lib\aui\toolbar\aui-toolbar-24px.png" />
+    <Content Include="Content\css\lib\aui\toolbar\aui-toolbar-button-active-bg.png" />
+    <Content Include="Content\css\lib\aui\toolbar\aui-toolbar-button-inactive-bg.png" />
+    <Content Include="Content\css\lib\aui\wait.gif" />
+    <Content Include="Content\js\lib\aui\aui-all.js" />
+    <Content Include="Content\js\lib\aui\aui-dependencies.js" />
+    <Content Include="Content\js\lib\aui\aui-experimental.js" />
+    <Content Include="Content\js\lib\aui\aui-ie.js" />
+    <Content Include="Content\js\lib\aui\aui-soy.js" />
+    <Content Include="Content\js\lib\aui\aui.js" />
+    <Content Include="Content\less\bootstrap.css">
+      <DependentUpon>bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\misc.css">
+      <DependentUpon>misc.less</DependentUpon>
+    </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\less\bootstrap.less" />
+    <Content Include="Content\less\misc.less" />
+    <Content Include="Content\less\misc.css.map">
+      <DependentUpon>misc.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\bootstrap.css.map">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_AuthenticatedHeader.cshtml" />
+    <Content Include="Views\Shared\_UnauthenticatedHeader.cshtml" />
+    <Content Include="Views\Authentication\LogOn.cshtml" />
+    <Content Include="Views\Authentication\Register.cshtml" />
+    <Content Include="Views\Authentication\_SignIn.cshtml" />
+    <Content Include="Views\Users\Account.cshtml" />
+    <Content Include="Views\Users\Confirm.cshtml" />
+    <Content Include="Views\Users\ConfirmationRequired.cshtml" />
+    <Content Include="Views\Users\ForgotPassword.cshtml" />
+    <Content Include="Views\Users\PasswordChanged.cshtml" />
+    <Content Include="Views\Users\PasswordSent.cshtml" />
+    <Content Include="Views\Users\Profiles.cshtml" />
+    <Content Include="Views\Users\ResetPassword.cshtml" />
+    <Content Include="Views\Users\Thanks.cshtml" />
+    <None Include="T4MVC.tt.hooks.t4" />
+    <None Include="T4MVC.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>T4MVC.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\Shared\_FocusedLayout.cshtml" />
+    <Content Include="Views\Shared\_FocusedWizardLayout.cshtml" />
+    <Content Include="Views\Shared\_LogOnLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\lib\aui\atlassian-icons.eot" />
+    <Content Include="Content\css\lib\aui\atlassian-icons.ttf" />
+    <Content Include="Content\css\lib\aui\atlassian-icons.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BundleTransformer.Configuration.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\PageNotFound.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50329</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:50329/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
