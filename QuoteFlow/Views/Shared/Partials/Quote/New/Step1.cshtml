@@ -1,0 +1,64 @@
+﻿@using QuoteFlow.Models
+@using QuoteFlow.Models.ViewModels
+@model NewQuoteModel
+@{
+    var orgs = Organization.GetOrganizations(Current.User.Organizations);
+}
+
+<div id="quote_new_step1">
+    @using (Html.BeginForm("CreateQuote", "Quote", FormMethod.Post)) {
+        @Html.AntiForgeryToken()
+        <header>
+            <h1>
+                Create a new quote for 
+                <div class="btn-group">
+                    <button class="btn">@orgs.First().OrganizationName</button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach (Organization org in orgs) {
+                            <li>@org.OrganizationName</li>
+                        }
+                    </ul>
+                </div>
+            </h1>
+        </header>
+
+        <div class="quote-new-details">
+            <div class="quote-name">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new { @class = "span4"})
+            </div>
+        
+            <div class="quote-description">
+                @Html.LabelFor(m => m.Description) <span class="muted">(optional)</span>
+                @Html.TextBoxFor(m => m.Description, new { @class = "span4" })
+            </div>
+        
+            <div class="quote-members">
+                <p>Invite people or groups to work on this quote.</p>
+            </div>
+
+            <div class="submit">
+                <input type="submit"/>
+                <button class="btn btn-success" type="submit">Create quote</button>
+            </div>
+        </div>
+
+        <div class="quote-new-tips span1" style="">
+            <header>
+                <h2>Example project names &amp; descriptions:</h2>
+            </header>
+
+            <h3>Website Redesign</h3>
+            <p>Home page ideas</p>
+
+            <h3>Email Marketing</h3>
+            <p>Plans for 2012</p>
+
+            <h3>Rebranding</h3>
+            <p>Budget: $30,000</p>
+        </div>
+    }
+</div>

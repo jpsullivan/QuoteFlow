@@ -1,0 +1,23 @@
+﻿@using System.Globalization
+@using QuoteFlow.Infrastructure.Extensions
+@using QuoteFlow.Models
+@model Asset
+
+@{
+    var catalog = (Catalog)ViewData["catalog"];
+    var detailsPage = string.Format("{0}/{1}/{2}/asset/{3}/{4}", 
+        Url.SiteRoot(), 
+        catalog.Id, 
+        catalog.Name.UrlFriendly(), 
+        Model.Id.ToString(CultureInfo.InvariantCulture), 
+        Model.Name.UrlFriendly());
+}
+
+<tr>
+    <td class="manufacturer">@Model.Manufacturer.Name</td>
+    <td class="model">
+        <a href="@detailsPage">@Model.Name</a>
+    </td>
+    <td>$@Model.Cost</td>
+    <td>@Model.LastUpdated.ToShortDateString()</td>
+</tr>

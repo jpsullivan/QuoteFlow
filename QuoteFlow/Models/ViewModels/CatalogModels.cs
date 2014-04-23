@@ -6,7 +6,7 @@ namespace QuoteFlow.Models.ViewModels
 {
     public class CatalogShowModel
     {
-        public List<Asset> Assets { get; set; }
+        public IEnumerable<Asset> Assets { get; set; }
         public Catalog Catalog { get; set; }
         public SubHeader SubHeader { get; set; }
     }
@@ -38,7 +38,7 @@ namespace QuoteFlow.Models.ViewModels
 
     public class CatalogShowAssets
     {
-        public List<Asset> Assets { get; set; }
+        public IEnumerable<Asset> Assets { get; set; }
         public Catalog Catalog { get; set; }
         public SubHeader SubHeader { get; set; }
     }

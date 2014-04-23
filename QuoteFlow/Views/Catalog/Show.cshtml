@@ -1,0 +1,23 @@
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Models.ViewModels.CatalogShowModel
+
+@{
+    var catalogName = Model.Catalog.Name;
+    ViewBag.Title = "QuoteFlow - " + catalogName;
+}
+
+@section CatalogSubheader {
+    @Html.Partial("Partials/CatalogHeader", Model.Catalog)
+    @Html.Partial("Partials/CatalogNavigation", Model.SubHeader)
+}
+
+<ul>
+    @foreach (var asset in Model.Assets) {
+        <li>
+            <a href="/@asset.CatalogId/@catalogName.UrlFriendly()/asset/@asset.Id/@asset.Name.UrlFriendly()">
+                <span class="catalog-name" title="@asset.Name">@asset.Name</span>
+                <span class="catalog-name" title="@asset.Name">@asset.Manufacturer.Name</span>
+            </a>
+        </li>
+    }
+</ul>

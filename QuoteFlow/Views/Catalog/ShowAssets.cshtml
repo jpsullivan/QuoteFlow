@@ -1,0 +1,37 @@
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Models.ViewModels.CatalogShowAssets
+
+@{ ViewBag.Title = "QuoteFlow - " + @Model.Catalog.Name; }
+
+@section CatalogSubheader {
+    @Html.Partial("Partials/CatalogHeader", Model.Catalog)
+    @Html.Partial("Partials/CatalogNavigation", Model.SubHeader)
+}
+
+<div class="row">
+    <div class="content-toolbar span12">
+        <div class="clearfix">
+            <a href="/@Model.Catalog.Id/@Model.Catalog.Name.UrlFriendly()/asset/new" class="btn">Create an asset</a>
+        </div>
+        <h4>Assets <span class="secondary">(1–1 of 1)</span></h4>
+    </div>
+</div>
+<div class="row">
+    <div class="content-list span12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Manufacturer</th>
+                    <th>Model / Description</th>
+                    <th>Cost</th>
+                    <th>Last Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var asset in Model.Assets) {
+                    @Html.Partial("Partials/Asset/ListItem", asset, new ViewDataDictionary { {"catalog", Model.Catalog }})
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

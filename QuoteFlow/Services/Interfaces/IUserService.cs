@@ -187,5 +187,13 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="userId">The user id to use when searching for roles.</param>
         /// <returns></returns>
         ICollection<Role> GetUserRoles(int userId);
+
+        /// <summary>
+        /// Fetches all of the organizations that a specific <see cref="User"/>
+        /// is a member of.
+        /// </summary>
+        /// <param name="userId">The identifier of the user to lookup</param>
+        /// <returns></returns>
+        ICollection<Organization> GetUserOrganizations(int userId);
     }
 }

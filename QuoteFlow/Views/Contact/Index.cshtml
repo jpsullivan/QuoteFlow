@@ -1,0 +1,51 @@
+﻿@using QuoteFlow.Models
+@{ ViewBag.Title = "QuoteFlow - Contacts"; }
+
+<div class="row">
+    <div class="content-toolbar span12">
+        <div class="toolbar-actions">
+            <div class="pull-left">
+                <a href="/contact/new" class="btn">Create a new contact</a>
+            </div>
+            <div class="filter-container">
+                <p class="filter-label">Filters:</p>
+                <ul class="filter-control">
+                    <li id="all">
+                        <a href="/jaysche/bitbucket-test-repo/issues">All</a>
+                    </li>
+
+                    <li id="open" aria-pressed="true">
+                        <a href="/jaysche/bitbucket-test-repo/issues?status=new&amp;status=open">Open</a>
+                    </li>
+                    <li id="mine">
+                        <a href="/jaysche/bitbucket-test-repo/issues?responsible=jaysche">My issues</a>
+                    </li>
+
+                    <li id="watching">
+                        <a href="/jaysche/bitbucket-test-repo/issues?watching=jaysche">Watching</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <h4>Contacts <span class="secondary">(1–1 of 1)</span></h4>
+    </div>
+</div>
+<div class="row">
+    <div class="content-list span12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Manufacturer</th>
+                    <th>Model / Description</th>
+                    <th>Cost</th>
+                    <th>Last Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Contact contact in Model) {
+                    @Html.Partial("Partials/Contact/ListItem", contact, new ViewDataDictionary { { "contact", contact } })
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

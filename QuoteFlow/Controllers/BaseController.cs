@@ -55,12 +55,6 @@ namespace QuoteFlow.Controllers
 
             _current.Controller = this; // allow code to easily find this controller
             base.Initialize(requestContext);
-
-//            if (CurrentUser.LastLoginUtc == null)
-//            {
-//                CurrentUser.LastLoginUtc = DateTime.UtcNow;
-//                //CurrentUser.IPAddress = GetRemoteIP();
-//            }
         }
 
         public IOwinContext OwinContext
@@ -84,6 +78,28 @@ namespace QuoteFlow.Controllers
         protected internal User GetCurrentUser()
         {
             return OwinContext.GetCurrentUser();
+        }
+
+        private Organization _currentOrganization;
+        public Organization CurrentOrganization
+        {
+            get
+            {
+                if (_currentOrganization == null)
+                {
+                    int organizationId;
+                    if (Int32.TryParse((Session["CurrentOrganizationId"] ?? "").ToString(), out organizationId))
+                    {
+                        _currentOrganization = Current.DB.Organizations.Get(organizationId);
+                    }
+                }
+                return _currentOrganization;
+            }
+            set
+            {
+                _currentOrganization = value;
+                Session["CurrentOrganizationId"] = _currentOrganization.Id;
+            }
         }
 
         /// <summary>

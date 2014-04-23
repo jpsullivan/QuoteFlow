@@ -31,7 +31,7 @@ namespace QuoteFlow.Models
         public DateTime? CreatedUtc { get; set; }
         public DateTime? LastLoginUtc { get; set; }
         public virtual ICollection<Credential> Credentials { get; set; }
-        public int[] Organizations { get; set; }
+        public virtual ICollection<Organization> Organizations { get; set; }
         public bool IsAdmin { get; set; }
 
         public bool Confirmed

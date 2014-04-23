@@ -19,16 +19,19 @@ namespace QuoteFlow.Services
         #region IoC
 
         public IAppConfiguration Config { get; protected set; }
+        public ICatalogService CatalogService { get; protected set; }
         public AuditingService Auditing { get; protected set; }
 
         protected UserService() { }
 
         public UserService(
             IAppConfiguration config,
+            ICatalogService catalogService,
             AuditingService auditing)
             : this()
         {
             Config = config;
+            CatalogService = catalogService;
             Auditing = auditing;
         }
 
@@ -50,6 +53,7 @@ namespace QuoteFlow.Services
 
             user.Credentials = GetUserCredentials(userId);
             user.Roles = GetUserRoles(userId);
+            user.Organizations = GetUserOrganizations(userId);
 
             return user;
         }
@@ -72,6 +76,7 @@ namespace QuoteFlow.Services
 
             user.Credentials = GetUserCredentials(user.Id);
             user.Roles = GetUserRoles(user.Id);
+            user.Organizations = GetUserOrganizations(user.Id);
             
             return user;
         }
@@ -95,6 +100,7 @@ namespace QuoteFlow.Services
 
             user.Credentials = GetUserCredentials(user.Id);
             user.Roles = GetUserRoles(user.Id);
+            user.Organizations = GetUserOrganizations(user.Id);
 
             return user;
         }
@@ -112,6 +118,7 @@ namespace QuoteFlow.Services
             {
                 user.Credentials = GetUserCredentials(user.Id);
                 user.Roles = GetUserRoles(user.Id);
+                user.Organizations = GetUserOrganizations(user.Id);
             }
 
             return allUsers;
@@ -132,6 +139,7 @@ namespace QuoteFlow.Services
             {
                 user.Credentials = GetUserCredentials(user.Id);
                 user.Roles = GetUserRoles(user.Id);
+                user.Organizations = GetUserOrganizations(user.Id);
             }
 
             return findAllByEmailAddress;
@@ -273,8 +281,8 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public bool BelongsToOrganization(int userId, int organizationId)
         {
-            var user = Current.DB.Users.Get(userId);
-            return user.Organizations.Contains(organizationId);
+            var user = GetUser(userId);
+            return user.Organizations.Any(org => org.Id == organizationId);
         }
 
         /// <summary>
@@ -285,7 +293,7 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public bool BelongsToOrganization(User user, int organizationId)
         {
-            return user != null && user.Organizations.Contains(organizationId);
+            return user != null && user.Organizations.Any(org => org.Id == organizationId);
         }
 
         /// <summary>
@@ -295,7 +303,7 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public bool BelongsToMultipleOrganizations(int userId)
         {
-            var user = Current.DB.Users.Get(userId);
+            var user = GetUser(userId);
             return BelongsToMultipleOrganizations(user);
         }
 
@@ -318,7 +326,7 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public bool IsCatalogCreator(User user, int catalogId)
         {
-            var catalog = Current.DB.Catalogs.Get(catalogId);
+            var catalog = CatalogService.GetCatalog(catalogId);
             return user.Id == catalog.CreatorId;
         }
 
@@ -341,7 +349,7 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public bool IsCatalogMember(User user, Catalog catalog)
         {
-            return Array.Exists(user.Organizations, element => element == catalog.OrganizationId);
+            return user.Credentials.Any(org => org.Id == catalog.OrganizationId);
         }
 
         /// <summary>
@@ -352,7 +360,7 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public bool IsCatalogMember(int userId, Catalog catalog)
         {
-            var user = Current.DB.Users.Get(userId);
+            var user = GetUser(userId);
             return IsCatalogMember(user, catalog);
         }
 
@@ -364,8 +372,8 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public bool IsCatalogMember(int userId, int catalogId)
         {
-            var user = Current.DB.Users.Get(userId);
-            var catalog = Current.DB.Catalogs.Get(catalogId);
+            var user = GetUser(userId);
+            var catalog = CatalogService.GetCatalog(catalogId);
             return IsCatalogMember(user, catalog);
         }
 
@@ -377,7 +385,7 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public bool IsCatalogAdmin(User user, int catalogId)
         {
-            var catalog = Current.DB.Catalogs.Get(catalogId);
+            var catalog = CatalogService.GetCatalog(catalogId);
 
             // Check if the user is either the creator or a member of the catalog admin list
             if (IsCatalogCreator(user, catalog))
@@ -455,6 +463,28 @@ namespace QuoteFlow.Services
             builder.Where("ur.UserId = @userId");
 
             return Current.DB.Query<Role>(tmpl.RawSql, new {userId}).ToList();
+        }
+
+        /// <summary>
+        /// Fetches all of the organizations that a specific <see cref="User"/>
+        /// is a member of.
+        /// </summary>
+        /// <param name="userId">The identifier of the user to lookup</param>
+        /// <returns></returns>
+        public ICollection<Organization> GetUserOrganizations(int userId)
+        {
+            var builder = new SqlBuilder();
+            SqlBuilder.Template tmpl = builder.AddTemplate(@"
+                SELECT o.Id, o.OrganizationName, o.OwnerId, o.CreatorId
+                FROM OrganizationUsers ou 
+                /**join**/
+                /**where**/"
+                );
+
+            builder.Join("Organizations AS o ON o.Id = ou.OrganizationId");
+            builder.Where("ou.UserId = @userId");
+
+            return Current.DB.Query<Organization>(tmpl.RawSql, new { userId }).ToList();
         }
 
         /// <summary>

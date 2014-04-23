@@ -280,9 +280,13 @@
     <Compile Include="Configuration\SmtpUri.cs" />
     <Compile Include="Configuration\StorageType.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\AssetController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CatalogController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Current.cs" />
     <Compile Include="DashboardController.generated.cs">
@@ -345,6 +349,7 @@
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
     <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
+    <Compile Include="Models\ViewModels\ContactModels.cs" />
     <Compile Include="Models\ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\ViewModels\LogOnViewModel.cs" />
     <Compile Include="Models\ViewModels\NavigationMenuViewModel.cs" />
@@ -357,6 +362,7 @@
     <Compile Include="Models\ViewModels\CatalogModels.cs" />
     <Compile Include="Models\ViewModels\NewAssetModel.cs" />
     <Compile Include="Models\ViewModels\PasswordResetViewModel.cs" />
+    <Compile Include="Models\ViewModels\QuoteModels.cs" />
     <Compile Include="Models\ViewModels\SubHeader.cs" />
     <Compile Include="Models\ViewModels\SubHeaderViewData.cs" />
     <Compile Include="Models\ViewModels\UserProfileModel.cs" />
@@ -531,6 +537,9 @@
     <Content Include="Content\less\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
     </Content>
+    <Content Include="Content\less\forms.css">
+      <DependentUpon>forms.less</DependentUpon>
+    </Content>
     <Content Include="Content\less\misc.css">
       <DependentUpon>misc.less</DependentUpon>
     </Content>
@@ -545,6 +554,10 @@
     </Content>
     <Content Include="Content\less\bootstrap.css.map">
       <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\forms.less" />
+    <Content Include="Content\less\forms.css.map">
+      <DependentUpon>forms.css</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -589,6 +602,24 @@
     <Content Include="Views\Shared\_FocusedLayout.cshtml" />
     <Content Include="Views\Shared\_FocusedWizardLayout.cshtml" />
     <Content Include="Views\Shared\_LogOnLayout.cshtml" />
+    <Content Include="Views\Asset\Index.cshtml" />
+    <Content Include="Views\Asset\New.cshtml" />
+    <Content Include="Views\Asset\Show.cshtml" />
+    <Content Include="Views\Catalog\Admin.cshtml" />
+    <Content Include="Views\Catalog\Index.cshtml" />
+    <Content Include="Views\Catalog\New.cshtml" />
+    <Content Include="Views\Catalog\Show.cshtml" />
+    <Content Include="Views\Catalog\ShowAssets.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Contact\New.cshtml" />
+    <Content Include="Views\Contact\Show.cshtml" />
+    <Content Include="Views\Quote\Index.cshtml" />
+    <Content Include="Views\Quote\New.cshtml" />
+    <Content Include="Views\Shared\Partials\Asset\ListItem.cshtml" />
+    <Content Include="Views\Shared\Partials\Contact\ListItem.cshtml" />
+    <Content Include="Views\Shared\Partials\Quote\ListItem.cshtml" />
+    <Content Include="Views\Shared\Partials\Quote\New\Step1.cshtml" />
+    <Content Include="Views\Shared\Partials\Quote\New\Step2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

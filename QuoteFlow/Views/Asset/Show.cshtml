@@ -1,0 +1,55 @@
+﻿@model QuoteFlow.Models.ViewModels.AssetDetailsModel
+
+@{ ViewBag.Title = "QuoteFlow - " + @Model.Asset.Name; }
+
+<div class="row-fluid">
+    <div class="span3">
+        <div class="avatared">
+            <span class="tooltipped downwards" original-title="Change your avatar at gravatar.com">
+                <a href="http://gravatar.com/emails/">
+                    <img src="http://placehold.it/210x210" class="img-polaroid" height="210" width="210">
+                </a>
+            </span>
+            
+            <div id="thumbnail_row" class="image-photos">
+                <ul>
+                    <li>
+                        <img src="http://placehold.it/55x55" class="img-polaroid" height="55" width="55">
+                    </li>
+                    <li>
+                        <img src="http://placehold.it/55x55" class="img-polaroid" height="55" width="55">
+                    </li>
+                    <li>
+                        <img src="http://placehold.it/55x55" class="img-polaroid" height="55" width="55">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="asset-header">
+            <h2>@Model.Asset.Name</h2>
+            <span class="asset-manufacturer">by <a href="#">@Model.Asset.Manufacturer.Name</a></span>    
+        </div>
+        <div class="asset-details">
+            <div class="asset-description">
+                @Model.Asset.Description
+            </div>
+            <div class="asset-specs">
+                
+            </div>
+        </div>
+    </div>
+    <div class="span3">
+        <div class="asset-pricing">
+            <div class="big-price">
+                <h3>$@Model.Asset.Price</h3>
+                <span class="muted">Price</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Model.Asset.Name
+@Model.Asset.Markup

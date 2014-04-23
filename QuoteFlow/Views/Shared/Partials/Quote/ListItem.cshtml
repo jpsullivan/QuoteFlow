@@ -1,0 +1,19 @@
+﻿@using QuoteFlow.Infrastructure.Extensions
+@using QuoteFlow.Models
+@model Quote
+
+@{
+    var quote = (Quote)ViewData["quote"];
+    var detailsPage = string.Format("{0}/quote/{1}/{2}",
+                                    Url.SiteRoot(),
+                                    quote.Id,
+                                    quote.Name.UrlFriendly());
+}
+
+<tr>
+    <td><a href="@detailsPage">@Model.CreationDate</a></td>
+    <td><a href="@detailsPage">@Model.Name</a></td>
+    <td><a href="@detailsPage">@Model.Status</a></td>
+    <td><a href="@detailsPage">@Model.TotalPrice</a></td>
+    <td><a href="@detailsPage">@Model.Responded</a></td>
+</tr>

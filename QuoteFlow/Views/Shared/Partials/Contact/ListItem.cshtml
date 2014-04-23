@@ -1,0 +1,19 @@
+﻿@using QuoteFlow.Infrastructure.Extensions
+@using QuoteFlow.Models
+@model Contact
+
+@{
+    var contact = (Contact)ViewData["contact"];
+    var detailsPage = string.Format("{0}/contact/{1}/{2}",
+                                    Url.SiteRoot(),
+                                    contact.Id,
+                                    contact.FullName.UrlFriendly());
+}
+
+<tr>
+    <td><a href="@detailsPage">@Model.FullName</a></td>
+    <td><a href="@detailsPage">@Model.Email</a></td>
+    <td><a href="@detailsPage">@Model.State</a></td>
+    <td><a href="@detailsPage">@Model.CreationDate</a></td>
+    <td><a href="@detailsPage">@Model.LastUpdated</a></td>
+</tr>

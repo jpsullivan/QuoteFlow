@@ -41,5 +41,13 @@ namespace QuoteFlow.Infrastructure.Extensions
         {
             return obj == null ? null : obj.ToString();
         }
+
+        /// <summary>
+        /// Produces a URL-friendly version of this String, "like-this-one".
+        /// </summary>
+        public static string UrlFriendly(this string s)
+        {
+            return s.HasValue() ? UrlFriendly(s) : s;
+        }
     }
 }
