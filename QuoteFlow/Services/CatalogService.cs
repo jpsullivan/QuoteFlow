@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
@@ -25,9 +26,8 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public Catalog GetCatalog(string catalogName)
         {
-            return
-                Current.DB.Query<Catalog>("select * from Catalogs where Name = @catalogName", new {catalogName})
-                    .FirstOrDefault();
+            const string sql = "select * from Catalogs where Name = @catalogName";
+            return Current.DB.Query<Catalog>(sql, new {catalogName}).FirstOrDefault();
         }
 
         /// <summary>
@@ -102,9 +102,23 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public string GetCreatorName(int creatorId)
         {
-            return
-                Current.DB.Query<string>("select FullName from Users where Id = @creatorId", new { creatorId })
-                    .FirstOrDefault();
+            const string sql = "select FullName from Users where Id = @creatorId";
+            return Current.DB.Query<string>(sql, new {creatorId}).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Fetches catalogs that exist within a series of <see cref="Organization"/>s.
+        /// </summary>
+        /// <param name="orgs"></param>
+        /// <returns></returns>
+        public IEnumerable<Catalog> GetCatalogsWithinOrganizations(ICollection<Organization> orgs)
+        {
+            if (!orgs.Any()) {
+                return null;
+            }
+
+            const string sql = "select * from Catalogs where OrganizationId in @orgs";
+            return Current.DB.Query<Catalog>(sql, new { @orgs = orgs.Select(org => org.Id).ToArray() });
         }
     }
 }

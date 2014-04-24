@@ -59,7 +59,6 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("catalog/new", HttpVerbs.Get)]
-        [LayoutInjector("_FocusedLayout")]
         public ActionResult New()
         {
             // if user has more than one organization, get them
@@ -74,27 +73,21 @@ namespace QuoteFlow.Controllers
         {
             var currentUser = GetCurrentUser();
 
-            // If a user is assigned to multiple organizations, assign the first one to this catalog
-            // TODO: Use the CurrentOrganization
-            if (!UserService.BelongsToMultipleOrganizations(currentUser.Id))
-            {
-                var orgs = OrganizationService.GetOrganizations(currentUser.Id);
-                var org = OrganizationService.GetOrganization(orgs.First().OrganizationId);
-                model.Organization = org;
-            }
+            // lazily set the organization to the first one that the user is assigned to.
+            // eventually use whatever the users' current organization is once multi-tenancy
+            // is implemented.
+            model.Organization = currentUser.Organizations.First();
 
             // Do some server-side validation before we begin
-            if (CatalogService.CatalogNameExists(model.Name, model.Organization.Id))
+            if (CatalogService.CatalogNameExists(model.Name, model.Organization.Id)) 
             {
-                // TODO: Return saying that the org name already exists
-                return RedirectToAction("New", "Catalog");
+                var errorMsg = string.Format("Catalog name already exists within the {0} organization.",
+                    model.Organization.OrganizationName);
+                ModelState.AddModelError("Name", errorMsg);
+                return View("New", model);
             }
 
-            Catalog newCatalog = CatalogService.CreateCatalog(model, GetCurrentUser().Id);
-
-            //            return RedirectToRoute("catalog", new {
-            //                catalogName = newCatalog.Name
-            //            });
+            var newCatalog = CatalogService.CreateCatalog(model, currentUser.Id);
 
             // there has to be a better way to do this...
             return Redirect("~/catalog/" + newCatalog.Id + "/" + newCatalog.Name.UrlFriendly());

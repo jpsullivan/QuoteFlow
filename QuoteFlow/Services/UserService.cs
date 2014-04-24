@@ -488,6 +488,23 @@ namespace QuoteFlow.Services
         }
 
         /// <summary>
+        /// Fetches all of the catalogs that a user has access to
+        /// based on their organization access.
+        /// </summary>
+        /// <param name="userId">The id of the user to get catalogs for.</param>
+        /// <returns></returns>
+        public IEnumerable<Catalog> GetCatalogs(int userId)
+        {
+            if (userId == 0)
+            {
+                throw new ArgumentException("User ID must be greater than zero.");
+            }
+
+            var user = GetUser(userId);
+            return CatalogService.GetCatalogsWithinOrganizations(user.Organizations);
+        }
+
+        /// <summary>
         /// Confirms the users' email address.
         /// </summary>
         /// <param name="user"></param>

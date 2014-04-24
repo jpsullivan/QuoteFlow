@@ -1,4 +1,6 @@
-﻿
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Models.ViewModels.DashboardViewModel
+
 @{
     ViewBag.Title = "Index";
 }
@@ -15,8 +17,18 @@
     <div class="aui-page-panel-inner">
         <section class="aui-page-panel-content">
             <h3>Recent Quotes</h3>
-            
-            <button class="btn">Create Quote</button>
+
+            <a href="@Url.NewCatalog()" class="aui-button">New Catalog</a>
+
+            @if (Model.Catalogs.Any())
+            {
+                foreach (var catalog in Model.Catalogs)
+                {
+                    <br />
+                    <a href="catalog/@catalog.Id/@catalog.Name.UrlFriendly()">@catalog.Name</a>
+                }
+            }
         </section>
+
     </div>
 </div>

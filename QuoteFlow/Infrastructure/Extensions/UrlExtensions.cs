@@ -25,6 +25,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return url.Action("Index", "Dashboard");
         }
 
+        public static string NewCatalog(this UrlHelper url)
+        {
+            return url.Action("New", "Catalog");
+        }
+
         public static string ConfirmationUrl(this UrlHelper url, string action, string controller, string username, string token)
         {
             return ConfirmationUrl(url, action, controller, username, token, null);

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace QuoteFlow.Models
 {
@@ -16,5 +13,8 @@ namespace QuoteFlow.Models
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdated { get; set; }
         public bool Enabled { get; set; }
+
+        public User Creator { get; set; }
+
     }
 }

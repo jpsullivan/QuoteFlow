@@ -1,4 +1,5 @@
-﻿using QuoteFlow.Models;
+﻿using System.Collections.Generic;
+using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
 
 namespace QuoteFlow.Services.Interfaces
@@ -42,5 +43,12 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="creatorId">the id of the creator</param>
         /// <returns></returns>
         string GetCreatorName(int creatorId);
+
+        /// <summary>
+        /// Fetches catalogs that exist within a series of <see cref="Organization"/>s.
+        /// </summary>
+        /// <param name="orgs"></param>
+        /// <returns></returns>
+        IEnumerable<Catalog> GetCatalogsWithinOrganizations(ICollection<Organization> orgs);
     }
 }

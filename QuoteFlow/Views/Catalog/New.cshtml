@@ -1,78 +1,62 @@
 ﻿@{ ViewBag.Title = "QuoteFlow - New Catalog"; }
 @model QuoteFlow.Models.ViewModels.NewCatalogModel
+           
+@{
+    Layout = "../Shared/_FocusedLayout.cshtml";
+}
+           
+<h2>Create a new catalog</h2>
+@using (Html.BeginForm("CreateCatalog", "Catalog", FormMethod.Post, new {@class = "aui"})) 
+{
+    @Html.AntiForgeryToken()
 
-<div id="catalog-create" class="">
-    <header>
-        <span class="pull-right">You can also <a href="#">import a catalog</a></span>
-        <h3>Create a new catalog</h3>
-    </header>
-    <section class="row form-container">
-        @using (Html.BeginForm("CreateCatalog", "Catalog", FormMethod.Post, new { @class = "span7 form-horizontal" }))
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="control-group">
-                @Html.LabelFor(mm => mm.Name, new { @class = "control-label", @for = "catalog_name" })
-                <div class="controls">
-                    @Html.TextBoxFor(mm => mm.Name, new { @id = "catalog_name", @class = "span5" })
-                </div>
-            </div>
-            
-            <div class="control-group">
-                @Html.LabelFor(mm => mm.Description, new { @class = "control-label", @for = "catalog_description" })
-                <div class="controls">
-                    @Html.TextAreaFor(mm => mm.Description, new { @id = "catalog_description", @class="span5" })
-                </div>
-            </div>
-
-@*            <div class="control-group">*@
-@*                @Html.LabelFor(mm => mm.Organization, new { @class = "control-label"})*@
-@*                <div class="controls">*@
-@*                    <select>*@
-@*                        @foreach (Organization organization in (IEnumerable<Organization>)ViewData["UserOrganizations"]) {*@
-@*                            <option value="@organization.Id">@organization.OrganizationName</option>*@
-@*                        }*@
-@*                    </select>*@
-@*                    @Html.ListBoxFor(mm => mm.Organization, (IEnumerable<Organization>)ViewData["UserOrganization"]);                   *@
-@*                </div>*@
-@*            </div>*@
-            
-            <div class="control-group">
-                @Html.LabelFor(mm => mm.Expirable, new { @class = "control-label", @for = "catalog_expirable" })
-                <div class="controls">
-                    @Html.CheckBoxFor(mm => mm.Expirable, new { @id = "catalog_expirable" })
-                </div>
-            </div>
-            
-            <div class="control-group">
-                @Html.LabelFor(mm => mm.ExpirationDate, new { @class = "control-label", @for = "catalog_expiration_date" })
-                <div class="controls">
-                    @Html.TextBoxFor(mm => mm.ExpirationDate, new {
-                        @id = "catalog_expiration_date", 
-                        @class = "datepicker", 
-                        @value = "2-17-2013",
-                        data_date_format="mm/dd/yyyy"
-                    })
-                </div>
-            </div>
-            
-            <div class="control-group buttons-container">
-                <div class="controls">
-                    <button type="submit" class="btn btn-primary">Create catalog</button>
-                    <a class="cancel" href="/">Cancel</a>
-                </div>
-            </div>
-        }
-        
-        <div class="sidebar span4">
-            <a href="https://confluence.atlassian.com/display/BITBUCKET/bitbucket+101" class="help-link doc-101" target="_blank">
-                <strong>New to QuoteFlow?</strong>
-                Learn the basics of using Git and Mercurial by exploring the Bitbucket 101.
-            </a>
-            <a href="/account/create-team/" class="help-link team-pitch">
-                <strong>Working in a team?</strong>
-                Create a team account to consolidate your repos and organize your team's work
-            </a>
+    <fieldset>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "text" })
+            <div class="error">@Html.ValidationMessageFor(m => m.Name)</div>
         </div>
-    </section>
-</div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "textarea long-field" })
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Expirable)
+            @Html.CheckBoxFor(m => m.Expirable, new { @class = "checkbox" })
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.ExpirationDate)
+            @Html.TextBoxFor(m => m.ExpirationDate, new {
+                @id = "catalog_expiration_date",
+                @class = "text",
+                @min = DateTime.UtcNow.ToString("yyyy-M-d")
+            })
+            <div class="error">@Html.ValidationMessageFor(m => m.ExpirationDate)</div>
+        </div>
+        
+        @*            <div class="control-group">*@
+        @*                @Html.LabelFor(mm => mm.Organization, new { @class = "control-label"})*@
+        @*                <div class="controls">*@
+        @*                    <select>*@
+        @*                        @foreach (Organization organization in (IEnumerable<Organization>)ViewData["UserOrganizations"]) {*@
+        @*                            <option value="@organization.Id">@organization.OrganizationName</option>*@
+        @*                        }*@
+        @*                    </select>*@
+        @*                    @Html.ListBoxFor(mm => mm.Organization, (IEnumerable<Organization>)ViewData["UserOrganization"]);                   *@
+        @*                </div>*@
+        @*            </div>*@
+    </fieldset>
+    
+    <div class="buttons-container">
+        <div class="buttons">
+            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Create catalog">
+            <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="#">Cancel</a>
+        </div>
+    </div>
+}
+
+<script>
+    AJS.$(document).ready(function () {
+        AJS.$('#catalog_expiration_date').datePicker({ 'overrideBrowserDefault': true });
+    });
+</script>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Mvc;
 
 namespace QuoteFlow.Infrastructure.Extensions
 {
@@ -47,7 +48,7 @@ namespace QuoteFlow.Infrastructure.Extensions
         /// </summary>
         public static string UrlFriendly(this string s)
         {
-            return s.HasValue() ? UrlFriendly(s) : s;
+            return s.HasValue() ? UrlHelpers.UrlFriendly(s) : s;
         }
     }
 }

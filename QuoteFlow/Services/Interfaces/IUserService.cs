@@ -189,6 +189,14 @@ namespace QuoteFlow.Services.Interfaces
         ICollection<Role> GetUserRoles(int userId);
 
         /// <summary>
+        /// Fetches all of the catalogs that a user has access to
+        /// based on their organization access.
+        /// </summary>
+        /// <param name="userId">The id of the user to get catalogs for.</param>
+        /// <returns></returns>
+        IEnumerable<Catalog> GetCatalogs(int userId);
+
+        /// <summary>
         /// Fetches all of the organizations that a specific <see cref="User"/>
         /// is a member of.
         /// </summary>

@@ -38,6 +38,7 @@ namespace QuoteFlow
             GlobalFilters.Filters.Add(new ProfilingActionFilter());
 
             //MiniProfiler.Settings.Results_List_Authorize = request => Current.User.IsAdministrator;
+            MiniProfiler.Settings.PopupRenderPosition = RenderPosition.Right;
         }
 
         public static void PostStart()

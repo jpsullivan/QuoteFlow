@@ -1,4 +1,8 @@
 ﻿.profiler-results {
   top: 41px !important;
 }
+.margin-fix {
+  margin-top: 50px;
+  min-height: auto;
+}
 /*# sourceMappingURL=misc.css.map */

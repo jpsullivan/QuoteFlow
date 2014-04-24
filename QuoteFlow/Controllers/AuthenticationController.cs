@@ -19,6 +19,8 @@ namespace QuoteFlow.Controllers
 {
     public partial class AuthenticationController : BaseController
     {
+        #region IoC 
+
         public AuthenticationService AuthService { get; protected set; }
         public IUserService UserService { get; protected set; }
         public IMessageService MessageService { get; protected set; }
@@ -37,6 +39,8 @@ namespace QuoteFlow.Controllers
             UserService = userService;
             MessageService = messageService;
         }
+
+        #endregion
 
         /// <summary>
         /// Sign In\Register view
