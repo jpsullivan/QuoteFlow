@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System.Security.Claims;
+using System.Web.Helpers;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -11,7 +13,7 @@ using QuoteFlow.Infrastructure.Attributes;
 using WebActivatorEx;
 using RouteAttribute = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
-[assembly: System.Web.PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
+[assembly: PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
 [assembly: PostApplicationStartMethod(typeof(AppActivator), "PostStart")]
 [assembly: ApplicationShutdownMethod(typeof(AppActivator), "Stop")]
 
@@ -23,6 +25,8 @@ namespace QuoteFlow
 
         public static void PreStart()
         {
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+
             NinjectPreStart();
             ElmahPreStart();
             GlimpsePreStart();

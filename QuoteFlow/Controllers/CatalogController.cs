@@ -59,7 +59,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("catalog/new", HttpVerbs.Get)]
-        [LayoutInjector("_LayoutWorkflow")]
+        [LayoutInjector("_FocusedLayout")]
         public ActionResult New()
         {
             // if user has more than one organization, get them

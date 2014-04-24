@@ -1,41 +1,42 @@
-﻿@using QuoteFlow
-@using QuoteFlow.Infrastructure.Extensions
+﻿@using QuoteFlow.Infrastructure.Extensions
 @model QuoteFlow.Models.ViewModels.LogOnViewModel
 
-@using (Html.BeginForm("SignIn", "Authentication", FormMethod.Post, new { @class = "aui" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.Hidden("ReturnUrl", ViewData[Constants.ReturnUrlViewDataKey])
-    @Html.Hidden("LinkingAccount", Model.External != null)
-
-    if (Model.External != null)
+<div id="login_form" class="workflow-box">
+    @using (Html.BeginForm("SignIn", "Authentication", FormMethod.Post, new { @class = "aui" }))
     {
-        @Html.HiddenFor(m => m.External.ProviderAccountNoun)
-        @Html.HiddenFor(m => m.External.AccountName)
-        @Html.HiddenFor(m => m.External.FoundExistingUser)
+        @Html.AntiForgeryToken()
+        @Html.Hidden("ReturnUrl", ViewData[Constants.ReturnUrlViewDataKey])
+        @Html.Hidden("LinkingAccount", Model.External != null)
+
+        if (Model.External != null)
+        {
+            @Html.HiddenFor(m => m.External.ProviderAccountNoun)
+            @Html.HiddenFor(m => m.External.AccountName)
+            @Html.HiddenFor(m => m.External.FoundExistingUser)
+        }
+
+        @Html.ValidationSummaryFor("SignIn")
+
+        <div class="field-group">
+            @Html.LabelFor(m => m.SignIn.UserNameOrEmail)
+            @Html.TextBoxFor(m => m.SignIn.UserNameOrEmail, new { @class = "text" })
+            @Html.ValidationMessageFor(m => m.SignIn.UserNameOrEmail)
+        </div>
+
+        <div class="field-group">
+            @Html.LabelFor(m => m.SignIn.Password)
+            @Html.EditorFor(m => m.SignIn.Password)
+            @Html.ValidationMessageFor(m => m.SignIn.Password)
+        </div>
+
+        <div class="buttons-container">
+            <div class="buttons">
+                <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Log in">
+                @Html.ActionLink("Forgot your password?", "ForgotPassword", "Users", new { @class = "aui-button aui-button-link" })
+            </div>
+            <div class="sign-up">
+                @Html.ActionLink("Need an account? Sign up free.", "Register", "Authentication")
+            </div>
+        </div>
     }
-
-    @Html.ValidationSummaryFor("SignIn")
-
-    <div class="field-group">
-        @Html.LabelFor(m => m.SignIn.UserNameOrEmail)
-        @Html.TextBoxFor(m => m.SignIn.UserNameOrEmail, new { @class = "text" })
-        @Html.ValidationMessageFor(m => m.SignIn.UserNameOrEmail)
-    </div>
-
-    <div class="field-group">
-        @Html.LabelFor(m => m.SignIn.Password)
-        @Html.EditorFor(m => m.SignIn.Password)
-        @Html.ValidationMessageFor(m => m.SignIn.Password)
-    </div>
-
-    <div class="buttons-container">
-        <div class="buttons">
-            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Log in">
-            @Html.ActionLink("Forgot your password?", "ForgotPassword", "Users", new { @class = "aui-button aui-button-link" })
-        </div>
-        <div class="sign-up">
-            @Html.ActionLink("Need an account? Sign up free.", "Register", "Authentication")
-        </div>
-    </div>
-}
+</div>

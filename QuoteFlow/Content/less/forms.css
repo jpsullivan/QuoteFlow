@@ -3,5 +3,12 @@
 .workflow-box form.aui .select,
 .workflow-box form.aui textarea {
   width: 100%;
+  max-width: inherit;
+}
+#login_form .forgot-password {
+  margin-left: 10px;
+}
+#login_form .sign-up {
+  margin-top: 20px;
 }
 /*# sourceMappingURL=forms.css.map */
