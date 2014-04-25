@@ -11,12 +11,6 @@ namespace QuoteFlow.Models.ViewModels
         public User CatalogCreator { get; set; }
     }
 
-    public class CatalogHeader
-    {
-        public Catalog Catalog { get; set; }
-        public SubHeader SubHeader { get; set; }
-    }
-
     public class NewCatalogModel
     {
         [Required]
@@ -36,7 +30,7 @@ namespace QuoteFlow.Models.ViewModels
         public Organization Organization { get; set; }
     }
 
-    public class CatalogShowAssets
+    public class CatalogShowAssetsModel
     {
         public IEnumerable<Asset> Assets { get; set; }
         public Catalog Catalog { get; set; }

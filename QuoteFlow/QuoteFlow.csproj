@@ -538,11 +538,17 @@
     <Content Include="Content\less\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
     </Content>
+    <Content Include="Content\less\footer.css">
+      <DependentUpon>footer.less</DependentUpon>
+    </Content>
     <Content Include="Content\less\forms.css">
       <DependentUpon>forms.less</DependentUpon>
     </Content>
     <Content Include="Content\less\header.css">
       <DependentUpon>header.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\layout.css">
+      <DependentUpon>layout.less</DependentUpon>
     </Content>
     <Content Include="Content\less\misc.css">
       <DependentUpon>misc.less</DependentUpon>
@@ -566,6 +572,14 @@
     <Content Include="Content\less\header.less" />
     <Content Include="Content\less\header.css.map">
       <DependentUpon>header.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\layout.less" />
+    <Content Include="Content\less\layout.css.map">
+      <DependentUpon>layout.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\footer.less" />
+    <Content Include="Content\less\footer.css.map">
+      <DependentUpon>footer.css</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

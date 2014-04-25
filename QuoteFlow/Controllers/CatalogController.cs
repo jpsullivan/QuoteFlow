@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Services.Interfaces;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
@@ -37,6 +36,41 @@ namespace QuoteFlow.Controllers
             return View();
         }
 
+        [Route("catalog/new", HttpVerbs.Get)]
+        public ActionResult New()
+        {
+            // if user has more than one organization, get them
+            // display them as select list
+            //ViewData["UserOrganizations"] = Organization.GetOrganizations(Current.User.Id);
+
+            return View();
+        }
+
+        [Route("catalog/create", HttpVerbs.Post)]
+        public ActionResult CreateCatalog(NewCatalogModel model)
+        {
+            var currentUser = GetCurrentUser();
+
+            // lazily set the organization to the first one that the user is assigned to.
+            // eventually use whatever the users' current organization is once multi-tenancy
+            // is implemented.
+            model.Organization = currentUser.Organizations.First();
+
+            // Do some server-side validation before we begin
+            if (CatalogService.CatalogNameExists(model.Name, model.Organization.Id))
+            {
+                var errorMsg = string.Format("Catalog name already exists within the {0} organization.",
+                    model.Organization.OrganizationName);
+                ModelState.AddModelError("Name", errorMsg);
+                return View("New", model);
+            }
+
+            var newCatalog = CatalogService.CreateCatalog(model, currentUser.Id);
+
+            // there has to be a better way to do this...
+            return Redirect("~/catalog/" + newCatalog.Id + "/" + newCatalog.Name.UrlFriendly());
+        }
+
         [Route("catalog/{catalogId:INT}/{catalogName}")]
         public ActionResult Show(int catalogId, string catalogName)
         {
@@ -59,49 +93,10 @@ namespace QuoteFlow.Controllers
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
         }
 
-        [Route("catalog/new", HttpVerbs.Get)]
-        public ActionResult New()
-        {
-            // if user has more than one organization, get them
-            // display them as select list
-            //ViewData["UserOrganizations"] = Organization.GetOrganizations(Current.User.Id);
-
-            return View();
-        }
-
-        [Route("catalog/create", HttpVerbs.Post)]
-        public ActionResult CreateCatalog(NewCatalogModel model)
-        {
-            var currentUser = GetCurrentUser();
-
-            // lazily set the organization to the first one that the user is assigned to.
-            // eventually use whatever the users' current organization is once multi-tenancy
-            // is implemented.
-            model.Organization = currentUser.Organizations.First();
-
-            // Do some server-side validation before we begin
-            if (CatalogService.CatalogNameExists(model.Name, model.Organization.Id)) 
-            {
-                var errorMsg = string.Format("Catalog name already exists within the {0} organization.",
-                    model.Organization.OrganizationName);
-                ModelState.AddModelError("Name", errorMsg);
-                return View("New", model);
-            }
-
-            var newCatalog = CatalogService.CreateCatalog(model, currentUser.Id);
-
-            // there has to be a better way to do this...
-            return Redirect("~/catalog/" + newCatalog.Id + "/" + newCatalog.Name.UrlFriendly());
-        }
-
-        //        [Route("catalog/{catalogId:INT}/{catalogName}/quotes")]
-        //        public ActionResult ShowCatalogQuotes(int catalogId, string catalogName) { }
-
         [Route("catalog/{catalogId:INT}/{catalogName}/assets")]
         public ActionResult ShowAssets(int catalogId, string catalogName)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
-
             if (catalog == null)
             {
                 return PageNotFound();
@@ -109,11 +104,10 @@ namespace QuoteFlow.Controllers
 
             var assets = AssetService.GetAssets(catalog);
 
-            var model = new CatalogShowAssets
+            var model = new CatalogShowAssetsModel
             {
                 Assets = assets,
-                Catalog = catalog,
-                SubHeader = (SubHeader)ViewData["SubHeader"]
+                Catalog = catalog
             };
 
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);

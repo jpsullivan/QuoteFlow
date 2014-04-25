@@ -25,7 +25,7 @@ namespace QuoteFlow.Infrastructure.Extensions
             return url.Action("Index", "Dashboard");
         }
 
-        #region Catalogs 
+        #region Catalogs
 
         public static string NewCatalog(this UrlHelper url)
         {
@@ -35,6 +35,16 @@ namespace QuoteFlow.Infrastructure.Extensions
         public static string Catalog(this UrlHelper url, int catalogId, string catalogName)
         {
             return string.Format("/catalog/{0}/{1}", catalogId, catalogName);
+        }
+
+        public static string CatalogAssets(this UrlHelper url, int catalogId, string catalogName)
+        {
+            return string.Format("/catalog/{0}/{1}/assets", catalogId, catalogName);
+        }
+
+        public static string CatalogVersions(this UrlHelper url, int catalogId, string catalogName)
+        {
+            return string.Format("/catalog/{0}/{1}/versions", catalogId, catalogName);
         }
 
         #endregion

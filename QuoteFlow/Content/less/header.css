@@ -21,6 +21,13 @@
   color: #707070;
 }
 .aui-page-header .header-side-buttons {
-  float: right;
+  vertical-align: top;
+  text-align: right;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: table-cell;
+  margin: 0;
+  padding: 0;
 }
 /*# sourceMappingURL=header.css.map */

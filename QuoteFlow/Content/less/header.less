@@ -20,21 +20,29 @@
         > li {
             display: inline-block;
         }
-        > li+li {
-                &:before {
-                    content: "\b7";
-                    padding: 0 0.42857142857142855em 0 0.21428571428571427em;
-                    color: #ccc;
-                    margin: 0 3px;
-                }
-            }
 
-        .list-label { 
-            color: #707070;
+        > li + li {
+            &:before {
+                content: "\b7";
+                padding: 0 0.42857142857142855em 0 0.21428571428571427em;
+                color: #ccc;
+                margin: 0 3px;
+            }
         }
 
+        .list-label {
+            color: #707070;
+        }
     }
+
     .header-side-buttons {
-        float: right;
+        vertical-align: top;
+        text-align: right;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        display: table-cell;
+        margin: 0;
+        padding: 0;
     }
 }

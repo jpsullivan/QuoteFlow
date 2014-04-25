@@ -1,0 +1,59 @@
+﻿.aui-page-panel-content {
+
+    .summary-modules {
+        margin-top: 20px;
+
+        .module {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-top: 25px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+
+            &:before, &:after {
+                content: " ";
+                display: table;
+            }
+            &:after {
+                clear: both;
+            }
+
+            > .module-header {
+                > h3 {
+                    margin-top: 0;
+                }
+
+                &:before, &:after {
+                    content: " ";
+                    display: table;
+                }
+                &:after {
+                    clear: both;
+                }
+            }
+
+            > .module-header + .module-content {
+                margin-top: 10px;
+            }
+
+            .module-content {
+                &:before, &:after {
+                    content: " ";
+                    display: table;
+                }
+                &:after {
+                    clear: both;
+                }
+            }
+        }
+
+        .module+.module {
+            border-top: 1px solid #cccccc;
+            margin-top: 25px;
+            padding-top: 25px;
+        }
+    }
+}

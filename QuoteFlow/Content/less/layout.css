@@ -1,0 +1,48 @@
+﻿.aui-page-panel-content .summary-modules {
+  margin-top: 20px;
+}
+.aui-page-panel-content .summary-modules .module {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-top: 25px;
+}
+.aui-page-panel-content .summary-modules .module:first-child {
+  margin-top: 0;
+}
+.aui-page-panel-content .summary-modules .module:before,
+.aui-page-panel-content .summary-modules .module:after {
+  content: " ";
+  display: table;
+}
+.aui-page-panel-content .summary-modules .module:after {
+  clear: both;
+}
+.aui-page-panel-content .summary-modules .module > .module-header > h3 {
+  margin-top: 0;
+}
+.aui-page-panel-content .summary-modules .module > .module-header:before,
+.aui-page-panel-content .summary-modules .module > .module-header:after {
+  content: " ";
+  display: table;
+}
+.aui-page-panel-content .summary-modules .module > .module-header:after {
+  clear: both;
+}
+.aui-page-panel-content .summary-modules .module > .module-header + .module-content {
+  margin-top: 10px;
+}
+.aui-page-panel-content .summary-modules .module .module-content:before,
+.aui-page-panel-content .summary-modules .module .module-content:after {
+  content: " ";
+  display: table;
+}
+.aui-page-panel-content .summary-modules .module .module-content:after {
+  clear: both;
+}
+.aui-page-panel-content .summary-modules .module + .module {
+  border-top: 1px solid #cccccc;
+  margin-top: 25px;
+  padding-top: 25px;
+}
+/*# sourceMappingURL=layout.css.map */

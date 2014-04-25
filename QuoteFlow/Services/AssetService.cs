@@ -61,10 +61,7 @@ namespace QuoteFlow.Services
                 a.Markup = ap.Markup;
                 a.Price = ap.Price;
                 return a;
-            }, new
-                {
-                    catalogId
-                });
+            }, new {catalogId});
         }
 
         /// <summary>
