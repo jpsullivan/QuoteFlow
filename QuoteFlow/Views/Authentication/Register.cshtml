@@ -29,6 +29,12 @@
             @Html.ValidationMessageFor(m => m.Register.Username)
         </div>
 
+        <div class="field-group">
+            @Html.LabelFor(m => m.Register.FullName)
+            @Html.TextBoxFor(m => m.Register.FullName, new { @class = "text long-field" })
+            @Html.ValidationMessageFor(m => m.Register.FullName)
+        </div>
+
         if (Model.External == null)
         {
             <div class="field-group">

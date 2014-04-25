@@ -11,6 +11,12 @@
 .aui-page-header ul.operations-list > li {
   display: inline-block;
 }
+.aui-page-header ul.operations-list > li + li:before {
+  content: "\b7";
+  padding: 0 0.42857142857142855em 0 0.21428571428571427em;
+  color: #ccc;
+  margin: 0 3px;
+}
 .aui-page-header ul.operations-list .list-label {
   color: #707070;
 }

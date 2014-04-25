@@ -8,7 +8,7 @@ namespace QuoteFlow.Models.ViewModels
     {
         public IEnumerable<Asset> Assets { get; set; }
         public Catalog Catalog { get; set; }
-        public SubHeader SubHeader { get; set; }
+        public User CatalogCreator { get; set; }
     }
 
     public class CatalogHeader

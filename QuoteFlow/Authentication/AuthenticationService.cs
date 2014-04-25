@@ -120,7 +120,7 @@ namespace QuoteFlow.Authentication
             owinContext.Authentication.SignOut(AuthenticationTypes.External);
         }
 
-        public virtual async Task<AuthenticatedUser> Register(string username, string emailAddress, Credential credential)
+        public virtual async Task<AuthenticatedUser> Register(string username, string emailAddress, string fullname, Credential credential)
         {
             var existingUser = UserService.GetUser(username, emailAddress);
             if (existingUser != null) {
@@ -133,6 +133,7 @@ namespace QuoteFlow.Authentication
 
             var newUser = new User(username)
             {
+                FullName = fullname,
                 EmailAllowed = true,
                 UnconfirmedEmailAddress = emailAddress,
                 EmailConfirmationToken = CryptographyService.GenerateToken(),

@@ -46,13 +46,14 @@ namespace QuoteFlow.Controllers
                 return PageNotFound();
             }
 
+            var creator = UserService.GetUser(catalog.CreatorId);
             var assets = AssetService.GetAssets(catalog);
 
             var model = new CatalogShowModel
             {
                 Assets = assets,
                 Catalog = catalog,
-                SubHeader = (SubHeader)ViewData["SubHeader"]
+                CatalogCreator = creator
             };
 
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);

@@ -25,10 +25,19 @@ namespace QuoteFlow.Infrastructure.Extensions
             return url.Action("Index", "Dashboard");
         }
 
+        #region Catalogs 
+
         public static string NewCatalog(this UrlHelper url)
         {
             return url.Action("New", "Catalog");
         }
+
+        public static string Catalog(this UrlHelper url, int catalogId, string catalogName)
+        {
+            return string.Format("/catalog/{0}/{1}", catalogId, catalogName);
+        }
+
+        #endregion
 
         public static string ConfirmationUrl(this UrlHelper url, string action, string controller, string username, string token)
         {

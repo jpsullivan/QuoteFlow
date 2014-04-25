@@ -48,7 +48,7 @@ namespace QuoteFlow.Services
             var user = Current.DB.Query<User>(sql, new {userId}).FirstOrDefault();
 
             if (user == null) {
-                throw new Exception("User is null");
+                return null;
             }
 
             user.Credentials = GetUserCredentials(userId);

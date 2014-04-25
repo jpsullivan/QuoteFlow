@@ -20,12 +20,12 @@
 
             <a href="@Url.NewCatalog()" class="aui-button">New Catalog</a>
 
-            @if (Model.Catalogs.Any())
+            @if (Model.Catalogs != null)
             {
                 foreach (var catalog in Model.Catalogs)
                 {
                     <br />
-                    <a href="catalog/@catalog.Id/@catalog.Name.UrlFriendly()">@catalog.Name</a>
+                    <a href="@Url.Catalog(catalog.Id, catalog.Name.UrlFriendly())">@catalog.Name</a>
                 }
             }
         </section>

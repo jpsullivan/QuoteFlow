@@ -64,17 +64,13 @@ namespace QuoteFlow.Models.ViewModels
         internal const string FirstPart = @"[-A-Za-z0-9!#$%&'*+\/=?^_`{|}~\.]+";
         internal const string SecondPart = @"[A-Za-z0-9]+[\w\.-]*[A-Za-z0-9]*\.[A-Za-z0-9][A-Za-z\.]*[A-Za-z]";
         internal const string EmailValidationRegex = "^" + FirstPart + "@" + SecondPart + "$";
-
         internal const string EmailValidationErrorMessage = "This doesn't appear to be a valid email address.";
-
-        internal const string UsernameValidationRegex =
-            @"[A-Za-z0-9][A-Za-z0-9_\.-]+[A-Za-z0-9]";
+        internal const string UsernameValidationRegex = @"[A-Za-z0-9][A-Za-z0-9_\.-]+[A-Za-z0-9]";
 
         /// <summary>
         /// Regex that matches INVALID username characters, to make it easy to strip those characters out.
         /// </summary>
-        internal static readonly Regex UsernameNormalizationRegex =
-            new Regex(@"[^A-Za-z0-9_\.-]");
+        internal static readonly Regex UsernameNormalizationRegex = new Regex(@"[^A-Za-z0-9_\.-]");
 
         internal const string UsernameValidationErrorMessage =
             "User names must start and end with a letter or number, and may only contain letters, numbers, underscores, periods, and hyphens in between.";
@@ -94,6 +90,10 @@ namespace QuoteFlow.Models.ViewModels
         [RegularExpression(UsernameValidationRegex, ErrorMessage = UsernameValidationErrorMessage)]
         [Hint("Choose something unique so others will know which contributions are yours.")]
         public string Username { get; set; }
+
+        [Required]
+        [StringLength(256)]
+        public string FullName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

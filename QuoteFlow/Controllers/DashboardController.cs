@@ -24,11 +24,11 @@ namespace QuoteFlow.Controllers
         {
             var model = new DashboardViewModel();
 
-            var currentUser = GetCurrentUser();
-            if (currentUser == null) {
+            if (!Request.IsAuthenticated) {
                 return View(model);
             }
 
+            var currentUser = GetCurrentUser();
             var catalogs = UserService.GetCatalogs(currentUser.Id);
             model.Catalogs = catalogs;
 

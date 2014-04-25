@@ -160,6 +160,7 @@ namespace QuoteFlow.Controllers
                     user = await AuthService.Register(
                         model.Register.Username,
                         model.Register.EmailAddress,
+                        model.Register.FullName,
                         result.Credential);
                 }
                 else
@@ -167,6 +168,7 @@ namespace QuoteFlow.Controllers
                     user = await AuthService.Register(
                         model.Register.Username,
                         model.Register.EmailAddress,
+                        model.Register.FullName,
                         CredentialBuilder.CreatePbkdf2Password(model.Register.Password));
                 }
             }
