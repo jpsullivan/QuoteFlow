@@ -6,6 +6,10 @@ namespace QuoteFlow.Models.ViewModels
     public class NewAssetModel
     {
         [Required]
+        [Display(Name = "Catalog")]
+        public int CatalogId { get; set; }
+
+        [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
 
@@ -26,6 +30,11 @@ namespace QuoteFlow.Models.ViewModels
 
         [Display(Name = "Product Images")]
         public List<AssetImage> AssetImages { get; set; }
+
+        [Required(ErrorMessage = "You must select an asset type.")]
+        [Display(Name = "Asset Type")]
+        public AssetType? AssetType{ get; set; }
+        public IEnumerable<AssetType> AssetTypeChoices { get; set; }
 
     }
 

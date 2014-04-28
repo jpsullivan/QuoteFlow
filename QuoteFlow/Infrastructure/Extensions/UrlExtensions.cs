@@ -25,6 +25,15 @@ namespace QuoteFlow.Infrastructure.Extensions
             return url.Action("Index", "Dashboard");
         }
 
+        #region Assets
+
+        public static string NewAsset(this UrlHelper url)
+        {
+            return url.Action("New", "Asset");
+        }
+
+        #endregion
+
         #region Catalogs
 
         public static string NewCatalog(this UrlHelper url)

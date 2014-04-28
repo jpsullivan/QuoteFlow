@@ -341,6 +341,7 @@
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetImage.cs" />
     <Compile Include="Models\AssetPrice.cs" />
+    <Compile Include="Models\AssetType.cs" />
     <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Credential.cs" />

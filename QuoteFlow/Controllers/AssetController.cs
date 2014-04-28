@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Infrastructure.Helpers;
 using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Services.Interfaces;
@@ -28,39 +27,34 @@ namespace QuoteFlow.Controllers
 
         #endregion
 
-        [Route("{catalogId:INT}/{catalogName}/asset/{assetId:INT}/{assetName}")]
-        public ActionResult Show(int catalogId, int assetId, string assetName)
+        [Route("asset/{assetId:INT}/{assetName}")]
+        public ActionResult Show(int assetId, string assetName)
         {
-            var catalog = CatalogService.GetCatalog(catalogId);
+            var asset = AssetService.GetAsset(assetId);
 
             // Ensure that the user has access to the supplied catalog
-            if (!UserService.IsCatalogMember(GetCurrentUser(), catalog)) return PageNotFound();
-
-            var asset = AssetService.GetAsset(assetId);
+            if (!UserService.IsCatalogMember(GetCurrentUser().Id, asset.CatalogId)) return PageNotFound();
 
             var viewModel = new AssetDetailsModel
             {
                 Asset = asset,
-                Catalog = catalog
+                Catalog = CatalogService.GetCatalog(asset.CatalogId)
             };
 
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
         }
 
-        [Route("{catalogId:INT}/{catalogName}/asset/new")]
-        [LayoutInjector("_LayoutWorkflow")]
-        public ActionResult New(int catalogId, string catalogName)
+        private static readonly AssetType[] AssetTypeChoices = new[]
         {
-            var catalog = CatalogService.GetCatalog(catalogId);
+            AssetType.Standard,
+            AssetType.Kit
+        };
 
-            if (catalog == null)
-            {
-                return PageNotFound();
-            }
-
-            ViewData["catalog"] = catalog;
-
-            return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View();
+        [Route("asset/new")]
+        public ActionResult New()
+        {
+            var model = new NewAssetModel {AssetTypeChoices = AssetTypeChoices};
+            return View(model);
         }
 
         [Route("{catalogId:INT}/{catalogName}/asset/create", HttpVerbs.Post)]

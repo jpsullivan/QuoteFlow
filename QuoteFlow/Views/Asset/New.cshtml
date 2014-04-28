@@ -1,147 +1,43 @@
-﻿@{ ViewBag.Title = "QuoteFlow - New Catalog"; }
+﻿@{ ViewBag.Title = "QuoteFlow - New Asset"; }
+@using QuoteFlow.Infrastructure.Extensions
 @model QuoteFlow.Models.ViewModels.NewAssetModel
+           
+@{
+    Layout = "../Shared/_FocusedLayout.cshtml";
+}
 
-<div id="catalog-create" class="">
-    <header>
-        <div class="btn-group pull-right">
-            <button class="btn active">Product</button>
-            <button class="btn">Kit</button>
-            <button class="btn">Service</button>
-            <button class="btn">Subscription</button>
+<h2>Create a new catalog</h2>
+@using (Html.BeginForm("CreateAsset", "Asset", FormMethod.Post, new { @class = "aui" }))
+{
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <div class="field-group">
+            @Html.LabelFor(m => m.CatalogId)
+            @Html.EnumDropDownListFor(m => m.AssetType, Model.AssetTypeChoices, "Choose an asset type")
+            @Html.ValidationMessageFor(m => m.AssetType)
         </div>
-        <h3>Create a new asset</h3>
-    </header>
-    <section class="row form-container">
-        @using (Html.BeginForm("CreateAsset", "Asset", FormMethod.Post, new {@class = "span7 form-horizontal"})) {
-            @Html.AntiForgeryToken()
-
-            <div class="control-group">
-                @Html.LabelFor(mm => mm.Name, new { @class = "control-label", @for = "asset_name" })
-                <div class="controls">
-                    @Html.TextBoxFor(mm => mm.Name, new { @id = "asset_name", @class = "span5" })
-                </div>
-            </div>
-            
-            <div class="control-group">
-                @Html.LabelFor(mm => mm.Manufacturer, new { @class = "control-label", @for = "asset_manufacturer" })
-                <div class="controls">
-                    @Html.TextBoxFor(mm => mm.Manufacturer, new { @id = "asset_manufacturer", @class = "span5" })
-                </div>
-            </div>
-            
-            <div class="control-group">
-                @Html.LabelFor(mm => mm.Description, new { @class = "control-label", @for = "asset_description" })
-                <div class="controls">
-                    @Html.TextAreaFor(mm => mm.Description, new { @id = "asset_description", @class = "span5" })
-                </div>
-            </div>
-            
-            <div class="control-group">
-                @Html.LabelFor(mm => mm.Cost, new { @class = "control-label", @for = "asset_cost" })
-                <div class="controls">
-                    @Html.TextBoxFor(mm => mm.Cost, new { @id = "asset_cost", @class = "span2" })
-                </div>
-            </div>
-            
-            <div class="control-group">
-                @Html.LabelFor(mm => mm.Markup, new { @class = "control-label", @for = "asset_markup" })
-                <div class="controls">
-                    @Html.TextBoxFor(mm => mm.Markup, new { @id = "asset_markup", @class = "span1" })
-                </div>
-            </div>
-            
-            <div class="control-group">
-                @Html.LabelFor(mm => mm.Price, new { @class = "control-label", @for = "asset_price" })
-                <div class="controls">
-                    @Html.TextBoxFor(mm => mm.Price, new { @id = "asset_price", @class = "span2" })
-                </div>
-            </div>
-
-            <div class="control-group">
-                @Html.LabelFor(mm => mm.AssetImages, new { @class = "control-label", @for = "asset_images" })
-                <div class="controls"></div>
-            </div>
-            
-            <div class="control-group buttons-container">
-                <div class="controls">
-                    <button type="submit" class="btn btn-primary">Create Asset</button>
-                    <a class="cancel" href="/">Cancel</a>
-                </div>
-            </div>
-        }
-
-        <div class="sidebar span4">
-            <a href="https://confluence.atlassian.com/display/BITBUCKET/bitbucket+101" class="help-link doc-101" target="_blank">
-                <strong>New to QuoteFlow?</strong>
-                Learn the basics of using Git and Mercurial by exploring the Bitbucket 101.
-            </a>
-            <a href="/account/create-team/" class="help-link team-pitch">
-                <strong>Working in a team?</strong>
-                Create a team account to consolidate your repos and organize your team's work
-            </a>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "text" })
+            <div class="error">@Html.ValidationMessageFor(m => m.Name)</div>
         </div>
-    </section>
-</div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "textarea long-field" })
+        </div>
+    </fieldset>
 
-<!-- The template to display files available for upload -->
-<script id="template-upload" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload fade">
-        <td class="preview"><span class="fade"></span></td>
-        <td class="name"><span>{%=file.name%}</span></td>
-        <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-        {% if (file.error) { %}
-            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-        {% } else if (o.files.valid && !i) { %}
-            <td>
-                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
-            </td>
-            <td class="start">{% if (!o.options.autoUpload) { %}
-                <button class="btn btn-primary">
-                    <i class="icon-upload icon-white"></i>
-                    <span>Start</span>
-                </button>
-            {% } %}</td>
-        {% } else { %}
-            <td colspan="2"></td>
-        {% } %}
-        <td class="cancel">{% if (!i) { %}
-            <button class="btn btn-warning">
-                <i class="icon-ban-circle icon-white"></i>
-                <span>Cancel</span>
-            </button>
-        {% } %}</td>
-    </tr>
-{% } %}
-</script>
+    <div class="buttons-container">
+        <div class="buttons">
+            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Create catalog">
+            <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="#">Cancel</a>
+        </div>
+    </div>
+}
 
-
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download fade">
-        {% if (file.error) { %}
-            <td></td>
-            <td class="name"><span>{%=file.name%}</span></td>
-            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-        {% } else { %}
-            <td class="preview"> 
-                <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
-            </td>
-            <td class="name">
-                <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
-            </td>
-            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-            <td colspan="2"></td>
-        {% } %}
-        <td class="delete">
-            <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                <i class="icon-trash icon-white"></i>
-                <span>Delete</span>
-            </button>
-            <input type="checkbox" name="delete" value="1">
-        </td>
-    </tr>
-{% } %}
+<script>
+    AJS.$(document).ready(function () {
+        AJS.$('#catalog_expiration_date').datePicker({ 'overrideBrowserDefault': true });
+    });
 </script>

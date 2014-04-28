@@ -17,19 +17,18 @@ namespace QuoteFlow.Infrastructure.Extensions
         {
             Debug.Assert(typeof(TEnum).IsEnum, "Expected an Enum Type!");
 
-            ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, self.ViewData);
-
-            IEnumerable<SelectListItem> items = new[] {
-                new SelectListItem() { Text = emptyItemText, Value = "" },
+            var metadata = ModelMetadata.FromLambdaExpression(expression, self.ViewData);
+            var items = new[] { 
+                new SelectListItem { Text = emptyItemText, Value = "" },
             }.Concat(
-                values.Select(value => new SelectListItem()
+                values.Select(value => new SelectListItem
                 {
                     Text = EnumHelpers.GetDescription(value),
                     Value = value.ToString(),
                     Selected = value.Equals(metadata.Model)
                 }));
 
-            return self.DropDownListFor(expression, items);
+            return self.DropDownListFor(expression, items, new { @class = "select" });
         }
 
         public static IHtmlString PreFormattedText(this HtmlHelper self, string text)
