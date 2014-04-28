@@ -50,45 +50,9 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                        <ul id="opsbar-opsbar-operations" class="toolbar-group pluggable-ops">
-                                            <li class="toolbar-item"><a id="greenhopper-rapidboard-operation" title="View this issue on an Agile board" class="toolbar-trigger issueaction-greenhopper-rapidboard-operation js-rapidboard-operation-issue" href="/secure/GHGoToBoard.jspa?issueId=330257"><span class="trigger-label">Agile Board</span></a></li>
-                                            <li class="toolbar-item toolbar-dropdown">
-                                                <div>
-                                                    <a href="#" id="opsbar-operations_more" data-hide-on-scroll=".split-view .issue-container" data-contain-to-window="true" class="toolbar-trigger  js-default-dropdown"><span class="dropdown-text">More</span><span class="icon drop-menu"></span></a><div class="ajs-layer-placeholder">
-                                                        <div class="ajs-layer box-shadow" id="opsbar-operations_more_drop" style="width: 200px; position: absolute; left: 529px; top: 298px; max-height: 705px; display: none;">
-                                                            <div class="aui-list">
-                                                                <ul class="aui-list-section aui-first"><li class="aui-list-item"><a href="/secure/AttachFile!default.jspa?id=330257" class="aui-list-item-link issueaction-attach-file" title="Attach one or more files to this issue" id="attach-file"><span class="trigger-label">Attach Files</span></a></li><li class="aui-list-item"><a href="/secure/ShowAttachScreenshotFormAction!default.jspa?id=330257" class="aui-list-item-link issueaction-attach-image" id="attach-screenshot-html5"><span class="trigger-label">Attach Screenshot</span></a></li></ul><ul class="aui-list-section"><li class="aui-list-item"><a href="/secure/VoteOrWatchIssue.jspa?atl_token=AKVY-YUFR-9LM7-97AB|d1897833c12317b22e8091681f2a4561d281018a|lin&amp;id=330257&amp;vote=vote" class="aui-list-item-link toggle-vote-issue issueaction-vote-issue" title="Vote for this issue" id="toggle-vote-issue"><span class="trigger-label">Add Vote</span></a></li><li class="aui-list-item"><a href="/secure/VoteOrWatchIssue.jspa?atl_token=AKVY-YUFR-9LM7-97AB|d1897833c12317b22e8091681f2a4561d281018a|lin&amp;id=330257&amp;watch=watch" class="aui-list-item-link issueaction-watch-issue" title="Start watching this issue" id="toggle-watch-issue"><span class="trigger-label">Watch Issue</span></a></li></ul><ul class="aui-list-section"><li class="aui-list-item"><a href="/secure/CreateSubTaskIssue!default.jspa?parentIssueId=330257" class="aui-list-item-link issueaction-create-subtask" title="Create sub-task for this issue" id="create-subtask"><span class="trigger-label">Create Sub-Task</span></a></li></ul><ul class="aui-list-section aui-last">
-                                                                    <li class="aui-list-item"><a href="/secure/CloneIssueDetails!default.jspa?id=330257" class="aui-list-item-link issueaction-clone-issue" title="Clone this issue" id="clone-issue"><span class="trigger-label">Clone</span></a></li>
-                                                                    <li class="aui-list-item">
-                                                                        <a href="/secure/SelectTargetProject!default.jspa?id=330257" class="aui-list-item-link issueaction-clone-issue-ric" title="Remote Copy" id="clone-issue-ric">
-                                                                            <span class="trigger-label">Remote Copy</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
                                     </div>
                                     <div class="toolbar-split toolbar-split-right">
-                                        <ul id="opsbar-jira.issue.tools" class="toolbar-group pluggable-ops">
-                                            <li class="toolbar-item toolbar-dropdown">
-                                                <div>
-                                                    <a href="#" id="viewissue-export" data-hide-on-scroll=".split-view .issue-container" data-contain-to-window="true" class="toolbar-trigger  js-default-dropdown" original-title="Export this issue in another format">
-                                                        <span class="icon icon-export viewissue-export"></span> <span class="dropdown-text">Export</span><span class="icon drop-menu"></span>
-                                                    </a>
-                                                    <div class="aui-list hidden">
-                                                        <ul class="aui-list-section aui-first aui-last">
-                                                            <li class="aui-list-item"><a href="/si/jira.issueviews:issue-xml/STASH-4640/STASH-4640.xml" class="aui-list-item-link" id="jira.issueviews:issue-xml"><span class="trigger-label">XML</span></a></li>
-                                                            <li class="aui-list-item"><a href="/si/jira.issueviews:issue-word/STASH-4640/STASH-4640.doc" class="aui-list-item-link" id="jira.issueviews:issue-word"><span class="trigger-label">Word</span></a></li>
-                                                            <li class="aui-list-item"><a href="/si/jira.issueviews:issue-html/STASH-4640/STASH-4640.html" class="aui-list-item-link" id="jira.issueviews:issue-html"><span class="trigger-label">Printable</span></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                        <button class="aui-button aui-button-primary">Add to quote</button>
                                     </div>
                                 </div>
                             </div>
@@ -100,11 +64,11 @@
                 <div class="aui-group asset-body">
                     <div class="aui-item issue-main-column">
                         <div id="details-module" class="module toggle-wrap">
-                            <div id="details-module_heading" class="mod-header">
+                            <div id="details-module_heading" class="module-header">
                                 <ul class="ops"></ul>
                                 <h2 class="toggle-title">Details</h2>
                             </div>
-                            <div class="mod-content">
+                            <div class="module-content">
 
                                 <ul id="issuedetails" class="property-list two-cols">
                                     <li class="item">
@@ -179,11 +143,11 @@
                             </div>
                         </div>
                         <div id="descriptionmodule" class="module toggle-wrap">
-                            <div id="descriptionmodule_heading" class="mod-header">
+                            <div id="descriptionmodule_heading" class="module-header">
                                 <ul class="ops"></ul>
                                 <h2 class="toggle-title">Description</h2>
                             </div>
-                            <div class="mod-content">
+                            <div class="module-content">
                                 <div id="description-val" class="field-ignore-highlight">
                                     <div class="user-content-block">
                                         <p>Refreshing the same page will show "There are too many files in this directory. Only showing the first 2,500." and 2500 items are listed.</p>
@@ -192,11 +156,11 @@
                             </div>
                         </div>
                         <div id="activitymodule" class="module toggle-wrap">
-                            <div id="activitymodule_heading" class="mod-header">
+                            <div id="activitymodule_heading" class="module-header">
                                 <ul class="ops"></ul>
                                 <h2 class="toggle-title">Activity</h2>
                             </div>
-                            <div class="mod-content">
+                            <div class="module-content">
 
                                 <div class="tabwrap tabs2">
                                     <ul id="issue-tabs" class="tabs horizontal">
@@ -233,7 +197,7 @@
                             </div>
                         </div><div id="addcomment" class="module">
                             <div id="addcomment" class="module">
-                                <div class="mod-content">
+                                <div class="module-content">
                                     <form action="/secure/AddComment.jspa?atl_token=AKVY-YUFR-9LM7-97AB%7Cd1897833c12317b22e8091681f2a4561d281018a%7Clin" class="aui top-label ajs-dirty-warning-exempt" id="issue-comment-add" method="post">
                                         <div class="form-body">
                                             <div class="hidden">
@@ -299,12 +263,15 @@
 
                         </div>
                     </div>
-                    <div id="viewissuesidebar" class="aui-item issue-side-column">
+                    <div id="asset_sidebar" class="aui-item asset-side-column">
                         <div id="peoplemodule" class="module toggle-wrap">
-                            <div id="peoplemodule_heading" class="mod-header"><ul class="ops"></ul><h2 class="toggle-title">People</h2></div><div class="mod-content">
+                            <div id="peoplemodule_heading" class="module-header">
+                                <ul class="ops"></ul>
+                                <h2 class="toggle-title">People</h2>
+                            </div>
+                            <div class="module-content">
                                 <ul class="item-details" id="peopledetails">
                                     <li class="people-details">
-
                                         <dl>
                                             <dt>Reporter:</dt>
                                             <dd>
