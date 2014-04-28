@@ -642,6 +642,9 @@
     <Content Include="Views\Shared\Partials\Quote\ListItem.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\New\Step1.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\New\Step2.cshtml" />
+    <Content Include="Views\Shared\_CatalogAssetsLayout.cshtml" />
+    <Content Include="Views\Shared\Partials\Asset\AssetNavigator.cshtml" />
+    <Content Include="Views\Shared\Partials\Asset\AssetDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
