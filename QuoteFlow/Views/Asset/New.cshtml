@@ -6,7 +6,7 @@
     Layout = "../Shared/_FocusedLayout.cshtml";
 }
 
-<h2>Create a new catalog</h2>
+<h2>Create a new asset</h2>
 @using (Html.BeginForm("CreateAsset", "Asset", FormMethod.Post, new { @class = "aui" }))
 {
     @Html.AntiForgeryToken()
@@ -14,6 +14,10 @@
     <fieldset>
         <div class="field-group">
             @Html.LabelFor(m => m.CatalogId)
+
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.AssetType)
             @Html.EnumDropDownListFor(m => m.AssetType, Model.AssetTypeChoices, "Choose an asset type")
             @Html.ValidationMessageFor(m => m.AssetType)
         </div>
@@ -30,7 +34,7 @@
 
     <div class="buttons-container">
         <div class="buttons">
-            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Create catalog">
+            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Create">
             <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="#">Cancel</a>
         </div>
     </div>
