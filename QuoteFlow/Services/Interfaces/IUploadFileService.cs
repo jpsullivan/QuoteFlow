@@ -5,10 +5,10 @@ namespace QuoteFlow.Services.Interfaces
 {
     public interface IUploadFileService
     {
-        Task DeleteUploadFileAsync(int userKey);
+        Task DeleteUploadFileAsync(int userId);
 
-        Task<Stream> GetUploadFileAsync(int userKey);
+        Task<Stream> GetUploadFileAsync(int userId);
 
-        Task SaveUploadFileAsync(int userKey, Stream packageFileStream);
+        Task SaveUploadFileAsync(int userId, Stream fileStream, string fileExtension);
     }
 }

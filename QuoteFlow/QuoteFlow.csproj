@@ -63,6 +63,9 @@
     <Reference Include="ClearScript">
       <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.1.3\lib\net40\ClearScript.dll</HintPath>
     </Reference>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.5.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.13\lib\net45\Dapper.dll</HintPath>
     </Reference>
@@ -305,6 +308,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadExtensions.cs" />
+    <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadModule.cs" />
+    <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadProgress.cs" />
+    <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadRequestParser.cs" />
     <Compile Include="Infrastructure\Attributes\HintAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\LayoutInjectorAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\ReadOnlyModeErrorFilter.cs" />
@@ -347,6 +354,7 @@
     <Compile Include="Models\Credential.cs" />
     <Compile Include="Models\EmailMessage.cs" />
     <Compile Include="Models\Manufacturer.cs" />
+    <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
     <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
@@ -368,6 +376,7 @@
     <Compile Include="Models\ViewModels\SubHeader.cs" />
     <Compile Include="Models\ViewModels\SubHeaderViewData.cs" />
     <Compile Include="Models\ViewModels\UserProfileModel.cs" />
+    <Compile Include="Models\ViewModels\VerifyCatalogImportViewModel.cs" />
     <Compile Include="Models\_Database.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -539,6 +548,9 @@
     <Content Include="Content\less\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
     </Content>
+    <Content Include="Content\less\focused.css">
+      <DependentUpon>focused.less</DependentUpon>
+    </Content>
     <Content Include="Content\less\footer.css">
       <DependentUpon>footer.less</DependentUpon>
     </Content>
@@ -559,6 +571,7 @@
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\async-file-upload.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\less\bootstrap.less" />
@@ -588,6 +601,10 @@
     <Content Include="Content\less\lists.less" />
     <Content Include="Content\less\lists.css.map">
       <DependentUpon>lists.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\focused.less" />
+    <Content Include="Content\less\focused.css.map">
+      <DependentUpon>focused.css</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -653,9 +670,11 @@
     <Content Include="Views\Shared\_CatalogAssetsLayout.cshtml" />
     <Content Include="Views\Shared\Partials\Asset\AssetNavigator.cshtml" />
     <Content Include="Views\Shared\Partials\Asset\AssetDetails.cshtml" />
+    <Content Include="Views\Catalog\Import.cshtml" />
+    <Content Include="Views\Catalog\VerifyImport.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Files\" />
     <Folder Include="Content\fonts\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,9 @@
-﻿#footer .qf-footer-body {
+﻿.aui-page-focused .secondary-link {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+#footer .qf-footer-body {
   color: #707070;
   font-size: 12px;
   margin: 20px 0;

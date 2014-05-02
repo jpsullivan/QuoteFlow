@@ -1,11 +1,15 @@
-﻿@{ ViewBag.Title = "QuoteFlow - New Catalog"; }
+﻿@using QuoteFlow.Infrastructure.Extensions
 @model QuoteFlow.Models.ViewModels.NewCatalogModel
            
 @{
     Layout = "../Shared/_FocusedLayout.cshtml";
+    ViewBag.Title = "QuoteFlow - New Catalog";
 }
            
 <h2>Create a new catalog</h2>
+<span class="secondary-link">
+    You can also <a href="@Url.ImportCatalog()">import a catalog</a>
+</span>
 @using (Html.BeginForm("CreateCatalog", "Catalog", FormMethod.Post, new {@class = "aui"})) 
 {
     @Html.AntiForgeryToken()

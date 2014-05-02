@@ -56,6 +56,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return string.Format("/catalog/{0}/{1}/versions", catalogId, catalogName);
         }
 
+        public static string ImportCatalog(this UrlHelper url)
+        {
+            return url.Action("Import", "Catalog");
+        }
+
         #endregion
 
         public static string ConfirmationUrl(this UrlHelper url, string action, string controller, string username, string token)

@@ -197,6 +197,14 @@ namespace QuoteFlow.Services.Interfaces
         IEnumerable<Catalog> GetCatalogs(int userId);
 
         /// <summary>
+        /// Fetches all of the catalogs that a user has access to
+        /// based on their organization access.
+        /// </summary>
+        /// <param name="user">The <see cref="User"/> to get catalogs for.</param>
+        /// <returns></returns>
+        IEnumerable<Catalog> GetCatalogs(User user);
+            
+        /// <summary>
         /// Fetches all of the organizations that a specific <see cref="User"/>
         /// is a member of.
         /// </summary>

@@ -253,4 +253,10 @@ The {2} Team</value>
   <data name="UserNotFound" xml:space="preserve">
     <value>A user with the provided user name does not exist.</value>
   </data>
+  <data name="CatalogImportFileRequired" xml:space="preserve">
+    <value>A pricing catalog is required to perform an import.</value>
+  </data>
+  <data name="FailedToReadUploadFile" xml:space="preserve">
+    <value>Failed to read the uploaded file.</value>
+  </data>
 </root>

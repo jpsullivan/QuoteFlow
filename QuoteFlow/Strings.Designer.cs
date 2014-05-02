@@ -88,6 +88,15 @@ namespace QuoteFlow {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A pricing catalog is required to perform an import..
+        /// </summary>
+        internal static string CatalogImportFileRequired {
+            get {
+                return ResourceManager.GetString("CatalogImportFileRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to write audit record: &apos;{0}&apos;. Record already exists..
         /// </summary>
         internal static string CloudAuditingService_DuplicateAuditRecord {
@@ -271,6 +280,15 @@ namespace QuoteFlow {
         internal static string ExternalAccountLinkExpired {
             get {
                 return ResourceManager.GetString("ExternalAccountLinkExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to read the uploaded file..
+        /// </summary>
+        internal static string FailedToReadUploadFile {
+            get {
+                return ResourceManager.GetString("FailedToReadUploadFile", resourceCulture);
             }
         }
         

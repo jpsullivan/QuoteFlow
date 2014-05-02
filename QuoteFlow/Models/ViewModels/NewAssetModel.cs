@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace QuoteFlow.Models.ViewModels
 {
@@ -8,7 +9,8 @@ namespace QuoteFlow.Models.ViewModels
         [Required]
         [Display(Name = "Catalog")]
         public int CatalogId { get; set; }
-
+        public IEnumerable<SelectListItem> Catalogs { get; set; }
+            
         [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }

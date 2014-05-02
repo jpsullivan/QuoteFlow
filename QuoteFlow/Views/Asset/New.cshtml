@@ -1,9 +1,9 @@
-﻿@{ ViewBag.Title = "QuoteFlow - New Asset"; }
-@using QuoteFlow.Infrastructure.Extensions
+﻿@using QuoteFlow.Infrastructure.Extensions
 @model QuoteFlow.Models.ViewModels.NewAssetModel
            
 @{
     Layout = "../Shared/_FocusedLayout.cshtml";
+    ViewBag.Title = "QuoteFlow - New Asset";
 }
 
 <h2>Create a new asset</h2>
@@ -14,7 +14,7 @@
     <fieldset>
         <div class="field-group">
             @Html.LabelFor(m => m.CatalogId)
-
+            @Html.DropDownListFor(m => m.CatalogId, Model.Catalogs, new { @class = "select" })
         </div>
         <div class="field-group">
             @Html.LabelFor(m => m.AssetType)

@@ -16,5 +16,9 @@ namespace QuoteFlow.Models
 
         public User Creator { get; set; }
 
+        /// <summary>
+        /// The total number of assets that are assigned to this catalog.
+        /// </summary>
+        public int TotalAssets { get; set; }
     }
 }

@@ -505,6 +505,21 @@ namespace QuoteFlow.Services
         }
 
         /// <summary>
+        /// Fetches all of the catalogs that a user has access to
+        /// based on their organization access.
+        /// </summary>
+        /// <param name="user">The <see cref="User"/> to get catalogs for.</param>
+        /// <returns></returns>
+        public IEnumerable<Catalog> GetCatalogs(User user)
+        {
+            if (user == null) {
+                throw new ArgumentException("User cannot be null");
+            }
+
+            return CatalogService.GetCatalogsWithinOrganizations(user.Organizations);
+        }
+
+        /// <summary>
         /// Confirms the users' email address.
         /// </summary>
         /// <param name="user"></param>

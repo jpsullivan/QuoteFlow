@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models;
@@ -53,7 +54,15 @@ namespace QuoteFlow.Controllers
         [Route("asset/new")]
         public ActionResult New()
         {
-            var model = new NewAssetModel {AssetTypeChoices = AssetTypeChoices};
+            var currentUser = GetCurrentUser();
+            var catalogs = UserService.GetCatalogs(currentUser);
+
+            var model = new NewAssetModel
+            {
+                AssetTypeChoices = AssetTypeChoices,
+                Catalogs = catalogs.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).OrderBy(s => s.Text)
+            };
+
             return View(model);
         }
 

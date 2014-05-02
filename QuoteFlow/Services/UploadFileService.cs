@@ -15,54 +15,64 @@ namespace QuoteFlow.Services
             _fileStorageService = fileStorageService;
         }
 
-        public Task DeleteUploadFileAsync(int userKey)
+        public Task DeleteUploadFileAsync(int userId)
         {
-            if (userKey < 1)
+            if (userId < 1)
             {
-                throw new ArgumentException("A user key is required.", "userKey");
+                throw new ArgumentException("A user id is required.", "userId");
             }
 
-            var uploadFileName = BuildFileName(userKey);
+            var uploadFileName = BuildFileName(userId);
 
             return _fileStorageService.DeleteFileAsync(Constants.UploadsFolderName, uploadFileName);
         }
 
-        public Task<Stream> GetUploadFileAsync(int userKey)
+        public Task<Stream> GetUploadFileAsync(int userId)
         {
-            if (userKey < 1)
+            if (userId < 1)
             {
-                throw new ArgumentException("A user key is required.", "userKey");
+                throw new ArgumentException("A user id is required.", "userId");
             }
 
             // Use the trick of a private core method that actually does the async stuff to allow for sync arg contract checking
-            return GetUploadFileAsyncCore(userKey);
+            return GetUploadFileAsyncCore(userId);
         }
 
-        public Task SaveUploadFileAsync(int userKey, Stream packageFileStream)
+        public Task SaveUploadFileAsync(int userId, Stream fileStream, string fileExtension)
         {
-            if (userKey < 1)
+            if (userId < 1)
             {
-                throw new ArgumentException("A user key is required.", "userKey");
+                throw new ArgumentException("A user id is required.", "userId");
             }
 
-            if (packageFileStream == null)
+            if (fileStream == null)
             {
-                throw new ArgumentNullException("packageFileStream");
+                throw new ArgumentNullException("fileStream");
             }
 
-            var uploadFileName = BuildFileName(userKey);
-            return _fileStorageService.SaveFileAsync(Constants.UploadsFolderName, uploadFileName, packageFileStream);
+            if (fileExtension == null) 
+            {
+                throw new ArgumentNullException("fileExtension");
+            }
+
+            var uploadFileName = BuildFileName(userId, fileExtension);
+            return _fileStorageService.SaveFileAsync(Constants.UploadsFolderName, uploadFileName, fileStream);
         }
 
-        private static string BuildFileName(int userKey)
+        private static string BuildFileName(int userId, string extension = null)
         {
-            return String.Format(CultureInfo.InvariantCulture, Constants.UploadFileNameTemplate, userKey, ".zip");
+            if (extension == null) 
+            {
+                extension = ".csv";
+            }
+
+            return String.Format(CultureInfo.InvariantCulture, Constants.UploadFileNameTemplate, userId, extension);
         }
 
         // Use the trick of a private core method that actually does the async stuff to allow for sync arg contract checking
-        private async Task<Stream> GetUploadFileAsyncCore(int userKey)
+        private async Task<Stream> GetUploadFileAsyncCore(int userId)
         {
-            var uploadFileName = BuildFileName(userKey);
+            var uploadFileName = BuildFileName(userId);
             return await _fileStorageService.GetFileAsync(Constants.UploadsFolderName, uploadFileName);
         }
     }

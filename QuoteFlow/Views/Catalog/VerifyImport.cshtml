@@ -1,0 +1,11 @@
+﻿@model QuoteFlow.Models.ViewModels.VerifyCatalogImportViewModel
+
+@{
+    Layout = "../Shared/_FocusedLayout.cshtml";
+    ViewBag.Title = "QuoteFlow - Import Catalog";
+}
+
+
+<h3>Verify bitch</h3>
+
+@Html.DropDownListFor(m => m.PriceHeader, Model.Headers, new { @class = "select" })
