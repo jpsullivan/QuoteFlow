@@ -213,10 +213,8 @@ namespace QuoteFlow.Controllers
         {
             var currentUser = GetCurrentUser();
 
-            CsvReader csvReader;
             var headers = new List<SelectListItem>();
             string[] rawHeaders = {};
-            string[] row;
             var rows = new List<string[]>();
 
             using (Stream uploadFile = await UploadFileService.GetUploadFileAsync(currentUser.Id))
@@ -229,13 +227,13 @@ namespace QuoteFlow.Controllers
                 try
                 {
                     var sr = new StreamReader(uploadFile);
-                    csvReader = new CsvReader(sr);
+                    var csvReader = new CsvReader(sr);
                     csvReader.Configuration.HasHeaderRecord = true;
 
                     while (csvReader.Read()) {
                         rawHeaders = csvReader.FieldHeaders;
 
-                        row = new string[rawHeaders.Count()];
+                        var row = new string[rawHeaders.Count()];
                         for (int i = 0; i < rawHeaders.Count() - 1; i++)
                         {
                             row[i] = csvReader.GetField(i);
@@ -252,36 +250,16 @@ namespace QuoteFlow.Controllers
             // pretty up the headers into a convenient dropdown list
             for (int i = 0; i < rawHeaders.Count(); i++)
             {
-                headers.Add(new SelectListItem() { Text = rawHeaders[i]});
+                headers.Add(new SelectListItem { Value = i.ToString(), Text = rawHeaders[i]});
             }
 
             var model = new VerifyCatalogImportViewModel
             {
                 Headers = headers, 
-                Rows = rows.Take(100)
+                Rows = rows.Take(100),
+                TotalRows = rows.Count()
             };
 
-//            var model = new VerifyPackageRequest
-//            {
-//                Id = packageMetadata.Id,
-//                Version = packageMetadata.Version.ToNormalizedStringSafe(),
-//                LicenseUrl = packageMetadata.LicenseUrl.ToEncodedUrlStringOrNull(),
-//                Listed = true,
-//                Edit = new EditPackageVersionRequest
-//                {
-//                    Authors = packageMetadata.Authors.Flatten(),
-//                    Copyright = packageMetadata.Copyright,
-//                    Description = packageMetadata.Description,
-//                    IconUrl = packageMetadata.IconUrl.ToEncodedUrlStringOrNull(),
-//                    LicenseUrl = packageMetadata.LicenseUrl.ToEncodedUrlStringOrNull(),
-//                    ProjectUrl = packageMetadata.ProjectUrl.ToEncodedUrlStringOrNull(),
-//                    ReleaseNotes = packageMetadata.ReleaseNotes,
-//                    RequiresLicenseAcceptance = packageMetadata.RequireLicenseAcceptance,
-//                    Summary = packageMetadata.Summary,
-//                    Tags = PackageHelper.ParseTags(packageMetadata.Tags),
-//                    VersionTitle = packageMetadata.Title,
-//                }
-//            };
             return View(model);
         }
 

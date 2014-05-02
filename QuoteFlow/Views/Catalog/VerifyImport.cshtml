@@ -1,11 +1,52 @@
 ﻿@model QuoteFlow.Models.ViewModels.VerifyCatalogImportViewModel
 
 @{
-    Layout = "../Shared/_FocusedLayout.cshtml";
+    Layout = "../Shared/_FocusedLayoutLarge.cshtml";
     ViewBag.Title = "QuoteFlow - Import Catalog";
 }
 
+<h2>Set Catalog Manifest Fields</h2>
+@using (Html.BeginForm("VerifyImport", "Catalog", FormMethod.Post, new { id = "request_form", enctype = "multipart/form-data", @class = "aui" }))
+{
+    @Html.AntiForgeryToken()
 
-<h3>Verify bitch</h3>
+    <fieldset>
+        <div class="field-group">
+            @Html.LabelFor(m => m.AssetNameHeaderId)
+            @Html.DropDownListFor(m => m.AssetNameHeaderId, Model.Headers, new { @class = "select long-field" })
+            <span class="aui-icon aui-icon-small aui-iconfont-devtools-task-in-progress" title="View a preview of some sample records using this column assignment."></span>
+            <div class="description">The field used to populate the <span class="aui-lozenge aui-lozenge-code">Name</span> column.</div>
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.ManufacturerHeaderId)
+            @Html.DropDownListFor(m => m.ManufacturerHeaderId, Model.Headers, new { @class = "select long-field" })
+            <span class="aui-icon aui-icon-small aui-iconfont-devtools-task-in-progress" title="View a preview of some sample records using this column assignment."></span>
+            <div class="description">The field used to populate the <span class="aui-lozenge aui-lozenge-code">Manufacturer</span> column.</div>
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.DescriptionHeaderId)
+            @Html.DropDownListFor(m => m.DescriptionHeaderId, Model.Headers, new { @class = "select long-field" })
+            <span class="aui-icon aui-icon-small aui-iconfont-devtools-task-in-progress" title="View a preview of some sample records using this column assignment."></span>
+            <div class="description">The field used to populate the <span class="aui-lozenge aui-lozenge-code">Description</span> column.</div>
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.CostHeaderId)
+            @Html.DropDownListFor(m => m.CostHeaderId, Model.Headers, new { @class = "select long-field" })
+            <span class="aui-icon aui-icon-small aui-iconfont-devtools-task-in-progress" title="View a preview of some sample records using this column assignment."></span>
+            <div class="description">The field used to populate the <span class="aui-lozenge aui-lozenge-code">Cost</span> column.</div>
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.MarkupHeaderId)
+            @Html.DropDownListFor(m => m.MarkupHeaderId, Model.Headers, new { @class = "select long-field" })
+            <span class="aui-icon aui-icon-small aui-iconfont-devtools-task-in-progress" title="View a preview of some sample records using this column assignment."></span>
+            <div class="description">The field used to populate the <span class="aui-lozenge aui-lozenge-code">Markup</span> column.</div>
+        </div>
+    </fieldset>
 
-@Html.DropDownListFor(m => m.PriceHeader, Model.Headers, new { @class = "select" })
+    <div class="buttons-container">
+        <div class="buttons">
+            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Set catalog fields">
+            <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="#">Cancel</a>
+        </div>
+    </div>
+}
