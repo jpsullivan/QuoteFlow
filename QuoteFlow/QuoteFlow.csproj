@@ -343,6 +343,7 @@
     <Compile Include="Infrastructure\HttpStatusCodeWithBodyResult.cs" />
     <Compile Include="Infrastructure\IoC\NinjectDependencyResolver.cs" />
     <Compile Include="Infrastructure\IoC\NinjectWebApiDependencyResolver.cs" />
+    <Compile Include="Infrastructure\Optimization\Bundler.cs" />
     <Compile Include="Infrastructure\QuoteFlowControllerFactory.cs" />
     <Compile Include="Infrastructure\RouteName.cs" />
     <Compile Include="Infrastructure\SafeRedirectResult.cs" />
@@ -515,6 +516,7 @@
     <Content Include="Content\js\app\helpers\application_helpers.js" />
     <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\ui\catalog\import_set_fields.js" />
+    <Content Include="Content\js\app\ui\common\panel-table.js" />
     <Content Include="Content\js\app\views.js" />
     <Content Include="Content\js\lib\aui\aui-all.js" />
     <Content Include="Content\js\lib\aui\aui-dependencies.js" />
@@ -552,7 +554,6 @@
     <Content Include="Content\less\typography.css">
       <DependentUpon>typography.less</DependentUpon>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\async-file-upload.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -594,6 +595,7 @@
       <DependentUpon>typography.css</DependentUpon>
     </Content>
     <Content Include="Content\js\lib\underscore.min.js" />
+    <Content Include="Content\views\common\panel-table.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -664,6 +666,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
+    <Folder Include="Content\compiled\" />
     <Folder Include="Content\fonts\" />
     <Folder Include="Content\js\ui\" />
   </ItemGroup>
@@ -679,9 +682,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\PageNotFound.cshtml" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -726,6 +726,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>SET mypath=%25~dp0
+echo %25mypath:~0,-1%25
+cd $(SolutionDir)QuoteFlow.Bundler
+gulp.cmd
+</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

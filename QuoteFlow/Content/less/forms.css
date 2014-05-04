@@ -11,4 +11,18 @@
 #login_form .sign-up {
   margin-top: 20px;
 }
+form.aui .panel {
+  border: 1px solid #cccccc;
+  border-radius: 3px 3px 3px 3px;
+  margin: 9px 0;
+}
+form.aui .panel .panel-content {
+  padding: 9px 12px;
+}
+form.aui .panel .panel-content pre {
+  white-space: pre;
+  -ms-word-break: normal;
+  word-break: normal;
+  max-height: 30em;
+}
 /*# sourceMappingURL=forms.css.map */

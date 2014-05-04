@@ -12,7 +12,8 @@ var QuoteFlow = {
     Pages: {},
     Routers: {},
     UI: {
-       Catalog: {}
+        Catalog: {},
+        Common: {}
     },
     Utilities: {},
     Vent: _.extend({}, Backbone.Events),

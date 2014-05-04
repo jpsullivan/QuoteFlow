@@ -1,0 +1,18 @@
+﻿<div class="panelContent">
+    <table class="aui aui-table-interactive">
+        <thead>
+            <tr>
+                <th>{{ leftHeader }}</th>
+                <th>{{ rightHeader }} </th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each bodyRows}}
+            <tr>
+                <td>{{ rowKey }}</td>
+                <td>{{ rowData }}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

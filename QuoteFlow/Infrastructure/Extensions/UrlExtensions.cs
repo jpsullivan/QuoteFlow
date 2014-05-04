@@ -135,14 +135,9 @@ namespace QuoteFlow.Infrastructure.Extensions
             return builder;
         }
 
-        internal static string EnsureTrailingSlash(string url)
+        public static string EnsureTrailingSlash(this string urlPart)
         {
-            if (url != null && !url.EndsWith("/", StringComparison.OrdinalIgnoreCase))
-            {
-                return url + '/';
-            }
-
-            return url;
+            return !urlPart.EndsWith("/", StringComparison.Ordinal) ? urlPart + '/' : urlPart;
         }
     }
 }
