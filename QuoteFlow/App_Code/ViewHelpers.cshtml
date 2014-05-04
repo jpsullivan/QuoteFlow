@@ -1,0 +1,5 @@
+﻿@using System.Web.Script.Serialization
+@helper JsEncode(object obj)
+{
+    @(new HtmlString(new JavaScriptSerializer().Serialize(obj)));
+}

@@ -27,10 +27,29 @@ namespace QuoteFlow
             // Lib JS
             Bundle libJs = new Bundle("~/bundles/js_lib").Include(
                 "~/Scripts/jquery-{version}.js",
+                "~/Content/js/lib/json2.min.js",
+                "~/Content/js/lib/handlebars.min.js",
+                "~/Content/js/lib/underscore.min.js",
+                "~/Content/js/lib/backbone.min.js",
                 "~/Content/js/lib/aui/aui-all.js");
             libJs.Transforms.Add(jsTransformer);
             libJs.Orderer = nullOrderer;
             bundles.Add(libJs);
+
+            // App JS
+            Bundle appJs = new Bundle("~/bundles/js_app").Include(
+                "~/Content/js/app/application.js",
+                "~/Content/js/app/views.js");
+            appJs.IncludeDirectory("~/Content/js/app/components", "*.js", true);
+            appJs.IncludeDirectory("~/Content/js/app/ui", "*.js", true);
+            appJs.IncludeDirectory("~/Content/js/app/helpers", "*.js", true);
+            bundles.Add(appJs);
+
+#if (DEBUG)
+            BundleTable.EnableOptimizations = false;
+#else
+            BundleTable.EnableOptimizations = true;
+#endif
         }
     }
 }

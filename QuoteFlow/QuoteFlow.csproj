@@ -449,6 +449,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="App_Code\ViewHelpers.cshtml" />
     <None Include="ClearScript.V8\ClearScriptV8-32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -510,6 +511,9 @@
     <Content Include="Content\css\lib\aui\wait.gif" />
     <Content Include="Content\images\quoteflow_logo.png" />
     <Content Include="Content\js\app\application.js" />
+    <Content Include="Content\js\app\components\utilities.js" />
+    <Content Include="Content\js\app\helpers\application_helpers.js" />
+    <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\ui\catalog\import_set_fields.js" />
     <Content Include="Content\js\app\views.js" />
     <Content Include="Content\js\lib\aui\aui-all.js" />

@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using QuoteFlow.Infrastructure.Extensions
+﻿@using QuoteFlow.Infrastructure.Extensions
 @model QuoteFlow.Models.ViewModels.CatalogShowAssetsModel
 <!DOCTYPE html>
 <html>
@@ -11,10 +10,6 @@
     <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui-all.css")" media="all">
     <!--[if lt IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie.css")" media="all"><![endif]-->
     <!--[if IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie9.css")" media="all"><![endif]-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
-    <script src="@Url.Content("~/Content/js/lib/aui/aui-all.js")"></script>
-    <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->
     @Styles.Render("~/bundles/css_app")
 </head>
 <body class="aui-layout page-type-split">
@@ -52,5 +47,13 @@
 
         @Html.Partial("_Footer")
     </div>
+    
+    @Scripts.Render("~/bundles/js_lib", "~/bundles/js_app")
+    <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->
+    @RenderSection("scripts", false)
+
+    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
+
+    @RenderSection("secondaryScripts", false)
 </body>
 </html>
