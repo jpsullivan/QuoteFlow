@@ -255,106 +255,26 @@ namespace QuoteFlow.Controllers
 
             var model = new VerifyCatalogImportViewModel
             {
-                Headers = headers, 
-                Rows = rows.Take(100),
+                Headers = headers,
+                Rows = rows,
                 TotalRows = rows.Count()
             };
 
             return View(model);
         }
 
-//        [Route("catalog/verify", HttpVerbs.Post)]
-//        [ValidateAntiForgeryToken]
-//        [ValidateInput(false)] // Security note: Disabling ASP.Net input validation which does things like disallow angle brackets in submissions. See http://go.microsoft.com/fwlink/?LinkID=212874
-//        public virtual async Task<ActionResult> VerifyImport(VerifyPackageRequest formData)
-//        {
-//            var currentUser = GetCurrentUser();
-//
-//            Package package;
-//            using (Stream uploadFile = await _uploadFileService.GetUploadFileAsync(currentUser.Key))
-//            {
-//                if (uploadFile == null)
-//                {
-//                    TempData["Message"] = "Your attempt to verify the package submission failed, because we could not find the uploaded package file. Please try again.";
-//                    return new RedirectResult(Url.UploadPackage());
-//                }
-//
-//                INupkg nugetPackage = CreatePackage(uploadFile);
-//
-//                // Rule out problem scenario with multiple tabs - verification request (possibly with edits) was submitted by user 
-//                // viewing a different package to what was actually most recently uploaded
-//                if (!(String.IsNullOrEmpty(formData.Id) || String.IsNullOrEmpty(formData.Version)))
-//                {
-//                    if (!(String.Equals(nugetPackage.Metadata.Id, formData.Id, StringComparison.OrdinalIgnoreCase)
-//                        && String.Equals(nugetPackage.Metadata.Version.ToNormalizedString(), formData.Version, StringComparison.OrdinalIgnoreCase)))
-//                    {
-//                        TempData["Message"] = "Your attempt to verify the package submission failed, because the package file appears to have changed. Please try again.";
-//                        return new RedirectResult(Url.VerifyPackage());
-//                    }
-//                }
-//
-//                bool pendEdit = false;
-//                if (formData.Edit != null)
-//                {
-//                    pendEdit = pendEdit || formData.Edit.RequiresLicenseAcceptance != nugetPackage.Metadata.RequireLicenseAcceptance;
-//
-//                    pendEdit = pendEdit || IsDifferent(formData.Edit.IconUrl, nugetPackage.Metadata.IconUrl.ToEncodedUrlStringOrNull());
-//                    pendEdit = pendEdit || IsDifferent(formData.Edit.ProjectUrl, nugetPackage.Metadata.ProjectUrl.ToEncodedUrlStringOrNull());
-//
-//                    pendEdit = pendEdit || IsDifferent(formData.Edit.Authors, nugetPackage.Metadata.Authors.Flatten());
-//                    pendEdit = pendEdit || IsDifferent(formData.Edit.Copyright, nugetPackage.Metadata.Copyright);
-//                    pendEdit = pendEdit || IsDifferent(formData.Edit.Description, nugetPackage.Metadata.Description);
-//                    pendEdit = pendEdit || IsDifferent(formData.Edit.ReleaseNotes, nugetPackage.Metadata.ReleaseNotes);
-//                    pendEdit = pendEdit || IsDifferent(formData.Edit.Summary, nugetPackage.Metadata.Summary);
-//                    pendEdit = pendEdit || IsDifferent(formData.Edit.Tags, nugetPackage.Metadata.Tags);
-//                    pendEdit = pendEdit || IsDifferent(formData.Edit.VersionTitle, nugetPackage.Metadata.Title);
-//                }
-//
-//                // update relevant database tables
-//                package = _packageService.CreatePackage(nugetPackage, currentUser, commitChanges: false);
-//                Debug.Assert(package.PackageRegistration != null);
-//
-//                _packageService.PublishPackage(package, commitChanges: false);
-//
-//                if (pendEdit)
-//                {
-//                    // Add the edit request to a queue where it will be processed in the background.
-//                    _editPackageService.StartEditPackageRequest(package, formData.Edit, currentUser);
-//                }
-//
-//                if (!formData.Listed)
-//                {
-//                    _packageService.MarkPackageUnlisted(package, commitChanges: false);
-//                }
-//
-//                _autoCuratedPackageCmd.Execute(package, nugetPackage, commitChanges: false);
-//
-//                // save package to blob storage
-//                uploadFile.Position = 0;
-//                await _packageFileService.SavePackageFileAsync(package, uploadFile);
-//
-//                // commit all changes to database as an atomic transaction
-//                _entitiesContext.SaveChanges();
-//
-//                // tell Lucene to update index for the new package
-//                _indexingService.UpdateIndex();
-//
-//                // If we're pushing a new stable version of NuGet.CommandLine, update the extracted executable.
-//                if (package.PackageRegistration.Id.Equals(Constants.NuGetCommandLinePackageId, StringComparison.OrdinalIgnoreCase) &&
-//                    package.IsLatestStable)
-//                {
-//                    await _nugetExeDownloaderService.UpdateExecutableAsync(nugetPackage);
-//                }
-//            }
-//
-//            // delete the uploaded binary in the Uploads container
-//            await _uploadFileService.DeleteUploadFileAsync(currentUser.Key);
-//
-//            TempData["Message"] = String.Format(
-//                CultureInfo.CurrentCulture, Strings.SuccessfullyUploadedPackage, package.PackageRegistration.Id, package.Version);
-//
-//            return RedirectToRoute(RouteName.DisplayPackage, new { package.PackageRegistration.Id, package.Version });
-//        }
+        [Route("catalog/verify", HttpVerbs.Post)]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> VerifyImport(VerifyCatalogImportViewModel formData)
+        {
+            // todo: validate the previous form to ensure that no two dropdowns have the same value selected
+
+            // todo: determine which headers have been selected, and remove them from the dropdown
+            // todo: fetch a list of all asset vars to be placed into a dropdown of their own
+
+            
+            return new EmptyResult();
+        }
 
         [Route("catalog/cancelImport", HttpVerbs.Post)]
         [ValidateAntiForgeryToken]

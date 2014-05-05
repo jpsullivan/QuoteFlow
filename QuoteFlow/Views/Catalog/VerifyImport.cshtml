@@ -12,36 +12,43 @@
 
     <fieldset>
         <div class="field-group" data-value-type="string">
-            @Html.LabelFor(m => m.AssetNameHeaderId)
-            @Html.DropDownListFor(m => m.AssetNameHeaderId, Model.Headers, "Choose a header", new { @class = "select long-field" })
+            @Html.LabelFor(m => m.PrimaryCatalogFields.AssetNameHeaderId)
+            @Html.DropDownListFor(m => m.PrimaryCatalogFields.AssetNameHeaderId, Model.Headers, "Choose a header", new { @class = "select long-field" })
             <span class="tooltip aui-icon aui-icon-small aui-iconfont-devtools-task-in-progress" title="View a preview of some sample records using this column assignment."></span>
             <div class="description">The field used to populate the <span class="aui-lozenge aui-lozenge-code">Name</span> column.</div>
             <div class="sample-data-container"></div>
         </div>
         <div class="field-group" data-value-type="string">
-            @Html.LabelFor(m => m.ManufacturerHeaderId)
-            @Html.DropDownListFor(m => m.ManufacturerHeaderId, Model.Headers, "Choose a header", new { @class = "select long-field" })
+            @Html.LabelFor(m => m.PrimaryCatalogFields.ManufacturerHeaderId)
+            @Html.DropDownListFor(m => m.PrimaryCatalogFields.ManufacturerHeaderId, Model.Headers, "Choose a header", new { @class = "select long-field" })
             <span class="tooltip aui-icon aui-icon-small aui-iconfont-devtools-task-in-progress" title="View a preview of some sample records using this column assignment."></span>
             <div class="description">The field used to populate the <span class="aui-lozenge aui-lozenge-code">Manufacturer</span> column.</div>
             <div class="sample-data-container"></div>
         </div>
         <div class="field-group" data-value-type="text">
-            @Html.LabelFor(m => m.DescriptionHeaderId)
-            @Html.DropDownListFor(m => m.DescriptionHeaderId, Model.Headers, "Choose a header", new { @class = "select long-field" })
+            @Html.LabelFor(m => m.PrimaryCatalogFields.DescriptionHeaderId)
+            @Html.DropDownListFor(m => m.PrimaryCatalogFields.DescriptionHeaderId, Model.Headers, "Choose a header", new { @class = "select long-field" })
             <span class="tooltip aui-icon aui-icon-small aui-iconfont-devtools-task-in-progress" title="View a preview of some sample records using this column assignment."></span>
             <div class="description">The field used to populate the <span class="aui-lozenge aui-lozenge-code">Description</span> column.</div>
             <div class="sample-data-container"></div>
         </div>
+        <div class="field-group" data-value-type="string">
+            @Html.LabelFor(m => m.PrimaryCatalogFields.SkuHeaderId)
+            @Html.DropDownListFor(m => m.PrimaryCatalogFields.SkuHeaderId, Model.Headers, "Choose a header", new { @class = "select long-field" })
+            <span class="tooltip aui-icon aui-icon-small aui-iconfont-devtools-task-in-progress" title="View a preview of some sample records using this column assignment."></span>
+            <div class="description">The field used to populate the <span class="aui-lozenge aui-lozenge-code">SKU</span> column.</div>
+            <div class="sample-data-container"></div>
+        </div>
         <div class="field-group" data-value-type="decimal">
-            @Html.LabelFor(m => m.CostHeaderId)
-            @Html.DropDownListFor(m => m.CostHeaderId, Model.Headers, "Choose a header", new { @class = "select long-field" })
+            @Html.LabelFor(m => m.PrimaryCatalogFields.CostHeaderId)
+            @Html.DropDownListFor(m => m.PrimaryCatalogFields.CostHeaderId, Model.Headers, "Choose a header", new { @class = "select long-field" })
             <span class="tooltip aui-icon aui-icon-small aui-iconfont-devtools-task-in-progress" title="View a preview of some sample records using this column assignment."></span>
             <div class="description">The field used to populate the <span class="aui-lozenge aui-lozenge-code">Cost</span> column.</div>
             <div class="sample-data-container"></div>
         </div>
         <div class="field-group" data-value-type="decimal">
-            @Html.LabelFor(m => m.MarkupHeaderId)
-            @Html.DropDownListFor(m => m.MarkupHeaderId, Model.Headers, "Choose a header", new { @class = "select long-field" })
+            @Html.LabelFor(m => m.PrimaryCatalogFields.MarkupHeaderId)
+            @Html.DropDownListFor(m => m.PrimaryCatalogFields.MarkupHeaderId, Model.Headers, "Choose a header", new { @class = "select long-field" })
             <span class="tooltip aui-icon aui-icon-small aui-iconfont-devtools-task-in-progress" title="View a preview of some sample records using this column assignment."></span>
             <div class="description">The field used to populate the <span class="aui-lozenge aui-lozenge-code">Markup</span> column.</div>
             <div class="sample-data-container"></div>
@@ -59,7 +66,7 @@
 @section secondaryScripts {
     <script type="text/javascript">
         var view = new QuoteFlow.UI.Catalog.ImportSetFields({
-            rawRows: @ViewHelpers.JsEncode(Model.Rows)
+            rawRows: @ViewHelpers.JsEncode(Model.Rows.Take(100))
         });
     </script>
 }

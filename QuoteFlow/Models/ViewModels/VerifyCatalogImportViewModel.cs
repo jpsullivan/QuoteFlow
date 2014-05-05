@@ -12,8 +12,7 @@ namespace QuoteFlow.Models.ViewModels
         public IEnumerable<SelectListItem> Headers { get; set; }
 
         /// <summary>
-        /// The catalog manifest records for previewing purposes. 
-        /// Should be capped at 100.
+        /// The catalog manifest records.
         /// </summary>
         public IEnumerable<string[]> Rows { get; set; }
 
@@ -23,6 +22,15 @@ namespace QuoteFlow.Models.ViewModels
         /// </summary>
         public int TotalRows { get; set; }
 
+        /// <summary>
+        /// The model that contains the data received in the first
+        /// step of catalog manifest imports.
+        /// </summary>
+        public PrimaryCatalogFieldsViewModel PrimaryCatalogFields { get; set; }
+    }
+
+    public class PrimaryCatalogFieldsViewModel
+    {
         [Required]
         [Display(Name = "Asset Name")]
         public int AssetNameHeaderId { get; set; }
@@ -45,7 +53,5 @@ namespace QuoteFlow.Models.ViewModels
         [Required]
         [Display(Name = "Markup")]
         public int MarkupHeaderId { get; set; }
-
-
     }
 }
