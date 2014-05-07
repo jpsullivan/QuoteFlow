@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace QuoteFlow.Models.ViewModels
 {
+    [Serializable]
     public class VerifyCatalogImportViewModel
     {
         /// <summary>
@@ -27,8 +29,15 @@ namespace QuoteFlow.Models.ViewModels
         /// step of catalog manifest imports.
         /// </summary>
         public PrimaryCatalogFieldsViewModel PrimaryCatalogFields { get; set; }
+
+        /// <summary>
+        /// The model that contains the data received from the second
+        /// step of the catalog import process.
+        /// </summary>
+        public SecondaryCatalogFieldsViewModel SecondaryCatalogFields { get; set; }
     }
 
+    [Serializable]
     public class PrimaryCatalogFieldsViewModel
     {
         [Required]
@@ -53,5 +62,11 @@ namespace QuoteFlow.Models.ViewModels
         [Required]
         [Display(Name = "Markup")]
         public int MarkupHeaderId { get; set; }
+    }
+
+    [Serializable]
+    public class SecondaryCatalogFieldsViewModel
+    {
+        
     }
 }

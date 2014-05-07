@@ -14,6 +14,7 @@
         this.rows = new Backbone.Collection().reset(options.rawRows);
 
         AJS.$(".tooltip").tooltip();
+        AJS.$('select').auiSelect2();
     },
 
     changeHeader: function(e) {
@@ -39,15 +40,30 @@
     },
 
     /**
-     * 
+     * Gathers a random collection of data from the selected
+     * header group and displays it in a table.
      */
     showPreview: function(e) {
         var el = $(e.currentTarget);
         var fieldGroup = el.parent();
 
         var valueType = fieldGroup.data('value-type');
-        var index = $('select', fieldGroup).prop('selectedIndex') - 1; // -1 to compensate for the default select opt
+        var index = $('select', fieldGroup).prop('selectedIndex'); 
         var panelKey = $('.aui-lozenge', fieldGroup).html();
+
+        if (index === 0) {
+//            // show an inline popup
+//            AJS.InlineDialog(AJS.$("select", fieldGroup), "myDialog",
+//                function(content, trigger, showPopup) {
+//                    content.css({ "padding": "20px" }).html('<p>Please select a field header.</p>');
+//                    showPopup();
+//                    return false;
+//                }
+//            );
+            return false;
+        }
+
+        index = index - 1; // -1 to compensate for the default select opt
 
         var panelView = new QuoteFlow.UI.Common.PanelTable({
             leftHeader: "Asset Key",

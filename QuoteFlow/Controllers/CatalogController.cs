@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CsvHelper;
+using Microsoft.Web.Mvc;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.AsyncFileUpload;
 using QuoteFlow.Infrastructure.Attributes;
@@ -211,47 +212,13 @@ namespace QuoteFlow.Controllers
         [Route("catalog/verify", HttpVerbs.Get)]
         public virtual async Task<ActionResult> VerifyImport()
         {
-            var currentUser = GetCurrentUser();
-
-            var headers = new List<SelectListItem>();
-            string[] rawHeaders = {};
-            var rows = new List<string[]>();
-
-            using (Stream uploadFile = await UploadFileService.GetUploadFileAsync(currentUser.Id))
-            {
-                if (uploadFile == null)
-                {
-                    return RedirectToAction("Import", "Catalog");
-                }
-
-                try
-                {
-                    var sr = new StreamReader(uploadFile);
-                    var csvReader = new CsvReader(sr);
-                    csvReader.Configuration.HasHeaderRecord = true;
-
-                    while (csvReader.Read()) {
-                        rawHeaders = csvReader.FieldHeaders;
-
-                        var row = new string[rawHeaders.Count()];
-                        for (int i = 0; i < rawHeaders.Count() - 1; i++)
-                        {
-                            row[i] = csvReader.GetField(i);
-                        }
-                        rows.Add(row);
-                    }
-                }
-                catch (InvalidDataException e)
-                {
-                    throw new InvalidDataException();
-                }
+            var catalogData = GetCatalogData().Result;
+            if (catalogData == null) {
+                return RedirectToAction("Import", "Catalog");
             }
 
-            // pretty up the headers into a convenient dropdown list
-            for (int i = 0; i < rawHeaders.Count(); i++)
-            {
-                headers.Add(new SelectListItem { Value = i.ToString(), Text = rawHeaders[i]});
-            }
+            var headers = catalogData.Headers;
+            var rows = catalogData.Rows;
 
             var model = new VerifyCatalogImportViewModel
             {
@@ -272,8 +239,32 @@ namespace QuoteFlow.Controllers
             // todo: determine which headers have been selected, and remove them from the dropdown
             // todo: fetch a list of all asset vars to be placed into a dropdown of their own
 
-            
-            return new EmptyResult();
+            return RedirectToAction("VerifyImportSecondary", formData.PrimaryCatalogFields);
+        }
+
+        [Route("catalog/verifyOther", HttpVerbs.Get)]
+        public virtual async Task<ActionResult> VerifyImportSecondary(PrimaryCatalogFieldsViewModel primaryModel)
+        {
+            // Since we can't get proper modelbinding on a multi-step form, we are 
+            // going to have to just get greasy and re-fetch the csv data... This class is fucked.
+
+            var catalogData = GetCatalogData().Result;
+            if (catalogData == null) {
+                return RedirectToAction("Import", "Catalog");
+            }
+
+            var headers = catalogData.Headers;
+            var rows = catalogData.Rows;
+
+            var model = new VerifyCatalogImportViewModel
+            {
+                Headers = headers,
+                Rows = rows,
+                TotalRows = rows.Count(),
+                PrimaryCatalogFields = primaryModel
+            };
+
+            return View(model);
         }
 
         [Route("catalog/cancelImport", HttpVerbs.Post)]
@@ -284,6 +275,54 @@ namespace QuoteFlow.Controllers
             await UploadFileService.DeleteUploadFileAsync(currentUser.Id);
 
             return RedirectToAction("Import");
+        }
+
+        [NonAction]
+        public async Task<CatalogCsv> GetCatalogData()
+        {
+            var currentUser = GetCurrentUser();
+
+            var headers = new List<SelectListItem>();
+            string[] rawHeaders = { };
+            var rows = new List<string[]>();
+
+            using (Stream uploadFile = await UploadFileService.GetUploadFileAsync(currentUser.Id))
+            {
+                if (uploadFile == null) {
+                    return null;
+                }
+
+                try
+                {
+                    var sr = new StreamReader(uploadFile);
+                    var csvReader = new CsvReader(sr);
+                    csvReader.Configuration.HasHeaderRecord = true;
+
+                    while (csvReader.Read())
+                    {
+                        rawHeaders = csvReader.FieldHeaders;
+
+                        var row = new string[rawHeaders.Count()];
+                        for (int i = 0; i < rawHeaders.Count() - 1; i++)
+                        {
+                            row[i] = csvReader.GetField(i);
+                        }
+                        rows.Add(row);
+                    }
+                }
+                catch (InvalidDataException e)
+                {
+                    throw new InvalidDataException();
+                }
+            }
+
+            // pretty up the headers into a convenient dropdown list
+            for (int i = 0; i < rawHeaders.Count(); i++)
+            {
+                headers.Add(new SelectListItem { Value = i.ToString(), Text = rawHeaders[i] });
+            }
+
+            return new CatalogCsv {Headers = headers, Rows = rows};
         }
     }
 }
