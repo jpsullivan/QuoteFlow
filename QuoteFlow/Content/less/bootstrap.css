@@ -3,6 +3,11 @@
   top: 25px;
   right: 25px;
 }
+.aui-page-focused .new-field {
+  display: block;
+  padding-top: 15px;
+  text-align: right;
+}
 #footer .qf-footer-body {
   color: #707070;
   font-size: 12px;

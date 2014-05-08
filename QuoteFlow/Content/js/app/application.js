@@ -8,7 +8,6 @@ var QuoteFlow = {
         Collections: []
     },
     Models: {},
-    Views: {},
     Pages: {},
     Routers: {},
     UI: {
@@ -17,6 +16,7 @@ var QuoteFlow = {
     },
     Utilities: {},
     Vent: _.extend({}, Backbone.Events),
+    Views: {},
 
     initialize: function () {
         QuoteFlow.Vent.on('domchange:title', this.onDomChangeTitle, this);

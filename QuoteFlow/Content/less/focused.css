@@ -3,4 +3,9 @@
   top: 25px;
   right: 25px;
 }
+.aui-page-focused .new-field {
+  display: block;
+  padding-top: 15px;
+  text-align: right;
+}
 /*# sourceMappingURL=focused.css.map */

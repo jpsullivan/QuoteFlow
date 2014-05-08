@@ -359,6 +359,8 @@
     <Compile Include="Models\AssetImage.cs" />
     <Compile Include="Models\AssetPrice.cs" />
     <Compile Include="Models\AssetType.cs" />
+    <Compile Include="Models\AssetVar.cs" />
+    <Compile Include="Models\AssetVarValue.cs" />
     <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\CatalogCsv.cs" />
     <Compile Include="Models\Contact.cs" />
@@ -397,6 +399,7 @@
     </Compile>
     <Compile Include="Services\AssetPriceService.cs" />
     <Compile Include="Services\AssetService.cs" />
+    <Compile Include="Services\AssetVarService.cs" />
     <Compile Include="Services\CatalogService.cs" />
     <Compile Include="Services\CloudBlobClientWrapper.cs" />
     <Compile Include="Services\CloudBlobContainerWrapper.cs" />
@@ -412,6 +415,7 @@
     <Compile Include="Services\HttpContextCacheService.cs" />
     <Compile Include="Services\Interfaces\IAssetPriceService.cs" />
     <Compile Include="Services\Interfaces\IAssetService.cs" />
+    <Compile Include="Services\Interfaces\IAssetVarService.cs" />
     <Compile Include="Services\Interfaces\ICacheService.cs" />
     <Compile Include="Services\Interfaces\ICatalogService.cs" />
     <Compile Include="Services\Interfaces\ICloudBlobClient.cs" />
@@ -524,6 +528,8 @@
     <Content Include="Content\js\app\helpers\application_helpers.js" />
     <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\ui\catalog\import_set_fields.js" />
+    <Content Include="Content\js\app\ui\catalog\import_set_optional_fields.js" />
+    <Content Include="Content\js\app\ui\catalog\select_asset_var_modal.js" />
     <Content Include="Content\js\app\ui\common\panel-table.js" />
     <Content Include="Content\js\app\views.js" />
     <Content Include="Content\js\lib\aui\aui-all.js" />
@@ -604,6 +610,7 @@
     </Content>
     <Content Include="Content\js\lib\underscore.min.js" />
     <Content Include="Content\views\common\panel-table.hbs" />
+    <Content Include="Content\views\catalog\select-asset-var-modal.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
