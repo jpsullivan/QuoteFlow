@@ -1,11 +1,18 @@
-﻿<section role="dialog" id="asset_var_selection_modal" class="aui-layer aui-dialog2 aui-dialog2-medium" aria-hidden="true">
+﻿<div role="dialog" id="asset_var_selection_modal" class="aui-layer aui-dialog2 aui-dialog2-medium" aria-hidden="true">
     <header class="aui-dialog2-header">
-        <h1 class="aui-dialog2-header-main">Select an asset var field</h1>
+        <h1 class="aui-dialog2-header-main">Set an asset var field</h1>
     </header>
 
     <div class="aui-dialog2-content">
         <form class="aui">
+            <h3>Select an existing Asset Var</h3>
+            <div class="field-group" id="select_asset_var_container"></div>
             
+            <h3>Or create a new one</h3>
+            <div class="field-group">
+                <label for="new_asset_var">Name</label>
+                <input class="text" type="text" id="new_aset_var" name="new_asset_var" />
+            </div>
         </form>
     </div>
 
@@ -15,4 +22,4 @@
             <button id="dialog-close-button" class="aui-button aui-button-link">Close</button>
         </div>
     </footer>
-</section>
+</div>

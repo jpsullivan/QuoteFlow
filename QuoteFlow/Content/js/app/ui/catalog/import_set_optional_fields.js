@@ -22,19 +22,24 @@
     initialize: function (options) {
         this.rows = new Backbone.Collection().reset(options.rawRows);
 
-        this.assetVarFieldsList = $('table#asset_var_fields tbody', this.$el);
-        this.assetVarSelectionModalContainer = $('#asset_var_selection_container', this.$el);
+        this.assetVarFieldsList = this.$('table#asset_var_fields tbody');
+        this.assetVarSelectionModalContainer = this.$('#asset_var_selection_container');
+        this.assetVarSelectionModal = this.getAssetVarSelectionModalView();
 
-        // forcefull render the select asset var modal
-        var assetVarSelectionModal = new QuoteFlow.UI.Catalog.SelectAssetVarModal();
-        this.assetVarSelectionModalContainer.html(assetVarSelectionModal.render().el);
+        this.renderSubviews(); // manually call since this view technically isn't ever rendered
 
         AJS.$(".tooltip").tooltip();
         AJS.$('select').auiSelect2();
     },
 
-    showAssetVarFieldSelectionModal: function() {
-        AJS.dialog2("#asset_var_selection_modal").show();
+    getAssetVarSelectionModalView: function () {
+        // todo: dispose the existing modal object if exists
+        return new QuoteFlow.UI.Catalog.SelectAssetVarModal();
+    },
+
+    showAssetVarFieldSelectionModal: function () {
+        // forcefull render the select asset var modal
+        this.assetVarSelectionModal.showModal();
     },
 
     changeHeader: function (e) {
