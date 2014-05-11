@@ -20,15 +20,15 @@
         var modelJson = this.model && this.model.attributes ? _.clone(this.model.attributes) : {};
 
         var imageUrl;
-        if (QuoteFlow.rootUrl === "/") {
+        if (QuoteFlow.RootUrl === "/") {
             imageUrl = "/Content/images/";
         } else {
-            imageUrl = QuoteFlow.rootUrl + "Content/images/";
+            imageUrl = QuoteFlow.RootUrl + "Content/images/";
         }
 
         return _.extend(modelJson, {
-            rootUrl: QuoteFlow.rootUrl,
-            imageUrl: imageUrl
+            RootUrl: QuoteFlow.RootUrl,
+            ImageUrl: imageUrl
         });
     },
 

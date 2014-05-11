@@ -15,6 +15,14 @@ namespace QuoteFlow.Services.Interfaces
 
         void InsertAssetVar(AssetVar assetVar);
 
+        void UpdateAssetVar(AssetVar assetVar);
+
+        void DeleteAssetVar(int id);
+
         void InsertVarValue(AssetVarValue varValue);
+
+        void UpdateAssetVarValue(AssetVarValue varValue);
+
+        void DeleteAssetVarValue(int id);
     }
 }

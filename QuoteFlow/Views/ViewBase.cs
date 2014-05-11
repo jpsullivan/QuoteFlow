@@ -63,6 +63,11 @@ namespace QuoteFlow.Views
             get { return QuoteFlowContext.CurrentUser; }
         }
 
+        public Organization CurrentOrganization
+        {
+            get { return QuoteFlowContext.CurrentOrganization; }
+        }
+
         protected ViewBase()
         {
             _context = new Lazy<QuoteFlowContext>(ViewBase.GetContextThunk(this));

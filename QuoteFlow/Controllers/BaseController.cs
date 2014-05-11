@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
@@ -19,13 +21,15 @@ using StackExchange.Profiling;
 
 namespace QuoteFlow.Controllers
 {
-    public abstract partial class BaseController : Controller
+    public abstract class BaseController : Controller
     {
+        private IOrganizationService OrganizationService { get; set; }
         private IUserService UserService { get; set; }
         private IOwinContext _overrideContext;
 
         protected BaseController()
         {
+            OrganizationService = Container.Kernel.TryGet<OrganizationService>();
             UserService = Container.Kernel.TryGet<UserService>();
             QuoteFlowContext = new QuoteFlowContext(this);
         }
@@ -85,20 +89,33 @@ namespace QuoteFlow.Controllers
         {
             get
             {
-                if (_currentOrganization == null)
-                {
-                    int organizationId;
-                    if (Int32.TryParse((Session["CurrentOrganizationId"] ?? "").ToString(), out organizationId))
-                    {
-                        _currentOrganization = Current.DB.Organizations.Get(organizationId);
+                if (_currentOrganization == null) {
+                    var organization = Session["CurrentOrganization"] as Organization;
+                    if (organization != null) {
+                        _currentOrganization = OrganizationService.GetOrganization(organization.Id);
+                    }
+
+                    // Absolutely no org associated with this session; use the default
+                    if (_currentOrganization == null) {
+                        var organizationUsers = OrganizationService.GetOrganizations(GetCurrentUser().Id);
+                        if (organizationUsers == null) {
+                            // no organizations for this user... this shouldn't have been possible.
+                            throw new UnauthorizedAccessException("No organizations found for this user.");
+                        }
+
+                        // build up the org ids and shamefully select the first until a better method exists.
+                        var organizationIds = organizationUsers.Select(organizationUser => organizationUser.OrganizationId).ToArray();
+                        _currentOrganization = OrganizationService.GetOrganizations(organizationIds).First();
                     }
                 }
+
+                Session["CurrentOrganization"] = _currentOrganization;
                 return _currentOrganization;
             }
             set
             {
                 _currentOrganization = value;
-                Session["CurrentOrganizationId"] = _currentOrganization.Id;
+                Session["CurrentOrganization"] = _currentOrganization.Id;
             }
         }
 
@@ -310,15 +327,18 @@ namespace QuoteFlow.Controllers
     public class QuoteFlowContext
     {
         private Lazy<User> _currentUser;
+        private Lazy<Organization> _currentOrganization;
 
         public ConfigurationService Config { get; private set; }
         public User CurrentUser { get { return _currentUser.Value; } }
+        public Organization CurrentOrganization { get { return _currentOrganization.Value; } }
 
         public QuoteFlowContext(BaseController ctrl)
         {
             Config = Container.Kernel.TryGet<ConfigurationService>();
 
             _currentUser = new Lazy<User>(() => ctrl.OwinContext.GetCurrentUser());
+            _currentOrganization = new Lazy<Organization>(() => ctrl.CurrentOrganization);
         }
     }
 }

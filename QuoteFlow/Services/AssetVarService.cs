@@ -44,12 +44,72 @@ namespace QuoteFlow.Services
 
         public void InsertAssetVar(AssetVar assetVar)
         {
+            if (assetVar == null)
+            {
+                throw new ArgumentException("Asset var cannot be null.");
+            }
+
             Current.DB.AssetVars.Insert(assetVar);
+        }
+
+        public void UpdateAssetVar(AssetVar assetVar)
+        {
+            if (assetVar == null) 
+            {
+                throw new ArgumentException("Asset var cannot be null.");
+            }
+
+            if (assetVar.Id == 0) 
+            {
+                throw new ArgumentException("Asset var must have an ID greater than zero.");
+            }
+
+            Current.DB.AssetVars.Update(assetVar.Id, assetVar);
+        }
+
+        public void DeleteAssetVar(int id)
+        {
+            if (id == 0) 
+            {
+                throw new ArgumentException("AssetVar ID must be greater than zero.", "id");
+            }
+
+            Current.DB.AssetVars.Delete(id);
         }
 
         public void InsertVarValue(AssetVarValue varValue)
         {
+            if (varValue == null)
+            {
+                throw new ArgumentException("Asset var value cannot be null.");
+            }
+
             Current.DB.AssetVarValues.Insert(varValue);
+        }
+
+        public void UpdateAssetVarValue(AssetVarValue varValue)
+        {
+            if (varValue == null)
+            {
+                throw new ArgumentException("Asset var value cannot be null.");
+            }
+
+            if (varValue.Id == 0)
+            {
+                throw new ArgumentException("Asset var value must have an ID greater than zero.");
+            }
+
+            Current.DB.AssetVarValues.Update(varValue.Id, varValue);
+        }
+
+        public void DeleteAssetVarValue(int id)
+        {
+            if (id == 0)
+            {
+                throw new ArgumentException("AssetVarValue ID must be greater than zero.", "id");
+            }
+
+            Current.DB.AssetVarValues.Delete(id);
         }
     }
 }

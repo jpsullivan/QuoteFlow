@@ -6,7 +6,12 @@
     <div class="aui-dialog2-content">
         <form class="aui">
             <h3>Select an existing Asset Var</h3>
-            <div class="field-group" id="select_asset_var_container"></div>
+            <select class="select">
+                <option>Select an AssetVar</option>
+                {{#each assetVars}}
+                <option value="{{Id}}">{{Name}}</option>
+                {{/each}}
+            </select>
             
             <h3>Or create a new one</h3>
             <div class="field-group">
