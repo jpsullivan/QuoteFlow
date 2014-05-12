@@ -36,6 +36,17 @@ var QuoteFlow;
         }
     });
 
+    var _currentUserId;
+
+    Object.defineProperty(QuoteFlow, 'CurrentUserId', {
+        get: function () {
+            return _currentUserId;
+        },
+        set: function (value) {
+            _currentUserId = value;
+        }
+    });
+
     QuoteFlow.Catalog = {};
     QuoteFlow.Collection = {};
     (function (Debug) {
@@ -44,7 +55,7 @@ var QuoteFlow;
         Debug.Collections = [];
     })(QuoteFlow.Debug || (QuoteFlow.Debug = {}));
     var Debug = QuoteFlow.Debug;
-    QuoteFlow.Models = {};
+    QuoteFlow.Model = {};
     QuoteFlow.Pages = {};
     QuoteFlow.Routers = {};
     (function (UI) {
@@ -57,12 +68,20 @@ var QuoteFlow;
     QuoteFlow.Views = {};
 
     var Initialize = (function () {
-        function Initialize(rootUrl, applicationPath, currentOrgId) {
+        function Initialize(rootUrl, applicationPath, currentOrgId, currentUser) {
             var parsedOrgId = parseInt(currentOrgId, 10);
+            var parsedUserId;
+
+            if (currentUser === undefined || currentUser === null) {
+                parsedUserId = 0;
+            } else {
+                parsedUserId = parseInt(currentUser.Id, 10);
+            }
 
             _rootUrl = this.buildRootUrl(rootUrl);
             _applicationPath = applicationPath;
             _currentOrganizationId = parsedOrgId;
+            _currentUserId = parsedUserId;
         }
         Initialize.prototype.buildRootUrl = function (context) {
             if (context === "/") {

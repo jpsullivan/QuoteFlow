@@ -41,6 +41,7 @@
 @section secondaryScripts {
     <script type="text/javascript">
         var view = new QuoteFlow.UI.Catalog.ImportSetOptionalFields({
+            headers: @ViewHelpers.JsEncode(Model.Headers),
             rawRows: @ViewHelpers.JsEncode(Model.Rows.Take(100))
         });
     </script>

@@ -1,4 +1,4 @@
-﻿<div role="dialog" id="asset_var_selection_modal" class="aui-layer aui-dialog2 aui-dialog2-medium" aria-hidden="true">
+﻿<div role="dialog" id="asset_var_selection_modal" class="aui-layer aui-dialog2 aui-dialog2-medium" aria-hidden="true" data-aui-modal="true">
     <header class="aui-dialog2-header">
         <h1 class="aui-dialog2-header-main">Set an asset var field</h1>
     </header>
@@ -6,17 +6,21 @@
     <div class="aui-dialog2-content">
         <form class="aui">
             <h3>Select an existing Asset Var</h3>
-            <select class="select">
-                <option>Select an AssetVar</option>
-                {{#each assetVars}}
-                <option value="{{Id}}">{{Name}}</option>
-                {{/each}}
-            </select>
+            <div class="field-group">
+                <label for="select_asset_var">Existing AssetVar</label>
+                <select class="select long-field" id="select_asset_var" name="select_asset_var">
+                    <option>Select an AssetVar</option>
+                    {{#each assetVars}}
+                    <option value="{{Id}}">{{Name}}</option>
+                    {{/each}}
+                </select>
+            </div>
             
             <h3>Or create a new one</h3>
             <div class="field-group">
-                <label for="new_asset_var">Name</label>
-                <input class="text" type="text" id="new_aset_var" name="new_asset_var" />
+                <label for="new_asset_var">AssetVar Name</label>
+                <input class="text long-field" type="text" id="new_asset_var" name="new_asset_var" />
+                <div class="description">Enter a name for this AssetVar</div>
             </div>
         </form>
     </div>

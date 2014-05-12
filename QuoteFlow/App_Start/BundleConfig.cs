@@ -35,14 +35,14 @@ namespace QuoteFlow
                 "~/Content/js/lib/handlebars.min.js",
                 "~/Content/js/lib/underscore.min.js",
                 "~/Content/js/lib/backbone.min.js",
-                "~/Content/js/lib/aui/aui-all.js");
+                "~/Content/js/lib/aui/aui-all.js",
+                "~/Content/js/lib/moment.min.js");
             libJs.Transforms.Add(jsTransformer);
             libJs.Orderer = nullOrderer;
             bundles.Add(libJs);
 
             // App JS
             Bundle appJs = new Bundle("~/bundles/js_app").Include(
-//                "~/Content/js/app/application.js",
                 "~/Content/js/app/quoteflow.ts",
                 "~/Content/js/app/views.js");
             appJs.IncludeDirectory("~/Content/js/app/components", "*.js", true);

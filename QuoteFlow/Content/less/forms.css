@@ -25,4 +25,23 @@ form.aui .panel .panel-content pre {
   word-break: normal;
   max-height: 30em;
 }
+form.aui .aui-select2-container.select2-container-disabled a.select2-choice {
+  background: #f5f5f5;
+  border-color: #ccc;
+  color: #999;
+  cursor: default;
+}
+form.aui .aui-select2-container.select2-container-disabled a.select2-choice:active,
+form.aui .aui-select2-container.select2-container-disabled a.select2-choice:hover {
+  background: #f5f5f5;
+  border-color: #ccc;
+  color: #999;
+  box-shadow: none;
+}
+form.aui .aui-select2-container.select2-container-disabled a.select2-choice:hover:after {
+  opacity: 0.8;
+}
+form.aui .aui-select2-container.select2-container-disabled a.select2-choice .select2-arrow {
+  background: #f5f5f5;
+}
 /*# sourceMappingURL=forms.css.map */

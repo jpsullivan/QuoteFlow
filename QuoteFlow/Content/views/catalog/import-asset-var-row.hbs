@@ -1,0 +1,9 @@
+﻿<td data-assetvar-id="{{assetVar.Id}}">{{assetVar.Name}}</td>
+<td>
+    <select class="select">
+        <option>Select a header</option>
+        {{#each catalogHeaders}}
+        <option value="{{Value}}">{{Text}}</option>
+        {{/each}}
+    </select>
+</td>

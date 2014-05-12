@@ -22,6 +22,13 @@ module QuoteFlow {
     Object.defineProperty(QuoteFlow, 'CurrentOrganizationId', {
         get: () => _currentOrganizationId,
         set: value => { _currentOrganizationId = value; }
+    });
+
+    var _currentUserId: number;
+    export declare var CurrentUserId: number;
+    Object.defineProperty(QuoteFlow, 'CurrentUserId', {
+        get: () => _currentUserId,
+        set: value => { _currentUserId = value; }
     }); 
 
     export module Backbone { }
@@ -44,12 +51,20 @@ module QuoteFlow {
     export var Views = {}
 
     export class Initialize {
-        constructor(rootUrl: string, applicationPath: string, currentOrgId: string) {
+        constructor(rootUrl: string, applicationPath: string, currentOrgId: string, currentUser: any) {
             var parsedOrgId = parseInt(currentOrgId, 10);
+            var parsedUserId;
+
+            if (currentUser === undefined || currentUser === null) {
+                parsedUserId = 0;
+            } else {
+                parsedUserId = parseInt(currentUser.Id, 10);
+            }
 
             _rootUrl = this.buildRootUrl(rootUrl);
             _applicationPath = applicationPath;
             _currentOrganizationId = parsedOrgId;
+            _currentUserId = parsedUserId;
         }
 
         buildRootUrl(context: string) {

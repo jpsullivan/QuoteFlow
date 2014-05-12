@@ -1,47 +1,30 @@
-﻿QuoteFlow.UI.Catalog.ImportSetOptionalFields = QuoteFlow.Views.Base.extend({
-    el: '.aui-page-panel-content',
+﻿QuoteFlow.UI.Catalog.ImportAssetVarRow = QuoteFlow.Views.Base.extend({
+
+    tagName: 'tr',
+
+    templateName: 'catalog/import-asset-var-row',
 
     options: {
         headers: null,
-        rawRows: null
+        rawRows: null,
+        assetVar: null
     },
 
-    events: {
-        "click #new_asset_var_field": "showAssetVarFieldSelectionModal",
-        "change .field-group select": "changeHeader",
-        "click .tooltip": "showPreview"
-    },
+    events: {},
 
     presenter: function () {
-        return _.extend(this.defaultPresenter(), {});
-    },
-
-    initialize: function (options) {
-        _.bindAll(this, 'addAssetVarRow');
-
-        this.rows = new Backbone.Collection().reset(options.rawRows);
-
-        this.assetVarFieldsList = this.$('table#asset_var_fields tbody');
-        this.assetVarSelectionModalContainer = this.$('#asset_var_selection_container');
-
-        this.renderSubviews(); // manually call since this view technically isn't ever rendered
-
-        AJS.$(".tooltip").tooltip();
-        AJS.$('select').auiSelect2();
-    },
-
-    getAssetVarSelectionModalView: function () {
-        // todo: dispose the existing modal object if exists
-        return new QuoteFlow.UI.Catalog.SelectAssetVarModal({
-            okFunc: this.addAssetVarRow
+        return _.extend(this.defaultPresenter(), {
+            assetVar: this.options.assetVar.toJSON(),
+            catalogHeaders: this.options.headers
         });
     },
 
-    showAssetVarFieldSelectionModal: function () {
-        // forcefull render the select asset var modal to reset form fields
-        this.assetVarSelectionModal = this.getAssetVarSelectionModalView();
-        this.$('#asset_var_selection_container').html(this.assetVarSelectionModal.render().el);
-        this.assetVarSelectionModal.showModal();
+    initialize: function(options) {},
+
+    postRenderTemplate: function () {
+        _.defer(function() {
+            AJS.$('select').auiSelect2();
+        });
     },
 
     changeHeader: function (e) {
@@ -107,21 +90,5 @@
      */
     getSampleRowData: function (index) {
         return _.sample(this.rows.pluck(index), 3);
-    },
-
-    /**
-     * Adds an asset var row based on the select asset var modal result.
-     */
-    addAssetVarRow: function(assetVar) {
-        if (assetVar === null) {
-            // todo: throw some kind of validation failure
-        }
-
-        var view = new QuoteFlow.UI.Catalog.ImportAssetVarRow({
-            headers: this.options.headers,
-            assetVar: assetVar
-        });
-
-        this.assetVarFieldsList.append(view.render().el);
     }
 })

@@ -1,11 +1,11 @@
 ﻿QuoteFlow.UI.Catalog.SelectAssetVarModal = QuoteFlow.Views.Base.extend({
     templateName: "catalog/select-asset-var-modal",
 
-    options: {},
-
-    events: {
-        "click #dialog-close-button": "closeModal"
+    options: {
+        okFunc: null
     },
+
+    events: {},
 
     presenter: function () {
         return _.extend(this.defaultPresenter(), {
@@ -13,17 +13,24 @@
         });
     },
 
-    initialize: function(options) {
+    initialize: function () {
+        // required sinced AJS overrides 'this'
+        _.bindAll(this, 'submitModal', 'closeModal', 'newAssetVarKepressHandler', 'disableAssetVarsDropdown', 'createAssetVar', 'getNewAssetVarName', 'getSelectedExistingAssetVar');
+
         this.assetVars = this.fetchAssetVars();
     },
 
     postRenderTemplate: function () {
         var self = this;
 
-        this.assetVars = 
-
         _.defer(function () {
             self.modalAJS = AJS.dialog2("#asset_var_selection_modal");
+            self.assetVarsDropdown = AJS.$('#select_asset_var').auiSelect2();
+
+            // handle event bindings here since AJS apparently overrides them...
+            AJS.$('#new_asset_var').on('keyup', self.newAssetVarKepressHandler);
+            AJS.$('#dialog-close-button').on('click', self.closeModal);
+            AJS.$('#dialog-create').on('click', self.submitModal);
         });
     },
 
@@ -45,7 +52,77 @@
     },
 
     closeModal: function () {
-        this.modalAJS.remove();
+        AJS.dialog2("#asset_var_selection_modal").hide();
         this.remove();
+        AJS.dialog2("#asset_var_selection_modal").remove();
+    },
+
+    submitModal: function(e) {
+        var el = $(e.currentTarget);
+        el.attr('aria-disabled', "true");
+
+        var assetVar;
+        if (this.assetVarsDropdown.prop('disabled')) {
+            // user opted to create a new assetvar
+            assetVar = this.createAssetVar(this.getNewAssetVarName());
+        } else {
+            // the user has selected an existing assetvar
+            var assetVarId = this.getSelectedExistingAssetVar();
+            assetVar = this.assetVars.findWhere({ Id: parseInt(assetVarId, 10) });
+        }
+
+        this.options.okFunc(assetVar);
+
+        this.closeModal();
+    },
+
+    newAssetVarKepressHandler: function(e) {
+        var el = $(e.currentTarget);
+        
+        if (el.val() !== "") {
+            this.disableAssetVarsDropdown();
+        } else {
+            this.enableAssetVarsDropdown();
+        }
+    },
+
+    disableAssetVarsDropdown: function() {
+        this.assetVarsDropdown.select2("enable", false);
+    },
+
+    enableAssetVarsDropdown: function() {
+        this.assetVarsDropdown.select2("enable", true);
+    },
+
+    createAssetVar: function(assetVarName) {
+        if (assetVarName === "") {
+            // todo: return failed validation for empty string
+        }
+
+        // does this assetvar exist yet?
+        var existing = this.assetVars.findWhere({ Name: assetVarName });
+        if (existing === null) {
+            // todo: return failed validation because assetvar already exists
+        }
+
+        var assetVar = new QuoteFlow.Model.AssetVar({
+            Name: assetVarName,
+            Description: null,
+            ValueType: "String",
+            OrganizationId: QuoteFlow.CurrentOrganizationId,
+            Enabled: true,
+            CreatedUtc: moment().format(),
+            CreatedBy: QuoteFlow.CurrentUserId
+        });
+
+        return this.assetVars.create(assetVar);
+    },
+
+    getNewAssetVarName: function() {
+        return $('#new_asset_var').val();
+    },
+
+    getSelectedExistingAssetVar: function() {
+        return this.assetVarsDropdown.val();
     }
 })
