@@ -90,5 +90,12 @@
      */
     getSampleRowData: function (index) {
         return _.sample(this.rows.pluck(index), 3);
+    },
+
+    /**
+     * Removes the asset var row from the table. Disposes the view.
+     */
+    removeRow: function() {
+        this.remove();
     }
 })

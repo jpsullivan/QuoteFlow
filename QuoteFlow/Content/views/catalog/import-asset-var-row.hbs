@@ -7,3 +7,22 @@
         {{/each}}
     </select>
 </td>
+<td>
+    <button aria-owns="assetvar_row_actions_{{assetVar.Id}}" aria-haspopup="true" class="aui-button aui-button-compact aui-button-subtle aui-dropdown2-trigger aui-dropdown2-trigger-arrowless">
+        <span class="aui-icon aui-icon-small aui-iconfont-more">More</span>
+    </button>
+    <div id="assetvar_row_actions_{{assetVar.Id}}" class="aui-dropdown2 aui-style-default" aria-hidden="false" data-dropdown2-alignment="right">
+        <ul class="aui-list-truncate">
+            <li>
+                <a href="#" class="active show-preview">
+                    <span class="aui-icon aui-icon-small aui-iconfont-view"></span> Show Preview
+                </a>
+            </li>
+            <li>
+                <a href="#" class="remove">
+                    <span class="aui-icon aui-icon-small aui-iconfont-remove-label"></span> Remove
+                </a>
+            </li>
+        </ul>
+    </div>
+</td>
