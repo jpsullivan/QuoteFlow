@@ -37,12 +37,42 @@ namespace QuoteFlow.Services.Interfaces
         Asset CreateAsset(NewAssetModel model, int catalogId, int userId);
 
         /// <summary>
+        /// Creates an <see cref="Asset"/>.
+        /// </summary>
+        /// <param name="asset">A pre-built <see cref="Asset"/>.</param>
+        /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
+        /// <returns></returns>
+        Asset CreateAsset(Asset asset, int userId);
+
+        /// <summary>
+        /// Creates an <see cref="Asset"/>.
+        /// </summary>
+        /// <param name="asset">A pre-built <see cref="Asset"/>.</param>
+        /// <param name="price"></param>
+        /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
+        /// <returns></returns>
+        Asset CreateAsset(Asset asset, AssetPrice price, int userId);
+
+        /// <summary>
         /// Check if an asset exists.
         /// </summary>
         /// <param name="assetName">The asset name to search for</param>
         /// <param name="catalogId">The Id of the catalog to search from</param>
         /// <returns></returns>
         bool AssetExists(string assetName, int catalogId);
+
+        /// <summary>
+        /// Check if an asset (truly) exists. Checks with a much more 
+        /// specific set of paramters to match on.
+        /// </summary>
+        /// <param name="name">The asset name.</param>
+        /// <param name="manufacturerId">The identifier for the <see cref="Manufacturer"/>.</param>
+        /// <param name="description">The asset description.</param>
+        /// <param name="sku">The asset SKU.</param>
+        /// <param name="catalogId">The Id of the catalog to search from.</param>
+        /// <param name="asset"></param>
+        /// <returns></returns>
+        bool AssetExists(string name, int manufacturerId, string description, string sku, int catalogId, out Asset asset);
 
         /// <summary>
         /// 

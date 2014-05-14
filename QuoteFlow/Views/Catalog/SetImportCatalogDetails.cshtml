@@ -1,0 +1,53 @@
+﻿@model QuoteFlow.Models.ViewModels.NewCatalogModel
+
+@{
+    Layout = "../Shared/_FocusedLayout.cshtml";
+    ViewBag.Title = "QuoteFlow - New Catalog";
+}
+
+<h2>Catalog Information</h2>
+@using (Html.BeginForm("VerifyImport", "Catalog", FormMethod.Get, new { @class = "aui" }))
+{
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "text" })
+            <div class="error">@Html.ValidationMessageFor(m => m.Name)</div>
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "textarea long-field" })
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Expirable)
+            @Html.CheckBoxFor(m => m.Expirable, new { @class = "checkbox" })
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.ExpirationDate)
+            @Html.TextBoxFor(m => m.ExpirationDate, new
+       {
+           @id = "catalog_expiration_date",
+           @class = "text",
+           @min = DateTime.UtcNow.ToString("yyyy-M-d")
+       })
+            <div class="error">@Html.ValidationMessageFor(m => m.ExpirationDate)</div>
+        </div>
+    </fieldset>
+
+    <div class="buttons-container">
+        <div class="buttons">
+            <input class="aui-button" type="submit" id="submit" name="submit" value="Next">
+            <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="#">Cancel</a>
+        </div>
+    </div>
+}
+
+@section secondaryScripts {
+    <script>
+        AJS.$(document).ready(function() {
+            AJS.$('#catalog_expiration_date').datePicker({ 'overrideBrowserDefault': true });
+        });
+    </script>
+}

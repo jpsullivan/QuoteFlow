@@ -64,7 +64,9 @@
         var assetVar;
         if (this.assetVarsDropdown.prop('disabled')) {
             // user opted to create a new assetvar
-            assetVar = this.createAssetVar(this.getNewAssetVarName());
+            this.createAssetVar(this.getNewAssetVarName());
+            this.assetVars = this.fetchAssetVars(); // re-fetch collection to get the id
+            assetVar = this.assetVars.at(this.assetVars.length - 1);
         } else {
             // the user has selected an existing assetvar
             var assetVarId = this.getSelectedExistingAssetVar();
@@ -115,7 +117,7 @@
             CreatedBy: QuoteFlow.CurrentUserId
         });
 
-        return this.assetVars.create(assetVar);
+        return this.assetVars.create(assetVar, { wait: true });
     },
 
     getNewAssetVarName: function() {

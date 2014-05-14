@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using QuoteFlow.Models;
@@ -9,16 +11,16 @@ namespace QuoteFlow.Services
     public class AssetPriceService : IAssetPriceService
     {
         /// <summary>
-        /// Gets the asset price for a particular asset.
+        /// Gets the asset prices for a particular asset.
         /// </summary>
         /// <param name="assetId">The Id of the asset to search for.</param>
-        /// <returns>An AssetPrice object</returns>
-        public AssetPrice GetAssetPrice(int assetId)
+        /// <returns>A collection of asset pricings.</returns>
+        public IEnumerable<AssetPrice> GetAssetPrices(int assetId)
         {
             var assetPrice = Current.DB.Query<AssetPrice>("select * from AssetPrices where AssetId = @assetId", new
             {
                 assetId
-            }).Single();
+            });
             return assetPrice;
         }
 
@@ -29,9 +31,8 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public AssetPrice InsertPrice(AssetPrice assetPrice)
         {
-            var nowUtc = DateTime.UtcNow;
-            assetPrice.CreationDate = nowUtc;
-            assetPrice.LastUpdated = nowUtc;
+            assetPrice.CreationDate = DateTime.UtcNow;
+            assetPrice.LastUpdated = DateTime.UtcNow;
             int? insert = Current.DB.AssetPrices.Insert(assetPrice);
 
             if (insert != null)

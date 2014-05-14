@@ -1,7 +1,10 @@
-﻿<td data-assetvar-id="{{assetVar.Id}}">{{assetVar.Name}}</td>
+﻿<td data-assetvar-id="{{assetVar.Id}}">
+    <input type="hidden" name="AssetVarId_{{assetVar.Id}}" value="{{assetVar.Id}}"/>
+    {{assetVar.Name}}
+</td>
 <td>
-    <select class="select">
-        <option>Select a header</option>
+    <select class="select" id="{{assetVar.Id}}_HeaderId" name="HeaderId_{{assetVar.Id}}">
+        <option value="-1">Select a header</option>
         {{#each catalogHeaders}}
         <option value="{{Value}}">{{Text}}</option>
         {{/each}}

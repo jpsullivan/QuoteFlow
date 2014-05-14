@@ -7,6 +7,9 @@ namespace QuoteFlow.Models
         public int Id { get; set; }
         public int AssetId { get; set; }
 
+        public int CatalogId { get; set; }
+        public Catalog Catalog { get; set; }
+
         private decimal _cost;
         public decimal Cost
         {

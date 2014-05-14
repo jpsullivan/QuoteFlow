@@ -4,6 +4,7 @@ using System.Linq;
 using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Services.Interfaces;
+using StackExchange.Profiling.Helpers.Dapper;
 
 namespace QuoteFlow.Services
 {
@@ -33,12 +34,10 @@ namespace QuoteFlow.Services
         {
             var asset = Current.DB.Assets.Get(assetId);
             var manufacturer = ManufacturerService.GetManufacturer(asset.ManufacturerId);
-            var pricing = AssetPriceService.GetAssetPrice(assetId);
+            var pricing = AssetPriceService.GetAssetPrices(assetId);
 
             asset.Manufacturer = manufacturer;
-            asset.Cost = pricing.Cost;
-            asset.Markup = pricing.Markup;
-            asset.Price = pricing.Price;
+            asset.Prices = pricing;
 
             return asset;
         }
@@ -55,11 +54,9 @@ namespace QuoteFlow.Services
                         join AssetPrices ap on ap.AssetId = a.Id
                         where a.CatalogId = @catalogId";
 
-            return Current.DB.Query<Asset, Manufacturer, AssetPrice, Asset>(sql, (a, m, ap) => {
+            return Current.DB.Query<Asset, Manufacturer, IEnumerable<AssetPrice>, Asset>(sql, (a, m, ap) => {
                 a.Manufacturer = m;
-                a.Cost = ap.Cost;
-                a.Markup = ap.Markup;
-                a.Price = ap.Price;
+                a.Prices = ap;
                 return a;
             }, new {catalogId});
         }
@@ -123,12 +120,91 @@ namespace QuoteFlow.Services
 
             assetPrice.AssetId = asset.Id;
 
-            // Insert the new asset price and set it tot he asset
-            assetPrice = AssetPriceService.InsertPrice(assetPrice);
-            asset.Cost = assetPrice.Cost;
-            asset.Markup = assetPrice.Markup;
-            asset.Price = assetPrice.Price;
+            // Insert the new asset price and set it to the asset
+            AssetPriceService.InsertPrice(assetPrice);
 
+            asset.Prices = AssetPriceService.GetAssetPrices(asset.Id);
+            return asset;
+        }
+
+        /// <summary>
+        /// Creates an <see cref="Asset"/>.
+        /// </summary>
+        /// <param name="asset">A pre-built <see cref="Asset"/>.</param>
+        /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
+        /// <returns></returns>
+        public Asset CreateAsset(Asset asset, int userId)
+        {
+            if (asset == null) {
+                throw new ArgumentNullException("asset");
+            }
+
+            if (userId == 0) {
+                throw new ArgumentException("User Id must be greater than zero.", "userId");
+            }
+
+            // Fill in any fields that one shouldn't be concerned with elsewhere
+            asset.Type = "Asset";
+
+            if (asset.CreationDate.Equals(DateTime.MinValue))
+            {
+                asset.CreationDate = DateTime.UtcNow;
+            }
+
+            if (asset.LastUpdated.Equals(DateTime.MinValue))
+            {
+                asset.LastUpdated = DateTime.UtcNow;
+            }
+
+            int? insert = Current.DB.Assets.Insert(new
+            {
+                asset.Name,
+                asset.Description,
+                asset.Type,
+                asset.ManufacturerId,
+                asset.CreatorId,
+                asset.CatalogId,
+                asset.CreationDate,
+                asset.LastUpdated
+            });
+
+            if (insert != null)
+            {
+                asset.Id = insert.Value;
+            }
+
+            return asset;
+        }
+
+        /// <summary>
+        /// Creates an <see cref="Asset"/>.
+        /// </summary>
+        /// <param name="asset">A pre-built <see cref="Asset"/>.</param>
+        /// <param name="price"></param>
+        /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
+        /// <returns></returns>
+        public Asset CreateAsset(Asset asset, AssetPrice price, int userId)
+        {
+            if (asset == null) {
+                throw new ArgumentNullException("asset");
+            }
+
+            if (price == null) {
+                throw new ArgumentNullException("price");
+            }
+
+            if (userId == 0) {
+                throw new ArgumentException("User Id must be greater than zero.", "userId");
+            }
+
+            asset = CreateAsset(asset, userId);
+
+            price.AssetId = asset.Id;
+
+            // Insert the new asset price and set it to the asset
+            AssetPriceService.InsertPrice(price);
+
+            asset.Prices = AssetPriceService.GetAssetPrices(asset.Id);
             return asset;
         }
 
@@ -140,15 +216,56 @@ namespace QuoteFlow.Services
         /// <returns>True if asset exists, false if not.</returns>
         public bool AssetExists(string assetName, int catalogId)
         {
-            Asset asset =
-                Current.DB.Query<Asset>("select * from Assets where Name = @assetName AND CatalogId = @catalogId",
-                                        new
-                                        {
-                                            assetName,
-                                            catalogId
-                                        }).FirstOrDefault();
+            const string sql = "select * from Assets where Name = @assetName AND CatalogId = @catalogId";
+            var asset = Current.DB.Query<Asset>(sql, new
+            {
+                assetName,
+                catalogId
+            }).FirstOrDefault();
 
             return asset != null;
+        }
+
+        /// <summary>
+        /// Check if an asset (truly) exists. Checks with a much more 
+        /// specific set of paramters to match on.
+        /// </summary>
+        /// <param name="name">The asset name.</param>
+        /// <param name="manufacturerId">The identifier for the <see cref="Manufacturer"/>.</param>
+        /// <param name="description">The asset description.</param>
+        /// <param name="sku">The asset SKU.</param>
+        /// <param name="catalogId">The Id of the catalog to search from.</param>
+        /// <param name="asset"></param>
+        /// <returns></returns>
+        public bool AssetExists(string name, int manufacturerId, string description, string sku, int catalogId, out Asset asset)
+        {
+            var builder = new SqlBuilder();
+            SqlBuilder.Template tmpl = builder.AddTemplate(@"
+                SELECT * FROM Assets
+                /**where**/"
+            );
+
+            builder.Where("Name = @name");
+            builder.Where("Description = @description");
+            builder.Where("SKU = @sku");
+            builder.Where("ManufacturerId = @manufacturerId");
+            builder.Where("CatalogId = @catalogId");
+
+            var assets = Current.DB.Query<Asset>(tmpl.RawSql, new
+            {
+                name, description, sku, manufacturerId, catalogId
+            });
+
+            var enumerable = assets as Asset[] ?? assets.ToArray();
+            if (enumerable.Any()) {
+                if (enumerable.Count() == 1) {
+                    asset = enumerable.First();
+                    return true;
+                }
+            } else {
+                asset = null;
+                return false;
+            }
         }
 
         /// <summary>

@@ -369,10 +369,17 @@
     <Compile Include="Models\AssetVarValue.cs" />
     <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\CatalogCsv.cs" />
+    <Compile Include="Models\CatalogImport\CatalogImportSummary.cs" />
+    <Compile Include="Models\CatalogImport\CatalogRecordImportFailure.cs" />
+    <Compile Include="Models\CatalogImport\CatalogRecordImportSkipped.cs" />
+    <Compile Include="Models\CatalogImport\CatalogRecordImportSuccess.cs" />
+    <Compile Include="Models\CatalogImport\CatalogSummaryResult.cs" />
+    <Compile Include="Models\CatalogImport\ICatalogSummaryRecord.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Credential.cs" />
     <Compile Include="Models\EmailMessage.cs" />
     <Compile Include="Models\Manufacturer.cs" />
+    <Compile Include="Models\OptionalImportField.cs" />
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
@@ -695,6 +702,7 @@
     <Content Include="Views\Catalog\VerifyImport.cshtml" />
     <Content Include="Views\Shared\_FocusedLayoutLarge.cshtml" />
     <Content Include="Views\Catalog\VerifyImportSecondary.cshtml" />
+    <Content Include="Views\Catalog\SetImportCatalogDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CsvHelper;
-using Microsoft.Web.Mvc;
-using QuoteFlow.Infrastructure;
+using Microsoft.Owin.Security.Provider;
 using QuoteFlow.Infrastructure.AsyncFileUpload;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
@@ -161,7 +158,7 @@ namespace QuoteFlow.Controllers
             using (var existingUploadFile = await UploadFileService.GetUploadFileAsync(currentUser.Id))
             {
                 if (existingUploadFile != null) {
-                    return RedirectToAction("VerifyImport");
+                    return RedirectToAction("SetImportCatalogDetails");
                 }
             }
 
@@ -193,7 +190,7 @@ namespace QuoteFlow.Controllers
                 await UploadFileService.SaveUploadFileAsync(currentUser.Id, uploadStream, Path.GetExtension(uploadFile.FileName));
             }
 
-            return RedirectToAction("VerifyImport", "Catalog");
+            return RedirectToAction("SetImportCatalogDetails", "Catalog");
         }
 
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
@@ -209,45 +206,29 @@ namespace QuoteFlow.Controllers
             return Json(progress, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("catalog/verify", HttpVerbs.Get)]
-        public virtual async Task<ActionResult> VerifyImport()
+        [Route("catalog/importCatalogDetails")]
+        public virtual async Task<ActionResult> SetImportCatalogDetails()
         {
-            var catalogData = GetCatalogData().Result;
-            if (catalogData == null) {
-                return RedirectToAction("Import", "Catalog");
+            return View();
+        }
+
+        [Route("catalog/verify", HttpVerbs.Get)]
+        public virtual async Task<ActionResult> VerifyImport(NewCatalogModel catalogDetails)
+        {
+            if (catalogDetails == null) 
+            {
+                return RedirectToAction("Import");
             }
 
-            var headers = catalogData.Headers;
-            var rows = catalogData.Rows;
-
-            var model = new VerifyCatalogImportViewModel
+            // todo: ensure that the catalog name is not already taken
+            if (CatalogService.CatalogNameExists(catalogDetails.Name, CurrentOrganization.Id))
             {
-                Headers = headers,
-                Rows = rows,
-                TotalRows = rows.Count()
-            };
+                return PageBadRequest("Catalog name already taken. Show this error in the form.");
+            }
 
-            return View(model);
-        }
+            catalogDetails.Organization = CurrentOrganization;
 
-        [Route("catalog/verify", HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> VerifyImport(VerifyCatalogImportViewModel formData)
-        {
-            // todo: validate the previous form to ensure that no two dropdowns have the same value selected
-
-            // todo: determine which headers have been selected, and remove them from the dropdown
-            // todo: fetch a list of all asset vars to be placed into a dropdown of their own
-
-            return RedirectToAction("VerifyImportSecondary", formData.PrimaryCatalogFields);
-        }
-
-        [Route("catalog/verifyOther", HttpVerbs.Get)]
-        public virtual async Task<ActionResult> VerifyImportSecondary(PrimaryCatalogFieldsViewModel primaryModel)
-        {
-            // Since we can't get proper modelbinding on a multi-step form, we are 
-            // going to have to just get greasy and re-fetch the csv data... This class is fucked.
-
+            // fetch the catalog data
             var catalogData = GetCatalogData().Result;
             if (catalogData == null) {
                 return RedirectToAction("Import", "Catalog");
@@ -261,10 +242,107 @@ namespace QuoteFlow.Controllers
                 Headers = headers,
                 Rows = rows,
                 TotalRows = rows.Count(),
-                PrimaryCatalogFields = primaryModel
+                CatalogInformation = catalogDetails
             };
 
             return View(model);
+        }
+
+        [Route("catalog/verify", HttpVerbs.Post)]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> VerifyImport(VerifyCatalogImportViewModel formData)
+        {
+            var catalogInformation = Jil.JSON.Deserialize<NewCatalogModel>(Request.Form["CatalogInformation"]);
+
+            // todo: validate the previous form to ensure that no two dropdowns have the same value selected
+
+            // todo: determine which headers have been selected, and remove them from the dropdown
+            // todo: fetch a list of all asset vars to be placed into a dropdown of their own
+
+            // rather than take the entire viewmodel with all the rows to the client, just 
+            // take the necessary ones
+            var slimVerifyModel = new VerifyCatalogImportViewModel
+            {
+                CatalogInformation = catalogInformation,
+                PrimaryCatalogFields = formData.PrimaryCatalogFields
+            };
+
+            return RedirectToAction("VerifyImportSecondary", slimVerifyModel);
+        }
+
+        [Route("catalog/verifyOther", HttpVerbs.Get)]
+        public virtual async Task<ActionResult> VerifyImportSecondary(VerifyCatalogImportViewModel slimVerifyModel)
+        {
+            // Since we can't get proper modelbinding on a multi-step form, we are 
+            // going to have to just get greasy and re-fetch the csv data... This class is fucked.
+
+            var catalogData = GetCatalogData().Result;
+            if (catalogData == null) 
+            {
+                return RedirectToAction("Import");
+            }
+
+            var headers = catalogData.Headers;
+            var rows = catalogData.Rows;
+
+            var model = new VerifyCatalogImportViewModel
+            {
+                Headers = headers,
+                Rows = rows,
+                TotalRows = rows.Count(),
+                CatalogInformation = slimVerifyModel.CatalogInformation,
+                PrimaryCatalogFields = slimVerifyModel.PrimaryCatalogFields
+            };
+
+            return View(model);
+        }
+
+        [Route("catalog/verifyOther", HttpVerbs.Post)]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> VerifyImportSecondary(FormCollection form)
+        {
+            var catalogInformation = Jil.JSON.Deserialize<NewCatalogModel>(form["CatalogInformation"]);
+            var primaryFields = Jil.JSON.Deserialize<PrimaryCatalogFieldsViewModel>(form["PrimaryCatalogFields"]);
+            var fields = new List<OptionalImportField>();
+
+            foreach (var key in form.AllKeys) 
+            {
+                if (!key.StartsWith("AssetVarId_", StringComparison.CurrentCultureIgnoreCase)) continue;
+
+                var assetVarId = Int32.Parse(form[key]);
+                var headerId = Int32.Parse(form["HeaderId_" + assetVarId]); // directly fetch the header value for this asset var
+                fields.Add(new OptionalImportField(assetVarId, headerId));
+            }
+
+            var secondaryFields = new SecondaryCatalogFieldsViewModel(fields);
+
+            // re-fetch the catalog data because this class is fucking horrendous
+            var catalogData = GetCatalogData().Result;
+            if (catalogData == null)
+            {
+                return RedirectToAction("Import");
+            }
+
+            var headers = catalogData.Headers;
+            var rows = catalogData.Rows;
+
+            var model = new VerifyCatalogImportViewModel
+            {
+                Headers = headers,
+                Rows = rows,
+                TotalRows = rows.Count(),
+                CatalogInformation = catalogInformation,
+                PrimaryCatalogFields = primaryFields,
+                SecondaryCatalogFields = secondaryFields
+            };
+
+            return RedirectToAction("ImportSummary", model);
+        }
+
+        [Route("catalog/importSummary")]
+        public virtual async Task<ActionResult> ImportSummary()
+        {
+            return new EmptyResult();
         }
 
         [Route("catalog/cancelImport", HttpVerbs.Post)]

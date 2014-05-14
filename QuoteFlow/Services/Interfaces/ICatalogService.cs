@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using QuoteFlow.Models;
+using QuoteFlow.Models.CatalogImport;
 using QuoteFlow.Models.ViewModels;
 
 namespace QuoteFlow.Services.Interfaces
@@ -50,5 +51,14 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="orgs"></param>
         /// <returns></returns>
         IEnumerable<Catalog> GetCatalogsWithinOrganizations(ICollection<Organization> orgs);
+
+        /// <summary>
+        /// Performs the import operations for a catalog.
+        /// </summary>
+        /// <param name="model">The ViewModel'd container for the import fields and rules.</param>
+        /// <param name="currentUserId"></param>
+        /// <param name="organizationId"></param>
+        /// <returns></returns>
+        CatalogImportSummary ImportCatalog(VerifyCatalogImportViewModel model, int currentUserId, int organizationId);
     }
 }

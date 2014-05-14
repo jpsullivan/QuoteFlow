@@ -1,15 +1,16 @@
-﻿using QuoteFlow.Models;
+﻿using System.Collections.Generic;
+using QuoteFlow.Models;
 
 namespace QuoteFlow.Services.Interfaces
 {
     public interface IAssetPriceService
     {
         /// <summary>
-        /// Gets the asset price for a particular asset.
+        /// Gets the asset prices for a particular asset.
         /// </summary>
         /// <param name="assetId">The Id of the asset to search for.</param>
-        /// <returns>An AssetPrice object</returns>
-        AssetPrice GetAssetPrice(int assetId);
+        /// <returns></returns>
+        IEnumerable<AssetPrice> GetAssetPrices(int assetId);
 
         /// <summary>
         /// Inserts a new asset price object into the AssetPrices table

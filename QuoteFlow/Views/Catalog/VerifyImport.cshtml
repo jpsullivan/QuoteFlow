@@ -9,6 +9,8 @@
 @using (Html.BeginForm("VerifyImport", "Catalog", FormMethod.Post, new { id = "request_form", enctype = "multipart/form-data", @class = "aui" }))
 {
     @Html.AntiForgeryToken()
+    
+    @Html.Hidden("CatalogInformation", ViewHelpers.JsEncode(Model.CatalogInformation))
 
     <fieldset>
         <div class="field-group" data-value-type="string">

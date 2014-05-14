@@ -6,9 +6,12 @@
 }
 
 <h2>Set Catalog Secondary Manifest Fields</h2>
-@using (Html.BeginForm("VerifyImport", "Catalog", FormMethod.Post, new { id = "request_form", enctype = "multipart/form-data", @class = "aui" }))
+@using (Html.BeginForm("VerifyImportSecondary", "Catalog", FormMethod.Post, new { enctype = "multipart/form-data", @class = "aui" }))
 {
     @Html.AntiForgeryToken()
+    
+    @Html.Hidden("CatalogInformation", ViewHelpers.JsEncode(Model.CatalogInformation))
+    @Html.Hidden("PrimaryCatalogFields", ViewHelpers.JsEncode(Model.PrimaryCatalogFields))
     
     <p>
         On this page you can configure any other fields that you wish to be inserted to your catalog.  This is an

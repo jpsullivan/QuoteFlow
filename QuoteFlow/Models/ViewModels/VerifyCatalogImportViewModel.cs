@@ -24,6 +24,8 @@ namespace QuoteFlow.Models.ViewModels
         /// </summary>
         public int TotalRows { get; set; }
 
+        public NewCatalogModel CatalogInformation { get; set; }
+
         /// <summary>
         /// The model that contains the data received in the first
         /// step of catalog manifest imports.
@@ -40,6 +42,10 @@ namespace QuoteFlow.Models.ViewModels
     [Serializable]
     public class PrimaryCatalogFieldsViewModel
     {
+        [Required]
+        [Display(Name = "Catalog Name")]
+        public string CatalogName { get; set; }
+
         [Required]
         [Display(Name = "Asset Name")]
         public int AssetNameHeaderId { get; set; }
@@ -67,6 +73,13 @@ namespace QuoteFlow.Models.ViewModels
     [Serializable]
     public class SecondaryCatalogFieldsViewModel
     {
-        
+        public SecondaryCatalogFieldsViewModel() { }
+
+        public SecondaryCatalogFieldsViewModel(List<OptionalImportField> optionalFields)
+        {
+            OptionalImportFields = optionalFields;
+        }
+
+        public List<OptionalImportField> OptionalImportFields { get; set; }
     }
 }
