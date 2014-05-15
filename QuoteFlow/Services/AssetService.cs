@@ -159,6 +159,7 @@ namespace QuoteFlow.Services
             int? insert = Current.DB.Assets.Insert(new
             {
                 asset.Name,
+                asset.SKU,
                 asset.Description,
                 asset.Type,
                 asset.ManufacturerId,
@@ -277,6 +278,17 @@ namespace QuoteFlow.Services
             var margin = (cost * (percent / 100));
             var price = (cost + margin);
             return price;
+        }
+
+        /// <summary>
+        /// Returns whether or not the specified asset name exceeds the
+        /// maximum length of 250 characters (which is still way too high, people).
+        /// </summary>
+        /// <param name="name">The asset name</param>
+        /// <returns></returns>
+        public bool AssetNameExceedsMaximumLength(string name)
+        {
+            return name.Length > 250;
         }
     }
 }

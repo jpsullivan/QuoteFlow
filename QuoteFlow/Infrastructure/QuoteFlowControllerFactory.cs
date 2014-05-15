@@ -9,8 +9,8 @@ namespace QuoteFlow.Infrastructure
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
             var controller = base.GetControllerInstance(requestContext, controllerType);
-            var controllerBase = controller as Controller;
-            controllerBase.TempDataProvider = new CookieTempDataProvider(requestContext.HttpContext);
+            //var controllerBase = controller as Controller;
+            //controllerBase.TempDataProvider = new CookieTempDataProvider(requestContext.HttpContext);
             return controller;
         }
     }

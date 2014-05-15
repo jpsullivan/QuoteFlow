@@ -6,7 +6,7 @@
 }
 
 <h2>Catalog Information</h2>
-@using (Html.BeginForm("VerifyImport", "Catalog", FormMethod.Get, new { @class = "aui" }))
+@using (Html.BeginForm("SetImportCatalogDetails", "Catalog", FormMethod.Post, new { @class = "aui" }))
 {
     @Html.AntiForgeryToken()
 

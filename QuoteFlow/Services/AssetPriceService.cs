@@ -33,8 +33,8 @@ namespace QuoteFlow.Services
         {
             assetPrice.CreationDate = DateTime.UtcNow;
             assetPrice.LastUpdated = DateTime.UtcNow;
-            int? insert = Current.DB.AssetPrices.Insert(assetPrice);
 
+            int? insert = Current.DB.AssetPrices.Insert(assetPrice);
             if (insert != null)
             {
                 assetPrice.Id = insert.Value;

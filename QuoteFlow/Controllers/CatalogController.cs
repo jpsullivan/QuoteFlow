@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using CsvHelper;
 using Microsoft.Owin.Security.Provider;
 using QuoteFlow.Infrastructure.AsyncFileUpload;
@@ -206,15 +207,24 @@ namespace QuoteFlow.Controllers
             return Json(progress, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("catalog/importCatalogDetails")]
+        [Route("catalog/importCatalogDetails", HttpVerbs.Get)]
         public virtual async Task<ActionResult> SetImportCatalogDetails()
         {
             return View();
         }
 
-        [Route("catalog/verify", HttpVerbs.Get)]
-        public virtual async Task<ActionResult> VerifyImport(NewCatalogModel catalogDetails)
+        [Route("catalog/importCatalogDetails", HttpVerbs.Post)]
+        public virtual async Task<ActionResult> SetImportCatalogDetails(NewCatalogModel catalogDetails)
         {
+            TempData["CatalogDetails"] = catalogDetails;
+
+            return RedirectToAction("VerifyImport");
+        }
+
+        [Route("catalog/verify", HttpVerbs.Get)]
+        public virtual async Task<ActionResult> VerifyImport()
+        {
+            var catalogDetails = (NewCatalogModel) TempData["CatalogDetails"];
             if (catalogDetails == null) 
             {
                 return RedirectToAction("Import");
@@ -266,13 +276,15 @@ namespace QuoteFlow.Controllers
                 CatalogInformation = catalogInformation,
                 PrimaryCatalogFields = formData.PrimaryCatalogFields
             };
+            TempData["VerifyModel"] = slimVerifyModel;
 
             return RedirectToAction("VerifyImportSecondary", slimVerifyModel);
         }
 
         [Route("catalog/verifyOther", HttpVerbs.Get)]
-        public virtual async Task<ActionResult> VerifyImportSecondary(VerifyCatalogImportViewModel slimVerifyModel)
+        public virtual async Task<ActionResult> VerifyImportSecondary()
         {
+            var slimVerifyModel = (VerifyCatalogImportViewModel)TempData["VerifyModel"];
             // Since we can't get proper modelbinding on a multi-step form, we are 
             // going to have to just get greasy and re-fetch the csv data... This class is fucked.
 
@@ -339,11 +351,14 @@ namespace QuoteFlow.Controllers
             // Do the import!
             var id = CatalogService.ImportCatalog(model, GetCurrentUser().Id, CurrentOrganization.Id);
 
-            return RedirectToAction("ImportSummary", id);
+            //return RedirectToAction("ImportSummary", id);
+            //return RedirectToRoute("catalog/" + id + "/importSummary");
+            var url = string.Format("~/catalog/{0}/{1}/importSummary", id, CatalogService.GetCatalog(id).Name.UrlFriendly());
+            return Redirect(url);
         }
 
-        [Route("catalog/{catalogId}importSummary")]
-        public virtual async Task<ActionResult> ImportSummary(int catalogId)
+        [Route("catalog/{catalogId:INT}/{catalogName}/importSummary")]
+        public virtual async Task<ActionResult> ImportSummary(int catalogId, string catalogName)
         {
             return new EmptyResult();
         }

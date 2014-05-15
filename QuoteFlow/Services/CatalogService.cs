@@ -160,6 +160,7 @@ namespace QuoteFlow.Services
 
             var newCatalog = CreateCatalog(model.CatalogInformation, currentUserId);
             var summaries = new List<ICatalogSummaryRecord>();
+            string reason;
 
             var primaryFields = model.PrimaryCatalogFields;
             var secondaryFields = model.SecondaryCatalogFields;
@@ -167,6 +168,7 @@ namespace QuoteFlow.Services
             for (int i = 0; i < model.Rows.Count() - 1; i++) {
                 var row = model.Rows.ElementAt(i);
                 Asset asset;
+                bool skipProcessing = false;
 
                 // get the manufacturer if they exist, otherwise create it
                 var manufacturerName = row[primaryFields.ManufacturerHeaderId];
@@ -191,42 +193,52 @@ namespace QuoteFlow.Services
                         SKU = sku
                     };
 
-                    asset = AssetService.CreateAsset(newAsset, currentUserId);
+                    // is the asset name too long? Flag it. Otherwise, add it.
+                    if (AssetService.AssetNameExceedsMaximumLength(name)) {
+                        reason = string.Format("Asset name is longer than 250 characters.");
+                        summaries.Add(new CatalogRecordImportFailure(i, reason));
+                        skipProcessing = true;
+                    } else {
+                        asset = AssetService.CreateAsset(newAsset, currentUserId);
+                    }
                 }
 
+                // If the asset would fail to be created, skip the following steps.
+                if (skipProcessing) continue;
+
                 // forceful failure if for some reason asset is null
-                if (asset == null) {
+                if (asset == null)
+                {
                     throw new Exception("Asset should not be null at this point. Something wrong has occurred.");
                 }
 
                 var price = new AssetPrice();
 
                 decimal cost;
-                string reason;
                 if (Decimal.TryParse(row[primaryFields.CostHeaderId], out cost)) {
                     price.Cost = cost;
                 } else {
-                    reason = string.Format("Could not convert {0} to decimal.", row[primaryFields.CostHeaderId]);
-                    summaries.Add(new CatalogRecordImportFailure(i, reason));
+                    reason = string.Format("Could not convert cost value of '{0}' to decimal.", row[primaryFields.CostHeaderId]);
+                    summaries.Add(new CatalogRecordImportFailure(i, reason, asset.Id));
                 }
 
                 decimal markup;
-                if (Decimal.TryParse(row[primaryFields.CostHeaderId], out markup)) {
+                if (Decimal.TryParse(row[primaryFields.MarkupHeaderId], out markup)) {
                     price.Markup = markup;
                 } else {
-                    reason = string.Format("Could not convert {0} to decimal.", row[primaryFields.CostHeaderId]);
-                    summaries.Add(new CatalogRecordImportFailure(i, reason));
+                    reason = string.Format("Could not convert markup value of '{0}' to decimal.", row[primaryFields.CostHeaderId]);
+                    summaries.Add(new CatalogRecordImportFailure(i, reason, asset.Id));
                 }
 
                 price.AssetId = asset.Id;
-                price.Cost = Decimal.Parse(row[primaryFields.CostHeaderId]);
-                price.Markup = Decimal.Parse(row[primaryFields.ManufacturerHeaderId]);
+                price.CatalogId = newCatalog.Id;
 
                 // add the price
                 AssetPriceService.InsertPrice(price);
 
                 // And finally let's add in the asset vars
-                foreach (var field in secondaryFields.OptionalImportFields) {
+                foreach (var field in secondaryFields.OptionalImportFields)
+                {
                     var headerValue = row[field.HeaderId];
                     var varValue = new AssetVarValue(asset.Id, field.AssetVarId, headerValue, organizationId);
                     AssetVarService.InsertVarValue(varValue);

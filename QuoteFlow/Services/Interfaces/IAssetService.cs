@@ -81,5 +81,13 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="markup"></param>
         /// <returns></returns>
         decimal CalculatePrice(decimal cost, decimal markup);
+
+        /// <summary>
+        /// Returns whether or not the specified asset name exceeds the
+        /// maximum length of 250 characters (which is still way too high, people).
+        /// </summary>
+        /// <param name="name">The asset name</param>
+        /// <returns></returns>
+        bool AssetNameExceedsMaximumLength(string name);
     }
 }
