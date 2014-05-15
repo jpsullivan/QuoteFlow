@@ -59,6 +59,6 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="currentUserId"></param>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        CatalogImportSummary ImportCatalog(VerifyCatalogImportViewModel model, int currentUserId, int organizationId);
+        int ImportCatalog(VerifyCatalogImportViewModel model, int currentUserId, int organizationId);
     }
 }

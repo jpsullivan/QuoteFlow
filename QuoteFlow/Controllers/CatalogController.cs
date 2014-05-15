@@ -336,11 +336,14 @@ namespace QuoteFlow.Controllers
                 SecondaryCatalogFields = secondaryFields
             };
 
-            return RedirectToAction("ImportSummary", model);
+            // Do the import!
+            var id = CatalogService.ImportCatalog(model, GetCurrentUser().Id, CurrentOrganization.Id);
+
+            return RedirectToAction("ImportSummary", id);
         }
 
-        [Route("catalog/importSummary")]
-        public virtual async Task<ActionResult> ImportSummary()
+        [Route("catalog/{catalogId}importSummary")]
+        public virtual async Task<ActionResult> ImportSummary(int catalogId)
         {
             return new EmptyResult();
         }

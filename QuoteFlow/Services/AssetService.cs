@@ -251,21 +251,18 @@ namespace QuoteFlow.Services
             builder.Where("ManufacturerId = @manufacturerId");
             builder.Where("CatalogId = @catalogId");
 
-            var assets = Current.DB.Query<Asset>(tmpl.RawSql, new
+            var foundAsset = Current.DB.Query<Asset>(tmpl.RawSql, new
             {
                 name, description, sku, manufacturerId, catalogId
-            });
+            }).FirstOrDefault();
 
-            var enumerable = assets as Asset[] ?? assets.ToArray();
-            if (enumerable.Any()) {
-                if (enumerable.Count() == 1) {
-                    asset = enumerable.First();
-                    return true;
-                }
-            } else {
+            if (foundAsset == null) {
                 asset = null;
                 return false;
             }
+
+            asset = foundAsset;
+            return true;
         }
 
         /// <summary>

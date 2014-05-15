@@ -72,6 +72,10 @@ namespace QuoteFlow
                 .To<AssetVarService>()
                 .InRequestScope();
 
+            Bind<ICatalogImportSummaryRecordsService>()
+                .To<CatalogImportSummaryRecordsService>()
+                .InRequestScope();
+
             Bind<ICatalogService>()
                 .To<CatalogService>()
                 .InRequestScope();

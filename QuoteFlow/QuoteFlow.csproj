@@ -370,6 +370,7 @@
     <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\CatalogCsv.cs" />
     <Compile Include="Models\CatalogImport\CatalogImportSummary.cs" />
+    <Compile Include="Models\CatalogImport\CatalogImportSummaryRecord.cs" />
     <Compile Include="Models\CatalogImport\CatalogRecordImportFailure.cs" />
     <Compile Include="Models\CatalogImport\CatalogRecordImportSkipped.cs" />
     <Compile Include="Models\CatalogImport\CatalogRecordImportSuccess.cs" />
@@ -413,6 +414,7 @@
     <Compile Include="Services\AssetPriceService.cs" />
     <Compile Include="Services\AssetService.cs" />
     <Compile Include="Services\AssetVarService.cs" />
+    <Compile Include="Services\CatalogImportSummaryRecordsService.cs" />
     <Compile Include="Services\CatalogService.cs" />
     <Compile Include="Services\CloudBlobClientWrapper.cs" />
     <Compile Include="Services\CloudBlobContainerWrapper.cs" />
@@ -430,6 +432,7 @@
     <Compile Include="Services\Interfaces\IAssetService.cs" />
     <Compile Include="Services\Interfaces\IAssetVarService.cs" />
     <Compile Include="Services\Interfaces\ICacheService.cs" />
+    <Compile Include="Services\Interfaces\ICatalogImportSummaryRecordsService.cs" />
     <Compile Include="Services\Interfaces\ICatalogService.cs" />
     <Compile Include="Services\Interfaces\ICloudBlobClient.cs" />
     <Compile Include="Services\Interfaces\ICloudBlobContainer.cs" />

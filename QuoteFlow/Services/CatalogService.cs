@@ -15,16 +15,19 @@ namespace QuoteFlow.Services
         private IAssetPriceService AssetPriceService { get; set; }
         private IAssetService AssetService { get; set; }
         private IAssetVarService AssetVarService { get; set; }
+        private ICatalogImportSummaryRecordsService CatalogSummaryService { get; set; }
         private IManufacturerService ManufacturerService { get; set; }
 
         public CatalogService() { }
 
         public CatalogService(IAssetPriceService assetPriceService, IAssetService assetService, 
-            IAssetVarService assetVarService, IManufacturerService manufacturerService)
+            ICatalogImportSummaryRecordsService catalogSummaryService, IAssetVarService assetVarService, 
+            IManufacturerService manufacturerService)
         {
             AssetPriceService = assetPriceService;
             AssetService = assetService;
             AssetVarService = assetVarService;
+            CatalogSummaryService = catalogSummaryService;
             ManufacturerService = manufacturerService;
         }
 
@@ -148,8 +151,8 @@ namespace QuoteFlow.Services
         /// <param name="model">The ViewModel'd container for the import fields and rules.</param>
         /// <param name="currentUserId"></param>
         /// <param name="organizationId"></param>
-        /// <returns></returns>
-        public CatalogImportSummary ImportCatalog(VerifyCatalogImportViewModel model, int currentUserId, int organizationId)
+        /// <returns>The newly created catalog id.</returns>
+        public int ImportCatalog(VerifyCatalogImportViewModel model, int currentUserId, int organizationId)
         {
             if (model == null) {
                 throw new ArgumentNullException("Catalog import failed due to missing data.");
@@ -160,7 +163,6 @@ namespace QuoteFlow.Services
 
             var primaryFields = model.PrimaryCatalogFields;
             var secondaryFields = model.SecondaryCatalogFields;
-            string reason;
 
             for (int i = 0; i < model.Rows.Count() - 1; i++) {
                 var row = model.Rows.ElementAt(i);
@@ -200,6 +202,7 @@ namespace QuoteFlow.Services
                 var price = new AssetPrice();
 
                 decimal cost;
+                string reason;
                 if (Decimal.TryParse(row[primaryFields.CostHeaderId], out cost)) {
                     price.Cost = cost;
                 } else {
@@ -232,8 +235,10 @@ namespace QuoteFlow.Services
                 summaries.Add(new CatalogRecordImportSuccess(i, asset));
             }
 
+            // Insert the import summary
+            CatalogSummaryService.InsertSummaries(summaries, newCatalog.Id);
 
-            return new CatalogImportSummary();
+            return newCatalog.Id;
         }
     }
 }

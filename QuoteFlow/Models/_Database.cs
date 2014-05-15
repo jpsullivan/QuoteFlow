@@ -1,4 +1,6 @@
-﻿namespace QuoteFlow.Models
+﻿using QuoteFlow.Models.CatalogImport;
+
+namespace QuoteFlow.Models
 {
     public class QuoteFlowDatabase : Dapper.Database<QuoteFlowDatabase>
     {
@@ -7,6 +9,7 @@
         public Table<AssetVar> AssetVars { get; private set; }
         public Table<AssetVarValue> AssetVarValues { get; private set; } 
         public Table<Catalog> Catalogs { get; private set; }
+        public Table<CatalogImportSummaryRecord> CatalogImportSummaryRecords { get; private set; }
         public Table<Contact> Contacts { get; private set; }
         public Table<Credential> Credentials { get; private set; } 
         public Table<Manufacturer> Manufacturers { get; private set; }
