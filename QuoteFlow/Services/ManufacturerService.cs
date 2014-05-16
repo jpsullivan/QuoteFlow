@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using QuoteFlow.Models;
 using QuoteFlow.Services.Interfaces;
@@ -47,6 +48,18 @@ namespace QuoteFlow.Services
             }
 
             return mfc;
+        }
+
+        /// <summary>
+        /// Retrieves all of the manufacturers that exist within a 
+        /// specific organization.
+        /// </summary>
+        /// <param name="organizationId">The organization id</param>
+        /// <returns></returns>
+        public IEnumerable<Manufacturer> GetManufacturers(int organizationId)
+        {
+            const string sql = "select * from Manufacturers where OrganizationId = @organizationId";
+            return Current.DB.Query<Manufacturer>(sql, new {organizationId});
         }
 
         /// <summary>

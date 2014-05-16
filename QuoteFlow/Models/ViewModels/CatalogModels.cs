@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using QuoteFlow.Models.CatalogImport;
 
 namespace QuoteFlow.Models.ViewModels
 {
@@ -35,5 +36,12 @@ namespace QuoteFlow.Models.ViewModels
         public IEnumerable<Asset> Assets { get; set; }
         public Catalog Catalog { get; set; }
         public SubHeader SubHeader { get; set; }
+    }
+
+    public class CatalogShowImportSummaryModel
+    {
+        public IEnumerable<CatalogImportSummaryRecord> Summary { get; set; }
+        public Catalog Catalog { get; set; }
+        public User CatalogCreator { get; set; }
     }
 }

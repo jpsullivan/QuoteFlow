@@ -5,9 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using CsvHelper;
-using Microsoft.Owin.Security.Provider;
 using QuoteFlow.Infrastructure.AsyncFileUpload;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
@@ -25,6 +23,7 @@ namespace QuoteFlow.Controllers
 
         public IAssetService AssetService { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
+        public ICatalogImportSummaryRecordsService CatalogImportSummaryService { get; set; }
         public IOrganizationService OrganizationService { get; protected set; }
         public IUserService UserService { get; protected set; }
         public IUploadFileService UploadFileService { get; protected set; }
@@ -33,11 +32,13 @@ namespace QuoteFlow.Controllers
         public CatalogController() { }
 
         public CatalogController(IAssetService assetService, ICatalogService catalogService, 
+            ICatalogImportSummaryRecordsService catalogImportSummaryService,
             IOrganizationService organizationService, IUserService userService,
             IUploadFileService uploadFileService, ICacheService cacheService)
         {
             AssetService = assetService;
             CatalogService = catalogService;
+            CatalogImportSummaryService = catalogImportSummaryService;
             OrganizationService = organizationService;
             UserService = userService;
             UploadFileService = uploadFileService;
@@ -123,7 +124,29 @@ namespace QuoteFlow.Controllers
             var model = new CatalogShowAssetsModel
             {
                 Assets = assets,
-                Catalog = catalog
+                Catalog = catalog,
+            };
+
+            return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
+        }
+
+        [Route("catalog/{catalogId:INT}/{catalogName}/import-results")]
+        public virtual async Task<ActionResult> ShowImportSummary(int catalogId, string catalogName)
+        {
+            var catalog = CatalogService.GetCatalog(catalogId);
+            if (catalog == null) {
+                return PageNotFound();
+            }
+
+            var creator = UserService.GetUser(catalog.CreatorId);
+            var summary = CatalogImportSummaryService.GetImportSummaryRecords(catalog.Id);
+            var rawSummary = CatalogImportSummaryService.ConvertToRawSummaryRecords(summary, catalog.Id);
+
+            var model = new CatalogShowImportSummaryModel
+            {
+                Summary = rawSummary,
+                Catalog = catalog,
+                CatalogCreator = creator
             };
 
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
@@ -351,16 +374,8 @@ namespace QuoteFlow.Controllers
             // Do the import!
             var id = CatalogService.ImportCatalog(model, GetCurrentUser().Id, CurrentOrganization.Id);
 
-            //return RedirectToAction("ImportSummary", id);
-            //return RedirectToRoute("catalog/" + id + "/importSummary");
-            var url = string.Format("~/catalog/{0}/{1}/importSummary", id, CatalogService.GetCatalog(id).Name.UrlFriendly());
+            var url = Url.CatalogImportResults(id, CatalogService.GetCatalog(id).Name.UrlFriendly());
             return Redirect(url);
-        }
-
-        [Route("catalog/{catalogId:INT}/{catalogName}/importSummary")]
-        public virtual async Task<ActionResult> ImportSummary(int catalogId, string catalogName)
-        {
-            return new EmptyResult();
         }
 
         [Route("catalog/cancelImport", HttpVerbs.Post)]

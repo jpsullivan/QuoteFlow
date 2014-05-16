@@ -706,6 +706,10 @@
     <Content Include="Views\Shared\_FocusedLayoutLarge.cshtml" />
     <Content Include="Views\Catalog\VerifyImportSecondary.cshtml" />
     <Content Include="Views\Catalog\SetImportCatalogDetails.cshtml" />
+    <Content Include="Views\Catalog\ShowImportSummary.cshtml" />
+    <Content Include="Views\Shared\Partials\Catalog\ImportResultSuccessRow.cshtml" />
+    <Content Include="Views\Shared\Partials\Catalog\ImportResultSkippedRow.cshtml" />
+    <Content Include="Views\Shared\Partials\Catalog\ImportResultFailureRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

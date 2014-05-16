@@ -1,4 +1,5 @@
-﻿using QuoteFlow.Models;
+﻿using System.Collections.Generic;
+using QuoteFlow.Models;
 
 namespace QuoteFlow.Services.Interfaces
 {
@@ -27,6 +28,14 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="organizationId">The organiation to set the created manufacturer to</param>
         /// <returns></returns>
         Manufacturer GetManufacturer(string manufacturerName, bool upsert, int organizationId = 0);
+
+        /// <summary>
+        /// Retrieves all of the manufacturers that exist within a 
+        /// specific organization.
+        /// </summary>
+        /// <param name="organizationId">The organization id</param>
+        /// <returns></returns>
+        IEnumerable<Manufacturer> GetManufacturers(int organizationId);
 
         /// <summary>
         /// Inserts a new <see cref="Manufacturer"/> into the database.

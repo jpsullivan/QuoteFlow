@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models;
 using QuoteFlow.Models.CatalogImport;
 using QuoteFlow.Models.ViewModels;
@@ -160,6 +161,7 @@ namespace QuoteFlow.Services
 
             var newCatalog = CreateCatalog(model.CatalogInformation, currentUserId);
             var summaries = new List<ICatalogSummaryRecord>();
+            var manufacturers = ManufacturerService.GetManufacturers(organizationId).ToList();
             string reason;
 
             var primaryFields = model.PrimaryCatalogFields;
@@ -171,9 +173,15 @@ namespace QuoteFlow.Services
                 bool skipProcessing = false;
 
                 // get the manufacturer if they exist, otherwise create it
+                // also, to prevent duplicate queries, check existance from 
+                // a list. If created, add to said list. Perf.
                 var manufacturerName = row[primaryFields.ManufacturerHeaderId];
-                var manufacturer = ManufacturerService.GetManufacturer(manufacturerName) ??
-                                   ManufacturerService.CreateManufacturer(manufacturerName, model.CatalogInformation.Organization.Id);
+                var manufacturer = manufacturers.FirstOrDefault(m => m.Name == manufacturerName);
+                if (manufacturer == null) {
+                    manufacturer = ManufacturerService.CreateManufacturer(manufacturerName, model.CatalogInformation.Organization.Id);
+                    manufacturers.Add(manufacturer);
+                }
+                                   
 
                 // grab all the primary asset fields to check for a match
                 var name = row[primaryFields.AssetNameHeaderId];
@@ -188,9 +196,10 @@ namespace QuoteFlow.Services
                     {
                         CatalogId = newCatalog.Id,
                         Name = name,
-                        Manufacturer = manufacturer,
+                        ManufacturerId = manufacturer.Id,
                         Description = description,
-                        SKU = sku
+                        SKU = sku,
+                        CreatorId = currentUserId
                     };
 
                     // is the asset name too long? Flag it. Otherwise, add it.
@@ -215,19 +224,29 @@ namespace QuoteFlow.Services
                 var price = new AssetPrice();
 
                 decimal cost;
-                if (Decimal.TryParse(row[primaryFields.CostHeaderId], out cost)) {
+                var costRowValue = row[primaryFields.CostHeaderId];
+                if (Decimal.TryParse(costRowValue, out cost)) {
                     price.Cost = cost;
                 } else {
-                    reason = string.Format("Could not convert cost value of '{0}' to decimal.", row[primaryFields.CostHeaderId]);
-                    summaries.Add(new CatalogRecordImportFailure(i, reason, asset.Id));
+                    if (costRowValue == "0" || costRowValue.IsNullOrEmpty()) {
+                        price.Cost = Decimal.Zero;
+                    } else {
+                        reason = string.Format("Could not convert cost value of '{0}' to decimal.", costRowValue);
+                        summaries.Add(new CatalogRecordImportFailure(i, reason, asset.Id));
+                    }
                 }
 
                 decimal markup;
-                if (Decimal.TryParse(row[primaryFields.MarkupHeaderId], out markup)) {
+                var markupRowValue = row[primaryFields.MarkupHeaderId];
+                if (Decimal.TryParse(markupRowValue, out markup)) {
                     price.Markup = markup;
                 } else {
-                    reason = string.Format("Could not convert markup value of '{0}' to decimal.", row[primaryFields.CostHeaderId]);
-                    summaries.Add(new CatalogRecordImportFailure(i, reason, asset.Id));
+                    if (markupRowValue == "0" || markupRowValue.IsNullOrEmpty()) {
+                        price.Markup = Decimal.Zero;
+                    } else {
+                        reason = string.Format("Could not convert markup value of '{0}' to decimal.", markupRowValue);
+                        summaries.Add(new CatalogRecordImportFailure(i, reason, asset.Id));
+                    }
                 }
 
                 price.AssetId = asset.Id;

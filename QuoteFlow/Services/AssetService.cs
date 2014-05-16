@@ -54,11 +54,32 @@ namespace QuoteFlow.Services
                         join AssetPrices ap on ap.AssetId = a.Id
                         where a.CatalogId = @catalogId";
 
-            return Current.DB.Query<Asset, Manufacturer, IEnumerable<AssetPrice>, Asset>(sql, (a, m, ap) => {
-                a.Manufacturer = m;
-                a.Prices = ap;
-                return a;
-            }, new {catalogId});
+            // Multi-mapping won't work out of the box for this since we can't supply an
+            // IEnumerable<AssetPrice>. Instead, we just manually map the required fields
+            // below, supplying the properties with default values if null.
+            var identityMap = new Dictionary<int, Asset>();
+            var assets = Current.DB.Query<Asset, Manufacturer, AssetPrice, Asset>(sql, (a, m, ap) => {
+                Asset master;
+                if (!identityMap.TryGetValue(a.Id, out master)) {
+                    identityMap[a.Id] = master = a;
+                }
+
+                var manufacturer = master.Manufacturer;
+                if (manufacturer == null) {
+                    master.Manufacturer = manufacturer = new Manufacturer();
+                }
+                master.Manufacturer = m;
+
+                var prices = (List<AssetPrice>) master.Prices;
+                if (prices == null) {
+                    master.Prices = prices = new List<AssetPrice>();
+                }
+                prices.Add(ap);
+
+                return master;
+            }, new { catalogId }).Distinct();
+
+            return assets;
         }
 
         /// <summary>
