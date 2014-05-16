@@ -336,6 +336,8 @@ namespace QuoteFlow.Controllers
         [ValidateAntiForgeryToken]
         public virtual async Task<ActionResult> VerifyImportSecondary(FormCollection form)
         {
+            var currentUser = GetCurrentUser();
+
             var catalogInformation = Jil.JSON.Deserialize<NewCatalogModel>(form["CatalogInformation"]);
             var primaryFields = Jil.JSON.Deserialize<PrimaryCatalogFieldsViewModel>(form["PrimaryCatalogFields"]);
             var fields = new List<OptionalImportField>();
@@ -372,7 +374,9 @@ namespace QuoteFlow.Controllers
             };
 
             // Do the import!
-            var id = CatalogService.ImportCatalog(model, GetCurrentUser().Id, CurrentOrganization.Id);
+            var id = CatalogService.ImportCatalog(model, currentUser.Id, CurrentOrganization.Id);
+
+            await UploadFileService.DeleteUploadFileAsync(currentUser.Id);
 
             var url = Url.CatalogImportResults(id, CatalogService.GetCatalog(id).Name.UrlFriendly());
             return Redirect(url);

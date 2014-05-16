@@ -66,6 +66,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return url.Action("Import", "Catalog");
         }
 
+        public static string CancelCatalogImport(this UrlHelper url)
+        {
+            return url.Action("CancelImport", "Catalog");
+        }
+
         #endregion
 
         public static string ConfirmationUrl(this UrlHelper url, string action, string controller, string username, string token)

@@ -1,4 +1,5 @@
-﻿@model QuoteFlow.Models.ViewModels.VerifyCatalogImportViewModel
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Models.ViewModels.VerifyCatalogImportViewModel
 
 @{
     Layout = "../Shared/_FocusedLayoutLarge.cshtml";
@@ -35,7 +36,7 @@
     <div class="buttons-container">
         <div class="buttons">
             <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Import Catalog">
-            <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="#">Cancel</a>
+            <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="@Url.CancelCatalogImport()">Cancel</a>
         </div>
     </div>
 }
