@@ -58,40 +58,52 @@
                     <div class="aui-page-header-inner">
                         <div class="aui-page-header-main">
                             <h2>Import Results</h2>
-                            
-                            @if (Model.Summary.TotalCount > 0)
-                            {
-                                <table class="aui aui-table-interactive">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th></th>
-                                            <th>Result</th>
-                                            <th>Asset Link</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var summary in Model.Summary)
-                                        {
-                                            if (summary.Result == "Success") {
-                                                @Html.Partial("Partials/Catalog/ImportResultSuccessRow", summary)
-                                            }
-                                            if (summary.Result == "Skip") {
-                                                @Html.Partial("Partials/Catalog/ImportResultSkippedRow", summary)
-                                            }
-                                            if (summary.Result == "Failure") {
-                                                @Html.Partial("Partials/Catalog/ImportResultFailureRow", summary)
-                                            }
-                                        }
-                                    </tbody>
-                                </table>
-
-                                var url = Url.CatalogImportResults(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly(), -1);
-                                @UIHelpers.PageNumber(url, Model.Summary, "aui-nav aui-nav-pagination")
-                            }
+                        </div>
+                        <div class="aui-page-header-actions" style="float:right;">
+                            <div class="summary-chart aui-item">
+                                <strong class="assistive">Summary Chart</strong>
+                                <div class="percentageGraph">
+                                    <a class="barSection" style="width:50%;border-color:#009900;" href="/secure/IssueNavigator.jspa?reset=true&amp;jqlQuery=project+%3D+STASH+AND+fixVersion+%3D+2.11.8+AND+resolution+in+%28Fixed%2C+%22Won%27t+Fix%22%2C+Duplicate%2C+Incomplete%2C+%22Cannot+Reproduce%22%2C+Invalid%2C+%22Resolved+Locally%22%2C+%22Handled+by+Support%22%2C+Answered%2C+%22Timed+out%22%2C+Obsolete%2C+%22Not+a+bug%22%2C+%22Unsolved+Mysteries%22%2C+Purchased%2C+%22Tracked+Elsewhere%22%2C+Deployed%2C+Done%2C+%22Support+Request%22%29" title="Resolved Issues - 50% (1 issues)"><span>Resolved Issues - 50%</span></a>
+                                    <a class="barSection" style="width:50%;border-color:#cc0000;" href="/secure/IssueNavigator.jspa?reset=true&amp;jqlQuery=project+%3D+STASH+AND+fixVersion+%3D+2.11.8+AND+resolution+%3D+Unresolved" title="Unresolved Issues - 50% (1 issues)"><span>Unresolved Issues - 50%</span></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            
+                @if (Model.Summary.TotalCount > 0)
+                {
+                    <table class="aui aui-table-interactive">
+                        <thead>
+                            <tr>
+                                <th>Row #</th>
+                                <th></th>
+                                <th>Result</th>
+                                <th>Asset Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var summary in Model.Summary)
+                            {
+                                if (summary.Result == "Success")
+                                {
+                                    @Html.Partial("Partials/Catalog/ImportResultSuccessRow", summary)
+                                }
+                                if (summary.Result == "Skip")
+                                {
+                                    @Html.Partial("Partials/Catalog/ImportResultSkippedRow", summary)
+                                }
+                                if (summary.Result == "Failure")
+                                {
+                                    @Html.Partial("Partials/Catalog/ImportResultFailureRow", summary)
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    var url = Url.CatalogImportResults(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly(), -1);
+                    @UIHelpers.PageNumber(url, Model.Summary, "aui-nav aui-nav-pagination")
+                }
             </section><!-- .aui-page-panel-content -->
         </div><!-- .aui-page-panel-inner -->
     </div><!-- .aui-page-panel -->

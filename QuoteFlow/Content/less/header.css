@@ -30,4 +30,47 @@
   margin: 0;
   padding: 0;
 }
+.aui-page-header .summary-chart {
+  min-width: 200px;
+  width: 30%;
+}
+.aui-page-header .summary-chart > .percentageGraph {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: inherit;
+  line-height: 1.5625em;
+  height: 1.5625em;
+  overflow: auto;
+  position: relative;
+  width: 100%;
+}
+.aui-page-header .summary-chart > .percentageGraph > .barSection {
+  border-style: solid;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-width: 4px 0;
+  display: block;
+  float: left;
+  height: 0;
+  line-height: 0;
+  margin-top: -4px;
+  overflow: hidden;
+  position: relative;
+  top: 50%;
+}
+.aui-page-header .summary-chart > .percentageGraph > .barSection span {
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 1px;
+}
+.aui-page-header .summary-chart > .percentageGraph:before,
+.aui-page-header .summary-chart > .percentageGraph:after {
+  content: " ";
+  display: table;
+}
+.aui-page-header .summary-chart > .percentageGraph:after {
+  clear: both;
+}
 /*# sourceMappingURL=header.css.map */

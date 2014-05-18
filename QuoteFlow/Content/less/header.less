@@ -46,3 +46,53 @@
         padding: 0;
     }
 }
+
+.aui-page-header {
+
+    .summary-chart {
+        min-width: 200px;
+        width: 30%;
+
+        > .percentageGraph {
+            font-size: 16px;
+            font-weight: bold;
+            font-family: inherit;
+            line-height: 1.5625em;
+            height: 1.5625em;
+            overflow: auto;
+            position: relative;
+            width: 100%;
+
+            > .barSection {
+                border-style: solid;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                border-width: 4px 0;
+                display: block;
+                float: left;
+                height: 0;
+                line-height: 0;
+                margin-top: -4px;
+                overflow: hidden;
+                position: relative;
+                top: 50%;
+
+                span {
+                    display: block;
+                    overflow: hidden;
+                    visibility: hidden;
+                    width: 1px;
+                }
+            }
+
+            &:before, &:after {
+                content: " ";
+                display: table;
+            }
+            &:after {
+                clear: both;
+            }
+        }
+    }
+}
