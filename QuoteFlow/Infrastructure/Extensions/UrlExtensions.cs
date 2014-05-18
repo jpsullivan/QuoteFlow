@@ -58,7 +58,12 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         public static string CatalogImportResults(this UrlHelper url, int catalogId, string catalogName)
         {
-            return string.Format("/catalog/{0}/{1}/import-results", catalogId, catalogName);
+            return string.Format("/catalog/{0}/{1}/import-results", catalogId, catalogName.UrlFriendly());
+        }
+
+        public static string CatalogImportResults(this UrlHelper url, int catalogId, string catalogName, int pageNumber)
+        {
+            return string.Format("/catalog/{0}/{1}/import-results?page={2}", catalogId, catalogName.UrlFriendly(), pageNumber);
         }
 
         public static string ImportCatalog(this UrlHelper url)

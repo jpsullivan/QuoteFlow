@@ -1,8 +1,9 @@
 ﻿@using QuoteFlow.Infrastructure.Extensions
+@using QuoteFlow.Infrastructure.Helpers
 @model QuoteFlow.Models.ViewModels.CatalogShowImportSummaryModel
 
 @{
-    ViewBag.Title = "QuoteFlow - " + @Model.Catalog.Name + " Import Summary";
+    ViewBag.Title = @Model.Catalog.Name + " Import Summary - QuoteFlow";
 }
 
 <section id="content" role="main">
@@ -14,12 +15,9 @@
                 <ul class="operations-list">
                     <li>
                         <span class="list-label">Owner:</span>
-                        @if (Model.CatalogCreator == null)
-                        {
+                        @if (Model.CatalogCreator == null) {
                             <span>(User not found)</span>
-                        }
-                        else
-                        {
+                        } else {
                             <a href="#" class="quoteflow-user-name quoteflow-user-avatar">
                                 <div class="aui-avatar aui-avatar-xsmall">
                                     <div class="aui-avatar-inner">
@@ -61,29 +59,36 @@
                         <div class="aui-page-header-main">
                             <h2>Import Results</h2>
                             
-                            <table class="aui aui-table-interactive">
-                                <thead>
-                                    <tr>
-                                        <th>Row #</th>
-                                        <th></th>
-                                        <th>Result</th>
-                                        <th>Asset Link</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var summary in Model.Summary) {
-                                        if (summary.Result == "Success") {
-                                            @Html.Partial("Partials/Catalog/ImportResultSuccessRow", summary)
+                            @if (Model.Summary.TotalCount > 0)
+                            {
+                                <table class="aui aui-table-interactive">
+                                    <thead>
+                                        <tr>
+                                            <th>Row #</th>
+                                            <th></th>
+                                            <th>Result</th>
+                                            <th>Asset Link</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var summary in Model.Summary)
+                                        {
+                                            if (summary.Result == "Success") {
+                                                @Html.Partial("Partials/Catalog/ImportResultSuccessRow", summary)
+                                            }
+                                            if (summary.Result == "Skip") {
+                                                @Html.Partial("Partials/Catalog/ImportResultSkippedRow", summary)
+                                            }
+                                            if (summary.Result == "Failure") {
+                                                @Html.Partial("Partials/Catalog/ImportResultFailureRow", summary)
+                                            }
                                         }
-                                        if (summary.Result == "Skip") {
-                                            @Html.Partial("Partials/Catalog/ImportResultSkippedRow", summary)
-                                        }
-                                        if (summary.Result == "Failure") {
-                                            @Html.Partial("Partials/Catalog/ImportResultFailureRow", summary)
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+
+                                var url = Url.CatalogImportResults(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly(), -1);
+                                @UIHelpers.PageNumber(url, Model.Summary, "aui-nav aui-nav-pagination")
+                            }
                         </div>
                     </div>
                 </div>

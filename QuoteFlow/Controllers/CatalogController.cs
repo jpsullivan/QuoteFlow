@@ -9,7 +9,9 @@ using CsvHelper;
 using QuoteFlow.Infrastructure.AsyncFileUpload;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
+using QuoteFlow.Infrastructure.Helpers;
 using QuoteFlow.Models;
+using QuoteFlow.Models.CatalogImport;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Services.Interfaces;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
@@ -131,22 +133,26 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("catalog/{catalogId:INT}/{catalogName}/import-results")]
-        public virtual async Task<ActionResult> ShowImportSummary(int catalogId, string catalogName)
+        public virtual async Task<ActionResult> ShowImportSummary(int catalogId, string catalogName, int? page)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
             if (catalog == null) {
                 return PageNotFound();
             }
 
+            const int perPage = 50;
+            var currentPage = Math.Max(page ?? 1, 1);
+
             var creator = UserService.GetUser(catalog.CreatorId);
             var summary = CatalogImportSummaryService.GetImportSummaryRecords(catalog.Id);
-            var rawSummary = CatalogImportSummaryService.ConvertToRawSummaryRecords(summary, catalog.Id);
+            var rawSummary = CatalogImportSummaryService.ConvertToRawSummaryRecords(summary, catalog.Id).ToPagedList(currentPage, perPage);
 
             var model = new CatalogShowImportSummaryModel
             {
                 Summary = rawSummary,
                 Catalog = catalog,
-                CatalogCreator = creator
+                CatalogCreator = creator,
+                CurrentPage = currentPage
             };
 
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);

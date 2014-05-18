@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using QuoteFlow.Infrastructure.Helpers;
 using QuoteFlow.Models.CatalogImport;
 
 namespace QuoteFlow.Models.ViewModels
@@ -40,8 +41,9 @@ namespace QuoteFlow.Models.ViewModels
 
     public class CatalogShowImportSummaryModel
     {
-        public IEnumerable<CatalogImportSummaryRecord> Summary { get; set; }
+        public PagedList<CatalogImportSummaryRecord> Summary { get; set; }
         public Catalog Catalog { get; set; }
         public User CatalogCreator { get; set; }
+        public int CurrentPage { get; set; }
     }
 }

@@ -352,6 +352,10 @@
     <Compile Include="Infrastructure\Helpers\DisposableAction.cs" />
     <Compile Include="Infrastructure\Attributes\RouteAttribute.cs" />
     <Compile Include="Infrastructure\Helpers\EnumHelpers.cs" />
+    <Compile Include="Infrastructure\Helpers\PagedList.cs" />
+    <Compile Include="Infrastructure\Helpers\PageNumber.cs" />
+    <Compile Include="Infrastructure\Helpers\PageSizer.cs" />
+    <Compile Include="Infrastructure\Helpers\UIHelpers.cs" />
     <Compile Include="Infrastructure\Helpers\UrlHelpers.cs" />
     <Compile Include="Infrastructure\HttpStatusCodeWithBodyResult.cs" />
     <Compile Include="Infrastructure\IoC\NinjectDependencyResolver.cs" />
