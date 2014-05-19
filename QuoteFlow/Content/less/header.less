@@ -45,9 +45,6 @@
         margin: 0;
         padding: 0;
     }
-}
-
-.aui-page-header {
 
     .summary-chart {
         min-width: 200px;
@@ -92,6 +89,59 @@
             }
             &:after {
                 clear: both;
+            }
+        }
+    }
+
+    ul.summary-list {
+        list-style: none;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        padding: 8px;
+
+        li {
+            text-align: left;
+            display: inline-block;
+            padding-right: 4px;
+
+            &:last-child {
+                padding-right: 0;
+            }
+
+            a {
+                text-decoration: none;
+                text-transform: uppercase;
+                font-size: 10px;
+            }
+
+            span.aui-icon {
+                vertical-align: text-bottom;
+            }
+
+            span.count {
+                font-size: 18px;
+            }
+
+            &.success a {
+                color: #057D07;
+
+                &:hover {
+                    color: lighten(#057D07, 10%);
+                }
+            }
+            &.skipped a {
+                color: #333;
+
+                &:hover {
+                    color: lighten(#333, 15%);
+                }
+            }
+            &.failed a {
+                color: #C52C19;
+
+                &:hover {
+                    color: lighten(#C52C19, 15%);
+                }
             }
         }
     }

@@ -45,5 +45,12 @@ namespace QuoteFlow.Models.ViewModels
         public Catalog Catalog { get; set; }
         public User CatalogCreator { get; set; }
         public int CurrentPage { get; set; }
+        public string Filter { get; set; }
+        public string PaginationUrl { get; set; }
+
+        // total counts are strings so they can include commas
+        public string TotalSuccess { get; set; }
+        public string TotalSkipped { get; set; }
+        public string TotalFailed { get; set; }
     }
 }

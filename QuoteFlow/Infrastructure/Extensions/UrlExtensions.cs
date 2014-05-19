@@ -66,6 +66,21 @@ namespace QuoteFlow.Infrastructure.Extensions
             return string.Format("/catalog/{0}/{1}/import-results?page={2}", catalogId, catalogName.UrlFriendly(), pageNumber);
         }
 
+        public static string CatalogImportResultsSuccess(this UrlHelper url, int catalogId, string catalogName, int pageNumber)
+        {
+            return string.Format("/catalog/{0}/{1}/import-results/successful?page={2}", catalogId, catalogName.UrlFriendly(), pageNumber);
+        }
+
+        public static string CatalogImportResultsSkipped(this UrlHelper url, int catalogId, string catalogName, int pageNumber)
+        {
+            return string.Format("/catalog/{0}/{1}/import-results/skipped?page={2}", catalogId, catalogName.UrlFriendly(), pageNumber);
+        }
+
+        public static string CatalogImportResultsFailed(this UrlHelper url, int catalogId, string catalogName, int pageNumber)
+        {
+            return string.Format("/catalog/{0}/{1}/import-results/failed?page={2}", catalogId, catalogName.UrlFriendly(), pageNumber);
+        }
+
         public static string ImportCatalog(this UrlHelper url)
         {
             return url.Action("Import", "Catalog");

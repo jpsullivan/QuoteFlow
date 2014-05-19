@@ -132,8 +132,8 @@ namespace QuoteFlow.Controllers
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
         }
 
-        [Route("catalog/{catalogId:INT}/{catalogName}/import-results")]
-        public virtual async Task<ActionResult> ShowImportSummary(int catalogId, string catalogName, int? page)
+        [Route("catalog/{catalogId:INT}/{catalogName}/import-results/{filter?}")]
+        public virtual async Task<ActionResult> ShowImportSummary(int catalogId, string catalogName, string filter, int? page)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
             if (catalog == null) {
@@ -144,7 +144,31 @@ namespace QuoteFlow.Controllers
             var currentPage = Math.Max(page ?? 1, 1);
 
             var creator = UserService.GetUser(catalog.CreatorId);
-            var summary = CatalogImportSummaryService.GetImportSummaryRecords(catalog.Id);
+            var summary = CatalogImportSummaryService.GetImportSummaryRecords(catalog.Id).ToList();
+
+            int totalSuccess = summary.Count(s => s.Result == CatalogSummaryResult.Success);
+            int totalSkipped = summary.Count(s => s.Result == CatalogSummaryResult.Skip);
+            int totalFailed = summary.Count(s => s.Result == CatalogSummaryResult.Failure);
+
+            // handle any filters that may exist, as well as build the correct pagination url
+            var paginationUrl = String.Empty;
+            if (filter.HasValue()) {
+                if (filter == "successful") {
+                    summary = summary.Where(row => row.Result == CatalogSummaryResult.Success).ToList();
+                    paginationUrl = Url.CatalogImportResultsSuccess(catalog.Id, catalog.Name.UrlFriendly(), -1);
+                }
+                if (filter == "skipped") {
+                    summary = summary.Where(row => row.Result == CatalogSummaryResult.Skip).ToList();
+                    paginationUrl = Url.CatalogImportResultsSkipped(catalog.Id, catalog.Name.UrlFriendly(), -1);
+                }
+                if (filter == "failed") {
+                    summary = summary.Where(row => row.Result == CatalogSummaryResult.Failure).ToList();
+                    paginationUrl = Url.CatalogImportResultsFailed(catalog.Id, catalog.Name.UrlFriendly(), -1);
+                }
+            } else {
+                paginationUrl = Url.CatalogImportResults(catalog.Id, catalog.Name.UrlFriendly(), -1);
+            }
+
             var rawSummary = CatalogImportSummaryService.ConvertToRawSummaryRecords(summary, catalog.Id).ToPagedList(currentPage, perPage);
 
             var model = new CatalogShowImportSummaryModel
@@ -152,7 +176,12 @@ namespace QuoteFlow.Controllers
                 Summary = rawSummary,
                 Catalog = catalog,
                 CatalogCreator = creator,
-                CurrentPage = currentPage
+                CurrentPage = currentPage,
+                Filter = filter,
+                PaginationUrl = paginationUrl,
+                TotalSuccess = string.Format("{0:n0}", totalSuccess),
+                TotalSkipped = string.Format("{0:n0}", totalSkipped),
+                TotalFailed = string.Format("{0:n0}", totalFailed)
             };
 
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);

@@ -136,6 +136,92 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
   margin: 0;
   padding: 0;
 }
+.aui-page-header .summary-chart {
+  min-width: 200px;
+  width: 30%;
+}
+.aui-page-header .summary-chart > .percentageGraph {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: inherit;
+  line-height: 1.5625em;
+  height: 1.5625em;
+  overflow: auto;
+  position: relative;
+  width: 100%;
+}
+.aui-page-header .summary-chart > .percentageGraph > .barSection {
+  border-style: solid;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-width: 4px 0;
+  display: block;
+  float: left;
+  height: 0;
+  line-height: 0;
+  margin-top: -4px;
+  overflow: hidden;
+  position: relative;
+  top: 50%;
+}
+.aui-page-header .summary-chart > .percentageGraph > .barSection span {
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 1px;
+}
+.aui-page-header .summary-chart > .percentageGraph:before,
+.aui-page-header .summary-chart > .percentageGraph:after {
+  content: " ";
+  display: table;
+}
+.aui-page-header .summary-chart > .percentageGraph:after {
+  clear: both;
+}
+.aui-page-header ul.summary-list {
+  list-style: none;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 8px;
+}
+.aui-page-header ul.summary-list li {
+  text-align: left;
+  display: inline-block;
+  padding-right: 4px;
+}
+.aui-page-header ul.summary-list li:last-child {
+  padding-right: 0;
+}
+.aui-page-header ul.summary-list li a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+.aui-page-header ul.summary-list li span.aui-icon {
+  vertical-align: text-bottom;
+}
+.aui-page-header ul.summary-list li span.count {
+  font-size: 18px;
+}
+.aui-page-header ul.summary-list li.success a {
+  color: #057D07;
+}
+.aui-page-header ul.summary-list li.success a:hover {
+  color: #07ae0a;
+}
+.aui-page-header ul.summary-list li.skipped a {
+  color: #333;
+}
+.aui-page-header ul.summary-list li.skipped a:hover {
+  color: #595959;
+}
+.aui-page-header ul.summary-list li.failed a {
+  color: #C52C19;
+}
+.aui-page-header ul.summary-list li.failed a:hover {
+  color: #e75543;
+}
 .aui-page-panel-content .summary-modules {
   margin-top: 20px;
 }

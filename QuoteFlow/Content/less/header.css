@@ -73,4 +73,47 @@
 .aui-page-header .summary-chart > .percentageGraph:after {
   clear: both;
 }
+.aui-page-header ul.summary-list {
+  list-style: none;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 8px;
+}
+.aui-page-header ul.summary-list li {
+  text-align: left;
+  display: inline-block;
+  padding-right: 4px;
+}
+.aui-page-header ul.summary-list li:last-child {
+  padding-right: 0;
+}
+.aui-page-header ul.summary-list li a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+.aui-page-header ul.summary-list li span.aui-icon {
+  vertical-align: text-bottom;
+}
+.aui-page-header ul.summary-list li span.count {
+  font-size: 18px;
+}
+.aui-page-header ul.summary-list li.success a {
+  color: #057D07;
+}
+.aui-page-header ul.summary-list li.success a:hover {
+  color: #07ae0a;
+}
+.aui-page-header ul.summary-list li.skipped a {
+  color: #333;
+}
+.aui-page-header ul.summary-list li.skipped a:hover {
+  color: #595959;
+}
+.aui-page-header ul.summary-list li.failed a {
+  color: #C52C19;
+}
+.aui-page-header ul.summary-list li.failed a:hover {
+  color: #e75543;
+}
 /*# sourceMappingURL=header.css.map */
