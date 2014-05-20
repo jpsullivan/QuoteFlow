@@ -1,6 +1,5 @@
 ﻿@using QuoteFlow.Infrastructure.Extensions
 @using QuoteFlow.Infrastructure.Helpers
-@using QuoteFlow.Models.CatalogImport
 @model QuoteFlow.Models.ViewModels.CatalogShowImportSummaryModel
 
 @{
@@ -59,6 +58,7 @@
                     <div class="aui-page-header-inner">
                         <div class="aui-page-header-main">
                             <h2>Import Results</h2>
+                            <h5>Imported @Model.Catalog.CreationDate.ToRelativeTime()</h5>
                         </div>
                         <div class="aui-page-header-actions" style="float:right;">
                             <ul class="summary-list">

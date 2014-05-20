@@ -691,7 +691,7 @@
     <Content Include="Views\Catalog\Index.cshtml" />
     <Content Include="Views\Catalog\New.cshtml" />
     <Content Include="Views\Catalog\Show.cshtml" />
-    <Content Include="Views\Catalog\ShowAssets.cshtml" />
+    <Content Include="Views\Quote\Builder.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Contact\New.cshtml" />
     <Content Include="Views\Contact\Show.cshtml" />
@@ -714,6 +714,8 @@
     <Content Include="Views\Shared\Partials\Catalog\ImportResultSuccessRow.cshtml" />
     <Content Include="Views\Shared\Partials\Catalog\ImportResultSkippedRow.cshtml" />
     <Content Include="Views\Shared\Partials\Catalog\ImportResultFailureRow.cshtml" />
+    <Content Include="Views\Catalog\ShowAssets.cshtml" />
+    <Content Include="Views\Shared\Partials\Catalog\AssetRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

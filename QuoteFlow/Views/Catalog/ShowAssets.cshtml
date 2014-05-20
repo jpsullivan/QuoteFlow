@@ -1,6 +1,90 @@
-﻿@model QuoteFlow.Models.ViewModels.CatalogShowAssetsModel
+﻿@using QuoteFlow.Infrastructure.Extensions
+@using QuoteFlow.Infrastructure.Helpers
+@model QuoteFlow.Models.ViewModels.CatalogShowAssetsModel
 
 @{
-    Layout = "../Shared/_CatalogAssetsLayout.cshtml";
-    ViewBag.Title = "QuoteFlow - " + @Model.Catalog.Name;
+    ViewBag.Title = @Model.Catalog.Name + " Assets - QuoteFlow";
 }
+
+<section id="content" role="main">
+    <header class="aui-page-header">
+        <div class="aui-page-header">
+            <div class="aui-page-header-inner">
+                <h1>@Model.Catalog.Name</h1>
+
+                <ul class="operations-list">
+                    <li>
+                        <span class="list-label">Owner:</span>
+                        @if (Model.CatalogCreator == null)
+                        {
+                            <span>(User not found)</span>
+                        }
+                        else
+                        {
+                            <a href="#" class="quoteflow-user-name quoteflow-user-avatar">
+                                <div class="aui-avatar aui-avatar-xsmall">
+                                    <div class="aui-avatar-inner">
+                                        @Html.Gravatar(@Model.CatalogCreator.EmailAddress, 16)
+                                    </div>
+                                </div>
+                                @Model.CatalogCreator.FullName
+                            </a>
+                        }
+                    </li>
+                </ul>
+
+                <div class="header-side-buttons">
+                    <a href="#" class="aui-button" title="">Download original</a>
+                </div>
+            </div>
+        </div>
+    </header><!-- .aui-page-header -->
+
+    <div class="aui-page-panel">
+        <div class="aui-page-panel-inner">
+            <div class="aui-page-panel-nav">
+                <nav class="aui-navgroup aui-navgroup-vertical">
+                    <div class="aui-navgroup-inner">
+                        <ul class="aui-nav">
+                            <li><a href="@Url.Catalog(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly())">Summary</a></li>
+                            <li><a href="@Url.CatalogAssets(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly())">Assets</a></li>
+                            <li class="aui-nav-selected"><a href="@Url.CatalogImportResults(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly())">Import Results</a></li>
+                            <li><a href="@Url.CatalogVersions(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly())">Versions</a></li>
+                            <li><a href="#">Change Log</a></li>
+                        </ul>
+                    </div>
+                </nav><!-- .aui-navgroup -->
+            </div><!-- .aui-page-panel-nav -->
+
+            <section class="aui-page-panel-content">
+                <div class="aui-page-header">
+                    <div class="aui-page-header-inner">
+                        <div class="aui-page-header-main">
+                            <h2>Assets</h2>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.Assets.TotalCount > 0)
+                {
+                    <table class="aui aui-table-interactive">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Part Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var asset in Model.Assets)
+                            {
+                                @Html.Partial("Partials/Catalog/AssetRow", asset)
+                            }
+                        </tbody>
+                    </table>
+
+                    @UIHelpers.PageNumber(Model.PaginationUrl, Model.Assets, "aui-nav aui-nav-pagination")
+                }
+            </section><!-- .aui-page-panel-content -->
+        </div><!-- .aui-page-panel-inner -->
+    </div><!-- .aui-page-panel -->
+</section>

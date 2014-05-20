@@ -34,9 +34,11 @@ namespace QuoteFlow.Models.ViewModels
 
     public class CatalogShowAssetsModel
     {
-        public IEnumerable<Asset> Assets { get; set; }
+        public PagedList<Asset> Assets { get; set; }
         public Catalog Catalog { get; set; }
-        public SubHeader SubHeader { get; set; }
+        public User CatalogCreator { get; set; }
+        public int CurrentPage { get; set; }
+        public string PaginationUrl { get; set; }
     }
 
     public class CatalogShowImportSummaryModel

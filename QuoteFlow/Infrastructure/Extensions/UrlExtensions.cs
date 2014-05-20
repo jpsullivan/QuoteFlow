@@ -51,6 +51,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return string.Format("/catalog/{0}/{1}/assets", catalogId, catalogName);
         }
 
+        public static string CatalogAssets(this UrlHelper url, int catalogId, string catalogName, int pageNumber)
+        {
+            return string.Format("/catalog/{0}/{1}/assets?page={2}", catalogId, catalogName, pageNumber);
+        }
+
         public static string CatalogVersions(this UrlHelper url, int catalogId, string catalogName)
         {
             return string.Format("/catalog/{0}/{1}/versions", catalogId, catalogName);
