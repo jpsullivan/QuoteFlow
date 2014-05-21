@@ -47,8 +47,8 @@
                     <div class="aui-navgroup-inner">
                         <ul class="aui-nav">
                             <li><a href="@Url.Catalog(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly())">Summary</a></li>
-                            <li><a href="@Url.CatalogAssets(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly())">Assets</a></li>
-                            <li class="aui-nav-selected"><a href="@Url.CatalogImportResults(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly())">Import Results</a></li>
+                            <li class="aui-nav-selected"><a href="@Url.CatalogAssets(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly())">Assets</a></li>
+                            <li><a href="@Url.CatalogImportResults(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly())">Import Results</a></li>
                             <li><a href="@Url.CatalogVersions(Model.Catalog.Id, Model.Catalog.Name.UrlFriendly())">Versions</a></li>
                             <li><a href="#">Change Log</a></li>
                         </ul>
@@ -67,11 +67,13 @@
 
                 @if (Model.Assets.TotalCount > 0)
                 {
-                    <table class="aui aui-table-interactive">
+                    <table class="aui aui-table-interactive catalog-assets">
                         <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Part Number</th>
+                                <th>Cost</th>
+                                <th>Pricing</th>
                             </tr>
                         </thead>
                         <tbody>

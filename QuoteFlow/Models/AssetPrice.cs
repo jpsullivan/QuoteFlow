@@ -20,7 +20,11 @@ namespace QuoteFlow.Models
         private decimal _price;
         public decimal Price
         {
-            get { return decimal.Round(_price, 2, MidpointRounding.AwayFromZero); }
+            get
+            {
+                var result = (Markup * Cost) + Cost;
+                return decimal.Round(result, 2, MidpointRounding.AwayFromZero);
+            }
             set { _price = value; }
         }
         public DateTime CreationDate { get; set; }

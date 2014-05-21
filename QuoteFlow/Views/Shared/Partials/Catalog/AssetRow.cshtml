@@ -1,8 +1,28 @@
-﻿@using QuoteFlow.Infrastructure.Extensions
+﻿@using System.Globalization
+@using QuoteFlow.Infrastructure.Extensions
 @model QuoteFlow.Models.Asset
 <tr>
     <td>
         <a href="@Url.Asset(Model.Id, Model.Name)">@Model.Name</a>
     </td>
     <td>@Model.SKU</td>
+    <td>$@Model.Prices.First().Cost</td>
+    <td class="pricing">
+        <ul>
+            @foreach (var price in Model.Prices)
+            {
+                <li>
+                    <div class="catalog-name">@price.CatalogId</div>
+                    <div class="markup">
+                        <span class="heading">Markup</span>
+                        <span>@price.Markup.ToString("P", CultureInfo.InvariantCulture)</span>
+                    </div>
+                    <div class="sell">
+                        <span class="heading">Sell Price</span>
+                        <span>$@price.Price</span>
+                    </div>
+                </li>
+            }
+        </ul>
+    </td>
 </tr>

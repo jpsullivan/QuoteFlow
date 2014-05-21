@@ -1,4 +1,25 @@
-﻿.aui-page-focused .secondary-link {
+﻿table.catalog-assets td.pricing ul {
+  margin: 0;
+  padding: 0;
+}
+table.catalog-assets td.pricing ul li {
+  display: inline-block;
+}
+table.catalog-assets td.pricing ul li div {
+  display: inline-block;
+}
+table.catalog-assets td.pricing ul li div span {
+  padding-left: 10px;
+  font-size: 12px;
+}
+table.catalog-assets td.pricing ul li div span.heading {
+  color: #808080;
+  text-transform: uppercase;
+  display: block;
+  font-size: 9px;
+  font-weight: bold;
+}
+.aui-page-focused .secondary-link {
   position: absolute;
   top: 25px;
   right: 25px;

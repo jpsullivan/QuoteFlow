@@ -1,0 +1,22 @@
+﻿table.catalog-assets td.pricing ul {
+  margin: 0;
+  padding: 0;
+}
+table.catalog-assets td.pricing ul li {
+  display: inline-block;
+}
+table.catalog-assets td.pricing ul li div {
+  display: inline-block;
+}
+table.catalog-assets td.pricing ul li div span {
+  padding-left: 10px;
+  font-size: 12px;
+}
+table.catalog-assets td.pricing ul li div span.heading {
+  color: #808080;
+  text-transform: uppercase;
+  display: block;
+  font-size: 9px;
+  font-weight: bold;
+}
+/*# sourceMappingURL=catalog.css.map */

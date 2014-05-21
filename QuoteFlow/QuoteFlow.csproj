@@ -573,6 +573,9 @@
     <Content Include="Content\less\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
     </Content>
+    <Content Include="Content\less\catalog.css">
+      <DependentUpon>catalog.less</DependentUpon>
+    </Content>
     <Content Include="Content\less\focused.css">
       <DependentUpon>focused.less</DependentUpon>
     </Content>
@@ -641,6 +644,10 @@
     <Content Include="Content\views\common\panel-table.hbs" />
     <Content Include="Content\views\catalog\select-asset-var-modal.hbs" />
     <Content Include="Content\views\catalog\import-asset-var-row.hbs" />
+    <Content Include="Content\less\catalog.less" />
+    <Content Include="Content\less\catalog.css.map">
+      <DependentUpon>catalog.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
