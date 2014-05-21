@@ -32,6 +32,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return url.Action("New", "Asset");
         }
 
+        public static string Asset(this UrlHelper url, int assetId, string assetName)
+        {
+            return string.Format("/asset/{0}/{1}", assetId, assetName.UrlFriendly());
+        }
+
         #endregion
 
         #region Catalogs

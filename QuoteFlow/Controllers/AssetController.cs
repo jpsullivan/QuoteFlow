@@ -45,8 +45,7 @@ namespace QuoteFlow.Controllers
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
         }
 
-        private static readonly AssetType[] AssetTypeChoices = new[]
-        {
+        private static readonly AssetType[] AssetTypeChoices = {
             AssetType.Standard,
             AssetType.Kit
         };

@@ -1,6 +1,8 @@
-﻿@model QuoteFlow.Models.Asset
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Models.Asset
 <tr>
-    <td>@Model.Name</td>
+    <td>
+        <a href="@Url.Asset(Model.Id, Model.Name)">@Model.Name</a>
+    </td>
     <td>@Model.SKU</td>
-    <td></td>
 </tr>
