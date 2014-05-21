@@ -36,6 +36,7 @@ namespace QuoteFlow.Models.ViewModels
     {
         public PagedList<Asset> Assets { get; set; }
         public Catalog Catalog { get; set; }
+        public IEnumerable<Catalog> Catalogs { get; set; } 
         public User CatalogCreator { get; set; }
         public int CurrentPage { get; set; }
         public string PaginationUrl { get; set; }

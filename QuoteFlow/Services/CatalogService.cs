@@ -56,6 +56,17 @@ namespace QuoteFlow.Services
         }
 
         /// <summary>
+        /// Fetches all of the catalogs within a given organization.
+        /// </summary>
+        /// <param name="organizationId">The organization id</param>
+        /// <returns></returns>
+        public IEnumerable<Catalog> GetCatalogs(int organizationId)
+        {
+            const string sql = "select * from catalogs where OrganizationId = @organizationId";
+            return Current.DB.Query<Catalog>(sql, new {organizationId});
+        }
+
+        /// <summary>
         /// Adds a new catalog from the database based on ViewModel data from the new catalog form
         /// </summary>
         /// <param name="model">NewCatalogModel ViewModel</param>

@@ -79,7 +79,7 @@
                         <tbody>
                             @foreach (var asset in Model.Assets)
                             {
-                                @Html.Partial("Partials/Catalog/AssetRow", asset)
+                                @Html.Partial("Partials/Catalog/AssetRow", asset, new ViewDataDictionary { { "Catalogs", Model.Catalogs } })
                             }
                         </tbody>
                     </table>

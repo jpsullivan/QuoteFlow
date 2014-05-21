@@ -125,12 +125,14 @@ namespace QuoteFlow.Controllers
 
             var creator = UserService.GetUser(catalog.CreatorId);
             var assets = AssetService.GetAssets(catalog).ToPagedList(currentPage, perPage);
+            var catalogs = CatalogService.GetCatalogs(CurrentOrganization.Id);
             var paginationUrl = Url.CatalogAssets(catalog.Id, catalog.Name.UrlFriendly(), -1);
 
             var model = new CatalogShowAssetsModel
             {
                 Assets = assets,
                 Catalog = catalog,
+                Catalogs = catalogs,
                 CatalogCreator = creator,
                 CurrentPage = currentPage,
                 PaginationUrl = paginationUrl

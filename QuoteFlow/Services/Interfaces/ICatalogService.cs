@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using QuoteFlow.Models;
-using QuoteFlow.Models.CatalogImport;
 using QuoteFlow.Models.ViewModels;
 
 namespace QuoteFlow.Services.Interfaces
@@ -21,6 +20,13 @@ namespace QuoteFlow.Services.Interfaces
         /// <returns></returns>
         Catalog GetCatalog(string catalogName);
 
+        /// <summary>
+        /// Fetches all of the catalogs within a given organization.
+        /// </summary>
+        /// <param name="organizationId">The organization id</param>
+        /// <returns></returns>
+        IEnumerable<Catalog> GetCatalogs(int organizationId);
+            
         /// <summary>
         /// Adds a new catalog from the database based on ViewModel data from the new catalog form
         /// </summary>

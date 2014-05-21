@@ -1,6 +1,10 @@
 ﻿@using System.Globalization
 @using QuoteFlow.Infrastructure.Extensions
-@model QuoteFlow.Models.Asset
+@using QuoteFlow.Models
+@model Asset
+@{
+    var catalogs = ViewData["Catalogs"] as List<Catalog>;
+}
 <tr>
     <td>
         <a href="@Url.Asset(Model.Id, Model.Name)">@Model.Name</a>
@@ -12,7 +16,21 @@
             @foreach (var price in Model.Prices)
             {
                 <li>
-                    <div class="catalog-name">@price.CatalogId</div>
+                    <div class="catalog-name">
+                        @{
+                            string catalogName = "";
+                            var catalog = catalogs.Find(c => c.Id == price.CatalogId);
+                            if (catalog != null) {
+                                catalogName = catalog.Name;
+                            }
+                        }
+                        
+                        @if (catalogName.HasValue()) {
+                            <span>@catalogName</span>
+                        } else {
+                            <span>(Catalog not found)</span>
+                        }
+                    </div>
                     <div class="markup">
                         <span class="heading">Markup</span>
                         <span>@price.Markup.ToString("P", CultureInfo.InvariantCulture)</span>
