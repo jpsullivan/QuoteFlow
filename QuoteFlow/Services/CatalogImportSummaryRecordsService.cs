@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using QuoteFlow.Models.CatalogImport;
 using QuoteFlow.Services.Interfaces;
 
@@ -51,7 +50,7 @@ namespace QuoteFlow.Services
                         resolvedSummary = new CatalogRecordImportFailure(summary.RowId, summary.Reason);
                         break;
                     case CatalogSummaryResult.Skip:
-                        resolvedSummary = new CatalogRecordImportSkipped(summary.RowId);
+                        resolvedSummary = new CatalogRecordImportSkipped(summary.RowId, summary.Reason);
                         break;
                     case CatalogSummaryResult.Success:
                         resolvedSummary = new CatalogRecordImportSuccess(summary.RowId, (int) summary.AssetId);
@@ -93,9 +92,17 @@ namespace QuoteFlow.Services
                 var resolvedSuccess = summary as CatalogRecordImportSuccess;
                 raw.AssetId = resolvedSuccess == null ? (int?) null : resolvedSuccess.AssetId;
 
+                // attempt to cast the summary as a skipped record to get the skip reason
+                var resolvedSkipped = summary as CatalogRecordImportSkipped;
+                if (resolvedSkipped != null) {
+                    raw.Reason = resolvedSkipped.Reason;
+                }
+
                 // attempt to cast the summary as a failure record to get the failure reason
                 var resolvedFailure = summary as CatalogRecordImportFailure;
-                raw.Reason = resolvedFailure == null ? null : resolvedFailure.Reason;
+                if (resolvedFailure != null) {
+                    raw.Reason = resolvedFailure.Reason;
+                }
 
                 rawSummaries.Add(raw);
             }

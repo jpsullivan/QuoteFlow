@@ -192,7 +192,6 @@ namespace QuoteFlow.Services
                     manufacturer = ManufacturerService.CreateManufacturer(manufacturerName, model.CatalogInformation.Organization.Id);
                     manufacturers.Add(manufacturer);
                 }
-                                   
 
                 // grab all the primary asset fields to check for a match
                 var name = row[primaryFields.AssetNameHeaderId];
@@ -201,7 +200,22 @@ namespace QuoteFlow.Services
 
                 // does this asset already exist? skip it
                 if (AssetService.AssetExists(name, manufacturer.Id, description, sku, newCatalog.Id, out asset)) {
-                    summaries.Add(new CatalogRecordImportSkipped(i));
+                    // does the existing asset already have a price from this new catalog?
+                    bool duplicateFound = false;
+                    foreach (var p in asset.Prices.Where(p => p.CatalogId == newCatalog.Id)) {
+                        duplicateFound = true;
+                    }
+
+                    // If so, skip it. Can't import separate prices during an import.
+                    string msg;
+                    if (duplicateFound) {
+                        msg = "A separate asset price was already found for this asset during import. Skipping to avoid duplicate prices.";
+                        skipProcessing = true;           
+                    } else {
+                        msg = "This row was skipped as the asset seems to already exist. Pricing for this record was inserted instead.";
+                    }
+
+                    summaries.Add(new CatalogRecordImportSkipped(i, msg));
                 } else {
                     var newAsset = new Asset
                     {

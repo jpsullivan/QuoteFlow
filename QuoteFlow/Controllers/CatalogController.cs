@@ -426,8 +426,7 @@ namespace QuoteFlow.Controllers
             return Redirect(url);
         }
 
-        [Route("catalog/cancelImport", HttpVerbs.Post)]
-        [ValidateAntiForgeryToken]
+        [Route("catalog/cancelImport")]
         public virtual async Task<ActionResult> CancelImport()
         {
             var currentUser = GetCurrentUser();

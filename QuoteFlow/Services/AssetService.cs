@@ -283,7 +283,7 @@ namespace QuoteFlow.Services
                 return false;
             }
 
-            asset = foundAsset;
+            asset = GetAsset(foundAsset.Id);
             return true;
         }
 
