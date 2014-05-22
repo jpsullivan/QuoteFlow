@@ -1,5 +1,5 @@
 ﻿table.catalog-assets td.name {
-  max-width: 250px;
+  max-width: 300px;
   vertical-align: baseline;
 }
 table.catalog-assets td.name > a {
@@ -11,6 +11,17 @@ table.catalog-assets td.name > a {
   display: inline-block;
   width: 100%;
   vertical-align: bottom;
+}
+table.catalog-assets td.sku {
+  max-width: 100px;
+}
+table.catalog-assets td.sku > span {
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: text-bottom;
 }
 table.catalog-assets td.pricing table {
   font-size: 12px;
@@ -35,7 +46,6 @@ table.catalog-assets td.pricing table tbody tr td {
 }
 table.catalog-assets td.pricing table td.bullet {
   max-width: 10px;
-  vertical-align: baseline;
   padding-right: 0;
 }
 table.catalog-assets td.pricing table td.markup,

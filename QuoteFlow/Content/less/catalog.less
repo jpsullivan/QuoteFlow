@@ -2,7 +2,7 @@
 table.catalog-assets {
 
     td.name {
-        max-width: 250px;
+        max-width: 300px;
         vertical-align: baseline;
 
         > a {
@@ -14,6 +14,19 @@ table.catalog-assets {
             display: inline-block;
             width: 100%;
             vertical-align: bottom;
+        }
+    }
+
+    td.sku {
+        max-width: 100px;
+
+        > span {
+            -o-text-overflow: ellipsis;
+            -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            vertical-align: text-bottom;
         }
     }
 
@@ -29,7 +42,7 @@ table.catalog-assets {
                 th {
                     color: #808080;
                     font-size: 9px;
-                    font-weight: bold;                    
+                    font-weight: bold;
                     padding: 4px 10px;
                     text-align: right;
                     text-transform: uppercase;
@@ -45,8 +58,7 @@ table.catalog-assets {
             }
 
             td.bullet {
-                max-width:10px;
-                vertical-align: baseline;
+                max-width: 10px;
                 padding-right: 0;
             }
 

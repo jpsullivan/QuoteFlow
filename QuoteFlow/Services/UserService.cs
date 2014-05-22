@@ -488,6 +488,23 @@ namespace QuoteFlow.Services
         }
 
         /// <summary>
+        /// Determines whether or not a user has access to view the
+        /// asset details for a particular asset.
+        /// </summary>
+        /// <param name="user">The <see cref="User"/>.</param>
+        /// <param name="asset">The <see cref="Asset"/>.</param>
+        /// <returns></returns>
+        public bool CanViewAsset(User user, Asset asset)
+        {
+            var hasAccess = false;
+            foreach (var org in user.Organizations.Where(org => org.Id == asset.OrganizationId)) {
+                hasAccess = true;
+            }
+
+            return hasAccess;
+        }
+
+        /// <summary>
         /// Fetches all of the catalogs that a user has access to
         /// based on their organization access.
         /// </summary>

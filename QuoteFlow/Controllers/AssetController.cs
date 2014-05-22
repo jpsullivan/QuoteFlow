@@ -33,8 +33,8 @@ namespace QuoteFlow.Controllers
         {
             var asset = AssetService.GetAsset(assetId);
 
-            // Ensure that the user has access to the supplied catalog
-            if (!UserService.IsCatalogMember(GetCurrentUser().Id, asset.OrganizationId)) 
+            // Ensure that the user has access to the asset
+            if (!UserService.CanViewAsset(GetCurrentUser(), asset))
                 return PageNotFound();
 
             var viewModel = new AssetDetailsModel

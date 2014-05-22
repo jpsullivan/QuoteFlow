@@ -8,9 +8,11 @@
 }
 <tr>
     <td class="name">
-        <a href="@Url.Asset(Model.Id, Model.Name)">@Model.Name</a>
+        <a href="@Url.Asset(Model.Id, Model.Name)" title="@Model.Name">@Model.Name</a>
     </td>
-    <td>@Model.SKU</td>
+    <td class="sku">
+        <span title="@Model.SKU">@Model.SKU</span>
+    </td>
     <td>$@Model.Prices.First().Cost</td>
     <td class="pricing">
         <table class="aui">

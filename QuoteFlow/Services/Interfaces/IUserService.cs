@@ -211,5 +211,14 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="userId">The identifier of the user to lookup</param>
         /// <returns></returns>
         ICollection<Organization> GetUserOrganizations(int userId);
+
+        /// <summary>
+        /// Determines whether or not a user has access to view the
+        /// asset details for a particular asset.
+        /// </summary>
+        /// <param name="user">The <see cref="User"/>.</param>
+        /// <param name="asset">The <see cref="Asset"/>.</param>
+        /// <returns></returns>
+        bool CanViewAsset(User user, Asset asset);
     }
 }
