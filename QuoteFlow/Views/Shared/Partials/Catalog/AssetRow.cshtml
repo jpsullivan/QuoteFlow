@@ -4,43 +4,58 @@
 @model Asset
 @{
     var catalogs = ViewData["Catalogs"] as List<Catalog>;
+    var currentCatalogId = (int) ViewData["CurrentCatalogId"];
 }
 <tr>
-    <td>
+    <td class="name">
         <a href="@Url.Asset(Model.Id, Model.Name)">@Model.Name</a>
     </td>
     <td>@Model.SKU</td>
     <td>$@Model.Prices.First().Cost</td>
     <td class="pricing">
-        <ul>
-            @foreach (var price in Model.Prices)
-            {
-                <li>
-                    <div class="catalog-name">
-                        @{
-                            string catalogName = "";
-                            var catalog = catalogs.Find(c => c.Id == price.CatalogId);
-                            if (catalog != null) {
-                                catalogName = catalog.Name;
+        <table class="aui">
+            <thead>
+                <th></th>
+                <th></th>
+                <th>Markup</th>
+                <th>Sell Price</th>
+            </thead>
+            <tbody>
+                @foreach (var price in Model.Prices) {
+                    <tr>
+                        <td class="bullet">
+                            @if (price.CatalogId == currentCatalogId) {
+                                <span class="aui-icon aui-icon-small aui-iconfont-custom-bullet" style="color: #C52C19"></span>
+                            } else {
+                                <span></span>
                             }
-                        }
-                        
-                        @if (catalogName.HasValue()) {
-                            <span>@catalogName</span>
-                        } else {
-                            <span>(Catalog not found)</span>
-                        }
-                    </div>
-                    <div class="markup">
-                        <span class="heading">Markup</span>
-                        <span>@price.Markup.ToString("P", CultureInfo.InvariantCulture)</span>
-                    </div>
-                    <div class="sell">
-                        <span class="heading">Sell Price</span>
-                        <span>$@price.Price</span>
-                    </div>
-                </li>
-            }
-        </ul>
+                        </td>
+                        <td>
+                            <div class="catalog-name">
+                                @{
+                                    string catalogName = "";
+                                    var catalog = catalogs.Find(c => c.Id == price.CatalogId);
+                                    if (catalog != null) {
+                                        catalogName = catalog.Name;
+                                    }
+                                }
+
+                                @if (catalogName.HasValue()) {
+                                    <span>@catalogName</span>
+                                } else {
+                                    <span>(Catalog not found)</span>
+                                }
+                            </div>
+                        </td>
+                        <td class="markup">
+                            <span>@price.Markup.ToString("P", CultureInfo.InvariantCulture)</span>
+                        </td>
+                        <td class="sell">
+                            <span>$@price.Price</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </td>
 </tr>

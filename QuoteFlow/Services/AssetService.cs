@@ -43,17 +43,18 @@ namespace QuoteFlow.Services
         }
 
         /// <summary>
-        /// Return a list of all the assets for a given catalog along with the manufacturer info.
+        /// Return a list of all the assets for a given set of catalogs along with 
+        /// their respective manufacturer info.
         /// </summary>
-        /// <param name="catalogId">The catalog Id you wish to fetch from.</param>
+        /// <param name="catalogIds"></param>
         /// <param name="organizationId"></param>
         /// <returns>A collection of <see cref="Asset"/> records associated with one <see cref="Catalog"/></returns>
-        public IEnumerable<Asset> GetAssets(int catalogId, int organizationId)
+        public IEnumerable<Asset> GetAssets(IEnumerable<int> catalogIds, int organizationId)
         {
             const string sql = @"select a.*, m.*, ap.* from Assets a
                         join Manufacturers m on m.Id = a.ManufacturerId
                         join AssetPrices ap on ap.AssetId = a.Id
-                        where a.OrganizationId = @organizationId and ap.CatalogId = @catalogId";
+                        where a.OrganizationId = @organizationId and ap.CatalogId in @catalogIds";
 
             // Multi-mapping won't work out of the box for this since we can't supply an
             // IEnumerable<AssetPrice>. Instead, we just manually map the required fields
@@ -78,7 +79,7 @@ namespace QuoteFlow.Services
                 prices.Add(ap);
 
                 return master;
-            }, new { catalogId, organizationId }).Distinct();
+            }, new { catalogIds, organizationId }).Distinct();
 
             return assets;
         }
@@ -90,7 +91,8 @@ namespace QuoteFlow.Services
         /// <returns>Collection of assets</returns>
         public IEnumerable<Asset> GetAssets(Catalog catalog)
         {
-            return GetAssets(catalog.Id, catalog.OrganizationId);
+            var catalogIds = new List<int> {catalog.Id};
+            return GetAssets(catalogIds, catalog.OrganizationId);
         }
 
         /// <summary>

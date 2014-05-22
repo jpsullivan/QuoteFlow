@@ -16,10 +16,10 @@ namespace QuoteFlow.Services.Interfaces
         /// <summary>
         /// Return a list of all the assets for a given catalog along with the manufacturer info.
         /// </summary>
-        /// <param name="catalogId">The catalog Id you wish to fetch from.</param>
+        /// <param name="catalogIds"></param>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        IEnumerable<Asset> GetAssets(int catalogId, int organizationId);
+        IEnumerable<Asset> GetAssets(IEnumerable<int> catalogIds, int organizationId);
 
         /// <summary>
         /// Return a list of all the assets for a given <see cref="Catalog"/>.

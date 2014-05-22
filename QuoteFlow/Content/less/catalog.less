@@ -1,31 +1,57 @@
 ﻿// Catalog asset row styling
 table.catalog-assets {
 
+    td.name {
+        max-width: 250px;
+        vertical-align: baseline;
+
+        > a {
+            -o-text-overflow: ellipsis;
+            -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+            width: 100%;
+            vertical-align: bottom;
+        }
+    }
+
     td.pricing {
 
-        ul {
-            margin: 0;
-            padding: 0;
+        table {
+            font-size: 12px;
+            width: 100%;
 
-            li {
-                display: inline-block;
+            thead {
+                border-bottom: 1px solid #ddd;
 
-                div {
-                    display: inline-block;
-
-                    span {
-                        padding-left: 10px;
-                        font-size: 12px;
-
-                        &.heading {
-                            color: #808080;
-                            text-transform: uppercase;
-                            display: block;
-                            font-size: 9px;
-                            font-weight: bold;
-                        }
-                    }
+                th {
+                    color: #808080;
+                    font-size: 9px;
+                    font-weight: bold;                    
+                    padding: 4px 10px;
+                    text-align: right;
+                    text-transform: uppercase;
                 }
+            }
+
+            tbody tr {
+                border-bottom: none;
+
+                td {
+                    padding: 3px 10px;
+                }
+            }
+
+            td.bullet {
+                max-width:10px;
+                vertical-align: baseline;
+                padding-right: 0;
+            }
+
+            td.markup, td.sell {
+                text-align: right;
             }
         }
     }

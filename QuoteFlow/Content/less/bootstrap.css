@@ -1,4 +1,43 @@
-﻿table.catalog-assets td.pricing ul {
+﻿table.catalog-assets td.name {
+  max-width: 250px;
+  vertical-align: baseline;
+}
+table.catalog-assets td.name > a {
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  width: 100%;
+  vertical-align: bottom;
+}
+table.catalog-assets td.pricing table {
+  font-size: 12px;
+  width: 100%;
+}
+table.catalog-assets td.pricing table thead {
+  border-bottom: 1px solid #ddd;
+}
+table.catalog-assets td.pricing table thead th {
+  color: #808080;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 4px 10px;
+  text-align: right;
+  text-transform: uppercase;
+}
+table.catalog-assets td.pricing table tbody tr {
+  border-bottom: none;
+}
+table.catalog-assets td.pricing table tbody tr td {
+  padding: 5px 10px;
+}
+table.catalog-assets td.pricing table td.markup,
+table.catalog-assets td.pricing table td.sell {
+  text-align: right;
+}
+table.catalog-assets td.pricing ul {
   margin: 0;
   padding: 0;
 }
