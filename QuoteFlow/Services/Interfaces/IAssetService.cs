@@ -17,8 +17,9 @@ namespace QuoteFlow.Services.Interfaces
         /// Return a list of all the assets for a given catalog along with the manufacturer info.
         /// </summary>
         /// <param name="catalogId">The catalog Id you wish to fetch from.</param>
+        /// <param name="organizationId"></param>
         /// <returns></returns>
-        IEnumerable<Asset> GetAssets(int catalogId);
+        IEnumerable<Asset> GetAssets(int catalogId, int organizationId);
 
         /// <summary>
         /// Return a list of all the assets for a given <see cref="Catalog"/>.
@@ -31,10 +32,11 @@ namespace QuoteFlow.Services.Interfaces
         /// Creates an <see cref="Asset"/>.
         /// </summary>
         /// <param name="model"></param>
+        /// <param name="organizationId"></param>
         /// <param name="catalogId"></param>
         /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
         /// <returns></returns>
-        Asset CreateAsset(NewAssetModel model, int catalogId, int userId);
+        Asset CreateAsset(NewAssetModel model, int organizationId, int catalogId, int userId);
 
         /// <summary>
         /// Creates an <see cref="Asset"/>.
@@ -57,9 +59,9 @@ namespace QuoteFlow.Services.Interfaces
         /// Check if an asset exists.
         /// </summary>
         /// <param name="assetName">The asset name to search for</param>
-        /// <param name="catalogId">The Id of the catalog to search from</param>
+        /// <param name="organizationId">The Id of the catalog to search from</param>
         /// <returns></returns>
-        bool AssetExists(string assetName, int catalogId);
+        bool AssetExists(string assetName, int organizationId);
 
         /// <summary>
         /// Check if an asset (truly) exists. Checks with a much more 
@@ -69,10 +71,20 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="manufacturerId">The identifier for the <see cref="Manufacturer"/>.</param>
         /// <param name="description">The asset description.</param>
         /// <param name="sku">The asset SKU.</param>
-        /// <param name="catalogId">The Id of the catalog to search from.</param>
+        /// <param name="organizationId">The Id of the organization to search from.</param>
         /// <param name="asset"></param>
         /// <returns></returns>
-        bool AssetExists(string name, int manufacturerId, string description, string sku, int catalogId, out Asset asset);
+        bool AssetExists(string name, int manufacturerId, string description, string sku, int organizationId, out Asset asset);
+
+        /// <summary>
+        /// Check if an asset exists based on its SKU.
+        /// </summary>
+        /// <param name="sku">The asset SKU (part number)</param>
+        /// <param name="manufacturerId">The identifier for the <see cref="Manufacturer"/>.</param>
+        /// <param name="organizationId">The Id of the organization to search from.</param>
+        /// <param name="asset"></param>
+        /// <returns></returns>
+        bool AssetExists(string sku, int manufacturerId, int organizationId, out Asset asset);
 
         /// <summary>
         /// 

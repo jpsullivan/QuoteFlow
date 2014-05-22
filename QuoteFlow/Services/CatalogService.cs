@@ -174,6 +174,7 @@ namespace QuoteFlow.Services
             var summaries = new List<ICatalogSummaryRecord>();
             var manufacturers = ManufacturerService.GetManufacturers(organizationId).ToList();
             string reason;
+            bool addPriceThenContinue = false;
 
             var primaryFields = model.PrimaryCatalogFields;
             var secondaryFields = model.SecondaryCatalogFields;
@@ -199,7 +200,10 @@ namespace QuoteFlow.Services
                 var sku = row[primaryFields.SkuHeaderId];
 
                 // does this asset already exist? skip it
-                if (AssetService.AssetExists(name, manufacturer.Id, description, sku, newCatalog.Id, out asset)) {
+                if (AssetService.AssetExists(sku, manufacturer.Id, organizationId, out asset))
+                {
+                    // TODO: Save "alternate asset names" that match the SKU, but not the asset name.
+
                     // does the existing asset already have a price from this new catalog?
                     bool duplicateFound = false;
                     foreach (var p in asset.Prices.Where(p => p.CatalogId == newCatalog.Id)) {
@@ -209,30 +213,31 @@ namespace QuoteFlow.Services
                     // If so, skip it. Can't import separate prices during an import.
                     string msg;
                     if (duplicateFound) {
-                        msg = "A separate asset price was already found for this asset during import. Skipping to avoid duplicate prices.";
-                        skipProcessing = true;           
+                        msg = string.Format("An asset price was already imported for '{0}' with this catalog. Skipping to avoid duplicate prices.", asset.SKU);
+                        skipProcessing = true; 
                     } else {
-                        msg = "This row was skipped as the asset seems to already exist. Pricing for this record was inserted instead.";
+                        msg = string.Format("Asset '{0}', seems to already exist. Pricing for this record was inserted instead.", asset.SKU);
+                        addPriceThenContinue = true;
                     }
 
                     summaries.Add(new CatalogRecordImportSkipped(i, msg));
                 } else {
-                    var newAsset = new Asset
-                    {
-                        CatalogId = newCatalog.Id,
-                        Name = name,
-                        ManufacturerId = manufacturer.Id,
-                        Description = description,
-                        SKU = sku,
-                        CreatorId = currentUserId
-                    };
-
                     // is the asset name too long? Flag it. Otherwise, add it.
                     if (AssetService.AssetNameExceedsMaximumLength(name)) {
                         reason = string.Format("Asset name is longer than 250 characters.");
                         summaries.Add(new CatalogRecordImportFailure(i, reason));
                         skipProcessing = true;
                     } else {
+                        var newAsset = new Asset
+                        {
+                            OrganizationId = organizationId,
+                            Name = name,
+                            ManufacturerId = manufacturer.Id,
+                            Description = description,
+                            SKU = sku,
+                            CreatorId = currentUserId
+                        };
+
                         asset = AssetService.CreateAsset(newAsset, currentUserId);
                     }
                 }
@@ -279,6 +284,11 @@ namespace QuoteFlow.Services
 
                 // add the price
                 AssetPriceService.InsertPrice(price);
+
+                // Continue if we only need to add the price since the asset was skipped.
+                if (addPriceThenContinue) {
+                    continue;
+                }
 
                 // And finally let's add in the asset vars
                 foreach (var field in secondaryFields.OptionalImportFields)

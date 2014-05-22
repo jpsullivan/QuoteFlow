@@ -34,12 +34,13 @@ namespace QuoteFlow.Controllers
             var asset = AssetService.GetAsset(assetId);
 
             // Ensure that the user has access to the supplied catalog
-            if (!UserService.IsCatalogMember(GetCurrentUser().Id, asset.CatalogId)) return PageNotFound();
+            if (!UserService.IsCatalogMember(GetCurrentUser().Id, asset.OrganizationId)) 
+                return PageNotFound();
 
             var viewModel = new AssetDetailsModel
             {
                 Asset = asset,
-                Catalog = CatalogService.GetCatalog(asset.CatalogId)
+                Catalog = CatalogService.GetCatalog(asset.OrganizationId)
             };
 
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
@@ -75,7 +76,7 @@ namespace QuoteFlow.Controllers
                 return RedirectToAction("New", "Asset");
             }
 
-            var newAsset = AssetService.CreateAsset(model, catalogId, GetCurrentUser().Id);
+            var newAsset = AssetService.CreateAsset(model, CurrentOrganization.Id, catalogId, GetCurrentUser().Id);
 
             //            return RedirectToRoute("catalog", new {
             //                catalogName = newCatalog.Name
