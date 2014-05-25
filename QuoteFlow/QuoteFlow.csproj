@@ -367,7 +367,6 @@
     <Compile Include="Infrastructure\TableErrorLog.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetImage.cs" />
-    <Compile Include="Models\AssetPrice.cs" />
     <Compile Include="Models\AssetType.cs" />
     <Compile Include="Models\AssetVar.cs" />
     <Compile Include="Models\AssetVarValue.cs" />
@@ -380,6 +379,9 @@
     <Compile Include="Models\CatalogImport\CatalogRecordImportSuccess.cs" />
     <Compile Include="Models\CatalogImport\CatalogSummaryResult.cs" />
     <Compile Include="Models\CatalogImport\ICatalogSummaryRecord.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\ClientCatalog.cs" />
+    <Compile Include="Models\ClientUser.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Credential.cs" />
     <Compile Include="Models\EmailMessage.cs" />
@@ -415,7 +417,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\AssetPriceService.cs" />
     <Compile Include="Services\AssetService.cs" />
     <Compile Include="Services\AssetVarService.cs" />
     <Compile Include="Services\CatalogImportSummaryRecordsService.cs" />
@@ -432,7 +433,6 @@
     <Compile Include="Services\FileSystemService.cs" />
     <Compile Include="Services\FormsAuthenticationService.cs" />
     <Compile Include="Services\HttpContextCacheService.cs" />
-    <Compile Include="Services\Interfaces\IAssetPriceService.cs" />
     <Compile Include="Services\Interfaces\IAssetService.cs" />
     <Compile Include="Services\Interfaces\IAssetVarService.cs" />
     <Compile Include="Services\Interfaces\ICacheService.cs" />
