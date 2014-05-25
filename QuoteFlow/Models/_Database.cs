@@ -5,7 +5,6 @@ namespace QuoteFlow.Models
     public class QuoteFlowDatabase : Dapper.Database<QuoteFlowDatabase>
     {
         public Table<Asset> Assets { get; private set; }
-        public Table<AssetPrice> AssetPrices { get; private set; }
         public Table<AssetVar> AssetVars { get; private set; }
         public Table<AssetVarValue> AssetVarValues { get; private set; } 
         public Table<Catalog> Catalogs { get; private set; }

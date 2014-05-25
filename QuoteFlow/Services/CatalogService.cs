@@ -13,7 +13,6 @@ namespace QuoteFlow.Services
     {
         #region IoC
 
-        private IAssetPriceService AssetPriceService { get; set; }
         private IAssetService AssetService { get; set; }
         private IAssetVarService AssetVarService { get; set; }
         private ICatalogImportSummaryRecordsService CatalogSummaryService { get; set; }
@@ -21,11 +20,9 @@ namespace QuoteFlow.Services
 
         public CatalogService() { }
 
-        public CatalogService(IAssetPriceService assetPriceService, IAssetService assetService, 
-            ICatalogImportSummaryRecordsService catalogSummaryService, IAssetVarService assetVarService, 
-            IManufacturerService manufacturerService)
+        public CatalogService(IAssetService assetService, ICatalogImportSummaryRecordsService catalogSummaryService, 
+            IAssetVarService assetVarService, IManufacturerService manufacturerService)
         {
-            AssetPriceService = assetPriceService;
             AssetService = assetService;
             AssetVarService = assetVarService;
             CatalogSummaryService = catalogSummaryService;
@@ -174,7 +171,6 @@ namespace QuoteFlow.Services
             var summaries = new List<ICatalogSummaryRecord>();
             var manufacturers = ManufacturerService.GetManufacturers(organizationId).ToList();
             string reason;
-            bool addPriceThenContinue = false;
 
             var primaryFields = model.PrimaryCatalogFields;
             var secondaryFields = model.SecondaryCatalogFields;
@@ -182,7 +178,6 @@ namespace QuoteFlow.Services
             for (int i = 0; i < model.Rows.Count() - 1; i++) {
                 var row = model.Rows.ElementAt(i);
                 Asset asset;
-                bool skipProcessing = false;
 
                 // get the manufacturer if they exist, otherwise create it
                 // also, to prevent duplicate queries, check existance from 
@@ -199,98 +194,65 @@ namespace QuoteFlow.Services
                 var description = row[primaryFields.DescriptionHeaderId];
                 var sku = row[primaryFields.SkuHeaderId];
 
-                // does this asset already exist? skip it
-                if (AssetService.AssetExists(sku, manufacturer.Id, organizationId, out asset))
+                // was this asset already added during the import session?
+                if (AssetService.AssetExists(sku, manufacturer.Id, newCatalog.Id, out asset))
                 {
-                    // TODO: Save "alternate asset names" that match the SKU, but not the asset name.
-
-                    // does the existing asset already have a price from this new catalog?
-                    bool duplicateFound = false;
-                    foreach (var p in asset.Prices.Where(p => p.CatalogId == newCatalog.Id)) {
-                        duplicateFound = true;
-                    }
-
-                    // If so, skip it. Can't import separate prices during an import.
-                    string msg;
-                    if (duplicateFound) {
-                        msg = string.Format("An asset price was already imported for '{0}' with this catalog. Skipping to avoid duplicate prices.", asset.SKU);
-                        skipProcessing = true; 
-                    } else {
-                        msg = string.Format("Asset '{0}', seems to already exist. Pricing for this record was inserted instead.", asset.SKU);
-                        addPriceThenContinue = true;
-                    }
-
+                    var msg = string.Format("Asset '{0}', seems to already exist.", asset.SKU);
                     summaries.Add(new CatalogRecordImportSkipped(i, msg));
-                } else {
-                    // is the asset name too long? Flag it. Otherwise, add it.
-                    if (AssetService.AssetNameExceedsMaximumLength(name)) {
-                        reason = string.Format("Asset name is longer than 250 characters.");
-                        summaries.Add(new CatalogRecordImportFailure(i, reason));
-                        skipProcessing = true;
-                    } else {
-                        var newAsset = new Asset
-                        {
-                            OrganizationId = organizationId,
-                            Name = name,
-                            ManufacturerId = manufacturer.Id,
-                            Description = description,
-                            SKU = sku,
-                            CreatorId = currentUserId
-                        };
-
-                        asset = AssetService.CreateAsset(newAsset, currentUserId);
-                    }
+                    continue;
                 }
 
-                // If the asset would fail to be created, skip the following steps.
-                if (skipProcessing) continue;
+                // is the asset name too long? Flag it. Otherwise, add it.
+                if (AssetService.AssetNameExceedsMaximumLength(name)) {
+                    reason = string.Format("Asset name is longer than 250 characters.");
+                    summaries.Add(new CatalogRecordImportFailure(i, reason));
+                    continue;
+                }
 
-                // forceful failure if for some reason asset is null
-                if (asset == null)
+                var newAsset = new Asset
                 {
-                    throw new Exception("Asset should not be null at this point. Something wrong has occurred.");
-                }
-
-                var price = new AssetPrice();
+                    CatalogId = organizationId,
+                    Name = name,
+                    SKU = sku,
+                    Description = description,
+                    ManufacturerId = manufacturer.Id,
+                    CreatorId = currentUserId
+                };
 
                 decimal cost;
                 var costRowValue = row[primaryFields.CostHeaderId];
                 if (Decimal.TryParse(costRowValue, out cost)) {
-                    price.Cost = cost;
+                    newAsset.Cost = cost;
                 } else {
-                    if (costRowValue == "0" || costRowValue.IsNullOrEmpty()) {
-                        price.Cost = Decimal.Zero;
-                    } else {
+                    if (costRowValue != "0" && !costRowValue.IsNullOrEmpty()) {
                         reason = string.Format("Could not convert cost value of '{0}' to decimal.", costRowValue);
                         summaries.Add(new CatalogRecordImportFailure(i, reason, asset.Id));
+                        continue;
                     }
+                    newAsset.Cost = Decimal.Zero;
                 }
 
                 decimal markup;
                 var markupRowValue = row[primaryFields.MarkupHeaderId];
                 if (Decimal.TryParse(markupRowValue, out markup)) {
-                    price.Markup = markup;
+                    newAsset.Markup = markup;
                 } else {
-                    if (markupRowValue == "0" || markupRowValue.IsNullOrEmpty()) {
-                        price.Markup = Decimal.Zero;
-                    } else {
+                    if (markupRowValue != "0" && !markupRowValue.IsNullOrEmpty()) {
                         reason = string.Format("Could not convert markup value of '{0}' to decimal.", markupRowValue);
                         summaries.Add(new CatalogRecordImportFailure(i, reason, asset.Id));
+                        continue;
                     }
+                    newAsset.Markup = Decimal.Zero;
                 }
 
-                price.AssetId = asset.Id;
-                price.CatalogId = newCatalog.Id;
+                asset = AssetService.CreateAsset(newAsset, currentUserId);
 
-                // add the price
-                AssetPriceService.InsertPrice(price);
-
-                // Continue if we only need to add the price since the asset was skipped.
-                if (addPriceThenContinue) {
-                    continue;
+                // forceful failure if for some reason asset is null
+                if (asset == null) {
+                    throw new Exception("Asset should not be null at this point. Something wrong has occurred.");
                 }
 
-                // And finally let's add in the asset vars
+                // Finally insert the asset vars
                 foreach (var field in secondaryFields.OptionalImportFields)
                 {
                     var headerValue = row[field.HeaderId];

@@ -40,7 +40,7 @@ namespace QuoteFlow.Controllers
             var viewModel = new AssetDetailsModel
             {
                 Asset = asset,
-                Catalog = CatalogService.GetCatalog(asset.OrganizationId)
+                Catalog = CatalogService.GetCatalog(asset.CatalogId)
             };
 
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
@@ -76,7 +76,7 @@ namespace QuoteFlow.Controllers
                 return RedirectToAction("New", "Asset");
             }
 
-            var newAsset = AssetService.CreateAsset(model, CurrentOrganization.Id, catalogId, GetCurrentUser().Id);
+            var newAsset = AssetService.CreateAsset(model, catalogId, GetCurrentUser().Id);
 
             //            return RedirectToRoute("catalog", new {
             //                catalogName = newCatalog.Name

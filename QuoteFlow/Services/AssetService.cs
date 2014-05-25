@@ -12,14 +12,12 @@ namespace QuoteFlow.Services
     {
         #region IoC
 
-        private IAssetPriceService AssetPriceService { get; set; }
         private IManufacturerService ManufacturerService { get; set; }
 
         public AssetService() { }
 
-        public AssetService(IAssetPriceService assetPriceService, IManufacturerService manufacturerService)
+        public AssetService(IManufacturerService manufacturerService)
         {
-            AssetPriceService = assetPriceService;
             ManufacturerService = manufacturerService;
         }
 
@@ -34,10 +32,7 @@ namespace QuoteFlow.Services
         {
             var asset = Current.DB.Assets.Get(assetId);
             var manufacturer = ManufacturerService.GetManufacturer(asset.ManufacturerId);
-            var pricing = AssetPriceService.GetAssetPrices(assetId);
-
             asset.Manufacturer = manufacturer;
-            asset.Prices = pricing;
 
             return asset;
         }
@@ -46,21 +41,19 @@ namespace QuoteFlow.Services
         /// Return a list of all the assets for a given set of catalogs along with 
         /// their respective manufacturer info.
         /// </summary>
-        /// <param name="catalogIds"></param>
-        /// <param name="organizationId"></param>
+        /// <param name="catalogId"></param>
         /// <returns>A collection of <see cref="Asset"/> records associated with one <see cref="Catalog"/></returns>
-        public IEnumerable<Asset> GetAssets(IEnumerable<int> catalogIds, int organizationId)
+        public IEnumerable<Asset> GetAssets(int catalogId)
         {
-            const string sql = @"select a.*, m.*, ap.* from Assets a
+            const string sql = @"select a.*, m.*, from Assets a
                         join Manufacturers m on m.Id = a.ManufacturerId
-                        join AssetPrices ap on ap.AssetId = a.Id
-                        where a.OrganizationId = @organizationId and ap.CatalogId in @catalogIds";
+                        where a.CatalogId = @catalogId";
 
             // Multi-mapping won't work out of the box for this since we can't supply an
             // IEnumerable<AssetPrice>. Instead, we just manually map the required fields
             // below, supplying the properties with default values if null.
             var identityMap = new Dictionary<int, Asset>();
-            var assets = Current.DB.Query<Asset, Manufacturer, AssetPrice, Asset>(sql, (a, m, ap) => {
+            var assets = Current.DB.Query<Asset, Manufacturer, Asset>(sql, (a, m) => {
                 Asset master;
                 if (!identityMap.TryGetValue(a.Id, out master)) {
                     identityMap[a.Id] = master = a;
@@ -72,14 +65,8 @@ namespace QuoteFlow.Services
                 }
                 master.Manufacturer = m;
 
-                var prices = (List<AssetPrice>) master.Prices;
-                if (prices == null) {
-                    master.Prices = prices = new List<AssetPrice>();
-                }
-                prices.Add(ap);
-
                 return master;
-            }, new { catalogIds, organizationId }).Distinct();
+            }, new { catalogId }).Distinct();
 
             return assets;
         }
@@ -91,36 +78,27 @@ namespace QuoteFlow.Services
         /// <returns>Collection of assets</returns>
         public IEnumerable<Asset> GetAssets(Catalog catalog)
         {
-            var catalogIds = new List<int> {catalog.Id};
-            return GetAssets(catalogIds, catalog.OrganizationId);
+            return GetAssets(catalog.Id);
         }
 
         /// <summary>
         /// Creates an <see cref="Asset"/>.
         /// </summary>
         /// <param name="model"></param>
-        /// <param name="organizationId"></param>
         /// <param name="catalogId"></param>
         /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
         /// <returns>The newly created <see cref="Asset"/></returns>
-        public Asset CreateAsset(NewAssetModel model, int organizationId, int catalogId, int userId)
+        public Asset CreateAsset(NewAssetModel model, int catalogId, int userId)
         {
             var asset = new Asset
             {
                 Name = model.Name,
                 Description = model.Description,
                 Type = "Asset",
+                CatalogId = catalogId,
                 CreatorId = userId,
                 CreationDate = DateTime.UtcNow,
-                LastUpdated = DateTime.UtcNow,
-                OrganizationId = organizationId
-            };
-            var assetPrice = new AssetPrice
-            {
-                Cost = model.Cost,
-                Markup = model.Markup,
-                Price = CalculatePrice(model.Cost, model.Markup),
-                CatalogId = catalogId
+                LastUpdated = DateTime.UtcNow
             };
 
             // Fetch the manufacturer id
@@ -133,8 +111,8 @@ namespace QuoteFlow.Services
                 asset.Description,
                 asset.Type,
                 asset.ManufacturerId,
+                asset.CatalogId,
                 asset.CreatorId,
-                asset.OrganizationId,
                 asset.CreationDate,
                 asset.LastUpdated
             });
@@ -144,12 +122,6 @@ namespace QuoteFlow.Services
                 asset.Id = insert.Value;
             }
 
-            assetPrice.AssetId = asset.Id;
-
-            // Insert the new asset price and set it to the asset
-            AssetPriceService.InsertPrice(assetPrice);
-
-            asset.Prices = AssetPriceService.GetAssetPrices(asset.Id);
             return asset;
         }
 
@@ -172,13 +144,11 @@ namespace QuoteFlow.Services
             // Fill in any fields that one shouldn't be concerned with elsewhere
             asset.Type = "Asset";
 
-            if (asset.CreationDate.Equals(DateTime.MinValue))
-            {
+            if (asset.CreationDate.Equals(DateTime.MinValue)) {
                 asset.CreationDate = DateTime.UtcNow;
             }
 
-            if (asset.LastUpdated.Equals(DateTime.MinValue))
-            {
+            if (asset.LastUpdated.Equals(DateTime.MinValue)) {
                 asset.LastUpdated = DateTime.UtcNow;
             }
 
@@ -186,17 +156,18 @@ namespace QuoteFlow.Services
             {
                 asset.Name,
                 asset.SKU,
-                asset.Description,
                 asset.Type,
+                asset.Description,
+                asset.Cost,
+                asset.Markup,
                 asset.ManufacturerId,
+                asset.CatalogId,
                 asset.CreatorId,
-                asset.OrganizationId,
                 asset.CreationDate,
                 asset.LastUpdated
             });
 
-            if (insert != null)
-            {
+            if (insert != null) {
                 asset.Id = insert.Value;
             }
 
@@ -204,50 +175,18 @@ namespace QuoteFlow.Services
         }
 
         /// <summary>
-        /// Creates an <see cref="Asset"/>.
-        /// </summary>
-        /// <param name="asset">A pre-built <see cref="Asset"/>.</param>
-        /// <param name="price"></param>
-        /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
-        /// <returns></returns>
-        public Asset CreateAsset(Asset asset, AssetPrice price, int userId)
-        {
-            if (asset == null) {
-                throw new ArgumentNullException("asset");
-            }
-
-            if (price == null) {
-                throw new ArgumentNullException("price");
-            }
-
-            if (userId == 0) {
-                throw new ArgumentException("User Id must be greater than zero.", "userId");
-            }
-
-            asset = CreateAsset(asset, userId);
-
-            price.AssetId = asset.Id;
-
-            // Insert the new asset price and set it to the asset
-            AssetPriceService.InsertPrice(price);
-
-            asset.Prices = AssetPriceService.GetAssetPrices(asset.Id);
-            return asset;
-        }
-
-        /// <summary>
         /// Check if an asset exists.
         /// </summary>
         /// <param name="assetName">The asset name to search for</param>
-        /// <param name="organizationId">The Id of the organization to search from</param>
+        /// <param name="catalogId">The Id of the organization to search from</param>
         /// <returns>True if asset exists, false if not.</returns>
-        public bool AssetExists(string assetName, int organizationId)
+        public bool AssetExists(string assetName, int catalogId)
         {
-            const string sql = "select * from Assets where Name = @assetName AND OrganizationId = @organizationId";
+            const string sql = "select * from Assets where Name = @assetName AND CatalogId = @catalogId";
             var asset = Current.DB.Query<Asset>(sql, new
             {
-                assetName,
-                catalogId = organizationId
+                assetName, 
+                catalogId
             }).FirstOrDefault();
 
             return asset != null;
@@ -261,10 +200,10 @@ namespace QuoteFlow.Services
         /// <param name="manufacturerId">The identifier for the <see cref="Manufacturer"/>.</param>
         /// <param name="description">The asset description.</param>
         /// <param name="sku">The asset SKU.</param>
-        /// <param name="organizationId">The Id of the organization to search from.</param>
+        /// <param name="catalogId">The Id of the organization to search from.</param>
         /// <param name="asset"></param>
         /// <returns></returns>
-        public bool AssetExists(string name, int manufacturerId, string description, string sku, int organizationId, out Asset asset)
+        public bool AssetExists(string name, int manufacturerId, string description, string sku, int catalogId, out Asset asset)
         {
             var builder = new SqlBuilder();
             SqlBuilder.Template tmpl = builder.AddTemplate(@"
@@ -276,11 +215,11 @@ namespace QuoteFlow.Services
             builder.Where("Description = @description");
             builder.Where("SKU = @sku");
             builder.Where("ManufacturerId = @manufacturerId");
-            builder.Where("OrganizationId = @organizationId");
+            builder.Where("CatalogId = @catalogId");
 
             var foundAsset = Current.DB.Query<Asset>(tmpl.RawSql, new
             {
-                name, description, sku, manufacturerId, catalogId = organizationId
+                name, description, sku, manufacturerId, catalogId
             }).FirstOrDefault();
 
             if (foundAsset == null) {
@@ -297,10 +236,10 @@ namespace QuoteFlow.Services
         /// </summary>
         /// <param name="sku">The asset SKU (part number)</param>
         /// <param name="manufacturerId">The identifier for the <see cref="Manufacturer"/>.</param>
-        /// <param name="organizationId">The Id of the organization to search from.</param>
+        /// <param name="catalogId">The Id of the organization to search from.</param>
         /// <param name="asset"></param>
         /// <returns></returns>
-        public bool AssetExists(string sku, int manufacturerId, int organizationId, out Asset asset)
+        public bool AssetExists(string sku, int manufacturerId, int catalogId, out Asset asset)
         {
             var builder = new SqlBuilder();
             SqlBuilder.Template tmpl = builder.AddTemplate(@"
@@ -310,13 +249,13 @@ namespace QuoteFlow.Services
             
             builder.Where("SKU = @sku");
             builder.Where("ManufacturerId = @manufacturerId");
-            builder.Where("OrganizationId = @organizationId");
+            builder.Where("CatalogId = @catalogId");
 
             var foundAsset = Current.DB.Query<Asset>(tmpl.RawSql, new
             {
                 sku,
                 manufacturerId, 
-                organizationId
+                organizationId = catalogId
             }).FirstOrDefault();
 
             if (foundAsset == null) {

@@ -115,8 +115,7 @@ namespace QuoteFlow.Controllers
         [Route("catalog/{catalogId:INT}/{catalogName}/assets")]
         public ActionResult ShowAssets(int catalogId, string catalogName, int? page)
         {
-            var catalogs = CatalogService.GetCatalogs(CurrentOrganization.Id).ToList();
-            var catalog = catalogs.First(c => c.Id == catalogId);
+            var catalog = CatalogService.GetCatalog(catalogId);
             if (catalog == null) {
                 return PageNotFound();
             }
@@ -125,14 +124,13 @@ namespace QuoteFlow.Controllers
             var currentPage = Math.Max(page ?? 1, 1);
 
             var creator = UserService.GetUser(catalog.CreatorId);
-            var assets = AssetService.GetAssets(catalogs.Select(c => c.Id), CurrentOrganization.Id).ToPagedList(currentPage, perPage);
+            var assets = AssetService.GetAssets(catalog.Id).ToPagedList(currentPage, perPage);
             var paginationUrl = Url.CatalogAssets(catalog.Id, catalog.Name.UrlFriendly(), -1);
 
             var model = new CatalogShowAssetsModel
             {
                 Assets = assets,
                 Catalog = catalog,
-                Catalogs = catalogs,
                 CatalogCreator = creator,
                 CurrentPage = currentPage,
                 PaginationUrl = paginationUrl

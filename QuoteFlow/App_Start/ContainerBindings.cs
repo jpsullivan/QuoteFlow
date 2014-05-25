@@ -60,10 +60,6 @@ namespace QuoteFlow
                 .To<ContentService>()
                 .InSingletonScope();
 
-            Bind<IAssetPriceService>()
-                .To<AssetPriceService>()
-                .InRequestScope();
-
             Bind<IAssetService>()
                 .To<AssetService>()
                 .InRequestScope();
