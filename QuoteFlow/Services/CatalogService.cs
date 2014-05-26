@@ -211,10 +211,10 @@ namespace QuoteFlow.Services
 
                 var newAsset = new Asset
                 {
-                    CatalogId = organizationId,
                     Name = name,
                     SKU = sku,
                     Description = description,
+                    CatalogId = newCatalog.Id,
                     ManufacturerId = manufacturer.Id,
                     CreatorId = currentUserId
                 };

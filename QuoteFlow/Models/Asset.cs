@@ -9,7 +9,6 @@ namespace QuoteFlow.Models
         public string SKU { get; set; }
         public string Type { get; set; }
         public string Description { get; set; }
-        public int CatalogId { get; set; }
         public int CreatorId { get; set; }
         public DateTime LastUpdated { get; set; }
         public DateTime CreationDate { get; set; }
@@ -35,5 +34,8 @@ namespace QuoteFlow.Models
 
         public int ManufacturerId { get; set; }
         public Manufacturer Manufacturer { get; set; }
+
+        public int CatalogId { get; set; }
+        public Catalog Catalog { get; set; }
     }
 }

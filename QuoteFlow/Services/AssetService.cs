@@ -31,9 +31,12 @@ namespace QuoteFlow.Services
         public Asset GetAsset(int assetId)
         {
             var asset = Current.DB.Assets.Get(assetId);
+            var catalog = Current.DB.Catalogs.Get(asset.CatalogId); // can't use CatalogService here due to cyclical deps
             var manufacturer = ManufacturerService.GetManufacturer(asset.ManufacturerId);
-            asset.Manufacturer = manufacturer;
 
+            asset.Catalog = catalog;
+            asset.Manufacturer = manufacturer;
+            
             return asset;
         }
 
@@ -45,15 +48,16 @@ namespace QuoteFlow.Services
         /// <returns>A collection of <see cref="Asset"/> records associated with one <see cref="Catalog"/></returns>
         public IEnumerable<Asset> GetAssets(int catalogId)
         {
-            const string sql = @"select a.*, m.*, from Assets a
+            const string sql = @"select a.*, m.*, c.* from Assets a
                         join Manufacturers m on m.Id = a.ManufacturerId
+                        join Catalogs c on c.Id = a.CatalogId
                         where a.CatalogId = @catalogId";
 
             // Multi-mapping won't work out of the box for this since we can't supply an
             // IEnumerable<AssetPrice>. Instead, we just manually map the required fields
             // below, supplying the properties with default values if null.
             var identityMap = new Dictionary<int, Asset>();
-            var assets = Current.DB.Query<Asset, Manufacturer, Asset>(sql, (a, m) => {
+            var assets = Current.DB.Query<Asset, Manufacturer, Catalog, Asset>(sql, (a, m, c) => {
                 Asset master;
                 if (!identityMap.TryGetValue(a.Id, out master)) {
                     identityMap[a.Id] = master = a;
@@ -64,6 +68,12 @@ namespace QuoteFlow.Services
                     master.Manufacturer = manufacturer = new Manufacturer();
                 }
                 master.Manufacturer = m;
+
+                var catalog = master.Catalog;
+                if (catalog == null) {
+                    master.Catalog = catalog = new Catalog();
+                }
+                master.Catalog = c;
 
                 return master;
             }, new { catalogId }).Distinct();
@@ -178,7 +188,7 @@ namespace QuoteFlow.Services
         /// Check if an asset exists.
         /// </summary>
         /// <param name="assetName">The asset name to search for</param>
-        /// <param name="catalogId">The Id of the organization to search from</param>
+        /// <param name="catalogId">The Id of the <see cref="Catalog"/> to search from</param>
         /// <returns>True if asset exists, false if not.</returns>
         public bool AssetExists(string assetName, int catalogId)
         {
@@ -200,7 +210,7 @@ namespace QuoteFlow.Services
         /// <param name="manufacturerId">The identifier for the <see cref="Manufacturer"/>.</param>
         /// <param name="description">The asset description.</param>
         /// <param name="sku">The asset SKU.</param>
-        /// <param name="catalogId">The Id of the organization to search from.</param>
+        /// <param name="catalogId">The Id of the <see cref="Catalog"/> to search from.</param>
         /// <param name="asset"></param>
         /// <returns></returns>
         public bool AssetExists(string name, int manufacturerId, string description, string sku, int catalogId, out Asset asset)
@@ -236,7 +246,7 @@ namespace QuoteFlow.Services
         /// </summary>
         /// <param name="sku">The asset SKU (part number)</param>
         /// <param name="manufacturerId">The identifier for the <see cref="Manufacturer"/>.</param>
-        /// <param name="catalogId">The Id of the organization to search from.</param>
+        /// <param name="catalogId">The Id of the <see cref="Catalog"/> to search from.</param>
         /// <param name="asset"></param>
         /// <returns></returns>
         public bool AssetExists(string sku, int manufacturerId, int catalogId, out Asset asset)
@@ -255,7 +265,7 @@ namespace QuoteFlow.Services
             {
                 sku,
                 manufacturerId, 
-                organizationId = catalogId
+                catalogId
             }).FirstOrDefault();
 
             if (foundAsset == null) {

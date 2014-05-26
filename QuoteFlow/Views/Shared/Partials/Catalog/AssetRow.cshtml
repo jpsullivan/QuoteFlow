@@ -2,10 +2,6 @@
 @using QuoteFlow.Infrastructure.Extensions
 @using QuoteFlow.Models
 @model Asset
-@{
-    var catalogs = ViewData["Catalogs"] as List<Catalog>;
-    var currentCatalogId = (int) ViewData["CurrentCatalogId"];
-}
 <tr>
     <td class="name">
         <a href="@Url.Asset(Model.Id, Model.Name)" title="@Model.Name">@Model.Name</a>
@@ -13,50 +9,39 @@
     <td class="sku">
         <span title="@Model.SKU">@Model.SKU</span>
     </td>
-    <td>$@Model.Prices.First().Cost</td>
+    <td>$@Model.Cost</td>
     <td class="pricing">
         <table class="aui">
             <thead>
-                <th></th>
                 <th></th>
                 <th>Markup</th>
                 <th>Sell Price</th>
             </thead>
             <tbody>
-                @foreach (var price in Model.Prices) {
-                    <tr>
-                        <td class="bullet">
-                            @if (price.CatalogId == currentCatalogId) {
-                                <span class="aui-icon aui-icon-small aui-iconfont-custom-bullet" style="color: #C52C19"></span>
-                            } else {
-                                <span></span>
+                <tr>
+                    <td>
+                        <div class="catalog-name">
+                            @{
+                                string catalogName = "";
+                                if (Model.Catalog != null) {
+                                    catalogName = Model.Catalog.Name;
+                                }
                             }
-                        </td>
-                        <td>
-                            <div class="catalog-name">
-                                @{
-                                    string catalogName = "";
-                                    var catalog = catalogs.Find(c => c.Id == price.CatalogId);
-                                    if (catalog != null) {
-                                        catalogName = catalog.Name;
-                                    }
-                                }
 
-                                @if (catalogName.HasValue()) {
-                                    <span>@catalogName</span>
-                                } else {
-                                    <span>(Catalog not found)</span>
-                                }
-                            </div>
-                        </td>
-                        <td class="markup">
-                            <span>@price.Markup.ToString("P", CultureInfo.InvariantCulture)</span>
-                        </td>
-                        <td class="sell">
-                            <span>$@price.Price</span>
-                        </td>
-                    </tr>
-                }
+                            @if (catalogName.HasValue()) {
+                                <span>@catalogName</span>
+                            } else {
+                                <span>(Catalog not found)</span>
+                            }
+                        </div>
+                    </td>
+                    <td class="markup">
+                        <span>@Model.Markup.ToString("P", CultureInfo.InvariantCulture)</span>
+                    </td>
+                    <td class="sell">
+                        <span>$@Model.Price</span>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </td>

@@ -496,12 +496,13 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public bool CanViewAsset(User user, Asset asset)
         {
-            var hasAccess = false;
-            foreach (var org in user.Organizations.Where(org => org.Id == asset.OrganizationId)) {
-                hasAccess = true;
-            }
-
-            return hasAccess;
+//            var hasAccess = false;
+//            foreach (var org in user.Organizations.Where(org => org.Id == asset.OrganizationId)) {
+//                hasAccess = true;
+//            }
+//
+//            return hasAccess;
+            return true;
         }
 
         /// <summary>
