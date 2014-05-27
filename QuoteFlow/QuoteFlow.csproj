@@ -570,6 +570,9 @@
     <Content Include="Content\js\lib\handlebars.min.js" />
     <Content Include="Content\js\lib\json2.min.js" />
     <Content Include="Content\js\lib\moment.min.js" />
+    <Content Include="Content\less\asset.css">
+      <DependentUpon>asset.less</DependentUpon>
+    </Content>
     <Content Include="Content\less\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
     </Content>
@@ -647,6 +650,10 @@
     <Content Include="Content\less\catalog.less" />
     <Content Include="Content\less\catalog.css.map">
       <DependentUpon>catalog.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\asset.less" />
+    <Content Include="Content\less\asset.css.map">
+      <DependentUpon>asset.css</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

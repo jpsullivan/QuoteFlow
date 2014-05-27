@@ -163,7 +163,8 @@ namespace QuoteFlow.Services
         /// <returns>The newly created catalog id.</returns>
         public int ImportCatalog(VerifyCatalogImportViewModel model, int currentUserId, int organizationId)
         {
-            if (model == null) {
+            if (model == null) 
+            {
                 throw new ArgumentNullException("Catalog import failed due to missing data.");
             }
 
@@ -175,7 +176,8 @@ namespace QuoteFlow.Services
             var primaryFields = model.PrimaryCatalogFields;
             var secondaryFields = model.SecondaryCatalogFields;
 
-            for (int i = 0; i < model.Rows.Count() - 1; i++) {
+            for (int i = 0; i < model.Rows.Count() - 1; i++) 
+            {
                 var row = model.Rows.ElementAt(i);
                 Asset asset;
 
@@ -184,7 +186,8 @@ namespace QuoteFlow.Services
                 // a list. If created, add to said list. Perf.
                 var manufacturerName = row[primaryFields.ManufacturerHeaderId];
                 var manufacturer = manufacturers.FirstOrDefault(m => m.Name == manufacturerName);
-                if (manufacturer == null) {
+                if (manufacturer == null) 
+                {
                     manufacturer = ManufacturerService.CreateManufacturer(manufacturerName, model.CatalogInformation.Organization.Id);
                     manufacturers.Add(manufacturer);
                 }
@@ -203,14 +206,14 @@ namespace QuoteFlow.Services
                 }
 
                 // is the asset name too long? Flag it. Otherwise, add it.
-                if (AssetService.AssetNameExceedsMaximumLength(name)) {
+                if (AssetService.AssetNameExceedsMaximumLength(name)) 
+                {
                     reason = string.Format("Asset name is longer than 250 characters.");
                     summaries.Add(new CatalogRecordImportFailure(i, reason));
                     continue;
                 }
 
-                var newAsset = new Asset
-                {
+                var newAsset = new Asset {
                     Name = name,
                     SKU = sku,
                     Description = description,
@@ -248,12 +251,13 @@ namespace QuoteFlow.Services
                 asset = AssetService.CreateAsset(newAsset, currentUserId);
 
                 // forceful failure if for some reason asset is null
-                if (asset == null) {
+                if (asset == null) 
+                {
                     throw new Exception("Asset should not be null at this point. Something wrong has occurred.");
                 }
 
                 // Finally insert the asset vars
-                foreach (var field in secondaryFields.OptionalImportFields)
+                foreach (var field in secondaryFields.OptionalImportFields) 
                 {
                     var headerValue = row[field.HeaderId];
                     var varValue = new AssetVarValue(asset.Id, field.AssetVarId, headerValue, organizationId);

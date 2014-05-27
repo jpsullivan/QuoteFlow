@@ -138,12 +138,7 @@ namespace QuoteFlow.Infrastructure.Helpers
 
     public static class PagedListExtensions
     {
-        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> source, int index)
-        {
-            return ToPagedList(source, index, null);
-        }
-
-        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> source, int index, int? pageSize, bool forceIndexInBounds = false, int? prePagedTotalCount = null)
+        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> source, int index, int? pageSize = null, bool forceIndexInBounds = false, int? prePagedTotalCount = null)
         {
             if (!pageSize.HasValue || pageSize.Value < 1)
                 pageSize = 50;
@@ -151,17 +146,12 @@ namespace QuoteFlow.Infrastructure.Helpers
             return new PagedList<T>(source, index, pageSize.Value, forceIndexInBounds, prePagedTotalCount);
         }
 
-        public static PagedList<T> ToPagedList<T>(this IQueryable<T> source, int index, int? pageSize)
+        public static PagedList<T> ToPagedList<T>(this IQueryable<T> source, int index, int? pageSize = null)
         {
             if (!pageSize.HasValue || pageSize.Value < 1)
                 pageSize = 50;
 
             return new PagedList<T>(source, index, pageSize.Value);
-        }
-
-        public static PagedList<T> ToPagedList<T>(this IQueryable<T> source, int index)
-        {
-            return ToPagedList(source, index, null);
         }
     }
 }

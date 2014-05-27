@@ -13,28 +13,11 @@
     <td class="pricing">
         <table class="aui">
             <thead>
-                <th></th>
                 <th>Markup</th>
                 <th>Sell Price</th>
             </thead>
             <tbody>
                 <tr>
-                    <td>
-                        <div class="catalog-name">
-                            @{
-                                string catalogName = "";
-                                if (Model.Catalog != null) {
-                                    catalogName = Model.Catalog.Name;
-                                }
-                            }
-
-                            @if (catalogName.HasValue()) {
-                                <span>@catalogName</span>
-                            } else {
-                                <span>(Catalog not found)</span>
-                            }
-                        </div>
-                    </td>
                     <td class="markup">
                         <span>@Model.Markup.ToString("P", CultureInfo.InvariantCulture)</span>
                     </td>
