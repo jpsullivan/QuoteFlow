@@ -103,6 +103,15 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         #endregion
 
+        #region Manufacturers
+
+        public static string Manufacturer(this UrlHelper url, int id, string manufacturerName)
+        {
+            return string.Format("/manufacturer/{0}/{1}", id, manufacturerName.UrlFriendly());
+        }
+
+        #endregion
+
         public static string ConfirmationUrl(this UrlHelper url, string action, string controller, string username, string token)
         {
             return ConfirmationUrl(url, action, controller, username, token, null);

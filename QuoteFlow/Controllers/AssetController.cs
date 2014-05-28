@@ -40,7 +40,7 @@ namespace QuoteFlow.Controllers
             var viewModel = new AssetDetailsModel
             {
                 Asset = asset,
-                Catalog = CatalogService.GetCatalog(asset.CatalogId)
+                Catalog = asset.Catalog
             };
 
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);

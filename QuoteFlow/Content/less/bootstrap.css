@@ -26,7 +26,6 @@
   right: 0;
   width: auto;
   z-index: 100;
-  background-color: #fff;
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
   -ms-transform: translateZ(0);
@@ -51,8 +50,9 @@
 }
 .asset-container #stalker .asset-header-content > .command-bar,
 .asset-container .asset-header .asset-header-content > .command-bar {
+  clear: both;
   background-color: #ffffff;
-  border-top: none;
+  border-top: 1px solid #ccc;
   margin: 0;
   padding: 10px;
 }
@@ -88,6 +88,10 @@
 .asset-container #stalker .asset-header-content .ops-menus,
 .asset-container .asset-header .asset-header-content .ops-menus {
   display: block;
+}
+.asset-container #stalker .asset-header-content .ops-menus .aui-button,
+.asset-container .asset-header .asset-header-content .ops-menus .aui-button {
+  margin-top: 0;
 }
 .asset-container #stalker .page-navigation,
 .asset-container .asset-header .page-navigation {
@@ -250,6 +254,47 @@
   margin-left: -5px;
   padding: 2px 30px 2px 5px;
   z-index: 1;
+}
+.asset-container .item-details {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.asset-container .item-details dl {
+  border-spacing: 0;
+  display: table;
+  table-layout: fixed;
+  margin: 1px 0 0 0;
+  width: 100%;
+}
+.asset-container .item-details dl:first-child {
+  line-height: 24px;
+}
+.asset-container .item-details dl > dt {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #707070;
+  display: table-cell;
+  font-weight: normal;
+  padding: 2px 5px 2px 0;
+  text-align: left;
+  vertical-align: top;
+  width: 140px;
+}
+.asset-container .item-details dl > dd {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 2px 0 2px 5px;
+  display: table-cell;
+}
+.asset-container .view-asset-field {
+  display: inline-block;
+  padding-right: 30px;
+}
+.asset-container .people-details .aui-avatar {
+  vertical-align: middle;
 }
 table.catalog-assets td.name {
   max-width: 300px;
