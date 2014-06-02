@@ -146,9 +146,9 @@
       <HintPath>..\packages\AnglicanGeek.WindowsAzure.ServiceRuntime.1.6\lib\net35-full\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="MiniProfiler, Version=3.0.10.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+    <Reference Include="MiniProfiler, Version=3.0.11.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MiniProfiler.3.0.10-beta6\lib\net40\MiniProfiler.dll</HintPath>
+      <HintPath>..\packages\MiniProfiler.3.0.11\lib\net40\MiniProfiler.dll</HintPath>
     </Reference>
     <Reference Include="MiniProfiler.Mvc">
       <HintPath>..\packages\MiniProfiler.Mvc4.3.0.10-beta1\lib\net40\MiniProfiler.Mvc.dll</HintPath>
@@ -763,6 +763,8 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\js\app\quoteflow.ts" />
+    <TypeScriptCompile Include="Content\js\app\ui\asset\show_asset.ts" />
+    <TypeScriptCompile Include="Content\js\app\views2.ts" />
     <TypeScriptCompile Include="Content\js\lib\backbone.d.ts" />
     <TypeScriptCompile Include="Content\js\lib\jquery.d.ts" />
     <TypeScriptCompile Include="Content\js\lib\underscore.d.ts" />

@@ -1,5 +1,5 @@
 ﻿@model QuoteFlow.Models.ViewModels.AssetDetailsModel
 
-@{ ViewBag.Title = "QuoteFlow - " + @Model.Asset.Name; }
+@{ ViewBag.Title = @Model.Asset.Name + " - QuoteFlow"; }
 
 @Html.Partial("Partials/Asset/AssetDetails", Model)

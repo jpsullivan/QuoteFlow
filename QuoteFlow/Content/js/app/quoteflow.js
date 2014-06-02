@@ -65,7 +65,6 @@ var QuoteFlow;
     var UI = QuoteFlow.UI;
     QuoteFlow.Utilities = {};
     QuoteFlow.Vent = _.extend({}, Backbone.Events);
-    QuoteFlow.Views = {};
 
     var Initialize = (function () {
         function Initialize(rootUrl, applicationPath, currentOrgId, currentUser) {

@@ -1,22 +1,33 @@
-﻿QuoteFlow.Views.Base = Backbone.View.extend({
+﻿/// <reference path="../lib/jquery.d.ts"/>
+/// <reference path="../lib/underscore.d.ts"/>
+/// <reference path="../lib/backbone.d.ts"/>
 
-    initialize: function (options) {
+//declare var JST: any;
+
+class Base extends Backbone.View<FakeModel> {
+
+    template: (data: any) => string;
+    templateName: string;
+    subviews: any;
+    
+    constructor(options) {
+        super(options);
         this.setupRenderEvents();
-    },
+    }
 
-    presenter: function () {
-        return this.defaultPresenter();
-    },
-
-    setupRenderEvents: function () {
+    setupRenderEvents() {
         if (this.model) {
             this.model.bind('remove', this.remove, this);
         }
-    },
+    }
+
+    presenter() {
+        return this.defaultPresenter();
+    }
 
     // automatically plugs-in the model attributes into the JST, as well as
     // some site-wide attributes that we define below
-    defaultPresenter: function () {
+    defaultPresenter() {
         var modelJson = this.model && this.model.attributes ? _.clone(this.model.attributes) : {};
 
         var imageUrl;
@@ -30,16 +41,16 @@
             RootUrl: QuoteFlow.RootUrl,
             ImageUrl: imageUrl
         });
-    },
+    }
 
-    render: function () {
+    render() {
         this.renderTemplate();
         this.renderSubviews();
 
         return this;
-    },
+    }
 
-    renderTemplate: function () {
+    renderTemplate() {
         var presenter = _.isFunction(this.presenter) ? this.presenter() : this.presenter;
         this.template = JST[this.templateName];
         if (!this.template) {
@@ -47,40 +58,41 @@
         }
 
         this.$el
-          .html(this.template(presenter))
-          .attr("data-template", _.last(this.templateName.split("/")));
+            .html(this.template(presenter))
+            .attr("data-template", _.last(this.templateName.split("/")));
         this.postRenderTemplate();
-    },
+    }
 
-    postRenderTemplate: $.noop, // hella callbax yo
+    postRenderTemplate() {
+        $.noop; // hella callbax yo
+    }
 
-    renderSubviews: function () {
-        var self = this;
-        _.each(this.subviews, function (property, selector) {
-            var view = _.isFunction(self[property]) ? self[property]() : self[property];
+    renderSubviews() {
+        _.each(this.subviews, (property, selector) => {
+            var view = _.isFunction(this[property]) ? this[property]() : this[property];
             if (view) {
                 if (_.isArray(view)) {
                     // If we pass an array of views into the subviews, append each to the selector.
                     // This should generally only be used when dealing with parent-specific class issues.
                     // For example, if you need to supply a "span*" class on the parent to prevent the
                     // box model from breaking.
-                    _.each(view, function (arrayView) {
+                    _.each(view, function (arrayView: any) {
                         var subView = _.isFunction(arrayView) ? arrayView() : arrayView;
                         if (arrayView) {
-                            self.$(selector).append(subView.render().el);
+                            this.$(selector).append(subView.render().el);
                             subView.delegateEvents();
                         }
                     });
                 } else {
                     // drop the view directly into the selector
-                    self.$(selector).html(view.render().el);
+                    this.$(selector).html(view.render().el);
                     view.delegateEvents();
                 }
             }
         });
-    },
+    }
 
-    remove: function () {
+    remove() {
         if (this.subviews) {
             this.removeSubviews();
         }
@@ -99,27 +111,22 @@
 
         // Remove the view from the DOM
         return Backbone.View.prototype.remove.apply(this, arguments);
-    },
+    }
 
-    /**
-        Removes any subviews associated with this view, which will in-turn remove any
-        children of those views, and so on.
-    **/
-    removeSubviews: function () {
-        var self = this,
-            children = this.subviews,
+    removeSubviews() {
+        var children = this.subviews,
             childViews = [];
 
         if (!children) {
             return this;
         }
 
-        _.each(children, function (property, selector) {
-            var view = _.isFunction(self[property]) ? self[property]() : self[property];
+        _.each(children, (property, selector) => {
+            var view = _.isFunction(this[property]) ? this[property]() : this[property];
             if (view) {
                 if (_.isArray(view)) {
                     // ensure that subview arrays are also properly disposed of
-                    _.each(view, function (arrayView) {
+                    _.each(view, arrayView => {
                         var subView = _.isFunction(arrayView) ? arrayView() : arrayView;
                         if (arrayView) {
                             childViews.push(subView);
@@ -131,10 +138,11 @@
             }
         });
 
-
         _(childViews).invoke("remove");
 
         this.subviews = {};
         return this;
     }
-});
+}
+
+class FakeModel extends Backbone.Model { }

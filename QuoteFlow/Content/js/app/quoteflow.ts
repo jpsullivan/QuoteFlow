@@ -48,7 +48,7 @@ module QuoteFlow {
     }
     export var Utilities = {}
     export var Vent = _.extend({}, Backbone.Events);
-    export var Views = {}
+    export module Views {}
 
     export class Initialize {
         constructor(rootUrl: string, applicationPath: string, currentOrgId: string, currentUser: any) {
@@ -79,4 +79,6 @@ module QuoteFlow {
             }
         }
     }
+
+    
 }

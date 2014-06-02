@@ -313,4 +313,49 @@
             vertical-align: middle;
         }
     }
+
+    // comment body and footer
+    #addcomment {
+
+        &.active {
+            .mod-content {
+                display: block;
+            }
+            .mod-footer {
+                display: none;
+            }
+        }
+
+        .mod-content {
+            display:none;
+        }
+
+        .mod-footer {
+            overflow: hidden;
+        }
+
+        .ops {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        textarea {
+            max-width: none;
+            max-height: none;
+            min-height: 150px;
+
+            li {
+                display: block;
+                float: left;
+                white-space: nowrap;
+            }
+        }
+
+        #asset-comment-add-cancel {
+            padding-left: 0;
+            padding-right: 0;
+            margin-right: 9px;
+        }
+    }
 }

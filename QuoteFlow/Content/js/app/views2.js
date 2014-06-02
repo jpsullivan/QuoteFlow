@@ -1,22 +1,32 @@
-﻿QuoteFlow.Views.Base = Backbone.View.extend({
-
-    initialize: function (options) {
+﻿/// <reference path="../lib/jquery.d.ts"/>
+/// <reference path="../lib/underscore.d.ts"/>
+/// <reference path="../lib/backbone.d.ts"/>
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+//declare var JST: any;
+var Base = (function (_super) {
+    __extends(Base, _super);
+    function Base(options) {
+        _super.call(this, options);
         this.setupRenderEvents();
-    },
-
-    presenter: function () {
-        return this.defaultPresenter();
-    },
-
-    setupRenderEvents: function () {
+    }
+    Base.prototype.setupRenderEvents = function () {
         if (this.model) {
             this.model.bind('remove', this.remove, this);
         }
-    },
+    };
+
+    Base.prototype.presenter = function () {
+        return this.defaultPresenter();
+    };
 
     // automatically plugs-in the model attributes into the JST, as well as
     // some site-wide attributes that we define below
-    defaultPresenter: function () {
+    Base.prototype.defaultPresenter = function () {
         var modelJson = this.model && this.model.attributes ? _.clone(this.model.attributes) : {};
 
         var imageUrl;
@@ -30,34 +40,34 @@
             RootUrl: QuoteFlow.RootUrl,
             ImageUrl: imageUrl
         });
-    },
+    };
 
-    render: function () {
+    Base.prototype.render = function () {
         this.renderTemplate();
         this.renderSubviews();
 
         return this;
-    },
+    };
 
-    renderTemplate: function () {
+    Base.prototype.renderTemplate = function () {
         var presenter = _.isFunction(this.presenter) ? this.presenter() : this.presenter;
         this.template = JST[this.templateName];
         if (!this.template) {
             console.log(!_.isUndefined(this.templateName) ? ("no template for " + this.templateName) : "no templateName specified");
         }
 
-        this.$el
-          .html(this.template(presenter))
-          .attr("data-template", _.last(this.templateName.split("/")));
+        this.$el.html(this.template(presenter)).attr("data-template", _.last(this.templateName.split("/")));
         this.postRenderTemplate();
-    },
+    };
 
-    postRenderTemplate: $.noop, // hella callbax yo
+    Base.prototype.postRenderTemplate = function () {
+        $.noop; // hella callbax yo
+    };
 
-    renderSubviews: function () {
-        var self = this;
+    Base.prototype.renderSubviews = function () {
+        var _this = this;
         _.each(this.subviews, function (property, selector) {
-            var view = _.isFunction(self[property]) ? self[property]() : self[property];
+            var view = _.isFunction(_this[property]) ? _this[property]() : _this[property];
             if (view) {
                 if (_.isArray(view)) {
                     // If we pass an array of views into the subviews, append each to the selector.
@@ -67,20 +77,20 @@
                     _.each(view, function (arrayView) {
                         var subView = _.isFunction(arrayView) ? arrayView() : arrayView;
                         if (arrayView) {
-                            self.$(selector).append(subView.render().el);
+                            this.$(selector).append(subView.render().el);
                             subView.delegateEvents();
                         }
                     });
                 } else {
                     // drop the view directly into the selector
-                    self.$(selector).html(view.render().el);
+                    _this.$(selector).html(view.render().el);
                     view.delegateEvents();
                 }
             }
         });
-    },
+    };
 
-    remove: function () {
+    Base.prototype.remove = function () {
         if (this.subviews) {
             this.removeSubviews();
         }
@@ -99,23 +109,18 @@
 
         // Remove the view from the DOM
         return Backbone.View.prototype.remove.apply(this, arguments);
-    },
+    };
 
-    /**
-        Removes any subviews associated with this view, which will in-turn remove any
-        children of those views, and so on.
-    **/
-    removeSubviews: function () {
-        var self = this,
-            children = this.subviews,
-            childViews = [];
+    Base.prototype.removeSubviews = function () {
+        var _this = this;
+        var children = this.subviews, childViews = [];
 
         if (!children) {
             return this;
         }
 
         _.each(children, function (property, selector) {
-            var view = _.isFunction(self[property]) ? self[property]() : self[property];
+            var view = _.isFunction(_this[property]) ? _this[property]() : _this[property];
             if (view) {
                 if (_.isArray(view)) {
                     // ensure that subview arrays are also properly disposed of
@@ -131,10 +136,19 @@
             }
         });
 
-
         _(childViews).invoke("remove");
 
         this.subviews = {};
         return this;
+    };
+    return Base;
+})(Backbone.View);
+
+var FakeModel = (function (_super) {
+    __extends(FakeModel, _super);
+    function FakeModel() {
+        _super.apply(this, arguments);
     }
-});
+    return FakeModel;
+})(Backbone.Model);
+//# sourceMappingURL=views2.js.map

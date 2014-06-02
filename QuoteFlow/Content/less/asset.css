@@ -296,4 +296,36 @@
 .asset-container .people-details .aui-avatar {
   vertical-align: middle;
 }
+.asset-container #addcomment.active .mod-content {
+  display: block;
+}
+.asset-container #addcomment.active .mod-footer {
+  display: none;
+}
+.asset-container #addcomment .mod-content {
+  display: none;
+}
+.asset-container #addcomment .mod-footer {
+  overflow: hidden;
+}
+.asset-container #addcomment .ops {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.asset-container #addcomment textarea {
+  max-width: none;
+  max-height: none;
+  min-height: 150px;
+}
+.asset-container #addcomment textarea li {
+  display: block;
+  float: left;
+  white-space: nowrap;
+}
+.asset-container #addcomment #asset-comment-add-cancel {
+  padding-left: 0;
+  padding-right: 0;
+  margin-right: 9px;
+}
 /*# sourceMappingURL=asset.css.map */
