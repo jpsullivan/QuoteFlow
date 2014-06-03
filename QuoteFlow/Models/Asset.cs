@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace QuoteFlow.Models
 {
@@ -37,5 +38,7 @@ namespace QuoteFlow.Models
 
         public int CatalogId { get; set; }
         public Catalog Catalog { get; set; }
+
+        public IEnumerable<AssetComment> Comments { get; set; }
     }
 }

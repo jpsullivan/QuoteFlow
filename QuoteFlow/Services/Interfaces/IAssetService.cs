@@ -45,6 +45,22 @@ namespace QuoteFlow.Services.Interfaces
         Asset CreateAsset(Asset asset, int userId);
 
         /// <summary>
+        /// Retrieves a collection of <see cref="AssetComment"/>s relative to
+        /// the specific <see cref="assetId"/>.
+        /// </summary>
+        /// <param name="assetId">The id of the assset whose comments are being fetched.</param>
+        /// <returns></returns>
+        IEnumerable<AssetComment> GetAssetComments(int assetId);
+
+        /// <summary>
+        /// Creates a new <see cref="AssetComment"/>.
+        /// </summary>
+        /// <param name="comment">The comment itself.</param>
+        /// <param name="assetId">The asset which this comment is for.</param>
+        /// <param name="userId">The user who wrote the comment.</param>
+        void AddAssetComment(string comment, int assetId, int userId);
+
+        /// <summary>
         /// Check if an asset exists.
         /// </summary>
         /// <param name="assetName">The asset name to search for</param>

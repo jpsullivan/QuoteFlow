@@ -43,12 +43,13 @@ module QuoteFlow {
     export var Pages = {}
     export var Routers = {}
     export module UI {
-        export var Catalog = {}
-        export var Common = {}
+        export var Asset = {};
+        export var Catalog = {};
+        export var Common = {};
     }
     export var Utilities = {}
     export var Vent = _.extend({}, Backbone.Events);
-    export module Views {}
+    export var Views = {}
 
     export class Initialize {
         constructor(rootUrl: string, applicationPath: string, currentOrgId: string, currentUser: any) {

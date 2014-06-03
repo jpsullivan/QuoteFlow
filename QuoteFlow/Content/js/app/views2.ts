@@ -1,10 +1,11 @@
 ﻿/// <reference path="../lib/jquery.d.ts"/>
 /// <reference path="../lib/underscore.d.ts"/>
 /// <reference path="../lib/backbone.d.ts"/>
+/// <reference path="quoteflow.ts"/>
 
-//declare var JST: any;
+declare var JST: any;
 
-class Base extends Backbone.View<FakeModel> {
+class BaseView extends Backbone.View<FakeModel> {
 
     template: (data: any) => string;
     templateName: string;
@@ -69,7 +70,8 @@ class Base extends Backbone.View<FakeModel> {
 
     renderSubviews() {
         _.each(this.subviews, (property, selector) => {
-            var view = _.isFunction(this[property]) ? this[property]() : this[property];
+            //var view = _.isFunction(this[property]) ? this[property]() : this[property];
+            var view = new function() {};
             if (view) {
                 if (_.isArray(view)) {
                     // If we pass an array of views into the subviews, append each to the selector.
@@ -122,11 +124,12 @@ class Base extends Backbone.View<FakeModel> {
         }
 
         _.each(children, (property, selector) => {
-            var view = _.isFunction(this[property]) ? this[property]() : this[property];
+            //var view = _.isFunction(this[property]) ? this[property]() : this[property];
+            var view = new function () { };
             if (view) {
                 if (_.isArray(view)) {
                     // ensure that subview arrays are also properly disposed of
-                    _.each(view, arrayView => {
+                    _.each(view, (arrayView: any) => {
                         var subView = _.isFunction(arrayView) ? arrayView() : arrayView;
                         if (arrayView) {
                             childViews.push(subView);

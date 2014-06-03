@@ -366,6 +366,7 @@
     <Compile Include="Infrastructure\SafeRedirectResult.cs" />
     <Compile Include="Infrastructure\TableErrorLog.cs" />
     <Compile Include="Models\Asset.cs" />
+    <Compile Include="Models\AssetComment.cs" />
     <Compile Include="Models\AssetImage.cs" />
     <Compile Include="Models\AssetType.cs" />
     <Compile Include="Models\AssetVar.cs" />
@@ -390,6 +391,7 @@
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
+    <Compile Include="Models\ViewModels\Assets\NewAssetCommentViewModel.cs" />
     <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactModels.cs" />
     <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
@@ -554,6 +556,7 @@
     <Content Include="Content\js\app\helpers\application_helpers.js" />
     <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\models\asset_var.js" />
+    <Content Include="Content\js\app\ui\asset\show_asset.js" />
     <Content Include="Content\js\app\ui\catalog\import_asset_var_row.js" />
     <Content Include="Content\js\app\ui\catalog\import_set_fields.js" />
     <Content Include="Content\js\app\ui\catalog\import_set_optional_fields.js" />
@@ -730,6 +733,7 @@
     <Content Include="Views\Shared\Partials\Catalog\ImportResultFailureRow.cshtml" />
     <Content Include="Views\Catalog\ShowAssets.cshtml" />
     <Content Include="Views\Shared\Partials\Catalog\AssetRow.cshtml" />
+    <Content Include="Views\Shared\Partials\Asset\NewComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
@@ -763,7 +767,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\js\app\quoteflow.ts" />
-    <TypeScriptCompile Include="Content\js\app\ui\asset\show_asset.ts" />
+    <TypeScriptCompile Include="Content\js\app\references.ts" />
     <TypeScriptCompile Include="Content\js\app\views2.ts" />
     <TypeScriptCompile Include="Content\js\lib\backbone.d.ts" />
     <TypeScriptCompile Include="Content\js\lib\jquery.d.ts" />

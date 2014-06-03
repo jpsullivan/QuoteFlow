@@ -59,12 +59,14 @@ var QuoteFlow;
     QuoteFlow.Pages = {};
     QuoteFlow.Routers = {};
     (function (UI) {
+        UI.Asset = {};
         UI.Catalog = {};
         UI.Common = {};
     })(QuoteFlow.UI || (QuoteFlow.UI = {}));
     var UI = QuoteFlow.UI;
     QuoteFlow.Utilities = {};
     QuoteFlow.Vent = _.extend({}, Backbone.Events);
+    QuoteFlow.Views = {};
 
     var Initialize = (function () {
         function Initialize(rootUrl, applicationPath, currentOrgId, currentUser) {

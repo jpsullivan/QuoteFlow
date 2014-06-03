@@ -4,6 +4,7 @@ using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
+using QuoteFlow.Models.ViewModels.Assets;
 using QuoteFlow.Services.Interfaces;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
@@ -44,6 +45,19 @@ namespace QuoteFlow.Controllers
             };
 
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
+        }
+
+        [ValidateAntiForgeryToken]
+        [Route("asset/{assetId:INT}/{assetName}/addcomment", HttpVerbs.Post)]
+        public ActionResult AddComment(NewAssetCommentViewModel model, int assetId, string assetName)
+        {
+            if (assetId != model.AssetId) {
+                return PageBadRequest("Asset IDs do not match up");
+            }
+
+            AssetService.AddAssetComment(model.Comment, model.AssetId, GetCurrentUser().Id);
+
+            return SafeRedirect(Url.Asset(assetId, assetName));
         }
 
         private static readonly AssetType[] AssetTypeChoices = {

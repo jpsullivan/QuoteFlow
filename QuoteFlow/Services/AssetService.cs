@@ -33,9 +33,11 @@ namespace QuoteFlow.Services
             var asset = Current.DB.Assets.Get(assetId);
             var catalog = Current.DB.Catalogs.Get(asset.CatalogId); // can't use CatalogService here due to cyclical deps
             var manufacturer = ManufacturerService.GetManufacturer(asset.ManufacturerId);
+            var comments = GetAssetComments(assetId);
 
             asset.Catalog = catalog;
             asset.Manufacturer = manufacturer;
+            asset.Comments = comments;
             
             return asset;
         }
@@ -182,6 +184,30 @@ namespace QuoteFlow.Services
             }
 
             return asset;
+        }
+
+        /// <summary>
+        /// Retrieves a collection of <see cref="AssetComment"/>s relative to
+        /// the specific <see cref="assetId"/>.
+        /// </summary>
+        /// <param name="assetId">The id of the assset whose comments are being fetched.</param>
+        /// <returns></returns>
+        public IEnumerable<AssetComment> GetAssetComments(int assetId)
+        {
+            const string sql = "select * from AssetComments where AssetId = @assetId";
+            return Current.DB.Query<AssetComment>(sql, new {assetId});
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="AssetComment"/>.
+        /// </summary>
+        /// <param name="comment">The comment itself.</param>
+        /// <param name="assetId">The asset which this comment is for.</param>
+        /// <param name="userId">The user who wrote the comment.</param>
+        public void AddAssetComment(string comment, int assetId, int userId)
+        {
+            var ac = new AssetComment(comment, assetId, userId);
+            Current.DB.AssetComments.Insert(ac);
         }
 
         /// <summary>
