@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Services.Interfaces;
@@ -206,6 +207,9 @@ namespace QuoteFlow.Services
         /// <param name="userId">The user who wrote the comment.</param>
         public void AddAssetComment(string comment, int assetId, int userId)
         {
+            // don't do anything if the comment itself is empty
+            if (!comment.HasValue()) return;
+
             var ac = new AssetComment(comment, assetId, userId);
             Current.DB.AssetComments.Insert(ac);
         }
