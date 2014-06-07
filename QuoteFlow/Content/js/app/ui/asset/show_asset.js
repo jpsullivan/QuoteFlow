@@ -2,11 +2,11 @@
 
     el: ".asset-container",
 
-    options: {
-    },
+    options: {},
 
     events: {
-        "click #footer_comment_button": "showCommentModule"
+        "click #footer_comment_button": "showCommentModule",
+        "click #asset_comment_add_cancel": "hideCommentModule"
     },
 
     presenter: function () {
@@ -14,14 +14,21 @@
         });
     },
 
-    initialize: function(options) {
-        console.log(this.$el);
-    },
+    initialize: function(options) {},
 
-    postRenderTemplate: function () {
-    },
+    postRenderTemplate: function () {},
 
+    /**
+     * Shows the comment form.
+     */
     showCommentModule: function() {
         $('#addcomment').addClass('active');
+    },
+
+    /**
+     * Hides the comment form.
+     */
+    hideCommentModule: function() {
+        $('#addcomment').removeClass('active');
     }
 })
