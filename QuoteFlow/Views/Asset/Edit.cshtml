@@ -1,0 +1,65 @@
+﻿
+@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Models.ViewModels.AssetDetailsModel
+
+@{
+    Layout = "../Shared/_FocusedLayout.cshtml";
+    ViewBag.Title = "Edit " + Model.Asset.Name + " - QuoteFlow";
+}
+
+<h2>Edit and asset</h2>
+@using (Html.BeginForm("CreateCatalog", "Catalog", FormMethod.Post, new { @class = "aui" }))
+{
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "text" })
+            <div class="error">@Html.ValidationMessageFor(m => m.Name)</div>
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "textarea long-field" })
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Expirable)
+            @Html.CheckBoxFor(m => m.Expirable, new { @class = "checkbox" })
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.ExpirationDate)
+            @Html.TextBoxFor(m => m.ExpirationDate, new
+       {
+           @id = "catalog_expiration_date",
+           @class = "text",
+           @min = DateTime.UtcNow.ToString("yyyy-M-d")
+       })
+            <div class="error">@Html.ValidationMessageFor(m => m.ExpirationDate)</div>
+        </div>
+
+        @*            <div class="control-group">*@
+        @*                @Html.LabelFor(mm => mm.Organization, new { @class = "control-label"})*@
+        @*                <div class="controls">*@
+        @*                    <select>*@
+        @*                        @foreach (Organization organization in (IEnumerable<Organization>)ViewData["UserOrganizations"]) {*@
+        @*                            <option value="@organization.Id">@organization.OrganizationName</option>*@
+        @*                        }*@
+        @*                    </select>*@
+        @*                    @Html.ListBoxFor(mm => mm.Organization, (IEnumerable<Organization>)ViewData["UserOrganization"]);                   *@
+        @*                </div>*@
+        @*            </div>*@
+    </fieldset>
+
+    <div class="buttons-container">
+        <div class="buttons">
+            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Create catalog">
+            <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="#">Cancel</a>
+        </div>
+    </div>
+}
+
+<script>
+    AJS.$(document).ready(function () {
+        AJS.$('#catalog_expiration_date').datePicker({ 'overrideBrowserDefault': true });
+    });
+</script>

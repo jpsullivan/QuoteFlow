@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
+using Dapper;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models;
@@ -47,17 +49,53 @@ namespace QuoteFlow.Controllers
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
         }
 
-        [ValidateAntiForgeryToken]
-        [Route("asset/{assetId:INT}/{assetName}/addcomment", HttpVerbs.Post)]
-        public ActionResult AddComment(NewAssetCommentViewModel model, int assetId, string assetName)
+        [Route("asset/assetId:INT}/{assetName}/edit")]
+        public ActionResult Edit(int assetId, string assetName)
         {
-            if (assetId != model.AssetId) {
-                return PageBadRequest("Asset IDs do not match up");
+            var asset = AssetService.GetAsset(assetId);
+
+            // Ensure that the user has access to the asset
+            if (!UserService.CanViewAsset(GetCurrentUser(), asset))
+                return PageNotFound();
+
+            var viewModel = new AssetDetailsModel
+            {
+                Asset = asset,
+                Catalog = asset.Catalog
+            };
+
+            return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
+        }
+
+        [Route("asset/assetId:INT}/{assetName}/edit", HttpVerbs.Post)]
+        public ActionResult Edit(int assetId, string assetName, EditAssetRequest form, string returnUrl)
+        {
+            var asset = AssetService.GetAsset(assetId);
+            if (asset == null) 
+            {
+                return HttpNotFound();
             }
 
-            AssetService.AddAssetComment(model.Comment, model.AssetId, GetCurrentUser().Id);
+            if (asset.Id == assetId && asset.Name.UrlFriendly() == assetName) 
+            {
+                var user = GetCurrentUser();
+                if (!ModelState.IsValid)
+                {
+                    var snapshot = Snapshotter.Start(asset);
+                    asset.Name = form.Name;
+                    asset.SKU = form.SKU;
+                    asset.Description = form.Description;
+                    asset.Cost = form.Cost;
+                    asset.Markup = form.Markup;
+                    asset.LastUpdated = DateTime.UtcNow;
 
-            return SafeRedirect(Url.Asset(assetId, assetName));
+                    var diff = snapshot.Diff();
+                    if (diff.ParameterNames.Any())
+                    {
+                        AssetService.UpdateAsset(asset.Id, diff);
+                    }
+                }
+            }
         }
 
         private static readonly AssetType[] AssetTypeChoices = {
@@ -98,6 +136,20 @@ namespace QuoteFlow.Controllers
 
             // there has to be a better way to do this...
             return Redirect("~/" + catalogId + "/" + catalogName + "/asset/" + newAsset.Id + "/" + newAsset.Name.UrlFriendly());
+        }
+
+        [ValidateAntiForgeryToken]
+        [Route("asset/{assetId:INT}/{assetName}/addcomment", HttpVerbs.Post)]
+        public ActionResult AddComment(NewAssetCommentViewModel model, int assetId, string assetName)
+        {
+            if (assetId != model.AssetId)
+            {
+                return PageBadRequest("Asset IDs do not match up");
+            }
+
+            AssetService.AddAssetComment(model.Comment, model.AssetId, GetCurrentUser().Id);
+
+            return SafeRedirect(Url.Asset(assetId, assetName));
         }
     }
 }

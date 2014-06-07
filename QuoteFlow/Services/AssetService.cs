@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dapper;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Services.Interfaces;
 using StackExchange.Profiling.Helpers.Dapper;
+using DynamicParameters = StackExchange.Profiling.Helpers.Dapper.DynamicParameters;
 
 namespace QuoteFlow.Services
 {
@@ -185,6 +187,20 @@ namespace QuoteFlow.Services
             }
 
             return asset;
+        }
+
+        /// <summary>
+        /// Upadtes an assets details based on a <see cref="Snapshotter"/> diff.
+        /// </summary>
+        /// <param name="assetId">The asset id to update.</param>
+        /// <param name="diff">The <see cref="Snapshotter"/> diff.</param>
+        public void UpdateAsset(int assetId, Dapper.DynamicParameters diff)
+        {
+            if (assetId == 0) {
+                throw new ArgumentException("Asset ID must be greater than zero.", "assetId");
+            }
+
+            Current.DB.Assets.Update(assetId, diff);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Dapper;
 using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
 
@@ -43,6 +44,13 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
         /// <returns></returns>
         Asset CreateAsset(Asset asset, int userId);
+
+        /// <summary>
+        /// Upadtes an assets details based on a <see cref="Snapshotter"/> diff.
+        /// </summary>
+        /// <param name="assetId">The asset id to update.</param>
+        /// <param name="diff">The <see cref="Snapshotter"/> diff.</param>
+        void UpdateAsset(int assetId, DynamicParameters diff);
 
         /// <summary>
         /// Retrieves a collection of <see cref="AssetComment"/>s relative to

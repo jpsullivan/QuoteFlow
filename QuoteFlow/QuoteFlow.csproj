@@ -734,6 +734,7 @@
     <Content Include="Views\Catalog\ShowAssets.cshtml" />
     <Content Include="Views\Shared\Partials\Catalog\AssetRow.cshtml" />
     <Content Include="Views\Shared\Partials\Asset\NewComment.cshtml" />
+    <Content Include="Views\Asset\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
