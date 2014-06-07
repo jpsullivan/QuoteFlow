@@ -30,5 +30,6 @@
      */
     hideCommentModule: function() {
         $('#addcomment').removeClass('active');
+        $('#Comment').val("");
     }
 })
