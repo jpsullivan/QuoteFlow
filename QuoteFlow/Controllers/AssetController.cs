@@ -56,7 +56,7 @@ namespace QuoteFlow.Controllers
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
         }
 
-        [Route("asset/{assetId:INT}/{assetName}/edit")]
+        [Route("asset/{assetId:INT}/{assetName}/edit", HttpVerbs.Get)]
         public ActionResult Edit(int assetId, string assetName)
         {
             var asset = AssetService.GetAsset(assetId);
@@ -76,6 +76,7 @@ namespace QuoteFlow.Controllers
             
             var viewModel = new EditAssetRequest
             {
+                Id = assetId,
                 Name = asset.Name,
                 SKU = asset.SKU,
                 Description = asset.Description,
@@ -97,28 +98,30 @@ namespace QuoteFlow.Controllers
                 return HttpNotFound();
             }
 
-            if (asset.Id == assetId && asset.Name.UrlFriendly() == assetName) 
-            {
-                var user = GetCurrentUser();
-                if (!ModelState.IsValid)
-                {
-                    var snapshot = Snapshotter.Start(asset);
-                    asset.Name = form.Name;
-                    asset.SKU = form.SKU;
-                    asset.Description = form.Description;
-                    asset.Cost = form.Cost;
-                    asset.Markup = form.Markup;
-                    asset.LastUpdated = DateTime.UtcNow;
+            // ensure that the provided asset matches the expected asset
+            if (asset.Id != assetId || asset.Name.UrlFriendly() != assetName)
+                return SafeRedirect(returnUrl ?? Url.Asset(assetId, assetName));
 
-                    var diff = snapshot.Diff();
-                    if (diff.ParameterNames.Any())
-                    {
-                        AssetService.UpdateAsset(asset.Id, diff);
-                    }
-                }
+            if (!ModelState.IsValid)
+            {
+                // todo: show some kind of form validation error
             }
 
-            return new EmptyResult();
+            var snapshot = Snapshotter.Start(asset);
+            asset.Name = form.Name;
+            asset.SKU = form.SKU;
+            asset.Description = form.Description;
+            asset.Cost = form.Cost;
+            asset.Markup = form.Markup;
+            asset.LastUpdated = DateTime.UtcNow;
+
+            var diff = snapshot.Diff();
+            if (diff.ParameterNames.Any())
+            {
+                AssetService.UpdateAsset(asset.Id, diff);
+            }
+
+            return SafeRedirect(returnUrl ?? Url.Asset(assetId, assetName));
         }
 
         private static readonly AssetType[] AssetTypeChoices = {

@@ -10,6 +10,9 @@ namespace QuoteFlow.Models.ViewModels.Assets
         [Display(Name = "Name")]
         public string Name { get; set; }
 
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
         [Required]
         [Display(Name = "SKU")]
         public string SKU { get; set; }
@@ -17,15 +20,14 @@ namespace QuoteFlow.Models.ViewModels.Assets
         [Display(Name = "Cost ($)")]
         public decimal Cost { get; set; }
 
-        [Display(Name = "Description")]
-        public string Description { get; set; }
-
         [Display(Name = "Markup")]
         public decimal Markup { get; set; }
 
         [Display(Name = "Manufacturer")]
         public int ManufacturerId { get; set; }
 
+        // non-modifiable fields
+        public int Id { get; set; }
         public IEnumerable<SelectListItem> Manufacturers { get; set; }
     }
 }
