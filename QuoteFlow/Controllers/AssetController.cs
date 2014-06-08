@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Dapper;
@@ -12,20 +13,26 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
+    [Authorize]
     public class AssetController : BaseController
     {
         #region IoC
 
         public IAssetService AssetService { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
+        public IManufacturerService ManufacturerService { get; protected set; }
         public IUserService UserService { get; protected set; }
 
         public AssetController() { }
 
-        public AssetController(IAssetService assetService, ICatalogService catalogService, IUserService userService)
+        public AssetController(IAssetService assetService, 
+            ICatalogService catalogService, 
+            IManufacturerService manufacturerService,
+            IUserService userService)
         {
             AssetService = assetService;
             CatalogService = catalogService;
+            ManufacturerService = manufacturerService;
             UserService = userService;
         }
 
@@ -49,25 +56,39 @@ namespace QuoteFlow.Controllers
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
         }
 
-        [Route("asset/assetId:INT}/{assetName}/edit")]
+        [Route("asset/{assetId:INT}/{assetName}/edit")]
         public ActionResult Edit(int assetId, string assetName)
         {
             var asset = AssetService.GetAsset(assetId);
+            if (asset == null) 
+            {
+                return HttpNotFound();
+            }
 
             // Ensure that the user has access to the asset
             if (!UserService.CanViewAsset(GetCurrentUser(), asset))
                 return PageNotFound();
 
-            var viewModel = new AssetDetailsModel
+            var user = GetCurrentUser();
+            
+            var manufacturers = ManufacturerService.GetManufacturers(user.Organizations.First().Id);
+            var manufacturersDropdown = manufacturers.Select(m => new SelectListItem {Value = m.Id.ToString(), Text = m.Name}).ToList();
+            
+            var viewModel = new EditAssetRequest
             {
-                Asset = asset,
-                Catalog = asset.Catalog
+                Name = asset.Name,
+                SKU = asset.SKU,
+                Description = asset.Description,
+                Cost = asset.Cost,
+                Markup = asset.Markup,
+                ManufacturerId = asset.ManufacturerId,
+                Manufacturers = manufacturersDropdown
             };
 
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
         }
 
-        [Route("asset/assetId:INT}/{assetName}/edit", HttpVerbs.Post)]
+        [Route("asset/{assetId:INT}/{assetName}/edit", HttpVerbs.Post)]
         public ActionResult Edit(int assetId, string assetName, EditAssetRequest form, string returnUrl)
         {
             var asset = AssetService.GetAsset(assetId);
@@ -96,6 +117,8 @@ namespace QuoteFlow.Controllers
                     }
                 }
             }
+
+            return new EmptyResult();
         }
 
         private static readonly AssetType[] AssetTypeChoices = {

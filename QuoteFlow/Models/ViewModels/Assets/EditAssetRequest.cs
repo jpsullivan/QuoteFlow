@@ -1,20 +1,31 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace QuoteFlow.Models.ViewModels.Assets
 {
     public class EditAssetRequest
     {
+        [Required]
+        [Display(Name = "Name")]
         public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "SKU")]
         public string SKU { get; set; }
-        public string Type { get; set; }
+
+        [Display(Name = "Cost ($)")]
+        public decimal Cost { get; set; }
+
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
-        private decimal _cost;
-        public decimal Cost
-        {
-            get { return decimal.Round(_cost, 2, MidpointRounding.AwayFromZero); }
-            set { _cost = value; }
-        }
+        [Display(Name = "Markup")]
         public decimal Markup { get; set; }
+
+        [Display(Name = "Manufacturer")]
+        public int ManufacturerId { get; set; }
+
+        public IEnumerable<SelectListItem> Manufacturers { get; set; }
     }
 }

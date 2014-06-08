@@ -1,14 +1,12 @@
-﻿
-@using QuoteFlow.Infrastructure.Extensions
-@model QuoteFlow.Models.ViewModels.AssetDetailsModel
+﻿@model QuoteFlow.Models.ViewModels.Assets.EditAssetRequest
 
 @{
     Layout = "../Shared/_FocusedLayout.cshtml";
-    ViewBag.Title = "Edit " + Model.Asset.Name + " - QuoteFlow";
+    ViewBag.Title = "Edit " + Model.Name + " - QuoteFlow";
 }
 
 <h2>Edit and asset</h2>
-@using (Html.BeginForm("CreateCatalog", "Catalog", FormMethod.Post, new { @class = "aui" }))
+@using (Html.BeginForm("Edit", "Asset", FormMethod.Post, new { @class = "aui" }))
 {
     @Html.AntiForgeryToken()
 
@@ -23,43 +21,42 @@
             @Html.TextAreaFor(m => m.Description, new { @class = "textarea long-field" })
         </div>
         <div class="field-group">
-            @Html.LabelFor(m => m.Expirable)
-            @Html.CheckBoxFor(m => m.Expirable, new { @class = "checkbox" })
+            @Html.LabelFor(m => m.SKU)
+            @Html.TextBoxFor(m => m.SKU, new { @class = "text" })
         </div>
         <div class="field-group">
-            @Html.LabelFor(m => m.ExpirationDate)
-            @Html.TextBoxFor(m => m.ExpirationDate, new
-       {
-           @id = "catalog_expiration_date",
-           @class = "text",
-           @min = DateTime.UtcNow.ToString("yyyy-M-d")
-       })
-            <div class="error">@Html.ValidationMessageFor(m => m.ExpirationDate)</div>
+            @Html.LabelFor(m => m.Cost)
+            @Html.TextBoxFor(m => m.Cost, new { @class = "text" })
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Markup)
+            @Html.TextBoxFor(m => m.Markup, new { @class = "text" })
         </div>
 
-        @*            <div class="control-group">*@
-        @*                @Html.LabelFor(mm => mm.Organization, new { @class = "control-label"})*@
-        @*                <div class="controls">*@
-        @*                    <select>*@
-        @*                        @foreach (Organization organization in (IEnumerable<Organization>)ViewData["UserOrganizations"]) {*@
-        @*                            <option value="@organization.Id">@organization.OrganizationName</option>*@
-        @*                        }*@
-        @*                    </select>*@
-        @*                    @Html.ListBoxFor(mm => mm.Organization, (IEnumerable<Organization>)ViewData["UserOrganization"]);                   *@
-        @*                </div>*@
-        @*            </div>*@
+        <div class="field-group">
+            @Html.LabelFor(m => m.ManufacturerId)
+            @Html.DropDownListFor(m => m.ManufacturerId, Model.Manufacturers, "Choose a manufacturer", new { @class = "select long-field" })
+        </div>
     </fieldset>
 
     <div class="buttons-container">
         <div class="buttons">
-            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Create catalog">
+            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Update asset">
             <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="#">Cancel</a>
         </div>
     </div>
 }
 
-<script>
-    AJS.$(document).ready(function () {
-        AJS.$('#catalog_expiration_date').datePicker({ 'overrideBrowserDefault': true });
-    });
-</script>
+@section secondaryScripts {
+    <script type="text/javascript">
+        //    // for returnUrl functionality
+        //    var origin = window.location.protocol + "//" + window.location.host;
+        //    var returnUrl = href.substr(origin.length);
+        //    $(document.forms.EditForm).append($('<input type="hidden" name="returnUrl" value="' + returnUrl + '">'));
+        //    document.forms.EditForm.submit();
+
+        AJS.$(document).ready(function() {
+            AJS.$('select').auiSelect2();
+        });
+    </script>
+}
