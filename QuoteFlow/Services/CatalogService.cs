@@ -229,7 +229,7 @@ namespace QuoteFlow.Services
                 } else {
                     if (costRowValue != "0" && !costRowValue.IsNullOrEmpty()) {
                         reason = string.Format("Could not convert cost value of '{0}' to decimal.", costRowValue);
-                        summaries.Add(new CatalogRecordImportFailure(i, reason, asset.Id));
+                        summaries.Add(new CatalogRecordImportFailure(i, reason));
                         continue;
                     }
                     newAsset.Cost = Decimal.Zero;
@@ -242,7 +242,7 @@ namespace QuoteFlow.Services
                 } else {
                     if (markupRowValue != "0" && !markupRowValue.IsNullOrEmpty()) {
                         reason = string.Format("Could not convert markup value of '{0}' to decimal.", markupRowValue);
-                        summaries.Add(new CatalogRecordImportFailure(i, reason, asset.Id));
+                        summaries.Add(new CatalogRecordImportFailure(i, reason));
                         continue;
                     }
                     newAsset.Markup = Decimal.Zero;
