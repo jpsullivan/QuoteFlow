@@ -141,8 +141,25 @@
                                 <div id="asset_tab_all" class="tabs-pane"></div>
                                 <div id="asset_tab_comments" class="tabs-pane active-pane">
                                     @foreach (var comment in Model.Asset.Comments) {
-                                        <div>
-                                            @comment.Comment
+                                        <div id="comment-@comment.Id" class="asset-data-block activity-comment">
+                                            <div class="action-head">
+                                                <div class="action-links">
+                                                    <a href="#" title="A permanent link to this comment." class="aui-icon aui-icon-small aui-iconfont-link activitymodule-link"><span>Permalink</span></a>
+                                                </div>
+                                                <div class="action-details">
+                                                    <a class="user-avatar" href="#">
+                                                        <span class="aui-avatar aui-avatar-xsmall">
+                                                            <span class="aui-avatar-inner">
+                                                                <img src="/secure/useravatar?size=xsmall&amp;ownerId=aahmed&amp;avatarId=48794">
+                                                            </span>
+                                                        </span> Josh Sullivan
+                                                    </a>
+                                                    added a comment - @comment.CreatedUtc.ToString("dd/MMM/yy hh:mm tt")
+                                                </div>
+                                            </div>
+                                            <div class="action-body">
+                                                <p>@comment.Comment</p>
+                                            </div>
                                         </div>
                                     }
                                 </div>

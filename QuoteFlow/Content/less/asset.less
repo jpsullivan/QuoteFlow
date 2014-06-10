@@ -313,6 +313,38 @@
             vertical-align: middle;
         }
     }
+    
+    // comment styling
+    .asset-data-block {
+        border-bottom: 1px solid #ccc;
+        padding: 10px;
+
+        &:hover {
+            background-color: #f0f0f0;
+
+            .action-links {
+                visibility: visible;
+            }
+        }
+
+        .action-head {
+            cursor: pointer;
+        }
+
+        .action-links {
+            float: right;
+            visibility: hidden;
+        }
+
+        .action-details {
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .action-body {
+            margin: 10px 0 0 0;
+        }
+    }
 
     // comment body and footer
     #addcomment {

@@ -296,6 +296,30 @@
 .asset-container .people-details .aui-avatar {
   vertical-align: middle;
 }
+.asset-container .asset-data-block {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+}
+.asset-container .asset-data-block:hover {
+  background-color: #f0f0f0;
+}
+.asset-container .asset-data-block:hover .action-links {
+  visibility: visible;
+}
+.asset-container .asset-data-block .action-head {
+  cursor: pointer;
+}
+.asset-container .asset-data-block .action-links {
+  float: right;
+  visibility: hidden;
+}
+.asset-container .asset-data-block .action-details {
+  line-height: 1.5;
+  text-align: left;
+}
+.asset-container .asset-data-block .action-body {
+  margin: 10px 0 0 0;
+}
 .asset-container #addcomment.active .mod-content {
   display: block;
 }
