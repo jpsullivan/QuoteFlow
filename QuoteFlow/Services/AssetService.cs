@@ -7,7 +7,6 @@ using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Services.Interfaces;
 using StackExchange.Profiling.Helpers.Dapper;
-using DynamicParameters = StackExchange.Profiling.Helpers.Dapper.DynamicParameters;
 
 namespace QuoteFlow.Services
 {
@@ -36,11 +35,13 @@ namespace QuoteFlow.Services
             var asset = Current.DB.Assets.Get(assetId);
             var catalog = Current.DB.Catalogs.Get(asset.CatalogId); // can't use CatalogService here due to cyclical deps
             var manufacturer = ManufacturerService.GetManufacturer(asset.ManufacturerId);
+            var user = Current.DB.Users.Get(asset.CreatorId);
             var comments = GetAssetComments(assetId);
 
             asset.Catalog = catalog;
-            asset.Manufacturer = manufacturer;
             asset.Comments = comments;
+            asset.Manufacturer = manufacturer;
+            asset.Creator = user;
             
             return asset;
         }
@@ -199,7 +200,7 @@ namespace QuoteFlow.Services
             if (assetId == 0) {
                 throw new ArgumentException("Asset ID must be greater than zero.", "assetId");
             }
-
+            
             Current.DB.Assets.Update(assetId, diff);
         }
 
@@ -211,8 +212,19 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public IEnumerable<AssetComment> GetAssetComments(int assetId)
         {
-            const string sql = "select * from AssetComments where AssetId = @assetId";
-            return Current.DB.Query<AssetComment>(sql, new {assetId});
+            const string sql = @"select ac.*, u.* from AssetComments ac
+                        join Users u on u.Id = ac.CreatorId
+                        where ac.AssetId = @assetId";
+
+            var comments = Current.DB.Query<AssetComment, User, AssetComment>(sql, (comment, user) => {
+                comment.Creator = user;
+                return comment;
+            }, new {assetId});
+
+            return comments;
+
+//            const string sql = "select * from AssetComments where AssetId = @assetId";
+//            return Current.DB.Query<AssetComment>(sql, new {assetId});
         }
 
         /// <summary>

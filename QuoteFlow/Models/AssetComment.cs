@@ -19,5 +19,8 @@ namespace QuoteFlow.Models
         public int CreatorId { get; set; }
         public int AssetId { get; set; }
         public DateTime CreatedUtc { get; set; }
+
+        // Not a mepped db field
+        public User Creator { get; set; }
     }
 }

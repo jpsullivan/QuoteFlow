@@ -1,0 +1,25 @@
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model IEnumerable<QuoteFlow.Models.AssetComment>
+
+@foreach (var comment in Model)
+{
+    <div id="comment-@comment.Id" class="asset-data-block activity-comment">
+        <div class="action-head">
+            <div class="action-links">
+                <a href="#" title="A permanent link to this comment." class="aui-icon aui-icon-small aui-iconfont-link activitymodule-link"><span>Permalink</span></a>
+            </div>
+            <div class="action-details">
+                <a class="user-hover user-avatar" href="@Url.User(comment.Creator.Id, comment.Creator.Username)">
+                    <span class="aui-avatar aui-avatar-xsmall">
+                        <span class="aui-avatar-inner">
+                            @Html.Gravatar(comment.Creator.EmailAddress, 16)
+                        </span>
+                    </span> @comment.Creator.FullName</a>
+                added a comment - @comment.CreatedUtc.ToString("dd/MMM/yy hh:mm tt")
+            </div>
+        </div>
+        <div class="action-body">
+            <p>@comment.Comment</p>
+        </div>
+    </div>
+}

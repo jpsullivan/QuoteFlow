@@ -117,6 +117,15 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         #endregion
 
+        #region Users
+
+        public static string User(this UrlHelper url, int userId, string username)
+        {
+            return string.Format("/user/{0}/{1}", userId, username.UrlFriendly());
+        }
+
+        #endregion
+
         public static string ConfirmationUrl(this UrlHelper url, string action, string controller, string username, string token)
         {
             return ConfirmationUrl(url, action, controller, username, token, null);

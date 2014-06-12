@@ -1115,6 +1115,17 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
   padding: 4px;
   margin: 0px 3px;
 }
+a.user-hover.user-avatar {
+  background-repeat: no-repeat;
+  background-position: center left;
+  padding: 2px 0 2px 19px;
+  position: relative;
+}
+a.user-hover.user-avatar > .aui-avatar {
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
 .profiler-results {
   top: 41px !important;
 }

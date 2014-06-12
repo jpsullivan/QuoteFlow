@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Dapper;
 
 namespace QuoteFlow.Models
 {
@@ -10,7 +11,6 @@ namespace QuoteFlow.Models
         public string SKU { get; set; }
         public string Type { get; set; }
         public string Description { get; set; }
-        public int CreatorId { get; set; }
         public DateTime LastUpdated { get; set; }
         public DateTime CreationDate { get; set; }
 
@@ -23,6 +23,7 @@ namespace QuoteFlow.Models
         public decimal Markup { get; set; }
 
         private decimal _price;
+        [IgnoreProperty(false)]
         public decimal Price
         {
             get
@@ -30,8 +31,10 @@ namespace QuoteFlow.Models
                 var result = (Markup * Cost) + Cost;
                 return decimal.Round(result, 2, MidpointRounding.AwayFromZero);
             }
-            set { _price = value; }
         }
+
+        public int CreatorId { get; set; }
+        public User Creator { get; set; }
 
         public int ManufacturerId { get; set; }
         public Manufacturer Manufacturer { get; set; }

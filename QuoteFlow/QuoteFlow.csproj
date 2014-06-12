@@ -607,6 +607,9 @@
     <Content Include="Content\less\typography.css">
       <DependentUpon>typography.less</DependentUpon>
     </Content>
+    <Content Include="Content\less\user.css">
+      <DependentUpon>user.less</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Scripts\async-file-upload.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -658,6 +661,10 @@
     <Content Include="Content\less\asset.less" />
     <Content Include="Content\less\asset.css.map">
       <DependentUpon>asset.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\user.less" />
+    <Content Include="Content\less\user.css.map">
+      <DependentUpon>user.css</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -736,6 +743,7 @@
     <Content Include="Views\Shared\Partials\Catalog\AssetRow.cshtml" />
     <Content Include="Views\Shared\Partials\Asset\NewComment.cshtml" />
     <Content Include="Views\Asset\Edit.cshtml" />
+    <Content Include="Views\Shared\Partials\Asset\AssetComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
