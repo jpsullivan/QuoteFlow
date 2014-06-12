@@ -7,7 +7,7 @@
 }
 
 <h2>Edit and asset</h2>
-@using (Html.BeginForm("Edit", "Asset", FormMethod.Post, new { @class = "aui" }))
+@using (Html.BeginForm("Edit", "Asset", FormMethod.Post, new { id="EditForm", @class = "aui" }))
 {
     @Html.AntiForgeryToken()
 
@@ -50,11 +50,11 @@
 
 @section secondaryScripts {
     <script type="text/javascript">
-        //    // for returnUrl functionality
-        //    var origin = window.location.protocol + "//" + window.location.host;
-        //    var returnUrl = href.substr(origin.length);
-        //    $(document.forms.EditForm).append($('<input type="hidden" name="returnUrl" value="' + returnUrl + '">'));
-        //    document.forms.EditForm.submit();
+            // for returnUrl functionality
+            var origin = window.location.protocol + "//" + window.location.host;
+            var returnUrl = href.substr(origin.length);
+            $(document.forms.EditForm).append($('<input type="hidden" name="returnUrl" value="' + returnUrl + '">'));
+            document.forms.EditForm.submit();
 
         AJS.$(document).ready(function() {
             AJS.$('select').auiSelect2();

@@ -35,6 +35,9 @@ namespace QuoteFlow.Infrastructure.Extensions
         public static string Asset(this UrlHelper url, int assetId, string assetName)
         {
             return string.Format("/asset/{0}/{1}", assetId, assetName.UrlFriendly());
+
+//            assetName = assetName.UrlFriendly();
+//            return url.RouteUrl("asset/{assetid}/{assetname}", new { assetId, assetName });
         }
 
         public static string EditAsset(this UrlHelper url, int assetId, string assetName)
