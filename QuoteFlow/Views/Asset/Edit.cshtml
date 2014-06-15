@@ -6,7 +6,7 @@
     ViewBag.Title = "Edit " + Model.Name + " - QuoteFlow";
 }
 
-<h2>Edit and asset</h2>
+<h2>Edit Asset</h2>
 @using (Html.BeginForm("Edit", "Asset", FormMethod.Post, new { id="EditForm", @class = "aui" }))
 {
     @Html.AntiForgeryToken()

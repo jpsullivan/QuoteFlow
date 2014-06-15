@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Dapper;
 using QuoteFlow.Models;
 
 namespace QuoteFlow.Services.Interfaces
@@ -45,5 +46,12 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="description">The <see cref="Manufacturer"/> description.</param>
         /// <returns></returns>
         Manufacturer CreateManufacturer(string name, int organizationId, string description = null);
+
+        /// <summary>
+        /// Updates a manufacturer's details based on a <see cref="Snapshotter"/> diff.
+        /// </summary>
+        /// <param name="id">The Id of the manufacturer to update.</param>
+        /// <param name="diff">The <see cref="Snapshotter"/> diff.</param>
+        void UpdateManufacturer(int id, DynamicParameters diff);
     }
 }

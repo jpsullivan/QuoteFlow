@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dapper;
 using QuoteFlow.Models;
 using QuoteFlow.Services.Interfaces;
 
@@ -95,6 +96,21 @@ namespace QuoteFlow.Services
             }
 
             return manufacturer;
+        }
+
+        /// <summary>
+        /// Updates a manufacturer's details based on a <see cref="Snapshotter"/> diff.
+        /// </summary>
+        /// <param name="id">The Id of the manufacturer to update.</param>
+        /// <param name="diff">The <see cref="Snapshotter"/> diff.</param>
+        public void UpdateManufacturer(int id, DynamicParameters diff)
+        {
+            if (id == 0)
+            {
+                throw new ArgumentException("Manufacturer ID must be greater than zero.", "id");
+            }
+
+            Current.DB.Manufacturers.Update(id, diff);
         }
     }
 }

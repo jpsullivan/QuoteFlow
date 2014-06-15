@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
+using Dapper;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models.ViewModels.Manufacturers;
@@ -10,35 +13,14 @@ namespace QuoteFlow.Controllers
     public class ManufacturerController : BaseController
     {
         #region IoC
-
-        public IAssetService AssetService { get; protected set; }
-        public ICatalogService CatalogService { get; protected set; }
-        public ICatalogImportSummaryRecordsService CatalogImportSummaryService { get; set; }
+        
         public IManufacturerService ManufacturerService { get; set; }
-        public IOrganizationService OrganizationService { get; protected set; }
-        public IUserService UserService { get; protected set; }
-        public IUploadFileService UploadFileService { get; protected set; }
-        public ICacheService CacheService { get; protected set; }
 
         public ManufacturerController() { }
 
-        public ManufacturerController(IAssetService assetService, 
-            ICatalogService catalogService, 
-            ICatalogImportSummaryRecordsService catalogImportSummaryService,
-            IManufacturerService manufacturerService,
-            IOrganizationService organizationService, 
-            IUserService userService,
-            IUploadFileService uploadFileService, 
-            ICacheService cacheService)
+        public ManufacturerController(IManufacturerService manufacturerService)
         {
-            AssetService = assetService;
-            CatalogService = catalogService;
-            CatalogImportSummaryService = catalogImportSummaryService;
             ManufacturerService = manufacturerService;
-            OrganizationService = organizationService;
-            UserService = userService;
-            UploadFileService = uploadFileService;
-            CacheService = cacheService;
         }
 
         #endregion
@@ -61,9 +43,54 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("manufacturer/{id:INT}/{name}/edit", HttpVerbs.Get)]
-        public ActionResult Edit()
+        public ActionResult Edit(int id, string name)
         {
-            return new EmptyResult();
+            var manufacturer = ManufacturerService.GetManufacturer(id);
+            if (manufacturer == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new EditManufacturerRequest
+            {
+                Id = manufacturer.Id,
+                Name = manufacturer.Name,
+                Description = manufacturer.Description
+            };
+
+            return manufacturer.Name.UrlFriendly() != name? PageNotFound() : View(viewModel);
+        }
+
+        [Route("manufacturer/{id:INT}/{name}/edit", HttpVerbs.Post)]
+        public ActionResult Edit(int id, string name, EditManufacturerRequest form, string returnUrl)
+        {
+            var manufacturer = ManufacturerService.GetManufacturer(id);
+            if (manufacturer == null)
+            {
+                return HttpNotFound();
+            }
+
+            // ensure that the provided asset matches the expected asset
+            if (manufacturer.Id != id)
+                return SafeRedirect(returnUrl ?? Url.Manufacturer(id, name));
+
+            if (!ModelState.IsValid)
+            {
+                // todo: show some kind of form validation error
+            }
+
+            var snapshot = Snapshotter.Start(manufacturer);
+            manufacturer.Name = form.Name;
+            manufacturer.Description = form.Description;
+            manufacturer.LastUpdated = DateTime.UtcNow;
+
+            var diff = snapshot.Diff();
+            if (diff.ParameterNames.Any())
+            {
+                ManufacturerService.UpdateManufacturer(manufacturer.Id, diff);
+            }
+
+            return SafeRedirect(returnUrl ?? Url.Asset(id, name));
         }
     }
 }

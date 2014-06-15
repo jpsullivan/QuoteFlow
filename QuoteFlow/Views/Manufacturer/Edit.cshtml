@@ -1,0 +1,42 @@
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Models.ViewModels.Manufacturers.EditManufacturerRequest
+
+@{
+    Layout = "../Shared/_FocusedLayout.cshtml";
+    ViewBag.Title = "Edit " + Model.Name + " - QuoteFlow";
+}
+
+<h2>Edit Manufacturer</h2>
+@using (Html.BeginForm("Edit", "Manufacturer", FormMethod.Post, new { id = "EditForm", @class = "aui" }))
+{
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "text" })
+            <div class="error">@Html.ValidationMessageFor(m => m.Name)</div>
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "textarea long-field" })
+        </div>
+    </fieldset>
+
+    <div class="buttons-container">
+        <div class="buttons">
+            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Update manufacturer">
+            <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="@Url.Manufacturer(Model.Id, Model.Name)">Cancel</a>
+        </div>
+    </div>
+}
+
+@section secondaryScripts {
+    <script type="text/javascript">
+        // for returnUrl functionality
+        var origin = window.location.protocol + "//" + window.location.host;
+        var returnUrl = href.substr(origin.length);
+        $(document.forms.EditForm).append($('<input type="hidden" name="returnUrl" value="' + returnUrl + '">'));
+        document.forms.EditForm.submit();
+    </script>
+}

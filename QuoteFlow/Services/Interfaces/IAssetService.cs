@@ -46,7 +46,7 @@ namespace QuoteFlow.Services.Interfaces
         Asset CreateAsset(Asset asset, int userId);
 
         /// <summary>
-        /// Upadtes an assets details based on a <see cref="Snapshotter"/> diff.
+        /// Updates an assets details based on a <see cref="Snapshotter"/> diff.
         /// </summary>
         /// <param name="assetId">The asset id to update.</param>
         /// <param name="diff">The <see cref="Snapshotter"/> diff.</param>
