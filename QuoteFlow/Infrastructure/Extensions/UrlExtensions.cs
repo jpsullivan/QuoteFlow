@@ -20,10 +20,14 @@ namespace QuoteFlow.Infrastructure.Extensions
             return builder.Uri.AbsoluteUri;
         }
 
+        #region Base Pages
+
         public static string Home(this UrlHelper url)
         {
             return url.Action("Index", "Dashboard");
         }
+
+        #endregion
 
         #region Assets
 
@@ -116,6 +120,16 @@ namespace QuoteFlow.Infrastructure.Extensions
         public static string Manufacturer(this UrlHelper url, int id, string manufacturerName)
         {
             return string.Format("/manufacturer/{0}/{1}", id, manufacturerName.UrlFriendly());
+        }
+
+        public static string ManufacturerAssets(this UrlHelper url, int id, string manufacturerName)
+        {
+            return string.Format("/manufacturer/{0}/{1}/assets", id, manufacturerName.UrlFriendly());
+        }
+
+        public static string EditManufacturer(this UrlHelper url, int id, string manufacturerName)
+        {
+            return string.Format("/manufacturer/{0}/{1}/edit", id, manufacturerName.UrlFriendly());
         }
 
         #endregion

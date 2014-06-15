@@ -1,0 +1,67 @@
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Models.ViewModels.Manufacturers.ManufacturerShowModel
+
+@{
+    var manufacturerName = Model.Manufacturer.Name;
+    ViewBag.Title = "QuoteFlow - " + manufacturerName;
+}
+
+<section id="content" role="main">
+    <header class="aui-page-header">
+        <div class="aui-page-header">
+            <div class="aui-page-header-inner">
+                <h1>@Model.Manufacturer.Name</h1>
+
+                <ul class="operations-list">
+                    <li>
+                        <span class="list-label">Created On:</span>
+                        <span>@Model.Manufacturer.CreationDate.ToLongDateString()</span>
+                    </li>
+                    <li>
+                        <span class="list-label">Last Updated:</span>
+                        <span>@Model.Manufacturer.LastUpdated.ToLongDateString()</span>
+                    </li>
+                </ul>
+
+                <div class="header-side-buttons">
+                    <a href="@Url.EditManufacturer(@Model.Manufacturer.Id, @Model.Manufacturer.Name)" class="aui-button" title="">Edit</a>
+                </div>
+            </div>
+        </div>
+    </header><!-- .aui-page-header -->
+
+    <div class="aui-page-panel">
+        <div class="aui-page-panel-inner">
+            <div class="aui-page-panel-nav">
+                <nav class="aui-navgroup aui-navgroup-vertical">
+                    <div class="aui-navgroup-inner">
+                        <ul class="aui-nav">
+                            <li class="aui-nav-selected"><a href="@Url.Manufacturer(Model.Manufacturer.Id, Model.Manufacturer.Name)">Summary</a></li>
+                            <li><a href="@Url.ManufacturerAssets(Model.Manufacturer.Id, Model.Manufacturer.Name)">Assets</a></li>
+                        </ul>
+                    </div>
+                </nav><!-- .aui-navgroup -->
+            </div><!-- .aui-page-panel-nav -->
+
+            <section class="aui-page-panel-content">
+                <div class="aui-page-header">
+                    <div class="aui-page-header-inner">
+                        <div class="aui-page-header-main">
+                            <h2>Summary</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-modules">
+                    <div class="aui-group">
+                        <div class="aui-item">
+                            <div class="module">
+                                <p>@Model.Manufacturer.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div><!-- .aui-page-panel-inner -->
+    </div><!-- .aui-page-panel -->
+</section>

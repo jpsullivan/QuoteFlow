@@ -304,6 +304,7 @@
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Current.cs" />
@@ -398,6 +399,7 @@
     <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\ViewModels\LogOnViewModel.cs" />
+    <Compile Include="Models\ViewModels\Manufacturers\ManufacturerShowModel.cs" />
     <Compile Include="Models\ViewModels\NavigationMenuViewModel.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\OrganizationUser.cs" />
@@ -744,6 +746,7 @@
     <Content Include="Views\Shared\Partials\Asset\NewComment.cshtml" />
     <Content Include="Views\Asset\Edit.cshtml" />
     <Content Include="Views\Shared\Partials\Asset\AssetComments.cshtml" />
+    <Content Include="Views\Manufacturer\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
