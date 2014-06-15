@@ -90,7 +90,7 @@ namespace QuoteFlow.Controllers
                 ManufacturerService.UpdateManufacturer(manufacturer.Id, diff);
             }
 
-            return SafeRedirect(returnUrl ?? Url.Asset(id, name));
+            return SafeRedirect(returnUrl ?? Url.Manufacturer(id, name));
         }
     }
 }

@@ -20,9 +20,7 @@ namespace QuoteFlow.Infrastructure
             if (String.IsNullOrWhiteSpace(Url) ||
                 !context.RequestContext.HttpContext.Request.IsUrlLocalToHost(Url) ||
                 Url.Length <= 1 ||
-                !Url.StartsWith("/", StringComparison.Ordinal) ||
-                !Url.StartsWith("//", StringComparison.Ordinal) ||
-                !Url.StartsWith("/\\", StringComparison.Ordinal))
+                IsValidLocalUrl(Url))
             {
                 // Redirect to the safe url
                 new RedirectResult(SafeUrl).ExecuteResult(context);
@@ -31,6 +29,13 @@ namespace QuoteFlow.Infrastructure
             {
                 new RedirectResult(Url).ExecuteResult(context);
             }
+        }
+
+        private static bool IsValidLocalUrl(string url)
+        {
+            return !(url.StartsWith("/", StringComparison.Ordinal) ||
+                     url.StartsWith("//", StringComparison.Ordinal) ||
+                     url.StartsWith("/\\", StringComparison.Ordinal));
         }
     }
 }

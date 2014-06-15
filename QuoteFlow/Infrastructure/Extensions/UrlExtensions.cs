@@ -119,7 +119,8 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         public static string Manufacturer(this UrlHelper url, int id, string manufacturerName)
         {
-            return string.Format("/manufacturer/{0}/{1}", id, manufacturerName.UrlFriendly());
+            //return string.Format("/manufacturer/{0}/{1}", id, manufacturerName.UrlFriendly());
+            return url.Action("Show", "Manufacturer", new {id, name = manufacturerName.UrlFriendly()});
         }
 
         public static string ManufacturerAssets(this UrlHelper url, int id, string manufacturerName)
