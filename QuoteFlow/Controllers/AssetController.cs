@@ -47,11 +47,7 @@ namespace QuoteFlow.Controllers
             if (!UserService.CanViewAsset(GetCurrentUser(), asset))
                 return PageNotFound();
 
-            var viewModel = new AssetDetailsModel
-            {
-                Asset = asset,
-                Catalog = asset.Catalog
-            };
+            var viewModel = new AssetDetailsModel(asset, false);
 
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
         }

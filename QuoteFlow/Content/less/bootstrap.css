@@ -7,6 +7,14 @@
   overflow-x: visible;
   position: relative;
 }
+.asset-container.builder-mode #stalker,
+.asset-container.builder-mode .asset-header {
+  background-color: #fff;
+}
+.asset-container.builder-mode #stalker .asset-header-content > .command-bar,
+.asset-container.builder-mode .asset-header .asset-header-content > .command-bar {
+  border-top: none;
+}
 .asset-container #asset-content {
   background-color: #fff;
   height: 100%;

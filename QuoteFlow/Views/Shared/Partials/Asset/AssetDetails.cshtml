@@ -5,7 +5,7 @@
 @{
     string containerClass;
     //bool builderModeEnabled = ViewData["BuilderModeEnabled"] as bool;
-    bool builderModeEnabled = false;
+    bool builderModeEnabled = Model.BuilderEnabled;
     containerClass = builderModeEnabled ? "asset-container builder-mode" : "asset-container";
 }
 

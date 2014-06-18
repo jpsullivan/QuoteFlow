@@ -1,4 +1,6 @@
-﻿<form class="navigator-search query-component generic-styled">
+﻿@model QuoteFlow.Models.ViewModels.AssetDetailsModel
+
+<form class="navigator-search query-component generic-styled">
     <div class="aui-group">
         <div class="aui-item search-wrap">
             <div class="search-container" data-mode="basic">
@@ -108,7 +110,7 @@
                 
                 <!-- Asset details -->
                 <div class="aui-item detail-panel navigator-issue-only active">
-                    @Html.Partial("Partials/Asset/AssetDetails")
+                    @Html.Partial("Partials/Asset/AssetDetails", Model)
                 </div>
             </div>
         </div>

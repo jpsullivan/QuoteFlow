@@ -135,6 +135,20 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         #endregion
 
+        #region Quotes
+
+        public static string Quote(this UrlHelper url, int id, string quoteName)
+        {
+            return string.Format("/quote/{0}/{1}", id, quoteName.UrlFriendly());
+        }
+
+        public static string NewQuote(this UrlHelper url)
+        {
+            return string.Format("/quote/new");
+        }
+
+        #endregion
+
         #region Users
 
         public static string User(this UrlHelper url, int userId, string username)

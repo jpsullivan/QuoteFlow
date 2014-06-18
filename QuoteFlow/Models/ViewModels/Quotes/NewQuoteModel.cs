@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuoteFlow.Models.ViewModels
+namespace QuoteFlow.Models.ViewModels.Quotes
 {
     public class NewQuoteModel
     {
         [Required]
-        [Display(Name = "Quote Name")]
-        public string Name { get; set; }
+        [Display(Name = "Name")]
+        public string QuoteName { get; set; }
 
         [Display(Name = "Description")]
-        public string Description { get; set; }
+        public string QuoteDescription { get; set; }
 
         public Organization Organization { get; set; }
     }

@@ -411,7 +411,8 @@
     <Compile Include="Models\ViewModels\CatalogModels.cs" />
     <Compile Include="Models\ViewModels\NewAssetModel.cs" />
     <Compile Include="Models\ViewModels\PasswordResetViewModel.cs" />
-    <Compile Include="Models\ViewModels\QuoteModels.cs" />
+    <Compile Include="Models\ViewModels\Quotes\NewQuoteModel.cs" />
+    <Compile Include="Models\ViewModels\Quotes\QuoteShowModel.cs" />
     <Compile Include="Models\ViewModels\SubHeader.cs" />
     <Compile Include="Models\ViewModels\SubHeaderViewData.cs" />
     <Compile Include="Models\ViewModels\UserProfileModel.cs" />
@@ -719,7 +720,6 @@
     <Content Include="Views\Catalog\Index.cshtml" />
     <Content Include="Views\Catalog\New.cshtml" />
     <Content Include="Views\Catalog\Show.cshtml" />
-    <Content Include="Views\Quote\Builder.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Contact\New.cshtml" />
     <Content Include="Views\Contact\Show.cshtml" />
@@ -730,7 +730,7 @@
     <Content Include="Views\Shared\Partials\Quote\ListItem.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\New\Step1.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\New\Step2.cshtml" />
-    <Content Include="Views\Shared\_CatalogAssetsLayout.cshtml" />
+    <Content Include="Views\Shared\_QuoteBuilderLayout.cshtml" />
     <Content Include="Views\Shared\Partials\Asset\AssetNavigator.cshtml" />
     <Content Include="Views\Shared\Partials\Asset\AssetDetails.cshtml" />
     <Content Include="Views\Catalog\Import.cshtml" />
@@ -749,6 +749,7 @@
     <Content Include="Views\Shared\Partials\Asset\AssetComments.cshtml" />
     <Content Include="Views\Manufacturer\Show.cshtml" />
     <Content Include="Views\Manufacturer\Edit.cshtml" />
+    <Content Include="Views\Quote\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

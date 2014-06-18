@@ -1,6 +1,6 @@
 ﻿@using QuoteFlow.Html
 @using QuoteFlow.Infrastructure.Extensions
-@model QuoteFlow.Models.ViewModels.CatalogShowAssetsModel
+@model QuoteFlow.Models.ViewModels.Quotes.QuoteShowModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +30,7 @@
                             </div>
                             <div class="search-header-view">
                                 <div class="header-section-primary">
-                                    <h1 class="search-title" title="Search">@Model.Catalog.Name Assets</h1>
+                                    <h1 class="search-title" title="Search">@Model.Quote.Name</h1>
                                     <ul class="filter-operations">
                                         <li><a href="@Url.NewAsset()" class="aui-button" title="">Create new asset</a></li>
                                     </ul>
@@ -38,7 +38,7 @@
                             </div>
                         </header>
                         
-                        @Html.Partial("Partials/Asset/AssetNavigator")
+                        @Html.Partial("Partials/Asset/AssetNavigator", Model.CurrentAsset)
                     </div>
                 </div>
             </div>

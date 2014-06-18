@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Dapper;
 
 namespace QuoteFlow.Models
 {
@@ -9,10 +7,12 @@ namespace QuoteFlow.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public QuoteStatus Status { get; set; }
-        public bool Responded { get; set; }
+        public bool? Responded { get; set; }
 
         private decimal _totalPrice;
+        [IgnoreProperty(true)]
         public decimal TotalPrice
         {
             get { return decimal.Round(_totalPrice, 2, MidpointRounding.AwayFromZero); }
@@ -23,6 +23,7 @@ namespace QuoteFlow.Models
         public int OrganizationId { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdated { get; set; }
+        public bool Enabled { get; set; }
     }
 
     /// <summary>

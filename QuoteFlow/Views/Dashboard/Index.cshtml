@@ -16,7 +16,7 @@
 <div class="aui-page-panel">
     <div class="aui-page-panel-inner">
         <section class="aui-page-panel-content">
-            <h3>Recent Quotes</h3>
+            <h3>Catalogs</h3>
 
             <a href="@Url.NewCatalog()" class="aui-button">New Catalog</a>
 
@@ -28,7 +28,17 @@
                     <a href="@Url.Catalog(catalog.Id, catalog.Name.UrlFriendly())">@catalog.Name</a>
                 }
             }
-        </section>
 
+            <h3>Quotes</h3>
+
+            @if (Model.Quotes != null)
+            {
+                foreach (var quote in Model.Quotes)
+                {
+                    <br />
+                    <a href="@Url.Quote(quote.Id, quote.Name.UrlFriendly())">@quote.Name</a>
+                }
+            }
+        </section>
     </div>
 </div>

@@ -42,7 +42,16 @@ namespace QuoteFlow.Models.ViewModels
 
     public class AssetDetailsModel
     {
+        public AssetDetailsModel() { }
+
+        public AssetDetailsModel(Asset asset, bool builderEnabled)
+        {
+            Asset = asset;
+            BuilderEnabled = builderEnabled;
+        }
+
         public Asset Asset { get; set; }
         public Catalog Catalog { get; set; }
+        public bool BuilderEnabled { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿@using QuoteFlow.Models
-@using QuoteFlow.Models.ViewModels
-@model NewQuoteModel
+@model QuoteFlow.Models.ViewModels.Quotes.NewQuoteModel
 @{
     var orgs = Organization.GetOrganizations(Current.User.Organizations);
 }
@@ -27,13 +26,13 @@
 
         <div class="quote-new-details">
             <div class="quote-name">
-                @Html.LabelFor(m => m.Name)
-                @Html.TextBoxFor(m => m.Name, new { @class = "span4"})
+                @Html.LabelFor(m => m.QuoteName)
+                @Html.TextBoxFor(m => m.QuoteName, new { @class = "span4"})
             </div>
         
             <div class="quote-description">
-                @Html.LabelFor(m => m.Description) <span class="muted">(optional)</span>
-                @Html.TextBoxFor(m => m.Description, new { @class = "span4" })
+                @Html.LabelFor(m => m.QuoteDescription) <span class="muted">(optional)</span>
+                @Html.TextBoxFor(m => m.QuoteDescription, new { @class = "span4" })
             </div>
         
             <div class="quote-members">

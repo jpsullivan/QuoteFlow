@@ -1,4 +1,31 @@
-﻿@{ ViewBag.Title = "QuoteFlow - New Quote"; }
+﻿@model QuoteFlow.Models.ViewModels.Quotes.NewQuoteModel
 
-@Html.Partial("Partials/Quote/New/Step1")
-@Html.Partial("Partials/Quote/New/Step2")
+@{
+    Layout = "../Shared/_FocusedLayout.cshtml";
+    ViewBag.Title = "New Quote - QuoteFlow";
+}
+
+<h2>Create a new quote</h2>
+@using (Html.BeginForm("CreateQuote", "Quote", FormMethod.Post, new { @class = "aui" }))
+{
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <div class="field-group">
+            @Html.LabelFor(m => m.QuoteName)
+            @Html.TextBoxFor(m => m.QuoteName, new { @class = "text" })
+            <div class="error">@Html.ValidationMessageFor(m => m.QuoteName)</div>
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.QuoteDescription)
+            @Html.TextAreaFor(m => m.QuoteDescription, new { @class = "textarea long-field" })
+        </div>
+    </fieldset>
+
+    <div class="buttons-container">
+        <div class="buttons">
+            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Create quote">
+            <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="#">Cancel</a>
+        </div>
+    </div>
+}

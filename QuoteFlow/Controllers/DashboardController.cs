@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Services.Interfaces;
@@ -10,10 +11,12 @@ namespace QuoteFlow.Controllers
     {
         #region Ioc
 
+        public IQuoteService QuoteService { get; protected set; }
         public IUserService UserService { get; protected set; }
 
-        public DashboardController(IUserService userService)
+        public DashboardController(IQuoteService quoteService, IUserService userService)
         {
+            QuoteService = quoteService;
             UserService = userService;
         }
 
@@ -30,7 +33,9 @@ namespace QuoteFlow.Controllers
 
             var currentUser = GetCurrentUser();
             var catalogs = UserService.GetCatalogs(currentUser.Id);
+            var quotes = QuoteService.GetQuotesFromOrganization(currentUser.Organizations.First().Id);
             model.Catalogs = catalogs;
+            model.Quotes = quotes;
 
             return View(model);
         }
