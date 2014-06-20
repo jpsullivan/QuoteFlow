@@ -6,7 +6,7 @@
     ViewBag.Title = "QuoteFlow - New Catalog";
 }
 
-<h2>Catalog Information</h2>
+<h2>Import a pricing catalog</h2>
 @using (Html.BeginForm("SetImportCatalogDetails", "Catalog", FormMethod.Post, new { @class = "aui" }))
 {
     @Html.AntiForgeryToken()
