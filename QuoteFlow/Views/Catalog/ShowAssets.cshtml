@@ -62,6 +62,17 @@
                         <div class="aui-page-header-main">
                             <h2>Assets</h2>
                         </div>
+                        <div class="header-side-buttons">
+                            <button class="aui-button aui-dropdown2-trigger" aria-owns="dropdown2-layout" aria-haspopup="true" aria-controls="dropdown2-layout">
+                                <span class="aui-icon aui-icon-small aui-iconfont-editor-layout"></span>
+                            </button>
+                            <div id="dropdown2-layout" class="aui-dropdown2 aui-style-default" data-dropdown2-alignment="left" aria-hidden="true">
+                                <ul role="radiogroup">
+                                    <li><a href="@Url.CatalogAssets(Model.Catalog.Id, Model.Catalog.Name)" class="aui-dropdown2-radio checked aui-dropdown2-checked" role="radio" aria-checked="false">List Mode</a></li>
+                                    <li><a href="@Url.CatalogAssetsInteractive(Model.Catalog.Id, Model.Catalog.Name)" class="aui-dropdown2-radio" role="radio" aria-checked="true">Interactive Mode</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

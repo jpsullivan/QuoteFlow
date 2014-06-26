@@ -1,0 +1,67 @@
+﻿@using QuoteFlow.Html
+@using QuoteFlow.Infrastructure.Extensions
+@using QuoteFlow.Models.ViewModels
+@model CatalogShowAssetsModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui-all.css")" media="all">
+    <!--[if lt IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie.css")" media="all"><![endif]-->
+    <!--[if IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie9.css")" media="all"><![endif]-->
+    @Styles.Render("~/bundles/css_app")
+</head>
+<body class="aui-layout page-type-split">
+    <div id="page">
+        @(User.Identity.IsAuthenticated ? Html.Partial("_AuthenticatedHeader") : Html.Partial("_UnauthenticatedHeader"))
+
+        <section id="content" role="main">
+            <div class="navigator-container">
+                <div class="navigator-body">
+                    <div class="contained-content">
+                        <header class="saved-search-selector">
+                            <div class="saved-search-operations">
+                                <ul class="operations">
+                                    <li class="aui-dd-parent"><a href="#" class="header-views header-operations aui-dropdown-trigger aui-dd-link standard icon-export lnk" role="button" original-title="Export this filter in another format"><span>Export</span></a></li>
+                                    <li class="aui-dd-parent"><a href="#" class="header-tools header-operations aui-dropdown-trigger aui-dd-link standard icon-tools" role="button" original-title="Select operations that can be completed"><span>Tools</span></a></li>
+                                </ul>
+                            </div>
+                            <div class="search-header-view">
+                                <div class="header-section-primary">
+                                    <h1 class="search-title" title="Search">@Model.Catalog.Name</h1>
+                                    <ul class="filter-operations">
+                                        <li><a href="@Url.NewAsset()" class="aui-button" title="">Create new asset</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </header>
+
+                        @{
+                            var firstAssetModel = new AssetDetailsModel { Asset = Model.Assets.First(), BuilderEnabled = true };
+                        }
+                        @Html.Partial("Partials/Asset/AssetNavigator", firstAssetModel)
+                    </div>
+                </div>
+            </div>
+
+            @RenderBody()
+        </section>
+
+
+
+        @Html.Partial("_Footer")
+    </div>
+    
+    @Scripts.Render("~/bundles/js_lib", "~/bundles/js_app")
+    @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
+    <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->
+    @RenderSection("scripts", false)
+
+    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
+
+    @RenderSection("secondaryScripts", false)
+</body>
+</html>

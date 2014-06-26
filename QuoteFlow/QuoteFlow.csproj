@@ -750,6 +750,8 @@
     <Content Include="Views\Manufacturer\Show.cshtml" />
     <Content Include="Views\Manufacturer\Edit.cshtml" />
     <Content Include="Views\Quote\Show.cshtml" />
+    <Content Include="Views\Shared\_InteractiveCatalogAssetsLayout.cshtml" />
+    <Content Include="Views\Catalog\ShowAssetsInteractive.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

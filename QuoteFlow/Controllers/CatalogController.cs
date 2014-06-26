@@ -139,6 +139,38 @@ namespace QuoteFlow.Controllers
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
         }
 
+        [Route("catalog/{catalogId:INT}/{catalogName}/assets/iv")]
+        public ActionResult ShowAssetsInteractive(int catalogId, string catalogName)
+        {
+            var catalog = CatalogService.GetCatalog(catalogId);
+            if (catalog == null)
+            {
+                return PageNotFound();
+            }
+            
+            const int perPage = 50;
+            var currentPage = Math.Max(1, 1); // always on page 1 on full-reload?
+
+            var creator = UserService.GetUser(catalog.CreatorId);
+            var assets = AssetService.GetAssets(catalog.Id).ToPagedList(currentPage, perPage);
+            var paginationUrl = Url.CatalogAssets(catalog.Id, catalog.Name.UrlFriendly(), -1);
+
+            // populate the comments section for the first asset
+            // todo: this is a total hack and sucks entirely. Not sure what I even want to do here.
+            assets[0] = AssetService.GetAsset(assets.First().Id);
+
+            var model = new CatalogShowAssetsModel
+            {
+                Assets = assets,
+                Catalog = catalog,
+                CatalogCreator = creator,
+                CurrentPage = currentPage,
+                PaginationUrl = paginationUrl
+            };
+
+            return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
+        }
+
         [Route("catalog/{catalogId:INT}/{catalogName}/import-results/{filter?}")]
         public virtual async Task<ActionResult> ShowImportSummary(int catalogId, string catalogName, string filter, int? page)
         {
