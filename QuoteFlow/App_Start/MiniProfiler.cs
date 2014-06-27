@@ -43,6 +43,10 @@ namespace QuoteFlow
 
         public static void PostStart()
         {
+            // reset all viewengines except razor for perf purposes
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new RazorViewEngine());
+
             // Intercept ViewEngines to profile all partial views and regular views.
             // If you prefer to insert your profiling blocks manually you can comment this out
             List<IViewEngine> copy = ViewEngines.Engines.ToList();
