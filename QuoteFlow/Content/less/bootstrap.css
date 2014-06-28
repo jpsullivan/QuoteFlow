@@ -996,6 +996,15 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
 .page-type-split .navigator-content .split-view .list-results-panel .list-panel .list-content .asset-list .splitview-asset-link {
   outline: none;
 }
+.page-type-split .navigator-content .split-view .list-results-panel .list-panel .list-content .asset-list .splitview-asset-link .asset-link-title {
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  margin-top: 3px;
+}
 .page-type-split .navigator-content .split-view .list-results-panel .list-panel .list-content .asset-list .splitview-asset-link + .splitview-asset-link {
   overflow: hidden;
   -ms-text-overflow: ellipsis;

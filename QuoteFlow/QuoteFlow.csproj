@@ -393,6 +393,7 @@
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
     <Compile Include="Models\ViewModels\Assets\EditAssetRequest.cs" />
+    <Compile Include="Models\ViewModels\Assets\InteractiveAssetNavigatorViewModel.cs" />
     <Compile Include="Models\ViewModels\Assets\NewAssetCommentViewModel.cs" />
     <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactModels.cs" />

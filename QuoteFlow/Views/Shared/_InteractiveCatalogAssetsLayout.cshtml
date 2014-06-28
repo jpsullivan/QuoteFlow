@@ -1,6 +1,7 @@
 ﻿@using QuoteFlow.Html
 @using QuoteFlow.Infrastructure.Extensions
 @using QuoteFlow.Models.ViewModels
+@using QuoteFlow.Models.ViewModels.Assets
 @model CatalogShowAssetsModel
 <!DOCTYPE html>
 <html>
@@ -40,17 +41,19 @@
                         </header>
 
                         @{
+                            var interactiveModel = new InteractiveAssetNavigatorViewModel();
+                            
                             var firstAssetModel = new AssetDetailsModel { Asset = Model.Assets.First(), BuilderEnabled = true };
+                            interactiveModel.CurrentAssetDetailsModel = firstAssetModel;
+                            interactiveModel.Assets = Model.Assets;
                         }
-                        @Html.Partial("Partials/Asset/AssetNavigator", firstAssetModel)
+                        @Html.Partial("Partials/Asset/AssetNavigator", interactiveModel)
                     </div>
                 </div>
             </div>
 
             @RenderBody()
         </section>
-
-
 
         @Html.Partial("_Footer")
     </div>

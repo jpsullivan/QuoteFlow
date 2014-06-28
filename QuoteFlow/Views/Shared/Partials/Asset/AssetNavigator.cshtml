@@ -1,4 +1,5 @@
-﻿@model QuoteFlow.Models.ViewModels.AssetDetailsModel
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Models.ViewModels.Assets.InteractiveAssetNavigatorViewModel
 
 <form class="navigator-search query-component generic-styled">
     <div class="aui-group">
@@ -49,54 +50,16 @@
                         </div>
                         <div class="list-content" style="height: 795px;">
                             <ol class="asset-list">
-                                <li class="focused" data-id="330257" data-key="STASH-4640" title="page.max.directory.children does not show correct number of files on page load">
-                                    <img height="16" width="16" alt="Bug" title="Bug - A problem which impairs or prevents the functions of the product." src="/images/icons/issuetypes/bug.png">
-                                    <a class="splitview-asset-link issue-link-key" data-issue-key="STASH-4640" href="/browse/STASH-4640"> BC-120</a>
-                                    <a class="splitview-asset-link issue-link-summary" data-issue-key="STASH-4640" href="/browse/STASH-4640"> Smart Battery Charger, Single Unit</a>
-                                    <div class="aui-group">
-                                        <div class="aui-item"><span>Needs Triage</span></div>
-                                    </div>
-                                </li>
-                                <li data-id="241745" data-key="STASH-2815" title="Use the server-side constant for page.max.changes on the client-side">
-                                    <img height="16" width="16" alt="Improvement" title="Improvement - An improvement or enhancement to an existing feature or task." src="/images/icons/issuetypes/improvement.png">
-                                    <a class="splitview-asset-link issue-link-key" data-issue-key="STASH-2815" href="/browse/STASH-2815"> 6878</a>
-                                    <a class="splitview-asset-link issue-link-summary" data-issue-key="STASH-2815" href="/browse/STASH-2815"> 3m Spectacle Kit 6878</a>
-                                    <div class="aui-group">
-                                        <div class="aui-item"><span>Closed</span></div>
-                                    </div>
-                                </li>
-                                <li data-id="241745" data-key="STASH-2815" title="Use the server-side constant for page.max.changes on the client-side">
-                                    <img height="16" width="16" alt="Improvement" title="Improvement - An improvement or enhancement to an existing feature or task." src="/images/icons/issuetypes/improvement.png">
-                                    <a class="splitview-asset-link issue-link-key" data-issue-key="STASH-2815" href="/browse/STASH-2815"> 7800S-L</a>
-                                    <a class="splitview-asset-link issue-link-summary" data-issue-key="STASH-2815" href="/browse/STASH-2815"> Full Facepiece Silicone Respirator, Lg</a>
-                                    <div class="aui-group">
-                                        <div class="aui-item"><span>Closed</span></div>
-                                    </div>
-                                </li>
-                                <li data-id="241745" data-key="STASH-2815" title="Use the server-side constant for page.max.changes on the client-side">
-                                    <img height="16" width="16" alt="Improvement" title="Improvement - An improvement or enhancement to an existing feature or task." src="/images/icons/issuetypes/improvement.png">
-                                    <a class="splitview-asset-link issue-link-key" data-issue-key="STASH-2815" href="/browse/STASH-2815"> 7800S-M</a>
-                                    <a class="splitview-asset-link issue-link-summary" data-issue-key="STASH-2815" href="/browse/STASH-2815"> Full Facepiece Silicone Respirator, Md</a>
-                                    <div class="aui-group">
-                                        <div class="aui-item"><span>Closed</span></div>
-                                    </div>
-                                </li>
-                                <li data-id="241745" data-key="STASH-2815" title="Use the server-side constant for page.max.changes on the client-side">
-                                    <img height="16" width="16" alt="Improvement" title="Improvement - An improvement or enhancement to an existing feature or task." src="/images/icons/issuetypes/improvement.png">
-                                    <a class="splitview-asset-link issue-link-key" data-issue-key="STASH-2815" href="/browse/STASH-2815"> 7800S-S</a>
-                                    <a class="splitview-asset-link issue-link-summary" data-issue-key="STASH-2815" href="/browse/STASH-2815"> Full Facepiece Silicone Respirator, Sm</a>
-                                    <div class="aui-group">
-                                        <div class="aui-item"><span>Closed</span></div>
-                                    </div>
-                                </li>
-                                <li data-id="241745" data-key="STASH-2815" title="Use the server-side constant for page.max.changes on the client-side">
-                                    <img height="16" width="16" alt="Improvement" title="Improvement - An improvement or enhancement to an existing feature or task." src="/images/icons/issuetypes/improvement.png">
-                                    <a class="splitview-asset-link issue-link-key" data-issue-key="STASH-2815" href="/browse/STASH-2815"> 520-04-57R01</a>
-                                    <a class="splitview-asset-link issue-link-summary" data-issue-key="STASH-2815" href="/browse/STASH-2815"> Lithium Battery</a>
-                                    <div class="aui-group">
-                                        <div class="aui-item"><span>Closed</span></div>
-                                    </div>
-                                </li>
+                                @foreach (var asset in Model.Assets) {
+                                    <li data-id="@asset.Id" title="@asset.Name">
+                                        <a class="splitview-asset-link" href="@Url.Asset(asset.Id, asset.Name)">
+                                            <img height="16" width="16" alt="@asset.Manufacturer.Name" title="" src="/images/icons/issuetypes/improvement.png">
+                                            <span>@asset.SKU</span>
+                                            <br />
+                                            <span class="asset-link-title">@asset.Name</span>
+                                        </a>
+                                    </li>
+                                }
                             </ol>
                         </div>
                     </div>
@@ -110,7 +73,7 @@
                 
                 <!-- Asset details -->
                 <div class="aui-item detail-panel navigator-issue-only active">
-                    @Html.Partial("Partials/Asset/AssetDetails", Model)
+                    @Html.Partial("Partials/Asset/AssetDetails", Model.CurrentAssetDetailsModel)
                 </div>
             </div>
         </div>
