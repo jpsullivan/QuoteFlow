@@ -1,4 +1,5 @@
 ﻿@using QuoteFlow.Infrastructure.Extensions
+@using QuoteFlow.Infrastructure.Helpers
 @model QuoteFlow.Models.ViewModels.Assets.InteractiveAssetNavigatorViewModel
 
 <form class="navigator-search query-component generic-styled">
@@ -66,7 +67,8 @@
                     <div class="end-of-stable-message"></div>
                     <div class="aui-group pagination-view count-pagination">
                         <a href="#" class="refresh-table" original-title="Refresh results">Refresh</a>
-                        <div class="pagination aui-item" data-displayable-total="6"></div>
+                        <div class="pagination aui-item" data-displayable-total="6">
+                        </div>
                     </div>
                     <div class="ui-sidebar ui-draggable" style="top: 153px; left: 483px; height: 870px;"></div>
                 </div>

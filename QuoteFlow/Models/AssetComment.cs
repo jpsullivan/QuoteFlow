@@ -1,4 +1,5 @@
 ﻿using System;
+using Dapper;
 
 namespace QuoteFlow.Models
 {
@@ -20,7 +21,8 @@ namespace QuoteFlow.Models
         public int AssetId { get; set; }
         public DateTime CreatedUtc { get; set; }
 
-        // Not a mepped db field
+        // Not a mapped db field
+        [IgnoreProperty(true)]
         public User Creator { get; set; }
     }
 }

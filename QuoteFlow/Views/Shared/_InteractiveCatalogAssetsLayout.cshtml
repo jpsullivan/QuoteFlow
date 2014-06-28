@@ -46,6 +46,7 @@
                             var firstAssetModel = new AssetDetailsModel { Asset = Model.Assets.First(), BuilderEnabled = true };
                             interactiveModel.CurrentAssetDetailsModel = firstAssetModel;
                             interactiveModel.Assets = Model.Assets;
+                            interactiveModel.PaginationUrl = Model.PaginationUrl;
                         }
                         @Html.Partial("Partials/Asset/AssetNavigator", interactiveModel)
                     </div>

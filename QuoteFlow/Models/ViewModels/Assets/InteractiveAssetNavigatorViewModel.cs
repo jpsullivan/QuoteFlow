@@ -6,6 +6,8 @@ namespace QuoteFlow.Models.ViewModels.Assets
     {
         public AssetDetailsModel CurrentAssetDetailsModel { get; set; }
 
-        public IEnumerable<Asset> Assets { get; set; } 
+        public IEnumerable<Asset> Assets { get; set; }
+
+        public string PaginationUrl { get; set; }
     }
 }
