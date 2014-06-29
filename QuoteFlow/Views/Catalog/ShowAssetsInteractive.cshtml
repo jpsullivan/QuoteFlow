@@ -4,3 +4,9 @@
     Layout = "../Shared/_InteractiveCatalogAssetsLayout.cshtml";
     ViewBag.Title = @Model.Catalog.Name + " - QuoteFlow";
 }
+
+@section secondaryScripts {
+    <script type="text/javascript">
+        var view = new QuoteFlow.UI.Asset.ShowAsset();
+    </script>
+}

@@ -8,5 +8,6 @@ namespace QuoteFlow.Models.ViewModels.Assets
         public string Comment { get; set; }
 
         public int AssetId { get; set; }
+        public string AssetName { get; set; }
     }
 }

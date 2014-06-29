@@ -149,7 +149,11 @@
                     <div id="addcomment" class="module">
                         <div class="mod-content">
                             @{
-                                var commentModel = new NewAssetCommentViewModel {AssetId = Model.Asset.Id};
+                                var commentModel = new NewAssetCommentViewModel
+                                {
+                                    AssetId = Model.Asset.Id,
+                                    AssetName = Model.Asset.Name
+                                };
                             }
                             @Html.Partial("Partials/Asset/NewComment", commentModel)
                         </div>
@@ -220,4 +224,3 @@
         </div>
     </div>
 </div>
-
