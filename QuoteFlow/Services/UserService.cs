@@ -125,6 +125,26 @@ namespace QuoteFlow.Services
         }
 
         /// <summary>
+        /// Fetches all users that belong to a specific organization Id.
+        /// </summary>
+        /// <param name="organizationId">The organization id to get users from.</param>
+        /// <returns></returns>
+        public IEnumerable<User> GetUsers(int organizationId)
+        {
+            var builder = new SqlBuilder();
+            SqlBuilder.Template tmpl = builder.AddTemplate(@"
+                SELECT * FROM OrganizationUsers ou
+                /**join**/
+                /**where**/"
+                );
+
+            builder.Join("Users AS u ON u.Id = ou.UserId");
+            builder.Where("ou.OrganizationId = @organizationId");
+
+            return Current.DB.Query<User>(tmpl.RawSql, new { organizationId }).ToList();
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="emailAddress"></param>

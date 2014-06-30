@@ -9,6 +9,13 @@ namespace QuoteFlow.Models.ViewModels.Assets
         public IEnumerable<Asset> Assets { get; set; }
 
         /// <summary>
+        /// A collection of all the asset creators found within this particular
+        /// group of assets.
+        /// todo: Should this collection contain a list of the organization members instead?
+        /// </summary>
+        public IEnumerable<User> Creators { get; set; }
+
+        /// <summary>
         /// The distinct list of manufacturers that are contained within 
         /// this catalog set.
         /// </summary>

@@ -35,6 +35,13 @@ namespace QuoteFlow.Services.Interfaces
         IEnumerable<User> GetUsers();
 
         /// <summary>
+        /// Fetches all users that belong to a specific organization Id.
+        /// </summary>
+        /// <param name="organizationId"></param>
+        /// <returns></returns>
+        IEnumerable<User> GetUsers(int organizationId);
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="emailAddress"></param>

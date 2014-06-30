@@ -157,14 +157,10 @@ namespace QuoteFlow.Controllers
             var pagedAssets = assets.ToPagedList(currentPage, perPage);
             var paginationUrl = Url.CatalogAssets(catalog.Id, catalog.Name.UrlFriendly(), -1);
 
-            // build up the distinct manufacturers list
-            var manufacturers = assets.Select(asset => asset.Manufacturer).ToList();
-//            foreach (var asset in assets.Where(asset => !manufacturers.Contains(asset.Manufacturer)))
-//            {
-//                manufacturers.Add(asset.Manufacturer);
-//            }
-
+            // build up the navigation filter items
+            var manufacturers = assets.Select(a => a.Manufacturer).ToList();
             manufacturers = manufacturers.Distinct(m => m.Id).ToList();
+            var creators = UserService.GetUsers(CurrentOrganization.Id);
 
             // populate the comments section for the first asset
             // todo: this is a total hack and sucks entirely. Not sure what I even want to do here.
@@ -172,11 +168,13 @@ namespace QuoteFlow.Controllers
 
             var model = new CatalogShowAssetsModel
             {
+
+                AssetCreators = creators,
                 Assets = pagedAssets,
-                Manufacturers = manufacturers,
                 Catalog = catalog,
-                CatalogCreator = creator,
+                CatalogCreator = creator,                
                 CurrentPage = currentPage,
+                Manufacturers = manufacturers,
                 PaginationUrl = paginationUrl
             };
 

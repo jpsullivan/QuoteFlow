@@ -16,19 +16,37 @@
                                                 <span id="fieldpid" class="fieldValue">Catalogs</span>
                                             </div>
                                         </div>
-                                    </button><a href="#" class="remove-filter" title="Remove criterion" tabindex="-1" style="display: none;"><span class="aui-icon aui-icon-small aui-iconfont-remove"></span></a>
+                                    </button>
+                                    <a href="#" class="remove-filter" title="Remove criterion" tabindex="-1" style="display: none;">
+                                        <span class="aui-icon aui-icon-small aui-iconfont-remove"></span>
+                                    </a>
                                 </li>
                                 <li data-id="manufacturers">
                                     <button type="button" data-id="manufacturers" class="criteria-selector aui-button aui-button-subtle aui-dropdown2-trigger" aria-owns="manufacturers-dropdown">
-                                        <div class="criteria-wrap"><span class="fieldLabel">Manufacturers:</span> All</div>
+                                        <div class="criteria-wrap"><span class="fieldLabel">Manufacturer:</span> All</div>
                                     </button>
                                 </li>
-                                <li data-id="issuetype" original-title=""><button type="button" data-id="issuetype" class="criteria-selector aui-button aui-button-subtle aui-dropdown2-trigger"><div class="criteria-wrap"><span class="fieldLabel">Type:</span> All</div></button><a href="#" class="remove-filter" title="Remove criterion" tabindex="-1" style="display: none;"><span class="aui-icon aui-icon-small aui-iconfont-remove"></span></a></li>
-                                <li class="text-query"><div class="text-query-container"><input class="search-entry text ajs-dirty-warning-exempt" id="searcher-query" type="text" name="text" placeholder="Contains text"></div></li>
+                                <li data-id="creator">
+                                    <button type="button" data-id="creator" class="criteria-selector aui-button aui-button-subtle aui-dropdown2-trigger" aria-owns="creators-dropdown">
+                                        <div class="criteria-wrap"><span class="fieldLabel">Creator:</span> All</div>
+                                    </button>
+                                    <a href="#" class="remove-filter" title="Remove criterion" tabindex="-1" style="display: none;">
+                                        <span class="aui-icon aui-icon-small aui-iconfont-remove"></span>
+                                    </a>
+                                </li>
+                                <li class="text-query">
+                                    <div class="text-query-container">
+                                        <input class="search-entry text ajs-dirty-warning-exempt" id="searcher-query" type="text" name="text" placeholder="Contains text">
+                                    </div>
+                                </li>
                                 <li class="criteria-actions">
                                     <button type="button" class="add-criteria aui-button aui-button-subtle aui-dropdown2-trigger" original-title="Add more fields to search with" style="display: inline-block;">More</button>
                                 </li>
-                                <li><button class="aui-button aui-button-subtle search-button" type="button" original-title="Search for issues"><span class="aui-icon aui-icon-small aui-iconfont-search">Search</span></button></li>
+                                <li>
+                                    <button class="aui-button aui-button-subtle search-button" type="button" original-title="Search for issues">
+                                        <span class="aui-icon aui-icon-small aui-iconfont-search">Search</span>
+                                    </button>
+                                </li>
                                 <li>
                                     <button class="aui-button" type="button">Save as</button>
                                 </li>
@@ -107,6 +125,35 @@
                                 <li class="check-list-item">
                                     <label class="item-label" title="@manufacturer.Name">
                                         <input type="checkbox" tabindex="-1" value="1"><img src="/images/icons/issuetypes/bug.png" height="16" width="16" align="absmiddle">@manufacturer.Name
+                                    </label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="creators-dropdown" class="aui-dropdown2 aui-style-default ajs-layer" data-dropdown2-alignment="left">
+    <form class="aui top-label aui-popup-content" id="manufacturers_filter">
+        <div class="field-group">
+            <div class="check-list-select">
+                <div class="check-list-field-container">
+                    <input autocomplete="off" placeholder="Find User..." class="aui-field check-list-field" id="searcher-type-input" wrap="off">
+                    <span class="aui-icon icon noloading">
+                        <span>More</span>
+                    </span>
+                </div>
+                <div class="aui-list">
+                    <div class="aui-list-scroll" tabindex="-1">
+                        <ul class="aui-list-section">
+                            @foreach (var user in Model.Creators)
+                            {
+                                <li class="check-list-item">
+                                    <label class="item-label" title="@user.Username">
+                                        <input type="checkbox" tabindex="-1" value="1">@Html.Gravatar(@user.EmailAddress, 16)@user.Username
                                     </label>
                                 </li>
                             }
