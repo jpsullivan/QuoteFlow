@@ -360,6 +360,112 @@
   padding-right: 0;
   margin-right: 9px;
 }
+.check-list-select {
+  width: 250px;
+}
+.check-list-select .check-list-field-container {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  padding: 5px 10px 9px;
+  overflow: hidden;
+}
+.check-list-select .check-list-field-container .check-list-field {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-border-radius: 3px 3px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 28px;
+  height: 0;
+  border: 1px solid #ccc;
+  padding: 0 24px 0 6px;
+  -webkit-box-shadow: #bbbbbb 0 7px 2px -7px inset;
+  -moz-box-shadow: #bbbbbb 0 7px 2px -7px inset;
+  box-shadow: #bbbbbb 0 7px 2px -7px inset;
+  margin: 0;
+  font-size: 14px;
+  font-family: inherit;
+}
+.check-list-select .check-list-field-container .icon {
+  position: absolute;
+  top: 11px;
+  right: 15px;
+  z-index: 2;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAo0lEQ…Ei7ZWLtNUkNUHGQCbj+FKiCVp4EdN8ESRWNPY+QQ/dggvAl0v7SYIpuAAAAABJRU5ErkJggg==) no-repeat 0 0;
+}
+.check-list-select .check-list-field-container .icon.loading {
+  background: url("data:image/gif;base64,R0lGODlhEAAQAMQAAP///+7u7t3d3bu7u6qqqpmZmYiIiHd3d2Zm…qgvgGCZOSFDhAUiWCYQwJSxGHKqGAE/5EqIHBjOgyRQELCBB7EAQHfySDhGYQdDWGQyUhADs=") 0 center no-repeat;
+}
+.check-list-select .check-list-field-container .icon span {
+  display: none;
+  text-indent: -9000px;
+}
+.check-list-select .aui-list-scroll {
+  max-height: 270px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  clear: both;
+}
+.check-list-select .aui-list-scroll h5 {
+  padding-left: 10px;
+}
+.aui-list h5 {
+  display: block;
+  margin: 0;
+  padding: 3px 10px;
+  color: #333;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.46;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-decoration: none;
+  text-transform: none;
+}
+.aui-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 2px 0;
+}
+.aui-list ul li.check-list-item {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 6px 10px 6px 34px;
+  position: relative;
+}
+.aui-list ul li.check-list-item label {
+  clear: none;
+  color: inherit;
+  display: block;
+  left: 0;
+  line-height: 1.4;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: static;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: auto;
+}
+.aui-list ul li.check-list-item label input[type="checkbox"] {
+  position: absolute;
+  left: 10px;
+}
+.aui-list .aui-list-section + h5,
+.aui-list .aui-list-section + .aui-list-section {
+  border-top: 1px solid #ccc;
+}
 table.catalog-assets td.name {
   max-width: 300px;
   vertical-align: baseline;

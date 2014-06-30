@@ -124,12 +124,13 @@ namespace QuoteFlow.Controllers
             var currentPage = Math.Max(page ?? 1, 1);
 
             var creator = UserService.GetUser(catalog.CreatorId);
-            var assets = AssetService.GetAssets(catalog.Id).ToPagedList(currentPage, perPage);
+            var assets = AssetService.GetAssets(catalog.Id).ToList();
+            var pagedAssets = assets.ToPagedList(currentPage, perPage);
             var paginationUrl = Url.CatalogAssets(catalog.Id, catalog.Name.UrlFriendly(), -1);
 
             var model = new CatalogShowAssetsModel
             {
-                Assets = assets,
+                Assets = pagedAssets,
                 Catalog = catalog,
                 CatalogCreator = creator,
                 CurrentPage = currentPage,
@@ -152,16 +153,25 @@ namespace QuoteFlow.Controllers
             var currentPage = Math.Max(1, 1); // always on page 1 on full-reload?
 
             var creator = UserService.GetUser(catalog.CreatorId);
-            var assets = AssetService.GetAssets(catalog.Id).ToPagedList(currentPage, perPage);
+            var assets = AssetService.GetAssets(catalog.Id).ToList();
+            var pagedAssets = assets.ToPagedList(currentPage, perPage);
             var paginationUrl = Url.CatalogAssets(catalog.Id, catalog.Name.UrlFriendly(), -1);
+
+            // build up the distinct manufacturers list
+            var manufacturers = new List<Manufacturer>();
+            foreach (var asset in assets.Where(asset => !manufacturers.Contains(asset.Manufacturer)))
+            {
+                manufacturers.Add(asset.Manufacturer);
+            }
 
             // populate the comments section for the first asset
             // todo: this is a total hack and sucks entirely. Not sure what I even want to do here.
-            assets[0] = AssetService.GetAsset(assets.First().Id);
+            pagedAssets[0] = AssetService.GetAsset(pagedAssets.First().Id);
 
             var model = new CatalogShowAssetsModel
             {
-                Assets = assets,
+                Assets = pagedAssets,
+                Manufacturers = manufacturers,
                 Catalog = catalog,
                 CatalogCreator = creator,
                 CurrentPage = currentPage,

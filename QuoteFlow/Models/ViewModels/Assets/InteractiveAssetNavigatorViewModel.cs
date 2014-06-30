@@ -8,6 +8,12 @@ namespace QuoteFlow.Models.ViewModels.Assets
 
         public IEnumerable<Asset> Assets { get; set; }
 
+        /// <summary>
+        /// The distinct list of manufacturers that are contained within 
+        /// this catalog set.
+        /// </summary>
+        public IEnumerable<Manufacturer> Manufacturers { get; set; }
+
         public string PaginationUrl { get; set; }
     }
 }

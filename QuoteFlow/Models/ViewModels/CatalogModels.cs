@@ -35,6 +35,7 @@ namespace QuoteFlow.Models.ViewModels
     public class CatalogShowAssetsModel
     {
         public PagedList<Asset> Assets { get; set; }
+        public IEnumerable<Manufacturer> Manufacturers { get; set; }
         public Catalog Catalog { get; set; }
         public IEnumerable<Catalog> Catalogs { get; set; } 
         public User CatalogCreator { get; set; }
