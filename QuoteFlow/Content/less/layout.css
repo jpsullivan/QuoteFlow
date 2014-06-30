@@ -218,7 +218,7 @@
 }
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
   .page-type-split .navigator-search.query-component .search-container .criteria-list .criteria-selector > .criteria-wrap {
-    max-width: 110px;
+    max-width: 125px;
   }
 }
 .page-type-split .navigator-search.query-component .search-container .criteria-list .criteria-selector.aui-button {

@@ -20,7 +20,7 @@
                                 </li>
                                 <li data-id="manufacturers">
                                     <button type="button" data-id="manufacturers" class="criteria-selector aui-button aui-button-subtle aui-dropdown2-trigger" aria-owns="manufacturers-dropdown">
-                                        <div class="criteria-wrap"><span class="fieldLabel">Manufacturers</span></div>
+                                        <div class="criteria-wrap"><span class="fieldLabel">Manufacturers:</span> All</div>
                                     </button>
                                 </li>
                                 <li data-id="issuetype" original-title=""><button type="button" data-id="issuetype" class="criteria-selector aui-button aui-button-subtle aui-dropdown2-trigger"><div class="criteria-wrap"><span class="fieldLabel">Type:</span> All</div></button><a href="#" class="remove-filter" title="Remove criterion" tabindex="-1" style="display: none;"><span class="aui-icon aui-icon-small aui-iconfont-remove"></span></a></li>
@@ -88,13 +88,13 @@
 
 
 <!-- Toolbar popups -->
-<div id="manufacturers-dropdown" class="aui-dropdown2 aui-style-default" data-dropdown2-alignment="left">
+<div id="manufacturers-dropdown" class="aui-dropdown2 aui-style-default ajs-layer" data-dropdown2-alignment="left">
     <form class="aui top-label aui-popup-content" id="manufacturers_filter">
         <div class="field-group">
             <div class="check-list-select">
                 <div class="check-list-field-container">
                     <input autocomplete="off" placeholder="Find Manufacturers..." class="aui-field check-list-field" id="searcher-type-input" wrap="off">
-                    <span class="icon noloading">
+                    <span class="aui-icon icon noloading">
                         <span>More</span>
                     </span>
                 </div>

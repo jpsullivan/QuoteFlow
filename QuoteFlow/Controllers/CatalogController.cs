@@ -158,11 +158,13 @@ namespace QuoteFlow.Controllers
             var paginationUrl = Url.CatalogAssets(catalog.Id, catalog.Name.UrlFriendly(), -1);
 
             // build up the distinct manufacturers list
-            var manufacturers = new List<Manufacturer>();
-            foreach (var asset in assets.Where(asset => !manufacturers.Contains(asset.Manufacturer)))
-            {
-                manufacturers.Add(asset.Manufacturer);
-            }
+            var manufacturers = assets.Select(asset => asset.Manufacturer).ToList();
+//            foreach (var asset in assets.Where(asset => !manufacturers.Contains(asset.Manufacturer)))
+//            {
+//                manufacturers.Add(asset.Manufacturer);
+//            }
+
+            manufacturers = manufacturers.Distinct(m => m.Id).ToList();
 
             // populate the comments section for the first asset
             // todo: this is a total hack and sucks entirely. Not sure what I even want to do here.

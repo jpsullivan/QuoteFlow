@@ -15,5 +15,30 @@ namespace QuoteFlow.Infrastructure.Extensions
         {
             return items != null && items.Any(predicate);
         }
+
+        public static IEnumerable<T> Distinct<T, TKey>(this IEnumerable<T> list, Func<T, TKey> lookup) where TKey : struct
+        {
+            return list.Distinct(new StructEqualityComparer<T, TKey>(lookup));
+        }
+
+        class StructEqualityComparer<T, TKey> : IEqualityComparer<T> where TKey : struct
+        {
+            readonly Func<T, TKey> _lookup;
+
+            public StructEqualityComparer(Func<T, TKey> lookup)
+            {
+                _lookup = lookup;
+            }
+
+            public bool Equals(T x, T y)
+            {
+                return _lookup(x).Equals(_lookup(y));
+            }
+
+            public int GetHashCode(T obj)
+            {
+                return _lookup(obj).GetHashCode();
+            }
+        }
     }
 }
