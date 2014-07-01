@@ -25,7 +25,7 @@ namespace QuoteFlow.Controllers
 
         #endregion
 
-        [Route("manufacturer/{id:INT}/{name}")]
+        [Route("manufacturer/{id:INT}/{manufacturerName}")]
         public ActionResult Show(int id, string name)
         {
             var manufacturer = ManufacturerService.GetManufacturer(id);
@@ -42,8 +42,8 @@ namespace QuoteFlow.Controllers
             return manufacturer.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
 
-        [Route("manufacturer/{id:INT}/{name}/edit", HttpVerbs.Get)]
-        public ActionResult Edit(int id, string name)
+        [Route("manufacturer/{id:INT}/{manufacturerName}/edit", HttpVerbs.Get)]
+        public ActionResult Edit(int id, string manufacturerName)
         {
             var manufacturer = ManufacturerService.GetManufacturer(id);
             if (manufacturer == null)
@@ -58,11 +58,11 @@ namespace QuoteFlow.Controllers
                 Description = manufacturer.Description
             };
 
-            return manufacturer.Name.UrlFriendly() != name? PageNotFound() : View(viewModel);
+            return manufacturer.Name.UrlFriendly() != manufacturerName? PageNotFound() : View(viewModel);
         }
 
-        [Route("manufacturer/{id:INT}/{name}/edit", HttpVerbs.Post)]
-        public ActionResult Edit(int id, string name, EditManufacturerRequest form, string returnUrl)
+        [Route("manufacturer/{id:INT}/{manufacturerName}/edit", HttpVerbs.Post)]
+        public ActionResult Edit(int id, string manufacturerName, EditManufacturerRequest form, string returnUrl)
         {
             var manufacturer = ManufacturerService.GetManufacturer(id);
             if (manufacturer == null)
@@ -72,7 +72,7 @@ namespace QuoteFlow.Controllers
 
             // ensure that the provided asset matches the expected asset
             if (manufacturer.Id != id)
-                return SafeRedirect(returnUrl ?? Url.Manufacturer(id, name));
+                return SafeRedirect(returnUrl ?? Url.Manufacturer(id, manufacturerName));
 
             if (!ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace QuoteFlow.Controllers
                 ManufacturerService.UpdateManufacturer(manufacturer.Id, diff);
             }
 
-            return SafeRedirect(returnUrl ?? Url.Manufacturer(id, name));
+            return SafeRedirect(returnUrl ?? Url.Manufacturer(id, manufacturerName));
         }
     }
 }
