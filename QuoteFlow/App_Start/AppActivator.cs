@@ -25,6 +25,10 @@ namespace QuoteFlow
 
         public static void PreStart()
         {
+            // reset all viewengines except razor for perf purposes
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new RazorViewEngine());
+
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
 
             NinjectPreStart();
