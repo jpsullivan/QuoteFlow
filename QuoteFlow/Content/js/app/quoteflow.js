@@ -59,7 +59,11 @@ var QuoteFlow;
     QuoteFlow.Pages = {};
     QuoteFlow.Routers = {};
     (function (UI) {
-        UI.Asset = {};
+        (function (Asset) {
+            Asset.Navigator = {};
+        })(UI.Asset || (UI.Asset = {}));
+        var Asset = UI.Asset;
+        ;
         UI.Catalog = {};
         UI.Common = {};
     })(QuoteFlow.UI || (QuoteFlow.UI = {}));

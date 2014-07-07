@@ -1,0 +1,1406 @@
+id,manufacturer,source,catalog_id,model,part_num,nsn,uom,expires,delivery,markup,fr_cost,sell_price
+,Anachemia,OEM,2.0,M256a1 Chemical Agent Detection Kit ,FR-061230COM,,Ea.,,30 Days,,236.24,286.05
+,Anachemia,OEM,2.0,M256a1 Chemical Detection Training Kit Simulator,FR-067230COM,,Ea.,,30 Days,,579.68,701.9
+,Anachemia,OEM,2.0,"C8 Chemcial Liquid Detector - Commercial Equivalent Of Military Detector Papers From A Booklet To Determine Presence Of G, V, Or H Agents In Liquid.",FR-081030COM,,Ea.,,30 Days,,10.21,12.25
+,Anachemia,OEM,2.0,"C9 Chemcial Liquid Detector - Commercial Equivalent Of Military Detector Papers From A Dispenser Roll To Determine Presence Of G, V, Or H Agents In Liquid.",FR-091402COM,,Ea.,,30 Days,,24.16,29.64
+,Avon,OEM,2.0,Fm53 Mask Assembly Rh Lge,FR-72501/1,,Ea.,,45 Days,,347.75,458.16
+,Avon,OEM,2.0,Fm53 Mask Assembly Rh Med,FR-72501/3,,Ea.,,45 Days,,347.75,458.16
+,Avon,OEM,2.0,Fm53 Mask Assembly Rh Sml,FR-72501/5,,Ea.,,45 Days,,347.75,458.16
+,Avon,OEM,2.0,Fm53 Mask Assembly Rh Xs,FR-72501/7,,Ea.,,45 Days,,347.75,458.16
+,Avon,OEM,2.0,Fm53 Mask Assembly Lh Lge,FR-72501/2,,Ea.,,45 Days,,347.75,458.16
+,Avon,OEM,2.0,Fm53 Mask Assembly Lh Med,FR-72501/4,,Ea.,,45 Days,,347.75,458.16
+,Avon,OEM,2.0,Fm53 Mask Assembly Lh Sml,FR-72501/6,,Ea.,,45 Days,,347.75,458.16
+,Avon,OEM,2.0,Fm53 Mask Assembly Lh Xs,FR-72501/8,,Ea.,,45 Days,,347.75,458.16
+,Avon,OEM,2.0,Fm53 Mask Assembly Twinport Lge,FR-72501/9,,Ea.,,45 Days,,380.25,500.98
+,Avon,OEM,2.0,Fm53 Mask Assembly Twinport Med,FR-72501/10,,Ea.,,45 Days,,380.25,500.98
+,Avon,OEM,2.0,Fm53 Mask Assembly Twinport Sml,FR-72501/11,,Ea.,,45 Days,,380.25,500.98
+,Avon,OEM,2.0,Fm53 Mask Assembly Twinport Xs,FR-72501/12,,Ea.,,45 Days,,380.25,500.98
+,Avon,OEM,2.0,Fm53 Mask System Rh Lge,FR-72553/1,,Ea.,,45 Days,,874.25,1151.82
+,Avon,OEM,2.0,Fm53 Mask System Rh Med,FR-72553/3,,Ea.,,45 Days,,874.25,1151.82
+,Avon,OEM,2.0,Fm53 Mask System Rh Sml,FR-72553/5,,Ea.,,45 Days,,874.25,1151.82
+,Avon,OEM,2.0,Fm53 Mask System Rh Xs,FR-72553/7,,Ea.,,45 Days,,874.25,1151.82
+,Avon,OEM,2.0,Fm53 Mask System Lh Lge,FR-72553/2,,Ea.,,45 Days,,874.25,1151.82
+,Avon,OEM,2.0,Fm53 Mask System Lh Med,FR-72553/4,,Ea.,,45 Days,,874.25,1151.82
+,Avon,OEM,2.0,Fm53 Mask System Lh Sml,FR-72553/6,,Ea.,,45 Days,,874.25,1151.82
+,Avon,OEM,2.0,Fm53 Mask System Lh Xs,FR-72553/8,,Ea.,,45 Days,,874.25,1151.82
+,Avon,OEM,2.0,Fm53 Mask System Twinport Lge,FR-72553/9,,Ea.,,45 Days,,906.75,1194.64
+,Avon,OEM,2.0,Fm53 Mask System Twinport Med,FR-72553/10,,Ea.,,45 Days,,906.75,1194.64
+,Avon,OEM,2.0,Fm53 Mask System Twinport Sml,FR-72553/11,,Ea.,,45 Days,,906.75,1194.64
+,Avon,OEM,2.0,Fm53 Mask System Twinport Xs,FR-72553/12,,Ea.,,45 Days,,906.75,1194.64
+,Avon,OEM,2.0,Fm50 Mask Assembly Lge,FR-71400/1,,Ea.,,45 Days,,266.5,351.11
+,Avon,OEM,2.0,Fm50 Mask Assembly Med,FR-71400/2,,Ea.,,45 Days,,266.5,351.11
+,Avon,OEM,2.0,Fm50 Mask Assembly Sml,FR-71400/3,,Ea.,,45 Days,,266.5,351.11
+,Avon,OEM,2.0,Fm50 Mask System Lge,FR-71450/1,,Ea.,,45 Days,,373.75,492.42
+,Avon,OEM,2.0,Fm50 Mask System Med,FR-71450/2,,Ea.,,45 Days,,373.75,492.42
+,Avon,OEM,2.0,Fm50 Mask System Sml,FR-71450/3,,Ea.,,45 Days,,373.75,492.42
+,Avon,OEM,2.0,C50 Mask Assembly Lge,FR-70501/187,,Ea.,,45 Days,,243.75,321.14
+,Avon,OEM,2.0,C50 Mask Assembly Med,FR-70501/188,,Ea.,,45 Days,,243.75,321.14
+,Avon,OEM,2.0,C50 Mask Assembly Sml,FR-70501/189,,Ea.,,45 Days,,243.75,321.14
+,Avon,OEM,2.0,Fm12 Cbrn Rh Lge,FR-CE70046/20/1,,Ea.,,45 Days,,172.25,226.94
+,Avon,OEM,2.0,Fm12 Cbrn Rh Med,FR-CE70046/20/2,,Ea.,,45 Days,,172.25,226.94
+,Avon,OEM,2.0,Fm12 Cbrn Rh Sml,FR-CE70046/20/3,,Ea.,,45 Days,,172.25,226.94
+,Avon,OEM,2.0,Fm12 Cbrn Lh Lge,FR-CE70502/163/1,,Ea.,,45 Days,,172.25,226.94
+,Avon,OEM,2.0,Fm12 Cbrn Lh Med,FR-CE70502/163/2,,Ea.,,45 Days,,172.25,226.94
+,Avon,OEM,2.0,Fm12 Cbrn Lh  Sml,FR-CE70502/163/3,,Ea.,,45 Days,,172.25,226.94
+,Avon,OEM,2.0,C420 W/c50 Lge Twin Port,FR-70501/264,,Ea.,,45 Days,,698.75,920.6
+,Avon,OEM,2.0,C420 W/c50 Med Twin Port,FR-70501/265,,Ea.,,45 Days,,698.75,920.6
+,Avon,OEM,2.0,C420 W/c50 Sml Twin Port,FR-70501/266,,Ea.,,45 Days,,698.75,920.6
+,Avon,OEM,2.0,C420 W/fm12 Rh Lge,FR-70501/246,,Ea.,,45 Days,,607.75,800.71
+,Avon,OEM,2.0,C420 W/fm12 Rh Med,FR-70501/247,,Ea.,,45 Days,,607.75,800.71
+,Avon,OEM,2.0,C420 W/fm12 Rh Sml,FR-70501/248,,Ea.,,45 Days,,607.75,800.71
+,Avon,OEM,2.0,C420 W/fm12 Lh Lge,FR-70501/249,,Ea.,,45 Days,,607.75,800.71
+,Avon,OEM,2.0,C420 W/fm12 Lh Med,FR-70501/250,,Ea.,,45 Days,,607.75,800.71
+,Avon,OEM,2.0,C420 Wfm12 Lh Sml,FR-70501/251,,Ea.,,45 Days,,607.75,800.71
+,Avon,OEM,2.0,St-papr,FR-STPAPR,,Ea.,,45 Days,,1462.5,1926.84
+,Avon,OEM,2.0,"Nh15 Cbrn Hood (s,m,l)",FR-75027/100,,Ea.,,45 Days,,122.85,161.85
+,Avon,OEM,2.0,Nh15 Cbrn Hood (xs),FR-75027/104,,Ea.,,45 Days,,122.85,161.85
+,Honeywell,OEM,2.0,Base Unit Price,M5 PID,,Ea.,,10-14 Days,,248,302.25
+,Honeywell,OEM,2.0,O2 Oxygen,X,,Ea.,,10-14 Days,,90,90.68
+,Honeywell,OEM,2.0,Lel Combustible,W,,Ea.,,10-14 Days,,116.25,117.12
+,Honeywell,OEM,2.0,Pid - Photo Ionization Detector,Q,,Ea.,,10-14 Days,,446.25,449.6
+,Honeywell,OEM,2.0,Cosh - Twin Tox Co/h2s,Y,,Ea.,,10-14 Days,,187.5,188.91
+,Honeywell,OEM,2.0,H2s Hydrogen Sulfide,H,,Ea.,,10-14 Days,,142.5,143.57
+,Honeywell,OEM,2.0,Co Carbon Monoxide,M,,Ea.,,10-14 Days,,150,151.13
+,Honeywell,OEM,2.0,So2 Sulfur Dioxide,S,,Ea.,,10-14 Days,,221.25,222.91
+,Honeywell,OEM,2.0,Cl2 Chlorine,C,,Ea.,,10-14 Days,,221.25,222.91
+,Honeywell,OEM,2.0,Clo2 Chlorine Dioxide,V,,Ea.,,10-14 Days,,221.25,222.91
+,Honeywell,OEM,2.0,Nh3 Ammonia,A,,Ea.,,10-14 Days,,296.25,298.47
+,Honeywell,OEM,2.0,Ph3 Phosphine,P,,Ea.,,10-14 Days,,221.25,222.91
+,Honeywell,OEM,2.0,Hcn Hydrogen Cyanide,Z,,Ea.,,10-14 Days,,221.25,222.91
+,Honeywell,OEM,2.0,No2 Nitrogen Dioxide,D,,Ea.,,10-14 Days,,221.25,222.91
+,Honeywell,OEM,2.0,O3 Ozone,G,,Ea.,,10-14 Days,,363.75,366.48
+,Honeywell,OEM,2.0,Rechargeable Nimh Battery Pack And Cradle Charger,R,,Ea.,,10-14 Days,,112.5,113.34
+,Honeywell,OEM,2.0,Rechargeable Nimh Battery Pack And Cradle Charger And Vehicle Adapter,V,,Ea.,,10-14 Days,,165,166.24
+,Honeywell,OEM,2.0,Motorized Sampling Pump,P,,Ea.,,10-14 Days,,93.75,94.45
+,Honeywell,OEM,2.0,Datalogging Monitor Includes Software,D,,Ea.,,10-14 Days,,75,75.56
+,Honeywell,OEM,2.0,Stealth Ir Led With Black Housing,S,,Ea.,,10-14 Days,,56.25,56.67
+,Honeywell,OEM,2.0,Csk W/carrying Case - No Gas Or Regulator,1,,Ea.,,10-14 Days,,157.5,158.68
+,Honeywell,OEM,2.0,"Csk W/carrying Case And 1.0 Lpm Regulator, No Gas",2,,Ea.,,10-14 Days,,202.5,204.02
+,Honeywell,OEM,2.0,Csk W 1 Cyl 34 L 50% Lel Ch4/ 1 Cyl Iso,3,,Ea.,,10-14 Days,,300,302.25
+,Honeywell,OEM,2.0,Csk W 1 34 L 4-mix (lel/o2/co/h2s),4,,Ea.,,10-14 Days,,375,377.81
+,Honeywell,OEM,2.0,Csk W 1 34 L 4-mix (lel/o2/co/h2s) And 1 Cyl Iso,9,,Ea.,,10-14 Days,,416.25,419.37
+,Honeywell,OEM,2.0,Csk W 1 Cyl 34 L 50% Lel Ch4/ 1 Cyl Iso And I Cyl Ph3,13,,Ea.,,10-14 Days,,693.75,698.95
+,Honeywell,OEM,2.0,Carbon Monoxide (co)    35-200ppm                        Specify Range,GA24XT-M,,Ea.,,10-14 Days,,117.18,142.81
+,Honeywell,OEM,2.0,Oxygen (o2) 19.5%-23.5%,GA24XT-X,,Ea.,,10-14 Days,,117.18,142.81
+,Honeywell,OEM,2.0,"Gaspoint Transmitter With H2s Sensor Unit, Modbus Compatible",GP-HD,,Ea.,,10-14 Days,,1645,1243
+,Honeywell,OEM,2.0,"Gaspoint Transmitter With Co Sensor Unit, Modbus Compatible",GP-MD,,Ea.,,10-14 Days,,1645,1243
+,Honeywell,OEM,2.0,"Gaspoint Transmitter With O2 Sensor Unit, Modbus Compatible",GP-XD,,Ea.,,10-14 Days,,1645,1243
+,Honeywell,OEM,2.0,"Gaspoint Transmitter With Lel Catalytic Sensor Unit, Modbus Compatible",GP-WD,,Ea.,,10-14 Days,,1645,1243
+,Honeywell,OEM,2.0,"Gaspoint Transmitter With So2 Sensor Unit, Modbus Compatible",GP-SD,,Ea.,,10-14 Days,,1645,1243
+,Honeywell,OEM,2.0,"Gaspoint Transmitter With Cl2 Sensor Unit, Modbus Compatible",GP-CD,,Ea.,,10-14 Days,,1995,1507.47
+,Honeywell,OEM,2.0,"Gaspoint Transmitter With Hcn Sensor Unit, Modbus Compatible",GP-ZD,,Ea.,,10-14 Days,,1995,1507.47
+,Honeywell,OEM,2.0,"Gaspoint Transmitter With No2 Sensor Unit, Modbus Compatible",GP-DD,,Ea.,,10-14 Days,,1995,1507.47
+,Honeywell,OEM,2.0,"Gaspoint Transmitter With Nh3 Sensor Unit, Modbus Compatible",GP-AD,,Ea.,,10-14 Days,,2195,1658.6
+,Honeywell,OEM,2.0,"Gaspoint Transmitter With Lel Infared (ir) Sensor Unit, Modbus Compatible",GP-IR-WD,,Ea.,,10-14 Days,,2595,1960.85
+,Honeywell,OEM,2.0,Independent 4 Channel Controller 110vac/24voc,CR-4000,,Ea.,,10-14 Days,,1295,978.53
+,Honeywell,OEM,2.0,Cr-4000 With Alarm Relays (low/high/fault) And Battey Back-up,CR-4000 CR4-BAT 1,,Ea.,,10-14 Days,,1495,1129.66
+,Honeywell,OEM,2.0,Cr-4000 With Channel 1 And Alarm Relays (low/high),CR-4000 CR4-R1000,,Ea.,,10-14 Days,,1295,978.53
+,Honeywell,OEM,2.0,Cr-4000 With Channel 1 And Alarm Relays (low/high) And Battery Back-up,CR-4000 CR4-R1000/BAT1,,Ea.,,10-14 Days,,1595,1205.22
+,Honeywell,OEM,2.0,"Cr-4000 With Channel 1, 2 And Alarm Relays (low/high)",CR-4000 CR4-R1200,,Ea.,,10-14 Days,,1395,1054.1
+,Honeywell,OEM,2.0,"Cr-4000 With Channel 1,2 And Alarm Relays (low/high) And Battery Back-up",CR-4000 CR4-R1200/BAT1,,Ea.,,10-14 Days,,1695,1280.78
+,Honeywell,OEM,2.0,"Cr-4000 With Channel 1, 2, 3 And Alarm Relays (low/high)",CR-4000 CR4-R1230,,Ea.,,10-14 Days,,1495,1129.66
+,Honeywell,OEM,2.0,"Cr-4000 With Channel 1,2, 3 And Alarm Relays (low/high) And Battery Back-up",CR-4000 CR4-R1230/BAT1,,Ea.,,10-14 Days,,1795,1356.35
+,Honeywell,OEM,2.0,"Cr-4000 With Channel 1, 2, 3, 4 And Alarm Relays (low/high)",CR-4000 CR4-R1234,,Ea.,,10-14 Days,,1595,1205.22
+,Honeywell,OEM,2.0,"Cr-4000 With Channel 1,2, 3, 4 And Alarm Relays (low/high) And Battery Back-up",CR-4000 CR4-R1234/BAT1,,Ea.,,10-14 Days,,1895,1431.91
+,Honeywell,OEM,2.0,"Battery Back-up: Two 12v, 3.2 Amp. Hr Batteries",CR-BAT1,,Ea.,,10-14 Days,,300,226.69
+,Honeywell,OEM,2.0,Battery Connector/cable Harness Battery Back-up (cr4-bat1),CR4-BAT1-BH,,Ea.,,10-14 Days,,108,81.61
+,Honeywell,OEM,2.0,"Cr-4000 Dual Audible/visual Alarm Bar, Stainless Steel",CR-ALH05,,Ea.,,10-14 Days,,810,612.06
+,Honeywell,OEM,2.0,Cr-4000 Pcb,CR-4000-PCB,,Ea.,,10-14 Days,,850,642.28
+,Honeywell,OEM,2.0,Cr-4000 With Channel 1 And Alarm Relays (low/high),CR4-1000-PCB,,Ea.,,10-14 Days,,925,698.95
+,Honeywell,OEM,2.0,"Cr-4000 With Channel 1, 2 And Alarm Relays (low/high)",CR4-1200-PCB,,Ea.,,10-14 Days,,1075,812.3
+,Honeywell,OEM,2.0,"Cr-4000 With Channel 1, 2, 3 And Alarm Relays (low/high)",CR4-1230-PCB,,Ea.,,10-14 Days,,1065,804.74
+,Honeywell,OEM,2.0,"Cr-4000 With Channel 1, 2, 3, 4 And Alarm Relays (low/high)",CR4-1234-PCB,,Ea.,,10-14 Days,,1165,880.3
+,Canberra,OEM,2.0,Mrad103 - Yellow Roentgen Unit,FR-MRAD103,,Ea.,,30 Days,,550.4,637.71
+,Canberra,OEM,2.0,Mrad203 - Black Roentgen Unit,FR-MRAD203,,Ea.,,30 Days,,550.4,637.71
+,Canberra,OEM,2.0,Mrad113 - Yellow Roentgen Unit Wit Vibrating Alarm,FR-MRAD113,,Ea.,,30 Days,,590.4,684.05
+,Canberra,OEM,2.0,Mrad213 - Black Roentgen Unit Wit Vibrating Alarm,FR-MRAD213,,Ea.,,30 Days,,590.4,684.05
+,Canberra,OEM,2.0,An/udr - High Sensitivity Military Pocket Radiac,FR-UN/ADR-14,,Ea.,,30 Days,,780.02,913
+,Canberra,OEM,2.0,Minisentry Transportable Gamma Portal Monitor,FR-MSENTRY,,Ea.,,30-45 Days,,8110,7762.28
+,Canberra,OEM,2.0,Minisentry Transportable Gamma Portal Monitor,FR-MSENTRY,,Ea.,,30-45 Days,,8883,10001.96
+,Canberra,OEM,2.0,"An/pdr-77 â€“ Military Radiac For Alpha, Beta, Gamma And X-ray Radiation Detection.",FR-AN/PDR-77,,Ea.,,60 Days,,8109.94,9171.68
+,Canberra,OEM,2.0,In1kl-1 - Inspector 1000 W/iprol-1,FR-IN1KL-1,,Ea.,,60 Days,,15752,17673.56
+,Canberra,OEM,2.0,In1kn-1 - Inspector 1000 W/ipron-1,FR-INIKN-1,,Ea.,,60 Days,,7802.96,8754.83
+,Canberra,OEM,2.0,In1kn-3 - Inspector 1000 W/irpon-3,FR-IN1KN-3,,Ea.,,60 Days,,11927.52,13382.54
+,Canberra,OEM,2.0,In1ks-2 - Inspector 1000 W/ipros-2,FR-IN1KS-2,,Ea.,,60 Days,,9413.36,10561.68
+,Canberra,OEM,2.0,In1kl-1n - Inspector 1000 W/iprol-1 And Neutron Probe,FR-IN1KL-1N,,Ea.,,60 Days,,18131.52,20343.36
+,Canberra,OEM,2.0,In1kn-1n- Inspector 1000 W/ipron-1 And Neutron Probe,FR-IN1KN-1N,,Ea.,,60 Days,,10183.36,11425.61
+,Canberra,OEM,2.0,In1ks-2n - Inspector 1000 W/ipros-2 And Neutron Probe,FR-IN1KS-2N,,Ea.,,60 Days,,11792.88,13231.48
+,Canberra,OEM,2.0," Kita - Adm-300 ""a"" Alpha Kit",FR-KITA,,Ea.,,60 Days,,4320,4787.64
+,Canberra,OEM,2.0,"Kitb - Adm-300 Kit ""b"" Basic Kit",FR-KITB,,Ea.,,60 Days,,2272.5,2518.5
+,Canberra,OEM,2.0,"Kitc - Adm-300 Kit ""c"" Medical Kit",FR-KITC,,Ea.,,60 Days,,6228,6902.18
+,Canberra,OEM,2.0,"Kite - Adm-300 Kit ""e"" Verification Kit",FR-KITE,,Ea.,,60 Days,,823.5,912.64
+,Draeger Safety,OEM,2.0,"8103310 - Clan Lab Simultest Set For Detection Of Phosphine, Phosgene, Ammonia, Hydrchloric Acid, Iodine",FR-8103310,,Ea.,,30 Days,,65.8,77.66
+,Draeger Safety,OEM,2.0,"8103410 - Fumigation Simultest Set For Detection Of Phosphine, Ammonia, Methyl Bromide, Hydrogen Cyanide, Formaldehyde",FR-8103410,,Ea.,,30 Days,,62.3,73.53
+,Draeger Safety,OEM,2.0,4056747 - Aerotest Simultan Alpha (<175 Psi),FR-4056747,,Ea.,,30 Days,,1735.3,2012.89
+,Draeger Safety,OEM,2.0,4055986 - Aerotest Simultan Hp (< 4500 Psi),FR-4055986,,Ea.,,30 Days,,2715.3,3087.39
+,Draeger Safety,OEM,2.0,4056181 - Aerotest Multi-test (< 75 Psi),FR-4056181,,Ea.,,30 Days,,2652.3,3015.76
+,Draeger Safety,OEM,2.0,6405300 - Cms Analyzer With Data Recorder,FR-6405300,,Ea.,,30 Days,,1351,1536.14
+,Draeger Safety,OEM,2.0,8317700 - Cms Analyzer With Remote Sample Pump,FR-8317700,,Ea.,,30 Days,,1847.3,2100.45
+,Draeger Safety,OEM,2.0,6405060 - Remote Sampling System,FR-6405060,,Ea.,,30 Days,,444.5,505.41
+,Draeger Safety,OEM,2.0,6406330 - Acetic Acid -2.0-50.0 Ppm,FR-6406330,,Ea.,,30 Days,,64.4,73.23
+,Draeger Safety,OEM,2.0,6406470 - Acetone - 40.0 - 600 Ppm,FR-6406470,,Ea.,,30 Days,,64.4,73.23
+,Draeger Safety,OEM,2.0,6406550 - Ammonia 0.20-5.0 Ppm,FR-6406550,,Ea.,,30 Days,,64.4,73.23
+,Draeger Safety,OEM,2.0,6406020 - Ammonia 10.0 - 150 Ppm,FR-6406020,,Ea.,,30 Days,,44.8,50.94
+,Draeger Safety,OEM,2.0,6406190 - Carbon Diox. 200-3000 Ppm,FR-6406190,,Ea.,,30 Days,,44.8,50.94
+,Draeger Safety,OEM,2.0,"6406070 - Carbon Diox. 1,000-25,000 Ppm",FR-6406070,,Ea.,,30 Days,,43.4,49.35
+,Draeger Safety,OEM,2.0,6406080 - Carbon Monox. 5.0-150 Ppm,FR-6406080,,Ea.,,30 Days,,43.4,49.35
+,Draeger Safety,OEM,2.0,6406010 - Chlorine .20-10.0 Ppm,FR-6406010,,Ea.,,30 Days,,44.8,50.94
+,Draeger Safety,OEM,2.0,6406050 - Hydrogen Sulfide - 2.0-50 Ppm,FR-6406050,,Ea.,,30 Days,,44.8,50.94
+,Draeger Safety,OEM,2.0,6406150 - Hydrogen Sulfide 20.0-500 Ppm,FR-6406150,,Ea.,,30 Days,,44.8,50.94
+,Draeger Safety,OEM,2.0,6406090 - Hydrochloric Acid - 1.0-25.0 Ppm,FR6406090,,Ea.,,30 Days,,58.1,66.06
+,Draeger Safety,OEM,2.0,6406380 - Methanol 20.0-500 Ppm,FR-6406380,,Ea.,,30 Days,,78.4,89.14
+,Draeger Safety,OEM,2.0,"6406370 - Ethanol - 100 - 2,500 Ppm",FR-6406370,,Ea.,,30 Days,,64.4,73.23
+,Draeger Safety,OEM,2.0,6406120 - Nitrogen Dioxide 0.50-25.0 Ppm,FR-6406120,,Ea.,,30 Days,,44.8,50.94
+,Draeger Safety,OEM,2.0,6406060 - Nitrous Gases 0.5-15 Ppm,FR-6406060,,Ea.,,30 Days,,43.4,49.35
+,Draeger Safety,OEM,2.0,6406240 - Nitrous Gases - 10.0 - 200 Ppm,FR-6406240,,Ea.,,30 Days,,44.8,50.94
+,Draeger Safety,OEM,2.0,6406490 - Oxygen - 1.0 - 30.0 Vol%,FR-6406490,,Ea.,,30 Days,,78.4,89.14
+,Draeger Safety,OEM,2.0,6406040 - Perchloroethylene - 5.0-150 Ppm,FR-6406040,,Ea.,,30 Days,,53.9,61.29
+,Draeger Safety,OEM,2.0,6406200 - Petroleum Hydrocarbons-20.0-500 Ppm,FR-6406200,,Ea.,,30 Days,,67.9,77.2
+,Draeger Safety,OEM,2.0,6406420 - Phosphine 20.0-500 Ppm,FR-6406420,,Ea.,,30 Days,,57.4,65.27
+,Draeger Safety,OEM,2.0,"6406310 - Propane - 100 - 2,000 Ppm",FR-6406310,,Ea.,,30 Days,,64.4,73.23
+,Draeger Safety,OEM,2.0,6406110 - Sulfur Dioxide - 0.40 - 10.0 Ppm,FR-6406110,,Ea.,,30 Days,,44.8,50.94
+,Draeger Safety,OEM,2.0,6406180 - Sulfur Dioxide - 5.0 - 150 Ppm,FR-6406180,,Ea.,,30 Days,,53.9,61.29
+,Draeger Safety,OEM,2.0,6406250 - Toluene 10.0 - 300 Ppm,FR-6406250,,Ea.,,30 Days,,57.4,65.27
+,Draeger Safety,OEM,2.0,6406290 - Training Chip Simulations,FR-6406290,,Ea.,,30 Days,,17.5,19.9
+,Draeger Safety,OEM,2.0,6406320 - Trichlorethylene - 5.0 - 100 Ppm,FR-6406320,,Ea.,,30 Days,,53.9,61.29
+,Draeger Safety,OEM,2.0,6406230 - Vinyl Chloride 10.0 - 250 Ppm,FR-6406230,,Ea.,,30 Days,,57.4,65.27
+,Draeger Safety,OEM,2.0,6406450 - Water Vapor 0.40 - 10.0 Mg/l,FR-6406450,,Ea.,,30 Days,,66.5,75.61
+,Draeger Safety,OEM,2.0,6406260 - Xylene - 10.0 - 300 Ppm,FR-6406260,,Ea.,,30 Days,,53.9,61.29
+,Draeger Safety,OEM,2.0,6406130 - Ammonia (2.0-50.0 Ppm),FR-6406130,,Ea.,,10 Days,,44.8,54.81
+,Draeger Safety,OEM,2.0,6406570 - Ammonia (100-2.000 Ppm),FR-6406570,,Ea.,,10 Days,,49.7,60.8
+,Draeger Safety,OEM,2.0,6406600 - Benzene (0.05-2.5 Ppm),FR-6406600,,Ea.,,10 Days,,128.1,156.72
+,Draeger Safety,OEM,2.0,6406030 - Benzene (0.20-10.0 Ppm),FR-6406030,,Ea.,,10 Days,,128.1,156.72
+,Draeger Safety,OEM,2.0,6406160 - Benzene (0.50-10.0 Ppm),FR-6406160,,Ea.,,10 Days,,128.1,156.72
+,Draeger Safety,OEM,2.0,6406280 - Benzene (10.0-250 Ppm),FR-6406280,,Ea.,,10 Days,,128.1,156.72
+,Draeger Safety,OEM,2.0,6406280 - Butadiene (1.0-25.0 Ppm),FR-6406280,,Ea.,,10 Days,,128.1,156.72
+,Draeger Safety,OEM,2.0,6406210 - Carbon Dioxide (1.0-20.0 Vol%),FR-6406210,,Ea.,,10 Days,,44.8,54.81
+,Draeger Safety,OEM,2.0,6406580 - Ethylene Oxide (0.40-5.0 Ppm),FR-6406580,,Ea.,,10 Days,,117.6,143.87
+,Draeger Safety,OEM,2.0,6406540 - Formaldehyde (0.20-5.0 Ppm),FR-6406540,,Ea.,,10 Days,,64.4,78.79
+,Draeger Safety,OEM,2.0,6406140 - Hydrochloric Acid (20.0-500 Ppm),FR-6406140,,Ea.,,10 Days,,58.1,71.08
+,Draeger Safety,OEM,2.0,6406100 - Hydrogen Cyanide (2.0-50.0 Ppm),FR-6406100,,Ea.,,10 Days,,53.9,65.94
+,Draeger Safety,OEM,2.0,6406440 - Hydrogen Peroxide (0.20-2.0 Ppm),FR-6406440,,Ea.,,10 Days,,67.9,83.07
+,Draeger Safety,OEM,2.0,6406520 - Hydrogen  Sulfide (0.20-5.0 Ppm),FR-6406520,,Ea.,,10 Days,,64.4,78.79
+,Draeger Safety,OEM,2.0,"6406220 - Hydrogen Sulfide (100-2,500 Ppm)",FR-6406220,,Ea.,,10 Days,,44.8,54.81
+,Draeger Safety,OEM,2.0,"6406390 - Iso-propanol (40.0-1,000 Ppm)",FR-6406390,,Ea.,,10 Days,,78.4,95.91
+,Draeger Safety,OEM,2.0,6406360 - Mercaptan (0.25-6.0 Ppm),FR-6406360,,Ea.,,10 Days,,78.4,95.91
+,Draeger Safety,OEM,2.0,6406530 - Methyl-tert-butyl Ether (mtbe) (10.0-200 Ppm),FR-6406530,,Ea.,,10 Days,,64.4,78.79
+,Draeger Safety,OEM,2.0,6406510 - Methylene Chloride (20.0-400 Ppm),FR-6406510,,Ea.,,10 Days,,64.4,78.79
+,Draeger Safety,OEM,2.0,"6406430 - Ozone (25-1,000 Ppb)",FR-6406430,,Ea.,,10 Days,,64.4,78.79
+,Draeger Safety,OEM,2.0,"6406270 - Petroleum Hydrocarbons (100-3,000 Ppm)",FR-6406270,,Ea.,,10 Days,,64.4,78.79
+,Draeger Safety,OEM,2.0,6406340 - Phosgene (0.05-2.0 Ppm),FR-6406340,,Ea.,,10 Days,,78.4,95.91
+,Draeger Safety,OEM,2.0,6406400 - Phosphine (0.10-2.5 Ppm),FR-6406400,,Ea.,,10 Days,,57.4,70.22
+,Draeger Safety,OEM,2.0,6406410 - Phosphine (1.0-25.0 Ppm),FR-6406410,,Ea.,,10 Days,,57.4,70.22
+,Draeger Safety,OEM,2.0,"6406500 - Phosphine (200-5,000 Ppm)",FR-6406500,,Ea.,,10 Days,,58.1,71.08
+,Draeger Safety,OEM,2.0,6406560 - Styrene (2.0-40.0ppm),FR-6406560,,Ea.,,10 Days,,64.4,78.79
+,Draeger Safety,OEM,2.0,6406170 - Vinyl Chloride (0.30-10.0ppm),FR-6406170,,Ea.,,10 Days,,57.4,70.22
+,Draeger Safety,OEM,2.0,"3951320- Xplore 1750 N95 Mask, Bx Of 20",FR-3951320,,Ea.,,10-14 Days,,10.2,12.77
+,Draeger Safety,OEM,2.0,"3951220 - Xplore 1350 N95 - S/m, Bx Of 20",FR-3951220,,Ea.,,10-14 Days,,9.4,11.92
+,Draeger Safety,OEM,2.0,"3951230 - Xplore 1350 N95 - M/l, Bx Of 20",FR-3951230,,Ea.,,10-14 Days,,9.4,11.92
+,Draeger Safety,OEM,2.0,"3951221 - Xplore 1350 N95 W/valve, S/m, Bx Of 10",FR-3951221,,Ea.,,10-14 Days,,10.1,12.77
+,Draeger Safety,OEM,2.0,"3951231 - Xplore 1350 N95 W/valve, M/l, Bx Of 10",FR-3951231,,Ea.,,10-14 Days,,10.1,12.77
+,Draeger Safety,OEM,2.0,"3951321 - X-plore 1750, N95 Mask, W/exhalation Valve, 15/bx",FR-3951321,,Ea.,,10-14 Days,,15.75,19.79
+,Draeger Safety,OEM,2.0,"R55915 - Xplore 2100, Silicone, M/l Resp. W/5 P100 Filters",FR-R55915,,Ea.,,10-14 Days,,35,29.8
+,Draeger Safety,OEM,2.0,"R55910 - Xplore 2100, Epdm, F/l Resp. W/5 P100",FR-R55910,,Ea.,,10-14 Days,,32,27.24
+,Draeger Safety,OEM,2.0,"R55331 - Xplore 3300 - Limited Use, Small",FR-R55331,,Ea.,,10-14 Days,,11,9.36
+,Draeger Safety,OEM,2.0,"R55330 - Xplore 3300 - Limited Use, Med",FR-R55330,,Ea.,,10-14 Days,,11,9.36
+,Draeger Safety,OEM,2.0,"R55332 - Xplore 3300 - Limited Use, Lg",FR-R55332,,Ea.,,10-14 Days,,11,9.36
+,Draeger Safety,OEM,2.0,R55351 - Xplore 3500 - Premium Half-mask - Sm,FR-R55351,,Ea.,,10-14 Days,,22,18.73
+,Draeger Safety,OEM,2.0,"R55350 - Xplore 3500 - Premium Half-mask, Med",FR-R55350,,Ea.,,10-14 Days,,22,18.73
+,Draeger Safety,OEM,2.0,"R55352 - Xplore 3500 - Premium Half-mask, Lg",FR-R55352,,Ea.,,10-14 Days,,22,18.73
+,Draeger Safety,OEM,2.0,6738012 - P100 Filters,FR-6738012,,Ea.,,10-14 Days,,54.2,68.36
+,Draeger Safety,OEM,2.0,6738020 - N95 Filter Pad,FR-6738020,,Ea.,,10-14 Days,,14.85,18.73
+,Draeger Safety,OEM,2.0,6738021 - R95 Filter Pad,FR-6738021,,Ea.,,10-14 Days,,21.6,27.24
+,Draeger Safety,OEM,2.0,6738024 - Organic Vapor Cart.,FR-6738024,,Ea.,,10-14 Days,,58.73,74.07
+,Draeger Safety,OEM,2.0,"6738025 - Organic Vapor/acid Gas, Formaldehyde., Cio2, Hydrogen Flouride",FR-6738025,,Ea.,,10-14 Days,,60.75,76.62
+,Draeger Safety,OEM,2.0,Scba,FR-4058561,,Ea.,,30 Days,,4128.98,5423.33
+,Draeger Safety,OEM,2.0,"4058561 - Scba, Airboss Pss100 Plus, 60-minute, Carbon Composite",FR-4055699,,Ea.,,30 Days,,806.63,1059.49
+,Draeger Safety,OEM,2.0,8101735 - Hazmat Simul. Test Set I - Inorganic Gases,FR-8101735,,Ea.,,30 Days,,52.5,59.69
+,Draeger Safety,OEM,2.0,8101770 - Hazmat Simul. Test Set Iii - Organic Vapors,FR-8101770,,Ea.,,30 Days,,52.5,59.69
+,Draeger Safety,OEM,2.0,8101736 - Hazmat Simul. Test Set Ii - Inorganic Vapors,FR-8101736,,Ea.,,30 Days,,52.5,59.69
+,Draeger Safety,OEM,2.0,4055711 - Cms Emergency Response Kit For Vocs/tims,FR-4055711,,Ea.,,20 Days,,3399.15,3424.64
+,Draeger Safety,OEM,2.0,4056562 - Clan Lab Simultest Kit,FR-4056562,,Ea.,,20 Days,,917.15,924.03
+,Draeger Safety,OEM,2.0,4056098 - Hazmat Simultest Kit Without Accuro Pump,FR-4056098,,Ea.,,20 Days,,1273.3,1557.75
+,Draeger Safety,OEM,2.0,6400565s - Civil Defense Simultest Kit With Accuro Pump,FR-6400565S,,Ea.,,20 Days,,3225.75,3746.99
+,Draeger Safety,OEM,2.0,4055976 - Cms Emer. Response Kit W/o Chips,FR-4055976,,Ea.,,20 Days,,2295.3,2808.05
+,Draeger Safety,OEM,2.0,Ch28401 - Polytest Qualitative,FR-CH28401,,Ea.,,10 Days,,43.4,53.1
+,Draeger Safety,OEM,2.0,"8103140 - Civil Defense Simultest Set I - Phosgene, Hd, Hn, Hcn, Lewisite",FR-8103140,,Ea.,,10 Days,,182.75,212.28
+,Draeger Safety,OEM,2.0,"8103200 - Civil Defense Simultest Set V - Nerve Agent, Phosgene, Cyanogen Chloride, Ci2, Hd",FR-8103200,,Ea.,,10 Days,,182.75,212.28
+,Draeger Safety,OEM,2.0,"4053473 - Includes Pump, Tube Opener,  Spare Parts Kit, Allen Wrench, Nylon Case",FR-4053473,,Ea.,,10 Days,,374.5,458.16
+,Draeger Safety,OEM,2.0,4056443 - Hard-side AccuroÂ® Pump Kit,FR-4056443,,Ea.,,10 Days,,412.3,504.4
+,Draeger Safety,OEM,2.0,6718401 - Triethylamine 5/a,FR-6718401,,Ea.,,10 Days,,53.2,65.08
+,Draeger Safety,OEM,2.0,"6728861 - (5) Chloroform 2/a, 2-10 Ppm",FR-6728861,,Ea.,,10 Days,,84,102.77
+,Draeger Safety,OEM,2.0,"Ch31701 - Sulfur Dioxide 1/a, 1-25 Ppm",FR-CH31701,,Ea.,,10 Days,,44.8,54.81
+,Draeger Safety,OEM,2.0,"8101941 - Ammonia 5/b, 5-100 Ppm",FR-8101941,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,"6722101 - Acetic Acid 5/a, 5-80 Ppm",FR-6722101,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,Ch29501 -  Hydrochloric Acid 1/a (1 - 10 Ppm),FR-CH29501,,Ea.,,10 Days,,56.18,68.72
+,Draeger Safety,OEM,2.0,Ch22901 - Acetone 110/b,FR-CH22901,,Ea.,,10 Days,,46.73,57.16
+,Draeger Safety,OEM,2.0,"8101121 - Acid Test, Qualitative",FR-8101121,,Ea.,,10 Days,,46.73,57.16
+,Draeger Safety,OEM,2.0,8101631 - Alcohol 25/a,FR-8101631,,Ea.,,10 Days,,57.58,70.44
+,Draeger Safety,OEM,2.0,Ch29701 - Alcohol 100/a,FR-CH29701,,Ea.,,10 Days,,47.78,58.45
+,Draeger Safety,OEM,2.0,8101711 - Ammonia 0.25/a,FR-8101711,,Ea.,,10 Days,,55.13,67.44
+,Draeger Safety,OEM,2.0,8101811 - Carbon Dioxide 100/a,FR-8101811,,Ea.,,10 Days,,44.1,53.95
+,Draeger Safety,OEM,2.0,"Ch23501 - Carbon Dioxide 0.1%/a, Sei",FR-CH23501,,Ea.,,10 Days,,41.65,50.95
+,Draeger Safety,OEM,2.0,8103321 - Carbon Monoxide 10/d,FR-8103321,,Ea.,,10 Days,,46.38,56.73
+,Draeger Safety,OEM,2.0,Ch27401 - Carbon Tetrachloride 5.0 To 50 Ppm,FR-CH27401,,Ea.,,10 Days,,67.73,82.85
+,Draeger Safety,OEM,2.0,Ch24301 - Chlorine 0.2/a,FR-CH24301,,Ea.,,10 Days,,42.7,52.24
+,Draeger Safety,OEM,2.0,Ch20701 - Chlorine 50/a,FR-CH20701,,Ea.,,10 Days,,53.55,65.51
+,Draeger Safety,OEM,2.0,Ch20201 - Ethyl Acetate 200/a,FR-CH20201,,Ea.,,10 Days,,55.83,68.3
+,Draeger Safety,OEM,2.0,8103571 - Hydrocarbons 0.1%b,FR-8103571,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,8101681 - Hydrochloric Acid/nitric Acid 1/a,FR-8101681,,Ea.,,10 Days,,70.7,86.49
+,Draeger Safety,OEM,2.0,Ch25701 - Hydrocyanic Acid 2/a (sei),FR-CH25701,,Ea.,,10 Days,,47.78,58.45
+,Draeger Safety,OEM,2.0,8101511 - Hydrogen 0.2%/a,FR-8101511,,Ea.,,10 Days,,63.7,77.93
+,Draeger Safety,OEM,2.0,8103251 - Hydrogen Fluoride 0.5/a,FR-8103251,,Ea.,,10 Days,,56.7,69.37
+,Draeger Safety,OEM,2.0,Ch30301 - Hydrogen Fluoride 1.5/b,FR-CH30301,,Ea.,,10 Days,,55.83,68.3
+,Draeger Safety,OEM,2.0,Ch29801 - Hydrogen Sulfide 5/b,FR-CH29801,,Ea.,,10 Days,,41.65,50.95
+,Draeger Safety,OEM,2.0,Ch29401 - Nitrous Gases 0.5/a,FR-CH29401,,Ea.,,10 Days,,41.65,50.95
+,Draeger Safety,OEM,2.0,8103261 - Oxygen 5%/c,FR-8103261,,Ea.,,10 Days,,105,128.46
+,Draeger Safety,OEM,2.0,8101501 - Perchloroethylene 2/a,FR-8101501,,Ea.,,10 Days,,46.73,57.16
+,Draeger Safety,OEM,2.0,8101661 - Toluene 5/b,FR-8101661,,Ea.,,10 Days,,56.88,69.58
+,Draeger Safety,OEM,2.0,6728541 - Trichloroethylene 2/a,FR-6728541,,Ea.,,10 Days,,46.73,57.16
+,Draeger Safety,OEM,2.0,Ch25601 - Carbon Monox. 5/c - 5 - 700 Ppm (sei Cert.),FR-CH25601,,Ea.,,30 Days,,44.1,50.14
+,Draeger Safety,OEM,2.0,Ch25001 - Arsine 0.05/a (0.05 - 60 Ppm),FR-CH25001,,Ea.,,10 Days,,63.7,77.93
+,Draeger Safety,OEM,2.0,8101741 - Benzene 15/a (15 - 420 Ppm),FR-8101741,,Ea.,,10 Days,,51.1,62.52
+,Draeger Safety,OEM,2.0,"8101731 - Toluene 100/a (100 - 1,800 Ppm)",FR-8101731,,Ea.,,10 Days,,63.7,77.93
+,Draeger Safety,OEM,2.0,8101891 - Carbon Disulfide 3/a (3 - 95 Ppm),FR-8101891,,Ea.,,10 Days,,51.1,62.52
+,Draeger Safety,OEM,2.0,"8103321 - Carbon Monoxide 10/d (10 - 3,000 Ppm)",FR-8103321,,Ea.,,10 Days,,46.38,56.73
+,Draeger Safety,OEM,2.0,Ch29501 -  Hydrochloric Acid 1/a (1 - 10 Ppm),FR-CH29501,,Ea.,,10 Days,,57.75,70.65
+,Draeger Safety,OEM,2.0,8101831 - Hydrogen Sulfide 1/d (1 - 200 Ppm),FR-8101831,,Ea.,,10 Days,,42.7,52.24
+,Draeger Safety,OEM,2.0,Ch21101 - Trichloroethane 50/d (50 - 600 Ppm),FR-CH21101,,Ea.,,10 Days,,44.1,53.95
+,Draeger Safety,OEM,2.0,Ch30001 - Nitrogen Dioxide 0.5/c (0.25 - 5 Ppm) (sei Certified),FR-CH30001,,Ea.,,10 Days,,44.8,54.81
+,Draeger Safety,OEM,2.0,8101521 - Phosgene 0.02/a (0.02 - 1 Ppm),FR-8101521,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,Ch21101 - Trichloroethane 50/d (50-600 Ppm) (5tests/box),FR-CH21101,,Ea.,,10 Days,,44.1,53.95
+,Draeger Safety,OEM,2.0,8101721 - Vinyl Chloride 0.5/a (0.5 - 30 Ppm),FR-8101721,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,Ch20501 - Ammonia 5/a  (5 - 700 Ppm) (sei Certified),FR-CH20501,,Ea.,,10 Days,,46.2,56.52
+,Draeger Safety,OEM,2.0,8101661 - Toluene 5/b  (5 - 300 Ppm),FR-8101661,,Ea.,,10 Days,,58.8,71.94
+,Draeger Safety,OEM,2.0,6728241 -  Ethylene Oxide 25/a (25 - 500 Ppm),FR-6728241,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,8103111 - Oil 10 Pn (5 Mg/m3),FR-8103111,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,8103061 - Water Vapor 20/a-p (20 - 1000 Mg/m3),FR-8103061,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,Ch31901 - Ammonia .5%/a (0.5 - 10 Vol. %),FR-CH31901,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,6718601 - Chloroformates 0.2/b (0.2 - 10 Ppm),FR-6718601,,Ea.,,10 Days,,67.2,82.21
+,Draeger Safety,OEM,2.0,6728961 - Ethylene Oxide 1/a (1 - 15 Ppm) (5 Tests/box),FR-6728961,,Ea.,,10 Days,,57.4,70.22
+,Draeger Safety,OEM,2.0,6733081 - Formaldehyde 0.2/a (0.2 - 5 Ppm),FR-6733081,,Ea.,,10 Days,,58.8,71.94
+,Draeger Safety,OEM,2.0,6722701 - Formic Acid 1/a (1 - 15 Ppm),FR-6722701,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,"8101601 - Halogenated Hydrocarbons 100/a (200 - 2,800 Ppm)",FR-8101601,,Ea.,,10 Days,,174.3,213.24
+,Draeger Safety,OEM,2.0,6728981 - Mercaptan 0.5/a (0.5 - 5 Ppm),FR-6728981,,Ea.,,10 Days,,67.2,82.21
+,Draeger Safety,OEM,2.0,Ch23101 - Mercury 0.1/b (0.05 - 2 Mg/mÂ³),FR-CH23101,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,Ch27301 - Methyl Bromide 5/b (5 - 50 Ppm),FR - CH27301,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,"Ch31201 - Olefins 0.05%/a  (propylene, Butylene) (0.06 - 3.2 Vol.%)",FR - CH31201,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,8101691 - Petroleum Hydrocarbons 10/a (10 - 300 Ppm),FR-8101691,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,Ch28301 - Phosgene 0.25/c (0.25 - 25 Ppm),FR-CH28301,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,Ch31101 - Phosphine 0.1/a (0.1 - 4 Ppm),FR-CH31101,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,Ch30701 - Perchloroethylene 10/b (10 - 500 Ppm),FR-CH30701,,Ea.,,10 Days,,50.4,61.66
+,Draeger Safety,OEM,2.0,6728781 - Sulfuric Acid 1/a (1 - 5 Mg/mÂ³),FR-6728781,,Ea.,,10 Days,,73.5,89.92
+,Draeger Safety,OEM,2.0,"8101441 - Trichloroethylene 200/a-d (200 - 1,000 Ppm X H)",FR-8101441,,Ea.,,10 Days,,71.05,86.92
+,Draeger Safety,OEM,2.0,6733161 - Xylene 10/a (10 - 400 Ppm),FR-6733161,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,"6726665 - Acetaldehyde 100/a (100-1,000 Ppm)",FR-6726665,,Ea.,,10 Days,,57.4,70.22
+,Draeger Safety,OEM,2.0,8103381 - Acetone 40/a (40-800 Ppm) (5 Tests /box),FR-8103381,,Ea.,,10 Days,,57.75,70.65
+,Draeger Safety,OEM,2.0,6728591 - Acrylonitrile 0.5/a (0.5-20 Ppm) (5 Tests /box),FR-6728591,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,Ch25301 - Air Current (smoke Tubes),FR-CH25301,,Ea.,,10 Days,,40.6,49.67
+,Draeger Safety,OEM,2.0,8101061 - Amine Test (qualitative),FR-8101061,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,6733231 - Ammonia 2/a (2-30 Ppm),FR-6733231,,Ea.,,10 Days,,49,59.95
+,Draeger Safety,OEM,2.0,6733171 - Aniline 0.5/a (o.5-10 Ppm),FR-6733171,,Ea.,,10 Days,,75.6,92.49
+,Draeger Safety,OEM,2.0,6728561 - Benzene 0.5/a (0.5-10 Ppm),FR-6728561,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,8101841 - Benzene 0.5/c (specific) (0.5-10 Ppm) (5 Tests /box),FR-8101841,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,8101231 - Benzene 2/a (2-60 Ppm) (5 Tests /box),FR-8101231,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,6728071 - Benzene 5/b (5-50 Ppm),FR-6728071,,Ea.,,10 Days,,49,59.95
+,Draeger Safety,OEM,2.0,Ch31401 - Carbon Dioxide 0.5%/a (0.5-10 Vol.%),FR-CH31401,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,Ch23501 - Carbon Dioxide 0.1%/a (0.1-6 Vol.%) (certified),FR-CH23501,,Ea.,,10 Days,,43.05,52.67
+,Draeger Safety,OEM,2.0,Ch25101 - Carbon Dioxide 1%/a (1-20 Vol.%),FR-CH25101,,Ea.,,10 Days,,44.1,53.95
+,Draeger Safety,OEM,2.0,Ch20301 - Carbon Dioxide 5%/a (5-60 Vol.%),FR-CH20301,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,"Ch23201 - Carbon Disulfide 30/a (32-3,200 Ppm)",FR-CH23201,,Ea.,,10 Days,,58.1,71.08
+,Draeger Safety,OEM,2.0,6733051 - Carbon Monoxide 2/a (2-300 Ppm),FR-6733051,,Ea.,,10 Days,,44.8,54.81
+,Draeger Safety,OEM,2.0,Ch19701 - Carbon Monoxide 8/a (8-150 Ppm),FR-CH19701,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,Ch29901 - Carbon Monoxide 0.3%/b (0.3-7 Vol%),FR-CH29901,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,Ch24101 - Carbon Pretube,FR-CH24101,,Ea.,,10 Days,,44.1,53.95
+,Draeger Safety,OEM,2.0,8103501 - Carbon Tetrachloride 0.1/a (0.1-5 Ppm),FR-8103501,,Ea.,,10 Days,,60.9,74.5
+,Draeger Safety,OEM,2.0,8101021 - Carbon Tetrachloride 1/a (1-15 Ppm) (5 Tests /box),FR-8101021,,Ea.,,10 Days,,58.8,71.94
+,Draeger Safety,OEM,2.0,6728411 - Chlorine 0.3/b (0.3-10 Ppm),FR-6728411,,Ea.,,10 Days,,55.3,67.65
+,Draeger Safety,OEM,2.0,8103491 - Chlorine Dioxide 0.025/a (0.025-3 Ppm),FR-8103491,,Ea.,,10 Days,,57.4,70.22
+,Draeger Safety,OEM,2.0,6728761 - Chlorobenzene 5/a (5-200 Ppm) (5 Tests /box),FR-6728761,,Ea.,,10 Days,,55.3,67.65
+,Draeger Safety,OEM,2.0,8103421 - Chloropicrin 0.1/a (0.1 -2 Ppm),FR-8103421,,Ea.,,10 Days,,90.3,110.47
+,Draeger Safety,OEM,2.0,6718901 - Chloroprene 5/a (5-60 Ppm),FR-6718901,,Ea.,,10 Days,,60.9,74.5
+,Draeger Safety,OEM,2.0,6728681 - Chromic Acid 0.1/a (0.1-0.5 Mg/m3) (9 Tests /box),FR-6728681,,Ea.,,10 Days,,84,102.77
+,Draeger Safety,OEM,2.0,6728791 - Cyanide 2/a (2-15 Mg/m3),FR-6728791,,Ea.,,10 Days,,75.6,92.49
+,Draeger Safety,OEM,2.0,Ch19801 - Cyanogen Chloride 0.25/a (0.25-5 Ppm),FR-CH19801,,Ea.,,10 Days,,69.65,85.21
+,Draeger Safety,OEM,2.0,"6725201 - Cyclohexane 100/a (100-1,500 Ppm)",FR-6725201,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,6728931 - Cyclohexamine 2/a (2-30 Ppm),FR-6728931,,Ea.,,10 Days,,75.6,92.49
+,Draeger Safety,OEM,2.0,8103475 - Diesel Fuel (25-200 Mg/m3),FR-8103475,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,"6730501 - Diethyl Ether 100/a (100-4,000 Ppm)",FR-6730501,,Ea.,,10 Days,,55.3,67.65
+,Draeger Safety,OEM,2.0,6718501 - Dimethyl Formamide 10/b (10-40 Ppm),FR-6718501,,Ea.,,10 Days,,97.3,119.04
+,Draeger Safety,OEM,2.0,6728451 - Dimethyl Sulfide 1/a (1-15 Ppm) (5 Tests /box),FR-6728451,,Ea.,,10 Days,,57.4,70.22
+,Draeger Safety,OEM,2.0,6728111 - Epichlorohydrin 5/b (5-50 Ppm),FR-6728111,,Ea.,,10 Days,,55.3,67.65
+,Draeger Safety,OEM,2.0,6728381 - Ethyl Benzene 30/a (30-600 Ppm),FR-6728381,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,8101331 - Ethylene 0.1/a (0.2-5 Ppm) (5 Tests /box),FR-8101331,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,"6728051 - Ethylene 50/a (50-2,500 Ppm)",FR-6728051,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,8101351 - Ethylene Glycol 19 (10-180 Mg.m3) (5 Tests /box),FR-8101351,,Ea.,,10 Days,,57.4,70.22
+,Draeger Safety,OEM,2.0,8103541 - Ethyl Formate 20/a (20-500 Ppm),FR-8103541,,Ea.,,10 Days,,56.7,69.37
+,Draeger Safety,OEM,2.0,6726801 - Ethyl Glycol Acetate 50/a (50-700 Ppm),FR-6726801,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,8101491 - Fluorine 0.1/a (0.1-2 Ppm),FR-8101491,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,8101141 - Formaldehyde Activation Tube - Use With Hcho 0.2/a (to Extend Measur. Range To 0.04ppm),FR-8101141,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,8101751 - Formaldehyde 2/a (2-40 Ppm),FR-8101751,,Ea.,,10 Days,,69.3,84.78
+,Draeger Safety,OEM,2.0,"6728391 - Hexane 100/a (50-3,000 Ppm)",FR-6728391,,Ea.,,10 Days,,53.2,65.08
+,Draeger Safety,OEM,2.0,8103351 - Hydrzine 0.01/a (0.01-6 Ppm),FR-8103351,,Ea.,,10 Days,,118.3,144.73
+,Draeger Safety,OEM,2.0,Ch31801 - Hydrzine 0.25/a (0.1-10 Ppm),FR-Ch31801,,Ea.,,10 Days,,57.4,70.22
+,Draeger Safety,OEM,2.0,"6728181 - Hydrochloric Acid 50/a (50-5,000 Ppm)",FR-6728181,,Ea.,,10 Days,,55.3,67.65
+,Draeger Safety,OEM,2.0,8101041 - Hydrogen Peroxide 0.1/a (0.1 - 3 Ppm),FR-8101041,,Ea.,,10 Days,,67.9,83.07
+,Draeger Safety,OEM,2.0,8101461 - Hydrogen Sulfide 0.2/a (0.2-5 Ppm),FR-8101461,,Ea.,,10 Days,,58.8,71.94
+,Draeger Safety,OEM,2.0,8101991 - Hydrogen Sulfide 0.2/b (0.2-6 Ppm),FR-8101991,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,6728041 - Hydrogen Sulfide 0.5/a (0.5-15 Ppm),FR-6728041,,Ea.,,10 Days,,46.9,57.38
+,Draeger Safety,OEM,2.0,6728821 - Hydrogen Sulfide 2/a (2-200 Ppm),FR-6728821,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,8101961 - Hydrogen Sulfide 2/b (1-60 Ppm),FR-8101961,,Ea.,,10 Days,,44.1,53.95
+,Draeger Safety,OEM,2.0,"Ch29101 - Hydrogen Sulfide 100/a (100-2,000 Ppm)",FR-CH29101,,Ea.,,10 Days,,44.8,54.81
+,Draeger Safety,OEM,2.0,Ch28101 - Hydrogen Sulfide 0.2%/a (0.2-7 Vol%),FR-CH28101,,Ea.,,10 Days,,58.1,71.08
+,Draeger Safety,OEM,2.0,8101211 - Hydrogen Sulfide 2%/a (2-40 Vol%),FR-8101211,,Ea.,,10 Days,,69.3,84.78
+,Draeger Safety,OEM,2.0,Ch28201 - Hydrogen Sulfide + Sulfur Dioxide 0.2%/a (0.2-7 Vol%),FR-CH28201,,Ea.,,10 Days,,75.6,92.49
+,Draeger Safety,OEM,2.0,8103521 - Iodine 0.1/a (0.1-5 Ppm),FR-8103521,,Ea.,,10 Days,,56.7,69.37
+,Draeger Safety,OEM,2.0,8103281 - Mercaptan 0.1/a (0.1-15 Ppm),FR-8103281,,Ea.,,10 Days,,67.2,82.21
+,Draeger Safety,OEM,2.0,8101871 - Mercaptan 20/a (20-100 Ppm),FR-8101871,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,6728161 - Methyl Acrylate 5/a (5-200 Ppm),FR-6728161,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,8103391 - Methyl Bromide 0.2/a (0.2-8 Ppm),FR-8103391,,Ea.,,10 Days,,111.3,136.16
+,Draeger Safety,OEM,2.0,8101671 - Methyl Bromide 0.5/a (0.5-30 Ppm),FR-8101671,,Ea.,,10 Days,,93.1,113.9
+,Draeger Safety,OEM,2.0,6728211 - Methyl Bromide 3/a (3-100 Ppm) (5 Test / Box),FR-6728211,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,8103485 - Methylisothiocyanate 0.1/a (0.1-6 Ppm),FR-8103485,,Ea.,,10 Days,,57.4,70.22
+,Draeger Safety,OEM,2.0,6723301 - Monostyrene 10/a (10-200 Ppm),FR-6723301,,Ea.,,10 Days,,54.6,66.8
+,Draeger Safety,OEM,2.0,6733141 - Monostyrene 10/b (10-250 Ppm),FR-6733141,,Ea.,,10 Days,,53.55,65.51
+,Draeger Safety,OEM,2.0,Ch27601 - Monostyrene 50/a (50-400 Ppm),FR-CH27601,,Ea.,,10 Days,,57.4,70.22
+,Draeger Safety,OEM,2.0,Ch20001 - Natural Gas Test (qualitative) (5 Tests /box),FR-CH20001,,Ea.,,10 Days,,44.1,53.95
+,Draeger Safety,OEM,2.0,Ch19501 - Nickel Tetracarbonyl 0.1/a (0.1-1 Ppm) (9 Tests /box),FR-CH19501,,Ea.,,10 Days,,84,102.77
+,Draeger Safety,OEM,2.0,6728311 - Nitric Acid 1/a (1-50 Ppm),FR-6728311,,Ea.,,10 Days,,58.1,71.08
+,Draeger Safety,OEM,2.0,6719101 - Nitrogen Dioxide 2/c (2-100 Ppm),FR-6719101,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,Ch31001 - Nitrous Gases 2/a (2-100 Ppm),FR-CH31001,,Ea.,,10 Days,,44.1,53.95
+,Draeger Safety,OEM,2.0,6724001 - Nitrous Gases 20/a (20-500 Ppm),FR-6724001,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,"8101921 - Nitrous Gases 50/a (50-2,000 Ppm)",FR-8101921,,Ea.,,10 Days,,44.1,53.95
+,Draeger Safety,OEM,2.0,"Ch27701 - Nitrous Gases 100/c (100-5,000 Ppm)",FR-CH27701,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,6733031 - Oil Mist 1/a (1-10 Mg/m3),FR-6733031,,Ea.,,10 Days,,69.3,84.78
+,Draeger Safety,OEM,2.0,6728371 - Oil 10/a-p (0.1-10 Mg/m3),FR-6728371,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,Ch26303 - Organic Arsenic Compounds & Arsine (3 Mg. Org.arsenic/m3),FR-CH26303,,Ea.,,10 Days,,74.9,91.63
+,Draeger Safety,OEM,2.0,Ch25903 - Organic Basic Nitrogen Compounds (1 Mg/m3),FR-CH25903,,Ea.,,10 Days,,69.3,84.78
+,Draeger Safety,OEM,2.0,Ch21001 - Ozone 10/a (10-300 Ppm) (9 Tests /box),FR-CH21001,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,6733181 - Ozone 0.05/b (0.05-1.4 Ppm) (9 Tests /box),FR-6733181,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,"6724701 - Pentane 100/a (100-1,500 Ppm)",FR-6724701,,Ea.,,10 Days,,53.2,65.08
+,Draeger Safety,OEM,2.0,8101551 - Perchloroethylene 0.1/a (0.1-4 Ppm),FR-8101551,,Ea.,,10 Days,,163.8,200.39
+,Draeger Safety,OEM,2.0,"6730201 - Petroleum Hydrocarbons 100/a (100-2,500 Ppm)",FR-6730201,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,8101521 Phenol 1/b (1-20 Ppm),FR-8101521,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,8101611 - Phosphine 0.01/a (0.01-1.0 Ppm),FR-8101611,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,8103341 - Phosphine 0.01/b In Acetylene (0.1-15 Ppm),FR-8103341,,Ea.,,10 Days,,69.3,84.78
+,Draeger Safety,OEM,2.0,"8101621 - Phosphine 25/a (25-10,000 Ppm)",FR-8101621,,Ea.,,10 Days,,84,102.77
+,Draeger Safety,OEM,2.0,"Ch21201 - Phosphine 50/a (15-1,000 Ppm)",FR-CH21201,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,6728461 - Phosphoric Acid Esters 0.05/a (0.05 Ppm),FR-6728461,,Ea.,,10 Days,,86.1,105.33
+,Draeger Safety,OEM,2.0,6728651 - Pyridine 5/a (5 Ppm),FR-6728651,,Ea.,,10 Days,,125.3,153.29
+,Draeger Safety,OEM,2.0,6727101 - Sulfur Dioxide 0.1/a (0.1-3 Ppm),FR-6727101,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,6728491 - Sulfur Dioxide 0.5/a (0.5-25 Ppm),FR-6728491,,Ea.,,10 Days,,48.3,59.09
+,Draeger Safety,OEM,2.0,"Ch24201 - Sulfur Dioxide20/a (20-2,000 Ppm)",FR-CH24201,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,"8101531 - Sulfur Dioxide 50/b (50-8,000 Ppm)",FR-8101531,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,8103471 - Sulfuryl Fluoride 1/a (1 - 5 Ppm) (5 Tests /box),FR-8103471,,Ea.,,10 Days,,97.3,119.04
+,Draeger Safety,OEM,2.0,8101341 - Tetrahydrothiophene 1/b (1-10 Ppm) (5 Tests /box),FR-8101341,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,Ch25803 - Thioether (1 M/m3),FR-CH25803,,Ea.,,10 Days,,69.65,85.21
+,Draeger Safety,OEM,2.0,6724501 - Toluene Diisocyanate 0.02/a (0.02-0.2 Ppm) (9 Tests /box),FR-6724501,,Ea.,,10 Days,,125.3,153.29
+,Draeger Safety,OEM,2.0,8101721 - Vinyl Chloride 0.5/b (1-50 Ppm),FR-8101721,,Ea.,,10 Days,,52.5,64.23
+,Draeger Safety,OEM,2.0,Ch19601 - Vinyl Chloride100/a (100-3000 Ppm),FR-CH19601,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,Ch23401 - Water Vapor 0.1 (1-4 Mg/l),FR-CH23401,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,8101321 - Water Vapor 0.1/a 0.051-1 Mg/l),FR-8101321,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,8101781 - Water Vapor 1/b (1-40 Mg/l),FR-8101781,,Ea.,,10 Days,,65.8,80.5
+,Draeger Safety,OEM,2.0,8103031 - Water Vapor 3/a (3-60 Lbs/mmcf),FR-8103031,,Ea.,,10 Days,,70.7,86.49
+,Federal Resources,OEM,2.0,"Fr-fpkit-1:  1 Extra Large Gear Bag;  1 - Msa Cairns Metro 660c Fire Helmet With Standard Flannel Cushion Liner, Nomex Earlap And 4"" Standard Face Shield #660cfs; 1 - Cairns 4"" Helmet Front;  1 Pr - Black Diamond Boot - Nfpa Leather Bunker Boot With Toe Cap & Enersole, 3-point Heel Lock - #0975;  1 Pr - Fire Dex - Courage Glove;  1 - Fire Dex H81 Fire Hood.",FR-FPKIT-1,,Ea.,,10-14 Days,,798.81,724.32
+,Federal Resources,OEM,2.0,"Fr-fpkit-2: 1 Extra Large Gear Bag;  1 -msa  Cairns 1010 Standard Helmet With Standard Flannel Cushion Liner, Nomex Earlap 6"" Front Holder, 4"" Tuffshield Or Cairns Goggle System;  1 - Cairns 6"" Helmet Front;  1 Pr - Black Diamond Boot - Nfp A Leather Bunker Boot With Toe Cap & Enersole, 3-point Heel Lock - #0975;  1 Pr - Fire Dex - Courage Glove;  1 - Fire Dex - H81 Hood.",FR-FPKIT-2,,Ea.,,10-14 Days,,866.81,785.98
+,Federal Resources,OEM,2.0,"Fr-lekit-1 - Law Enforcement Kit Includes:  Msa/m-cbrn-3s; M-cbrn-3m; M-cbrn-3l/-millennium Mask, Cbrn Canister, Esp Ii Comm. System, Gas Mask Pouch; Lakeland/60151/tychem F Chemical Suit With Respirator Fit Hood, Elastic Wrists, Boots;  North Safety/a352/latex Bootie - Yellow;  North Safety/b144rgi/14 Mil Butyl Glove - Rough; Tactical Gear/m295/individual Cwa Decon Kit;  Connecticut Laminating Company/pl0522t/arm Band Holder With Strap;  R&b Fabrications/192bk-pln/black Ppe Gear Bag. ",FR-LEKIT-1,,Ea.,,14 Days,,1045.24,947.77
+,H.l. Bouton,OEM,2.0,"01107 - Safe Stream 7 Gallon: Wall Mounted; 2 Convenient Rigid Bottles Of Flushing Fluid; Test & Approvals: Meets Ansi Z358. 1 Standards; Portable, Self-contained Primary Eyewash Station. Delivers 15 Minute Flow In Less Than 1 Second.",FR-01107,,Ea.,,14 Days,,890.46,601.08
+,H.l. Bouton,OEM,2.0,"01116 - Primary Eyewash Station: Includes Steel Wall Brackets For Easy Mounting, A Drainage Hose, Bacteriostaic Additive And A Test Log Card; Flow Activated In Les Than 1 Second; Delivers 16 Gallons Over 15 Minutes.",FR-01116,,Ea.,,14 Days,,655.24,442.3
+,Honeywell,OEM,2.0,Ha71sm -16 Channel Digital Gas Detector; Surface Mount; Includes Magnetic Keypad For Non-intrusive Control.,FR-HA71SM,,Ea.,,30 Days,,3900,3536.33
+,Honeywell,OEM,2.0,Tpwm1110 - Touchpoint 1 Controller Operate Any One Sensepoint Gas Detector For 24-hour Protection; Wall Mount; Ma Inout Version.,FR-TPWM1110,,Ea.,,30 Days,,629,570.35
+,Honeywell,OEM,2.0,Tpwm4440 - Touchpoint 4 - 4 Channel System; Wall Mount; 4 X Ma Input; 0 X Mv Input.,FR-TPWM4440,,Ea.,,30 Days,,1574,1427.22
+,Honeywell,OEM,2.0,Tpwm4330 - Touchpoint 4 - 3 Channel System; Wall Mount; 3 X Ma Input; 0 X Mv Input.,FR-TPWM4330,,Ea.,,30 Days,,1312,1189.66
+,Honeywell,OEM,2.0,2110n2283 - Apex Ul Transmitter & Sensor Kit For Catalytic & Electrochemical Cartridges,FR-2110N2283,,Ea.,,30 Days,,1185,1074.5
+,Honeywell,OEM,2.0,2110b3000 - Arsine - 0.2 Ppm,FR-2110B3000,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3010 - Diborane - 0.4 Ppm,FR-2110B3010,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3020 - Boron Trichloride - 6 Ppm,FR-2110B3020,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3040 - Bromine - 0.4 Ppm,FR-2110B3040,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b30901 - Chlorine - 2 Ppm,FR-2110B30901,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3100 - Chlorine - 5 Ppm,FR-2110B3100,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3110 - Chlorine - 15 Ppm,FR-2110B3110,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3130 - Chlorine Dioxide 0 0.4 Ppm,FR-2110B3130,,Ea.,,30 Days,,450,408.04
+,Honeywell,OEM,2.0,2110b3140 - Carbon Monoxide - 100 Ppm,FR-2110B3140,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3150 - Carbon Monoxide - 200 Ppm,FR-2110B3150,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3160 - Carbon Monoxide - 500 Ppm,FR-2110B3160,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3210 - Germane - 0.8 Ppm,FR-2110B3210,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2112110b3220 - Hydrogen - 1000 Ppm,FR-2112110B3220,,Ea.,,30 Days,,425,385.37
+,Honeywell,OEM,2.0,2110b3230 - Hydrogen Sulfide - 20 Ppm,FR-2110B3230,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3240 - Hydrogen Sulfide - 50 Ppm,FR-2110B3240,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3250 - Hydrogen Sulfide - 100 Ppm,FR-2110B3250,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3530 - Hydrogen Sulfide - 15 Ppm,FR-2110B3530,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3270 - Hydrogen Bromide - 12 Ppm,FR-2110B3270,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3280 - Hydrogen Chloride - 20 Ppm,FR-2110B3280,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3290 - Hydrogen Cyanide - 20 Ppm,FR-2110B3290,,Ea.,,30 Days,,425,385.37
+,Honeywell,OEM,2.0,2110b3300 - Hydrogen Fluoride - 12 Ppm,FR-2110B3300,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3320 - Ammonia - 50 Ppm,FR-2110B3320,,Ea.,,30 Days,,425,385.37
+,Honeywell,OEM,2.0,2110b3330 - Ammonia - 100 Ppm,FR-2110B3330,,Ea.,,30 Days,,425,385.37
+,Honeywell,OEM,2.0,2110b3340 - Ammonia - 400 Ppm,FR-2110B3340,,Ea.,,30 Days,,425,385.37
+,Honeywell,OEM,2.0,2110b3350 - Ammonia - 1000 Ppm,FR-2110B3350,,Ea.,,30 Days,,425,385.37
+,Honeywell,OEM,2.0,2110b3360 - Nitric Oxide - 100 Ppm,FR-2110B3360,,Ea.,,30 Days,,450,408.04
+,Honeywell,OEM,2.0,2110b3370 - Nitrogen Dioxide - 12 Ppm,FR-2110B3370,,Ea.,,30 Days,,450,408.04
+,Honeywell,OEM,2.0,2110b3380 - Oxygen - 21% V/v,FR-2110B3380,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3400 - Phosphine - 1.2 Ppm,FR-2110B3400,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3440 - Silane - 20 Ppm,FR-2110B3440,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3490 - Silane - 2 Ppm,FR-2110B3490,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3460 - Sulfur Dioxide - 8 Ppm,FR-2110B3460,,Ea.,,30 Days,,450,408.04
+,Honeywell,OEM,2.0,2110b3580 - Sulfur Dioxide - 10 Ppm,FR-2110B3580,,Ea.,,30 Days,,425,385.37
+,Honeywell,OEM,2.0,2110b3470 - Sulfur Dioxide - 15 Ppm,FR-2110B3470,,Ea.,,30 Days,,425,385.37
+,Honeywell,OEM,2.0,2110b3520 - Sulfur Dioxide -50 Ppm,FR-2110B3520,,Ea.,,30 Days,,425,385.37
+,Honeywell,OEM,2.0,2110b3701 - Propane - 100% Lel,FR-2110B3701,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3702 - Butane - 100% Lel,FR-2110B3702,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3703 - Propene - 100% Lel,FR-2110B3703,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3704 - Methane - 100% Lel,FR-2110B3704,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3705 - Lpg - 100% Lel,FR-2110B3705,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3917 - Ammonia - 100% Lel,FR-2110B3917,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3707 - Hydrogen - 100% Lel,FR-2110B3707,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3708 - Ethylene - 100% Lel,FR-2110B3708,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3712 - Ethyl Alcohol - 100% Lel,FR-2110B3712,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3719 - Octane - 100% Lel,FR-2110B3719,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3721 - Acetone - 100% Lel,FR-2110B3721,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3723 - Methyl Alcohol - 100% Lel,FR-2110B3723,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3727 - Styrene - 100% Lel,FR-2110B3727,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3717 - Hexane - 100% Lel,FR-2110B3717,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3728 - Toluene - 100% Lel,FR-2110B3728,,Ea.,,30 Days,,200,181.35
+,Honeywell,OEM,2.0,2110b3787 - Ethylene - 10% Lel,FR-2110B3787,,Ea.,,30 Days,,200,181.35
+,Iml Corporation,OEM,2.0,Dhk1-40,FR-DHK1-40,,Ea.,,30 Days,,6800,5138.25
+,Lakeland Industries,OEM,2.0,"Tk658 Deluxe Level A Suit, Rear Entry Sz S",FR-TK658S,,Ea.,,30 Days,,509.79,763.96
+,Lakeland Industries,OEM,2.0,"Tk658 Deluxe Level A Suit, Rear Entry Sz M",FR-TK658M,,Ea.,,30 Days,,509.79,763.96
+,Lakeland Industries,OEM,2.0,"Tk658 Deluxe Level A Suit, Rear Entry Sz L",FR-TK658L,,Ea.,,30 Days,,509.79,763.96
+,Lakeland Industries,OEM,2.0,"Tk658 Deluxe Level A Suit, Rear Entry Sz Xl",FR-TK658XL,,Ea.,,30 Days,,509.79,763.96
+,Lakeland Industries,OEM,2.0,"Tk6582x Deluxe Level A Suit, Rear Entry 2xl",FR-TK6582X,,Ea.,,30 Days,,535.28,804.18
+,Lakeland Industries,OEM,2.0,"Tk658w Deluxe Level A Suit, Rear Entry Sz S",FR-TK658WS,,Ea.,,30 Days,,537.77,650.13
+,Lakeland Industries,OEM,2.0,"Tk658w Deluxe Level A Suit, Rear Entry Sz M",FR-TK658WM,,Ea.,,30 Days,,537.77,650.13
+,Lakeland Industries,OEM,2.0,"Tk658w Deluxe Level A Suit, Rear Entry Sz L",FR-TK658WL,,Ea.,,30 Days,,537.77,650.13
+,Lakeland Industries,OEM,2.0,"Tk658w Deluxe Level A Suit, Rear Entry Sz Xl",FR-TK658WXL,,Ea.,,30 Days,,537.77,650.13
+,Lakeland Industries,OEM,2.0,"Tk658w2x Deluxe Level A Suit, Rear Entry 2xl",FR-TK658W2X,,Ea.,,30 Days,,564.65,682.87
+,Lakeland Industries,OEM,2.0,"Tk658wp11 Deluxe Level A Suit, Rear Entry Sz S",FR-TK658WP11S,,Ea.,,30 Days,,2155,1411.26
+,Lakeland Industries,OEM,2.0,"Tk658wp11 Deluxe Level A Suit, Rear Entry Sz M",FR-TK658WP11M,,Ea.,,30 Days,,2155,1411.26
+,Lakeland Industries,OEM,2.0,"Tk658wp11 Deluxe Level A Suit, Rear Entry Sz L",FR-TK658WP11L,,Ea.,,30 Days,,2155,1411.26
+,Lakeland Industries,OEM,2.0,"Tk658wp11 Deluxe Level A Suit, Rear Entry Sz Xl",FR-TK658WP11XL,,Ea.,,30 Days,,2155,1411.26
+,Lakeland Industries,OEM,2.0,"Tk658wp112x Deluxe Level A Suit, Rear Entry 2xl",FR-TK658WP112X,,Ea.,,30 Days,,2260,1480.02
+,Lakeland Industries,OEM,2.0,"Tk645, W/alum Cvr, Level A Under, Front Entry, Sz S",FR-TK645S,,Ea.,,30 Days,,1115.18,1440.73
+,Lakeland Industries,OEM,2.0,"Tk645, W/alum Cvr, Level A Under, Front Entry, Sz M",FR-TK645M,,Ea.,,30 Days,,1115.18,1440.73
+,Lakeland Industries,OEM,2.0,"Tk645, W/alum Cvr, Level A Under, Front Entry, Sz L",FR-TK645L,,Ea.,,30 Days,,1115.18,1440.73
+,Lakeland Industries,OEM,2.0,"Tk645, W/alum Cvr, Level A Under, Front Entry, Sz Xl",FR-645XL,,Ea.,,30 Days,,1115.18,1440.73
+,Lakeland Industries,OEM,2.0,"Tk645, W/alum Cvr, Level A Under, Front Entry, Sz 2xl",FR-TK6452X,,Ea.,,30 Days,,1171.03,1588.07
+,Lakeland Industries,OEM,2.0,"Tk655, W/alum Cvr, Level A Under, Rear Entry, Sz S",FR-TK655S,,Ea.,,30 Days,,1115.21,1460.65
+,Lakeland Industries,OEM,2.0,"Tk655, W/alum Cvr, Level A Under, Rear Entry, Sz M",FR-TK655M,,Ea.,,30 Days,,1115.21,1460.65
+,Lakeland Industries,OEM,2.0,"Tk655, W/alum Cvr, Level A Under, Rear Entry, Sz L",FR-TK655L,,Ea.,,30 Days,,1115.21,1460.65
+,Lakeland Industries,OEM,2.0,"Tk655, W/alum Cvr, Level A Under, Rear Entry, Sz Xl",FR-TK655XL,,Ea.,,30 Days,,1115.21,1460.65
+,Lakeland Industries,OEM,2.0,"Tk655, W/alum Cvr, Level A Under, Rear Entry, Sz 2x",FR-TK6552X,,Ea.,,30 Days,,1170.97,1533.68
+,Lakeland Industries,OEM,2.0,"Tk640, Level A, Front Entry, Sz S",FR-TK640S,,Ea.,,30 Days,,440.2,563.74
+,Lakeland Industries,OEM,2.0,"Tk640, Level A, Front Entry, Sz M",FR-TK640M,,Ea.,,30 Days,,440.2,563.74
+,Lakeland Industries,OEM,2.0,"Tk640, Level A, Front Entry, Sz L",FR-TK640L,,Ea.,,30 Days,,440.2,563.74
+,Lakeland Industries,OEM,2.0,"Tk640, Level A, Front Entry, Sz Xl",FR-TK640XL,,Ea.,,30 Days,,440.2,563.74
+,Lakeland Industries,OEM,2.0,"Tk640, Level A, Front Entry, Sz 2xl",FR-TK6402X,,Ea.,,30 Days,,462.21,593.41
+,Lakeland Industries,OEM,2.0,"Tk650 Deluxe Level A Suit, Rear Entry Sz S",FR-TK650S,,Ea.,,30 Days,,440.2,563.74
+,Lakeland Industries,OEM,2.0,"Tk650 Deluxe Level A Suit, Rear Entry Sz M",FR-TK650M,,Ea.,,30 Days,,440.2,563.74
+,Lakeland Industries,OEM,2.0,"Tk650 Deluxe Level A Suit, Rear Entry Sz L",FR-TK650L,,Ea.,,30 Days,,440.2,563.74
+,Lakeland Industries,OEM,2.0,"Tk650 Deluxe Level A Suit, Rear Entry Sz Xl",FR-TK650XL,,Ea.,,30 Days,,440.2,563.74
+,Lakeland Industries,OEM,2.0,"Tk6502x Deluxe Level A Suit, Rear Entry 2xl",FR-TK6502X,,Ea.,,30 Days,,462.21,593.41
+,Lakeland Industries,OEM,2.0,"Br151 Cvrall, Resp. Fit Hood, Elastic Face, Wrists, Att. Boots Sz S",FR-BR151S,,Ea.,,10-14 Days,,226.32,304.35
+,Lakeland Industries,OEM,2.0,"Br151 Cvrall, Resp. Fit Hood, Elastic Face, Wrists, Att. Boots Sz M",FR-BR151M,,Ea.,,10-14 Days,,226.32,304.35
+,Lakeland Industries,OEM,2.0,"Br151 Cvrall, Resp. Fit Hood, Elastic Face, Wrists, Att. Boots Sz L",FR-BR151L,,Ea.,,10-14 Days,,226.32,304.35
+,Lakeland Industries,OEM,2.0,"Br151 Cvrall, Resp. Fit Hood, Elastic Face, Wrists, Att. Boots Sz Xl",FR-BR151XL,,Ea.,,10-14 Days,,226.32,304.35
+,Lakeland Industries,OEM,2.0,"Br130, Cvrall, Elastic Face, Wrists, Ankles, Sz S ",FR-BR130S,,Ea.,,10-14 Days,,176.64,229.82
+,Lakeland Industries,OEM,2.0,"Br130, Cvrall, Elastic Face, Wrists, Ankles, Sz M ",FR-BR130M,,Ea.,,10-14 Days,,176.64,229.82
+,Lakeland Industries,OEM,2.0,"Br130, Cvrall, Elastic Face, Wrists, Ankles, Sz L ",FR-BR130L,,Ea.,,10-14 Days,,176.64,229.82
+,Lakeland Industries,OEM,2.0,"Br130, Cvrall, Elastic Face, Wrists, Ankles, Sz Xl ",FR-BR130XL,,Ea.,,10-14 Days,,176.64,229.82
+,Lakeland Industries,OEM,2.0,"00200, Level A Test Kit ",FR-00200,,Ea.,,30 Days,,1575,1118.7
+,Lakeland Industries,OEM,2.0,"00010, Level A Test Kit",FR-00010,,Ea.,,30 Days,,380.36,496.14
+,Lakeland Industries,OEM,2.0,"Tk491 - Encapsulated Training Suit, Rear Entry, Expanded Back, Sewn Seams, 20 Mil Pvc Faceshield, Pvc Gloves, Attached Sock Boots With Boot Flaps. For Training In Level A Procedures Only. Do Not Use In Actual Level A Hazmat Environment.  Sizes S-xl",FR-TK491,,Ea.,,30 Days,,111.35,145.72
+,Lakeland Industries,OEM,2.0,"Tk491-2xl - Encapsulated Training Suit, Rear Entry, Expanded Back, Sewn Seams, 20 Mil Pvc Faceshield, Pvc Gloves, Attached Sock Boots With Boot Flaps. For Training In Level A Procedures Nly. Do Not Use In Actual Level A Hazmat Environment.  Size 2xl",FR-TK491-2XL,,Ea.,,30 Days,,116.83,153.02
+,Lakeland Industries,OEM,2.0,"Tk497 - Encapsulated Training Suit, Front Entry, Expanded Back, Sewn Seams, 20 Mil Pvc Faceshield, Pvc Gloves, Attached Sock Boots With Boot Flaps. For Training In Level A Procedures Only. Do Not Use In Actual Level A Hazmat Environment.  Sizes S-xl",FR-TK497,,Ea.,,30 Days,,111.35,145.72
+,Lakeland Industries,OEM,2.0,"Tk497-2xl - Encapsulated Training Suit, Front Entry, Expanded Back, Sewn Seams, 20 Mil Pvc Faceshield, Pvc Gloves, Attached Sock Boots With Boot Flaps. For Training In Level A Procedures Only. Do Not Use In Actual Level A Hazmat Environment.  Size 2xl",FR-TK497-2XL,,Ea.,,30 Days,,116.83,153.02
+,Lakeland Industries,OEM,2.0,"C3t165n - Chemmaxâ„¢ 3 Coverall, Attached Respirator-fit Hood, Double Storm Flap With Hook And Loop Closure, Elastic Face And Wrists, Attached Boots With Boot Flaps. Sizes S-xl",FR-C3T165N,,Ea.,,30 Days,,155.87,204.15
+,Lakeland Industries,OEM,2.0,"C3t165n-2xl - Chemmaxâ„¢ 3 Coverall, Attached Respirator-fit Hood, Double Storm Flap With Hook And Loop Closure, Elastic Face And Wrists, Attached Boots With Boot Flaps. Size 2xl",FR-C3T165N-2XL,,Ea.,,30 Days,,163.66,214.35
+,Lakeland Industries,OEM,2.0,"Tychem F - 60132 â€“ Coverall, Respirator Fit Hood, Storm Flap, Elastic Face, Wrists, Ankles, Sz S-xl, 6/cs",FR-60132/S-XL,,Ea.,,30 Days,,140.2,185.89
+,Lakeland Industries,OEM,2.0,"Tychem F - 60132 - Coverall, Respirator Fit Hood, Storm Flap, Elastic Face, Wrists, Ankles, Sz 2xl",FR-60132/2XL,,Ea.,,30 Days,,147.2,185.89
+,Lakeland Industries,OEM,2.0,"Tychem F - 60151 - Coverall, Respirator Fit Hood, Storm Flap, Elastic Face, Wrists, Attached Boots, Sz S-xl, 6/cs",FR-60151/S-XL,,Ea.,,30 Days,,155.19,185.89
+,Lakeland Industries,OEM,2.0,"Tychem F - 60151 - Coverall, Respirator Fit Hood, Storm Flap, Elastic Face, Wrists, Attached Boots, Sz 2xl, 6/cs",FR-60151/2XL,,Ea.,,30 Days,,162.94,195.18
+,Lakeland Industries,OEM,2.0,"300ag/ba - Approach Suit Complete, Scba Accommodation, Sz S, M, L",FR-300AG/BA,,Ea.,,30-45 Days,,620,820.24
+,Lakeland Industries,OEM,2.0,"300ag/ba - Approach Suit Complete, Scba Accommodation, Sz Xl",FR-300AG/BA - XL,,Ea.,,30-45 Days,,651,861.27
+,Lakeland Industries,OEM,2.0,"300ag Approach Suit Complete, Sz S, M, L",FR-300AG,,Ea.,,30-45 Days,,595,787.17
+,Lakeland Industries,OEM,2.0,"300ag Approach Suit Complete,  Sz Xl",FR-300AG - XL,,Ea.,,30-45 Days,,624.75,826.53
+,Lakeland Industries,OEM,2.0,"305ag/ba - Approach Coverall Complete, Scba Accommodation., Sz S, M, L",FR-305AG/BA,,Ea.,,30-45 Days,,555,734.25
+,Lakeland Industries,OEM,2.0,"305ag/ba - Approach Coverall Complete, Scba Accommodation.,  Sz Xl",FR-305AG/BA - XL,,Ea.,,30-45 Days,,582.75,770.97
+,Lakeland Industries,OEM,2.0,"305ag - Approach Coverall Complete, Sz S, M, L",FR-305AG,,Ea.,,30-45 Days,,495,654.88
+,Lakeland Industries,OEM,2.0,"305ag - Approach Coverall Complete, Sz Xl",FR-305AG - XL,,Ea.,,30-45 Days,,519.75,687.62
+,Lakeland Industries,OEM,2.0,"310-2aglg - Approach Hood,  Sz S, M, L",FR-310-2AGLG,,Ea.,,30-45 Days,,155,205.06
+,Lakeland Industries,OEM,2.0,"310-2aglg - Approach Hood,   Sz Xl",FR-310-2AGLG - XL,,Ea.,,30-45 Days,,162.75,215.32
+,Lakeland Industries,OEM,2.0,"310-1aglg Approach Hood, Sz S, M, L",FR-310-1AGLG,,Ea.,,30-45 Days,,156.41,205.06
+,Lakeland Industries,OEM,2.0,"322ag/ba Approach Coverall, Scba Accommodation, Sz S, M, L",FR-322AG/BA,,Ea.,,30-45 Days,,300,396.89
+,Lakeland Industries,OEM,2.0,"322ag/ba Approach Coverall,  Scba Accommodation, Sz Xl",FR-322AG/BA - XL,,Ea.,,30-45 Days,,315,416.74
+,Lakeland Industries,OEM,2.0,"322ag  Approach Coverall,  Sz S, M, L",FR-322AG,,Ea.,,30-45 Days,,235,310.9
+,Lakeland Industries,OEM,2.0,"322ag Approach Coverall,   Sz Xl",FR-322AG - XL,,Ea.,,30-45 Days,,246.72,326.4
+,Lakeland Industries,OEM,2.0,"320-32ag/ba Approach Coat, Scba Accommodation, Sz S, M, L",FR-320/32AG/BA,,Ea.,,30-45 Days,,185,244.75
+,Lakeland Industries,OEM,2.0,"320-32ag/ba Approach Coat, Scba Accommodation, Sz Xl",FR-320-32AG/BA - XL,,Ea.,,30-45 Days,,194.25,256.99
+,Lakeland Industries,OEM,2.0,"320-32ag - Approach Coat, Sz S, M, L",FR-32-32AG,,Ea.,,30-45 Days,,155,205.06
+,Lakeland Industries,OEM,2.0,"320-32ag - Approach Coat,  Sz Xl",FR-32-32AG - XL,,Ea.,,30-45 Days,,162.75,215.32
+,Lakeland Industries,OEM,2.0,"330ag - Approach Pants, Sz S, M, L",FR-330AG,,Ea.,,30-45 Days,,169.95,224.84
+,Lakeland Industries,OEM,2.0,"330ag - Approach Pants, Ag, Sz Xl",FR-330AG - XL,,Ea.,,30-45 Days,,179.05,236.88
+,MSA,OEM,2.0,2216 Blackhawk Air Mask,BL,,Ea.,,10-14 Days,,1463,1620.03
+,MSA,OEM,2.0,4500 Blackhawk Air Mask,BH,,Ea.,,10-14 Days,,1463,1620.03
+,MSA,OEM,2.0,Kevlar,A,,Ea.,,10-14 Days,,196.35,217.43
+,MSA,OEM,2.0,Kevlar With Chest Strap,B,,Ea.,,10-14 Days,,210.65,233.26
+,MSA,OEM,2.0,Kevlar With Shoulder Strap,C,,Ea.,,10-14 Days,,238.7,264.32
+,MSA,OEM,2.0,Lumbar Pad,1,,Ea.,,10-14 Days,,45.1,49.94
+,MSA,OEM,2.0,Swiveling Lumbar Pad,2,,Ea.,,10-14 Days,,60.5,66.99
+,MSA,OEM,2.0,Rescue Belt-standard 50',A,,Ea.,,10-14 Days,,242,267.97
+,MSA,OEM,2.0,Rescue Belt-standard 75',B,,Ea.,,10-14 Days,,311.3,344.71
+,MSA,OEM,2.0,"Rescue Belt - Long, 50'",C,,Ea.,,10-14 Days,,256.3,283.81
+,MSA,OEM,2.0,"Rescue Belt, Long 75'",D,,Ea.,,10-14 Days,,325.6,360.55
+,MSA,OEM,2.0,Swiveling Rescue Belt-standard 50',E,,Ea.,,10-14 Days,,258.5,286.25
+,MSA,OEM,2.0,Swiveling Rescue Belt-standard 75',F,,Ea.,,10-14 Days,,320.65,355.07
+,MSA,OEM,2.0,Swiveling Resuce Belt-long 50',G,,Ea.,,10-14 Days,,272.25,301.47
+,MSA,OEM,2.0,Swiveling Resuce Belt-long 75',H,,Ea.,,10-14 Days,,341,377.6
+,MSA,OEM,2.0,30' Carbon Lp,1,,Ea.,,10-14 Days,,627.55,694.91
+,MSA,OEM,2.0,30' Carbon Less Air Lp,2,,Ea.,,10-14 Days,,647.35,716.83
+,MSA,OEM,2.0,30' Carbon Hp,1,,Ea.,,10-14 Days,,627.55,694.91
+,MSA,OEM,2.0,45' Carbon Low-profile Hp,2,,Ea.,,10-14 Days,,830.5,919.64
+,MSA,OEM,2.0,60' Carbon Hp,3,,Ea.,,10-14 Days,,1069.75,1184.57
+,MSA,OEM,2.0,30' Carbon Less Air Hp,4,,Ea.,,10-14 Days,,647.35,716.83
+,MSA,OEM,2.0,45' Carbon Low-profile Less Air Hp,5,,Ea.,,10-14 Days,,850.85,942.18
+,MSA,OEM,2.0,60' Carbon Low-profile Less Air Hp,6,,Ea.,,10-14 Days,,1090.65,1207.71
+,MSA,OEM,2.0,"Firehawk Ptc, Solid Cover Cbrn",R,,Ea.,,10-14 Days,,57.2,63.34
+,MSA,OEM,2.0,Snap-tite Aluminum,1,,Ea.,,10-14 Days,,121,133.99
+,MSA,OEM,2.0,Hansen Sst,2,,Ea.,,10-14 Days,,162.8,180.27
+,MSA,OEM,2.0,Hansen Brass,3,,Ea.,,10-14 Days,,121,133.99
+,MSA,OEM,2.0,Foster Steel,4,,Ea.,,10-14 Days,,121,133.99
+,MSA,OEM,2.0,Snap-tite Locking Aluminum,5,,Ea.,,10-14 Days,,154,170.53
+,MSA,OEM,2.0,Quick-fill Shoulder Mounted,1,,Ea.,,10-14 Days,,201.85,223.52
+,MSA,OEM,2.0,"Ultra Elite, Hycar, Small",B,,Ea.,,10-14 Days,,163.9,181.49
+,MSA,OEM,2.0,Ultra Elite Hycar Medium,C,,Ea.,,10-14 Days,,163.9,181.49
+,MSA,OEM,2.0,"Ultra Elite, Hycar, Large",D,,Ea.,,10-14 Days,,163.9,181.49
+,MSA,OEM,2.0,Ultra Elite Silicone Small,E,,Ea.,,10-14 Days,,173.8,192.45
+,MSA,OEM,2.0,Ultra Elite Silicone Medium,F,,Ea.,,10-14 Days,,173.8,192.45
+,MSA,OEM,2.0,Ultra Elite Silicone Large,G,,Ea.,,10-14 Days,,173.8,192.45
+,MSA,OEM,2.0,Medium,1,,Ea.,,10-14 Days,,24.75,27.41
+,MSA,OEM,2.0,Large,2,,Ea.,,10-14 Days,,24.75,27.41
+,MSA,OEM,2.0,Rubber,1,,Ea.,,10-14 Days,,14.3,15.83
+,MSA,OEM,2.0,Speed-on,2,,Ea.,,10-14 Days,,40.15,44.46
+,MSA,OEM,2.0,Clear-command Ready,B,,Ea.,,10-14 Days,,89.65,99.27
+,MSA,OEM,2.0,Clear Command Amp,C,,Ea.,,10-14 Days,,260.7,288.68
+,MSA,OEM,2.0,Hard Case,1,,Ea.,,10-14 Days,,73.15,81
+,MSA,OEM,2.0,Soft Case,2,,Ea.,,10-14 Days,,73.15,81
+,MSA,OEM,2.0,2216 Firehawk Air Mask,UM,,Ea.,,10-14 Days,,1588.4,1891.28
+,MSA,OEM,2.0,4500 Firehawk Air Mask,CM,,Ea.,,10-14 Days,,1588.4,1891.28
+,MSA,OEM,2.0,"Airframe Single Pull, W/o Chest Strap",A,,Ea.,,10-14 Days,,473,563.19
+,MSA,OEM,2.0,"Airframe Double Pull, W/o Chest Strap",B,,Ea.,,10-14 Days,,489.5,582.84
+,MSA,OEM,2.0,"Airframe Single Pull, W/chest Strap",C,,Ea.,,10-14 Days,,500.5,595.94
+,MSA,OEM,2.0,"Airframe Double Pull, W/ Chest Strap",D,,Ea.,,10-14 Days,,518.1,616.89
+,MSA,OEM,2.0,Lumbar Pad/rescue Belt,1,,Ea.,,10-14 Days,,45.1,53.7
+,MSA,OEM,2.0,Swiveling Lumbar Pad,2,,Ea.,,10-14 Days,,60.5,72.04
+,MSA,OEM,2.0,"Rescue Belt, Std 50'",A,,Ea.,,10-14 Days,,242,288.15
+,MSA,OEM,2.0,"Rescue Belt, Std 75'",B,,Ea.,,10-14 Days,,311.3,370.66
+,MSA,OEM,2.0,"Rescue Belt - Long, 50'",C,,Ea.,,10-14 Days,,256.3,305.17
+,MSA,OEM,2.0,"Rescue Belt, Long 75'",D,,Ea.,,10-14 Days,,325.6,387.69
+,MSA,OEM,2.0,"Swiveling Rescue Belt, Std 50'",E,,Ea.,,10-14 Days,,258.5,307.79
+,MSA,OEM,2.0,"Swiveling Rescue Belt, Std 75'",F,,Ea.,,10-14 Days,,320.65,381.79
+,MSA,OEM,2.0,"Swiveling Rescue Belt, Long 50'",G,,Ea.,,10-14 Days,,272.25,324.16
+,MSA,OEM,2.0,"Swiveling Rescue Belt, Long 75'",H,,Ea.,,10-14 Days,,341,406.02
+,MSA,OEM,2.0,"Rescue Belt - Mid-size, 50'",J,,Ea.,,10-14 Days,,248.6,296
+,MSA,OEM,2.0,"Rescue Belt - Mid-size, 75'",K,,Ea.,,10-14 Days,,319,379.83
+,MSA,OEM,2.0,"Swiveling Rescue Belt, Mid-size, 50'",L,,Ea.,,10-14 Days,,256.85,305.83
+,MSA,OEM,2.0,"Swiveling Rescue Belt, Mid-size, 75'",M,,Ea.,,10-14 Days,,325.6,387.69
+,MSA,OEM,2.0,3al Aluminum,1,,Ea.,,10-14 Days,,353.65,421.08
+,MSA,OEM,2.0,Hoop-wound,2,,Ea.,,10-14 Days,,430.65,512.77
+,MSA,OEM,2.0,30' Carbon,3,,Ea.,,10-14 Days,,627.55,747.21
+,MSA,OEM,2.0,3al Aluminum Less Air,4,,Ea.,,10-14 Days,,372.35,443.35
+,MSA,OEM,2.0,Hoop-wound Less Air,5,,Ea.,,10-14 Days,,450.45,536.34
+,MSA,OEM,2.0,30' Carbon Less Air,6,,Ea.,,10-14 Days,,647.35,770.79
+,MSA,OEM,2.0,30' Carbon,1,,Ea.,,10-14 Days,,627.55,747.21
+,MSA,OEM,2.0,45' Carbon,2,,Ea.,,10-14 Days,,830.5,988.86
+,MSA,OEM,2.0,45' Carbon Low-profile,3,,Ea.,,10-14 Days,,830.5,988.86
+,MSA,OEM,2.0,60' Carbon,4,,Ea.,,10-14 Days,,1069.75,1273.73
+,MSA,OEM,2.0,30' Carbon Less Air,5,,Ea.,,10-14 Days,,647.35,770.79
+,MSA,OEM,2.0,45' Carbon Less Air,6,,Ea.,,10-14 Days,,850.85,1013.09
+,MSA,OEM,2.0,45' Carbon Low-profile Less Air,7,,Ea.,,10-14 Days,,850.85,1013.09
+,MSA,OEM,2.0,60' Carbon Less Air,8,,Ea.,,10-14 Days,,1090.65,1298.62
+,MSA,OEM,2.0,"Cbrn Firehawk Stc, Threaded, Solid Cvr",N,,Ea.,,10-14 Days,,57.2,68.11
+,MSA,OEM,2.0,"Cbrn Firehawk Stc, Qc,threaded, Solid Cvr",Q,,Ea.,,10-14 Days,,192.5,229.21
+,MSA,OEM,2.0,"Cbrn Firehawk Ptc, Threaded, Solid Cvr",R,,Ea.,,10-14 Days,,57.2,68.11
+,MSA,OEM,2.0,"Cbrn Firehawk Ptc, Qc, Solid Cvr",S,,Ea.,,10-14 Days,,192.5,229.21
+,MSA,OEM,2.0,Quick-fill Shoulder Mounted,1,,Ea.,,10-14 Days,,199.65,237.72
+,MSA,OEM,2.0,Extendaire (ebs) W/ Dual Quick-connect,3,,Ea.,,10-14 Days,,305.25,363.46
+,MSA,OEM,2.0,Shoulder Mtd Quick-fill & Extendaire (ebs) W/ Dual Quick-connect,4,,Ea.,,10-14 Days,,504.9,601.18
+,MSA,OEM,2.0,"Ultra Elite, Hycar, Small",B,,Ea.,,10-14 Days,,163.9,195.15
+,MSA,OEM,2.0,"Ultra Elite, Hycar, Med",C,,Ea.,,10-14 Days,,163.9,195.15
+,MSA,OEM,2.0,"Ultra Elite, Hycar, Large",D,,Ea.,,10-14 Days,,163.9,195.15
+,MSA,OEM,2.0,Medium,1,,Ea.,,10-14 Days,,24.75,29.47
+,MSA,OEM,2.0,Large,2,,Ea.,,10-14 Days,,24.75,29.47
+,MSA,OEM,2.0,Speed-on Less Neck Strap,2,,Ea.,,10-14 Days,,33.55,39.95
+,MSA,OEM,2.0,Speed-on With Neck Strap,4,,Ea.,,10-14 Days,,40.15,47.81
+,MSA,OEM,2.0,Clear-command Ready,B,,Ea.,,10-14 Days,,89.65,106.74
+,MSA,OEM,2.0,Clear Command Amp,C,,Ea.,,10-14 Days,,260.7,310.41
+,MSA,OEM,2.0,Clear-command Amp/ri (less Ptt),D,,Ea.,,10-14 Days,,388.3,462.34
+,MSA,OEM,2.0,Pressure Gauge,B,,Ea.,,10-14 Days,,97.35,115.91
+,MSA,OEM,2.0,Icm Tx W/o Heat Sensor,D,,Ea.,,10-14 Days,,688.6,819.9
+,MSA,OEM,2.0,Icm Tx With Heat Sensor,C,,Ea.,,10-14 Days,,688.6,819.9
+,MSA,OEM,2.0,Icm Txr Withheat Sensor Enabled,G,,Ea.,,10-14 Days,,935,1113.29
+,MSA,OEM,2.0,Icm Txr W/o Heat Senor Enabled,H,,Ea.,,10-14 Days,,935,1113.29
+,MSA,OEM,2.0,Hard Case,1,,Ea.,,10-14 Days,,73.15,87.1
+,MSA,OEM,2.0,Soft Case,2,,Ea.,,10-14 Days,,73.15,87.1
+,MSA,OEM,2.0,2216: Low Pressure,L,,Ea.,,10-14 Days,,1718.75,2046.48
+,MSA,OEM,2.0,4500: High Pressure,H,,Ea.,,10-14 Days,,1718.75,2046.48
+,MSA,OEM,2.0,Single Pull W/o Chest Strap,A,,Ea.,,10-14 Days,,513.15,611
+,MSA,OEM,2.0,Single Pull W/chest Strap,B,,Ea.,,10-14 Days,,529.65,630.64
+,MSA,OEM,2.0,Double Pull W/o Chest Strap,C,,Ea.,,10-14 Days,,540.65,643.74
+,MSA,OEM,2.0,Double Pull W/chest Strap,D,,Ea.,,10-14 Days,,558.25,664.7
+,MSA,OEM,2.0,Swiveling Lumbar Pad,1,,Ea.,,10-14 Days,,60.5,72.04
+,MSA,OEM,2.0,"Rescue Belt, Std 50'",A,,Ea.,,10-14 Days,,242,288.15
+,MSA,OEM,2.0,"Rescue Belt - Mid-size, 50'",B,,Ea.,,10-14 Days,,248.6,296
+,MSA,OEM,2.0,"Rescue Belt - Long, 50'",C,,Ea.,,10-14 Days,,256.3,305.17
+,MSA,OEM,2.0,"Rescue Belt, Std 75'",D,,Ea.,,10-14 Days,,311.3,370.66
+,MSA,OEM,2.0,"Rescue Belt - Mid-size, 75'",E,,Ea.,,10-14 Days,,318.45,379.17
+,MSA,OEM,2.0,"Rescue Belt, Long 75'",F,,Ea.,,10-14 Days,,325.6,387.69
+,MSA,OEM,2.0,3al Aluminum W/air,1,,Ea.,,10-14 Days,,353.65,421.08
+,MSA,OEM,2.0,Hoop Wrapped W/air,2,,Ea.,,10-14 Days,,430.65,512.77
+,MSA,OEM,2.0,30' Carbon W/air,3,,Ea.,,10-14 Days,,627.55,747.21
+,MSA,OEM,2.0,3al Aluminum Less Air,4,,Ea.,,10-14 Days,,372.35,443.35
+,MSA,OEM,2.0,Hoop Wrapped Less Air,5,,Ea.,,10-14 Days,,450.45,536.34
+,MSA,OEM,2.0,30' Carbon Less Air,6,,Ea.,,10-14 Days,,647.35,770.79
+,MSA,OEM,2.0,30' Carbon With Air,1,,Ea.,,10-14 Days,,627.55,747.21
+,MSA,OEM,2.0,45' Carbon With Air,2,,Ea.,,10-14 Days,,830.5,988.86
+,MSA,OEM,2.0,45' Carbon Low Profile W/air,3,,Ea.,,10-14 Days,,830.5,988.86
+,MSA,OEM,2.0,60' Carbon W/air,4,,Ea.,,10-14 Days,,1069.75,1273.73
+,MSA,OEM,2.0,30' Carbon Less Air,5,,Ea.,,10-14 Days,,647.35,770.79
+,MSA,OEM,2.0,45' Carbon Less Air,6,,Ea.,,10-14 Days,,850.85,1013.09
+,MSA,OEM,2.0,45' Carbon Low-profile Less Air,7,,Ea.,,10-14 Days,,850.85,1013.09
+,MSA,OEM,2.0,60' Carbon Less Air,8,,Ea.,,10-14 Days,,1090.65,1298.62
+,MSA,OEM,2.0,"Cbrn Firehawk Stc, Threaded",A,,Ea.,,10-14 Days,,57.2,68.11
+,MSA,OEM,2.0,"Cbrn Firehawk Stc, Qc",B,,Ea.,,10-14 Days,,192.5,229.21
+,MSA,OEM,2.0,"Cbrn Firehawk Ptc, Threaded",C,,Ea.,,10-14 Days,,57.2,68.11
+,MSA,OEM,2.0,"Cbrn Firehawk Ptc, Qc",D,,Ea.,,10-14 Days,,192.5,229.21
+,MSA,OEM,2.0,Quick-fill,1,,Ea.,,10-14 Days,,199.65,237.72
+,MSA,OEM,2.0,Extendaire,2,,Ea.,,10-14 Days,,305.25,363.46
+,MSA,OEM,2.0,Quick-fill And Extendaire,3,,Ea.,,10-14 Days,,504.9,601.18
+,MSA,OEM,2.0,Hycar - Small,B,,Ea.,,10-14 Days,,163.9,195.15
+,MSA,OEM,2.0,Hycar - Medium,C,,Ea.,,10-14 Days,,163.9,195.15
+,MSA,OEM,2.0,Hycar - Large,D,,Ea.,,10-14 Days,,163.9,195.15
+,MSA,OEM,2.0,Medium,1,,Ea.,,10-14 Days,,24.75,29.47
+,MSA,OEM,2.0,Large,2,,Ea.,,10-14 Days,,24.75,29.47
+,MSA,OEM,2.0,Speed-on Less Neck Strap,2,,Ea.,,10-14 Days,,33.55,39.95
+,MSA,OEM,2.0,Speed-on With Neck Strap,4,,Ea.,,10-14 Days,,40.15,47.81
+,MSA,OEM,2.0,Clear Command Ready W/bracket,B,,Ea.,,10-14 Days,,89.65,106.74
+,MSA,OEM,2.0,Clear Command Amp,C,,Ea.,,10-14 Days,,260.7,310.41
+,MSA,OEM,2.0,Clear Command Amp/fi,D,,Ea.,,10-14 Days,,388.3,462.34
+,MSA,OEM,2.0,Pass W/thermal Alarm Activated,A,,Ea.,,10-14 Days,,1013.1,1206.28
+,MSA,OEM,2.0,Pass W/o Thermal Alarm Activated,B,,Ea.,,10-14 Days,,1013.1,1206.28
+,MSA,OEM,2.0,"Pass, Telemetry And Thermal Alarm",C,,Ea.,,10-14 Days,,1246.3,1483.95
+,MSA,OEM,2.0,"Pass, Telemetry And W/o Thermal Alarm",D,,Ea.,,10-14 Days,,1246.3,1483.95
+,MSA,OEM,2.0,Hard Case,1,,Ea.,,10-14 Days,,73.15,87.1
+,MSA,OEM,2.0,Soft Case,2,,Ea.,,10-14 Days,,73.15,87.1
+,MSA,OEM,2.0,2216,L,,Ea.,,10-14 Days,,2076.25,2472.15
+,MSA,OEM,2.0,4500,H,,Ea.,,10-14 Days,,2076.25,2472.15
+,MSA,OEM,2.0,Single Pull W/o Chest Strap,A,,Ea.,,10-14 Days,,513.15,611
+,MSA,OEM,2.0,Single Pull W/chest Strap,B,,Ea.,,10-14 Days,,529.65,630.64
+,MSA,OEM,2.0,Double Pull W/o Chest Strap,C,,Ea.,,10-14 Days,,540.65,643.74
+,MSA,OEM,2.0,Double Pull W/chest Strap,D,,Ea.,,10-14 Days,,558.25,664.7
+,MSA,OEM,2.0,Swiveling Lumbar Pad,1,,Ea.,,10-14 Days,,60.5,72.04
+,MSA,OEM,2.0,"Rescue Belt, Std 50'",A,,Ea.,,10-14 Days,,242,288.15
+,MSA,OEM,2.0,"Rescue Belt - Mid-size, 50'",B,,Ea.,,10-14 Days,,248.6,296
+,MSA,OEM,2.0,"Rescue Belt - Long, 50'",C,,Ea.,,10-14 Days,,256.3,305.17
+,MSA,OEM,2.0,"Rescue Belt, Std 75'",D,,Ea.,,10-14 Days,,311.3,370.66
+,MSA,OEM,2.0,"Rescue Belt - Mid-size, 75'",E,,Ea.,,10-14 Days,,318.45,379.17
+,MSA,OEM,2.0,"Rescue Belt, Long 75'",F,,Ea.,,10-14 Days,,325.6,387.69
+,MSA,OEM,2.0,30' Carbon W/air,3,,Ea.,,10-14 Days,,627.55,747.21
+,MSA,OEM,2.0,30' Carbon Less Air,6,,Ea.,,10-14 Days,,647.35,770.79
+,MSA,OEM,2.0,30' Carbon With Air,1,,Ea.,,10-14 Days,,627.55,747.21
+,MSA,OEM,2.0,45' Carbon With Air,2,,Ea.,,10-14 Days,,830.5,988.86
+,MSA,OEM,2.0,45' Carbon Low Profile W/air,3,,Ea.,,10-14 Days,,830.5,988.86
+,MSA,OEM,2.0,60' Carbon W/air,4,,Ea.,,10-14 Days,,1069.75,1273.73
+,MSA,OEM,2.0,30' Carbon Less Air,5,,Ea.,,10-14 Days,,647.35,770.79
+,MSA,OEM,2.0,45' Carbon Less Air,6,,Ea.,,10-14 Days,,850.85,1013.09
+,MSA,OEM,2.0,45' Carbon Low-profile Less Air,7,,Ea.,,10-14 Days,,850.85,1013.09
+,MSA,OEM,2.0,60' Carbon Less Air,8,,Ea.,,10-14 Days,,1090.65,1298.62
+,MSA,OEM,2.0,Quick-fill,1,,Ea.,,10-14 Days,,199.65,237.72
+,MSA,OEM,2.0,Extendaire,2,,Ea.,,10-14 Days,,305.25,363.46
+,MSA,OEM,2.0,Quick-fill And Extendaire,3,,Ea.,,10-14 Days,,504.9,601.18
+,MSA,OEM,2.0,Hycar - Small,B,,Ea.,,10-14 Days,,254.65,303.21
+,MSA,OEM,2.0,Hycar - Medium,C,,Ea.,,10-14 Days,,254.65,303.21
+,MSA,OEM,2.0,Hycar - Large,D,,Ea.,,10-14 Days,,254.65,303.21
+,MSA,OEM,2.0,Medium,1,,Ea.,,10-14 Days,,24.75,29.47
+,MSA,OEM,2.0,Large,2,,Ea.,,10-14 Days,,24.75,29.47
+,MSA,OEM,2.0,Speed-on Less Neck Strap,2,,Ea.,,10-14 Days,,33.55,39.95
+,MSA,OEM,2.0,Speed-on With Neck Strap,4,,Ea.,,10-14 Days,,40.15,47.81
+,MSA,OEM,2.0,Clear Command Ready W/bracket,B,,Ea.,,10-14 Days,,89.65,106.74
+,MSA,OEM,2.0,Clear Command Amp,C,,Ea.,,10-14 Days,,260.7,310.41
+,MSA,OEM,2.0,Clear Command Amp/ri,D,,Ea.,,10-14 Days,,388.3,462.34
+,MSA,OEM,2.0,"Apr 18"" Tube",B,,Ea.,,10-14 Days,,115.5,137.52
+,MSA,OEM,2.0,"Apr 22"" Tube",C,,Ea.,,10-14 Days,,119.35,142.11
+,MSA,OEM,2.0,"Apr 18"" Tube With Papr Kit",D,,Ea.,,10-14 Days,,592.35,705.3
+,MSA,OEM,2.0,"Apr 22"" Tube With Papr Kit",E,,Ea.,,10-14 Days,,596.2,709.88
+,MSA,OEM,2.0,Pass W/thermal Alarm Activated,A,,Ea.,,10-14 Days,,955.35,1137.52
+,MSA,OEM,2.0,Pass W/o Thermal Alarm Activated,B,,Ea.,,10-14 Days,,955.35,1137.52
+,MSA,OEM,2.0,"Pass, Telemetry And Thermal Alarm",C,,Ea.,,10-14 Days,,1175.35,1399.47
+,MSA,OEM,2.0,"Pass, Telemetry And W/o Thermal Alarm",D,,Ea.,,10-14 Days,,1175.35,1399.47
+,MSA,OEM,2.0,Hard Case,1,,Ea.,,10-14 Days,,68.75,81.86
+,MSA,OEM,2.0,Soft Case,2,,Ea.,,10-14 Days,,68.75,81.86
+,MSA,OEM,2.0,Base Unit Price,C,,Ea.,,10-14 Days,,711.75,827.41
+,MSA,OEM,2.0,Yes,1,,Ea.,,10-14 Days,,65,75.56
+,MSA,OEM,2.0,1 Regulator,1,,Ea.,,10-14 Days,,162.5,188.91
+,MSA,OEM,2.0,2 Regulators,2,,Ea.,,10-14 Days,,325,377.81
+,MSA,OEM,2.0,3 Regulators,3,,Ea.,,10-14 Days,,487.5,566.72
+,MSA,OEM,2.0,1 Cylinder,1,,Ea.,,10-14 Days,,65,75.56
+,MSA,OEM,2.0,2 Cylinder Holders,2,,Ea.,,10-14 Days,,130,151.13
+,MSA,OEM,2.0,3 Cylinder Holders,3,,Ea.,,10-14 Days,,195,226.69
+,MSA,OEM,2.0,Yes,1,,Ea.,,10-14 Days,,97.5,113.34
+,MSA,OEM,2.0,North American,N,,Ea.,,10-14 Days,,32.5,37.78
+,MSA,OEM,2.0,Global Supply,G,,Ea.,,10-14 Days,,39,45.34
+,MSA,OEM,2.0,Battery Pack & N.a. Supply,B,,Ea.,,10-14 Days,,130,151.13
+,MSA,OEM,2.0,Battery Pack & Global Supply,X,,Ea.,,10-14 Days,,136.5,158.68
+,MSA,OEM,2.0,Yes,1,,Ea.,,10-14 Days,,32.5,37.78
+,MSA,OEM,2.0,Wired Web Interface,A,,Ea.,,10-14 Days,,325,377.81
+,MSA,OEM,2.0,Base Unit Price,A-Sirius,,Ea.,,10-14 Days,,2235,1688.82
+,MSA,OEM,2.0,Pid With 10.6 Ev Lamp (0-2000 Ppm),A,,Ea.,,10-14 Days,,162.5,188.91
+,MSA,OEM,2.0,Pid With 9.8 Ev Lamp,B,,Ea.,,10-14 Days,,195,226.69
+,MSA,OEM,2.0,0-100% Lel,L,,Ea.,,10-14 Days,,117,136.01
+,MSA,OEM,2.0,0-5% Methane,M,,Ea.,,10-14 Days,,117,136.01
+,MSA,OEM,2.0,Oxygen (0-25%),1,,Ea.,,10-14 Days,,110.5,128.46
+,MSA,OEM,2.0,Carbon Monoxide (0-500 Ppm),1,,Ea.,,10-14 Days,,123.5,143.57
+,MSA,OEM,2.0,Hydrogen Sulfide (0-100 Ppm),1,,Ea.,,10-14 Days,,123.5,143.57
+,MSA,OEM,2.0,"Lithium Ion, Includes Charger And Cord",A,,Ea.,,10-14 Days,,100.75,117.12
+,MSA,OEM,2.0,Replaceable Alkaline,B,,Ea.,,10-14 Days,,55.25,64.23
+,MSA,OEM,2.0,Both Lithium Ion And Replaceable Alkaline Battery Packs,C,,Ea.,,10-14 Days,,156,181.35
+,MSA,OEM,2.0,Vehicle Charger,1,,Ea.,,10-14 Days,,130,151.13
+,MSA,OEM,2.0,10-foot Polyurethane,1,,Ea.,,10-14 Days,,40.63,47.23
+,MSA,OEM,2.0,25-foot Polyurethane,2,,Ea.,,10-14 Days,,43.88,51
+,MSA,OEM,2.0,10-foot Teflon (for Jet Fuel Sampling),3,,Ea.,,10-14 Days,,47.13,54.78
+,MSA,OEM,2.0,25-foot Teflon (for Jet Fuel Sampling),4,,Ea.,,10-14 Days,,53.63,62.34
+,MSA,OEM,2.0,3-foot Polyurethane,5,,Ea.,,10-14 Days,,39,45.34
+,MSA,OEM,2.0,1-foot Probe,_(1,,Ea.,,10-14 Days,,83.2,96.72
+,MSA,OEM,2.0,3-foot Probe,2,,Ea.,,10-14 Days,,90.35,105.03
+,MSA,OEM,2.0,8-inch Probe,3,,Ea.,,10-14 Days,,38.35,44.58
+,MSA,OEM,2.0,Retractable Carrying Line With Belt Clip,1,,Ea.,,10-14 Days,,26,30.23
+,MSA,OEM,2.0,Shoulder Harness,2,,Ea.,,10-14 Days,,13,15.11
+,MSA,OEM,2.0,Wrist Harness,3,,Ea.,,10-14 Days,,29.25,34
+,MSA,OEM,2.0,Black Boot With Harness,B,,Ea.,,10-14 Days,,50.05,58.18
+,MSA,OEM,2.0,Cordura Jacket With Harness,C,,Ea.,,10-14 Days,,29.25,34
+,MSA,OEM,2.0,"Black Boot, Cordura Jacket And Harness",D,,Ea.,,10-14 Days,,79.3,92.19
+,MSA,OEM,2.0,Econo-cal Fixed-flow-regulator Calibration Kit (includes Multigas And Isobutylene Cylinders),1,,Ea.,,10-14 Days,,373.75,434.48
+,MSA,OEM,2.0,Model Rp Fixed-flow Regulator Calibration Kit (includes Multigas And Isobutylene Cylinders),2,,Ea.,,10-14 Days,,422.5,491.16
+,MSA,OEM,2.0,Isobutylene Calibration Kit (includes Gas Cylinder),3,,Ea.,,10-14 Days,,260,302.25
+,MSA,OEM,2.0,Data Link Module,1,,Ea.,,10-14 Days,,162.5,188.91
+,MSA,OEM,2.0,Data Link Module And Software Kit,2,,Ea.,,10-14 Days,,227.5,264.47
+,MSA,OEM,2.0,Standard Black Pvc Case,1,,Ea.,,10-14 Days,,81.9,95.21
+,MSA,OEM,2.0,Premium Black Field Case,2,,Ea.,,10-14 Days,,62.66,72.84
+,MSA,OEM,2.0,Long-term Storage Kit Case,4,,Ea.,,10-14 Days,,129.35,150.37
+,MSA,OEM,2.0,"Long-term Storage Kit Basic Includes 10.6 Ev Replacement Pid Lamp, And Four $180 Each Sensors Including 02, Lel, Co And H2s",5,,Ea.,,10-14 Days,,1036.75,1205.22
+,MSA,OEM,2.0,Base Unit Price,A-ORION,,Ea.,,10-14 Days,,574.6,667.97
+,MSA,OEM,2.0,Lel  1-100% Pentane,1,,Ea.,,10-14 Days,,104,120.9
+,MSA,OEM,2.0,Oxygen (0-25%),1,,Ea.,,10-14 Days,,97.5,113.34
+,MSA,OEM,2.0,Carbon Monoxide (0-99% Ppm),1,,Ea.,,10-14 Days,,110.5,128.46
+,MSA,OEM,2.0,Hydrogen Sulfide (0-200 Ppm),1,,Ea.,,10-14 Days,,110.5,128.46
+,MSA,OEM,2.0,Standard Nimh Rechargeable,A,,Ea.,,10-14 Days,,130,151.13
+,MSA,OEM,2.0,Replaceable Alkaline,B,,Ea.,,10-14 Days,,65,75.56
+,MSA,OEM,2.0,Both Nimh And Alkaline,C,,Ea.,,10-14 Days,,195,226.69
+,MSA,OEM,2.0,Vehicular Charger,1,,Ea.,,10-14 Days,,136.5,158.68
+,MSA,OEM,2.0,"Integral, Pulsecheck Pump",P,,Ea.,,10-14 Days,,65,75.56
+,MSA,OEM,2.0,Manual Aspirator Module,A,,Ea.,,10-14 Days,,97.5,113.34
+,MSA,OEM,2.0,3-foot Coiled,1,,Ea.,,10-14 Days,,29.25,34
+,MSA,OEM,2.0,5-foot Coiled,2,,Ea.,,10-14 Days,,32.5,37.78
+,MSA,OEM,2.0,10-foot,3,,Ea.,,10-14 Days,,22.75,26.45
+,MSA,OEM,2.0,15-foot,4,,Ea.,,10-14 Days,,29.25,34
+,MSA,OEM,2.0,25-foot,5,,Ea.,,10-14 Days,,32.5,37.78
+,MSA,OEM,2.0,1-foot Straight,1,,Ea.,,10-14 Days,,73.45,85.39
+,MSA,OEM,2.0,3-foot Straight,2,,Ea.,,10-14 Days,,81.25,94.45
+,MSA,OEM,2.0,"3-foot, Holes Near Tip",3,,Ea.,,10-14 Days,,91,105.79
+,MSA,OEM,2.0,"3-foot, Holes Near Handle",4,,Ea.,,10-14 Days,,91,105.79
+,MSA,OEM,2.0,Hot Gas Probe,5,,Ea.,,10-14 Days,,105.3,122.41
+,MSA,OEM,2.0,Swivel Belt Loop,1,,Ea.,,10-14 Days,,54.6,63.47
+,MSA,OEM,2.0,Black Rubber Boot,B,,Ea.,,10-14 Days,,48.75,56.67
+,MSA,OEM,2.0,Black Leather Case,L,,Ea.,,10-14 Days,,58.5,68.01
+,MSA,OEM,2.0,Orange Cordora Jacket,C,,Ea.,,10-14 Days,,29.25,34
+,MSA,OEM,2.0,Black Rubber Boot/orange Cordora,D,,Ea.,,10-14 Days,,78,90.68
+,MSA,OEM,2.0,Red Rubber Boot,R,,Ea.,,10-14 Days,,48.75,56.67
+,MSA,OEM,2.0,Rp Calibration Kit (includes Gas),1,,Ea.,,10-14 Days,,292.5,340.03
+,MSA,OEM,2.0,Squirt Gas Check Kit (includes Gas),2,,Ea.,,10-14 Days,,78,90.68
+,MSA,OEM,2.0,Orin Link Module,1,,Ea.,,10-14 Days,,162.5,188.91
+,MSA,OEM,2.0,Module And Download Software,2,,Ea.,,10-14 Days,,227.5,264.47
+,MSA,OEM,2.0,"Black Plastic Case W/space For Cyl., W/video",1,,Ea.,,10-14 Days,,58.5,68.01
+,MSA,OEM,2.0,Heavy-duty Case W/video,2,,Ea.,,10-14 Days,,78,90.68
+,MSA,OEM,2.0,Lg Heavy-duty Case W/video And Space For 2 Cylinders,3,,Ea.,,10-14 Days,,123.5,143.57
+,MSA,OEM,2.0,Orange Plastic Case W/space For  One (1) Cyl. W/video,4,,Ea.,,10-14 Days,,58.5,68.01
+,MSA,OEM,2.0,Base Unit,A-ALT4-BASE,,Ea.,,14 Days,,112.45,130.72
+,MSA,OEM,2.0,Motion Alert Feature,A,,Ea.,,14 Days,,26,30.23
+,MSA,OEM,2.0,Lel  1-100% Pentane,L,,Ea.,,14 Days,,113.75,132.23
+,MSA,OEM,2.0,0-5% Vol Methane,M,,Ea.,,14 Days,,113.75,132.23
+,MSA,OEM,2.0,0-25% Vol,1,,Ea.,,14 Days,,97.5,113.34
+,MSA,OEM,2.0,0-999 Ppm Co And 0-200 Ppm H2s,1,,Ea.,,14 Days,,97.5,113.34
+,MSA,OEM,2.0,0-999 Ppm Co And 0-200 Ppm H2s,2,,Ea.,,14 Days,,84.5,98.23
+,MSA,OEM,2.0,0-200 Ppm H2s,3,,Ea.,,14 Days,,84.5,98.23
+,MSA,OEM,2.0,North American,N,,Ea.,,14 Days,,16.25,18.89
+,MSA,OEM,2.0,European,E,,Ea.,,14 Days,,35.75,41.56
+,MSA,OEM,2.0,Australian,A,,Ea.,,14 Days,,35.75,41.56
+,MSA,OEM,2.0,North American W/cradle,M,,Ea.,,14 Days,,26,30.23
+,MSA,OEM,2.0,European W/cradle,F,,Ea.,,14 Days,,42.25,49.12
+,MSA,OEM,2.0,Australian W/crade,B,,Ea.,,14 Days,,42.25,49.12
+,MSA,OEM,2.0,Three Years Total,1,,Ea.,,14 Days,,256.75,298.47
+,MSA,OEM,2.0,Four Years Total,2,,Ea.,,14 Days,,315.25,366.48
+,MSA,OEM,2.0,10-unit Bulk Pkg,1,,Ea.,,14 Days,,0.65,0.76
+,MSA,OEM,2.0,Pumped,A,,Ea.,,14 Days,,292.5,340.03
+,MSA,OEM,2.0,Pumped With Color Display,B,,Ea.,,14 Days,,487.5,566.72
+,MSA,OEM,2.0,Diffusion,E,,Ea.,,14 Days,,130,151.13
+,MSA,OEM,2.0,Diffusion Wit Hcolor Display,F,,Ea.,,14 Days,,325,377.81
+,MSA,OEM,2.0,Lel  1-100% Pentane,L,,Ea.,,14 Days,,97.5,113.34
+,MSA,OEM,2.0,0-5% Vol Methane,M,,Ea.,,14 Days,,97.5,113.34
+,MSA,OEM,2.0,0-25% Vol,1,,Ea.,,14 Days,,97.5,113.34
+,MSA,OEM,2.0,0-999 Ppm Co & 0-200 Ppm H2s,1,,Ea.,,14 Days,,97.5,113.34
+,MSA,OEM,2.0,So2 0-20 Ppm,A,,Ea.,,14 Days,,227.5,264.47
+,MSA,OEM,2.0,Cl20-20 Ppm,B*,,Ea.,,14 Days,,162.5,188.91
+,MSA,OEM,2.0,No2 0-50 Ppm,C*,,Ea.,,14 Days,,227.5,264.47
+,MSA,OEM,2.0,Nh3 0-50 Ppm,D*,,Ea.,,14 Days,,276.25,321.14
+,MSA,OEM,2.0,Ph3 0-5 Ppm,E*,,Ea.,,14 Days,,276.25,321.14
+,MSA,OEM,2.0,Hcn 0-30 Ppm,F*,,Ea.,,14 Days,,276.25,321.14
+,MSA,OEM,2.0,Clo2 0-1.00 Ppm,G*,,Ea.,,14 Days,,276.25,321.14
+,MSA,OEM,2.0,North American Pack With Power Supply,N,,Ea.,,14 Days,,97.5,113.34
+,MSA,OEM,2.0,Atex Pack & Power Supply With Cradle,E,,Ea.,,14 Days,,130,151.13
+,MSA,OEM,2.0,Anz Pack & Power Supply,A,,Ea.,,14 Days,,113.75,132.23
+,MSA,OEM,2.0,North American Pack With Power Supply With Cradle,M,,Ea.,,14 Days,,113.75,132.23
+,MSA,OEM,2.0,Global With Power Supply,G,,Ea.,,14 Days,,113.75,132.23
+,MSA,OEM,2.0,Replaceable Battery Pack,1,,Ea.,,14 Days,,65,75.56
+,MSA,OEM,2.0,10ft Polyurethane,1,,Ea.,,14 Days,,55.25,64.23
+,MSA,OEM,2.0,25ft Polyurethane,2,,Ea.,,14 Days,,61.75,71.78
+,MSA,OEM,2.0,10ft Teflon,3,,Ea.,,14 Days,,55.25,64.23
+,MSA,OEM,2.0,25ft Teflon,4,,Ea.,,14 Days,,61.75,71.78
+,MSA,OEM,2.0,3ft Polyurethane Coiled,5,,Ea.,,14 Days,,58.5,68.01
+,MSA,OEM,2.0,1ft Straight,1,,Ea.,,14 Days,,94.25,109.57
+,MSA,OEM,2.0,3ft Straight,2,,Ea.,,14 Days,,104,120.9
+,MSA,OEM,2.0,8in Stick,3,,Ea.,,14 Days,,45.5,52.89
+,MSA,OEM,2.0,Black Economy,E,,Ea.,,14 Days,,58.5,68.01
+,MSA,OEM,2.0,Red Economy,R,,Ea.,,14 Days,,58.5,68.01
+,MSA,OEM,2.0,Logo Express,1,,Ea.,,14 Days,,16.25,18.89
+,MSA,OEM,2.0,S-cap  Fire Escape Hood/cardboard Bx,FR-10064644,,Ea.,,5-7 Days,,164.92,191.72
+,MSA,OEM,2.0,S-cap  Fire Escape Hood/wall Mt Bx,FR-10064645,,Ea.,,5-7 Days,,186.63,216.96
+,MSA,OEM,2.0,"C420 Papr Kit 1-  36"" Breathing Tube, Millennium Fcpc, 2 Cbrn Cart., Sz S",M-60141-036S-KIT,,Ea.,,10-14 Days,,921.9,1000.26
+,MSA,OEM,2.0,"C420 Papr Kit 1-  36"" Breathing Tube, Millennium Fcpc, 2 Cbrn Cart., Sz M",M-60141-036M-KIT,,Ea.,,10-14 Days,,921.9,1000.26
+,MSA,OEM,2.0,"C420 Papr Kit 1-  36"" Breathing Tube, Millennium Fcpc, 2 Cbrn Cart., Sz L",M-60141-036L-KIT,,Ea.,,10-14 Days,,921.9,1000.26
+,MSA,OEM,2.0,"C420 Papr Kit 1-  36"" Breathing Tube, Ultra Elite Hycar Mask, 2 Cbrn Cart., Sz S",U-60141-036S-KIT,,Ea.,,10-14 Days,,884.54,959.73
+,MSA,OEM,2.0,"C420 Papr Kit 1-  36"" Breathing Tube, Ultra Elite Hycar Mask, 2 Cbrn Cart., Sz M",U-60141-036M-KIT,,Ea.,,10-14 Days,,884.54,959.73
+,MSA,OEM,2.0,"C420 Papr Kit 1-  36"" Breathing Tube, Ultra Elite Hycar Mask, 2 Cbrn Cart., Sz L",U-60141-036L-KIT,,Ea.,,10-14 Days,,884.54,959.73
+,MSA,OEM,2.0,"Millennium Facepiece W/1cbrn Cart., Sz S",M-CBRN-1S,,Ea.,,10-14 Days,,457.47,299.59
+,MSA,OEM,2.0,"Millennium Facepiece W/1 Cbrn Cart., Sz M",M-CBRN-1M,,Ea.,,10-14 Days,,457.47,299.59
+,MSA,OEM,2.0,"Millennium Facepiece W/1 Cbrn Car., Sz L",M-CBRN-1L,,Ea.,,10-14 Days,,457.47,299.59
+,MSA,OEM,2.0,"Millennium Facepiece W/ 1 Cbrn Cart., Esp Comm., Sz S",M-CBRN-2S,,Ea.,,10-14 Days,,801.86,553.39
+,MSA,OEM,2.0,"Millennium Facepiece W/ 1 Cbrn Cart., Esp Comm., Sz M",M-CBRN-2M,,Ea.,,10-14 Days,,801.86,553.39
+,MSA,OEM,2.0,"Millennium Facepiece W/1 Cbrn Cart., Esp Comm., Sz L",M-CBRN-2L,,Ea.,,10-14 Days,,801.86,553.39
+,MSA,OEM,2.0,"Millennium Facepiece W/1 Cbrn Cart., Esp Comm., Mil Pouch, Sz S",M-CBRN-3S,,Ea.,,10-14 Days,,880.5,612.1
+,MSA,OEM,2.0,"Millennium Facepiece W/1 Cbrn Cart., Esp Comm., Mil Pouch, Sz M",M-CBRN-3M,,Ea.,,10-14 Days,,880.5,612.1
+,MSA,OEM,2.0,"Millennium Facepiece W/1 Cbrn Cart., Esp Comm., Mil Pouch, Sz L",M-CBRN-3L,,Ea.,,10-14 Days,,880.5,612.1
+,MSA,OEM,2.0,Biosensor 2200r Kit,FR-10084834,,Ea.,,10-14 Days,,14988.9,11325.99
+,MSA,OEM,2.0,"Hazmatcad - Nerve, Blister",FR-10055094,,Ea.,,10-14 Days,,6732,5086.87
+,MSA,OEM,2.0,"Hazmatcad Plus - Nerve, Blister, Tics",FR-10055097,,Ea.,,10-14 Days,,10965,8285.43
+,MSA,OEM,2.0,10074135 Altair Pro Single Gas Detector - H2s,FR-10074135,,Ea.,,,,230.75,268.25
+,MSA,OEM,2.0,10074136 Altair Pro Single Gas Detector - Co,FR-10074136,,Ea.,,,,230.75,268.25
+,MSA,OEM,2.0,10074137 Altair Pro Single Gas Detector - O2,FR-10074137,,Ea.,,,,230.75,268.25
+,MSA,OEM,2.0,"Hazmatcad - Nerve,blister,hcn",FR-10055095,,Ea.,,10-14 Days,,7395,5587.85
+,MSA,OEM,2.0,"Hazmatcad - Nerve,blister,phosgen",FR-10055096,,Ea.,,10-14 Days,,7395,5587.85
+,MSA,OEM,2.0,"Evolution 5600 Tic  Complete With Heat Seeker, Quick Temp And User's Instruction Manual.",FR-10097331,,Ea.,,14 Days,,5526,6727.33
+,MSA,OEM,2.0,"Evolution 5200 Tic  Complete With Heat Seeker, Quick Temp And User's Instruction Manual.",FR-10097245,,Ea.,,14 Days,,8150.4,9922.26
+,MSA,OEM,2.0,"Evolution 5200hd2 Tic  Complete With Heat Seeker, Quick Temp And User's Instruction Manual, Wihout 2x Zoom.",FR-10097247,,Ea.,,14 Days,,8150.4,9922.26
+,MSA,OEM,2.0,"Evolution 5200hd2 Tic  Complete With Heat Seeker, Quick Temp And User's Instruction Manual, Wih 2x Zoom.",FR-10097249,,Ea.,,14 Days,,8338.2,10150.89
+,MSA,OEM,2.0,"Tic:ev5200hd2,hs(c),qt,2x,camera Only",FR-10097250,,Ea.,,10-14  Days,,8338.2,10150.89
+,MSA,OEM,2.0,"Tic:ev5200hd2,hs(c),qt,camera Only",FR-10097248,,Ea.,,10-14  Days,,8150.4,9922.26
+,MSA,OEM,2.0,"Tic:ev5200,hs(c),qt,camera Only",FR-10097246,,Ea.,,10-14  Days,,8150.4,9922.26
+,MSA,OEM,2.0,"Tic:ev5600,hs(c),qt,camera Only",FR-10097332,,Ea.,,10-14  Days,,5526,6727.33
+,MSA,OEM,2.0,"Advantage 1000 Riot Control Respirator; Gas Mask Assembly, Cba-rca, Black, Small",FR-813860,,Ea.,,14 Days,,125.15,185.43
+,MSA,OEM,2.0,"Advantage 1000 Riot Control Respirator; Gas Mask Assembly, Cba-rca, Black, Medium",FR-813859,,Ea.,,14 Days,,125.15,185.43
+,MSA,OEM,2.0,"Advantage 1000 Riot Control Respirator; Gas Mask Assembly, Cba-rca, Black, Large",FR-813861,,Ea.,,14 Days,,125.15,185.43
+,MSA,OEM,2.0,"C-tdr-75839020n Pre-assembled Arff Helmet: Cairns Model 1044; Yellow; 6"" Gold-coated Faceshield; Deluxe Leather Headband Liner With Crown Pad; Cfr Aluminized Bonnet With Pbi/kevlar Shroud And Nomex Earlap; Nomex Chinstrap W/ Quick Release And Postman's Slide.",FR-C-TDR-75839020N,,Ea.,,14 Days,,470.59,509.29
+,MSA,OEM,2.0,"C-tdr-15839020n Pre-assembled Arff Helmet: Cairns Model 1010; Yellow; 6"" Gold-coated Faceshield; Deluxe Leather Headband Liner With Crown Pad; Cfr Aluminized Bonnet With Pbi/kevlar Shroud And Nomex Earlap; Nomex Chinstrap W/ Quick Release And Postman's Slide.",FR-C-TDR-15839020N,,Ea.,,14 Days,,508.99,550.85
+,MSA,OEM,2.0,"Kit,facepiece Assy,sm,w/comm Ul El Rspnr",FR-10093927,,Ea.,,30 Days,,501.23,621.52
+,MSA,OEM,2.0,"Kit,facepiece Assy,med,w/comm Ul El Rspn",FR-10093926,,Ea.,,30 Days,,501.23,621.52
+,MSA,OEM,2.0,"Kit,facepiece Assy,lrg,w/comm Ul El Rspn",FR-10093928,,Ea.,,30 Days,,501.23,621.52
+,MSA,OEM,2.0,Amplifier Kit:w/bracket & Voicemitter,FR-10024074,,Ea.,,30 Days,,294.35,364.99
+,MSA,OEM,2.0,"Amplifier Kit:radio Interface,clrcommand",FR-10051290,,Ea.,,30 Days,,428.92,531.86
+,MSA,OEM,2.0,"Hose & Pouch Kit, Quick-fill,3ft",FR-485366,,Ea.,,30 Days,,448.44,556.07
+,MSA,OEM,2.0,"Replacement Kits,hud Assy,m7 Responder",FR-10093911,,Ea.,,30 Days,,198.41,246.02
+,MSA,OEM,2.0,"Replacement Kits,hud Assy,w/mtg. Bracket",FR-10093912,,Ea.,,30 Days,,219.29,271.92
+,MSA,OEM,2.0,"Cylinder & Valve Assy,h-30 Stealth",FR-807587,,Ea.,,30 Days,,745.21,924.06
+,MSA,OEM,2.0,"Cylinder & Valve Assy,h-45 Stealth",FR-807570,,Ea.,,30 Days,,986.54,1223.31
+,MSA,OEM,2.0,"Cylinder & Valve Assy.,carbon Ii, H/p",FR-10035644,,Ea.,,30 Days,,986.54,1223.31
+,MSA,OEM,2.0,"Cylinder & Valve Assy,h-60 Stealth,4500",FR-807588,,Ea.,,30 Days,,1269.65,1574.36
+,MSA,OEM,2.0,"Canister Assy.,threaded, Cbrn",FR-10046570,,Ea.,,30 Days,,35.24,43.69
+,MSA,OEM,2.0,"Kit,breathing Tube Assy,18"" W/o Plunger",FR-10094016,,Ea.,,30 Days,,58.83,72.94
+,MSA,OEM,2.0,"Kit,22"" Breathing Tube Assy,w/o Plunger",FR-10094023,,Ea.,,30 Days,,61.61,76.4
+,MSA,OEM,2.0,C420 Blower Assembly,FR-10094024,,Ea.,,30 Days,,568.75,705.25
+,Nextteq,OEM,2.0,"Std-100 - Standard Hazmat Kit - With Gastec Sampling Pump And Detector Tubes - Detects 32 Gases, Vapors,  Liquids",FR-STD-100,,Ea.,,10 Days,,1311.59,1255.36
+,Nextteq,OEM,2.0,"Std-101 - Deluxe Hazmat Kit - Gastec Sampling Pump And Detector Tubes  - Detects 48 Gases, Vapors,  Liquids",FR-STD-101,,Ea.,,10 Days,,1603.05,1534.32
+,North Safety,OEM,2.0,"Bni243/apm - Butyl Neoprene, 24 Mil, Sz Xs-xl Per Pr",FR-BNI243/APM/XS-XL,,Ea.,,10 Days,,36.49,45.25
+,North Safety,OEM,2.0,"B254gi - Butyl Milspec, 25 Mil, 14"" Long, Sz Xs-xl Per Pr",FR-B254GI/XS-XL,,Ea.,,10 Days,,23.66,28.62
+,North Safety,OEM,2.0,"B144gi - Butyl Milspec, 14 Mil, 14"" Long, Sz Xs-xl Per Pr",FR-B144GI/XS-XL,,Ea.,,10 Days,,14.65,16.83
+,North Safety Products,OEM,2.0,"770030/s-l: Dual Cartridge Silicone Half Mast, Sizes Small To Large",FR-770030/S-L,,Ea.,,10-14 Days,,14.85,19.15
+,North Safety Products,OEM,2.0,"760008as: Dual Cartridge Full Facepiece, Silicone, 5 Strap Head Harness; Size Small",FR-760008AS,,Ea.,,10-14 Days,,132,170.23
+,North Safety Products,OEM,2.0,"760008a/m-l: Dual Cartridge Full Facepiece, Silicone, 5 Strap Head Harness; Size, Med And Large",FR-760008A/M-L,,Ea.,,10-14 Days,,132,170.23
+,North Safety Products,OEM,2.0,"7580p100: Filter, P100 (all Particulates), Per Pair",FR-7580P100,,Ea.,,10-14 Days,,4.23,5.28
+,North Safety Products,OEM,2.0,"75scp100: Defender Multi-purpose Cartridge For Organic Vapors, Chlorine, Hydrogen Chloride, Sulfur Dioxide, Hydrogen Sulfide, Hydrogen Fluoride, Chlorine Dioxide, Ammonia, Methylamine And Formaldehyde, With P100 Particulate Filter, Per Pair.",FR-75SCP100,,Ea.,,10-14 Days,,11,13.74
+,North Safety Products,OEM,2.0,"75sc: Defender Multi-purpose Cartridge. For Organic Vapors, Chlorine, Hydrogen Chloride, Sulfur Dioxide, Hydrogen Sulfide, Hydrogen Fluoride, Chlorine Dioxide, Ammonia, Methylamine And Formaldehyde, Per Pair.",FR-75SC,,Ea.,,10-14 Days,,5.65,7.06
+,North Safety Products,OEM,2.0,"7583p100: Organic Vapors, Chlorine, Hydrogen Chloride, Sulfur Dioxide, Hydrogen Fluoride, Chlorine Dioxide, With P100 Particulate Filter, Per Pair.",FR-7583P100,,Ea.,,10-14 Days,,11,13.74
+,North Safety Products,OEM,2.0,"N75003: Organic Vapors, Chlorine, Hydrogen Chloride, Sulfur Dioxide, Hydrogen Fluoride, Chlorine Dioxide. Cartridge/ Pair",FR-N75003,,Ea.,,10-14 Days,,5.65,7.06
+,North Safety Products,OEM,2.0,Ca101d - Compact Air Assembly For Use With Primair Series Hood And Loose Fitting Facepieces; With Decon Back Pad And Pvc Belt.,FR-CA101D,,Ea.,,10-14 Days,,472.68,609.56
+,North Safety Products,OEM,2.0,Ca102d - Compact Air Assembly For Use With North Tight-fitting Facepieces; Decon Back Pad And Pvc Belt.,FR-CA102D,,Ea.,,10-14 Days,,461.43,595.05
+,North Safety Products,OEM,2.0,40he - Hepa Filter From Particulates (3/box),FR-40HE,,Ea.,,10-14 Days,,27.03,33.76
+,North Safety Products,OEM,2.0,"4003 - Organic Vapors, Gl,hcl,so2,hf,clo2,h2s, Formaldehyde Cartridge (3/box)",FR-4003,,Ea.,,10-14 Days,,50.65,63.28
+,North Safety Products,OEM,2.0,"4003he - Organic Vapors, Gl,hcl,so2,hf,clo2,h2s, Formadehyde And Hepa Cartridge (3/box)",FR-4003HE,,Ea.,,10-14 Days,,61.9,77.33
+,North Safety Products,OEM,2.0,"Ssg/6-11: Silver Shield Gloves - Unique, Flexible Film Glove, 10 Prs/pack, 5 Packs/cs.",FR-SSG/6-11,,Ea.,,10-14 Days,,153.5,197.95
+,North Safety Products,OEM,2.0,"La132g-7-11: Nitri-guard - Nitrile Gloves - Green, Flocked, 15 Mil, 12 Prs/bg",FR-LA132G-7-11,,Ea.,,10-14 Days,,11.75,15.15
+,North Safety Products,OEM,2.0,"A352: Latex Disposable Mid Height Bootie, S-xxl",FR-A352,,Ea.,,10-14 Days,,2.53,3.38
+,North Safety Products,OEM,2.0,"75177: Servus, Hazmat Green, Pvc, Steel Toe And Midsole, Knee Boot, Triple Density, Self-cleaning Outsole, Sizes 7-15",FR-75177,,Ea.,,10-14 Days,,44,58.68
+,North Safety Products,OEM,2.0,018505-4221,FR-018505-4221,,Ea.,,10-14 Days,,23.15,27.99
+,North Safety Products,OEM,2.0,Er2000,FR-001-N1-0301,,Ea.,,21 Days,,139.25,204.83
+,North Safety Products,OEM,2.0,11095s,FR-11095S,,Ea.,,10-14 Days,,11.5,17.38
+,North Safety Products,OEM,2.0,11095med,FR-11095MED,,Ea.,,10-14 Days,,11.5,17.38
+,North Safety Products,OEM,2.0,11095lrg,FR-11095LRG,,Ea.,,10-14 Days,,11.5,17.38
+,North Safety Products,OEM,2.0,11095xl,FR-11095XL,,Ea.,,10-14 Days,,11.5,17.38
+,North Safety Products,OEM,2.0,B074gi/s,FR-B074GI/S,,Ea.,,10-14 Days,,12.14,16.7
+,North Safety Products,OEM,2.0,B074gi/m,FR-B074GI/M,,Ea.,,10-14 Days,,12.14,16.7
+,North Safety Products,OEM,2.0,B074gi/l,FR-B074GI/L,,Ea.,,10-14 Days,,12.14,16.7
+,North Safety Products,OEM,2.0,B074gi/xl,FR-B074GI/XL,,Ea.,,10-14 Days,,12.14,16.7
+,North Safety Products,OEM,2.0,B174gi/s,FR-B174GI/S,,Ea.,,10-14 Days,,22.98,31.59
+,North Safety Products,OEM,2.0,B174gi/m,FR-B174GI/M,,Ea.,,10-14 Days,,22.98,31.59
+,North Safety Products,OEM,2.0,B174gi/l,FR-B174GI/L,,Ea.,,10-14 Days,,22.98,31.59
+,North Safety Products,OEM,2.0,B174gi/xl,FR-B174GI/XL,,Ea.,,10-14 Days,,22.98,31.59
+,North Safety,OEM,2.0,"P2nrw-01-1234 - Cap Style Hardhat; Roughneck Series; Fiberglass With 3-r Ratchet Headband, 8 Pt. Suspension, Factory Assembled; Class G; C Type 1.  Available In White, Yellow,grey, Red Blue, Green. Case Of 20. No Artwork Included. Design Set Up Fee Extra. First Order With Logo Is 2 Case Minimum.",FR-P2NRW-01-1234,,Ea.,,14 Days,,527,398.21
+,Onguard Industries,OEM,2.0,87012-6,FR-87012-6,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87012-7,FR-87012-7,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87012-8,FR-87012-8,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87012-9,FR-87012-9,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87012-10,FR-87012-10,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87012-11,FR-87012-11,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87012-12,FR-87012-12,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87012-13,FR-87012-13,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87012-14,FR-87012-14,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87012-15,FR-87012-15,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87015-s,FR-87015-S,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87015-m,FR-87015-M,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87015-l,FR-87015-L,,Ea.,,10-14 Days,,49.77,67.63
+,Onguard Industries,OEM,2.0,87015-xl,FR-87015-XL,,Ea.,,10-14 Days,,49.77,67.63
+,Pelican Products,OEM,2.0,"1400 - Small, Od 13.37"" X 11.62"" X 6.00"", 4.41 Lbs With Foam - All Colors",FR-1400,,Ea.,,30 Days,,51.73,57.91
+,Pelican Products,OEM,2.0,"1445 - Utility Padded Divider Set With Lid Organizer, Od 19.70""x 12.00"" X 18.00"",  16.5 Lbs With Foam - All Colors",FR-1445,,Ea.,,30 Days,,47.68,53.37
+,Pelican Products,OEM,2.0,"1446 - Office Divider Set With Lid Organizer, Od 19.70""x 12.00"" X 18.00"",  16.5 Lbs With Foam - All Colors",FR-1446,,Ea.,,30 Days,,50.38,56.39
+,Pelican Products,OEM,2.0,"1490 - Laptop Case, Od 19.87"" X 13.93"" X4.68"", 6.5 Lbs With Foam, Lock And Keys Included - Black Or Tan",FR-1490,,Ea.,,30 Days,,89.98,100.72
+,Pelican Products,OEM,2.0,"1495cc1 - Computer Case Dlx, With Lid Organizer, Od 21.62"" X 17.25"" X 4.87"", 8.37 Lbs With Foam - Black Or Tan",FR-1495CC1,,Ea.,,30 Days,,156.13,174.78
+,Pelican Products,OEM,2.0,"1495cc2 - Computer Case With Lid Organizer.,  Od 21.65"" X 17.25"" X 4.87"", 8.37 Lbs With Foam - Black Or Tan",FR-1495CC2,,Ea.,,30 Days,,141.73,158.66
+,Pelican Products,OEM,2.0,"1510 - Med. Case, Od 19.75"" X 18.81"" X 9.00"", 13.6 Lbs With Foam - Black, Tan, Green",FR-1510,,Ea.,,30 Days,,109.78,122.89
+,Pelican Products,OEM,2.0,"1550 - Medium Case, Od 20.62"" X 16.87"" X 8.12, 11.9 Lbs With Foam - All Colors",FR-1550,,Ea.,,30 Days,,95.38,106.77
+,Pelican Products,OEM,2.0,"1600 - Big Case, Od 24.25"" X 19.43"" X 8.68"", 14.11 Lbs With Foam - All Colors",FR-1600,,Ea.,,30 Days,,112.48,125.91
+,Pelican Products,OEM,2.0,"1610 - Big Case, Od 24.71"" X 19.58"" X 11.93"", 22.49 Lbs With Foam, Black, Tan, Green",FR-1610,,Ea.,,30 Days,,145.33,162.69
+,Pelican Products,OEM,2.0,"1630 - Big Case, Od 31.28"" X 24.21"" X 17.48"" 36 Lbs With Foam, Black, Tan Green",FR-1630,,Ea.,,30 Days,,219.58,245.8
+,Pelican Products,OEM,2.0,"1640 - Big Case Od 27.20"" X 27.50"" X 16.30"", 38 Lbs With Foam, Black, Tan, Green",FR-1640,,Ea.,,30 Days,,177.73,198.96
+,Pelican Products,OEM,2.0,"1650 - Big Case, Od 30.75"" X 20.25"" X 11.62"", 35.49 Lbs With Foam, Black, Tan, Green",FR-1650,,Ea.,,30 Days,,164.68,184.35
+,Pelican Products,OEM,2.0,"1660 - Big Case, Od 31.50"" X 22.87"" X 19.00"", 42.11 Lbs With Foam, Black, Tan, Green",FR-1660,,Ea.,,30 Days,,217.33,243.29
+,Pelican Products,OEM,2.0,"1690 - Big Case, Od 33.36"" X 28.44"" X 18.23"", 43 Lbs, With Foam, Black, Green, Tan",FR-1690,,Ea.,,30 Days,,245.68,275.02
+,Pelican Products,OEM,2.0,"1700 - Rifle Case, Od 38.12"" X 16.00"" X 6.12"", 16.98 Lbs With Foam, Tan, Green, Black",FR-1700,,Ea.,,30 Days,,132.28,148.08
+,Pelican Products,OEM,2.0,"1720 - Rifle Case, Od 44.37"" X 16.00"" X 6.12"", 18.96 Lbs With Foam, Tan, Black, Green",FR-1720,,Ea.,,30 Days,,148.03,165.71
+,Pelican Products,OEM,2.0,"1750 - Rifle Case, Od 53.00"" X 16.00"" X 6.12"", 25.57 Lbs With Foam, Tan, Green, Black",FR-1750,,Ea.,,30 Days,,156.58,175.28
+,Pelican Products,OEM,2.0,"1780t - Transport Case - Od 44.90"" X 25.32"" X 16.50"", 49 Lbs With Foam, Black, Green, Tan",FR-1780T,,Ea.,,30 Days,,292.48,327.41
+,Pelican Products,OEM,2.0,"1780hl - Weapons Case, W/rifle Hard Liner, Od 44.90"" X 25.32"" X 16.50"", 68.4 Lbs (hl), Black, Green, Tan",FR-1780HL,,Ea.,,30 Days,,526.48,851.63
+,Pelican Products,OEM,2.0,"1780nf - Transport Case No Foam  Od 44.90"" X 25.32"" X 16.50"", 38.4 Lbs Black, Tan, Green",FR-1780NF,,Ea.,,30 Days,,263.23,294.67
+,Pelican Products,OEM,2.0,"1780rf, Weapons Case W/rifle Foam Cut Insert, Od 44.90"" X 25.32"" X 16.50"", 53 Lbs, Black, Tan, Green",FR-1780RF,,Ea.,,30 Days,,575.98,931.7
+,Pelican Products,OEM,2.0,"340 Cube Case, Od 20.50"" X 20.50"" X 21.25"", 32.01 Lbs With Foam, Black, Tan, Green",FR-340,,Ea.,,30 Days,,193.48,216.59
+,Pelican Products,OEM,2.0,"350 Cube Case, Od 22.50"" X 22.43"" X 21.25"", 32.01 Lbs, With Foam, Black, Tan",FR-350,,Ea.,,30 Days,,197.53,221.12
+,Pelican Products,OEM,2.0,"370 Cube Case, Od 2.50"" X 26.50"" 25.25"", 41 Lbs With Foam, Black, Tan, Green",FR-370,,Ea.,,30 Days,,238.03,266.46
+,Proengin,OEM,2.0,"M262 E00 003: Portable Chemical Contamination Control Device Used To Detect Chemical Agents G (sarin, Soman, Tabun, Etc.) Vx And Mustard Gas, Takes Only 5 Minutes To Learn To Use.kit Includes Batteries, Hydrogen, 1 Liquid Sampler And Consumables In A Pelican Case.",FR-M262 E00 003,,Ea.,,60 Days,,18903,16188.06
+,Proengin,OEM,2.0,"M262 E00 001: Ap2c Is A Portable Chemical Contamination Control Device Used To Detect Chemical Agents G (sarin, Soman, Tabun, Etc.) Vx And Mustard Gas, Takes Only 5 Minutes To Learn To Use.    Kit Includes Batteries, Hydrogen, 2 X S4pe Liquid Sampler, Carry Sling, Consumables In A Pelican Case.",FR-M262 E00 001,,Ea.,,60 Days,,20563,17609.64
+,Proengin,OEM,2.0,"M232 E00 003: Intrinsically Safe Cw Agent Detector For G, H And V.  Complete Kit Includes Batteries, Hydrogen, 1 S4pe Liquid Sampler, Carry Sling, Consumables In A Pelican Case.",FR-M232 E00 003,,Ea.,,60 Days,,21336,18271.62
+,Proengin,OEM,2.0,"M232 E00 001: Intrinsically Safe Cw Agent Detector For G, H And V.  Complete Kit Includes Batteries, Hydrogen, Liquid Sampler, Carry Sling, Consumables In A Pelican Case.",FR-M232 E00 001,,Ea.,,60 Days,,23610,20219.01
+,Proengin,OEM,2.0,"M910 E00 003: Intrinsically Safe Chemical Detector For Cw Agents, Tics And Tims.   Complete Kit Includes Batteries, Hydrogen, 1 S4pe Liquid Sampler, Carry Sling, Consumables In A Pelican Case.",FR-M910 E00 003,,Ea.,,60 Days,,27032,23149.53
+,Proengin,OEM,2.0,"M910 E00 001: Intrinsically Safe Chemical Detector For Cw Agents, Tics And Tims.   Complete Kit Includes Batteries, Hydrogen, 2 S4pe Liquid Sampler, Carry Sling, Consumables In A Pelican Case.",FR-M910 E00 001,,Ea.,,60 Days,,28214,24161.76
+,Quicksilver Analytics,OEM,2.0,"Self Contained Backpack For Cbre Sampling - Chemical And Biological Sampling Kit Is A Dynamic, Field Sampling Collection Kit. The Most Significant Advantage Of This Sampling Kit Is The Quality Assurance And Quality Control Which Goes Into The Assembly Of This Unique Kit. Items That Come In Contact With The Chemical Sample Are Either Purchased Pre-cleaned (with Certification) Or Cleaned/screened For Over 10 Chemical Warfare-related Compounds And A Representative List Of Semi-volatile Compounds (tics/tims). ",FR-QSA102FullFAC,,Ea.,,30 Days,,2243.79,2493.09
+,Quicksilver Analytics,OEM,2.0,Self Contained Backpack For Cbre Sampling - National Guard Version,FR-QSA102-NG,,Ea.,,30 Days,,2080.1,2288.08
+,Quicksilver Analytics,OEM,2.0,Self Contained Backpack For Cbre Sampling - National Guard Training Version,FR-QSA102T-NG,,Ea.,,30 Days,,1607.83,1768.59
+,Quicksilver Analytics,OEM,2.0,"Training Version Of Qsa 102 Full Fac: Chemical And Biological Sampling Kit Is A Dynamic, Field Sampling Collection Kit. The Most Significant Advantage Of This Sampling Kit Is The Quality Assurance And Quality Control Which Goes Into The Assembly Of This Unique Kit. Items That Come In Contact With The Chemical Sample Are Either Purchased Pre-cleaned (with Certification) Or Cleaned/screened For Over 10 Chemical Warfare-related Compounds And A Representative List Of Semi-volatile Compounds (tics/tims). ",FR-QSA102T-FullFAC,,Ea.,,30 Days,,1743.68,1937.31
+,Quicksilver Analytics,OEM,2.0,C3 Bio  Sampler Kit,FR-SWK50001,,Ea.,,30 Days,,79.99,87.99
+,Quicksilver Analytics,OEM,2.0,"Residue And Powder Sampling Area Kit: Developed To Meet The Needs Of The New York City Crime Scene Unit That Receives On A Weekly Basis Several Calls About Unknown, Suspicious White Powders. The Qsa 700 Rapsakâ„¢ Is A Small, Light Weight, Field Sampling Kit For Obtaining Residue And Powder Samples. All Components For Collecting The Sample Are Sterile And For Single Use. ",FR-QSA700RAPSAK,,Ea.,,30 Days,,317.03,352.23
+,Quicksilver Analytics,OEM,2.0,"Molle Vest Chemical & Biological Sampling Kit: Equipped And Designed For The War Fighter. All The Required, Unique Sampling Tools And Equipment Needed In A Strategic Environment Are Included. Each Pouch Is Compartmentalized For Ease-of-use And Segregated By Sampling Type, E.g., Liquid, Solid/wipe, Administrative Supplies, Etc. All Sampling Tools Are Dual Use, Effective For Both Chemical And Biological Samples.",FR-VES500,,Ea.,,30 Days,,3650.04,4014.77
+,Quicksilver Analytics,OEM,2.0,"Training Version Of Molle Vest Chemical & Biological Sampling Kit: Equipped And Designed For The War Fighter. All The Required, Unique Sampling Tools And Equipment Needed In A Strategic Environment Are Included. Each Pouch Is Compartmentalized For Ease-of-use And Segregated By Sampling Type, E.g., Liquid, Solid/wipe, Administrative Supplies, Etc. All Sampling Tools Are Dual Use, Effective For Both Chemical And Biological Samples.",FR-VES500T,,Ea.,,30 Days,,3250.03,3574.8
+,Quicksilver Analytics,OEM,2.0,"Chem-bio (cbre) Hard Case Sampling Kit: Mobile, Rugged Hard Case Kit To Withstand Harsh Conditions Of Frequent Travel.  Case Inside Has Foamed Compartment To Easily Find Items And Secure Them During Transport. Tools For Chemical Sampling Are Cleaned/screened For Over 10 Chemical Warfare-related Compounds And A List Of Tics/tims. Tools For Biological Sampling Are Sterile. Obtain Nine Chemical (liquid, Wipe, Or Solid), Thirteen Biological (liquid, Wipe, Solid), Six Radiological (wipe) And Three Explosive Samples. ",FR-QSA800HC,,Ea.,,30 Days,,2599.26,2737.07
+,Quicksilver Analytics,OEM,2.0,"Chem-bio Transport Case Sampling Kit: A Unique, Field Sampling Collection Kit. The Sampling Kit Is Contained In A Mobile, Rugged Cart That Can Be Decontaminated Or Discarded, Which Is Ideal For ""hot Zone"" And ""down Range"" Applications. The Product Includes Components Necessary In Taking Both Chemical Or Biological Samples. The Most Significant Advantage Of The 600tc Is The Quality Assurance And Quality Control Which Goes Into The Assembly Of This Unique Kit. Items That Come In Contact With The Chemical Sample Are Either Purchased Pre-cleaned (with Certification) Or Cleaned/screened For Over 10 Chemical Warfare Related Compounds And A Representative List Of Semi-volatile Compounds (tics/tims).",FR-QSA600TC,,Ea.,,30 Days,,1607.44,1785.94
+,Quicksilver Analytics,OEM,2.0,"Incident Response Sampling Kit (irk): Designed For Use By Emergency Response Personnel At Incidents Where Hazardous Materials May Be Present And Sample Collection Is Necessary. The Kit Contains All Materials Necessary To Collect Air, Liquid And Solid Samples For Chemical And Biological Analysis, And Prescribes Detailed Instructions To Ensure Sample Integrity. ",FR-3000IRK,,Ea.,,30 Days,,999.99,1099.92
+,Rae Systems,OEM,2.0,Basic Unit,9,,Ea.,,30 Days,,682.5,872.75
+,Rae Systems,OEM,2.0,Combustible,1,,Ea.,,30 Days,,119.6,152.94
+,Rae Systems,OEM,2.0,Oxygen,2,,Ea.,,30 Days,,81.9,104.73
+,Rae Systems,OEM,2.0,Combustible And Oxygen,3,,Ea.,,30 Days,,201.5,257.67
+,Rae Systems,OEM,2.0,Hydrogen Sulfide Sensor,1,,Ea.,,30 Days,,133.25,170.39
+,Rae Systems,OEM,2.0,Carbon Monoxide Sensor,2,,Ea.,,30 Days,,133.25,170.39
+,Rae Systems,OEM,2.0,Sulfur Dioxide Sensor,3,,Ea.,,30 Days,,133.25,170.39
+,Rae Systems,OEM,2.0,Nitric Oxide Sensor,4,,Ea.,,30 Days,,133.25,170.39
+,Rae Systems,OEM,2.0,Nitrogen Dioxide Sensor,5,,Ea.,,30 Days,,133.25,170.39
+,Rae Systems,OEM,2.0,Cholrine Sensor,6,,Ea.,,30 Days,,133.25,170.39
+,Rae Systems,OEM,2.0,Hydrogen Cyanide Sensor,7,,Ea.,,30 Days,,269.75,344.94
+,Rae Systems,OEM,2.0,Ammonia Sensor,8,,Ea.,,30 Days,,269.75,344.94
+,Rae Systems,OEM,2.0,Phoshine Sensor,9,,Ea.,,30 Days,,269.75,344.94
+,Rae Systems,OEM,2.0,Hydrogen Sulfide Sensor,1,,Ea.,,30 Days,,133.25,170.39
+,Rae Systems,OEM,2.0,Carbon Monoxide Sensor,2,,Ea.,,30 Days,,133.25,170.39
+,Rae Systems,OEM,2.0,Sulfur Dioxide Sensor,3,,Ea.,,30 Days,,133.25,170.39
+,Rae Systems,OEM,2.0,Nitrogen Dioxide Sensor,5,,Ea.,,30 Days,,133.25,170.39
+,Rae Systems,OEM,2.0,Chlorine Sensor,6,,Ea.,,30 Days,,269.75,344.94
+,Rae Systems,OEM,2.0,Hydrogen Cyanide Sensor,7,,Ea.,,30 Days,,269.75,344.94
+,Rae Systems,OEM,2.0,Phosphine Sensor,9,,Ea.,,30 Days,,269.75,344.94
+,Rae Systems,OEM,2.0,10.6 Ev Lamp,1,,Ea.,,30 Days,,989.95,1265.9
+,Rae Systems,OEM,2.0,11.7 Ev Lamp,2,,Ea.,,30 Days,,1058.2,1353.17
+,Rae Systems,OEM,2.0,"Pump, Standard Li-ion Battery, Universal Wall Charger",1,,Ea.,,30 Days,,239.2,305.88
+,Rae Systems,OEM,2.0,"Pump, Alkaline Batteries",2,,Ea.,,30 Days,,170.95,218.6
+,Rae Systems,OEM,2.0,"Pump, Extended Duration Li-ion, Universal Charger",8,,Ea.,,30 Days,,341.25,436.37
+,Rae Systems,OEM,2.0,Pump Extended Duration Li-ion Battery No Charger,B,,Ea.,,30 Days,,321.1,410.61
+,Rae Systems,OEM,2.0,Pump Standard Li-ion Battery No Charger,C,,Ea.,,30 Days,,218.4,279.28
+,Rae Systems,OEM,2.0,"Pump, Alkaline Batteries Atex Approval Atex Box ",E,,Ea.,,30 Days,,341.25,436.37
+,Rae Systems,OEM,2.0,"Pump, Standard Li-ion Battery, Universal Wall Charger, Atex Barrier Box",F,,Ea.,,30 Days,,375.7,480.43
+,Rae Systems,OEM,2.0,"Pump Standard Li-ion Battery No Charger,atex Barrier Box",G,,Ea.,,30 Days,,389.35,497.88
+,Rae Systems,OEM,2.0,Accessories And 4-gas (lel/02/h2s)calibration Kit,1,,Ea.,,30 Days,,307.45,393.15
+,Rae Systems,OEM,2.0,Accessories And Isobutylene Calibration Kit,2,,Ea.,,30 Days,,307.45,393.15
+,Rae Systems,OEM,2.0,Accessories Kit (no Gas Or Regulator),3,,Ea.,,30 Days,,154.05,196.99
+,Rae Systems,OEM,2.0,Access. And 4 Gas (lel/02/co/h2s)+isobutylene Cal Kit,4,,Ea.,,30 Days,,477.75,610.92
+,Rae Systems,OEM,2.0,Access. And 3 Gas (lel/02/co) Calibration Kit,5,,Ea.,,30 Days,,225.55,288.42
+,Rae Systems,OEM,2.0,Access. And 3 Gas (lel/02/co) Plus Isobutylene Cal Kit,6,,Ea.,,30 Days,,395.85,506.19
+,Rae Systems,OEM,2.0,Access. And 3 Gas (lel/02/h2s)calibration Kit,7,,Ea.,,30 Days,,307.45,393.15
+,Rae Systems,OEM,2.0,Access.and 3 Gas (lel/02/h2s) Plus Isobutylene Cal Kit,8,,Ea.,,30 Days,,477.75,610.92
+,Rae Systems,OEM,2.0,Access.and 2 Gas (lel/02) Calibration Kit,9,,Ea.,,30 Days,,187.85,240.21
+,Rae Systems,OEM,2.0,Access. And 2 Gas (lel/02),A,,Ea.,,30 Days,,232.05,296.73
+,Rae Systems,OEM,2.0,H2s Hydrogen Sulfide 1-100 Ppm,1,,Ea.,,30 Days,,35.75,45.72
+,Rae Systems,OEM,2.0,H2s Hydrogen Sulfide 3-1000 Ppm,2,,Ea.,,30 Days,,35.75,45.72
+,Rae Systems,OEM,2.0,Co Carbon Monoxide,1,,Ea.,,30 Days,,35.75,45.72
+,Rae Systems,OEM,2.0,So2 Sulfur Dioxide,2,,Ea.,,30 Days,,61.75,78.96
+,Rae Systems,OEM,2.0,Lel Csa/ul,1,,Ea.,,30 Days,,35.75,45.72
+,Rae Systems,OEM,2.0,O2 Spe Oxygen,1,,Ea.,,30 Days,,35.75,45.72
+,Rae Systems,OEM,2.0,"Diffusion, Rechargeable Li-ion Battery, Universal Wall Adapter",0,,Ea.,,30 Days,,243.75,311.7
+,Rae Systems,OEM,2.0,"Diffusion Alkaline Batteries, (must Be Configured With 2 Sensors Min.)",1,,Ea.,,30 Days,,211.25,270.14
+,Rae Systems,OEM,2.0,"Pump, Rechargeable Li-ion Battery, Universal Wall Adapter",2,,Ea.,,30 Days,,308.75,394.81
+,Rae Systems,OEM,2.0,"Ppbrae 3000 Monitor.10.6ev,1/2"".ul Alkaline Battery.non Wireless.monitor Only",059-C100-000,,Ea.,,30 Days,,4046.25,5174.14
+,Rae Systems,OEM,2.0,"Ppbrae 3000 Monitor.10.6ev,1/2"".ul Alkaline Battery.non Wireless.accs,cal Kit,gas & Regulator",059-C100-100,,Ea.,,30 Days,,4371.25,5589.74
+,Rae Systems,OEM,2.0,"Ppbrae 3000 Monitor.10.6ev,1/2"".ul Alkaline Battery.2.4ghz Wireless (bluetooth).monitor Only",059-C101-000,,Ea.,,30 Days,,4241.25,5423.5
+,Rae Systems,OEM,2.0,"Ppbrae 3000 Monitor.10.6ev,1/2"".ul Alkaline Battery.2.4ghz Wireless (bluetooth).accs,cal Kit,gas & Regulator",059-C101-100,,Ea.,,30 Days,,4566.25,5839.09
+,Rae Systems,OEM,2.0,"Ppbrae 3000 Monitor.10.6ev,1/2"".ul Li-ion Battery.non Wireless.monitor Only",059-C110-000,,Ea.,,30 Days,,4111.25,5257.26
+,Rae Systems,OEM,2.0,"Ppbrae 3000 Monitor.10.6ev,1/2"".ul Li-ion Battery.non Wireless.accs,cal Kit,gas & Regulator",059-C110-100,,Ea.,,30 Days,,4436.25,5672.85
+,Rae Systems,OEM,2.0,"Ppbrae 3000 Monitor.10.6ev,1/2"".ul Li-ion Battery.2.4ghz Wireless (bluetooth).monitor Only",059-C111-000,,Ea.,,30 Days,,4306.25,5506.62
+,Rae Systems,OEM,2.0,"Ppbrae 3000 Monitor.10.6ev,1/2"".ul Li-ion Battery.2.4ghz Wireless (bluetooth).accs,cal Kit,gas & Regulator",059-C111-100,,Ea.,,30 Days,,4631.25,5922.21
+,Rae Systems,OEM,2.0,"Ppbrae 3000 Monitor.11.7ev,1/2"".ul Alkaline Battery.non Wireless.monitor Only",059-C200-000,,Ea.,,30 Days,,4111.25,5257.26
+,Rae Systems,OEM,2.0,"Ppbrae 3000 Monitor.11.7ev,1/2"".ul Alkaline Battery.non Wireless.accs,cal Kit,gas & Regulator",059-C200-100,,Ea.,,30 Days,,4436.25,5672.85
+,Rae Systems,OEM,2.0,"Minirae 3000.10.6ev,1/2"".ul Alkaline Battery.non Wireless.monitor Only",059-B100-000,,Ea.,,30 Days,,2421.25,3096.17
+,Rae Systems,OEM,2.0,"Minirae 3000.10.6ev,1/2"".ul Alkaline Battery.non Wireless.accs,cal Kit,gas & Regulator",059-B100-100,,Ea.,,30 Days,,2746.25,3511.77
+,Rae Systems,OEM,2.0,"Minirae 3000.10.6ev,1/2"".ul Alkaline Battery.2.4ghz Wireless (bluetooth).monitor Only",059-B101-000,,Ea.,,30 Days,,2616.25,3345.53
+,Rae Systems,OEM,2.0,"Minirae 3000.10.6ev,1/2"".ul Alkaline Battery.2.4ghz Wireless (bluetooth).accs,cal Kit,gas & Regulator",059-B101-100,,Ea.,,30 Days,,2941.25,3761.12
+,Rae Systems,OEM,2.0,"Minirae 3000.10.6ev,1/2"".ul Li-ion Battery.non Wireless.monitor Only",059-B110-000,,Ea.,,30 Days,,2486.25,3179.29
+,Rae Systems,OEM,2.0,"Minirae 3000.10.6ev,1/2"".ul Li-ion Battery.non Wireless.accs,cal Kit,gas & Regulator",059-B110-100,,Ea.,,30 Days,,2811.25,3594.89
+,Rae Systems,OEM,2.0,"Minirae 3000.10.6ev,1/2"".ul Li-ion Battery.2.4ghz Wireless (bluetooth).monitor Only",059-B111-000,,Ea.,,30 Days,,2681.25,3428.65
+,Rae Systems,OEM,2.0,"Minirae 3000.10.6ev,1/2"".ul Li-ion Battery.2.4ghz Wireless (bluetooth).accs,cal Kit,gas & Regulator",059-B111-100,,Ea.,,30 Days,,3006.25,3844.24
+,Rae Systems,OEM,2.0,"Minirae 3000.11.7ev,1/2"".ul Li-ion Battery.non Wireless.monitor Only",059-B210-000,,Ea.,,30 Days,,2551.25,3262.41
+,Rae Systems,OEM,2.0,"Minirae 3000.11.7ev,1/2"".ul Li-ion Battery.non Wireless.accs,cal Kit,gas & Regulator",059-B210-100,,Ea.,,30 Days,,2876.25,3678
+,Remploy Frontline,OEM,2.0,"Frontline Cbrn Protective Ensemble Is Nfpa 1994 Class B/2 Certified For First Responders. The Unique Ensemble Includes 3 Layers Of  Non-encapsulating  Hooded Coveralls Consisting Of The Inner Cooler Garment, The Britannia Intermediate Garment And The Peeler Outer Garment The Best Cbrn Protection Available.  Sizes S-xxl.",FR-FRONTLINER,,Ea.,,20 Days,,1663,1574.94
+,Schroeder Industries,OEM,2.0,Bmlgk-h2ovc12 - Fuel Test Kit; Water And Visual Clarity; 12 Tests,FR-BMLGK-H2OVC12,,Ea.,,21 Days,,63,90.68
+,Schroeder Industries,OEM,2.0,Bmlgk-mic6 - Fuel Test Kit; Microbial Contamination; 6 Tests,FR-BMLGK-MIC6,,Ea.,,21 Days,,63,90.68
+,Schroeder Industries,OEM,2.0,Bmlgk-an.bb12- Fuel Test Kit; Acid Number B5/b20; 12 Tests,FR-BMLGK-AN.BB12,,Ea.,,21 Days,,63,90.68
+,Schroeder Industries,OEM,2.0,Bmlgk-an.bb10012- Fuel Test Kit; Acid Number B99/b100; 12 Tests,FR-BMLGK-AN.BB10012,,Ea.,,21 Days,,63,90.68
+,Schroeder Industries,OEM,2.0,Bmlgk-b512 - Fuel Test Kit; Percent Biodiesel B5; 12 Tests,FR-BMLGK-B512,,Ea.,,21 Days,,63,90.68
+,Schroeder Industries,OEM,2.0,Bmlgk-b2012 - Fuel Test Kit; Percent Biodiesel B20; 12 Tests,FR-BMLGK-B2012,,Ea.,,21 Days,,63,90.68
+,Schroeder Industries,OEM,2.0,Bmlgk-tg6 - Fuel Test Kit; Total Glycerin; 6 Tests,FR-BMLGK-TG6,,Ea.,,21 Days,,63,90.68
+,Schroeder Industries,OEM,2.0,Bmlgk-b112 - Bio Diesel Detector Kit,FR-BMLGK-B112,,Ea.,,21 Days,,63,90.68
+,Smiths Detection,OEM,2.0,Hazmat Id Unit,FR023-1001,,Ea.,,45-60 Days,,55000,52638.55
+,Smiths Detection,OEM,2.0,Hazmat Id Command Unit: Includes A 3-year Partnership Program.,FR023-1005,,Ea.,,45-60 Days,,67500,64601.86
+,Smiths Detection,OEM,2.0,Hazmat Id Extended Library Package Single Unit: Includes A 5-year Partnership Program.,FR023-1010,,Ea.,,45-60 Days,,88357.5,84569.17
+,Smiths Detection,OEM,2.0,"Hazmatid Toughbook Model: Hazmatid Unit With Panasonic Toughbook Laptop Operating System - Minimum Spec 1 Ghz Cpu, 256 Mbytes Ram, 30 Gbyte Hard Drive, 10.4"" Color Display, Windows Xp Professional W/cd Drive",FR023-1011,,Ea.,,45-60 Days,,58500,57759.98
+,Smiths Detection,OEM,2.0,"Hazmatid Toughbook Model Partnership Package: Hazmatid Unit With Panasonic Toughbook Laptop Operating System And 4 Year Partnership Package, To Include 24/7/365 Reachback Support, Free Loaner, 1 Hazmat Refresher Course/yr.",FR023-1015,,Ea.,,45-60 Days,,70500,69608.18
+,Smiths Detection,OEM,2.0,023-4021 Hazmatid 1 Year Partnership Program,FR-023-4021,,Ea.,,30 Days,,4750,4689.91
+,Smiths Detection,OEM,2.0,023-xxx Hazmatid 3 Year Partnership Program,FR-023-4023,,Ea.,,30 Days,,10500,10367.17
+,Smiths Detection,OEM,2.0,023-4041  Upgrade Of Hazmatid System To 400 Mhz Processor,FR-023-4041,,Ea.,,30 Days,,5250,5183.59
+,Smiths Detection,OEM,2.0,Single Mode Explosives,FR194816600NEG,,Ea.,,30 Days,,25405,22951.52
+,Smiths Detection,OEM,2.0,Single Mode Narcotics,FR194816600POS,,Ea.,,30 Days,,25405,22951.52
+,Smiths Detection,OEM,2.0,Dual Mode (explosives And Narcotics),FR194816600DUAL,,Ea.,,30 Days,,26790,24202.76
+,Smiths Detection,OEM,2.0,"Tri Mode (explosives, Narcotics And Chemicals)",FR194816600TRI,,Ea.,,30 Days,,28185,25463.04
+,Smiths Detection,OEM,2.0,Sabre 4000 Partnership Package,FR023-9000,,Ea.,,30 Days,,38250,34556.02
+,Smiths Detection,OEM,2.0,Sabre Fr - Sabre Fr - Hand Held Trace Detector For Chemical Warfare Agents And Tics Using Ion Mobility Spectrometry (ims) Technology,FR4818300,,Ea.,,30 Days,,18500,16713.37
+,Smiths Detection,OEM,2.0,2428800-30,FR-002-S3-0900,,Ea.,,45 Days,,9600,9260.26
+,Smiths Detection,OEM,2.0,"Apd 2000 Partnership Package:  W/3 Yr Warranty (includes Repair Or Replacement Of Defective Components Through Normal Use Of The Systems And One Yearly Preventive Maintenance Checkup To Include Replacement Of Charcoal Filters And Sieves, Replenish Ammonia Source, Update Software, Radiation Wipe Test And Functional Certification Testing. All Repairs And Preventive Maintenance Procedures To Be Performed In Service Lab, An In-house Repair Depot), On-site Training (one On-site Six-hour Class For Up To 16 Students By A Certified Smiths Detection Trainer), Filtered Stand-off Nozzles (five Packs Of Six Nozzles), One (1) Additonal Confidence Sample.
+",FR-APD2000-PP,,Ea.,,45 Days,,15239.31,15200.07
+,Smiths Detection,OEM,2.0,Gasid Unit,FR023-3001,,Ea.,,45-60 Days,,55000,52638.55
+,Smiths Detection,OEM,2.0,Gasid Partnership Package:,FR023-3005,,Ea.,,45-60 Days,,67500,64601.86
+,Smiths Detection,OEM,2.0,Responder Rci,FR-024-1001,,Ea.,,45-60 Days,,30000,28713.75
+,Smiths Detection,OEM,2.0,"Responder Rci Partnership Package: (raman Chemical Identifier) Is A Superior Field-portable Raman Spectrometer Supported By A 6,000+ Raman Spectral Library Of:   White Powders; Explosives ; Nerve & Blister Agents; Narcotics; Common Chemicals; Wmds. Fast, Accurate Detection And Identification Of Unknown Chemicals Makes The Responder Rci A Critical Tool For Use By Homeland Security, Hazmat, Usar, Bomb Squad, And Drug Enforcement Teams.  Responder Rci Features: Only Product With Wireless Communication To Hazmatid; Reachback 24/7/365 Technical Support; Lightweight, Field Portable Raman Spectrometer; Upgraded 6,000+ Spectral Database; Ease-of-operation In Level A Gear.   Point-and-shoot Capability; Waterproof And Rugged; Long Lasting Rechargeable Battery. Includes All Standard Responder Rci Features Plus:  300 Customized Sample Vials For Analysis. Three Year Partnership Program. Training At Customer Facility For Up To 16 People. ",FR-024-1005,,Ea.,,45-60 Days,,40000,38285
+,Smiths Detection,OEM,2.0,"Lcd-fr-1b/g: Lightweight Chemical Detector - First Responder In Green Or Black, W/detector Pouch, Accessory Pouch, User Guide, Survey Nozzle, Earpc Assy, 10 Pk Of Sieve Pks, Tng And Maint. Cd, 1-yr Partnership Program Including Free Loaner, 24/7/365 Reachback Support (023-6000)",FR-LCD-FR-1B/G,,Ea.,,90 Days,,8568,8373.29
+,Smiths Detection,OEM,2.0,"Lcd-fr-3b/g: 3-y. Partnership Program Including Free Loaner, 24/7/365 Reachback Support (023-6002)",FR-LCD-FR-3B/G,,Ea.,,90 Days,,10302,10067.89
+,Smiths Detection,OEM,2.0,"Lcd-fr-4b/g: Lightweight Chemical Detector - First Responder In Green Or Black, W/detector Pouch, Access. Pouch, User Guide, Survey Nozzle, Earpc Assy, 3-10 Pks Of Sieve Pks, Training And Maintenance Cd, 4-yr Partnership Program Including Free Loaner, 24/7/365 Reachback Support (023-6009)",FR-LCD-FR-4B/G,,Ea.,,90 Days,,11220,10965.03
+,Smiths Detection,OEM,2.0,"Lcd-fr-3b/g Command: Lightweight Chemical Detector - First Responder In Green Or Black, W/detector Pouch, Access. Pouch, User Guide, Survey Nozzle, Earpiece Assy, 3-10 Pks Of Sieve Pks, Training And Maintenance Cd, Pelican Case, Powers/comms. Kit With Software, 3-year Partnership Program Including Free Loaner, 24/7/365 Reachback Support (023-6004)",FR-LCD-FR-3B/G Command,,Ea.,,90 Days,,12750,12460.26
+,Smiths Detection,OEM,2.0,"023-6020 - Lcd 3.3e - Lightweight Chem. Detector - Hands Free, Tics And Cwa's - Ims Technology",FR-023-6020,,Ea.,,90-120 Days,,10200,9968.21
+,Smiths Detection,OEM,2.0,023-6021 - Lcd 3.3e G1 - W/1 Yr Partnership Package,FR-023-6021,,Ea.,,90-120 Days,,13260,12958.67
+,Smiths Detection,OEM,2.0,023-6022 - Lcd 3.3e G3 - W/3 Yr Partnership Package,FR-023-6022,,Ea.,,90-120 Days,,14790,14453.9
+,Smiths Detection,OEM,2.0,023-6023 - Lcd 3.3e G4 - W/4 Yr Partnership Package,FR-023-6023,,Ea.,,90-120 Days,,15810,15450.72
+,Smiths Detection,OEM,2.0,023-6024 - Lcd 3.3e G3 Command System W/3 Yr Partnership Package,FR-023-6024,,Ea.,,90-120 Days,,18870,18441.18
+,Smiths Detection,OEM,2.0,Bioseeq + Biological Agent Detector,FR-13624-1,,Ea.,,60-90 Days,,37900,37038.72
+,Smiths Detection,OEM,2.0,Hgvi System,FR025-1001,,Ea.,,60-90 Days,,28000,27363.7
+,Smiths Detection,OEM,2.0,"Hgvi Partnership Package: Designed For First Responders To Identify High Level Threats, First Handheld Instrument That Simultaneously Detects, Identifies And Quantifies Tics.  Includes Pelican Case, H-fusion(tm) Software, Integrated Pid Board Assy, Ims Assy, Gamma Radiation Det., Embedded Gps, 40 Sieve Pks,  2 Batteries, Standard 1 Yr Warranty And Partnership Program And Additional 3 Yr Partnership Program Extension, Overnight Replace. Of Ims And Pid Assy's, Free Loaner, Hgvi Refresher Course For 1 Person/yr Of Partnership Program, Onsite Training,  24/7 Reachback Hgvi Partnership Package: Designed For First Responders To Identify High Level Threats, First Handheld Instrument That Simultaneously Detects, Identifies And Quantifies Tics.  Includes Pelican Case, H-fusion(tm) Software, Integrated Pid Board Assy, Ims Assy, Gamma Radiation Det., Embedded Gps, 40 Sieve Pks,  2 Batteries, Standard 1 Yr Warranty And Partnership Program And Additional 3 Yr Partnership Program Extension, Overnight Replace. Of Ims And Pid Assy's, Free Loaner, Hgvi Refresher Course For 1 Person/yr Of Partnership Program, Onsite Training,  24/7 Reachback Hgvi Partnership Package: Designed For First Responders To Identify High Level Threats, First Handheld Instrument That Simultaneously Detects, Identifies And Quantifies Tics.  Includes Pelican Case, H-fusion(tm) Software, Integrated Pid Board Assy, Ims Assy, Gamma Radiation Det., Embedded Gps, 40 Sieve Pks,  2 Batteries, Standard 1 Yr Warranty And Partnership Program And Additional 3 Yr Partnership Program Extension, Overnight Replace. Of Ims And Pid Assy's, Free Loaner, Hgvi Refresher Course For 1 Person/yr Of Partnership Program, Onsite Training,  24/7 Reachback. ",FR025-1003,,Ea.,,60-90 Days,,41000,40068.28
+,Smiths Detection,OEM,2.0,Travelir Ii Hazmat Chemical Identifer,FR-022-1030,,Ea.,,45-60 Days,,51000,50354.85
+,Smiths Detection,OEM,2.0,Travelir Ii Hazmat Chemical Identifier Partnership Package,FR-022-1035,,Ea.,,45-60 Days,,66500,65658.77
+,Smiths Detection,OEM,2.0,"4816800  - Ionscan 500dt Partnershp Package - W/ 4 Yr Warranty (free Software Updates; All Parts & Labor To Repair System In The Event Of A Malfunction; Refresher Course For One Person Per Year At A One Day Regional Training Course (limited To The Length Of Partnership Program); 24/7 Reachback Access To Technical Support.), On-site Training (one On-site Six-hour Class For Up To 10 Students By A Certified Smiths Detection Trainer), Consumables (up To 20,000 Samples/yr).",FR-IS500DT-PP,,Ea.,,90 Days,,70049.78,67046.4
+,Smiths Detection,OEM,2.0,"4810768   - Ionscan 400b Partnershp Package - W/ 4 Yr Warranty (free Software Updates; All Parts & Labor To Repair System In The Event Of A Malfunction; Refresher Course For One Person Per Year At A One Day Regional Training Course (limited To The Length Of Partnership Program); 24/7 Reachback Access To Technical Support.), On-site Training (one On-site Six-hour Class For Up To 10 Students By A Certified Smiths Detection Trainer), Consumables (up To 50,000 Explosives Samples/yr).",FR-IS400B-PP,,Ea.,,90 Days,,60886.67,58276.15
+,Smiths Detection,OEM,2.0,Hazmatid Ranger - Performs Analysis By Simply Touching The Diamond Sensor To The Sample.  A Single Drop Of Liquid Or Grain Of Powder Is All That Is Required.  Includes: Hazmatid Ranger System; Instrument Power Supply; Ultra Rugged Field Computer - Bluetooth Enabled Controller; Computer Power Supply; Sealed Battery Compartment; Two Rechargeable Batteries; External Battery Charger; Hard Shipping Case; 1 Yr Standard Warranty; 24/7 Reachback Capability - Access To Chemists; Software Libraries; 3 Seats To A One Day Training Class.,FR-026-1001,,Ea.,,60 Days,,45000,44884.13
+,Smiths Detection,OEM,2.0,Hazmatid Ranger Partnership Program- Performs Analysis By Simply Touching The Diamond Sensor To The Sample.  A Single Drop Of Liquid Or Grain Of Powder Is All That Is Required.  Includes: Hazmatid Ranger System; Instrument Power Supply; Ultra Rugged Field Computer - Bluetooth Enabled Controller; Computer Power Supply; Sealed Battery Compartment; Two Rechargeable Batteries; External Battery Charger; Hard Shipping Case; 1 Yr Standard Warranty; 24/7 Reachback Capability - Access To Chemists; Software Libraries;,FR-026-1003,,Ea.,,60 Days,,55000,54858.38
+,Smiths Detection,OEM,2.0,Hazmatid Ranger Extended Library Package- Performs Analysis By Simply Touching The Diamond Sensor To The Sample.  A Single Drop Of Liquid Or Grain Of Powder Is All That Is Required.  Includes: Hazmatid Ranger System; Instrument Power Supply; Ultra Rugged Field Computer - Bluetooth Enabled Controller; Computer Power Supply; Sealed Battery Compartment; Two Rechargeable Batteries; External Battery Charger; Hard Shipping Case; Standard 1 Yr Warranty And Partnership Program Plus An Additional 4 Year Partnership Program Extension For A Total Of 5 Years;,FR-026-1010,,Ea.,,60 Days,,75000,74806.88
+,Smiths Detection,OEM,2.0,"000-0062  Aldrich-ichem Library Package (32,126 Spectra) For Hazmatid This Library Contains 32,126 Unique Atr-ftir Spectra. The Data In This Library Encompasses A Broad Range Of Industries Including Plastics And Polymers, Chemicals And Petrochemicals, Semiconductors, Food And Beverage, Forensics, Hazardous Materials, Pesticides, Solvents And Pharmaceuticals. **only For The Hazmatid.  **compatible Only With Qualid.",FR-000-0062,,Ea.,,30 Days,,16950,16735.58
+,Smiths Detection,OEM,2.0,Cam 2 With Non-rechargeable Battery Pack; Hand Held Post Attack Device That Provides A Means Of Quickly Locating The Presence Of Nerve And Blister Agent Contamination On Personnel And Equipment In Both Combat And Homeland Defense Missions.,FR-0482-0301NRB,,Ea.,,90 Days,,10503,10475.95
+,Smiths Detection,OEM,2.0,"Multi-mode Threat Detector (mmtd) Single Mode Is A Rugged, Portable Hand-held System For The Rapid Detection And Identification Of Explosives.",FR-4820800EXP,,Ea.,,90 Days,,39000,38899.57
+,Smiths Detection,OEM,2.0,"Multi-mode Threat Detector (mmtd) Dual Mode Is A Rugged, Portable Hand-held System For The Rapid Detection And Identification Of Explosives And/or Narcotics.  The Dual Mode Setting Allows For The Simultaneous Detection Of Explosives And Narcotics From One Sample.",FR-4820800DUAL,,Ea.,,90 Days,,42000,41891.85
+,Smiths Detection,OEM,2.0,"Multi-mode Threat Detector (mmtd) Tri-mode Is A Rugged, Portable Hand-held System For The Rapid Detection And Identification Of Explosives, Narcotics And Cwa/tics Featuring An Optimized Detection Capability For Peroxides, Taggants And Methamphetamine Precursors. Additionally, A Dual Mode Setting Allows For The Simultaneous Detection Of Explosives And Narcotics From One Sample.",FR-4820800TRI,,Ea.,,90 Days,,45000,44884.13
+,Smiths Detection,OEM,2.0,Multi-mode Threat Detector (mmtd) Partnership Program,FR-4820800PP,,Ea.,,90 Days,,55000,54858.38
+,Sperian Protection,OEM,2.0,2f3 Fabric,5,,Ea.,,30-45 Days,,665.32,402.19
+,Sperian Protection,OEM,2.0,Millenia Xt,9,,Ea.,,30-45 Days,,694.44,419.79
+,Sperian Protection,OEM,2.0,Advance  Ultra,A,,Ea.,,30-45 Days,,629.48,380.52
+,Sperian Protection,OEM,2.0,Nomex Iiia,C,,Ea.,,30-45 Days,,413.3,249.84
+,Sperian Protection,OEM,2.0,Pbi/kevlar,D,,Ea.,,30-45 Days,,696.68,421.14
+,Sperian Protection,OEM,2.0,Pbi/kevlar (black),Db,,Ea.,,30-45 Days,,713.5,431.31
+,Sperian Protection,OEM,2.0,Gemini,GN,,Ea.,,30-45 Days,,824.38,498.34
+,Sperian Protection,OEM,2.0,Gemini (black),GB,,Ea.,,30-45 Days,,890.46,538.28
+,Sperian Protection,OEM,2.0,Armor Gold,IG,,Ea.,,30-45 Days,,655.24,396.09
+,Sperian Protection,OEM,2.0,Matrix Pbi/kevlar,ON,,Ea.,,30-45 Days,,723.58,437.4
+,Sperian Protection,OEM,2.0,Matrix Pbi / Kevlar (black),Ob,,Ea.,,30-45 Days,,785.18,474.64
+,Sperian Protection,OEM,2.0,Basofil/kevlar,T,,Ea.,,30-45 Days,,502.92,304.02
+,Sperian Protection,OEM,2.0,Basofil/kevlar(black),Tb,,Ea.,,30-45 Days,,594,359.07
+,Sperian Protection,OEM,2.0,Nomex/kevlar(advance),U,,Ea.,,30-45 Days,,594.76,359.53
+,Sperian Protection,OEM,2.0,Nomex/kevlar,W,,Ea.,,30-45 Days,,474.92,287.09
+,Sperian Protection,OEM,2.0,Stedair 3000 Eptfe/e-89,K,,Ea.,,30-45 Days,,292.34,176.72
+,Sperian Protection,OEM,2.0,Stedair 4000 Eptfe/woven Nomex,E,,Ea.,,30-45 Days,,376.34,227.5
+,Sperian Protection,OEM,2.0,Rt7100 Ptfe/non-woven Substrate,P,,Ea.,,30-45 Days,,308.02,186.2
+,Sperian Protection,OEM,2.0,Crosstech / Nomex Pjc,V,,Ea.,,30-45 Days,,424.52,256.62
+,Sperian Protection,OEM,2.0,Xe-289 (chambray),2,,Ea.,,30-45 Days,,264.34,159.79
+,Sperian Protection,OEM,2.0,Xe-289 (chambray),3,,Ea.,,30-45 Days,,299.06,180.78
+,Sperian Protection,OEM,2.0,Quantum 3d,3,,Ea.,,30-45 Days,,387.54,234.27
+,Sperian Protection,OEM,2.0,Caldura Silver Sl3,3S,,Ea.,,30-45 Days,,380.82,230.21
+,Sperian Protection,OEM,2.0,Caldura Sliver Np,LS,,Ea.,,30-45 Days,,360.66,218.02
+,Sperian Protection,OEM,2.0,Xtra-lite (chambray),M,,Ea.,,30-45 Days,,216.18,130.68
+,Sperian Protection,OEM,2.0,Aralite Np,MS,,Ea.,,30-45 Days,,252.02,152.35
+,Sperian Protection,OEM,2.0,Xlt-lite (chambray),N,,Ea.,,30-45 Days,,193.78,117.14
+,Sperian Protection,OEM,2.0,Caldura Sliver Sl2,RS,,Ea.,,30-45 Days,,343.86,207.86
+,Sperian Protection,OEM,2.0,Ultraflex/armid Batting,Y,,Ea.,,30-45 Days,,318.1,192.29
+,Sperian Protection,OEM,2.0,Ultraflex 2/2 Layers E-89,Y2,,Ea.,,30-45 Days,,367.38,222.08
+,Sperian Protection,OEM,2.0,War Glide/aramid Batting,ZW,,Ea.,,30-45 Days,,282.26,170.63
+,Sperian Protection,OEM,2.0,War Glide 2-layer,Z8,,Ea.,,30-45 Days,,316.98,191.61
+,Sperian Protection,OEM,2.0,War Glide 3-layer,Z9,,Ea.,,30-45 Days,,334.9,202.45
+,Sperian Protection,OEM,2.0,2f3 Fabric,5,,Ea.,,30-45 Days,,579.08,350.05
+,Sperian Protection,OEM,2.0,Millenia Xt,9,,Ea.,,30-45 Days,,592.52,358.18
+,Sperian Protection,OEM,2.0,Advance  Ultra,A,,Ea.,,30-45 Days,,535.4,323.65
+,Sperian Protection,OEM,2.0,Nomex Iiia,C,,Ea.,,30-45 Days,,361.78,218.7
+,Sperian Protection,OEM,2.0,Pbi/kevlar,D,,Ea.,,30-45 Days,,594.76,359.53
+,Sperian Protection,OEM,2.0,Pbi/kevlar (black),Db,,Ea.,,30-45 Days,,604.84,365.63
+,Sperian Protection,OEM,2.0,Gemini,GN,,Ea.,,30-45 Days,,626.12,378.49
+,Sperian Protection,OEM,2.0,Gemini (black),GB,,Ea.,,30-45 Days,,676.52,408.96
+,Sperian Protection,OEM,2.0,Armor Gold,IG,,Ea.,,30-45 Days,,493.96,298.6
+,Sperian Protection,OEM,2.0,Matrix Pbi/kevlar,ON,,Ea.,,30-45 Days,,616.04,372.4
+,Sperian Protection,OEM,2.0,Matrix Pbi / Kevlar (black),Ob,,Ea.,,30-45 Days,,664.2,401.51
+,Sperian Protection,OEM,2.0,Basofil/kevlar,T,,Ea.,,30-45 Days,,436.84,264.07
+,Sperian Protection,OEM,2.0,Basofil/kevlar(black),Tb,,Ea.,,30-45 Days,,481.64,291.15
+,Sperian Protection,OEM,2.0,Nomex/kevlar(advance),U,,Ea.,,30-45 Days,,446.92,270.16
+,Sperian Protection,OEM,2.0,Nomex/kevlar,W,,Ea.,,30-45 Days,,413.3,249.84
+,Sperian Protection,OEM,2.0,Stedair 3000 Eptfe/e-89,K,,Ea.,,30-45 Days,,208.34,125.94
+,Sperian Protection,OEM,2.0,Stedair 4000 Eptfe/woven Nomex,E,,Ea.,,30-45 Days,,265.46,160.47
+,Sperian Protection,OEM,2.0,Rt7100 Ptfe/non-woven Substrate,P,,Ea.,,30-45 Days,,218.42,132.03
+,Sperian Protection,OEM,2.0,Crosstech / Nomex Pjc,V,,Ea.,,30-45 Days,,299.06,180.78
+,Sperian Protection,OEM,2.0,Xe-289 (chambray),2,,Ea.,,30-45 Days,,236.34,142.87
+,Sperian Protection,OEM,2.0,Xe-289 (chambray),3,,Ea.,,30-45 Days,,266.58,161.15
+,Sperian Protection,OEM,2.0,Quantum 3d,3,,Ea.,,30-45 Days,,347.22,209.89
+,Sperian Protection,OEM,2.0,Caldura Silver Sl3,3S,,Ea.,,30-45 Days,,342.74,207.19
+,Sperian Protection,OEM,2.0,Caldura Sliver Np,LS,,Ea.,,30-45 Days,,319.22,192.97
+,Sperian Protection,OEM,2.0,Xtra-lite (chambray),M,,Ea.,,30-45 Days,,192.66,116.46
+,Sperian Protection,OEM,2.0,Aralite Np,MS,,Ea.,,30-45 Days,,224.02,135.42
+,Sperian Protection,OEM,2.0,Xlt-lite (chambray),N,,Ea.,,30-45 Days,,174.74,105.63
+,Sperian Protection,OEM,2.0,Caldura Sliver Sl2,RS,,Ea.,,30-45 Days,,306.9,185.52
+,Sperian Protection,OEM,2.0,Ultraflex/armid Batting,Y,,Ea.,,30-45 Days,,282.26,170.63
+,Sperian Protection,OEM,2.0,Ultraflex 2/2 Layers E-89,Y2,,Ea.,,30-45 Days,,325.94,197.03
+,Sperian Protection,OEM,2.0,War Glide/aramid Batting,ZW,,Ea.,,30-45 Days,,255.38,154.38
+,Sperian Protection,OEM,2.0,War Glide 2-layer,Z8,,Ea.,,30-45 Days,,286.74,173.33
+,Sperian Protection,OEM,2.0,War Glide 3-layer,Z9,,Ea.,,30-45 Days,,301.3,182.14
+,Sperian Protection,OEM,2.0,Nfpa,1,,Ea.,,30-45 Days,,80.54,48.69
+,Sperian Protection,OEM,2.0,Nfpa Hi-viz,2,,Ea.,,30-45 Days,,84.9,51.32
+,Sperian Protection,OEM,2.0,Nfpa Combo,3,,Ea.,,30-45 Days,,94.2,56.94
+,Sperian Protection,OEM,2.0,New York,4,,Ea.,,30-45 Days,,103.6,62.63
+,Sperian Protection,OEM,2.0,N.y. Hi-viz,5,,Ea.,,30-45 Days,,105.18,63.58
+,Sperian Protection,OEM,2.0,N.y. Combo,6,,Ea.,,30-45 Days,,114.48,69.2
+,Sperian Protection,OEM,2.0,Pant,7,,Ea.,,30-45 Days,,22.74,13.75
+,Sperian Protection,OEM,2.0,Outseam (450),8,,Ea.,,30-45 Days,,22.4,13.54
+,Sperian Protection,OEM,2.0,Nfpa,1,,Ea.,,30-45 Days,,110.22,66.63
+,Sperian Protection,OEM,2.0,Nfpa Hi-viz,2,,Ea.,,30-45 Days,,115.26,69.67
+,Sperian Protection,OEM,2.0,Nfpa Combo,3,,Ea.,,30-45 Days,,128.36,77.59
+,Sperian Protection,OEM,2.0,New York,4,,Ea.,,30-45 Days,,141.24,85.38
+,Sperian Protection,OEM,2.0,N.y. Hi-viz,5,,Ea.,,30-45 Days,,143.04,86.47
+,Sperian Protection,OEM,2.0,N.y. Combo,6,,Ea.,,30-45 Days,,155.92,94.25
+,Sperian Protection,OEM,2.0,Pant,7,,Ea.,,30-45 Days,,28.9,17.47
+,Sperian Protection,OEM,2.0,Outseam (450),8,,Ea.,,30-45 Days,,28.12,17
+,Sperian Protection,OEM,2.0,Nfpa,1,,Ea.,,30-45 Days,,146.74,88.7
+,Sperian Protection,OEM,2.0,Nfpa Hi-viz,2,,Ea.,,30-45 Days,,152.34,92.09
+,Sperian Protection,OEM,2.0,Nfpa Combo,3,,Ea.,,30-45 Days,,170.14,102.85
+,Sperian Protection,OEM,2.0,New York,4,,Ea.,,30-45 Days,,186.72,112.87
+,Sperian Protection,OEM,2.0,N.y. Hi-viz,5,,Ea.,,30-45 Days,,188.84,114.15
+,Sperian Protection,OEM,2.0,N.y. Combo,6,,Ea.,,30-45 Days,,206.88,125.06
+,Sperian Protection,OEM,2.0,Pant,7,,Ea.,,30-45 Days,,36.74,22.21
+,Sperian Protection,OEM,2.0,Outseam (450),8,,Ea.,,30-45 Days,,35.06,21.19
+,Sperian Protection,OEM,2.0,Nfpa Combo,3,,Ea.,,30-45 Days,,147.52,89.18
+,Sperian Protection,OEM,2.0,New York,4,,Ea.,,30-45 Days,,161.86,97.84
+,Sperian Protection,OEM,2.0,N.y. Hi-viz,5,,Ea.,,30-45 Days,,163.86,99.05
+,Sperian Protection,OEM,2.0,N.y. Combo,6,,Ea.,,30-45 Days,,179.44,108.47
+,Sperian Protection,OEM,2.0,Pant,7,,Ea.,,30-45 Days,,32.6,19.71
+,Sperian Protection,OEM,2.0,Outseam (450),8,,Ea.,,30-45 Days,,32.38,19.57
+,Sperian Protection,OEM,2.0,Nfpa,1,,Ea.,,30-45 Days,,127.02,76.78
+,Sperian Protection,OEM,2.0,Nfpa Hi-viz,2,,Ea.,,30-45 Days,,132.16,79.89
+,Sperian Protection,OEM,2.0,Nfpa,1,,Ea.,,30-45 Days,,167.56,101.29
+,Sperian Protection,OEM,2.0,Nfpa Hi-viz,2,,Ea.,,30-45 Days,,173.28,104.75
+,Sperian Protection,OEM,2.0,Nfpa Combo,3,,Ea.,,30-45 Days,,194.22,117.41
+,Sperian Protection,OEM,2.0,New York,4,,Ea.,,30-45 Days,,213.16,128.86
+,Sperian Protection,OEM,2.0,N.y. Hi-viz,5,,Ea.,,30-45 Days,,214.94,129.93
+,Sperian Protection,OEM,2.0,N.y. Combo,6,,Ea.,,30-45 Days,,236,142.66
+,Sperian Protection,OEM,2.0,Pant,7,,Ea.,,30-45 Days,,40.88,24.71
+,Sperian Protection,OEM,2.0,Outseam (450),8,,Ea.,,30-45 Days,,40.32,24.37
+,Sperian Protection,OEM,2.0,Wristlets - Imperm. Waterwell,315,,Ea.,,30-45 Days,,27.22,16.45
+,Sperian Protection,OEM,2.0,Wristlets - Breathable Waterwell,395,,Ea.,,30-45 Days,,51.42,31.08
+,Sperian Protection,OEM,2.0,Wristlets - Black Breathable Waterwell,385,,Ea.,,30-45 Days,,51.42,31.08
+,Sperian Protection,OEM,2.0,Wristlets W/thumb Hole W/imperm. Waterwell,311,,Ea.,,30-45 Days,,40.1,24.24
+,Sperian Protection,OEM,2.0,Wristlets W/thumb Hole W/breathable Waterwell,391,,Ea.,,30-45 Days,,63.06,38.12
+,Sperian Protection,OEM,2.0,Wristlets - Imperm. Waterwell,316,,Ea.,,30-45 Days,,27.22,16.45
+,Sperian Protection,OEM,2.0,Wristlets - Breathable Waterwell,396,,Ea.,,30-45 Days,,51.42,31.08
+,Sperian Protection,OEM,2.0,Wristlets W/thumb Hole - Impermeable Waterwell,310,,Ea.,,30-45 Days,,40.1,24.24
+,Sperian Protection,OEM,2.0,Wristlets W/thumb Hole - Breathable Waterwell,390,,Ea.,,30-45 Days,,63.06,38.12
+,Sperian Protection,OEM,2.0,Standard (drd),245,,Ea.,,30-45 Days,,112.8,68.19
+,Sperian Protection,OEM,2.0,Soft Drd,246,,Ea.,,30-45 Days,,123.2,74.47
+,Sperian Protection,OEM,2.0,Sleeve Cuffs,608,,Ea.,,30-45 Days,,15.68,9.48
+,Sperian Protection,OEM,2.0,Pant Cuffs,623,,Ea.,,30-45 Days,,21.62,13.07
+,Sperian Protection,OEM,2.0,Shoulder Patches,619,,Ea.,,30-45 Days,,26.2,15.84
+,Sperian Protection,OEM,2.0,Elbow Patches,105,,Ea.,,30-45 Days,,21.62,13.07
+,Sperian Protection,OEM,2.0,Knee Patches,628,,Ea.,,30-45 Days,,39.88,24.11
+,Sperian Protection,OEM,2.0," Lower 5"" Of Pocket - Inside - Semi-bellow Pants",633,,Ea.,,30-45 Days,,23.18,14.01
+,Sperian Protection,OEM,2.0,Sleeve Cuffs,605,,Ea.,,30-45 Days,,13.1,7.92
+,Sperian Protection,OEM,2.0,Pant Cuffs,620,,Ea.,,30-45 Days,,18.14,10.97
+,Sperian Protection,OEM,2.0,Elbow Patches,610,,Ea.,,30-45 Days,,12.44,7.52
+,Sperian Protection,OEM,2.0,Knee Patches,625,,Ea.,,30-45 Days,,25.64,15.5
+,Sperian Protection,OEM,2.0," Lower 5"" Of Pocket - Outside - Semi-bellow Pants",630,,Ea.,,30-45 Days,,11.64,7.04
+,Sperian Protection,OEM,2.0,Sleeve Cuffs,606,,Ea.,,30-45 Days,,11.76,7.11
+,Sperian Protection,OEM,2.0,Pant Cuffs,621,,Ea.,,30-45 Days,,16.02,9.68
+,Sperian Protection,OEM,2.0,Elbow Patches,611,,Ea.,,30-45 Days,,16.92,10.23
+,Sperian Protection,OEM,2.0,Knee Patches,626,,Ea.,,30-45 Days,,28.68,17.34
+,Sperian Protection,OEM,2.0," Lower 5"" Of Pocket - Outside - Semi-bellow Pants",631,,Ea.,,30-45 Days,,16.46,9.95
+,Sperian Protection,OEM,2.0," Lower 5"" Of Pocket - Inside - Semi-bellow Pants",641,,Ea.,,30-45 Days,,23.3,14.08
+,Sperian Protection,OEM,2.0,"Radio Pocket (9""x4 1/2"" X 2"")each",110,,Ea.,,30-45 Days,,39.98,24.17
+,Sperian Protection,OEM,2.0,"Radio Pocket (7 1/2"" X 3  1/2"" X 2"")each",111,,Ea.,,30-45 Days,,34.62,20.93
+,Sperian Protection,OEM,2.0,"Radio Pocket Neoprene Lined (9"" X 4  1/2"" X 2"")each",112,,Ea.,,30-45 Days,,39.54,23.9
+,Sperian Protection,OEM,2.0,"Radio Pocket Neoprene Lined (7 1/2 "" X 3 1/2"" X 2"")each",113,,Ea.,,30-45 Days,,34.62,20.93
+,Sperian Protection,OEM,2.0,"2 Cell Flashlight Pocket (10"" X 2 5/8"" X 2"")each",117,,Ea.,,30-45 Days,,36.74,22.21
+,Sperian Protection,OEM,2.0,"Scba Face Mask Pouch Detachable (12 1/4"" X 14"")each",146,,Ea.,,30-45 Days,,74.26,44.89
+,Sperian Protection,OEM,2.0,Hand Warmer Pocket Per Pair - Coat,168,,Ea.,,30-45 Days,,33.38,20.18
+,Sperian Protection,OEM,2.0,Full-bellow Pocket Kevlar Reinforced - Replaces Standard Pocket - Coat,184,,Ea.,,30-45 Days,,72.8,44.01
+,Sperian Protection,OEM,2.0,Semi-bellow Pocket Kevlar Reinforced - Replaces Std Pocket - Coat,189,,Ea.,,30-45 Days,,48.16,29.11
+,Sperian Protection,OEM,2.0,Full-bellow Pocket W/charlotte Handwarmer - Coat,182,,Ea.,,30-45 Days,,119.84,72.44
+,Sperian Protection,OEM,2.0,Semi-bellow Pocket W/charlotte Handwarmer - Coat,187,,Ea.,,30-45 Days,,107.52,65
+,Sperian Protection,OEM,2.0,Add Full Kevlar Reinforcement - Inside N/a W/184 And 189,665,,Ea.,,30-45 Days,,23.4,14.15
+,Sperian Protection,OEM,2.0,"Semi-bellow Pocket 9""x9"" - Pants",180,,Ea.,,30-45 Days,,16.02,9.68
+,Sperian Protection,OEM,2.0,"Full-bellow Pocket 9"" X 9"" - Pants",185,,Ea.,,30-45 Days,,21.16,12.79
+,Sperian Protection,OEM,2.0,Impermeable Pant Pocket,183,,Ea.,,30-45 Days,,21.06,12.73
+,Sperian Protection,OEM,2.0,Divider In Pocket (not Available With #187 Or Kevlar Pouch)each - Pants,160,,Ea.,,30-45 Days,,23.18,14.01
+,Sperian Protection,OEM,2.0,Microphone Loop In Webbing Each,125,,Ea.,,30-45 Days,,5.72,3.46
+,Sperian Protection,OEM,2.0,Microphone Loop In Webbing With Flap Each,126,,Ea.,,30-45 Days,,11.32,6.84
+,Sperian Protection,OEM,2.0,Belt Loops Four(4),130,,Ea.,,30-45 Days,,18.04,10.91
+,Sperian Protection,OEM,2.0,Flashlight Loops Each,134,,Ea.,,30-45 Days,,6.6,3.99
+,Sperian Protection,OEM,2.0,Flashlight Loops With Utility Strap Each,135,,Ea.,,30-45 Days,,14.9,9.01
+,Sperian Protection,OEM,2.0,P.d.d. Loop Each,140,,Ea.,,30-45 Days,,5.72,3.46
+,Sperian Protection,OEM,2.0,Test Patch Each,150,,Ea.,,30-45 Days,,6.28,3.8
+,Sperian Protection,OEM,2.0,"Personal I.d. Patch - Embroidered (1""x4"") Each",151,,Ea.,,30-45 Days,,18.6,11.24
+,Sperian Protection,OEM,2.0,"Glove Holder 1"" X 12"" Each",173,,Ea.,,30-45 Days,,14.68,8.87
+,Sperian Protection,OEM,2.0,Accessory Hook On Hypalon Patch Each,175,,Ea.,,30-45 Days,,9.18,5.55
+,Sperian Protection,OEM,2.0,Accessory Dee On Hypalon Patch Each,176,,Ea.,,30-45 Days,,7.4,4.47
+,Sperian Protection,OEM,2.0,I-tech Insertable Knee System,214,,Ea.,,30-45 Days,,74.48,45.02
+,Sperian Protection,OEM,2.0,Knee Pads,216,,Ea.,,30-45 Days,,22.4,13.54
+,Sperian Protection,OEM,2.0,Steamgard Wrist Trim (standard Trim) Pair,225,,Ea.,,30-45 Days,,7.1,4.29
+,Sperian Protection,OEM,2.0,Tes Thermal Enhancement System Each,232,,Ea.,,30-45 Days,,188.18,113.75
+,Sperian Protection,OEM,2.0,Tes Thermal Enhancement System S27 Each,234,,Ea.,,30-45 Days,,190.1,114.92
+,Sperian Protection,OEM,2.0,Coat  & Pant Liner Alert System Each,240,,Ea.,,30-45 Days,,8.74,5.28
+,Sperian Protection,OEM,2.0,Reverse Boot Cut Pair,260,,Ea.,,30-45 Days,,1,0.6
+,Sperian Protection,OEM,2.0,Thumb Loops Pair,305,,Ea.,,30-45 Days,,4.82,2.91
+,Sperian Protection,OEM,2.0,Waterdam Pair,320,,Ea.,,30-45 Days,,27.22,16.45
+,Sperian Protection,OEM,2.0,Leg Zippers Pair,330,,Ea.,,30-45 Days,,92.52,55.93
+,Sperian Protection,OEM,2.0,Double-stitch On Reflective Trim For Coat Pair,455,,Ea.,,30-45 Days,,19.6,11.85
+,Sperian Protection,OEM,2.0,Double -stitch On Reflective Trim For Pant Pair,456,,Ea.,,30-45 Days,,8.06,4.87
+,Sperian Protection,OEM,2.0,Stormband Each - Coat,505,,Ea.,,30-45 Days,,28.56,17.26
+,Sperian Protection,OEM,2.0,Snap Attachement For Fleece Vest  Each - Coat,555,,Ea.,,30-45 Days,,9.64,5.83
+,Sperian Protection,OEM,2.0,Nomex Fleece Vest (must Be Ordered In Combination With #555 Snap Attachement) Each,155,,Ea.,,30-45 Days,,192.66,116.46
+,Sperian Protection,OEM,2.0,"Permanent, 3 1/2"" X 10""",351,,Ea.,,30-45 Days,,12.66,7.65
+,Sperian Protection,OEM,2.0,"Permanent, 7"" X  10""",352,,Ea.,,30-45 Days,,16.68,10.08
+,Sperian Protection,OEM,2.0,"Removable, 3 1/2"" X 10""",356,,Ea.,,30-45 Days,,17.7,10.7
+,Sperian Protection,OEM,2.0,"Removable, 3 1/2"" X 12 1/2""",360,,Ea.,,30-45 Days,,22.74,13.75
+,Sperian Protection,OEM,2.0,"Removable, 3 1/2"" X 16 1/2"" ",361,,Ea.,,30-45 Days,,26.2,15.84
+,Sperian Protection,OEM,2.0,"Hanging Name Patch, 4"" X 19 1/2""",365,,Ea.,,30-45 Days,,28.56,17.26
+,Sperian Protection,OEM,2.0,"Removable Suspenders For Bunker Pant, 8 Point Button",513,,Ea.,,30-45 Days,,51.42,31.08
+,Sperian Protection,OEM,2.0,"Removable Suspenders  With 2"" Scotchlite Yellow Triple Trim Bunker Pant, 8 Point Button ",513-2SY,,Ea.,,30-45 Days,,83.34,50.38
+,Sperian Protection,OEM,2.0,"Removable Suspenders  With 2"" Scotchlite Red Triple Trim Bunker Pant, 8 Point Button ",513-2SR,,Ea.,,30-45 Days,,83.34,50.38
+,Sperian Protection,OEM,2.0,Standard Quick Release Suspenders - Side Buckle,514,,Ea.,,30-45 Days,,29.24,17.68
+,Sperian Protection,OEM,2.0,"Standard Quick Release W/2"" Scotchlite Triple Trim Yellow, Side Release Buckle",514-2SY,,Ea.,,30-45 Days,,61.26,37.03
+,Sperian Protection,OEM,2.0,"Standard Quick Release W/2"" Scotchlite Triple Trim Red, Side Release Buckle",514-2SR,,Ea.,,30-45 Days,,61.26,37.03
+,Sperian Protection,OEM,2.0,"New England Style Removable Suspenders, Side Release Buckle",518,,Ea.,,30-45 Days,,36.3,21.94
+,Sperian Protection,OEM,2.0,"New England Style Removable Suspender With 2"" Scotchlite Yellow Triple Trim, Side Release Buckles",518-2SY,,Ea.,,30-45 Days,,68.44,41.37
+,Sperian Protection,OEM,2.0,"Removable Suspenders New England Style With 2"" Scotchlite  Red Triple Trim, Side Release Buckles",518-2SR,,Ea.,,30-45 Days,,68.44,41.37
+,Sperian Protection,OEM,2.0,Advance Foam Padding For Suspenders,530,,Ea.,,30-45 Days,,7.28,4.4
+,Sperian Protection,OEM,2.0,Elbow Pads (1year)pair,205,,Ea.,,30-45 Days,,9.86,5.96
+,Sperian Protection,OEM,2.0,Shoulder Pads (1 Layer)pair,210,,Ea.,,30-45 Days,,9.86,5.96
+,Sperian Protection,OEM,2.0,Yoke Padding (1 Layer)each,223,,Ea.,,30-45 Days,,15.56,9.41
+,Sperian Protection,OEM,2.0,Aluminized Kevlar,F,,Ea.,,30-45 Days,,688.84,416.4
+,Sperian Protection,OEM,2.0,Aluminized Pbi/kevlar,S,,Ea.,,30-45 Days,,778.46,470.58
+,Sperian Protection,OEM,2.0,Rt7100 Ptfe/non-woven Substrate,P,,Ea.,,30-45 Days,,259.86,157.09
+,Sperian Protection,OEM,2.0,Crosstech / Nomex Pjc,V,,Ea.,,30-45 Days,,358.42,216.66
+,Sperian Protection,OEM,2.0,Xtra-lite (chambray),M,,Ea.,,30-45 Days,,236.34,142.87
+,Sperian Protection,OEM,2.0,Xlt-lite (chambray),N,,Ea.,,30-45 Days,,209.46,126.62
+,Sperian Protection,OEM,2.0,Ultraflex/ Aramidbatting,Y,,Ea.,,30-45 Days,,320.34,193.65
+,Sperian Protection,OEM,2.0,War Glide/aramid Batt.,ZW,,Ea.,,30-45 Days,,274.42,165.89
+,Sperian Protection,OEM,2.0,Aluminized Kevlar,F,,Ea.,,30-45 Days,,517.48,312.82
+,Sperian Protection,OEM,2.0,Aluminized Pbi/kevlar,S,,Ea.,,30-45 Days,,582.44,352.08
+,Sperian Protection,OEM,2.0,Rt7100 Ptfe/non-woven Substrate,P,,Ea.,,30-45 Days,,220.66,133.39
+,Sperian Protection,OEM,2.0,Crosstech / Nomex Pjc,V,,Ea.,,30-45 Days,,293.46,177.4
+,Sperian Protection,OEM,2.0,Xtra-lite (chambray),M,,Ea.,,30-45 Days,,181.46,109.69
+,Sperian Protection,OEM,2.0,Xlt-lite (chambray),N,,Ea.,,30-45 Days,,157.94,95.47
+,Sperian Protection,OEM,2.0,Ultraflex/ Aramidbatting,Y,,Ea.,,30-45 Days,,247.54,149.64
+,Sperian Protection,OEM,2.0,War Glide/aramid Batt.,ZW,,Ea.,,30-45 Days,,210.58,127.3
+,Sperian Protection,OEM,2.0,"Wristlets 4"" Black (wrist Only)",385,,Ea.,,30-45 Days,,43.7,26.42
+,Sperian Protection,OEM,2.0,Thumbed Wristlets Black (hand & Wrist),386,,Ea.,,30-45 Days,,53.6,32.4
+,Sperian Protection,OEM,2.0,Standard Drag Rescue Device (drd),245,,Ea.,,30-45 Days,,112.8,68.19
+,Sperian Protection,OEM,2.0,Soft Drd,246,,Ea.,,30-45 Days,,123.2,74.47
+,Sperian Protection,OEM,2.0,Sleeve Cuffs,605,,Ea.,,30-45 Days,,13.1,7.92
+,Sperian Protection,OEM,2.0,Pant Cuffs,620,,Ea.,,30-45 Days,,18.14,10.97
+,Sperian Protection,OEM,2.0,Sleeve Cuffs,606,,Ea.,,30-45 Days,,11.76,7.11
+,Sperian Protection,OEM,2.0,Pant Cuffs,621,,Ea.,,30-45 Days,,16.02,9.68
+,Sperian Protection,OEM,2.0,Sleeve Cuffs,608,,Ea.,,30-45 Days,,15.68,9.48
+,Sperian Protection,OEM,2.0,Pant Cuffs,623,,Ea.,,30-45 Days,,21.62,13.07
+,Sperian Protection,OEM,2.0,Elbow Patches,105,,Ea.,,30-45 Days,,21.62,13.07
+,Sperian Protection,OEM,2.0,Shoulder Patches,918,,Ea.,,30-45 Days,,26.2,15.84
+,Sperian Protection,OEM,2.0,Knee Patches,928,,Ea.,,30-45 Days,,39.88,24.11
+,Sperian Protection,OEM,2.0,Type 194,940,,Ea.,,30-45 Days,,16.12,9.74
+,Sperian Protection,OEM,2.0,Type 195,950,,Ea.,,30-45 Days,,21.72,13.13
+,Sperian Protection,OEM,2.0,Type 194,941,,Ea.,,30-45 Days,,21.28,12.86
+,Sperian Protection,OEM,2.0,Type 194,942,,Ea.,,30-45 Days,,16.58,10.02
+,Sperian Protection,OEM,2.0,Type 195,952,,Ea.,,30-45 Days,,18.6,11.24
+,Sperian Protection,OEM,2.0,Type 196,962,,Ea.,,30-45 Days,,26.2,15.84
+,Sperian Protection,OEM,2.0,"Radio Pocket, Neoprene Lined  (7  1/2"" X 3  1/4"" X 2  1/2"")",107,,Ea.,,30-45 Days,,44.36,26.82
+,Sperian Protection,OEM,2.0,"Radio Pocket, Neoprene Lined  (8 1/2"" X 3 1/4"" X 2 1/2"")",108,,Ea.,,30-45 Days,,46.6,28.17
+,Sperian Protection,OEM,2.0,"Radio Pocket, Neoprene Lined (9 1/2"" X 3 1/4"" X 2 1/2"")",109,,Ea.,,30-45 Days,,48.84,29.52
+,Sperian Protection,OEM,2.0,"Scba Mask Pouch, Side Loaded Zipper Closure (15"" X 9 1/2"")",148,,Ea.,,30-45 Days,,93.64,56.61
+,Sperian Protection,OEM,2.0,"Pocket Partition For 195 And 196 Only (50/50, 60/40 Or  40/60)",162,,Ea.,,30-45 Days,,18.92,11.44
+,Sperian Protection,OEM,2.0,Handwarmer Patch Pocket Lined With Ara-filk,166,,Ea.,,30-45 Days,,34.62,20.93
+,Sperian Protection,OEM,2.0,"Pant Patch Pocket With Flap (7  1/2"" X 7"")",192,,Ea.,,30-45 Days,,34.38,20.78
+,Sperian Protection,OEM,2.0,"Full-bellow Pocket, Neoprene Lined (9"" X 7"")",195,,Ea.,,30-45 Days,,20.6,12.45
+,Sperian Protection,OEM,2.0,"Full-bellow Pocket, Neoprene Lined (10"" X 10"")",196,,Ea.,,30-45 Days,,49.74,30.07
+,Sperian Protection,OEM,2.0,"Handwarmer Pocket Lined With Ara-filk (9 1/2"" X 9 1/2"")",199,,Ea.,,30-45 Days,,16.12,9.74
+,Sperian Protection,OEM,2.0,Mic Tab (0.5 X 3),128,,Ea.,,30-45 Days,,5.72,3.46
+,Sperian Protection,OEM,2.0,"Flashlight Tube, D-cells, 5 1/2"", Open Bottom",138,,Ea.,,30-45 Days,,29.68,17.94
+,Sperian Protection,OEM,2.0,"Pass Device Loop (2"" X 4"")",142,,Ea.,,30-45 Days,,9.64,5.83
+,Sperian Protection,OEM,2.0,"Test Patch (1"" X 3"")",150,,Ea.,,30-45 Days,,6.28,3.8
+,Sperian Protection,OEM,2.0,Accessory Hook With Hypalon Reinforcement,174,,Ea.,,30-45 Days,,9.18,5.55
+,Sperian Protection,OEM,2.0,Acessory D-ring With Hypalon Reinforcement,177,,Ea.,,30-45 Days,,7.4,4.47
+,Sperian Protection,OEM,2.0,Reverse Boot Cut On Pant Leg,260,,Ea.,,30-45 Days,,1,0.6
+,Sperian Protection,OEM,2.0,"Suspenders, Quick Release Buckle",514,,Ea.,,30-45 Days,,29.24,17.68
+,Sperian Protection,OEM,2.0,Suspenders New England Style,518,,Ea.,,30-45 Days,,36.3,21.94
+,Sperian Protection,OEM,2.0,"Suspenders Heavy Duty, 8 Point Button (old#370). N/a In Short",523,,Ea.,,30-45 Days,,50.96,30.81
+,Sperian Protection,OEM,2.0,"Suspenders, Non-stretchable, 8 Buttons System (old#911 Black)",528,,Ea.,,30-45 Days,,50.96,30.81
+,Sperian Protection,OEM,2.0,Padding For Suspenders,530,,Ea.,,30-45 Days,,7.28,4.4
+,Sperian Protection,OEM,2.0,"Elbow Pad, Ara-fill Under Reinforcement Option 105",202,,Ea.,,30-45 Days,,13.78,8.33
+,Sperian Protection,OEM,2.0,"Shoulder Pad, Ara-fill Under  Reinforcement Option 918",212,,Ea.,,30-45 Days,,13.78,8.33
+,Sperian Protection,OEM,2.0,"Knee Pad, Thermal Liner (2 Layers) Under Reinforce. Option 928",217,,Ea.,,30-45 Days,,27.32,16.51
+,Sperian Protection,OEM,2.0,"Knee Pad, Removable",219,,Ea.,,30-45 Days,,217.8,131.66
+,Sperian Protection,OEM,2.0,Thermal Enhancement System For Coat,230,,Ea.,,30-45 Days,,188.18,113.75
+,Sperian Protection,OEM,2.0,Thermal Enhancement System For Pant,231,,Ea.,,30-45 Days,,58.8,35.54
+,Sperian Protection,OEM,2.0,"Porta Stream I -  W/water Add.,  6 Min.,  32-000130-0000: A Self-contained Unit, The Porta Stream I Provides 6 Minutes Of Uninterrupted, Hands-free Flushing. The Gravity-fed Flow Starts Immediately After The Nozzle Pull Strap Is Removed. The Porta Stream I Comes With 8 Oz. Of Water Additive, Enough For 14-16 Gallons Of Water. When Mixed With Tap Water, Porta Stream I Rovides 6 Gallons (22.7l) Of Solution. Additionally, Porta Stream I's Exclusive Full Flow Nozzles Cover A Wide Area Around The Eye. ",FR-32-000130-0000,,Ea.,,14 Days,,181.58,146.35
+,Sperian Protection,OEM,2.0,"Porta Stream Ii -  W/180 Oz. Saline, 15 Min., 32-000200-0000: The 16-gal. Capacity Of This Eyewash Station Meets Ansi Z358.1-2004 Standards. Gravity-fed Unit Flushes Both Eyes At The Required .42 Gpm For 15 Minutes. Flow Begins Immediately When The Nozzle Restraining Strap Is Pulled Off. Comes With A Proportionate Amount Of EyesalineÂ® Concentrate To Create A Buffered, Saline Eyewash Solution. Includes Metal Hanging Bracket And 8""x10"" Eyewash Sign.",FR-32-000200-0000,,Ea.,,14 Days,,302.76,228.77
+,Sperian Protection,OEM,2.0,"Porta Stream Iii - W/180 Oz. Saline, 15 Min. Heated, 32-000310-0000: The 16-gal. Capacity Of This Eyewash Station Meets Ansi Z358.1-2004 Standards. Gravity-fed Unit Flushes Both Eyes At The Required .42 Gpm For 15 Minutes. Flow Begins Immediately When The Nozzle Restraining Strap Is Pulled Off. Comes With A Proportionate Amount Of EyesalineÂ® Concentrate To Create A Buffered, Saline Eyewash Solution. Includes Metal Hanging Bracket And 8""x10"" Eyewash Sign. Porta Stream Iii Is Freeze Protected By A Special Form Fitted Insulated Cover And Twin, 600 Watt, 110 Volt Thermostatically Controlled Heaters For Indoor And Outdoor Use. The Fluid-heating System Makes It Ideal For Use Between 72Â° And -32Â° F (22Â° To -36Â° C).",FR-000310-0000,,Ea.,,14 Days,,1447.37,1166.58
+,Sperian Protection,OEM,2.0,"32-000100-0000 Porta Stream I, 6 Minutes Hands-free Flushing, 6 Gal: Can Deliver Eye Wash Continuously For Six Minutes; Delivers 70 Oz. Of Eyesaline Solution At Room Temperature. A Self-contained Unit, The Porta Stream I Provides 6 Minutes Of Uninterrupted, Hands-free Flushing. The Gravity-fed Flow Starts Immediately After The Nozzle Pull Strap Is Removed. The Porta Stream I Comes With 70 Oz. (2.07l) Of Eyesaline Concentrate. When Mixed With Tap Water, Porta Stream I Provides 6 Gallons (22.7l) Of Eyesaline Solution For Flushing Out Eyes When Needed. Additionally, Porta Stream I's Exclusive Full Flow Nozzles Cover A Wide Area Around The Eye. Designed To Be Self Contained And Portable, No Plumbing Is Required.",FR-32-000100-0000,,Ea.,,30 Days,,203.07,161.63

@@ -564,6 +564,7 @@
     <Content Include="Content\js\app\components\jqui-widget_sidebar.js" />
     <Content Include="Content\js\app\models\asset_var.js" />
     <Content Include="Content\js\app\ui\asset\asset_navigator.js" />
+    <Content Include="Content\js\app\ui\asset\navigator\toolbar.js" />
     <Content Include="Content\js\app\ui\asset\show_asset.js" />
     <Content Include="Content\js\app\ui\catalog\import_asset_var_row.js" />
     <Content Include="Content\js\app\ui\catalog\import_set_fields.js" />

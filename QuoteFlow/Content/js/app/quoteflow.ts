@@ -43,7 +43,9 @@ module QuoteFlow {
     export var Pages = {}
     export var Routers = {}
     export module UI {
-        export var Asset = {};
+        export module Asset {
+            export var Navigator = {};
+        };
         export var Catalog = {};
         export var Common = {};
     }

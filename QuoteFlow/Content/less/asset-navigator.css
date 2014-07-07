@@ -83,6 +83,10 @@
   padding: 6px 10px 6px 34px;
   position: relative;
 }
+.aui-list ul li.check-list-item:hover,
+.aui-list ul li.check-list-item.active {
+  background-color: #ebf2f9;
+}
 .aui-list ul li.check-list-item label {
   clear: none;
   color: inherit;

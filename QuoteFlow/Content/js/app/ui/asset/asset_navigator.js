@@ -1,5 +1,4 @@
-﻿QuoteFlow.UI.Asset.AssetNavigator = QuoteFlow.Views.Base.extend({
-
+﻿QuoteFlow.UI.Asset.Navigator = QuoteFlow.Views.Base.extend({
     el: ".navigator-content",
 
     options: {},
@@ -11,7 +10,14 @@
         });
     },
 
-    initialize: function(options) {
+    subviews: {
+        ".navigator-search": "toolbar"
+    },
+
+    initialize: function (options) {
+        // subviews
+        this.toolbar = new QuoteFlow.UI.Asset.Navigator.Toolbar();
+
         this.initializeAssetListSidebar();
     },
 

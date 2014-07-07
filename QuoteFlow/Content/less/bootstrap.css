@@ -288,7 +288,7 @@
   padding: 2px 5px 2px 0;
   text-align: left;
   vertical-align: top;
-  width: 140px;
+  width: 120px;
 }
 .asset-container .item-details dl > dd {
   -moz-box-sizing: border-box;
@@ -444,6 +444,10 @@
   box-sizing: border-box;
   padding: 6px 10px 6px 34px;
   position: relative;
+}
+.aui-list ul li.check-list-item:hover,
+.aui-list ul li.check-list-item.active {
+  background-color: #ebf2f9;
 }
 .aui-list ul li.check-list-item label {
   clear: none;
