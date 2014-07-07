@@ -53,6 +53,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   clear: both;
+  outline: none;
 }
 .check-list-select .aui-list-scroll h5 {
   padding-left: 10px;
