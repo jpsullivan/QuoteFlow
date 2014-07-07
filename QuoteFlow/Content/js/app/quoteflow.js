@@ -55,7 +55,10 @@ var QuoteFlow;
         Debug.Collections = [];
     })(QuoteFlow.Debug || (QuoteFlow.Debug = {}));
     var Debug = QuoteFlow.Debug;
-    QuoteFlow.Model = {};
+    (function (Model) {
+        Model.Asset = {};
+    })(QuoteFlow.Model || (QuoteFlow.Model = {}));
+    var Model = QuoteFlow.Model;
     QuoteFlow.Pages = {};
     QuoteFlow.Routers = {};
     (function (UI) {

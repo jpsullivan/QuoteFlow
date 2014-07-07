@@ -39,7 +39,9 @@ module QuoteFlow {
         export var Models = [];
         export var Collections = [];
     }
-    export var Model = {}
+    export module Model {
+        export var Asset = {};
+    }
     export var Pages = {}
     export var Routers = {}
     export module UI {

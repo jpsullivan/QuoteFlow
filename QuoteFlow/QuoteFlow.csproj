@@ -562,6 +562,7 @@
     <Content Include="Content\js\app\helpers\application_helpers.js" />
     <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\components\jqui-widget_sidebar.js" />
+    <Content Include="Content\js\app\models\asset\navigator.js" />
     <Content Include="Content\js\app\models\asset_var.js" />
     <Content Include="Content\js\app\ui\asset\asset_navigator.js" />
     <Content Include="Content\js\app\ui\asset\navigator\toolbar.js" />
