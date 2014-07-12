@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QuoteFlow.Infrastructure.Helpers;
 
 namespace QuoteFlow.Models.ViewModels.Assets
 {
@@ -6,7 +7,7 @@ namespace QuoteFlow.Models.ViewModels.Assets
     {
         public AssetDetailsModel CurrentAssetDetailsModel { get; set; }
 
-        public IEnumerable<Asset> Assets { get; set; }
+        public PagedList<Asset> Assets { get; set; }
 
         /// <summary>
         /// A collection of all the asset creators found within this particular

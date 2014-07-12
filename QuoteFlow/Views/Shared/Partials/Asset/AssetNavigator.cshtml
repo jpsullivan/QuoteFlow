@@ -1,4 +1,5 @@
 ﻿@using QuoteFlow.Infrastructure.Extensions
+@using QuoteFlow.Infrastructure.Helpers
 @model QuoteFlow.Models.ViewModels.Assets.InteractiveAssetNavigatorViewModel
 
 <form class="navigator-search query-component generic-styled">
@@ -72,7 +73,8 @@
                         </div>
                         <div class="list-content" style="height: 795px;">
                             <ol class="asset-list">
-                                @foreach (var asset in Model.Assets) {
+                                @foreach (var asset in Model.Assets)
+                                {
                                     <li data-id="@asset.Id" title="@asset.Name">
                                         <a class="splitview-asset-link" href="@Url.Asset(asset.Id, asset.Name)">
                                             <img height="16" width="16" alt="@asset.Manufacturer.Name" title="" src="/images/icons/issuetypes/improvement.png">
@@ -87,12 +89,20 @@
                     </div>
                     <div class="end-of-stable-message"></div>
                     <div class="aui-group pagination-view count-pagination">
-                        <a href="#" class="refresh-table" original-title="Refresh results">Refresh</a>
-                        <div class="pagination aui-item" data-displayable-total="6">
+                        <div class="refresh-container aui-item">
+                            <span>
+                                <a href="#" class="refresh-table" title="Refresh results">Refresh results</a>
+                            </span>
+                        </div>
+                        <div class="pagination-container aui-item">
+                            <div class="pagination">
+                                @UIHelpers.PageNumber(Model.PaginationUrl, Model.Assets, "aui-nav aui-nav-pagination")
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Asset details -->
                 <div class="aui-item detail-panel active">
                     @Html.Partial("Partials/Asset/AssetDetails", Model.CurrentAssetDetailsModel)

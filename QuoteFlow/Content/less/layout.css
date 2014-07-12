@@ -382,11 +382,25 @@
   table-layout: auto;
 }
 .page-type-split .navigator-content .split-view .list-results-panel .count-pagination .pagination {
-  font-size: 0;
   padding: 0 10px 0 0;
   text-align: right;
   vertical-align: middle;
   white-space: nowrap;
+}
+.page-type-split .navigator-content .split-view .list-results-panel .count-pagination .pagination .aui-nav-pagination .aui-nav-selected {
+  font-weight: bold;
+}
+.page-type-split .navigator-content .split-view .list-results-panel .count-pagination .pagination .aui-nav-pagination li {
+  font-size: 14px;
+  line-height: 1;
+  height: auto;
+  margin: 0 0 0 .15em;
+  padding: .1em;
+  position: relative;
+  vertical-align: bottom;
+}
+.page-type-split .navigator-content .split-view .list-results-panel .count-pagination .pagination .aui-nav-pagination li a {
+  padding: 0;
 }
 .page-type-split .navigator-content .split-view .list-results-panel .count-pagination .refresh-table {
   height: 16px;

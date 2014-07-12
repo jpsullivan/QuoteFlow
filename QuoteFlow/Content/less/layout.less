@@ -464,11 +464,31 @@
                     table-layout: auto;
 
                     .pagination {
-                        font-size: 0;
                         padding: 0 10px 0 0;
                         text-align: right;
                         vertical-align: middle;
                         white-space: nowrap;
+
+                        .aui-nav-pagination {
+
+                            .aui-nav-selected {
+                                font-weight: bold;
+                            }
+
+                            li {
+                                font-size: 14px;
+                                line-height: 1;
+                                height: auto;
+                                margin: 0 0 0 .15em;
+                                padding: .1em;
+                                position: relative;
+                                vertical-align: bottom;
+
+                                a {
+                                    padding: 0;
+                                }
+                            }
+                        }
                     }
 
                     .refresh-table {

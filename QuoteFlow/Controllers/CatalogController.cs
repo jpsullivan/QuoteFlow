@@ -168,7 +168,6 @@ namespace QuoteFlow.Controllers
 
             var model = new CatalogShowAssetsModel
             {
-
                 AssetCreators = creators,
                 Assets = pagedAssets,
                 Catalog = catalog,
