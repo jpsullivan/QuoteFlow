@@ -141,21 +141,21 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("catalog/{catalogId:INT}/{catalogName}/assets/iv")]
-        public ActionResult ShowAssetsInteractive(int catalogId, string catalogName)
+        public ActionResult ShowAssetsInteractive(int catalogId, string catalogName, int? page)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
             if (catalog == null)
             {
                 return PageNotFound();
             }
-            
+
             const int perPage = 50;
-            var currentPage = Math.Max(1, 1); // always on page 1 on full-reload?
+            var currentPage = Math.Max(page ?? 1, 1);
 
             var creator = UserService.GetUser(catalog.CreatorId);
             var assets = AssetService.GetAssets(catalog.Id).ToList();
             var pagedAssets = assets.ToPagedList(currentPage, perPage);
-            var paginationUrl = Url.CatalogAssets(catalog.Id, catalog.Name.UrlFriendly(), -1);
+            var paginationUrl = Url.CatalogAssetsInteractive(catalog.Id, catalog.Name.UrlFriendly(), -1);
 
             // build up the navigation filter items
             var manufacturers = assets.Select(a => a.Manufacturer).ToList();
