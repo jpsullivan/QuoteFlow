@@ -75,6 +75,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return string.Format("/catalog/{0}/{1}/assets/iv", catalogId, catalogName.UrlFriendly());
         }
 
+        public static string CatalogAssetsInteractive(this UrlHelper url, int catalogId, string catalogName, int pageNumber)
+        {
+            return string.Format("/catalog/{0}/{1}/assets/iv?page={2}", catalogId, catalogName.UrlFriendly(), pageNumber);
+        }
+
         public static string CatalogVersions(this UrlHelper url, int catalogId, string catalogName)
         {
             return string.Format("/catalog/{0}/{1}/versions", catalogId, catalogName);
@@ -121,8 +126,8 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         public static string Manufacturer(this UrlHelper url, int id, string manufacturerName)
         {
-            //return string.Format("/manufacturer/{0}/{1}", id, manufacturerName.UrlFriendly());
-            return url.Action("Show", "Manufacturer", new {id, name = manufacturerName.UrlFriendly()});
+            return string.Format("/manufacturer/{0}/{1}", id, manufacturerName.UrlFriendly());
+            return url.RouteUrl("Manufacturer-Show", new {id, name = manufacturerName.UrlFriendly()});
         }
 
         public static string ManufacturerAssets(this UrlHelper url, int id, string manufacturerName)
