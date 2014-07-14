@@ -297,6 +297,7 @@
     <Compile Include="Configuration\SmtpUri.cs" />
     <Compile Include="Configuration\StorageType.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\Api\AssetController.cs" />
     <Compile Include="Controllers\Api\AssetVarController.cs" />
     <Compile Include="Controllers\AssetController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
@@ -562,9 +563,12 @@
     <Content Include="Content\js\app\helpers\application_helpers.js" />
     <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\components\jqui-widget_sidebar.js" />
+    <Content Include="Content\js\app\models\asset\details.js" />
     <Content Include="Content\js\app\models\asset\navigator.js" />
     <Content Include="Content\js\app\models\asset_var.js" />
     <Content Include="Content\js\app\ui\asset\asset_navigator.js" />
+    <Content Include="Content\js\app\ui\asset\navigator\asset_details.js" />
+    <Content Include="Content\js\app\ui\asset\navigator\asset_list.js" />
     <Content Include="Content\js\app\ui\asset\navigator\toolbar.js" />
     <Content Include="Content\js\app\ui\asset\show_asset.js" />
     <Content Include="Content\js\app\ui\catalog\import_asset_var_row.js" />
@@ -582,6 +586,7 @@
     <Content Include="Content\js\lib\backbone.min.js" />
     <Content Include="Content\js\lib\handlebars.min.js" />
     <Content Include="Content\js\lib\json2.min.js" />
+    <Content Include="Content\js\lib\md5.js" />
     <Content Include="Content\js\lib\moment.min.js" />
     <Content Include="Content\less\asset-navigator.css">
       <DependentUpon>asset-navigator.less</DependentUpon>
@@ -744,6 +749,7 @@
     <Content Include="Content\less\asset-navigator.css.map">
       <DependentUpon>asset-navigator.css</DependentUpon>
     </Content>
+    <Content Include="Content\views\asset\details.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -17,6 +17,8 @@
     initialize: function (options) {
         // subviews
         this.toolbar = new QuoteFlow.UI.Asset.Navigator.Toolbar();
+        this.assetList = new QuoteFlow.UI.Asset.Navigator.AssetList();
+        this.assetDetails = new QuoteFlow.UI.Asset.Navigator.AssetDetails();
 
         this.initializeAssetListSidebar();
     },

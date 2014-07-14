@@ -1,0 +1,236 @@
+﻿<div class="asset-container builder-mode" tabindex="-1">
+    <div id="asset-content" class="asset-edit-form">
+        <header id="stalker" class="asset-header js-stalker">
+            <div class="asset-header-content">
+                <header class="aui-page-header">
+                    <div class="aui-page-header-inner">
+                        <div class="aui-page-header-image">
+                            <span id="13310" class="aui-avatar aui-avatar-large aui-avatar-project">
+                                <span class="aui-avatar-inner">
+                                    <img id="project-avatar" alt="Stash" src="http://i.imgur.com/bIfm5AV.png">
+                                </span>
+                            </span>
+                        </div>
+                        <!-- .aui-page-header-image -->
+                        <div class="aui-page-header-main">
+                            <ol class="aui-nav aui-nav-breadcrumbs">
+                                <li>
+                                    <a id="project-name-val" href="">{{ Manufacturer.Name }}</a>
+                                </li>
+                            </ol>
+                            <h1 id="summary-val">{{ Name }}</h1>
+                        </div>
+                        <div class="aui-page-header-actions"></div>
+                    </div>
+                </header>
+                <div class="command-bar">
+                    <div>
+                        <div class="ops-cont">
+                            <div class="ops-menus aui-toolbar2">
+                                <div class="aui-toolbar-2-inner">
+                                    <div class="aui-toolbar2-primary">
+                                        <div id="button-set" class="aui-buttons">
+                                            <a href="@Url.EditAsset(Model.Asset.Id, Model.Asset.Name)" class="aui-button aui-button-primary">Edit</a>
+                                        </div>
+                                        <div id="button-set" class="aui-buttons">
+                                            <button class="aui-button">Comment</button>
+                                        </div>
+                                    </div>
+                                    <div class="aui-toolbar2-secondary">
+                                        <div id="button-set" class="aui-buttons">
+                                            <button class="aui-button aui-button-primary">
+                                                <span>Add to quote</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div><!-- .aui-toolbar-inner -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="asset-body-content">
+            <div class="aui-group asset-body">
+                <div class="aui-item issue-main-column">
+                    <div id="details-module" class="module toggle-wrap">
+                        <div id="details-module_heading" class="module-header">
+                            <ul class="ops"></ul>
+                            <h2 class="toggle-title">Details</h2>
+                        </div>
+                        <div class="module-content">
+                            <ul id="issuedetails" class="property-list two-cols">
+                                <li class="item">
+                                    <div class="wrap">
+                                        <strong class="name">SKU:</strong>
+                                        <span class="value"> {{ SKU }}</span>
+                                    </div>
+                                </li>
+                                <li class="item item-right">
+                                    <div class="wrap">
+                                        <strong class="name">Cost:</strong>
+                                        <span class="value">${{ Cost }}</span>
+                                    </div>
+                                </li>
+                                <li class="item">
+                                    <div class="wrap">
+                                        <strong class="name">Manufacturer:</strong>
+                                        <span class="value">
+                                            <a href="@Url.Manufacturer(Model.Asset.ManufacturerId, Model.Asset.Manufacturer.Name)">{{ Manufacturer.Name }}</a>
+                                        </span>
+                                    </div>
+                                </li>
+                                <li class="item item-right">
+                                    <div class="wrap">
+                                        <strong class="name">Markup:</strong>
+                                        <span class="value">{{ Markup }}</span>
+                                    </div>
+                                </li>
+                                <li class="item item-right">
+                                    <div class="wrap">
+                                        <strong class="name">Price:</strong>
+                                        <span class="value">${{ Price }}</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div id="descriptionmodule" class="module toggle-wrap">
+                        <div id="descriptionmodule_heading" class="module-header">
+                            <ul class="ops"></ul>
+                            <h2 class="toggle-title">Description</h2>
+                        </div>
+                        <div class="module-content">
+                            <div id="description-val" class="field-ignore-highlight">
+                                <div class="user-content-block">
+                                    <p>{{ Description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="activitymodule" class="module toggle-wrap">
+                        <div id="activitymodule_heading" class="module-header">
+                            <ul class="ops"></ul>
+                            <h2 class="toggle-title">Activity</h2>
+                        </div>
+                        <div class="module-content">
+                            <div class="aui-tabs horizontal-tabs">
+                                <ul id="issue-tabs" class="tabs-menu">
+                                    <li class="menu-item">
+                                        <a href="#asset_tab_all"><strong>All</strong></a>
+                                    </li>
+                                    <li class="menu-item active-tab">
+                                        <a href="#asset_tab_comments"><strong>Comments</strong></a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="#asset_tab_activity"><strong>Activity</strong></a>
+                                    </li>
+                                </ul>
+                                <div id="asset_tab_all" class="tabs-pane"></div>
+                                <div id="asset_tab_comments" class="tabs-pane active-pane">
+                                    {{#each Comments}}
+                                    <div id="comment-{{Id}}" class="asset-data-block activity-comment">
+                                        <div class="action-head">
+                                            <div class="action-links">
+                                                <a href="#" title="A permanent link to this comment." class="aui-icon aui-icon-small aui-iconfont-link activitymodule-link"><span>Permalink</span></a>
+                                            </div>
+                                            <div class="action-details">
+                                                <a class="user-hover user-avatar" href="@Url.User(comment.Creator.Id, comment.Creator.Username)">
+                                                    <span class="aui-avatar aui-avatar-xsmall">
+                                                        <span class="aui-avatar-inner">
+                                                            <img src="{{#gravatar Creator.EmailAddress size="16"}}{{/gravatar}}"/>
+                                                        </span>
+                                                    </span> {{ Creator.FullName }}
+                                                </a>
+                                                added a comment - {{ CreatedUtc }}
+                                            </div>
+                                        </div>
+                                        <div class="action-body">
+                                            <p>{{ Comment }}</p>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                                <div id="asset_tab_activity" class="tabs-pane"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="addcomment" class="module">
+                        <div class="mod-content">
+                            @{
+                            var commentModel = new NewAssetCommentViewModel
+                            {
+                            AssetId = Model.Asset.Id,
+                            AssetName = Model.Asset.Name
+                            };
+                            }
+                            @Html.Partial("Partials/Asset/NewComment", commentModel)
+                        </div>
+                        <div class="mod-footer">
+                            <ul class="ops">
+                                <li>
+                                    <button class="aui-button" id="footer_comment_button">
+                                        <span class="aui-icon aui-icon-small aui-iconfont-comment"></span>
+                                        <span>Comment</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="asset_sidebar" class="aui-item asset-side-column">
+                    <div id="peoplemodule" class="module toggle-wrap">
+                        <div id="peoplemodule_heading" class="module-header">
+                            <ul class="ops"></ul>
+                            <h2 class="toggle-title">People</h2>
+                        </div>
+                        <div class="module-content">
+                            <ul class="item-details" id="peopledetails">
+                                <li class="people-details">
+                                    <dl>
+                                        <dt>Creator:</dt>
+                                        <dd>
+                                            <span id="reporter-val" class="view-asset-field">
+                                                <span class="aui-avatar aui-avatar-small">
+                                                    <span class="aui-avatar-inner">
+                                                        <img src="{{#gravatar Creator.EmailAddress size="24"}}{{/gravatar}}" />
+                                                    </span>
+                                                </span>
+                                                {{ Creator.FullName }}
+                                            </span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="datesmodule" class="module toggle-wrap">
+                        <div id="datesmodule_heading" class="module-header">
+                            <ul class="ops"></ul>
+                            <h2 class="toggle-title">Dates</h2>
+                        </div>
+                        <div class="module-content">
+                            <ul class="item-details" id="dates">
+                                <li>
+                                    <dl>
+                                        <dt>Created:</dt>
+                                        <dd>
+                                            <span>{{ CreationDate }}</span>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>Updated:</dt>
+                                        <dd>
+                                            <span>{{ LastUpdated }}</span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -63,3 +63,14 @@ Handlebars.registerHelper('debug', function (optionalValue) {
 Handlebars.registerHelper('first', function (context, block) {
     return block(context[0]);
 });
+
+// Gravatar thumbnail
+// Usage: {{#gravatar email size="64"}}{{/gravatar}} [depends on md5.js]
+// Author: Makis Tracend (@tracend)
+Handlebars.registerHelper('gravatar', function(context, options) {
+	
+    var email = context;
+    var size=( typeof(options.hash.size) === "undefined") ? 32 : options.hash.size;
+	
+    return "http://www.gravatar.com/avatar/" + MD5( email ) + "?s="+ size;
+});
