@@ -74,3 +74,9 @@ Handlebars.registerHelper('gravatar', function(context, options) {
 	
     return "http://www.gravatar.com/avatar/" + MD5( email ) + "?s="+ size;
 });
+
+// Converts a decimal to a percentage (including the % sign)
+// Usage: {{#percentage 0.15}}{{/percentage}}
+Handlebars.registerHelper('percentage', function (value) {
+    return (value * 100).toFixed(2) + " %";
+});
