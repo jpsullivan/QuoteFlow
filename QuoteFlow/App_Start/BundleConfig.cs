@@ -54,6 +54,7 @@ namespace QuoteFlow
             appJs.IncludeDirectory("~/Content/js/app/collections", "*.js", true);
             appJs.IncludeDirectory("~/Content/js/app/ui", "*.js", true);
             appJs.IncludeDirectory("~/Content/js/app/helpers", "*.js", true);
+            appJs.Orderer = nullOrderer;
             bundles.Add(appJs);
 
 #if (DEBUG)

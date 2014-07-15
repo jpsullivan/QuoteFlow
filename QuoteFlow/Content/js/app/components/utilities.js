@@ -76,6 +76,37 @@ QuoteFlow.Utilities = {
             vars[hash[0]] = hash[1];
         }
         return vars;
-    }
+    },
 
+    /**
+     * A collection of triggers that fire whenever a resize is detected.
+     * These triggers are namespaced within the QuoteFlow.Interactive convention
+     * because they really shouldn't be used outside of a full-screen environment such
+     * as the interactive asset viewer / quote builder.
+     */
+    initializeResizeHooks: function() {
+        var horizontal = "horizontalResize",
+                vertical = "verticalResize";
+
+        QuoteFlow.Interactive.offHorizontalResize = function (c) {
+            AJS.$(document).off(horizontal, c);
+        };
+        QuoteFlow.Interactive.onHorizontalResize = function (c) {
+            AJS.$(document).on(horizontal, c);
+        };
+        QuoteFlow.Interactive.triggerHorizontalResize = _.throttle(function () {
+            AJS.$(document).trigger(horizontal);
+        }, 100);
+        QuoteFlow.Interactive.offVerticalResize = function (c) {
+            AJS.$(document).off(vertical, c);
+        };
+        QuoteFlow.Interactive.onVerticalResize = function (c) {
+            AJS.$(document).on(vertical, c);
+        };
+        QuoteFlow.Interactive.triggerVerticalResize = _.throttle(function () {
+            AJS.$(document).trigger(vertical);
+        }, 100);
+
+        jQuery(window).resize(QuoteFlow.Interactive.triggerVerticalResize);
+    }
 };

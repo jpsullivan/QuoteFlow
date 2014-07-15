@@ -16,6 +16,8 @@
 
     postRenderTemplate: function () { },
 
+
+
     /**
      * Selects an asset from the left navigation, loading its info
      * and rendering it on the details panel.

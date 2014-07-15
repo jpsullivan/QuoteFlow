@@ -15,14 +15,42 @@
     },
 
     initialize: function (options) {
-        this.model = new QuoteFlow.Model.Asset.Details();
-        QuoteFlow.Vent.on('navigator:asset-details:load', this.loadAsset, this);
+        _.bindAll(this, "adjustHeight");
 
+        this.model = new QuoteFlow.Model.Asset.Details();
         this.model.bind("change", this.render, this);
+
+        this.adjustHeight = _.debounce(this.adjustHeight);
+
+        QuoteFlow.Interactive.onVerticalResize(this.adjustHeight);
+        this.adjustHeight();
+
+        QuoteFlow.Vent.on('navigator:asset-details:load', this.loadAsset, this);        
     },
 
     postRenderTemplate: function() {
-        console.log('uh oh');
+        this.adjustHeight();
+    },
+
+    /**
+     * Automatically adjusts the height of the details view
+     * once the available window size changes (dev tools pops up or screen resizes).
+     */
+    adjustHeight: function() {
+        _.defer(_.bind(function() {
+            var container = this.getAssetContainer(), offset;
+            if (container.length) {
+                offset = container.length && container.offset().top;
+                container.css("height", window.innerHeight - offset);
+            }
+        }, this));
+    },
+
+    /**
+     * Returns the asset container element.
+     */
+    getAssetContainer: function() {
+        return this.$el.find(".asset-container");
     },
 
     /**

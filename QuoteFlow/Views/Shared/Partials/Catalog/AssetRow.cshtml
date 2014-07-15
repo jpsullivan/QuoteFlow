@@ -9,23 +9,7 @@
     <td class="sku">
         <span title="@Model.SKU">@Model.SKU</span>
     </td>
-    <td>$@Model.Cost</td>
-    <td class="pricing">
-        <table class="aui">
-            <thead>
-                <th>Markup</th>
-                <th>Sell Price</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="markup">
-                        <span>@Model.Markup.ToString("P", CultureInfo.InvariantCulture)</span>
-                    </td>
-                    <td class="sell">
-                        <span>$@Model.Price</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </td>
+    <td>$@Model.Cost.ToString("N")</td>
+    <td>@Model.Markup.ToString("P", CultureInfo.InvariantCulture)</td>
+    <td>$@Model.Price.ToString("N")</td>
 </tr>

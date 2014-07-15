@@ -39,6 +39,7 @@ module QuoteFlow {
         export var Models = [];
         export var Collections = [];
     }
+    export var Interactive = {};
     export module Model {
         export var Asset = {};
     }
@@ -51,7 +52,7 @@ module QuoteFlow {
         export var Catalog = {};
         export var Common = {};
     }
-    export var Utilities = {}
+    export module Utilities {}
     export var Vent = _.extend({}, Backbone.Events);
     export var Views = {}
 

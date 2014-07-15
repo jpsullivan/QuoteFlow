@@ -84,17 +84,18 @@
                                 <th>Name</th>
                                 <th>Part Number</th>
                                 <th>Cost</th>
-                                <th>Pricing</th>
+                                <th>Markup</th>
+                                <th>Price</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var asset in Model.Assets)
-                            {
-                                @Html.Partial("Partials/Catalog/AssetRow", asset, new ViewDataDictionary
-                                {
-                                    { "Catalogs", Model.Catalogs },
-                                    { "CurrentCatalogId", Model.Catalog.Id }
-                                })
+                            @{
+                                foreach (var asset in Model.Assets) {
+                                    Html.RenderPartial("Partials/Catalog/AssetRow", asset, new ViewDataDictionary {
+                                        { "Catalogs", Model.Catalogs },
+                                        { "CurrentCatalogId", Model.Catalog.Id }
+                                    });
+                                }
                             }
                         </tbody>
                     </table>

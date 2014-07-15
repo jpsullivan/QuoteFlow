@@ -10,27 +10,19 @@ namespace QuoteFlow.Infrastructure.Helpers
 {
     public static class EnumHelpers
     {
-        private static readonly ConcurrentDictionary<Type, IDictionary<object, string>> _descriptionMap = new ConcurrentDictionary<Type, IDictionary<object, string>>();
+        private static readonly ConcurrentDictionary<Type, IDictionary<object, string>> DescriptionMap = new ConcurrentDictionary<Type, IDictionary<object, string>>();
 
         public static string GetDescription<TEnum>(TEnum value) where TEnum : struct
         {
             Debug.Assert(typeof(TEnum).IsEnum); // Can't encode this in a generic constraint :(
 
-            var descriptions = _descriptionMap.GetOrAdd(typeof(TEnum), key =>
+            var descriptions = DescriptionMap.GetOrAdd(typeof(TEnum), key =>
                 typeof(TEnum).GetFields(BindingFlags.Public | BindingFlags.Static).Select(f =>
                 {
                     var v = f.GetValue(null);
-                    DescriptionAttribute attr = f.GetCustomAttribute<DescriptionAttribute>();
+                    var attr = f.GetCustomAttribute<DescriptionAttribute>();
 
-                    string description;
-                    if (attr != null)
-                    {
-                        description = attr.Description;
-                    }
-                    else
-                    {
-                        description = v.ToString();
-                    }
+                    string description = attr != null ? attr.Description : v.ToString();
                     return new KeyValuePair<object, string>(v, description);
                 }).ToDictionary(p => p.Key, p => p.Value));
 
@@ -39,10 +31,7 @@ namespace QuoteFlow.Infrastructure.Helpers
             {
                 return value.ToString();
             }
-            else
-            {
-                return desc;
-            }
+            return desc;
         }
     }
 }

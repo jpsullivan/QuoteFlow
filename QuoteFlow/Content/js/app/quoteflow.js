@@ -55,6 +55,7 @@ var QuoteFlow;
         Debug.Collections = [];
     })(QuoteFlow.Debug || (QuoteFlow.Debug = {}));
     var Debug = QuoteFlow.Debug;
+    QuoteFlow.Interactive = {};
     (function (Model) {
         Model.Asset = {};
     })(QuoteFlow.Model || (QuoteFlow.Model = {}));
@@ -71,7 +72,7 @@ var QuoteFlow;
         UI.Common = {};
     })(QuoteFlow.UI || (QuoteFlow.UI = {}));
     var UI = QuoteFlow.UI;
-    QuoteFlow.Utilities = {};
+
     QuoteFlow.Vent = _.extend({}, Backbone.Events);
     QuoteFlow.Views = {};
 
