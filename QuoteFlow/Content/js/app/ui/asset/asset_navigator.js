@@ -39,7 +39,7 @@
     adjustHeight: function () {
         var b = this.$el.find(".list-panel");
         var d = 0,
-            offset = this.assetList.$el.offset().top + b.scrollTop(),
+            offset = $('.list-content', this.assetList.$el).offset().top + b.scrollTop(),
             outerHeight = this.$el.find(".pagination-container").outerHeight(),
             innerHeight = window.innerHeight;
 
