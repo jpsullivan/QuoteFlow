@@ -37,16 +37,12 @@
      * once the available window size changes (dev tools pops up or screen resizes).
      */
     adjustHeight: function () {
-        var b = this.$el.find(".list-panel");
-        var d = 0,
-            offset = $('.list-content', this.assetList.$el).offset().top + b.scrollTop(),
+        var listPanel = this.$el.find(".list-panel");
+        var offset = $('.list-content', this.assetList.$el).offset().top + listPanel.scrollTop(),
             outerHeight = this.$el.find(".pagination-container").outerHeight(),
             innerHeight = window.innerHeight;
 
-        //        if (this.endOfStableSearchView && this.endOfStableSearchView.$el) {
-        //            d = this.endOfStableSearchView.$el.outerHeight();
-        //        }
-        b.css("height", innerHeight - offset - d - outerHeight);
+        listPanel.css("height", innerHeight - offset - outerHeight);
     },
 
     /**

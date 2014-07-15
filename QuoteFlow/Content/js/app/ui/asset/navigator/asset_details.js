@@ -30,6 +30,7 @@
 
     postRenderTemplate: function() {
         this.adjustHeight();
+        this.showAsset = new QuoteFlow.UI.Asset.ShowAsset();
     },
 
     /**
