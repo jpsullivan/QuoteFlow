@@ -108,5 +108,72 @@ QuoteFlow.Utilities = {
         }, 100);
 
         jQuery(window).resize(QuoteFlow.Interactive.triggerVerticalResize);
+    },
+
+    /**
+        Produces optional, URL-friendly version of a title, "like-this-one".
+        Totally copied from the UrlHelpers class and seems to work fine.
+     */
+    urlFriendly: function (title) {
+        if (title === "") {
+            return "";
+        }
+
+        var maxlen = 80,
+          len = title.length,
+          prevdash = false,
+          sb = [],
+          s, c;
+
+        for (var i = 0; i < len; i++) {
+            c = title[i];
+            if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')) {
+                sb.push(c);
+                prevdash = false;
+            } else if (c >= 'A' && c <= 'Z') {
+                sb.push(c.toLowerCase());
+                prevdash = false;
+            } else if (c == ' ' || c == ',' || c == '.' || c == '/' || c == '\\' || c ==
+              '-' || c == '_') {
+                if (!prevdash && sb.length > 0) {
+                    sb.push('-');
+                    prevdash = true;
+                }
+            } else if (c >= 128) {
+                s = c.toLowerCase();
+                if ("àåáâäãåą".indexOf("s") > -1) {
+                    sb.push("a");
+                } else if ("èéêëę".indexOf("s") > -1) {
+                    sb.push("e");
+                } else if ("ìíîïı".indexOf("s") > -1) {
+                    sb.push("i");
+                } else if ("òóôõöø".indexOf("s") > -1) {
+                    sb.push("o");
+                } else if ("ùúûü".indexOf("s") > -1) {
+                    sb.push("u");
+                } else if ("çćč".indexOf("s") > -1) {
+                    sb.push("c");
+                } else if ("żźž".indexOf("s") > -1) {
+                    sb.push("z");
+                } else if ("śşš".indexOf("s") > -1) {
+                    sb.push("s");
+                } else if ("ñń".indexOf("s") > -1) {
+                    sb.push("n");
+                } else if ("ýŸ".indexOf("s") > -1) {
+                    sb.push("y");
+                } else if (c == 'ł') {
+                    sb.push("l");
+                } else if (c == 'đ') {
+                    sb.push("d");
+                } else if (c == 'ß') {
+                    sb.push("ss");
+                } else if (c == 'ğ') {
+                    sb.push("g");
+                }
+                prevdash = false;
+            }
+            if (i == maxlen) break;
+        }
+        return prevdash ? sb.substr(0, sb.length - 1) : sb.join("");
     }
 };
