@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using QuoteFlow.Models;
 using QuoteFlow.Services.Interfaces;
 
@@ -29,17 +30,36 @@ namespace QuoteFlow.Services
             return Current.DB.Query<AssetVar>(sql, new {organizationId});
         }
 
-        public IEnumerable<AssetVarValue> GetVarValues(int assetId, int organizationId)
+        public IEnumerable<AssetVarValue> GetVarValues(int assetId)
         {
             if (assetId == 0)
                 throw new ArgumentException("Asset ID must be greater than zero", "assetId");
 
-            if (organizationId == 0)
-                throw new ArgumentException("Organization ID must be greater than zero", "organizationId");
-
             const string sql =
-                "select * from AssetVarValues where AssetId = @assetId and OrganizationId = @organizationId";
-            return Current.DB.Query<AssetVarValue>(sql, new {assetId, organizationId});
+                "select * from AssetVarValues where AssetId = @assetId";
+            return Current.DB.Query<AssetVarValue>(sql, new {assetId});
+        }
+
+        /// <summary>
+        /// Fetches a collection of <see cref="AssetVar"/> objects which also contains
+        /// their respective <see cref="AssetVarValue"/>.
+        /// </summary>
+        /// <param name="assetId">The asset whose asset vars will be searched for.</param>
+        /// <returns></returns>
+        public IEnumerable<AssetVar> GetAssetVarsWithValues(int assetId)
+        {
+            var values = GetVarValues(assetId).ToList();
+            var varIds = values.Select(v => v.AssetVarId).ToList();
+
+            const string sql = "select * from AssetVars where Id in @varIds";
+
+            var assetVars = Current.DB.Query<AssetVar>(sql, new {varIds}).ToList();
+
+            foreach (var assetVar in assetVars) {
+                assetVar.Value = values.Single(value => value.AssetVarId == assetVar.Id);
+            }
+
+            return assetVars;
         }
 
         public void InsertAssetVar(AssetVar assetVar)

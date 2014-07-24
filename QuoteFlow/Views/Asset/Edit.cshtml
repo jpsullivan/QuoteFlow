@@ -38,6 +38,10 @@
             @Html.LabelFor(m => m.ManufacturerId)
             @Html.DropDownListFor(m => m.ManufacturerId, Model.Manufacturers, "Choose a manufacturer", new { @class = "select long-field" })
         </div>
+        
+        <h3>Asset Vars</h3>
+        
+
     </fieldset>
 
     <div class="buttons-container">
@@ -50,11 +54,11 @@
 
 @section secondaryScripts {
     <script type="text/javascript">
-            // for returnUrl functionality
-            var origin = window.location.protocol + "//" + window.location.host;
-            var returnUrl = href.substr(origin.length);
-            $(document.forms.EditForm).append($('<input type="hidden" name="returnUrl" value="' + returnUrl + '">'));
-            document.forms.EditForm.submit();
+//        // for returnUrl functionality
+//        var origin = window.location.protocol + "//" + window.location.host;
+//        var returnUrl = href.substr(origin.length);
+//        $(document.forms.EditForm).append($('<input type="hidden" name="returnUrl" value="' + returnUrl + '">'));
+//        document.forms.EditForm.submit();
 
         AJS.$(document).ready(function() {
             AJS.$('select').auiSelect2();

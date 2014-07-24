@@ -32,7 +32,7 @@
      * items are out of element scope from the rest of the DOM.
      */
     initManufacturerDropdownClickHandlers: function() {
-        $('#manufacturers-dropdown .check-list-item input').on('change', this.manufacturerClickHandler);
+        $('#manufacturers-dropdown .check-list-item').on('change', this.manufacturerClickHandler);
     },
 
     /**
@@ -96,8 +96,8 @@
     /**
      * Handles when a manufacturer from the popup is selected (or deselected).
      */
-    manufacturerClickHandler: function(e) {
-        var el = $(e.currentTarget), parent = el.parent();
+    manufacturerClickHandler: function (e) {
+        var el = $('input', $(e.currentTarget)), parent = $(e.currentTarget);
         var manufacturer = parent.attr('title');
 
         if(el.is(':checked')) {

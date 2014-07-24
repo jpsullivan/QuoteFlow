@@ -42,6 +42,12 @@ namespace QuoteFlow.Models
         public int CatalogId { get; set; }
         public Catalog Catalog { get; set; }
 
+        /// <summary>
+        /// The asset vars and their respective values associated with
+        /// this particular asset.
+        /// </summary>
+        public IEnumerable<AssetVar> AssetVars { get; set; } 
+
         public IEnumerable<AssetComment> Comments { get; set; }
     }
 }

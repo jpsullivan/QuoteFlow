@@ -92,6 +92,15 @@
                                         <span class="value">${{ Price }}</span>
                                     </div>
                                 </li>
+                                
+                                {{#each AssetVars}}
+                                <li class="item">
+                                    <div class="wrap">
+                                        <strong class="name">{{ Name }}:</strong>
+                                        <span class="value">{{ Value.VarValue }}</span>
+                                    </div>
+                                </li>
+                                {{/each}}
                             </ul>
 
                         </div>

@@ -14,12 +14,16 @@ namespace QuoteFlow.Services
     {
         #region IoC
 
+        public IAssetVarService AssetVarService { get; protected set; }
         private IManufacturerService ManufacturerService { get; set; }
 
         public AssetService() { }
 
-        public AssetService(IManufacturerService manufacturerService)
+        public AssetService(
+            IAssetVarService assetVarService,
+            IManufacturerService manufacturerService)
         {
+            AssetVarService = assetVarService;
             ManufacturerService = manufacturerService;
         }
 
@@ -35,13 +39,15 @@ namespace QuoteFlow.Services
             var asset = Current.DB.Assets.Get(assetId);
             var catalog = Current.DB.Catalogs.Get(asset.CatalogId); // can't use CatalogService here due to cyclical deps
             var manufacturer = ManufacturerService.GetManufacturer(asset.ManufacturerId);
-            var user = Current.DB.Users.Get(asset.CreatorId);
+            var user = Current.DB.Users.Get(asset.CreatorId); // also can't use service due to cyclical deps
+            var assetVars = AssetVarService.GetAssetVarsWithValues(assetId);
             var comments = GetAssetComments(assetId);
 
+            asset.AssetVars = assetVars;
             asset.Catalog = catalog;
+            asset.Creator = user;
             asset.Comments = comments;
             asset.Manufacturer = manufacturer;
-            asset.Creator = user;
             
             return asset;
         }

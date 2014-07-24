@@ -11,7 +11,15 @@ namespace QuoteFlow.Services.Interfaces
 
         IEnumerable<AssetVar> GetAssetVarsByOrganizationId(int organizationId);
 
-        IEnumerable<AssetVarValue> GetVarValues(int assetId, int organizationId);
+        IEnumerable<AssetVarValue> GetVarValues(int assetId);
+
+        /// <summary>
+        /// Fetches a collection of <see cref="AssetVar"/> objects which also contains
+        /// their respective <see cref="AssetVarValue"/>.
+        /// </summary>
+        /// <param name="assetId">The asset whose asset vars will be searched for.</param>
+        /// <returns></returns>
+        IEnumerable<AssetVar> GetAssetVarsWithValues(int assetId); 
 
         void InsertAssetVar(AssetVar assetVar);
 

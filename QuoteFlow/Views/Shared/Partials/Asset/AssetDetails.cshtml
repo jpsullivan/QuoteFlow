@@ -103,8 +103,17 @@
                                         <span class="value">$@Model.Asset.Price.ToString("N")</span>
                                     </div>
                                 </li>
-                            </ul>
 
+                                @foreach (var assetVar in Model.Asset.AssetVars)
+                                {
+                                    <li class="item">
+                                        <div class="wrap">
+                                            <strong class="name">@assetVar.Name:</strong>
+                                            <span class="value">@assetVar.Value.VarValue</span>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
                         </div>
                     </div>
                     <div id="descriptionmodule" class="module toggle-wrap">

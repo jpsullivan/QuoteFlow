@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace QuoteFlow.Models
 {
@@ -19,5 +20,10 @@ namespace QuoteFlow.Models
         public DateTime CreatedUtc { get; set; }
 
         public int CreatedBy { get; set; }
+
+        /// <summary>
+        /// Manually set; Not contained within a standard db result.
+        /// </summary>
+        public AssetVarValue Value { get; set; }
     }
 }
