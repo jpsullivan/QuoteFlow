@@ -26,8 +26,11 @@ namespace QuoteFlow.Models.ViewModels.Assets
         [Display(Name = "Manufacturer")]
         public int ManufacturerId { get; set; }
 
+        public IEnumerable<AssetVar> AssetVars { get; set; }
+
         // non-modifiable fields
         public int Id { get; set; }
         public IEnumerable<SelectListItem> Manufacturers { get; set; }
+        public AssetVarDropdown AssetVarDropdown { get; set; }
     }
 }

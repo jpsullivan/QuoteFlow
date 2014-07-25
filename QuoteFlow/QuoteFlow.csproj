@@ -389,10 +389,12 @@
     <Compile Include="Models\Credential.cs" />
     <Compile Include="Models\EmailMessage.cs" />
     <Compile Include="Models\Manufacturer.cs" />
+    <Compile Include="Models\ModelBinders\Asset\EditAssetModelBinder.cs" />
     <Compile Include="Models\OptionalImportField.cs" />
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
+    <Compile Include="Models\ViewModels\Assets\AssetVarDropdown.cs" />
     <Compile Include="Models\ViewModels\Assets\EditAssetRequest.cs" />
     <Compile Include="Models\ViewModels\Assets\InteractiveAssetNavigatorViewModel.cs" />
     <Compile Include="Models\ViewModels\Assets\NewAssetCommentViewModel.cs" />
@@ -834,6 +836,7 @@
     <Content Include="Views\Quote\Show.cshtml" />
     <Content Include="Views\Shared\_InteractiveCatalogAssetsLayout.cshtml" />
     <Content Include="Views\Catalog\ShowAssetsInteractive.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Asset\AssetVarNames_Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

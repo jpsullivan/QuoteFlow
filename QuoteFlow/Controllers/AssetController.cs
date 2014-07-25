@@ -68,6 +68,9 @@ namespace QuoteFlow.Controllers
             
             var manufacturers = ManufacturerService.GetManufacturers(user.Organizations.First().Id);
             var manufacturersDropdown = manufacturers.Select(m => new SelectListItem {Value = m.Id.ToString(), Text = m.Name}).ToList();
+
+            var assetVarDropdown = new AssetVarDropdown();
+            assetVarDropdown.AssetVarNames = asset.AssetVars.Select(m => new SelectListItem {Value = m.Id.ToString(), Text = m.Name}).ToList();
             
             var viewModel = new EditAssetRequest
             {
@@ -77,8 +80,10 @@ namespace QuoteFlow.Controllers
                 Description = asset.Description,
                 Cost = asset.Cost,
                 Markup = asset.Markup,
+                AssetVars = asset.AssetVars,
                 ManufacturerId = asset.ManufacturerId,
-                Manufacturers = manufacturersDropdown
+                Manufacturers = manufacturersDropdown,
+                AssetVarDropdown = assetVarDropdown
             };
 
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);

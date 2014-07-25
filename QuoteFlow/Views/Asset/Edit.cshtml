@@ -41,7 +41,11 @@
         
         <h3>Asset Vars</h3>
         
-
+        @foreach (var assetVar in Model.AssetVars) {
+            <div class="field-group">
+                @Html.EditorFor(m => m.AssetVarDropdown)
+            </div>
+        }
     </fieldset>
 
     <div class="buttons-container">

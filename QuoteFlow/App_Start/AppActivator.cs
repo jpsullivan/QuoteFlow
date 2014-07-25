@@ -10,6 +10,8 @@ using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject.Web.Common;
 using QuoteFlow;
 using QuoteFlow.Infrastructure.Attributes;
+using QuoteFlow.Models.ModelBinders.Asset;
+using QuoteFlow.Models.ViewModels.Assets;
 using WebActivatorEx;
 using RouteAttribute = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
@@ -63,6 +65,7 @@ namespace QuoteFlow
 
             RegisterAllRouters();
             AddGlobalFilters();
+            AddModelBinders();
         }
 
         /// <summary>
@@ -104,6 +107,11 @@ namespace QuoteFlow
             GlobalFilters.Filters.Add(new ElmahHandleErrorAttribute());
             GlobalFilters.Filters.Add(new ReadOnlyModeErrorFilter());
             GlobalFilters.Filters.Add(new HandleErrorAttribute());
+        }
+
+        private static void AddModelBinders()
+        {
+            ModelBinders.Binders.Add(typeof(EditAssetRequest), new EditAssetModelBinder());
         }
 
         private static void NinjectPreStart()
