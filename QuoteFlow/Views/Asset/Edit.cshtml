@@ -39,7 +39,7 @@
             @Html.DropDownListFor(m => m.ManufacturerId, Model.Manufacturers, "Choose a manufacturer", new { @class = "select long-field" })
         </div>
         
-        <h3>Asset Vars <button class="aui-button aui-button-compact">Add Asset Var</button></h3>
+        <h3 style="margin-bottom: 10px;">Asset Vars <button class="aui-button aui-button-compact">Add Asset Var</button></h3>
         
         @foreach (var assetVar in Model.AssetVars) {
             <div class="field-group">
