@@ -50,6 +50,21 @@
                     @Html.DropDownList("AssetVarName", Model.AssetVarNames, new { @class = "select long-field" })
                 </label>
                 @Html.TextBox("TextboxAssetVarThingy", assetVar.Value.VarValue, new { @class = "text" })
+                @{
+                    var buttonOwns = string.Format("assetvar_{0}", assetVar.Id.ToString());
+                }
+                <button aria-owns="@buttonOwns" aria-haspopup="true" class="aui-button aui-button-compact aui-button-subtle aui-dropdown2-trigger aui-dropdown2-trigger-arrowless">
+                    <span class="aui-icon aui-icon-small aui-iconfont-more">More</span>
+                </button>
+                <div id="@buttonOwns" class="aui-dropdown2 aui-style-default" aria-hidden="false" data-dropdown2-alignment="right">
+                    <ul class="aui-list-truncate">
+                        <li>
+                            <a href="#" class="remove">
+                                <span class="aui-icon aui-icon-small aui-iconfont-remove-label"></span> Remove
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         }
     </fieldset>
