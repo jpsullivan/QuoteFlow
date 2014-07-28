@@ -394,7 +394,6 @@
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
-    <Compile Include="Models\ViewModels\Assets\AssetVarDropdown.cs" />
     <Compile Include="Models\ViewModels\Assets\EditAssetRequest.cs" />
     <Compile Include="Models\ViewModels\Assets\InteractiveAssetNavigatorViewModel.cs" />
     <Compile Include="Models\ViewModels\Assets\NewAssetCommentViewModel.cs" />

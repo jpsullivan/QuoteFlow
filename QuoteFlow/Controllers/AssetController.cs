@@ -18,6 +18,7 @@ namespace QuoteFlow.Controllers
         #region IoC
 
         public IAssetService AssetService { get; protected set; }
+        public IAssetVarService AssetVarService { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
         public IManufacturerService ManufacturerService { get; protected set; }
         public IUserService UserService { get; protected set; }
@@ -25,11 +26,13 @@ namespace QuoteFlow.Controllers
         public AssetController() { }
 
         public AssetController(IAssetService assetService, 
+            IAssetVarService assetVarService,
             ICatalogService catalogService, 
             IManufacturerService manufacturerService,
             IUserService userService)
         {
             AssetService = assetService;
+            AssetVarService = assetVarService;
             CatalogService = catalogService;
             ManufacturerService = manufacturerService;
             UserService = userService;
@@ -61,16 +64,18 @@ namespace QuoteFlow.Controllers
             }
 
             // Ensure that the user has access to the asset
-            if (!UserService.CanViewAsset(GetCurrentUser(), asset))
+            if (!UserService.CanViewAsset(GetCurrentUser(), asset)) 
+            {
                 return PageNotFound();
+            }
 
             var user = GetCurrentUser();
             
             var manufacturers = ManufacturerService.GetManufacturers(user.Organizations.First().Id);
             var manufacturersDropdown = manufacturers.Select(m => new SelectListItem {Value = m.Id.ToString(), Text = m.Name}).ToList();
 
-            var assetVarDropdown = new AssetVarDropdown();
-            assetVarDropdown.AssetVarNames = asset.AssetVars.Select(m => new SelectListItem {Value = m.Id.ToString(), Text = m.Name}).ToList();
+            var assetVars = AssetVarService.GetAssetVarsByOrganizationId(CurrentOrganization.Id);
+            var assetVarNames = assetVars.Select(m => new SelectListItem { Value = m.Id.ToString(), Text = m.Name }).ToList();
             
             var viewModel = new EditAssetRequest
             {
@@ -83,7 +88,7 @@ namespace QuoteFlow.Controllers
                 AssetVars = asset.AssetVars,
                 ManufacturerId = asset.ManufacturerId,
                 Manufacturers = manufacturersDropdown,
-                AssetVarDropdown = assetVarDropdown
+                AssetVarNames = assetVarNames
             };
 
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);

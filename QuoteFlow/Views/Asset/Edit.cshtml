@@ -39,11 +39,17 @@
             @Html.DropDownListFor(m => m.ManufacturerId, Model.Manufacturers, "Choose a manufacturer", new { @class = "select long-field" })
         </div>
         
-        <h3>Asset Vars</h3>
+        <h3>Asset Vars <button class="aui-button aui-button-compact">Add Asset Var</button></h3>
         
         @foreach (var assetVar in Model.AssetVars) {
             <div class="field-group">
-                @Html.EditorFor(m => m.AssetVarDropdown)
+                <label style="padding: 0;">
+                    @foreach (var name in Model.AssetVarNames.Where(name => name.Text == assetVar.Name)) {
+                        name.Selected = true;
+                    }
+                    @Html.DropDownList("AssetVarName", Model.AssetVarNames, new { @class = "select long-field" })
+                </label>
+                @Html.TextBox("TextboxAssetVarThingy", assetVar.Value.VarValue, new { @class = "text" })
             </div>
         }
     </fieldset>
