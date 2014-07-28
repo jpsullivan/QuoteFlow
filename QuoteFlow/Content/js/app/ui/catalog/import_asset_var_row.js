@@ -19,8 +19,6 @@
         });
     },
 
-    initialize: function(options) {},
-
     postRenderTemplate: function () {
         _.defer(function() {
             AJS.$('select').auiSelect2();

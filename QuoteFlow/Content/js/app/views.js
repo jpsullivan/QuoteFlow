@@ -1,6 +1,7 @@
 ﻿QuoteFlow.Views.Base = Backbone.View.extend({
 
     initialize: function (options) {
+        this.options = options || {};
         this.setupRenderEvents();
     },
 

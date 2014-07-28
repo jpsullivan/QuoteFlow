@@ -13,7 +13,10 @@
         });
     },
 
-    initialize: function () {
+    initialize: function (options) {
+        // so we can use options throughout each function
+        this.options = options || {};
+
         // required sinced AJS overrides 'this'
         _.bindAll(this, 'submitModal', 'closeModal', 'newAssetVarKepressHandler', 'disableAssetVarsDropdown', 'createAssetVar', 'getNewAssetVarName', 'getSelectedExistingAssetVar');
 

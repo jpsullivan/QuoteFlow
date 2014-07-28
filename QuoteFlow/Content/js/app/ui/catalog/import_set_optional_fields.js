@@ -17,6 +17,8 @@
     },
 
     initialize: function (options) {
+        this.options = options || {};
+
         _.bindAll(this, 'addAssetVarRow');
 
         this.rows = new Backbone.Collection().reset(options.rawRows);
