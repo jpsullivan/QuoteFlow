@@ -569,6 +569,7 @@
     <Content Include="Content\js\app\models\asset_var.js" />
     <Content Include="Content\js\app\ui\asset\asset_navigator.js" />
     <Content Include="Content\js\app\ui\asset\edit.js" />
+    <Content Include="Content\js\app\ui\asset\edit\add_asset_var_field.js" />
     <Content Include="Content\js\app\ui\asset\navigator\asset_details.js" />
     <Content Include="Content\js\app\ui\asset\navigator\asset_list.js" />
     <Content Include="Content\js\app\ui\asset\navigator\toolbar.js" />
