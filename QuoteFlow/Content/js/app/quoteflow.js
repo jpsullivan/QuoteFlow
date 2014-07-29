@@ -64,6 +64,7 @@ var QuoteFlow;
     QuoteFlow.Routers = {};
     (function (UI) {
         (function (Asset) {
+            Asset.Edit = {};
             Asset.Navigator = {};
         })(UI.Asset || (UI.Asset = {}));
         var Asset = UI.Asset;

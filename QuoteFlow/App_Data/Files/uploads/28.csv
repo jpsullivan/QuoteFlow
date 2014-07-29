@@ -1,0 +1,439 @@
+id,manufacturer,source,catalog_id,model,part_num,nsn,uom,expires,delivery,markup,fr_cost,sell_price
+,Kappler,OEM,19,"Zytron 100 Coverall with collar. Serged Seams. Size:XS, Case Qty:12",Z1S412_XS,,CS,,30-45 Days,,93.73,187.45
+,Kappler,OEM,19,"Zytron 100 Coverall with collar. Serged Seams. Size:SM/MD, Case Qty:12",Z1S412_SM/MD,,CS,,30-45 Days,,93.73,187.45
+,Kappler,OEM,19,"Zytron 100 Coverall with collar. Serged Seams. Size:LG/XL, Case Qty:12",Z1S412_LG/XL,,CS,,30-45 Days,,93.73,187.45
+,Kappler,OEM,19,"Zytron 100 Coverall with collar. Serged Seams. Size:2X/3X, Case Qty:12",Z1S412_2X/3X,,CS,,30-45 Days,,103.1,206.19
+,Kappler,OEM,19,"Zytron 100 Coverall with collar. Serged Seams. Size:4X, Case Qty:12",Z1S412_4X,,CS,,30-45 Days,,107.78,215.55
+,Kappler,OEM,19,"Zytron 100 Coverall with collar. Bound Seams Size:XS, Case Qty:12",Z1B412_XS,,CS,,30-45 Days,,73.62,147.23
+,Kappler,OEM,19,"Zytron 100 Coverall with collar. Bound Seams Size:SM/MD, Case Qty:12",Z1B412_SM/MD,,CS,,30-45 Days,,73.62,147.23
+,Kappler,OEM,19,"Zytron 100 Coverall with collar. Bound Seams Size:LG/XL, Case Qty:12",Z1B412_LG/XL,,CS,,30-45 Days,,73.62,147.23
+,Kappler,OEM,19,"Zytron 100 Coverall with collar. Bound Seams Size:2X/3X, Case Qty:12",Z1B412_2X/3X,,CS,,30-45 Days,,80.98,161.95
+,Kappler,OEM,19,"Zytron 100 Coverall with collar. Bound Seams Size:4X, Case Qty:12",Z1B412_4X,,CS,,30-45 Days,,84.66,169.32
+,Kappler,OEM,19,"Zytron 100 Coverall with hood and boots, elastic wrists. Serged Seams. Size:XS, Case Qty:12",Z1S414_XS,,CS,,30-45 Days,,80.89,161.77
+,Kappler,OEM,19,"Zytron 100 Coverall with hood and boots, elastic wrists. Serged Seams. Size:SM/MD, Case Qty:12",Z1S414_SM/MD,,CS,,30-45 Days,,80.89,161.77
+,Kappler,OEM,19,"Zytron 100 Coverall with hood and boots, elastic wrists. Serged Seams. Size:LG/XL, Case Qty:12",Z1S414_LG/XL,,CS,,30-45 Days,,80.89,161.77
+,Kappler,OEM,19,"Zytron 100 Coverall with hood and boots, elastic wrists. Serged Seams. Size:2X/3X, Case Qty:12",Z1S414_2X/3X,,CS,,30-45 Days,,88.96,177.92
+,Kappler,OEM,19,"Zytron 100 Coverall with hood and boots, elastic wrists. Serged Seams. Size:4X, Case Qty:12",Z1S414_4X,,CS,,30-45 Days,,93.01,186.02
+,Kappler,OEM,19,"Zytron 100 Coverall with hood and boots, elastic wrists. Bound Seams.   Size:XS, Case Qty:12",Z1B414_XS,,CS,,30-45 Days,,93.73,187.45
+,Kappler,OEM,19,"Zytron 100 Coverall with hood and boots, elastic wrists. Bound Seams.   Size:SM/MD, Case Qty:12",Z1B414_SM/MD,,CS,,30-45 Days,,93.73,187.45
+,Kappler,OEM,19,"Zytron 100 Coverall with hood and boots, elastic wrists. Bound Seams.   Size:LG/XL, Case Qty:12",Z1B414_LG/XL,,CS,,30-45 Days,,93.73,187.45
+,Kappler,OEM,19,"Zytron 100 Coverall with hood and boots, elastic wrists. Bound Seams.   Size:2X/3X, Case Qty:12",Z1B414_2X/3X,,CS,,30-45 Days,,103.1,206.19
+,Kappler,OEM,19,"Zytron 100 Coverall with hood and boots, elastic wrists. Bound Seams.   Size:4X, Case Qty:12",Z1B414_4X,,CS,,30-45 Days,,107.78,215.55
+,Kappler,OEM,19,"Zytron 100 Coverall with collar, elastic wrists and ankles. Serged Seams.  Size:XS, Case Qty:12",Z1S417_XS,,CS,,30-45 Days,,67.74,135.48
+,Kappler,OEM,19,"Zytron 100 Coverall with collar, elastic wrists and ankles. Serged Seams.  Size:SM/MD, Case Qty:12",Z1S417_SM/MD,,CS,,30-45 Days,,67.74,135.48
+,Kappler,OEM,19,"Zytron 100 Coverall with collar, elastic wrists and ankles. Serged Seams.  Size:LG/XL, Case Qty:12",Z1S417_LG/XL,,CS,,30-45 Days,,67.74,135.48
+,Kappler,OEM,19,"Zytron 100 Coverall with collar, elastic wrists and ankles. Serged Seams.  Size:2X/3X, Case Qty:12",Z1S417_2X/3X,,CS,,30-45 Days,,74.52,149.04
+,Kappler,OEM,19,"Zytron 100 Coverall with collar, elastic wrists and ankles. Serged Seams.  Size:4X, Case Qty:12",Z1S417_4X,,CS,,30-45 Days,,77.91,155.82
+,Kappler,OEM,19,"Zytron 100 Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:XS, Case Qty:12",Z1B417_XS,,CS,,30-45 Days,,76.21,152.42
+,Kappler,OEM,19,"Zytron 100 Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:SM/MD, Case Qty:12",Z1B417_SM/MD,,CS,,30-45 Days,,76.21,152.42
+,Kappler,OEM,19,"Zytron 100 Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:LG/XL, Case Qty:12",Z1B417_LG/XL,,CS,,30-45 Days,,76.21,152.42
+,Kappler,OEM,19,"Zytron 100 Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:2X/3X, Case Qty:12",Z1B417_2X/3X,,CS,,30-45 Days,,83.84,167.67
+,Kappler,OEM,19,"Zytron 100 Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:4X, Case Qty:12",Z1B417_4X,,CS,,30-45 Days,,87.65,175.29
+,Kappler,OEM,19,"Zytron 100 Coverall with hood, elastic wrists and ankles. Serged Seams.  Size:XS, Case Qty:12",Z1S428_XS,,CS,,30-45 Days,,70.72,141.44
+,Kappler,OEM,19,"Zytron 100 Coverall with hood, elastic wrists and ankles. Serged Seams.  Size:SM/MD, Case Qty:12",Z1S428_SM/MD,,CS,,30-45 Days,,70.72,141.44
+,Kappler,OEM,19,"Zytron 100 Coverall with hood, elastic wrists and ankles. Serged Seams.  Size:LG/XL, Case Qty:12",Z1S428_LG/XL,,CS,,30-45 Days,,70.72,141.44
+,Kappler,OEM,19,"Zytron 100 Coverall with hood, elastic wrists and ankles. Serged Seams.  Size:2X/3X, Case Qty:12",Z1S428_2X/3X,,CS,,30-45 Days,,77.79,155.57
+,Kappler,OEM,19,"Zytron 100 Coverall with hood, elastic wrists and ankles. Serged Seams.  Size:4X, Case Qty:12",Z1S428_4X,,CS,,30-45 Days,,81.32,162.64
+,Kappler,OEM,19,"Zytron 100 Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:XS, Case Qty:12",Z1B428_XS,,CS,,30-45 Days,,80.99,161.97
+,Kappler,OEM,19,"Zytron 100 Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:SM/MD, Case Qty:12",Z1B428_SM/MD,,CS,,30-45 Days,,80.99,161.97
+,Kappler,OEM,19,"Zytron 100 Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:LG/XL, Case Qty:12",Z1B428_LG/XL,,CS,,30-45 Days,,80.99,161.97
+,Kappler,OEM,19,"Zytron 100 Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:2X/3X, Case Qty:12",Z1B428_2X/3X,,CS,,30-45 Days,,89.09,178.18
+,Kappler,OEM,19,"Zytron 100 Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:4X, Case Qty:12",Z1B428_4X,,CS,,30-45 Days,,93.15,186.29
+,Kappler,OEM,19,"Zytron 100 Splash, Totally encapsulating Level B suit, rear entry, expanded back. Bound Seams. Size:XS, Case Qty:6",Z1B571_XS,,CS,,30-45 Days,,142.63,285.26
+,Kappler,OEM,19,"Zytron 100 Splash, Totally encapsulating Level B suit, rear entry, expanded back. Bound Seams. Size:SM/MD, Case Qty:6",Z1B571_SM/MD,,CS,,30-45 Days,,142.63,285.26
+,Kappler,OEM,19,"Zytron 100 Splash, Totally encapsulating Level B suit, rear entry, expanded back. Bound Seams. Size:LG/XL, Case Qty:6",Z1B571_LG/XL,,CS,,30-45 Days,,142.63,285.26
+,Kappler,OEM,19,"Zytron 100 Splash, Totally encapsulating Level B suit, rear entry, expanded back. Bound Seams. Size:2X/3X, Case Qty:6",Z1B571_2X/3X,,CS,,30-45 Days,,156.89,313.77
+,Kappler,OEM,19,"Zytron 100 Splash, Totally encapsulating Level B suit, rear entry, expanded back. Bound Seams. Size:4X, Case Qty:6",Z1B571_4X,,CS,,30-45 Days,,164.02,328.03
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar. Serged Seams. Size:XS, Case Qty:12",Z1S412 XP_XS,,CS,,30-45 Days,,77.06,154.11
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar. Serged Seams. Size:SM/MD, Case Qty:12",Z1S412 XP_SM/MD,,CS,,30-45 Days,,77.06,154.11
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar. Serged Seams. Size:LG/XL, Case Qty:12",Z1S412 XP_LG/XL,,CS,,30-45 Days,,77.06,154.11
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar. Serged Seams. Size:2X/3X, Case Qty:12",Z1S412 XP_2X/3X,,CS,,30-45 Days,,84.77,169.53
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar. Serged Seams. Size:4X, Case Qty:12",Z1S412 XP_4X,,CS,,30-45 Days,,88.61,177.22
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar. Bound Seams.  Size:XS, Case Qty:12",Z1B412 XP_XS,,CS,,30-45 Days,,100.39,200.77
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar. Bound Seams.  Size:SM/MD, Case Qty:12",Z1B412 XP_SM/MD,,CS,,30-45 Days,,100.39,200.77
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar. Bound Seams.  Size:LG/XL, Case Qty:12",Z1B412 XP_LG/XL,,CS,,30-45 Days,,100.39,200.77
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar. Bound Seams.  Size:2X/3X, Case Qty:12",Z1B412 XP_2X/3X,,CS,,30-45 Days,,110.43,220.85
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar. Bound Seams.  Size:4X, Case Qty:12",Z1B412 XP_4X,,CS,,30-45 Days,,115.44,230.88
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood and boots, elastic wrists. Serged Seams. Size:XS, Case Qty:12",Z1S414 XP_XS,,CS,,30-45 Days,,100.48,200.96
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood and boots, elastic wrists. Serged Seams. Size:SM/MD, Case Qty:12",Z1S414 XP_SM/MD,,CS,,30-45 Days,,100.48,200.96
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood and boots, elastic wrists. Serged Seams. Size:LG/XL, Case Qty:12",Z1S414 XP_LG/XL,,CS,,30-45 Days,,100.48,200.96
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood and boots, elastic wrists. Serged Seams. Size:2X/3X, Case Qty:12",Z1S414 XP_2X/3X,,CS,,30-45 Days,,110.53,221.05
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood and boots, elastic wrists. Serged Seams. Size:4X, Case Qty:12",Z1S414 XP_4X,,CS,,30-45 Days,,115.55,231.1
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood and boots, elastic wrists. Bound Seams.  Size:XS, Case Qty:12",Z1B414 XP_XS,,CS,,30-45 Days,,121.79,243.58
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood and boots, elastic wrists. Bound Seams.  Size:SM/MD, Case Qty:12",Z1B414 XP_SM/MD,,CS,,30-45 Days,,121.79,243.58
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood and boots, elastic wrists. Bound Seams.  Size:LG/XL, Case Qty:12",Z1B414 XP_LG/XL,,CS,,30-45 Days,,121.79,243.58
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood and boots, elastic wrists. Bound Seams.  Size:2X/3X, Case Qty:12",Z1B414 XP_2X/3X,,CS,,30-45 Days,,133.97,267.93
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood and boots, elastic wrists. Bound Seams.  Size:4X, Case Qty:12",Z1B414 XP_4X,,CS,,30-45 Days,,140.06,280.12
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar, elastic wrists and ankles. Serged Seams. Size:XS, Case Qty:12",Z1S417 XP_XS,,CS,,30-45 Days,,81.34,162.67
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar, elastic wrists and ankles. Serged Seams. Size:SM/MD, Case Qty:12",Z1S417 XP_SM/MD,,CS,,30-45 Days,,81.34,162.67
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar, elastic wrists and ankles. Serged Seams. Size:LG/XL, Case Qty:12",Z1S417 XP_LG/XL,,CS,,30-45 Days,,81.34,162.67
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar, elastic wrists and ankles. Serged Seams. Size:2X/3X, Case Qty:12",Z1S417 XP_2X/3X,,CS,,30-45 Days,,89.47,178.93
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar, elastic wrists and ankles. Serged Seams. Size:4X, Case Qty:12",Z1S417 XP_4X,,CS,,30-45 Days,,93.54,187.08
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:XS, Case Qty:12",Z1B417 XP_XS,,CS,,30-45 Days,,97.39,194.77
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:SM/MD, Case Qty:12",Z1B417 XP_SM/MD,,CS,,30-45 Days,,97.39,194.77
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:LG/XL, Case Qty:12",Z1B417 XP_LG/XL,,CS,,30-45 Days,,97.39,194.77
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:2X/3X, Case Qty:12",Z1B417 XP_2X/3X,,CS,,30-45 Days,,107.13,214.25
+,Kappler,OEM,19,"Zytron 100 XP Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:4X, Case Qty:12",Z1B417 XP_4X,,CS,,30-45 Days,,112,223.99
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood, elastic wrists and ankles. Serged Seams. Size:XS, Case Qty:12",Z1S428 XP_XS,,CS,,30-45 Days,,83.66,167.32
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood, elastic wrists and ankles. Serged Seams. Size:SM/MD, Case Qty:12",Z1S428 XP_SM/MD,,CS,,30-45 Days,,83.66,167.32
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood, elastic wrists and ankles. Serged Seams. Size:LG/XL, Case Qty:12",Z1S428 XP_LG/XL,,CS,,30-45 Days,,83.66,167.32
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood, elastic wrists and ankles. Serged Seams. Size:2X/3X, Case Qty:12",Z1S428 XP_2X/3X,,CS,,30-45 Days,,92.03,184.05
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood, elastic wrists and ankles. Serged Seams. Size:4X, Case Qty:12",Z1S428 XP_4X,,CS,,30-45 Days,,96.22,192.43
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:XS, Case Qty:12",Z1B428 XP_XS,,CS,,30-45 Days,,107.8,215.59
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:SM/MD, Case Qty:12",Z1B428 XP_SM/MD,,CS,,30-45 Days,,107.8,215.59
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:LG/XL, Case Qty:12",Z1B428 XP_LG/XL,,CS,,30-45 Days,,107.8,215.59
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:2X/3X, Case Qty:12",Z1B428 XP_2X/3X,,CS,,30-45 Days,,118.58,237.16
+,Kappler,OEM,19,"Zytron 100 XP Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:4X, Case Qty:12",Z1B428 XP_4X,,CS,,30-45 Days,,123.97,247.93
+,Kappler,OEM,19,"Zytron 200 knee high boot cover, elastic top. Bound Seams. Size:One Size, Case Qty:100 per",Z2B017,,CS,,30-45 Days,,226.35,452.7
+,Kappler,OEM,19,"Zytron 200 long SIeeved apron, ties in back, elastic wrists. Bound Seams. Size:SM/MD, Case Qty:25",Z2B347_SM/MD,,CS,,30-45 Days,,165.25,330.5
+,Kappler,OEM,19,"Zytron 200 long SIeeved apron, ties in back, elastic wrists. Bound Seams. Size:LG/XL, Case Qty:25",Z2B347_LG/XL,,CS,,30-45 Days,,165.25,330.5
+,Kappler,OEM,19,"Zytron 200 long SIeeved apron, ties in back, elastic wrists. Bound Seams. Size:2X/3X, Case Qty:25",Z2B347_2X/3X,,CS,,30-45 Days,,181.77,363.54
+,Kappler,OEM,19,"Zytron 200 long SIeeved apron, ties in back, elastic wrists. Bound Seams. Size:4X, Case Qty:25",Z2B347_4X,,CS,,30-45 Days,,190.04,380.08
+,Kappler,OEM,19,"Zytron 200 Coverall with collar. Bound Seams.  Size:XS, Case Qty:12",Z2B412_XS,,CS,,30-45 Days,,134.96,269.91
+,Kappler,OEM,19,"Zytron 200 Coverall with collar. Bound Seams.  Size:SM/MD, Case Qty:12",Z2B412_SM/MD,,CS,,30-45 Days,,134.96,269.91
+,Kappler,OEM,19,"Zytron 200 Coverall with collar. Bound Seams.  Size:LG/XL, Case Qty:12",Z2B412_LG/XL,,CS,,30-45 Days,,134.96,269.91
+,Kappler,OEM,19,"Zytron 200 Coverall with collar. Bound Seams.  Size:2X/3X, Case Qty:12",Z2B412_2X/3X,,CS,,30-45 Days,,148.45,296.89
+,Kappler,OEM,19,"Zytron 200 Coverall with collar. Bound Seams.  Size:4X, Case Qty:12",Z2B412_4X,,CS,,30-45 Days,,155.2,310.4
+,Kappler,OEM,19,"Zytron 200 Coverall with collar. Heat Sealed/Taped Seams.  Size:XS, Case Qty:6",Z2H412_XS,,CS,,30-45 Days,,118.1,236.2
+,Kappler,OEM,19,"Zytron 200 Coverall with collar. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z2H412_SM/MD,,CS,,30-45 Days,,118.1,236.2
+,Kappler,OEM,19,"Zytron 200 Coverall with collar. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z2H412_LG/XL,,CS,,30-45 Days,,118.1,236.2
+,Kappler,OEM,19,"Zytron 200 Coverall with collar. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z2H412_2X/3X,,CS,,30-45 Days,,129.91,259.81
+,Kappler,OEM,19,"Zytron 200 Coverall with collar. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z2H412_4X,,CS,,30-45 Days,,135.81,271.62
+,Kappler,OEM,19,"Zytron 200 Coverall with hood and boots, elastic wrists. Bound Seams.  Size:XS, Case Qty:12",Z2B414_XS,,CS,,30-45 Days,,167.65,335.3
+,Kappler,OEM,19,"Zytron 200 Coverall with hood and boots, elastic wrists. Bound Seams.  Size:SM/MD, Case Qty:12",Z2B414_SM/MD,,CS,,30-45 Days,,167.65,335.3
+,Kappler,OEM,19,"Zytron 200 Coverall with hood and boots, elastic wrists. Bound Seams.  Size:LG/XL, Case Qty:12",Z2B414_LG/XL,,CS,,30-45 Days,,167.65,335.3
+,Kappler,OEM,19,"Zytron 200 Coverall with hood and boots, elastic wrists. Bound Seams.  Size:2X/3X, Case Qty:12",Z2B414_2X/3X,,CS,,30-45 Days,,184.42,368.84
+,Kappler,OEM,19,"Zytron 200 Coverall with hood and boots, elastic wrists. Bound Seams.  Size:4X, Case Qty:12",Z2B414_4X,,CS,,30-45 Days,,192.8,385.6
+,Kappler,OEM,19,"Zytron 200 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams. Size:XS, Case Qty:6",Z2H414_XS,,CS,,30-45 Days,,162.44,324.87
+,Kappler,OEM,19,"Zytron 200 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams. Size:SM/MD, Case Qty:6",Z2H414_SM/MD,,CS,,30-45 Days,,162.44,324.87
+,Kappler,OEM,19,"Zytron 200 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams. Size:LG/XL, Case Qty:6",Z2H414_LG/XL,,CS,,30-45 Days,,162.44,324.87
+,Kappler,OEM,19,"Zytron 200 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams. Size:2X/3X, Case Qty:6",Z2H414_2X/3X,,CS,,30-45 Days,,178.67,357.33
+,Kappler,OEM,19,"Zytron 200 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams. Size:4X, Case Qty:6",Z2H414_4X,,CS,,30-45 Days,,186.79,373.57
+,Kappler,OEM,19,"Zytron 200 Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:XS, Case Qty:12",Z2B417_XS,,CS,,30-45 Days,,144.68,289.36
+,Kappler,OEM,19,"Zytron 200 Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:SM/MD, Case Qty:12",Z2B417_SM/MD,,CS,,30-45 Days,,144.68,289.36
+,Kappler,OEM,19,"Zytron 200 Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:LG/XL, Case Qty:12",Z2B417_LG/XL,,CS,,30-45 Days,,144.68,289.36
+,Kappler,OEM,19,"Zytron 200 Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:2X/3X, Case Qty:12",Z2B417_2X/3X,,CS,,30-45 Days,,159.16,318.32
+,Kappler,OEM,19,"Zytron 200 Coverall with collar, elastic wrists and ankles. Bound Seams.  Size:4X, Case Qty:12",Z2B417_4X,,CS,,30-45 Days,,166.39,332.78
+,Kappler,OEM,19,"Zytron 200 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.  Size:XS, Case Qty:6",Z2H417_XS,,CS,,30-45 Days,,126.41,252.82
+,Kappler,OEM,19,"Zytron 200 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z2H417_SM/MD,,CS,,30-45 Days,,126.41,252.82
+,Kappler,OEM,19,"Zytron 200 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z2H417_LG/XL,,CS,,30-45 Days,,126.41,252.82
+,Kappler,OEM,19,"Zytron 200 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z2H417_2X/3X,,CS,,30-45 Days,,139.05,278.1
+,Kappler,OEM,19,"Zytron 200 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z2H417_4X,,CS,,30-45 Days,,145.37,290.74
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists, and sock boot and boot flap.  Heat Sealed/Taped Seams. CE Certified Type 3. Size:XS, Case Qty:6",Z2H426_XS,,CS,,30-45 Days,,187.25,374.49
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists, and sock boot and boot flap.  Heat Sealed/Taped Seams. CE Certified Type 3. Size:SM/MD, Case Qty:6",Z2H426_SM/MD,,CS,,30-45 Days,,187.25,374.49
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists, and sock boot and boot flap.  Heat Sealed/Taped Seams. CE Certified Type 3. Size:LG/XL, Case Qty:6",Z2H426_LG/XL,,CS,,30-45 Days,,187.25,374.49
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists, and sock boot and boot flap.  Heat Sealed/Taped Seams. CE Certified Type 3. Size:2X/3X, Case Qty:6",Z2H426_2X/3X,,CS,,30-45 Days,,205.98,411.95
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists, and sock boot and boot flap.  Heat Sealed/Taped Seams. CE Certified Type 3. Size:4X, Case Qty:6",Z2H426_4X,,CS,,30-45 Days,,215.34,430.67
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:XS, Case Qty:12",Z2B428_XS,,CS,,30-45 Days,,144.5,289
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:SM/MD, Case Qty:12",Z2B428_SM/MD,,CS,,30-45 Days,,144.5,289
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:LG/XL, Case Qty:12",Z2B428_LG/XL,,CS,,30-45 Days,,144.5,289
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:2X/3X, Case Qty:12",Z2B428_2X/3X,,CS,,30-45 Days,,158.95,317.9
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists and ankles. Bound Seams.  Size:4X, Case Qty:12",Z2B428_4X,,CS,,30-45 Days,,166.18,332.35
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. CE Certified Type 3. Size:XS, Case Qty:6",Z2H428_XS,,CS,,30-45 Days,,126.25,252.5
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. CE Certified Type 3. Size:SM/MD, Case Qty:6",Z2H428_SM/MD,,CS,,30-45 Days,,126.25,252.5
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. CE Certified Type 3. Size:LG/XL, Case Qty:6",Z2H428_LG/XL,,CS,,30-45 Days,,126.25,252.5
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. CE Certified Type 3. Size:2X/3X, Case Qty:6",Z2H428_2X/3X,,CS,,30-45 Days,,138.87,277.74
+,Kappler,OEM,19,"Zytron 200 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. CE Certified Type 3. Size:4X, Case Qty:6",Z2H428_4X,,CS,,30-45 Days,,145.19,290.37
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry suit, flat back with side air inlet. Bound Seams.  Size:S, Case Qty:6",Z2B371_S,,CS,,30-45 Days,,195.77,391.54
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry suit, flat back with side air inlet. Bound Seams.  Size:LG/XL, Case Qty:6",Z2B371_LG/XL,,CS,,30-45 Days,,195.77,391.54
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry suit, flat back with side air inlet. Bound Seams.  Size:2X/3X, Case Qty:6",Z2B371_2X/3X,,CS,,30-45 Days,,215.35,430.69
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry suit, flat back with side air inlet. Bound Seams.  Size:4X, Case Qty:6",Z2B371_4X,,CS,,30-45 Days,,225.14,450.27
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry suit, flat back with side air inlet. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z2H371_SM/MD,,CS,,30-45 Days,,359.98,719.95
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry suit, flat back with side air inlet. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z2H371_LG/XL,,CS,,30-45 Days,,359.98,719.95
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry suit, flat back with side air inlet. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z2H371_2X/3X,,CS,,30-45 Days,,395.97,791.94
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry suit, flat back with side air inlet. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z2H371_4X,,CS,,30-45 Days,,413.97,827.94
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry garment with expanded back. Bound Seams.  Size:XS, Case Qty:6",Z2B571_XS,,CS,,30-45 Days,,222,443.99
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry garment with expanded back. Bound Seams.  Size:SM/MD, Case Qty:6",Z2B571_SM/MD,,CS,,30-45 Days,,222,443.99
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry garment with expanded back. Bound Seams.  Size:LG/XL, Case Qty:6",Z2B571_LG/XL,,CS,,30-45 Days,,222,443.99
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry garment with expanded back. Bound Seams.  Size:2X/3X, Case Qty:6",Z2B571_2X/3X,,CS,,30-45 Days,,244.19,488.38
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry garment with expanded back. Bound Seams.  Size:4X, Case Qty:6",Z2B571_4X,,CS,,30-45 Days,,255.29,510.57
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry garment with expanded back. Heat Sealed/Taped Seams.  Size:XS, Case Qty:6",Z2H571_XS,,CS,,30-45 Days,,372.68,745.36
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry garment with expanded back. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z2H571_SM/MD,,CS,,30-45 Days,,372.68,745.36
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry garment with expanded back. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z2H571_LG/XL,,CS,,30-45 Days,,372.68,745.36
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry garment with expanded back. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z2H571_2X/3X,,CS,,30-45 Days,,409.95,819.9
+,Kappler,OEM,19,"Zytron 200 Totally encapsulating Level B rear entry garment with expanded back. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z2H571_4X,,CS,,30-45 Days,,428.59,857.17
+,Kappler,OEM,19,"Zytron 300 Long SIeeved Apron.Heat Sealed/Taped Seams.  Size:XS, Case Qty:12",Z3H347_XS,,CS,,30-45 Days,,173.38,346.75
+,Kappler,OEM,19,"Zytron 300 Long SIeeved Apron.Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:12",Z3H347_SM/MD,,CS,,30-45 Days,,173.38,346.75
+,Kappler,OEM,19,"Zytron 300 Long SIeeved Apron.Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:12",Z3H347_LG/XL,,CS,,30-45 Days,,173.38,346.75
+,Kappler,OEM,19,"Zytron 300 Long SIeeved Apron.Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:12",Z3H347_2X/3X,,CS,,30-45 Days,,190.72,381.43
+,Kappler,OEM,19,"Zytron 300 Long SIeeved Apron.Heat Sealed/Taped Seams.  Size:4X, Case Qty:12",Z3H347_4X,,CS,,30-45 Days,,199.38,398.76
+,Kappler,OEM,19,"Zytron 300 Coverall with collar. Heat Sealed/Taped Seams.  Size:XS, Case Qty:6",Z3H412_XS,,CS,,30-45 Days,,163.45,326.9
+,Kappler,OEM,19,"Zytron 300 Coverall with collar. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z3H412_SM/MD,,CS,,30-45 Days,,163.45,326.9
+,Kappler,OEM,19,"Zytron 300 Coverall with collar. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z3H412_LG/XL,,CS,,30-45 Days,,163.45,326.9
+,Kappler,OEM,19,"Zytron 300 Coverall with collar. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z3H412_2X/3X,,CS,,30-45 Days,,179.8,359.6
+,Kappler,OEM,19,"Zytron 300 Coverall with collar. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z3H412_4X,,CS,,30-45 Days,,187.97,375.94
+,Kappler,OEM,19,"Zytron 300 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams. Size:XS, Case Qty:6",Z3H414_XS,,CS,,30-45 Days,,221.47,442.94
+,Kappler,OEM,19,"Zytron 300 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams. Size:SM/MD, Case Qty:6",Z3H414_SM/MD,,CS,,30-45 Days,,221.47,442.94
+,Kappler,OEM,19,"Zytron 300 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams. Size:LG/XL, Case Qty:6",Z3H414_LG/XL,,CS,,30-45 Days,,221.47,442.94
+,Kappler,OEM,19,"Zytron 300 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams. Size:2X/3X, Case Qty:6",Z3H414_2X/3X,,CS,,30-45 Days,,243.61,487.22
+,Kappler,OEM,19,"Zytron 300 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams. Size:4X, Case Qty:6",Z3H414_4X,,CS,,30-45 Days,,254.69,509.37
+,Kappler,OEM,19,"Zytron 300 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.  Size:XS, Case Qty:6",Z3H417_XS,,CS,,30-45 Days,,173.23,346.46
+,Kappler,OEM,19,"Zytron 300 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z3H417_SM/MD,,CS,,30-45 Days,,173.23,346.46
+,Kappler,OEM,19,"Zytron 300 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z3H417_LG/XL,,CS,,30-45 Days,,173.23,346.46
+,Kappler,OEM,19,"Zytron 300 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z3H417_2X/3X,,CS,,30-45 Days,,190.55,381.1
+,Kappler,OEM,19,"Zytron 300 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z3H417_4X,,CS,,30-45 Days,,199.22,398.43
+,Kappler,OEM,19,"Zytron 300 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:XS, Case Qty:6",Z3H426_XS,,CS,,30-45 Days,,249.54,499.07
+,Kappler,OEM,19,"Zytron 300 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:SM/MD, Case Qty:6",Z3H426_SM/MD,,CS,,30-45 Days,,249.54,499.07
+,Kappler,OEM,19,"Zytron 300 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:LG/XL, Case Qty:6",Z3H426_LG/XL,,CS,,30-45 Days,,249.54,499.07
+,Kappler,OEM,19,"Zytron 300 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:2X/3X, Case Qty:6",Z3H426_2X/3X,,CS,,30-45 Days,,274.49,548.98
+,Kappler,OEM,19,"Zytron 300 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:4X, Case Qty:6",Z3H426_4X,,CS,,30-45 Days,,286.96,573.92
+,Kappler,OEM,19,"Zytron 300 NFPA Certified Coverall-1992/2005 Edition - Elastic hood opening, attached gloves and sock boots and boot flaps. Glove system: Ansell Neoprene outer/Ansell barrier inner. Heat Sealed/Taped Seams.  Size:XS, Case Qty:6",Z3H427-92_XS,,CS,,30-45 Days,,459.7,919.4
+,Kappler,OEM,19,"Zytron 300 NFPA Certified Coverall-1992/2005 Edition - Elastic hood opening, attached gloves and sock boots and boot flaps. Glove system: Ansell Neoprene outer/Ansell barrier inner. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z3H427-92_SM/MD,,CS,,30-45 Days,,459.7,919.4
+,Kappler,OEM,19,"Zytron 300 NFPA Certified Coverall-1992/2005 Edition - Elastic hood opening, attached gloves and sock boots and boot flaps. Glove system: Ansell Neoprene outer/Ansell barrier inner. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z3H427-92_LG/XL,,CS,,30-45 Days,,459.7,919.4
+,Kappler,OEM,19,"Zytron 300 NFPA Certified Coverall-1992/2005 Edition - Elastic hood opening, attached gloves and sock boots and boot flaps. Glove system: Ansell Neoprene outer/Ansell barrier inner. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z3H427-92_2X/3X,,CS,,30-45 Days,,505.84,1011.68
+,Kappler,OEM,19,"Zytron 300 NFPA Certified Coverall-1992/2005 Edition - Elastic hood opening, attached gloves and sock boots and boot flaps. Glove system: Ansell Neoprene outer/Ansell barrier inner. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z3H427-92_4X,,CS,,30-45 Days,,528.84,1057.67
+,Kappler,OEM,19,"Zytron 300 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams.  CE Certified Type 3.  Size:XS, Case Qty:6",Z3H428_XS,,CS,,30-45 Days,,176.03,352.05
+,Kappler,OEM,19,"Zytron 300 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams.  CE Certified Type 3.  Size:SM/MD, Case Qty:6",Z3H428_SM/MD,,CS,,30-45 Days,,176.03,352.05
+,Kappler,OEM,19,"Zytron 300 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams.  CE Certified Type 3.  Size:LG/XL, Case Qty:6",Z3H428_LG/XL,,CS,,30-45 Days,,176.03,352.05
+,Kappler,OEM,19,"Zytron 300 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams.  CE Certified Type 3.  Size:2X/3X, Case Qty:6",Z3H428_2X/3X,,CS,,30-45 Days,,193.63,387.26
+,Kappler,OEM,19,"Zytron 300 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams.  CE Certified Type 3.  Size:4X, Case Qty:6",Z3H428_4X,,CS,,30-45 Days,,202.43,404.86
+,Kappler,OEM,19,"Zytron 300 NFPA Certified Coverall-1992/2005 Edition - Elastic hood opening, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:XS, Case Qty:6",Z3H428-92_XS,,CS,,30-45 Days,,198.28,396.55
+,Kappler,OEM,19,"Zytron 300 NFPA Certified Coverall-1992/2005 Edition - Elastic hood opening, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:SM/MD, Case Qty:6",Z3H428-92_SM/MD,,CS,,30-45 Days,,198.28,396.55
+,Kappler,OEM,19,"Zytron 300 NFPA Certified Coverall-1992/2005 Edition - Elastic hood opening, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:LG/XL, Case Qty:6",Z3H428-92_LG/XL,,CS,,30-45 Days,,198.28,396.55
+,Kappler,OEM,19,"Zytron 300 NFPA Certified Coverall-1992/2005 Edition - Elastic hood opening, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:2X/3X, Case Qty:6",Z3H428-92_2X/3X,,CS,,30-45 Days,,218.1,436.19
+,Kappler,OEM,19,"Zytron 300 NFPA Certified Coverall-1992/2005 Edition - Elastic hood opening, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:4X, Case Qty:6",Z3H428-92_4X,,CS,,30-45 Days,,228.01,456.02
+,Kappler,OEM,19,"Zytron 300 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.  Size:XS, Case Qty:6",Z3H571_XS,,CS,,30-45 Days,,470.57,941.13
+,Kappler,OEM,19,"Zytron 300 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z3H571_SM/MD,,CS,,30-45 Days,,470.57,941.13
+,Kappler,OEM,19,"Zytron 300 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z3H571_LG/XL,,CS,,30-45 Days,,470.57,941.13
+,Kappler,OEM,19,"Zytron 300 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z3H571_2X/3X,,CS,,30-45 Days,,517.62,1035.23
+,Kappler,OEM,19,"Zytron 300 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z3H571_4X,,CS,,30-45 Days,,541.15,1082.29
+,Kappler,OEM,19,"Zytron 300 Bib trousers. Heat Sealed/Taped Seams.   Size:XS, Case Qty:6",Z3H660_XS,,CS,,30-45 Days,,115.25,230.49
+,Kappler,OEM,19,"Zytron 300 Bib trousers. Heat Sealed/Taped Seams.   Size:SM/MD, Case Qty:6",Z3H660_SM/MD,,CS,,30-45 Days,,115.25,230.49
+,Kappler,OEM,19,"Zytron 300 Bib trousers. Heat Sealed/Taped Seams.   Size:LG/XL, Case Qty:6",Z3H660_LG/XL,,CS,,30-45 Days,,115.25,230.49
+,Kappler,OEM,19,"Zytron 300 Bib trousers. Heat Sealed/Taped Seams.   Size:2X/3X, Case Qty:6",Z3H660_2X/3X,,CS,,30-45 Days,,126.77,253.54
+,Kappler,OEM,19,"Zytron 300 Bib trousers. Heat Sealed/Taped Seams.   Size:4X, Case Qty:6",Z3H660_4X,,CS,,30-45 Days,,132.53,265.06
+,Kappler,OEM,19,"Zytron 300 Jacket. Heat Sealed/Taped Seams.   Size:XS, Case Qty:6",Z3H670_XS,,CS,,30-45 Days,,137.28,274.56
+,Kappler,OEM,19,"Zytron 300 Jacket. Heat Sealed/Taped Seams.   Size:SM/MD, Case Qty:6",Z3H670_SM/MD,,CS,,30-45 Days,,137.28,274.56
+,Kappler,OEM,19,"Zytron 300 Jacket. Heat Sealed/Taped Seams.   Size:LG/XL, Case Qty:6",Z3H670_LG/XL,,CS,,30-45 Days,,137.28,274.56
+,Kappler,OEM,19,"Zytron 300 Jacket. Heat Sealed/Taped Seams.   Size:2X/3X, Case Qty:6",Z3H670_2X/3X,,CS,,30-45 Days,,151.01,302.01
+,Kappler,OEM,19,"Zytron 300 Jacket. Heat Sealed/Taped Seams.   Size:4X, Case Qty:6",Z3H670_4X,,CS,,30-45 Days,,157.88,315.75
+,Kappler,OEM,19,"Zytron 300 Hood. Heat Sealed/Taped Seams.   Size:One Size, Case Qty:6",Z3H750,,CS,,30-45 Days,,159.93,319.86
+,Kappler,OEM,19,"Zytron 300 Half C Jacket. Heat Sealed/Taped Seams.  Size:XS, Case Qty:6",Z3H763_XS,,CS,,30-45 Days,,254.82,509.64
+,Kappler,OEM,19,"Zytron 300 Half C Jacket. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z3H763_SM/MD,,CS,,30-45 Days,,254.82,509.64
+,Kappler,OEM,19,"Zytron 300 Half C Jacket. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z3H763_LG/XL,,CS,,30-45 Days,,254.82,509.64
+,Kappler,OEM,19,"Zytron 300 Half C Jacket. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z3H763_2X/3X,,CS,,30-45 Days,,280.3,560.6
+,Kappler,OEM,19,"Zytron 300 Half C Jacket. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z3H763_4X,,CS,,30-45 Days,,293.04,586.08
+,Kappler,OEM,19,"Zytron 300 Half C Jacket with Air System. Heat Sealed/Taped Seams. Size:XS, Case Qty:6",Z3H763 30_XS,,CS,,30-45 Days,,649.71,1299.42
+,Kappler,OEM,19,"Zytron 300 Half C Jacket with Air System. Heat Sealed/Taped Seams. Size:SM/MD, Case Qty:6",Z3H763 30_SM/MD,,CS,,30-45 Days,,649.71,1299.42
+,Kappler,OEM,19,"Zytron 300 Half C Jacket with Air System. Heat Sealed/Taped Seams. Size:LG/XL, Case Qty:6",Z3H763 30_LG/XL,,CS,,30-45 Days,,649.71,1299.42
+,Kappler,OEM,19,"Zytron 300 Half C Jacket with Air System. Heat Sealed/Taped Seams. Size:2X/3X, Case Qty:6",Z3H763 30_2X/3X,,CS,,30-45 Days,,714.68,1429.36
+,Kappler,OEM,19,"Zytron 300 Half C Jacket with Air System. Heat Sealed/Taped Seams. Size:4X, Case Qty:6",Z3H763 30_4X,,CS,,30-45 Days,,747.17,1494.33
+,Kappler,OEM,19,"Zytron 400 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams.  Size:XS, Case Qty:6",Z4H414_XS,,CS,,30-45 Days,,298.35,596.7
+,Kappler,OEM,19,"Zytron 400 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z4H414_SM/MD,,CS,,30-45 Days,,298.35,596.7
+,Kappler,OEM,19,"Zytron 400 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z4H414_LG/XL,,CS,,30-45 Days,,298.35,596.7
+,Kappler,OEM,19,"Zytron 400 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z4H414_2X/3X,,CS,,30-45 Days,,328.18,656.36
+,Kappler,OEM,19,"Zytron 400 Coverall with hood and boots, elastic wrists. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z4H414_4X,,CS,,30-45 Days,,343.1,686.19
+,Kappler,OEM,19,"Zytron 400 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:XS, Case Qty:6",Z4H417_XS,,CS,,30-45 Days,,223.3,446.6
+,Kappler,OEM,19,"Zytron 400 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:SM/MD, Case Qty:6",Z4H417_SM/MD,,CS,,30-45 Days,,223.3,446.6
+,Kappler,OEM,19,"Zytron 400 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:LG/XL, Case Qty:6",Z4H417_LG/XL,,CS,,30-45 Days,,223.3,446.6
+,Kappler,OEM,19,"Zytron 400 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:2X/3X, Case Qty:6",Z4H417_2X/3X,,CS,,30-45 Days,,245.63,491.25
+,Kappler,OEM,19,"Zytron 400 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:4X, Case Qty:6",Z4H417_4X,,CS,,30-45 Days,,256.79,513.58
+,Kappler,OEM,19,"Zytron 400 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.   Size:XS, Case Qty:6",Z4H426_XS,,CS,,30-45 Days,,336.46,672.91
+,Kappler,OEM,19,"Zytron 400 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.   Size:SM/MD, Case Qty:6",Z4H426_SM/MD,,CS,,30-45 Days,,336.46,672.91
+,Kappler,OEM,19,"Zytron 400 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.   Size:LG/XL, Case Qty:6",Z4H426_LG/XL,,CS,,30-45 Days,,336.46,672.91
+,Kappler,OEM,19,"Zytron 400 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.   Size:2X/3X, Case Qty:6",Z4H426_2X/3X,,CS,,30-45 Days,,370.1,740.19
+,Kappler,OEM,19,"Zytron 400 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.   Size:4X, Case Qty:6",Z4H426_4X,,CS,,30-45 Days,,386.92,773.84
+,Kappler,OEM,19,"Zytron 400 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:XS, Case Qty:6",Z4H428_XS,,CS,,30-45 Days,,243.52,487.03
+,Kappler,OEM,19,"Zytron 400 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:SM/MD, Case Qty:6",Z4H428_SM/MD,,CS,,30-45 Days,,243.52,487.03
+,Kappler,OEM,19,"Zytron 400 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:LG/XL, Case Qty:6",Z4H428_LG/XL,,CS,,30-45 Days,,243.52,487.03
+,Kappler,OEM,19,"Zytron 400 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:2X/3X, Case Qty:6",Z4H428_2X/3X,,CS,,30-45 Days,,267.88,535.75
+,Kappler,OEM,19,"Zytron 400 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:4X, Case Qty:6",Z4H428_4X,,CS,,30-45 Days,,280.05,560.1
+,Kappler,OEM,19,"Zytron 400 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.   Size:XS, Case Qty:6",Z4H571_XS,,CS,,30-45 Days,,592.54,1185.08
+,Kappler,OEM,19,"Zytron 400 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.   Size:SM/MD, Case Qty:6",Z4H571_SM/MD,,CS,,30-45 Days,,592.54,1185.08
+,Kappler,OEM,19,"Zytron 400 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.   Size:LG/XL, Case Qty:6",Z4H571_LG/XL,,CS,,30-45 Days,,592.54,1185.08
+,Kappler,OEM,19,"Zytron 400 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.   Size:2X/3X, Case Qty:6",Z4H571_2X/3X,,CS,,30-45 Days,,651.81,1303.61
+,Kappler,OEM,19,"Zytron 400 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.   Size:4X, Case Qty:6",Z4H571_4X,,CS,,30-45 Days,,681.43,1362.85
+,Kappler,OEM,19,"Zytron 400 Bib overalls. Heat Sealed/Taped Seams.  Size:XS, Case Qty:6",Z4H660_XS,,CS,,30-45 Days,,179.87,359.73
+,Kappler,OEM,19,"Zytron 400 Bib overalls. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z4H660_SM/MD,,CS,,30-45 Days,,179.87,359.73
+,Kappler,OEM,19,"Zytron 400 Bib overalls. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z4H660_LG/XL,,CS,,30-45 Days,,179.87,359.73
+,Kappler,OEM,19,"Zytron 400 Bib overalls. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z4H660_2X/3X,,CS,,30-45 Days,,197.86,395.71
+,Kappler,OEM,19,"Zytron 400 Bib overalls. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z4H660_4X,,CS,,30-45 Days,,206.84,413.68
+,Kappler,OEM,19,"Zytron 400 Jacket. Heat Sealed/Taped Seams.  Size:XS, Case Qty:6",Z4H670_XS,,CS,,30-45 Days,,186.12,372.23
+,Kappler,OEM,19,"Zytron 400 Jacket. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:6",Z4H670_SM/MD,,CS,,30-45 Days,,186.12,372.23
+,Kappler,OEM,19,"Zytron 400 Jacket. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:6",Z4H670_LG/XL,,CS,,30-45 Days,,186.12,372.23
+,Kappler,OEM,19,"Zytron 400 Jacket. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:6",Z4H670_2X/3X,,CS,,30-45 Days,,204.72,409.44
+,Kappler,OEM,19,"Zytron 400 Jacket. Heat Sealed/Taped Seams.  Size:4X, Case Qty:6",Z4H670_4X,,CS,,30-45 Days,,214.02,428.04
+,Kappler,OEM,19,"Zytron 400 Hood. Heat Sealed/Taped Seams. Size:One Size, Case Qty:6",Z4H750,,CS,,30-45 Days,,194.36,388.71
+,Kappler,OEM,19,"Zytron 500 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:XS, Case Qty:3",Z5H417_XS,,CS,,30-45 Days,,202.94,405.88
+,Kappler,OEM,19,"Zytron 500 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:SM/MD, Case Qty:3",Z5H417_SM/MD,,CS,,30-45 Days,,202.94,405.88
+,Kappler,OEM,19,"Zytron 500 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:LG/XL, Case Qty:3",Z5H417_LG/XL,,CS,,30-45 Days,,202.94,405.88
+,Kappler,OEM,19,"Zytron 500 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:2X/3X, Case Qty:3",Z5H417_2X/3X,,CS,,30-45 Days,,223.24,446.47
+,Kappler,OEM,19,"Zytron 500 Coverall with collar, elastic wrists and ankles. Heat Sealed/Taped Seams.   Size:4X, Case Qty:3",Z5H417_4X,,CS,,30-45 Days,,233.39,466.77
+,Kappler,OEM,19,"Zytron 500 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:XS, Case Qty:3",Z5H426_XS,,CS,,30-45 Days,,276.16,552.31
+,Kappler,OEM,19,"Zytron 500 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:SM/MD, Case Qty:",Z5H426_SM/MD,,CS,,30-45 Days,,276.16,552.31
+,Kappler,OEM,19,"Zytron 500 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:LG/XL, Case Qty:",Z5H426_LG/XL,,CS,,30-45 Days,,276.16,552.31
+,Kappler,OEM,19,"Zytron 500 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:2X/3X, Case Qty:",Z5H426_2X/3X,,CS,,30-45 Days,,303.77,607.53
+,Kappler,OEM,19,"Zytron 500 Coverall with hood, elastic wrists, and sock boot and boot flap. Heat Sealed/Taped Seams. CE Certified Type 3.  Size:4X, Case Qty:",Z5H426_4X,,CS,,30-45 Days,,317.57,635.14
+,Kappler,OEM,19,"Zytron 500 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. Size:XS, Case Qty:3",Z5H428_XS,,CS,,30-45 Days,,208.96,417.92
+,Kappler,OEM,19,"Zytron 500 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. Size:SM/MD, Case Qty:",Z5H428_SM/MD,,CS,,30-45 Days,,208.96,417.92
+,Kappler,OEM,19,"Zytron 500 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. Size:LG/XL, Case Qty:",Z5H428_LG/XL,,CS,,30-45 Days,,208.96,417.92
+,Kappler,OEM,19,"Zytron 500 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. Size:2X/3X, Case Qty:",Z5H428_2X/3X,,CS,,30-45 Days,,229.86,459.71
+,Kappler,OEM,19,"Zytron 500 Coverall with hood, elastic wrists and ankles. Heat Sealed/Taped Seams. Size:4X, Case Qty:",Z5H428_4X,,CS,,30-45 Days,,240.31,480.61
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, flat back, double. 5 mil. Teflon over-lay on lens. Standard pass-through included. Butyl outer glove with Ansell liner. Heat Sealed/Taped Seams inside & out. Size:XS, Case Qty:1",Z5H380_XS,,CS,,30-45 Days,,531.77,1063.53
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, flat back, double. 5 mil. Teflon over-lay on lens. Standard pass-through included. Butyl outer glove with Ansell liner. Heat Sealed/Taped Seams inside & out. Size:SM/MD, Case Qty:1",Z5H380_SM/MD,,CS,,30-45 Days,,531.77,1063.53
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, flat back, double. 5 mil. Teflon over-lay on lens. Standard pass-through included. Butyl outer glove with Ansell liner. Heat Sealed/Taped Seams inside & out. Size:LG/XL, Case Qty:1",Z5H380_LG/XL,,CS,,30-45 Days,,531.77,1063.53
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, flat back, double. 5 mil. Teflon over-lay on lens. Standard pass-through included. Butyl outer glove with Ansell liner. Heat Sealed/Taped Seams inside & out. Size:2X/3X, Case Qty:1",Z5H380_2X/3X,,CS,,30-45 Days,,584.95,1169.89
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, flat back, double. 5 mil. Teflon over-lay on lens. Standard pass-through included. Butyl outer glove with Ansell liner. Heat Sealed/Taped Seams inside & out. Size:4X, Case Qty:1",Z5H380_4X,,CS,,30-45 Days,,611.53,1223.06
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, expanded back. Heat Sealed/Taped Seams.  Size:XS, Case Qty:1",Z5H550_XS,,CS,,30-45 Days,,451.07,902.14
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, expanded back. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:1",Z5H550_SM/MD,,CS,,30-45 Days,,451.07,902.14
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, expanded back. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:1",Z5H550_LG/XL,,CS,,30-45 Days,,451.07,902.14
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, expanded back. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:1",Z5H550_2X/3X,,CS,,30-45 Days,,496.18,992.35
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, expanded back. Heat Sealed/Taped Seams.  Size:4X, Case Qty:1",Z5H550_4X,,CS,,30-45 Days,,518.73,1037.45
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Rear entry, expanded back. Heat Sealed/Taped Seams.  Size:XS, Case Qty:1",Z5H551 _XS,,CS,,30-45 Days,,451.07,902.14
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Rear entry, expanded back. Heat Sealed/Taped Seams.  Size:SM/MD, Case Qty:1",Z5H551 _SM/MD,,CS,,30-45 Days,,451.07,902.14
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Rear entry, expanded back. Heat Sealed/Taped Seams.  Size:LG/XL, Case Qty:1",Z5H551 _LG/XL,,CS,,30-45 Days,,451.07,902.14
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Rear entry, expanded back. Heat Sealed/Taped Seams.  Size:2X/3X, Case Qty:1",Z5H551 _2X/3X,,CS,,30-45 Days,,496.18,992.35
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Rear entry, expanded back. Heat Sealed/Taped Seams.  Size:4X, Case Qty:1",Z5H551 _4X,,CS,,30-45 Days,,518.73,1037.45
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level B suit. Front entry, expanded back. Heat Sealed/Taped Seams.   Size:XS, Case Qty:1",Z5H570_XS,,CS,,30-45 Days,,183.66,367.31
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level B suit. Front entry, expanded back. Heat Sealed/Taped Seams.   Size:SM/MD, Case Qty:1",Z5H570_SM/MD,,CS,,30-45 Days,,183.66,367.31
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level B suit. Front entry, expanded back. Heat Sealed/Taped Seams.   Size:LG/XL, Case Qty:1",Z5H570_LG/XL,,CS,,30-45 Days,,183.66,367.31
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level B suit. Front entry, expanded back. Heat Sealed/Taped Seams.   Size:2X/3X, Case Qty:1",Z5H570_2X/3X,,CS,,30-45 Days,,202.01,404.02
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level B suit. Front entry, expanded back. Heat Sealed/Taped Seams.   Size:4X, Case Qty:1",Z5H570_4X,,CS,,30-45 Days,,211.19,422.38
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.   Size:XS, Case Qty:1",Z5H571_XS,,CS,,30-45 Days,,180.6,361.2
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.   Size:SM/MD, Case Qty:1",Z5H571_SM/MD,,CS,,30-45 Days,,180.6,361.2
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.   Size:LG/XL, Case Qty:1",Z5H571_LG/XL,,CS,,30-45 Days,,180.6,361.2
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.   Size:2X/3X, Case Qty:1",Z5H571_2X/3X,,CS,,30-45 Days,,198.66,397.32
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level B suit. Rear entry, expanded back. Heat Sealed/Taped Seams.   Size:4X, Case Qty:1",Z5H571_4X,,CS,,30-45 Days,,207.69,415.38
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, expanded back, double. Facesheild 40 mil. PVC w/5 mil. Teflon over-lay on lens. Butyl outer glove with Ansell Barrier Inner. Heat Sealed/Taped Seams inside & out. CE Certified Type 1aET. Size:XS, Case Qty:1",Z5H580_XS,,CS,,30-45 Days,,521.1,1042.2
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, expanded back, double. Facesheild 40 mil. PVC w/5 mil. Teflon over-lay on lens. Butyl outer glove with Ansell Barrier Inner. Heat Sealed/Taped Seams inside & out. CE Certified Type 1aET. Size:SM/MD, Case Qty:1",Z5H580_SM/MD,,CS,,30-45 Days,,521.1,1042.2
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, expanded back, double. Facesheild 40 mil. PVC w/5 mil. Teflon over-lay on lens. Butyl outer glove with Ansell Barrier Inner. Heat Sealed/Taped Seams inside & out. CE Certified Type 1aET. Size:LG/XL, Case Qty:1",Z5H580_LG/XL,,CS,,30-45 Days,,521.1,1042.2
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, expanded back, double. Facesheild 40 mil. PVC w/5 mil. Teflon over-lay on lens. Butyl outer glove with Ansell Barrier Inner. Heat Sealed/Taped Seams inside & out. CE Certified Type 1aET. Size:2X/3X, Case Qty:1",Z5H580_2X/3X,,CS,,30-45 Days,,573.21,1146.41
+,Kappler,OEM,19,"Zytron 500 Totally encapsulating Level A suit. Front entry, expanded back, double. Facesheild 40 mil. PVC w/5 mil. Teflon over-lay on lens. Butyl outer glove with Ansell Barrier Inner. Heat Sealed/Taped Seams inside & out. CE Certified Type 1aET. Size:4X, Case Qty:1",Z5H580_4X,,CS,,30-45 Days,,599.26,1198.52
+,Kappler,OEM,19,"Zytron 500 NFPA 1994/2007 Edition Class 2 Certified Suit- Totally encapsulated front entry, expanded back, sock boots w/ boot flaps. Faceshield 40 mil PVC w/ 5 mil Teflon overlay. Butyl outer glove with Ansell Barrier Inner. Heat Sealed/Taped Seams inside & out. Size:XS-XL, Case Qty:1",Z5HTN C2_XS-XL,,CS,,30-45 Days,,658.96,1317.92
+,Kappler,OEM,19,"Zytron 500 NFPA 1994/2007 Edition Class 2 Certified Suit- Totally encapsulated front entry, expanded back, sock boots w/ boot flaps. Faceshield 40 mil PVC w/ 5 mil Teflon overlay. Butyl outer glove with Ansell Barrier Inner. Heat Sealed/Taped Seams inside & out. Size:2X, Case Qty:1",Z5HTN C2_2X,,CS,,30-45 Days,,724.86,1449.71
+,Kappler,OEM,19,"Zytron 500 NFPA 1994/2007 Edition Class 2 Certified Suit- Totally encapsulated front entry, expanded back, sock boots w/ boot flaps. Faceshield 40 mil PVC w/ 5 mil Teflon overlay. Butyl outer glove with Ansell Barrier Inner. Heat Sealed/Taped Seams inside & out. Size:3X, Case Qty:1",Z5HTN C2_3X,,CS,,30-45 Days,,757.81,1515.61
+,Kappler,OEM,19,"Zytron 500 NFPA 1994/2007 Edition Class 2 Certified Suit- Totally encapsulated front entry, expanded back, sock boots w/ boot flaps. Faceshield 40 mil PVC w/ 5 mil Teflon overlay. Butyl outer glove with Ansell Barrier Inner. Heat Sealed/Taped Seams inside & out. Size:4X, Case Qty:1",Z5HTN C2_4X,,CS,,30-45 Days,,790.75,1581.5
+,Kappler,OEM,19,"Zytron 500 Hood. Heat Sealed/Taped Seams. Size:One Size, Case Qty:1",Z5H750,,CS,,30-45 Days,,147.51,295.02
+,Kappler,OEM,19,"Aluminized Overcover, front entry, large-view 10-mil. FEP face shield, 2 covered exhalation valves, 48â€� zipper, elastic wrists and ankles, includes one pair knit kevlar gloves. Serged Seams. Also Available in rear entry (FAS561). Size:SM/MD, Case Qty:1",FAS560 _SM/MD,,CS,,30-45 Days,,511.7,1023.4
+,Kappler,OEM,19,"Aluminized Overcover, front entry, large-view 10-mil. FEP face shield, 2 covered exhalation valves, 48â€� zipper, elastic wrists and ankles, includes one pair knit kevlar gloves. Serged Seams. Also Available in rear entry (FAS561). Size:LG/XL, Case Qty:1",FAS560 _LG/XL,,CS,,30-45 Days,,511.7,1023.4
+,Kappler,OEM,19,"Aluminized Overcover, front entry, large-view 10-mil. FEP face shield, 2 covered exhalation valves, 48â€� zipper, elastic wrists and ankles, includes one pair knit kevlar gloves. Serged Seams. Also Available in rear entry (FAS561). Size:2X/3X, Case Qty:1",FAS560 _2X/3X,,CS,,30-45 Days,,562.87,1125.74
+,Kappler,OEM,19,"Aluminized Overcover, front entry, large-view 10-mil. FEP face shield, 2 covered exhalation valves, 48â€� zipper, elastic wrists and ankles, includes one pair knit kevlar gloves. Serged Seams. Also Available in rear entry (FAS561). Size:4X, Case Qty:1",FAS560 _4X,,CS,,30-45 Days,,588.46,1176.91
+,Kappler,OEM,19,"PVC Training Suit Front Entry, Expanded Back, Large-View PVC Face Shield, 1 Exhaust Port, 48â€� Zipper, Storm Flap with Hook and Loop Closure, Attached Sock Boots with Boot Flap, Serged on PVC Gloves. Serged Seams.  Size:SM/MD, Case Qty:1",PVS555 YW _SM/MD,,CS,,30-45 Days,,113.58,227.16
+,Kappler,OEM,19,"PVC Training Suit Front Entry, Expanded Back, Large-View PVC Face Shield, 1 Exhaust Port, 48â€� Zipper, Storm Flap with Hook and Loop Closure, Attached Sock Boots with Boot Flap, Serged on PVC Gloves. Serged Seams.  Size:LG/XL, Case Qty:1",PVS555 YW _LG/XL,,CS,,30-45 Days,,113.58,227.16
+,Kappler,OEM,19,"PVC Training Suit Front Entry, Expanded Back, Large-View PVC Face Shield, 1 Exhaust Port, 48â€� Zipper, Storm Flap with Hook and Loop Closure, Attached Sock Boots with Boot Flap, Serged on PVC Gloves. Serged Seams.  Size:2X/3X, Case Qty:1",PVS555 YW _2X/3X,,CS,,30-45 Days,,124.94,249.87
+,Kappler,OEM,19,"PVC Training Suit Front Entry, Expanded Back, Large-View PVC Face Shield, 1 Exhaust Port, 48â€� Zipper, Storm Flap with Hook and Loop Closure, Attached Sock Boots with Boot Flap, Serged on PVC Gloves. Serged Seams.  Size:4X, Case Qty:1",PVS555 YW _4X,,CS,,30-45 Days,,130.62,261.24
+,Kappler,OEM,19,"Zytron 500 TRAINING suit, front entry, expanded back, large-view PVC face shield, 1 exhaust port, sock boots with boot flaps, PVC Serged on gloves. Serged Seams. Also available in rear entry (Z5S556).  Size:XS, Case Qty:1",Z5S555_XS,,CS,,30-45 Days,,139.8,279.6
+,Kappler,OEM,19,"Zytron 500 TRAINING suit, front entry, expanded back, large-view PVC face shield, 1 exhaust port, sock boots with boot flaps, PVC Serged on gloves. Serged Seams. Also available in rear entry (Z5S556).  Size:SM/MD, Case Qty:1",Z5S555_SM/MD,,CS,,30-45 Days,,139.8,279.6
+,Kappler,OEM,19,"Zytron 500 TRAINING suit, front entry, expanded back, large-view PVC face shield, 1 exhaust port, sock boots with boot flaps, PVC Serged on gloves. Serged Seams. Also available in rear entry (Z5S556).  Size:LG/XL, Case Qty:1",Z5S555_LG/XL,,CS,,30-45 Days,,139.8,279.6
+,Kappler,OEM,19,"Zytron 500 TRAINING suit, front entry, expanded back, large-view PVC face shield, 1 exhaust port, sock boots with boot flaps, PVC Serged on gloves. Serged Seams. Also available in rear entry (Z5S556).  Size:2X/3X, Case Qty:1",Z5S555_2X/3X,,CS,,30-45 Days,,153.78,307.55
+,Kappler,OEM,19,"Zytron 500 TRAINING suit, front entry, expanded back, large-view PVC face shield, 1 exhaust port, sock boots with boot flaps, PVC Serged on gloves. Serged Seams. Also available in rear entry (Z5S556).  Size:4X, Case Qty:1",Z5S555_4X,,CS,,30-45 Days,,160.77,321.53
+,Kappler,OEM,19,"Frontline 300 Coverall with special-design hood opening for better fit against Respirator and Visor. Longneck design with extended zipper closure, double storm flap with hook and loop closure. Cone inserts at sleeves. Heat Sealed/Taped Seams. Size:SMMD, LGXL, Case Qty:2","F3H429_SMMD, LGXL",,CS,,30-45 Days,,365.5,731
+,Kappler,OEM,19,"Frontline 300 Coverall with special-design hood opening for better fit against Respirator and Visor. Longneck design with extended zipper closure, double storm flap with hook and loop closure. Cone inserts at sleeves. Heat Sealed/Taped Seams. Size:2X3X, Case Qty:2",F3H429_2X3X,,CS,,30-45 Days,,402.05,804.1
+,Kappler,OEM,19,"Frontline 300 Coverall with special-design hood opening for better fit against Respirator and Visor. Longneck design with extended zipper closure, double storm flap with hook and loop closure. Cone inserts at sleeves. Heat Sealed/Taped Seams. Size:4X, Case Qty:2",F3H429_4X,,CS,,30-45 Days,,420.33,840.65
+,Kappler,OEM,19,"Frontline 300 Coverall with special-design hood opening for better fit against Respirator and Visor. Longneck design with extended zipper closure, double storm flap with hook and loop closure. Cone inserts at sleeves. Heat Sealed/Taped Seams. Size:5X, Case Qty:1",F3H429_5X,,CS,,30-45 Days,,438.6,877.2
+,Kappler,OEM,19,"Frontline 300 Jacket, with zipper front, double storm flap with FR hook and loop closure. Cone inserts at sleeves. Heat Sealed/Taped Seams. Size:SMMD, LGXL, Case Qty:1","F3H675_SMMD, LGXL",,CS,,30-45 Days,,129.27,258.54
+,Kappler,OEM,19,"Frontline 300 Jacket, with zipper front, double storm flap with FR hook and loop closure. Cone inserts at sleeves. Heat Sealed/Taped Seams. Size:2X3X, Case Qty:1",F3H675_2X3X,,CS,,30-45 Days,,142.2,284.39
+,Kappler,OEM,19,"Frontline 300 Jacket, with zipper front, double storm flap with FR hook and loop closure. Cone inserts at sleeves. Heat Sealed/Taped Seams. Size:4X, Case Qty:1",F3H675_4X,,CS,,30-45 Days,,148.66,297.32
+,Kappler,OEM,19,"Frontline 300 Jacket, with zipper front, double storm flap with FR hook and loop closure. Cone inserts at sleeves. Heat Sealed/Taped Seams. Size:5X, Case Qty:1",F3H675_5X,,CS,,30-45 Days,,155.13,310.25
+,Kappler,OEM,19,"Frontline 300 Bib Trouser with adjustable webbing straps and snap-lock closure. Heat Sealed/Taped Seams. Size:SMMD, LGXL, Case Qty:1","F3H660Â _SMMD, LGXL",,CS,,30-45 Days,,159.72,319.43
+,Kappler,OEM,19,"Frontline 300 Bib Trouser with adjustable webbing straps and snap-lock closure. Heat Sealed/Taped Seams. Size:2X3X, Case Qty:1",F3H660Â _2X3X,,CS,,30-45 Days,,175.68,351.36
+,Kappler,OEM,19,"Frontline 300 Bib Trouser with adjustable webbing straps and snap-lock closure. Heat Sealed/Taped Seams. Size:4X, Case Qty:1",F3H660Â _4X,,CS,,30-45 Days,,183.67,367.34
+,Kappler,OEM,19,"Frontline 300 Bib Trouser with adjustable webbing straps and snap-lock closure. Heat Sealed/Taped Seams. Size:5X, Case Qty:1",F3H660Â _5X,,CS,,30-45 Days,,191.66,383.31
+,Kappler,OEM,19,"Frontline 300 Hood with flat back and FR hook and loop closure, 40 mil. PVC visor. Heat Sealed/Taped Seams. Size:One Size, Case Qty:1",F3H750Â _One Size,,CS,,30-45 Days,,128.25,256.5
+,Kappler,OEM,19,"Frontline 300 Ensemble, with jacket (F3H675), bib (F3H660) & hood (F3H750). Size:SMMD, LGXL, Case Qty:1","F3H630Â _SMMD, LGXL",,CS,,30-45 Days,,422.37,844.74
+,Kappler,OEM,19,"Frontline 300 Ensemble, with jacket (F3H675), bib (F3H660) & hood (F3H750). Size:2X3X, Case Qty:1",F3H630Â _2X3X,,CS,,30-45 Days,,464.61,929.21
+,Kappler,OEM,19,"Frontline 300 Ensemble, with jacket (F3H675), bib (F3H660) & hood (F3H750). Size:4X, Case Qty:1",F3H630Â _4X,,CS,,30-45 Days,,485.73,971.45
+,Kappler,OEM,19,"Frontline 300 Ensemble, with jacket (F3H675), bib (F3H660) & hood (F3H750). Size:5X, Case Qty:1",F3H630Â _5X,,CS,,30-45 Days,,506.84,1013.68
+,Kappler,OEM,19,"Frontline 300 Expanded Back Half C Jacket/hood, double storm flap, 40 mil. PVC Visor, CPE cuffs. Head Sealed/Taped Seams.  Size:SMMD, LGXL, Case Qty:1","F3H760_SMMD, LGXL",,CS,,30-45 Days,,217.6,435.2
+,Kappler,OEM,19,"Frontline 300 Expanded Back Half C Jacket/hood, double storm flap, 40 mil. PVC Visor, CPE cuffs. Head Sealed/Taped Seams.  Size:2X3X, Case Qty:1",F3H760_2X3X,,CS,,30-45 Days,,239.36,478.72
+,Kappler,OEM,19,"Frontline 300 Expanded Back Half C Jacket/hood, double storm flap, 40 mil. PVC Visor, CPE cuffs. Head Sealed/Taped Seams.  Size:4X, Case Qty:1",F3H760_4X,,CS,,30-45 Days,,250.25,500.49
+,Kappler,OEM,19,"Frontline 300 Expanded Back Half C Jacket/hood, double storm flap, 40 mil. PVC Visor, CPE cuffs. Head Sealed/Taped Seams.  Size:5X, Case Qty:1",F3H760_5X,,CS,,30-45 Days,,261.13,522.25
+,Kappler,OEM,19,"Frontline 300 Flat Back Half C Jacket/hood, double storm flap, 40 mil. PVC Visor, CPE cuffs. Head Sealed/Taped Seams. Size:SMMD, LGXL, Case Qty:1","F3H761_SMMD, LGXL",,CS,,30-45 Days,,213.93,427.85
+,Kappler,OEM,19,"Frontline 300 Flat Back Half C Jacket/hood, double storm flap, 40 mil. PVC Visor, CPE cuffs. Head Sealed/Taped Seams. Size:2X3X, Case Qty:1",F3H761_2X3X,,CS,,30-45 Days,,235.32,470.64
+,Kappler,OEM,19,"Frontline 300 Flat Back Half C Jacket/hood, double storm flap, 40 mil. PVC Visor, CPE cuffs. Head Sealed/Taped Seams. Size:4X, Case Qty:1",F3H761_4X,,CS,,30-45 Days,,246.02,492.03
+,Kappler,OEM,19,"Frontline 300 Flat Back Half C Jacket/hood, double storm flap, 40 mil. PVC Visor, CPE cuffs. Head Sealed/Taped Seams. Size:5X, Case Qty:1",F3H761_5X,,CS,,30-45 Days,,256.71,513.42
+,Kappler,OEM,19,"Frontline 300 Expanded Back Half Jacket (F3H670) w/ Bib Trouser (F3H660). Heat Sealed/Taped Seams. Size:SMMD, LGXL, Case Qty:1","F3H620_SMMD, LGXL",,CS,,30-45 Days,,313.04,626.08
+,Kappler,OEM,19,"Frontline 300 Expanded Back Half Jacket (F3H670) w/ Bib Trouser (F3H660). Heat Sealed/Taped Seams. Size:2X3X, Case Qty:1",F3H620_2X3X,,CS,,30-45 Days,,344.35,688.69
+,Kappler,OEM,19,"Frontline 300 Expanded Back Half Jacket (F3H670) w/ Bib Trouser (F3H660). Heat Sealed/Taped Seams. Size:4X, Case Qty:1",F3H620_4X,,CS,,30-45 Days,,360,719.99
+,Kappler,OEM,19,"Frontline 300 Expanded Back Half Jacket (F3H670) w/ Bib Trouser (F3H660). Heat Sealed/Taped Seams. Size:5X, Case Qty:1",F3H620_5X,,CS,,30-45 Days,,375.65,751.3
+,Kappler,OEM,19,"Frontline 300  Flat Back Half Jacket (F3H761) w/ Bib Trouser (F3H660). Heat Sealed/Taped Seams. Size:SMMD, LGXL, Case Qty:1","F3H621_SMMD, LGXL",,CS,,30-45 Days,,313.04,626.08
+,Kappler,OEM,19,"Frontline 300  Flat Back Half Jacket (F3H761) w/ Bib Trouser (F3H660). Heat Sealed/Taped Seams. Size:2X3X, Case Qty:1",F3H621_2X3X,,CS,,30-45 Days,,344.35,688.69
+,Kappler,OEM,19,"Frontline 300  Flat Back Half Jacket (F3H761) w/ Bib Trouser (F3H660). Heat Sealed/Taped Seams. Size:4X, Case Qty:1",F3H621_4X,,CS,,30-45 Days,,360,719.99
+,Kappler,OEM,19,"Frontline 300  Flat Back Half Jacket (F3H761) w/ Bib Trouser (F3H660). Heat Sealed/Taped Seams. Size:5X, Case Qty:1",F3H621_5X,,CS,,30-45 Days,,375.65,751.3
+,Kappler,OEM,19,"Front Entry, Expanded Back, Large PVC view window with FEP Overlay, Knee reinforcements, 2 exhalation valves, 48â€� Gas-Tight PVC Zipper, Double Storm Flap with Hook and Loop closure, attached Sock boots with Boot Flap, Field replaceable Glove System includes Butyl Gloves with Barrier Glove liner and knitted Kevlar overglove. Double Heat Sealed/Taped Seams. Size: SMMD, LGXL , Case Qty:1","F5H580 91_ SMMD, LGXL",,CS,,30-45 Days,,1343.75,2687.5
+,Kappler,OEM,19,"Front Entry, Expanded Back, Large PVC view window with FEP Overlay, Knee reinforcements, 2 exhalation valves, 48â€� Gas-Tight PVC Zipper, Double Storm Flap with Hook and Loop closure, attached Sock boots with Boot Flap, Field replaceable Glove System includes Butyl Gloves with Barrier Glove liner and knitted Kevlar overglove. Double Heat Sealed/Taped Seams. Size:2X3X, Case Qty:1",F5H580 91_2X3X,,CS,,30-45 Days,,1478.13,2956.25
+,Kappler,OEM,19,"Front Entry, Expanded Back, Large PVC view window with FEP Overlay, Knee reinforcements, 2 exhalation valves, 48â€� Gas-Tight PVC Zipper, Double Storm Flap with Hook and Loop closure, attached Sock boots with Boot Flap, Field replaceable Glove System includes Butyl Gloves with Barrier Glove liner and knitted Kevlar overglove. Double Heat Sealed/Taped Seams. Size:4X, Case Qty:1",F5H580 91_4X,,CS,,30-45 Days,,1545.32,3090.63
+,Kappler,OEM,19,"Front Entry, Expanded Back, Large PVC view window with FEP Overlay, Knee reinforcements, 2 exhalation valves, 48â€� Gas-Tight PVC Zipper, Double Storm Flap with Hook and Loop closure, attached Sock boots with Boot Flap, Field replaceable Glove System includes Butyl Gloves with Barrier Glove liner and knitted Kevlar overglove. Double Heat Sealed/Taped Seams. Size:5X, Case Qty:1",F5H580 91_5X,,CS,,30-45 Days,,1612.5,3225
+,Kappler,OEM,19,"ProVent 7000 Wrap-around gown. Hook and loop velcro neck closure. Two waist ties. Knit cuffs. Non-Sterile. Serged Seams. Size:SM-XL, Case Qty:30",101_SM-XL,,CS,,30-45 Days,,97.85,195.69
+,Kappler,OEM,19,"ProVent 7000 Wrap-around gown. Hook and loop velcro neck closure. Two waist ties. Knit cuffs. Non-Sterile. Serged Seams. Size:2X, Case Qty:30",101_2X,,CS,,30-45 Days,,107.63,215.25
+,Kappler,OEM,19,"ProVent 7000 Wrap-around gown. Hook and loop velcro neck closure. Two waist ties. Knit cuffs. Non-Sterile. Serged Seams. Size:3X, Case Qty:30",101_3X,,CS,,30-45 Days,,112.54,225.08
+,Kappler,OEM,19,"ProVent 7000 Wrap-around gown. Hook and loop velcro neck closure. Two waist ties. Knit cuffs. Non-Sterile. Serged Seams. Size:4X, Case Qty:30",101_4X,,CS,,30-45 Days,,117.42,234.84
+,Kappler,OEM,19,"ProVent 7000 Wrap-around gown. Two neck ties and two waist ties. Elastic wrists. Non-Sterile. Serged Seams. Size:SM-XL, Case Qty:50",112_SM-XL,,CS,,30-45 Days,,148.36,296.71
+,Kappler,OEM,19,"ProVent 7000 Wrap-around gown. Two neck ties and two waist ties. Elastic wrists. Non-Sterile. Serged Seams. Size:2X, Case Qty:50",112_2X,,CS,,30-45 Days,,163.19,326.37
+,Kappler,OEM,19,"ProVent 7000 Wrap-around gown. Two neck ties and two waist ties. Elastic wrists. Non-Sterile. Serged Seams. Size:3X, Case Qty:50",112_3X,,CS,,30-45 Days,,170.6,341.19
+,Kappler,OEM,19,"ProVent 7000 Wrap-around gown. Two neck ties and two waist ties. Knit cuffs. Non-sterile. Serged Seams. Size:SM-XL, Case Qty:30",LS112 2H_SM-XL,,CS,,30-45 Days,,102.6,205.19
+,Kappler,OEM,19,"ProVent 7000 Wrap-around gown. Two neck ties and two waist ties. Knit cuffs. Non-sterile. Serged Seams. Size:2X, Case Qty:30",LS112 2H_2X,,CS,,30-45 Days,,112.85,225.69
+,Kappler,OEM,19,"ProVent 7000 Knee-high boots. Elastic at top and ankle. Gray non-skid bottom. Ultrasonic Seams. Size:One Size, Case Qty:50 per",810,,CS,,30-45 Days,,79.68,159.36
+,Kappler,OEM,19,"ProVent 7000 Modesty shorts. Elastic waist. Serged Seams. Size:MD-XL, Case Qty:100",810_MD-XL,,CS,,30-45 Days,,91.01,182.01
+,Kappler,OEM,19,"ProVent 7000 Modesty shorts. Elastic waist. Serged Seams. Size:2X, Case Qty:100",810_2X,,CS,,30-45 Days,,94.87,189.74
+,Kappler,OEM,19,"ProVent 7000 Modesty shorts. Elastic waist. Serged Seams. Size:3X, Case Qty:100",810_3X,,CS,,30-45 Days,,97.62,195.23
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front  zipper closure with stormflap. Attached hood and skid resistant boot. Elastic wrists and face opening. Serged Seams. Size:SM-XL, Case Qty:25",MSE36_SM-XL,,CS,,30-45 Days,,218.59,437.18
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front  zipper closure with stormflap. Attached hood and skid resistant boot. Elastic wrists and face opening. Serged Seams. Size:2X, Case Qty:25",MSE36_2X,,CS,,30-45 Days,,231.71,463.41
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front  zipper closure with stormflap. Attached hood and skid resistant boot. Elastic wrists and face opening. Serged Seams. Size:3X, Case Qty:25",MSE36_3X,,CS,,30-45 Days,,245.61,491.22
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front  zipper closure with stormflap. Attached hood and skid resistant boot. Elastic wrists and face opening. Serged Seams. Size:4X, Case Qty:25",MSE36_4X,,CS,,30-45 Days,,265.27,530.53
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front zipper closure with stormflap. Attached hood. Elastic wrists, ankles and face opening.  Serged Seams. CE Certified Type 5, 6. Size:SM-XL, Case Qty:25",MSE38_SM-XL,,CS,,30-45 Days,,145.47,290.93
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front zipper closure with stormflap. Attached hood. Elastic wrists, ankles and face opening.  Serged Seams. CE Certified Type 5, 6. Size:2X, Case Qty:25",MSE38_2X,,CS,,30-45 Days,,160.01,320.01
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front zipper closure with stormflap. Attached hood. Elastic wrists, ankles and face opening.  Serged Seams. CE Certified Type 5, 6. Size:3X, Case Qty:25",MSE38_3X,,CS,,30-45 Days,,167.28,334.55
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front zipper closure with stormflap. Attached hood. Elastic wrists, ankles and face opening.  Serged Seams. CE Certified Type 5, 6. Size:4X, Case Qty:25",MSE38_4X,,CS,,30-45 Days,,174.55,349.1
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front zipper closure with stormflap. Attached hood and skid resistant boots. Elastic wrists and face opening. Ultrasonic Seams. Size:SM-XL, Case Qty:25",MNE36_SM-XL,,CS,,30-45 Days,,231.77,463.54
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front zipper closure with stormflap. Attached hood and skid resistant boots. Elastic wrists and face opening. Ultrasonic Seams. Size:2X, Case Qty:25",MNE36_2X,,CS,,30-45 Days,,245.02,490.03
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front zipper closure with stormflap. Attached hood and skid resistant boots. Elastic wrists and face opening. Ultrasonic Seams. Size:3X, Case Qty:25",MNE36_3X,,CS,,30-45 Days,,251.64,503.27
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front zipper closure with stormflap. Attached hood. Elastic wrists, ankles, and face opening. Ultrasonic Seams. CE Certified Type 5, 6.  Size:SM-XL, Case Qty:25",MNE38_SM-XL,,CS,,30-45 Days,,170.45,340.9
+,Kappler,OEM,19,"ProVent 10,000 Coverall. Elastic back waist. Front zipper closure with stormflap. Attached hood. Elastic wrists, ankles, and face opening. Ultrasonic Seams. CE Certified Type 5, 6.  Size:2X, Case Qty:25",MNE38_2X,,CS,,30-45 Days,,187.49,374.98
+,Kappler,OEM,19,"ProVent 10,000 Lab coat. Full cut. Zipper front closure. Knit collar and cuffs. 3 Serged-on pockets (1 breast & 2 hip). Serged Seams. Size:SM-XL, Case Qty:30",MS225_SM-XL,,CS,,30-45 Days,,214.41,428.82
+,Kappler,OEM,19,"ProVent 10,000 Lab coat. Full cut. Zipper front closure. Knit collar and cuffs. 3 Serged-on pockets (1 breast & 2 hip). Serged Seams. Size:2X, Case Qty:30",MS225_2X,,CS,,30-45 Days,,235.85,471.7
+,Kappler,OEM,19,"ProVent 10,000 Lab coat. Full cut. Zipper front closure. Knit collar and cuffs. 3 Serged-on pockets (1 breast & 2 hip). Serged Seams. Size:3X, Case Qty:30",MS225_3X,,CS,,30-45 Days,,246.58,493.15
+,Kappler,OEM,19,"ProVent 10,000 Lab coat. Full cut. Zipper front closure. Knit collar and cuffs. 3 Serged-on pockets (1 breast & 2 hip). Serged Seams. Size:4X, Case Qty:30",MS225_4X,,CS,,30-45 Days,,257.29,514.58
+,Kappler,OEM,19,"ProVent 10,000 Lab coat. Full cut. 6-snap front closure. Knit collar and cuffs. 3 Serged-on pockets (1 breast & 2 hip). Serged Seams. Size:SM-XL, Case Qty:30",MS235_SM-XL,,CS,,30-45 Days,,167.34,334.68
+,Kappler,OEM,19,"ProVent 10,000 Lab coat. Full cut. 6-snap front closure. Knit collar and cuffs. 3 Serged-on pockets (1 breast & 2 hip). Serged Seams. Size:2X, Case Qty:30",MS235_2X,,CS,,30-45 Days,,184.06,368.12
+,Kappler,OEM,19,"ProVent 10,000 Lab coat. Full cut. 6-snap front closure. Knit collar and cuffs. 3 Serged-on pockets (1 breast & 2 hip). Serged Seams. Size:3X, Case Qty:30",MS235_3X,,CS,,30-45 Days,,192.44,384.87
+,Kappler,OEM,19,"ProVent 10,000 Lab coat. Full cut. 6-snap front closure. Knit collar and cuffs. 3 Serged-on pockets (1 breast & 2 hip). Serged Seams. Size:4X, Case Qty:30",MS235_4X,,CS,,30-45 Days,,200.68,401.36
+,Kappler,OEM,19,"ProVent 10,000 Open back gown. Hook and loop velcro neck closure. Waist ties. Non-sterile.  Ultrasonic Seams. Size:SM-XL, Case Qty:30",MN101_SM-XL,,CS,,30-45 Days,,159.37,318.73
+,Kappler,OEM,19,"ProVent 10,000 Open back gown. Hook and loop velcro neck closure. Waist ties. Non-sterile.  Ultrasonic Seams. Size:2X, Case Qty:30",MN101_2X,,CS,,30-45 Days,,175.3,350.6
+,Kappler,OEM,19,"ProVent 10,000 Open back gown. Hook and loop velcro neck closure. Waist ties. Non-sterile.  Ultrasonic Seams. Size:3X, Case Qty:30",MN101_3X,,CS,,30-45 Days,,183.28,366.55
+,Kappler,OEM,19,"ProVent 10,000 Open back gown. Hook and loop velcro neck closure. Waist ties. Non-sterile.  Ultrasonic Seams. Size:4X, Case Qty:30",MN101_4X,,CS,,30-45 Days,,191.24,382.47
+,Kappler,OEM,19,"ProVent 10,000 Open back gown. Hook and loop velcro neck closure. Waist ties. Knit cuffs. Non-sterile. Ultrasonic Seams. Size:SM-XL, Case Qty:30",MN108_SM-XL,,CS,,30-45 Days,,143.43,286.85
+,Kappler,OEM,19,"ProVent 10,000 Open back gown. Hook and loop velcro neck closure. Waist ties. Knit cuffs. Non-sterile. Ultrasonic Seams. Size:2X, Case Qty:30",MN108_2X,,CS,,30-45 Days,,157.78,315.56
+,Kappler,OEM,19,"ProVent 10,000 Open back gown. Hook and loop velcro neck closure. Waist ties. Knit cuffs. Non-sterile. Ultrasonic Seams. Size:3X, Case Qty:30",MN108_3X,,CS,,30-45 Days,,164.95,329.9
+,Kappler,OEM,19,"ProVent 10,000 Open back gown. Hook and loop velcro neck closure. Waist ties. Knit cuffs. Non-sterile. Ultrasonic Seams. Size:4X, Case Qty:30",MN108_4X,,CS,,30-45 Days,,172.12,344.23
+,Kappler,OEM,19,"ProVent 10,000 Waist-high pant with attached boots. Elastic waist. Ankle ties. 2-ply sole. Ultrasonic Seams. Size:SM-XL, Case Qty:30",MN818_SM-XL,,CS,,30-45 Days,,167.34,334.68
+,Kappler,OEM,19,"ProVent 10,000 Waist-high pant with attached boots. Elastic waist. Ankle ties. 2-ply sole. Ultrasonic Seams. Size:2X, Case Qty:30",MN818_2X,,CS,,30-45 Days,,184.06,368.12
+,Kappler,OEM,19,"ProVent 10,000 Waist-high pant with attached boots. Elastic waist. Ankle ties. 2-ply sole. Ultrasonic Seams. Size:3X, Case Qty:30",MN818_3X,,CS,,30-45 Days,,192.44,384.87
+,Kappler,OEM,19,"ProVent 10,000 Waist-high pant with attached boots. Elastic waist. Ankle ties. 2-ply sole. Ultrasonic Seams. Size:4X, Case Qty:30",MN818_4X,,CS,,30-45 Days,,200.81,401.61
+,Kappler,OEM,19,"ProVent 10,000 Knee-high boot. Hook and loop ankle closure. Elastic at top half of boot. 2-ply sole. Ultrasonic Seams. Size:SM-XL, Case Qty:50 per",MN026_SM-XL,,CS,,30-45 Days,,159.37,318.73
+,Kappler,OEM,19,"ProVent 12,000 Wrap-around gown. Two neck ties and two waist ties. Knit cuffs. Non-sterile. Serged Seams.  Size:SM-XL, Case Qty:30",PNSM1_SM-XL,,CS,,30-45 Days,,182.52,365.04
+,Kappler,OEM,19,"ProVent 12,000 Wrap-around gown. Two neck ties and two waist ties. Knit cuffs. Non-sterile. Serged Seams.  Size:2X, Case Qty:30",PNSM1_2X,,CS,,30-45 Days,,187.99,375.98
+,Kappler,OEM,19,"ProVent 12,000 Wrap-around gown. Two neck ties and two waist ties. Knit cuffs. Non-sterile. Serged Seams.  Size:3X, Case Qty:30",PNSM1_3X,,CS,,30-45 Days,,195.52,391.03
+,Kappler,OEM,19,"ProVent 12,000 Wrap-around gown. Two neck ties and two waist ties. Knit cuffs. Non-sterile. Serged Seams.  Size:4X, Case Qty:30",PNSM1_4X,,CS,,30-45 Days,,203.34,406.68
+,Kappler,OEM,19,"ProVent 12,000 Lab coat. 5-snap front closure. Knit collar and cuffs. 2 Serged-on hip pockets, elastic waist. Serged Seams. Size:SM-XL, Case Qty:25",PNSJ2_SM-XL,,CS,,30-45 Days,,146.02,292.03
+,Kappler,OEM,19,"ProVent 12,000 Lab coat. 5-snap front closure. Knit collar and cuffs. 2 Serged-on hip pockets, elastic waist. Serged Seams. Size:2X, Case Qty:25",PNSJ2_2X,,CS,,30-45 Days,,154.78,309.55
+,Kappler,OEM,19,"ProVent 12,000 Lab coat. 5-snap front closure. Knit collar and cuffs. 2 Serged-on hip pockets, elastic waist. Serged Seams. Size:3X, Case Qty:25",PNSJ2_3X,,CS,,30-45 Days,,167.16,334.31
+,Kappler,OEM,19,"ProVent 12,000 Lab coat. 5-snap front closure. Knit collar and cuffs. 2 Serged-on hip pockets, elastic waist. Serged Seams. Size:4X, Case Qty:25",PNSJ2_4X,,CS,,30-45 Days,,180.54,361.07
+,Kappler,OEM,19,"ProVent 12,000 Medical coverall. Front zipper closure. Traditional collar. Knit cuffs, no elastic. Serged Seams. Size:SM-XL, Case Qty:25",PNSC1 KN_SM-XL,,CS,,30-45 Days,,160.62,321.24
+,Kappler,OEM,19,"ProVent 12,000 Medical coverall. Front zipper closure. Traditional collar. Knit cuffs, no elastic. Serged Seams. Size:2X, Case Qty:25",PNSC1 KN_2X,,CS,,30-45 Days,,170.26,340.51
+,Kappler,OEM,19,"ProVent 12,000 Medical coverall. Front zipper closure. Traditional collar. Knit cuffs, no elastic. Serged Seams. Size:3X, Case Qty:25",PNSC1 KN_3X,,CS,,30-45 Days,,183.88,367.76
+,Kappler,OEM,19,"ProVent 12,000 Medical coverall. Front zipper closure. Traditional collar. Knit cuffs, no elastic. Serged Seams. Size:4X, Case Qty:25",PNSC1 KN_4X,,CS,,30-45 Days,,198.58,397.16
+,Kappler,OEM,19,"ProVent 12,000 Waist-high pant with attached boots. Elastic waist. Ankle ties. 2-ply sole. Ultrasonic Seams. Size:SM-XL, Case Qty:30",PMNPB_SM-XL,,CS,,30-45 Days,,183.98,367.95
+,Kappler,OEM,19,"ProVent 12,000 Waist-high pant with attached boots. Elastic waist. Ankle ties. 2-ply sole. Ultrasonic Seams. Size:2X, Case Qty:30",PMNPB_2X,,CS,,30-45 Days,,198.58,397.15
+,Kappler,OEM,19,"ProVent 12,000 Waist-high pant with attached boots. Elastic waist. Ankle ties. 2-ply sole. Ultrasonic Seams. Size:3X, Case Qty:30",PMNPB_3X,,CS,,30-45 Days,,214.47,428.93
+,Kappler,OEM,19,"ProVent 12,000 Waist-high pant with attached boots. Elastic waist. Ankle ties. 2-ply sole. Ultrasonic Seams. Size:4X, Case Qty:30",PMNPB_4X,,CS,,30-45 Days,,231.62,463.24
+,Kappler,OEM,19,"Kappler male glove insert cones for use with chemical splash coveralls with elastic wrists. Used to interface glove to suit and provide smooth taping surface. Size:, Case Qty:1",AG0AR,,CS,,30-45 Days,,13.46,26.92
+,Kappler,OEM,19,"Viton Gloves Size:, Case Qty:1",AG0GV,,CS,,30-45 Days,,85.03,170.05
+,Kappler,OEM,19,"Butyl Gloves, Guardian CP-25. Size:, Case Qty:1",AG0GB,,CS,,30-45 Days,,55.98,111.95
+,Kappler,OEM,19,"HangAir Drying System. Dries protective apparel, turnout gear, etc. in hours. Size:, Case Qty:1",A0HUS,,CS,,30-45 Days,,129,258
+,Kappler,OEM,19,"Pirelli Exhalation Valve Size:, Case Qty:1",AV0R0,,CS,,30-45 Days,,12.04,24.08
+,Kappler,OEM,19,"ChemTape - used to tape glove, zipper, boot and other interfaces to protective clothing. Rolls are 2â€� x 60 lyd (48mm wide x 50 meters long). Size:, Case Qty:1",99402 YW,,CS,,30-45 Days,,412.95,825.9
+,Kappler,OEM,19,"Tingley Chemical Protective HazProof boots; designed oversized especially for use over chemical suit sock boots; order regular shoe size; tapered top opens wide for easy donning; easy replaceable closure tabs. Size:, Case Qty:1",AR0B0,,CS,,30-45 Days,,85.03,170.05
+,Kappler,OEM,19,"On-Guard Industries HazMax boot Size:, Case Qty:1",AR0B2,,CS,,30-45 Days,,86.09,172.17
+,Kappler,OEM,19,"Kappler anti-fog solution for use with chemical suit faceshields or any other faceshield to alleviate fogging. Non-toxic; inert. 2 oz spray bottle. Packed 1 per case. Size:, Case Qty:1",A00RS,,CS,,30-45 Days,,8.5,17
+,Kappler,OEM,19,"Pressure Test Kit Size:, Case Qty:1",AKMOB,,CS,,30-45 Days,,1204,2408
+,Kappler,OEM,19,"Mesh Cool Vest 600 - 600 gram/pack vest. 4 cooling packs fit into pockets on front and back of vest. Size:, Case Qty:1",AM0R6,,CS,,30-45 Days,,159.43,318.86
+,Kappler,OEM,19,"Mesh Cool Vest alone, no cooling packs included Size:, Case Qty:1",AM0RV,,CS,,30-45 Days,,45.35,90.7
+,Kappler,OEM,19,"Cool Vest 400 - 400 gram/pack Banox FR cotton vest; cooling packs fit into internal pockets; includes 4 cooling packs Size:, Case Qty:1",AB0R4,,CS,,30-45 Days,,177.14,354.28
+,Kappler,OEM,19,"Cool Vest 600 - 600 gram/pack cotton (non FR) cotton vest; cooling packs fit into internal pockets; includes 4 cooling packs Size:, Case Qty:1",AC0R6 CA,,CS,,30-45 Days,,177.14,354.28
+,Kappler,OEM,19,"Cool Vest 600 - 600 gram/pack Banox FR cotton vest; cooling packs fit into internal pockets; includes 4 cooling packs Size:, Case Qty:1",AB0R6 TN,,CS,,30-45 Days,,177.14,354.28
+,Kappler,OEM,19,"Banox Cotton Vest alone, no cooling packs included Size:, Case Qty:1",AB0RV TN,,CS,,30-45 Days,,63.77,127.54
+,Kappler,OEM,19,"Cool Gel Packs replacements - 400 gram Size:, Case Qty:4/set",A00R4,,CS,,30-45 Days,,137.46,274.92
+,Kappler,OEM,19,"Cool Gel Packs replacements - 600 gram Size:, Case Qty:4/set",A00R6,,CS,,30-45 Days,,137.46,274.92
+,Kappler,OEM,19,"Decontamination Shower Kit (photo shown with Curtain Kit part # Z5HD1, sold separately). Size:, Case Qty:1",Z5HD0,,CS,,30-45 Days,,637.7,1275.4
+,Kappler,OEM,19,"Decon Shower Curtain Attachment Size:, Case Qty:1",Z5HD1,,CS,,30-45 Days,,506.62,1013.24

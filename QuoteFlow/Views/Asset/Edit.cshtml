@@ -14,7 +14,7 @@
     <fieldset>
         <div class="field-group">
             @Html.LabelFor(m => m.Name)
-            @Html.TextBoxFor(m => m.Name, new { @class = "text" })
+            @Html.TextBoxFor(m => m.Name, new { @class = "text long-field" })
             <div class="error">@Html.ValidationMessageFor(m => m.Name)</div>
         </div>
         <div class="field-group">
@@ -23,28 +23,30 @@
         </div>
         <div class="field-group">
             @Html.LabelFor(m => m.SKU)
-            @Html.TextBoxFor(m => m.SKU, new { @class = "text" })
+            @Html.TextBoxFor(m => m.SKU, new { @class = "text long-field" })
         </div>
         <div class="field-group">
             @Html.LabelFor(m => m.Cost)
-            @Html.TextBoxFor(m => m.Cost, new { @class = "text" })
+            @Html.TextBoxFor(m => m.Cost, new { @class = "text long-field" })
         </div>
         <div class="field-group">
             @Html.LabelFor(m => m.Markup)
-            @Html.TextBoxFor(m => m.Markup, new { @class = "text" })
+            @Html.TextBoxFor(m => m.Markup, new { @class = "text long-field" })
         </div>
 
         <div class="field-group">
             @Html.LabelFor(m => m.ManufacturerId)
             @Html.DropDownListFor(m => m.ManufacturerId, Model.Manufacturers, "Choose a manufacturer", new { @class = "select long-field" })
         </div>
-        
-        <h3 style="margin-bottom: 10px;">Asset Vars <button class="aui-button aui-button-compact">Add Asset Var</button></h3>
-        
-        @foreach (var assetVar in Model.AssetVars) {
+
+        <h3 style="margin-bottom: 10px;">Asset Vars <button id="add_asset_var" class="aui-button aui-button-compact">Add Asset Var</button></h3>
+
+        @foreach (var assetVar in Model.AssetVars)
+        {
             <div class="field-group">
                 <label style="padding: 0;">
-                    @foreach (var name in Model.AssetVarNames.Where(name => name.Text == assetVar.Name)) {
+                    @foreach (var name in Model.AssetVarNames.Where(name => name.Text == assetVar.Name))
+                    {
                         name.Selected = true;
                     }
                     @Html.DropDownList("AssetVarName", Model.AssetVarNames, new { @class = "select long-field" })
@@ -53,7 +55,7 @@
                 @{
                     var buttonOwns = string.Format("assetvar_{0}", assetVar.Id.ToString());
                 }
-                <button aria-owns="@buttonOwns" aria-haspopup="true" class="aui-button aui-button-compact aui-button-subtle aui-dropdown2-trigger aui-dropdown2-trigger-arrowless">
+                <button aria-owns="@buttonOwns" aria-haspopup="true" class="aui-button aui-button-subtle aui-dropdown2-trigger aui-dropdown2-trigger-arrowless">
                     <span class="aui-icon aui-icon-small aui-iconfont-more">More</span>
                 </button>
                 <div id="@buttonOwns" class="aui-dropdown2 aui-style-default" aria-hidden="false" data-dropdown2-alignment="right">
@@ -75,7 +77,8 @@
             <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="@Url.Asset(Model.Id, Model.Name)">Cancel</a>
         </div>
     </div>
-}
+
+    <div id="asset_var_selection_container"></div>}
 
 @section secondaryScripts {
     <script type="text/javascript">
@@ -84,6 +87,10 @@
 //        var returnUrl = href.substr(origin.length);
 //        $(document.forms.EditForm).append($('<input type="hidden" name="returnUrl" value="' + returnUrl + '">'));
 //        document.forms.EditForm.submit();
+
+        var view = new QuoteFlow.UI.Asset.EditAsset({
+            assetVarNames: JSON.stringify(@Model.AssetVarNames)
+        });
 
         AJS.$(document).ready(function() {
             AJS.$('select').auiSelect2();
