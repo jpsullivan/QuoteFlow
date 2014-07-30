@@ -1,0 +1,20 @@
+﻿<label style="padding: 0;">
+    <select id="AssetVarName_{{assetVar.Id}}" name="AssetVarName_{{assetVar.Id}}">
+        {{#select assetVar.Id}}
+        {{#each assetVarNames}}
+        <option value="{{Value}}">{{Text}}</option>
+        {{/each}}
+        {{/select}}
+    </select>
+</label>
+<input id="AssetVarValue_{{assetVar.Id}}" class="text" type="text" />
+<button aria-owns="{{buttonOwns}}" aria-haspopup="true" class="aui-button aui-button-subtle aui-dropdown2-trigger aui-dropdown2-trigger-arrowless">
+    <span class="aui-icon aui-icon-small aui-iconfont-more">More</span>
+</button>
+<div id="{{buttonOwns}}" class="aui-dropdown2 aui-style-default" aria-hidden="false" data-dropdown2-alignment="right">
+    <ul class="aui-list-truncate">
+        <li>
+            <a href="#" class="remove"><span class="aui-icon aui-icon-small aui-iconfont-remove-label"></span> Remove</a>
+        </li>
+    </ul>
+</div>

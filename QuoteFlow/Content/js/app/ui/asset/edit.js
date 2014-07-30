@@ -15,8 +15,12 @@
         });
     },
 
-    initialize: function(options) {
+    initialize: function (options) {
         this.options = options || {};
+
+        _.bindAll(this, 'addAssetVarRow');
+
+        this.assetVarFieldsList = this.$('#asset_var_fields');
     },
 
     postRenderTemplate: function () { },
@@ -48,8 +52,11 @@
             // todo: throw some kind of validation failure
         }
 
-        var view = new QuoteFlow.UI.Catalog.QuoteFlow.UI.Asset.Edit.AddAssetVarField();
+        var view = new QuoteFlow.UI.Asset.Edit.AssetVarEditRow({
+            assetVarNames: this.options.assetVarNames,
+            assetVar: assetVar
+        });
 
-        //this.assetVarFieldsList.append(view.render().el);
+        this.assetVarFieldsList.append(view.render().el);
     }
 })

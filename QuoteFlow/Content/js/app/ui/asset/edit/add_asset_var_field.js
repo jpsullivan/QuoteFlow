@@ -48,8 +48,8 @@
             // todo: throw some kind of validation failure
         }
 
-        var view = new QuoteFlow.UI.Catalog.ImportAssetVarRow({
-            headers: this.options.headers,
+        var view = new QuoteFlow.UI.Asset.Edit.AssetVarEditRow({
+            assetVarNames: this.options.assetVarNames,
             assetVar: assetVar
         });
 

@@ -40,33 +40,34 @@
         </div>
 
         <h3 style="margin-bottom: 10px;">Asset Vars <button id="add_asset_var" class="aui-button aui-button-compact">Add Asset Var</button></h3>
+        
+        <div id="asset_var_fields">
+            @foreach (var assetVar in Model.AssetVars)
+            {
+                <div class="field-group">
+                    <label style="padding: 0;">
+                        @foreach (var name in Model.AssetVarNames.Where(name => name.Text == assetVar.Name))
+                        {
+                            name.Selected = true;
+                        }
+                        @Html.DropDownList("AssetVarName", Model.AssetVarNames, new { @class = "select long-field" })
+                    </label>
+                    @Html.TextBox("TextboxAssetVarThingy", assetVar.Value.VarValue, new { @class = "text" })
 
-        @foreach (var assetVar in Model.AssetVars)
-        {
-            <div class="field-group">
-                <label style="padding: 0;">
-                    @foreach (var name in Model.AssetVarNames.Where(name => name.Text == assetVar.Name))
-                    {
-                        name.Selected = true;
-                    }
-                    @Html.DropDownList("AssetVarName", Model.AssetVarNames, new { @class = "select long-field" })
-                </label>
-                @Html.TextBox("TextboxAssetVarThingy", assetVar.Value.VarValue, new { @class = "text" })
-                @{
-            var buttonOwns = string.Format("assetvar_{0}", assetVar.Id.ToString());
-                }
-                <button aria-owns="@buttonOwns" aria-haspopup="true" class="aui-button aui-button-subtle aui-dropdown2-trigger aui-dropdown2-trigger-arrowless">
-                    <span class="aui-icon aui-icon-small aui-iconfont-more">More</span>
-                </button>
-                <div id="@buttonOwns" class="aui-dropdown2 aui-style-default" aria-hidden="false" data-dropdown2-alignment="right">
-                    <ul class="aui-list-truncate">
-                        <li>
-                            <a href="#" class="remove"><span class="aui-icon aui-icon-small aui-iconfont-remove-label"></span> Remove</a>
-                        </li>
-                    </ul>
+                    @{ var buttonOwns = string.Format("assetvar_{0}", assetVar.Id.ToString()); }
+                    <button aria-owns="@buttonOwns" aria-haspopup="true" class="aui-button aui-button-subtle aui-dropdown2-trigger aui-dropdown2-trigger-arrowless">
+                        <span class="aui-icon aui-icon-small aui-iconfont-more">More</span>
+                    </button>
+                    <div id="@buttonOwns" class="aui-dropdown2 aui-style-default" aria-hidden="false" data-dropdown2-alignment="right">
+                        <ul class="aui-list-truncate">
+                            <li>
+                                <a href="#" class="remove"><span class="aui-icon aui-icon-small aui-iconfont-remove-label"></span> Remove</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </fieldset>
 
     <div class="buttons-container">
@@ -88,7 +89,7 @@
         //        document.forms.EditForm.submit();
 
         var view = new QuoteFlow.UI.Asset.EditAsset({
-            assetVarNames: '@Jil.JSON.Serialize(Model.AssetVarNames)'
+            assetVarNames: @ViewHelpers.JsEncode(Model.AssetVarNames)
         });
 
         AJS.$(document).ready(function () {

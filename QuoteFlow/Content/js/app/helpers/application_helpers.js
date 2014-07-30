@@ -80,3 +80,12 @@ Handlebars.registerHelper('gravatar', function(context, options) {
 Handlebars.registerHelper('percentage', function (value) {
     return (value * 100).toFixed(2) + " %";
 });
+
+// Wraps a "select" element in a handlebars template with {{#select foo}}.
+// Warning: ALL elements must have a value for this to work
+// usage: {{#select foo}} <option value="bar">Baz</option> {{/select}}
+Handlebars.registerHelper('select', function (value, options) {
+    var $el = $('<select />').html(options.fn(this));
+    $el.find('[value=' + value + ']').attr({ 'selected': 'selected' });
+    return $el.html();
+});

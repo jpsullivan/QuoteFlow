@@ -570,6 +570,7 @@
     <Content Include="Content\js\app\ui\asset\asset_navigator.js" />
     <Content Include="Content\js\app\ui\asset\edit.js" />
     <Content Include="Content\js\app\ui\asset\edit\add_asset_var_field.js" />
+    <Content Include="Content\js\app\ui\asset\edit\asset_var_edit_row.js" />
     <Content Include="Content\js\app\ui\asset\navigator\asset_details.js" />
     <Content Include="Content\js\app\ui\asset\navigator\asset_list.js" />
     <Content Include="Content\js\app\ui\asset\navigator\toolbar.js" />
@@ -753,6 +754,7 @@
       <DependentUpon>asset-navigator.css</DependentUpon>
     </Content>
     <Content Include="Content\views\asset\details.hbs" />
+    <Content Include="Content\views\asset\edit\asset-var-edit-row.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
