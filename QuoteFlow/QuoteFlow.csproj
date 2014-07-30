@@ -837,7 +837,6 @@
     <Content Include="Views\Quote\Show.cshtml" />
     <Content Include="Views\Shared\_InteractiveCatalogAssetsLayout.cshtml" />
     <Content Include="Views\Catalog\ShowAssetsInteractive.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Asset\AssetVarNames_Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

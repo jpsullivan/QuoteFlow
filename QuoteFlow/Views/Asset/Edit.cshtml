@@ -7,7 +7,7 @@
 }
 
 <h2>Edit Asset</h2>
-@using (Html.BeginForm("Edit", "Asset", FormMethod.Post, new { id="EditForm", @class = "aui" }))
+@using (Html.BeginForm("Edit", "Asset", FormMethod.Post, new { id = "EditForm", @class = "aui" }))
 {
     @Html.AntiForgeryToken()
 
@@ -53,7 +53,7 @@
                 </label>
                 @Html.TextBox("TextboxAssetVarThingy", assetVar.Value.VarValue, new { @class = "text" })
                 @{
-                    var buttonOwns = string.Format("assetvar_{0}", assetVar.Id.ToString());
+            var buttonOwns = string.Format("assetvar_{0}", assetVar.Id.ToString());
                 }
                 <button aria-owns="@buttonOwns" aria-haspopup="true" class="aui-button aui-button-subtle aui-dropdown2-trigger aui-dropdown2-trigger-arrowless">
                     <span class="aui-icon aui-icon-small aui-iconfont-more">More</span>
@@ -61,9 +61,7 @@
                 <div id="@buttonOwns" class="aui-dropdown2 aui-style-default" aria-hidden="false" data-dropdown2-alignment="right">
                     <ul class="aui-list-truncate">
                         <li>
-                            <a href="#" class="remove">
-                                <span class="aui-icon aui-icon-small aui-iconfont-remove-label"></span> Remove
-                            </a>
+                            <a href="#" class="remove"><span class="aui-icon aui-icon-small aui-iconfont-remove-label"></span> Remove</a>
                         </li>
                     </ul>
                 </div>
@@ -78,21 +76,22 @@
         </div>
     </div>
 
-    <div id="asset_var_selection_container"></div>}
+    <div id="asset_var_selection_container"></div>
+}
 
 @section secondaryScripts {
     <script type="text/javascript">
-//        // for returnUrl functionality
-//        var origin = window.location.protocol + "//" + window.location.host;
-//        var returnUrl = href.substr(origin.length);
-//        $(document.forms.EditForm).append($('<input type="hidden" name="returnUrl" value="' + returnUrl + '">'));
-//        document.forms.EditForm.submit();
+        //        // for returnUrl functionality
+        //        var origin = window.location.protocol + "//" + window.location.host;
+        //        var returnUrl = href.substr(origin.length);
+        //        $(document.forms.EditForm).append($('<input type="hidden" name="returnUrl" value="' + returnUrl + '">'));
+        //        document.forms.EditForm.submit();
 
         var view = new QuoteFlow.UI.Asset.EditAsset({
-            assetVarNames: JSON.stringify(@Model.AssetVarNames)
+            assetVarNames: '@Jil.JSON.Serialize(Model.AssetVarNames)'
         });
 
-        AJS.$(document).ready(function() {
+        AJS.$(document).ready(function () {
             AJS.$('select').auiSelect2();
         });
     </script>
