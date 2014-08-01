@@ -380,6 +380,14 @@
     <Compile Include="Migrations\M007_CreateCatalogs.cs" />
     <Compile Include="Migrations\M008_CreateCatalogImportSummaryRecords.cs" />
     <Compile Include="Migrations\M009_CreateAssets.cs" />
+    <Compile Include="Migrations\M010_CreateAssetVars.cs" />
+    <Compile Include="Migrations\M011_CreateAssetVarValues.cs" />
+    <Compile Include="Migrations\M012_CreateAssetComments.cs" />
+    <Compile Include="Migrations\M013_CreateAssetImages.cs" />
+    <Compile Include="Migrations\M014_CreateAssetAttachments.cs" />
+    <Compile Include="Migrations\M015_CreateClients.cs" />
+    <Compile Include="Migrations\M016_CreateClientUsers.cs" />
+    <Compile Include="Migrations\M017_CreateClientCatalogs.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetComment.cs" />
     <Compile Include="Models\AssetImage.cs" />
