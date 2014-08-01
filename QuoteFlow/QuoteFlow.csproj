@@ -378,6 +378,8 @@
     <Compile Include="Migrations\M005_CreateOrganizations.cs" />
     <Compile Include="Migrations\M006_CreateOrganizationUsers.cs" />
     <Compile Include="Migrations\M007_CreateCatalogs.cs" />
+    <Compile Include="Migrations\M008_CreateCatalogImportSummaryRecords.cs" />
+    <Compile Include="Migrations\M009_CreateAssets.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetComment.cs" />
     <Compile Include="Models\AssetImage.cs" />
