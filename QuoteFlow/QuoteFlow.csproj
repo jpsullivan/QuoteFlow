@@ -349,6 +349,7 @@
     <Compile Include="Infrastructure\Extensions\DateExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\DictionaryExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\FluentMigratorExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\HtmlExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\HttpContextExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
@@ -371,6 +372,8 @@
     <Compile Include="Infrastructure\SafeRedirectResult.cs" />
     <Compile Include="Infrastructure\TableErrorLog.cs" />
     <Compile Include="Migrations\M001_CreateUsers.cs" />
+    <Compile Include="Migrations\M002_CreateRoles.cs" />
+    <Compile Include="Migrations\M003_CreateUserRoles.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetComment.cs" />
     <Compile Include="Models\AssetImage.cs" />

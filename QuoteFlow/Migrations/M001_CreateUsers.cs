@@ -25,6 +25,8 @@ namespace QuoteFlow.Migrations
         }
 
         public override void Down()
-        {}
+        {
+            Delete.Table(TableName);
+        }
     }
 }
