@@ -370,6 +370,7 @@
     <Compile Include="Infrastructure\RouteName.cs" />
     <Compile Include="Infrastructure\SafeRedirectResult.cs" />
     <Compile Include="Infrastructure\TableErrorLog.cs" />
+    <Compile Include="Migrations\M001_CreateUsers.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetComment.cs" />
     <Compile Include="Models\AssetImage.cs" />
@@ -848,7 +849,6 @@
     <Folder Include="Content\compiled\" />
     <Folder Include="Content\fonts\" />
     <Folder Include="Content\js\ui\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
