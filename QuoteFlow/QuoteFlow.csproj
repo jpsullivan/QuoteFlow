@@ -374,6 +374,10 @@
     <Compile Include="Migrations\M001_CreateUsers.cs" />
     <Compile Include="Migrations\M002_CreateRoles.cs" />
     <Compile Include="Migrations\M003_CreateUserRoles.cs" />
+    <Compile Include="Migrations\M004_CreateCredentials.cs" />
+    <Compile Include="Migrations\M005_CreateOrganizations.cs" />
+    <Compile Include="Migrations\M006_CreateOrganizationUsers.cs" />
+    <Compile Include="Migrations\M007_CreateCatalogs.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetComment.cs" />
     <Compile Include="Models\AssetImage.cs" />
