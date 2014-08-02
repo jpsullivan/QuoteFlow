@@ -388,6 +388,11 @@
     <Compile Include="Migrations\M015_CreateClients.cs" />
     <Compile Include="Migrations\M016_CreateClientUsers.cs" />
     <Compile Include="Migrations\M017_CreateClientCatalogs.cs" />
+    <Compile Include="Migrations\M018_CreateManufacturers.cs" />
+    <Compile Include="Migrations\M019_CreateQuotes.cs" />
+    <Compile Include="Migrations\M020_CreateContacts.cs" />
+    <Compile Include="Migrations\M021_ContactsZipcodeShouldBeFixedLength.cs" />
+    <Compile Include="Migrations\M022_CreateELMAH.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetComment.cs" />
     <Compile Include="Models\AssetImage.cs" />
@@ -715,6 +720,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Global.asax" />
+    <EmbeddedResource Include="Migrations\Elmah.SqlServer.sql" />
     <Content Include="Scripts\async-file-upload.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
