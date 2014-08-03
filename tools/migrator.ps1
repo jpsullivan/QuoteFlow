@@ -15,4 +15,4 @@ $QuoteFlowDLLPath = (dir $$PSScriptRoot\..\..\QuoteFlow\bin\QuoteFlow.dll | sele
 Write-Output $FluentMigratorExePath
 Write-Output $QuoteFlowDLLPath
 
-& $FluentMigratorExePath /connection "Data Source=(local);Initial Catalog=QuoteFlow_Migrator;Integrated Security=SSPI;" /provider sqlserver2012 /assembly $QuoteFlowDLLPath
+& $FluentMigratorExePath /connection "Data Source=(local);Initial Catalog=QuoteFlow;Integrated Security=SSPI;" /provider sqlserver2012 /assembly $QuoteFlowDLLPath
