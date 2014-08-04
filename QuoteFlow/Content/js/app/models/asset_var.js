@@ -1,5 +1,9 @@
 ﻿QuoteFlow.Model.AssetVar = Backbone.Model.extend({
     
+    url: function() {
+        return QuoteFlow.RootUrl + "api/assetvar";
+    },
+
     defaults: function() {
         return {
             Id: null,

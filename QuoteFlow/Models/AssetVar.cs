@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using Dapper;
 
 namespace QuoteFlow.Models
 {
@@ -24,6 +24,7 @@ namespace QuoteFlow.Models
         /// <summary>
         /// Manually set; Not contained within a standard db result.
         /// </summary>
+        [IgnoreProperty(true)]
         public AssetVarValue Value { get; set; }
     }
 }

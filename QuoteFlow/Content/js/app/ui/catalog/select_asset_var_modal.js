@@ -18,7 +18,7 @@
         this.options = options || {};
 
         // required sinced AJS overrides 'this'
-        _.bindAll(this, 'submitModal', 'closeModal', 'newAssetVarKepressHandler', 'disableAssetVarsDropdown', 'createAssetVar', 'getNewAssetVarName', 'getSelectedExistingAssetVar');
+        _.bindAll(this, 'submitModal', 'closeModal', 'newAssetVarKeypressHandler', 'disableAssetVarsDropdown', 'createAssetVar', 'getNewAssetVarName', 'getSelectedExistingAssetVar');
 
         this.assetVars = this.fetchAssetVars();
     },
@@ -31,7 +31,7 @@
             self.assetVarsDropdown = AJS.$('#select_asset_var').auiSelect2();
 
             // handle event bindings here since AJS apparently overrides them...
-            AJS.$('#new_asset_var').on('keyup', self.newAssetVarKepressHandler);
+            AJS.$('#new_asset_var').on('keyup', self.newAssetVarKeypressHandler);
             AJS.$('#dialog-close-button').on('click', self.closeModal);
             AJS.$('#dialog-create').on('click', self.submitModal);
         });
@@ -81,7 +81,7 @@
         this.closeModal();
     },
 
-    newAssetVarKepressHandler: function(e) {
+    newAssetVarKeypressHandler: function (e) {
         var el = $(e.currentTarget);
         
         if (el.val() !== "") {
@@ -106,7 +106,7 @@
 
         // does this assetvar exist yet?
         var existing = this.assetVars.findWhere({ Name: assetVarName });
-        if (existing === null) {
+        if (existing != undefined) {
             // todo: return failed validation because assetvar already exists
         }
 

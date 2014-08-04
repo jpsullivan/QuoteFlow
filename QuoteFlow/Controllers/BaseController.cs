@@ -89,14 +89,24 @@ namespace QuoteFlow.Controllers
         {
             get
             {
-                if (_currentOrganization == null) {
+                if (_currentOrganization == null) 
+                {
                     var organization = Session["CurrentOrganization"] as Organization;
-                    if (organization != null) {
+                    if (organization != null)
+                    {
                         _currentOrganization = OrganizationService.GetOrganization(organization.Id);
                     }
 
                     // Absolutely no org associated with this session; use the default
-                    if (_currentOrganization == null) {
+                    if (_currentOrganization == null)
+                    {
+                        var user = GetCurrentUser();
+                        if (user == null)
+                        {
+                            // both current org and user are null, then return null I guess
+                            return null;
+                        }
+
                         var organizationUsers = OrganizationService.GetOrganizations(GetCurrentUser().Id);
                         if (organizationUsers == null) {
                             // no organizations for this user... this shouldn't have been possible.

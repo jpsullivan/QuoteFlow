@@ -27,10 +27,6 @@
     @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
     <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->
     @RenderSection("scripts", false)
-    
-    <script>
-        var qf = new QuoteFlow.Initialize('@Url.SiteRoot()', '@Context.Request.ApplicationPath.EnsureTrailingSlash()', '@CurrentOrganization.Id.ToString()', @ViewHelpers.JsEncode(CurrentUser));
-    </script>
 
     @StackExchange.Profiling.MiniProfiler.RenderIncludes()
     
