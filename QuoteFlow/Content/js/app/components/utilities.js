@@ -111,8 +111,8 @@ QuoteFlow.Utilities = {
     },
 
     /**
-        Produces optional, URL-friendly version of a title, "like-this-one".
-        Totally copied from the UrlHelpers class and seems to work fine.
+     * Produces optional, URL-friendly version of a title, "like-this-one".
+     * Totally copied from the UrlHelpers class and seems to work fine.
      */
     urlFriendly: function (title) {
         if (title === "") {
