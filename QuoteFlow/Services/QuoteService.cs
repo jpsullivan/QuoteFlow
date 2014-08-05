@@ -33,7 +33,7 @@ namespace QuoteFlow.Services
                 Name = model.QuoteName,
                 Description = model.QuoteDescription,
                 Status = QuoteStatus.Pending,
-                Responded = null,
+                Responded = false,
                 CreatorId = userId,
                 OrganizationId = model.Organization.Id,
                 CreationDate = DateTime.UtcNow,
