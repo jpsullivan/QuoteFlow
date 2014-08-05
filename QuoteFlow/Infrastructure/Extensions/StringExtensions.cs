@@ -50,5 +50,17 @@ namespace QuoteFlow.Infrastructure.Extensions
         {
             return s.HasValue() ? UrlHelpers.UrlFriendly(s) : s;
         }
+
+        /// <summary>
+        /// Seperates text based on the specific seperator index.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="seperator"></param>
+        /// <returns></returns>
+        public static string Seperate(this string s, string seperator)
+        {
+            int index = s.IndexOf(seperator, StringComparison.Ordinal);
+            return index > 0 ? s.Substring(0, index) : "";
+        }
     }
 }

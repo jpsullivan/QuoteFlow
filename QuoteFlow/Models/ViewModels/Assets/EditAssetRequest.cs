@@ -33,7 +33,6 @@ namespace QuoteFlow.Models.ViewModels.Assets
         public IEnumerable<SelectListItem> Manufacturers { get; set; }
         public IEnumerable<SelectListItem> AssetVarNames { get; set; }
 
-        public Dictionary<int, object> AssetVarsData { get; set; }
-        public Dictionary<int, object> AssetVarValuesData { get; set; }
+        public IEnumerable<AssetVarEditRequest> AssetVarValuesData { get; set; }
     }
 }

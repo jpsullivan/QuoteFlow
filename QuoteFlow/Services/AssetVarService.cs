@@ -97,16 +97,26 @@ namespace QuoteFlow.Services
             Current.DB.AssetVars.Delete(id);
         }
 
-        public void InsertVarValue(AssetVarValue varValue)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="varValue"></param>
+        /// <returns></returns>
+        public int? InsertVarValue(AssetVarValue varValue)
         {
             if (varValue == null)
             {
                 throw new ArgumentException("Asset var value cannot be null.");
             }
 
-            Current.DB.AssetVarValues.Insert(varValue);
+            return Current.DB.AssetVarValues.Insert(varValue);
+
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="varValue"></param>
         public void UpdateAssetVarValue(AssetVarValue varValue)
         {
             if (varValue == null)
@@ -120,6 +130,24 @@ namespace QuoteFlow.Services
             }
 
             Current.DB.AssetVarValues.Update(varValue.Id, varValue);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assetVarValueId"></param>
+        /// <param name="assetVarId"></param>
+        /// <param name="assetVarValue"></param>
+        public void UpdateAssetVarValue(int assetVarValueId, int assetVarId, string assetVarValue)
+        {
+            if (assetVarValueId == 0) throw new ArgumentException("Asset Var Value ID must be greater than zero.", "assetVarValueId");
+            if (assetVarId == 0) throw new ArgumentException("Asset Var row ID must be greater than zero.", "assetVarId");
+
+            Current.DB.AssetVarValues.Update(assetVarValueId, new
+            {
+                VarValue = assetVarValue,
+                AssetVarId = assetVarId
+            });
         }
 
         public void DeleteAssetVarValue(int id)

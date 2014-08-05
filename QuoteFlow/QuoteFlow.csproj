@@ -302,6 +302,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\Api\AssetController.cs" />
     <Compile Include="Controllers\Api\AssetVarController.cs" />
+    <Compile Include="Controllers\Api\AssetVarValueController.cs" />
     <Compile Include="Controllers\AssetController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -422,6 +423,7 @@
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
+    <Compile Include="Models\ViewModels\Assets\AssetVarEditRequest.cs" />
     <Compile Include="Models\ViewModels\Assets\EditAssetRequest.cs" />
     <Compile Include="Models\ViewModels\Assets\InteractiveAssetNavigatorViewModel.cs" />
     <Compile Include="Models\ViewModels\Assets\NewAssetCommentViewModel.cs" />
@@ -595,6 +597,7 @@
     <Content Include="Content\js\app\models\asset\details.js" />
     <Content Include="Content\js\app\models\asset\navigator.js" />
     <Content Include="Content\js\app\models\asset_var.js" />
+    <Content Include="Content\js\app\models\asset_var_value.js" />
     <Content Include="Content\js\app\ui\asset\asset_navigator.js" />
     <Content Include="Content\js\app\ui\asset\edit.js" />
     <Content Include="Content\js\app\ui\asset\edit\add_asset_var_field.js" />

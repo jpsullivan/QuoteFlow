@@ -126,6 +126,11 @@ namespace QuoteFlow.Controllers
                 AssetService.UpdateAsset(asset.Id, diff);
             }
 
+            foreach (var assetVarValue in form.AssetVarValuesData)
+            {
+                AssetVarService.UpdateAssetVarValue(assetVarValue.AssetVarValueId, assetVarValue.AssetVarId, assetVarValue.AssetVarValue);
+            }
+
             return SafeRedirect(returnUrl ?? Url.Asset(assetId, assetName));
         }
 
