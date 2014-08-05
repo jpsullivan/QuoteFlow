@@ -27,35 +27,10 @@ namespace QuoteFlow.Models.ModelBinders.Asset
                 {
                     throw new InvalidOperationException("AssetVars parameter is not specified.");
                 }
-                
-                var keys = key.Replace("AssetVarName_", String.Empty);
-                int assetVarValueId = Convert.ToInt32(keys.Seperate("_"));
-                //int assetVarId = Convert.ToInt32(keys[keys.Length - 1]);
-                int assetVarId = Convert.ToInt32(discriminator.AttemptedValue);
 
-                var assetVarValueDiscriminator = bindingContext.ValueProvider.GetValue(string.Format("AssetVarValue_{0}", assetVarValueId.ToString()));
-                if (assetVarValueDiscriminator == null)
-                {
-                    throw new InvalidOperationException("AssetVarValue parameter is not specified.");
-                }
-
-                var assetVarValue = assetVarValueDiscriminator.AttemptedValue;
-
-                assetVarData.Add(new AssetVarEditRequest(assetVarValueId, assetVarId, assetVarValue));
+                var model = GetAssetVarValueDiscriminator(key, bindingContext, discriminator);
+                assetVarData.Add(model);
             }
-
-//            foreach (var key in assetVarValueKeys)
-//            {
-//                // this gets the value from the form collection, if it was in an input named "ViewModelName":
-//                var discriminator = bindingContext.ValueProvider.GetValue(key);
-//                if (discriminator == null)
-//                {
-//                    throw new InvalidOperationException("AssetVarValues parameter is not specified.");
-//                }
-//
-//                int id = Convert.ToInt32(key.Replace("AssetVarValue_", String.Empty));
-//                assetVarValuesData.Add(id, discriminator.AttemptedValue);
-//            }
 
             var obj = (EditAssetRequest) Activator.CreateInstance(typeof(EditAssetRequest));
             obj.AssetVarValuesData = assetVarData;
@@ -64,6 +39,35 @@ namespace QuoteFlow.Models.ModelBinders.Asset
             bindingContext.ModelMetadata.Model = obj;
 
             return obj;
+        }
+
+        /// <summary>
+        /// Gets the asset var value from the binding context.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="bindingContext"></param>
+        /// <param name="discriminator"></param>
+        /// <returns></returns>
+        private AssetVarEditRequest GetAssetVarValueDiscriminator(string key, ModelBindingContext bindingContext, ValueProviderResult discriminator)
+        {
+            if (key.IsNullOrEmpty())
+            {
+                return null;
+            }
+
+            var keys = key.Replace("AssetVarName_", String.Empty);
+            int assetVarValueId = Convert.ToInt32(keys.Seperate("_"));
+            int assetVarId = Convert.ToInt32(discriminator.AttemptedValue);
+
+            var assetVarValueDiscriminator = bindingContext.ValueProvider.GetValue(string.Format("AssetVarValue_{0}", assetVarValueId.ToString()));
+            if (assetVarValueDiscriminator == null)
+            {
+                throw new InvalidOperationException("AssetVarValue parameter is not specified.");
+            }
+
+            var assetVarValue = assetVarValueDiscriminator.AttemptedValue;
+
+            return new AssetVarEditRequest(assetVarValueId, assetVarId, assetVarValue);
         }
     }
 }

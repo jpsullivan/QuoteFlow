@@ -23,7 +23,9 @@ namespace QuoteFlow.Controllers.Api
         public void Post(AssetVarValue varValue)
         {
             if (varValue == null)
+            {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
 
             AssetVarService.InsertVarValue(varValue);
         }
@@ -31,7 +33,9 @@ namespace QuoteFlow.Controllers.Api
         public void Put(AssetVarValue varValue)
         {
             if (varValue == null)
+            {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
 
             AssetVarService.InsertVarValue(varValue);
         }
