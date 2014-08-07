@@ -76,7 +76,7 @@
                                     <div class="wrap">
                                         <strong class="name">Manufacturer:</strong>
                                         <span class="value">
-                                            <a href="@Url.Manufacturer(Model.Asset.ManufacturerId, Model.Asset.Manufacturer.Name)">{{ Manufacturer.Name }}</a>
+                                            <a href="{{routeUrl 'manufacturer' id=ManufacturerId name=Manufacturer.Name}}">{{ Manufacturer.Name }}</a>
                                         </span>
                                     </div>
                                 </li>
