@@ -25,7 +25,7 @@ namespace QuoteFlow.Controllers
 
         #endregion
 
-        [Route("manufacturer/{id:INT}/{manufacturerName}", Name = "Manufacturer-Show")]
+        [Route("manufacturer/{id:INT}/{name}", Name = "Manufacturer-Show")]
         public ActionResult Show(int id, string name)
         {
             var manufacturer = ManufacturerService.GetManufacturer(id);

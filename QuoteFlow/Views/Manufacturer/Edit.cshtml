@@ -22,7 +22,21 @@
             @Html.TextAreaFor(m => m.Description, new { @class = "textarea long-field" })
         </div>
         <div class="field-group">
-            
+            <label for="avatar-picker">Manufacturer Logo</label>
+            <div class="aui-group manufacturer-logo-group">
+                <div class="aui-item manufacturer-logo-preview">
+                    <span class="aui-avatar aui-avatar-xlarge aui-avatar-project">
+                        <span class="aui-avatar-inner">
+                            <img src="">
+                            <div class="manufacturer-logo-default-preview"></div>
+                        </span>
+                    </span>
+                </div>
+                <div class="aui-item manufacturer-logo-upload">
+                    <button id="avatar-picker-button" class="aui-button" type="button" autocomplete="off">Change logo</button>
+                    <input id="avatar" name="avatar" type="hidden" value="">
+                </div>
+            </div>
         </div>
     </fieldset>
 

@@ -3,6 +3,7 @@ using System.Web.Optimization;
 using BundleTransformer.Core.Orderers;
 using BundleTransformer.Core.Transformers;
 using BundleTransformer.Core.Translators;
+using BundleTransformer.Less.Translators;
 using BundleTransformer.TypeScript.Translators;
 using BundleTransformer.UglifyJs.Minifiers;
 using BundleTransformer.Yui.Minifiers;

@@ -39,5 +39,11 @@ namespace QuoteFlow.Controllers
 
             return View(model);
         }
+
+        [Route("getting-started")]
+        public ActionResult GettingStarted()
+        {
+            return View();
+        }
     }
 }

@@ -68,6 +68,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Authorize]
+        [Route("account")]
         public virtual ActionResult Account()
         {
             return AccountView(new AccountViewModel());

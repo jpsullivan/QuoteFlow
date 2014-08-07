@@ -27,6 +27,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return url.Action("Index", "Dashboard");
         }
 
+        public static string GettingStarted(this UrlHelper url)
+        {
+            return url.Action("GettingStarted", "Dashboard");
+        }
+
         #endregion
 
         #region Assets

@@ -44,4 +44,16 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice:hove
 form.aui .aui-select2-container.select2-container-disabled a.select2-choice .select2-arrow {
   background: #f5f5f5;
 }
+.manufacturer-logo-group {
+  margin-top: 0;
+}
+.manufacturer-logo-group .manufacturer-logo-preview {
+  width: 70px;
+}
+.manufacturer-logo-group .manufacturer-logo-preview .aui-avatar-project {
+  margin: 3px;
+}
+.manufacturer-logo-group .manufacturer-logo-upload {
+  vertical-align: middle;
+}
 /*# sourceMappingURL=forms.css.map */

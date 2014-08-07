@@ -588,6 +588,8 @@
     <Content Include="Content\css\lib\aui\select2.png" />
     <Content Include="Content\css\lib\aui\select2x2.png" />
     <Content Include="Content\css\lib\aui\wait.gif" />
+    <Content Include="Content\images\get-started\birds-eye-view_2x.png" />
+    <Content Include="Content\images\get-started\get-started_2x.png" />
     <Content Include="Content\images\quoteflow_logo.png" />
     <Content Include="Content\js\app\collections\asset_vars.js" />
     <Content Include="Content\js\app\components\routes.js" />
@@ -634,8 +636,20 @@
     <Content Include="Content\less\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
     </Content>
+    <Content Include="Content\less\bootstrap.min.css">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
     <Content Include="Content\less\catalog.css">
       <DependentUpon>catalog.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\forms.min.css">
+      <DependentUpon>forms.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\get-started.css">
+      <DependentUpon>get-started.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\get-started.min.css">
+      <DependentUpon>get-started.css</DependentUpon>
     </Content>
     <Content Include="Content\less\focused.css">
       <DependentUpon>focused.less</DependentUpon>
@@ -789,6 +803,10 @@
     </Content>
     <Content Include="Content\views\asset\details.hbs" />
     <Content Include="Content\views\asset\edit\asset-var-edit-row.hbs" />
+    <Content Include="Content\less\get-started.less" />
+    <Content Include="Content\less\get-started.css.map">
+      <DependentUpon>get-started.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -873,6 +891,8 @@
     <Content Include="Views\Quote\Show.cshtml" />
     <Content Include="Views\Shared\_InteractiveCatalogAssetsLayout.cshtml" />
     <Content Include="Views\Catalog\ShowAssetsInteractive.cshtml" />
+    <Content Include="Views\Shared\Partials\Dashboard\FirstTime.cshtml" />
+    <Content Include="Views\Dashboard\GettingStarted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
