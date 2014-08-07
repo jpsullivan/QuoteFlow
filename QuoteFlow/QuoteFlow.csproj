@@ -590,7 +590,9 @@
     <Content Include="Content\css\lib\aui\wait.gif" />
     <Content Include="Content\images\quoteflow_logo.png" />
     <Content Include="Content\js\app\collections\asset_vars.js" />
+    <Content Include="Content\js\app\components\routes.js" />
     <Content Include="Content\js\app\components\utilities.js" />
+    <Content Include="Content\js\app\extensions\string_extensions.js" />
     <Content Include="Content\js\app\helpers\application_helpers.js" />
     <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\components\jqui-widget_sidebar.js" />

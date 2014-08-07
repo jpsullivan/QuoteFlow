@@ -82,10 +82,36 @@ Handlebars.registerHelper('percentage', function (value) {
 });
 
 // Wraps a "select" element in a handlebars template with {{#select foo}}.
-// Warning: ALL elements must have a value for this to work
 // usage: {{#select foo}} <option value="bar">Baz</option> {{/select}}
 Handlebars.registerHelper('select', function (value, options) {
-    var $el = $('<select />').html(options.fn(this));
-    $el.find('[value=' + value + ']').attr({ 'selected': 'selected' });
-    return $el.html();
+    // Create a select element 
+    var select = document.createElement('select');
+
+    // Populate it with the option HTML
+    select.innerHTML = options.fn(this);
+
+    // Set the value
+    select.value = value;
+
+    // Find the selected node, if it exists, add the selected attribute to it
+    if (select.children[select.selectedIndex]) {
+        select.children[select.selectedIndex].setAttribute('selected', 'selected');
+    } else { //select first option if that exists
+        if (select.children[0]) {
+            select.children[0].setAttribute('selected', 'selected');
+        }
+    }
+
+    return select.innerHTML;
+});
+
+/**
+ * Produces a url based on the route name and its values. The route name
+ * is just the name of the function within the routes.js file. The routeValues
+ * argument is taken in via an options hash (arg1=arg1) and sent through as a 
+ * key-value object.
+ * Usage: {{#routeUrl 'showAsset' arg1=arg1 arg2=arg2 }}
+ */
+Handlebars.registerHelper('routeUrl', function(routeName, routeValues) {
+    return QuoteFlow.Routes[routeName](routeValues);
 });

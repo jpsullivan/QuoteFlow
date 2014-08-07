@@ -61,7 +61,7 @@ var QuoteFlow;
     })(QuoteFlow.Model || (QuoteFlow.Model = {}));
     var Model = QuoteFlow.Model;
     QuoteFlow.Pages = {};
-    QuoteFlow.Routers = {};
+    QuoteFlow.Routes = {};
     (function (UI) {
         (function (Asset) {
             Asset.Edit = {};

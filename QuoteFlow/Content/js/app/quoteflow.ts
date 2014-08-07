@@ -44,7 +44,7 @@ module QuoteFlow {
         export var Asset = {};
     }
     export var Pages = {}
-    export var Routers = {}
+    export var Routes = {}
     export module UI {
         export module Asset {
             export var Edit = {};

@@ -25,11 +25,11 @@ gulp.task('templates', function () {
             outputType: 'bare',
             wrapped: true,
             compilerOptions: {
-                knownHelpers: ['t', 'eachkeys', 'ifCond', 'debug', 'first'],
+                knownHelpers: ['t', 'eachkeys', 'ifCond', 'debug', 'first', 'routeUrl'],
                 knownHelpersOnly: false
             }
         }))
-        .pipe(declare({ 
+        .pipe(declare({
             processName: function (filePath) {
                 filePath = filePath.replace(/\\/g, "/"); // convert fwd-slash to backslash
                 filePath = filePath.replace('../QuoteFlow/Content/views/', '');

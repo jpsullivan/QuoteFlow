@@ -30,7 +30,7 @@
                                 <div class="aui-toolbar-2-inner">
                                     <div class="aui-toolbar2-primary">
                                         <div id="button-set" class="aui-buttons">
-                                            <a href="@Url.EditAsset(Model.Asset.Id, Model.Asset.Name)" class="aui-button aui-button-primary">Edit</a>
+                                            <a href="{{routeUrl 'editAsset' id=Id name=Name }}" class="aui-button aui-button-primary">Edit</a>
                                         </div>
                                         <div id="button-set" class="aui-buttons">
                                             <button class="aui-button">Comment</button>

@@ -49,6 +49,7 @@ namespace QuoteFlow
             Bundle appJs = new Bundle("~/bundles/js_app").Include(
                 "~/Content/js/app/quoteflow.ts",
                 "~/Content/js/app/views.js");
+            appJs.IncludeDirectory("~/Content/js/app/extensions", "*.js", true);
             appJs.IncludeDirectory("~/Content/js/app/components", "*.js", true);
             appJs.IncludeDirectory("~/Content/js/app/models", "*.js", true);
             appJs.IncludeDirectory("~/Content/js/app/collections", "*.js", true);
