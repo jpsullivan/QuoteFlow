@@ -891,8 +891,9 @@
     <Content Include="Views\Quote\Show.cshtml" />
     <Content Include="Views\Shared\_InteractiveCatalogAssetsLayout.cshtml" />
     <Content Include="Views\Catalog\ShowAssetsInteractive.cshtml" />
-    <Content Include="Views\Shared\Partials\Dashboard\FirstTime.cshtml" />
+    <Content Include="Views\Shared\Partials\Dashboard\GettingStarted.cshtml" />
     <Content Include="Views\Dashboard\GettingStarted.cshtml" />
+    <Content Include="Views\Shared\Partials\Header\Help.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
