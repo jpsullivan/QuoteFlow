@@ -8,7 +8,7 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
-    public class ContactController : BaseController
+    public partial class ContactController : BaseController
     {
         #region IoC
 
@@ -24,7 +24,7 @@ namespace QuoteFlow.Controllers
         #endregion
 
         [Route("contacts")]
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             var contacts = ContactService.GetContactsByOrganizationId(CurrentOrganization.Id);
             return View(contacts);
@@ -32,13 +32,13 @@ namespace QuoteFlow.Controllers
 
         [Route("contact/new", HttpVerbs.Get)]
         [LayoutInjector("_LayoutWorkflow")]
-        public ActionResult New()
+        public virtual ActionResult New()
         {
             return View();
         }
 
         [Route("contact/create", HttpVerbs.Post)]
-        public ActionResult CreateContact(NewContactModel model)
+        public virtual ActionResult CreateContact(NewContactModel model)
         {
             if (ContactService.ContactExists(model.FirstName, model.LastName, model.Email, CurrentOrganization.Id))
             {
@@ -72,7 +72,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("contact/{contactId}/{contactNameSlug}")]
-        public ActionResult Show(int contactId, string contactNameSlug)
+        public virtual ActionResult Show(int contactId, string contactNameSlug)
         {
             var contact = ContactService.GetContact(contactId);
             return View(contact);

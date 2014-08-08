@@ -21,7 +21,7 @@ using StackExchange.Profiling;
 
 namespace QuoteFlow.Controllers
 {
-    public abstract class BaseController : Controller
+    public abstract partial class BaseController : Controller
     {
         private IOrganizationService OrganizationService { get; set; }
         private IUserService UserService { get; set; }

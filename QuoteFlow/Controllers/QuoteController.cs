@@ -9,7 +9,7 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
-    public class QuoteController : BaseController
+    public partial class QuoteController : BaseController
     {
         #region IoC
 
@@ -31,7 +31,7 @@ namespace QuoteFlow.Controllers
         #endregion
 
         [Route("quotes")]
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             var quotes = QuoteService.GetQuotesFromOrganization(CurrentOrganization.Id);
 
@@ -39,14 +39,14 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("quote/new")]
-        public ActionResult New()
+        public virtual ActionResult New()
         {
             return View();
         }
 
         [ValidateAntiForgeryToken]
         [Route("quote/create", HttpVerbs.Post)]
-        public ActionResult CreateQuote(NewQuoteModel model)
+        public virtual ActionResult CreateQuote(NewQuoteModel model)
         {
             var currentUser = GetCurrentUser();
 
@@ -72,7 +72,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("quote/{id:INT}/{name}")]
-        public ActionResult Show(int id, string name)
+        public virtual ActionResult Show(int id, string name)
         {
             var quote = QuoteService.GetQuote(id);
             if (quote == null)

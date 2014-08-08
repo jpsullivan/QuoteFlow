@@ -13,7 +13,7 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 namespace QuoteFlow.Controllers
 {
     [Authorize]
-    public class AssetController : BaseController
+    public partial class AssetController : BaseController
     {
         #region IoC
 
@@ -41,7 +41,7 @@ namespace QuoteFlow.Controllers
         #endregion
 
         [Route("asset/{assetId:INT}/{assetName}")]
-        public ActionResult Show(int assetId, string assetName)
+        public virtual ActionResult Show(int assetId, string assetName)
         {
             var asset = AssetService.GetAsset(assetId);
 
@@ -55,7 +55,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("asset/{assetId:INT}/{assetName}/edit", HttpVerbs.Get)]
-        public ActionResult Edit(int assetId, string assetName)
+        public virtual ActionResult Edit(int assetId, string assetName)
         {
             var asset = AssetService.GetAsset(assetId);
             if (asset == null) 
@@ -95,7 +95,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("asset/{assetId:INT}/{assetName}/edit", HttpVerbs.Post)]
-        public ActionResult Edit(int assetId, string assetName, EditAssetRequest form, string returnUrl)
+        public virtual ActionResult Edit(int assetId, string assetName, EditAssetRequest form, string returnUrl)
         {
             var asset = AssetService.GetAsset(assetId);
             if (asset == null) 
@@ -140,7 +140,7 @@ namespace QuoteFlow.Controllers
         };
 
         [Route("asset/new")]
-        public ActionResult New()
+        public virtual ActionResult New()
         {
             var currentUser = GetCurrentUser();
             var catalogs = UserService.GetCatalogs(currentUser);
@@ -155,7 +155,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("{catalogId:INT}/{catalogName}/asset/create", HttpVerbs.Post)]
-        public ActionResult CreateAsset(int catalogId, string catalogName, NewAssetModel model)
+        public virtual ActionResult CreateAsset(int catalogId, string catalogName, NewAssetModel model)
         {
             // Do some server-side validation before we begin
             if (AssetService.AssetExists(model.Name, catalogId))
@@ -176,7 +176,7 @@ namespace QuoteFlow.Controllers
 
         [ValidateAntiForgeryToken]
         [Route("asset/{assetId:INT}/{assetName}/addcomment", HttpVerbs.Post)]
-        public ActionResult AddComment(NewAssetCommentViewModel model, int assetId, string assetName)
+        public virtual ActionResult AddComment(NewAssetCommentViewModel model, int assetId, string assetName)
         {
             if (assetId != model.AssetId)
             {

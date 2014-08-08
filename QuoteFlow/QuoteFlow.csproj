@@ -274,6 +274,9 @@
     <Compile Include="App_Start\ContainerBindings.cs" />
     <Compile Include="App_Start\MiniProfiler.cs" />
     <Compile Include="App_Start\OwinStartup.cs" />
+    <Compile Include="AssetController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Auditing\AuditActor.cs" />
     <Compile Include="Auditing\AuditEntry.cs" />
     <Compile Include="Auditing\AuditingService.cs" />
@@ -293,6 +296,9 @@
     <Compile Include="Authentication\Providers\AuthenticatorConfiguration.cs" />
     <Compile Include="Authentication\Providers\AuthenticatorUI.cs" />
     <Compile Include="Authentication\Providers\LocalUser\LocalUserAuthenticator.cs" />
+    <Compile Include="CatalogController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Configuration\AppConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\IAppConfiguration.cs" />
@@ -300,6 +306,9 @@
     <Compile Include="Configuration\SmtpUri.cs" />
     <Compile Include="Configuration\StorageType.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="ContactController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\Api\AssetController.cs" />
     <Compile Include="Controllers\Api\AssetVarController.cs" />
     <Compile Include="Controllers\Api\AssetVarValueController.cs" />
@@ -372,6 +381,9 @@
     <Compile Include="Infrastructure\RouteName.cs" />
     <Compile Include="Infrastructure\SafeRedirectResult.cs" />
     <Compile Include="Infrastructure\TableErrorLog.cs" />
+    <Compile Include="ManufacturerController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\M001_CreateUsers.cs" />
     <Compile Include="Migrations\M002_CreateRoles.cs" />
     <Compile Include="Migrations\M003_CreateUserRoles.cs" />
@@ -456,6 +468,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="QuoteController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\AssetService.cs" />
     <Compile Include="Services\AssetVarService.cs" />

@@ -1,4 +1,5 @@
-﻿<div class="marketing-panel marketing-panel-swapped marketing-page-header">
+﻿@using QuoteFlow.Infrastructure.Extensions
+<div class="marketing-panel marketing-panel-swapped marketing-page-header">
     <div class="marketing-panel-inner">
         <div class="marketing-panel-image marketing-panel-get-started" role="img" aria-label="Screenshot"></div>
         <div class="marketing-panel-text">
@@ -6,7 +7,7 @@
                 Welcome to QuoteFlow<br>
                 <strong>Let’s get started</strong>
             </h1>
-            <p class="skip-welcome">Familiar with QuoteFlow? <a href="/projects" id="getting-started-header-cta-link">Show me the dashboard</a>.</p>
+            <p class="skip-welcome">Familiar with QuoteFlow? <a href="@string.Format("{0}?skipGettingStarted=1", Url.Home())" id="getting-started-header-cta-link">Show me the dashboard</a>.</p>
         </div>
     </div>
 </div>

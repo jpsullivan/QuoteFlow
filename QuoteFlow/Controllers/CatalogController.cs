@@ -19,7 +19,7 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 namespace QuoteFlow.Controllers
 {
     [Authorize]
-    public class CatalogController : BaseController
+    public partial class CatalogController : BaseController
     {
         #region IoC
 
@@ -50,13 +50,13 @@ namespace QuoteFlow.Controllers
         #endregion
 
         [Route("catalogs")]
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View();
         }
 
         [Route("catalog/new", HttpVerbs.Get)]
-        public ActionResult New()
+        public virtual ActionResult New()
         {
             // if user has more than one organization, get them
             // display them as select list
@@ -66,7 +66,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("catalog/create", HttpVerbs.Post)]
-        public ActionResult CreateCatalog(NewCatalogModel model)
+        public virtual ActionResult CreateCatalog(NewCatalogModel model)
         {
             var currentUser = GetCurrentUser();
 
@@ -91,7 +91,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("catalog/{catalogId:INT}/{catalogName}")]
-        public ActionResult Show(int catalogId, string catalogName)
+        public virtual ActionResult Show(int catalogId, string catalogName)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
             if (catalog == null)
@@ -113,7 +113,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("catalog/{catalogId:INT}/{catalogName}/assets")]
-        public ActionResult ShowAssets(int catalogId, string catalogName, int? page)
+        public virtual ActionResult ShowAssets(int catalogId, string catalogName, int? page)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
             if (catalog == null) {
@@ -141,7 +141,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("catalog/{catalogId:INT}/{catalogName}/assets/iv")]
-        public ActionResult ShowAssetsInteractive(int catalogId, string catalogName, int? page)
+        public virtual ActionResult ShowAssetsInteractive(int catalogId, string catalogName, int? page)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
             if (catalog == null)
@@ -236,7 +236,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("catalog/{catalogId:INT}/{catalogName}/admin")]
-        public ActionResult Admin(int catalogId, string catalogName)
+        public virtual ActionResult Admin(int catalogId, string catalogName)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
 
@@ -301,7 +301,7 @@ namespace QuoteFlow.Controllers
         }
 
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-        public ActionResult ImportCatalogProgress()
+        public virtual ActionResult ImportCatalogProgress()
         {
             string username = User.Identity.Name;
 

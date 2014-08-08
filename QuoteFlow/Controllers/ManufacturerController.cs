@@ -10,7 +10,7 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
-    public class ManufacturerController : BaseController
+    public partial class ManufacturerController : BaseController
     {
         #region IoC
         
@@ -26,7 +26,7 @@ namespace QuoteFlow.Controllers
         #endregion
 
         [Route("manufacturer/{id:INT}/{name}", Name = "Manufacturer-Show")]
-        public ActionResult Show(int id, string name)
+        public virtual ActionResult Show(int id, string name)
         {
             var manufacturer = ManufacturerService.GetManufacturer(id);
             if (manufacturer == null)
@@ -43,7 +43,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("manufacturer/{id:INT}/{manufacturerName}/edit", HttpVerbs.Get)]
-        public ActionResult Edit(int id, string manufacturerName)
+        public virtual ActionResult Edit(int id, string manufacturerName)
         {
             var manufacturer = ManufacturerService.GetManufacturer(id);
             if (manufacturer == null)
@@ -62,7 +62,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("manufacturer/{id:INT}/{manufacturerName}/edit", HttpVerbs.Post)]
-        public ActionResult Edit(int id, string manufacturerName, EditManufacturerRequest form, string returnUrl)
+        public virtual ActionResult Edit(int id, string manufacturerName, EditManufacturerRequest form, string returnUrl)
         {
             var manufacturer = ManufacturerService.GetManufacturer(id);
             if (manufacturer == null)

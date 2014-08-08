@@ -5,43 +5,48 @@
     ViewBag.Title = "Index";
 }
 
-@Html.Partial("Partials/Dashboard/GettingStarted")
-<div class="marketing-page-footer"><button id="getting-started-footer-cta-button" class="aui-button aui-button-subtle">Git back to it</button><p>If you’d like to learn more, check out our <a href="https://www.atlassian.com/git" target="_blank" id="getting-started-footer-gitmicrosite-link">beginner’s guide to Git</a>.</p><p>Looking for a powerful desktop Git client? <a href="http://www.sourcetreeapp.com" target="_blank" id="getting-started-footer-sourcetree-link">Get SourceTree for free</a>.</p></div>
+@if (!Model.SkipGettingStarted)
+{
+    @Html.Partial("Partials/Dashboard/GettingStarted")
+    <div class="marketing-page-footer"><button id="getting-started-footer-cta-button" class="aui-button aui-button-subtle">Git back to it</button><p>If you’d like to learn more, check out our <a href="https://www.atlassian.com/git" target="_blank" id="getting-started-footer-gitmicrosite-link">beginner’s guide to Git</a>.</p><p>Looking for a powerful desktop Git client? <a href="http://www.sourcetreeapp.com" target="_blank" id="getting-started-footer-sourcetree-link">Get SourceTree for free</a>.</p></div>
+}
+else
+{
+    <header class="aui-page-header">
+        <div class="aui-page-header">
+            <div class="aui-page-header-inner">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </header>
 
-<header class="aui-page-header">
-    <div class="aui-page-header">
-        <div class="aui-page-header-inner">
-            <h1>Dashboard</h1>
+    <div class="aui-page-panel">
+        <div class="aui-page-panel-inner">
+            <section class="aui-page-panel-content">
+                <h3>Catalogs</h3>
+
+                <a href="@Url.NewCatalog()" class="aui-button">New Catalog</a>
+
+                @if (Model.Catalogs != null)
+                {
+                    foreach (var catalog in Model.Catalogs)
+                    {
+                        <br />
+                        <a href="@Url.Catalog(catalog.Id, catalog.Name.UrlFriendly())">@catalog.Name</a>
+                    }
+                }
+
+                <h3>Quotes</h3>
+
+                @if (Model.Quotes != null)
+                {
+                    foreach (var quote in Model.Quotes)
+                    {
+                        <br />
+                        <a href="@Url.Quote(quote.Id, quote.Name.UrlFriendly())">@quote.Name</a>
+                    }
+                }
+            </section>
         </div>
     </div>
-</header>
-
-<div class="aui-page-panel">
-    <div class="aui-page-panel-inner">
-        <section class="aui-page-panel-content">
-            <h3>Catalogs</h3>
-
-            <a href="@Url.NewCatalog()" class="aui-button">New Catalog</a>
-
-            @if (Model.Catalogs != null)
-            {
-                foreach (var catalog in Model.Catalogs)
-                {
-                    <br />
-                    <a href="@Url.Catalog(catalog.Id, catalog.Name.UrlFriendly())">@catalog.Name</a>
-                }
-            }
-
-            <h3>Quotes</h3>
-
-            @if (Model.Quotes != null)
-            {
-                foreach (var quote in Model.Quotes)
-                {
-                    <br />
-                    <a href="@Url.Quote(quote.Id, quote.Name.UrlFriendly())">@quote.Name</a>
-                }
-            }
-        </section>
-    </div>
-</div>
+}

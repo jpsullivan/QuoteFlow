@@ -26,9 +26,6 @@ namespace QuoteFlow.Controllers
     public partial class DashboardController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public DashboardController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected DashboardController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -57,6 +54,12 @@ namespace QuoteFlow.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Index()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public DashboardController Actions { get { return MVC.Dashboard; } }
@@ -74,15 +77,25 @@ namespace QuoteFlow.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string GettingStarted = "GettingStarted";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string GettingStarted = "GettingStarted";
         }
 
 
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index
+        {
+            public readonly string skipGettingStarted = "skipGettingStarted";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -93,8 +106,10 @@ namespace QuoteFlow.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string GettingStarted = "GettingStarted";
                 public readonly string Index = "Index";
             }
+            public readonly string GettingStarted = "~/Views/Dashboard/GettingStarted.cshtml";
             public readonly string Index = "~/Views/Dashboard/Index.cshtml";
         }
     }
@@ -105,13 +120,25 @@ namespace QuoteFlow.Controllers
         public T4MVC_DashboardController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? skipGettingStarted);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Index()
+        public override System.Web.Mvc.ActionResult Index(int? skipGettingStarted)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            IndexOverride(callInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "skipGettingStarted", skipGettingStarted);
+            IndexOverride(callInfo, skipGettingStarted);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void GettingStartedOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult GettingStarted()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.GettingStarted);
+            GettingStartedOverride(callInfo);
             return callInfo;
         }
 

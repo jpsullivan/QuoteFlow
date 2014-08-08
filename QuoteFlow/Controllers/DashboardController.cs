@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Services.Interfaces;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
@@ -23,25 +22,44 @@ namespace QuoteFlow.Controllers
         #endregion
 
         [Route("")]
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(int? skipGettingStarted)
         {
             var model = new DashboardViewModel();
 
-            if (!Request.IsAuthenticated) {
+            model.SkipGettingStarted = true;
+
+            if (!Request.IsAuthenticated)
+            {
                 return View(model);
             }
 
             var currentUser = GetCurrentUser();
-            var catalogs = UserService.GetCatalogs(currentUser.Id);
-            var quotes = QuoteService.GetQuotesFromOrganization(currentUser.Organizations.First().Id);
+            var catalogs = UserService.GetCatalogs(currentUser.Id).ToList();
+            var quotes = QuoteService.GetQuotesFromOrganization(currentUser.Organizations.First().Id).ToList();
+
+            // if there aren't any catalogs or quotes, show the getting started screen.
+            if (!catalogs.Any() && !quotes.Any())
+            {
+                model.SkipGettingStarted = false;
+            }
+
             model.Catalogs = catalogs;
             model.Quotes = quotes;
+
+            // catch-all, if the query string is forcing a skip, do so.
+            if (skipGettingStarted != null)
+            {
+                if (skipGettingStarted == 1)
+                {
+                    model.SkipGettingStarted = true;
+                }
+            }
 
             return View(model);
         }
 
         [Route("getting-started")]
-        public ActionResult GettingStarted()
+        public virtual ActionResult GettingStarted()
         {
             return View();
         }
