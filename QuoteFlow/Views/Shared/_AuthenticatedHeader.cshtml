@@ -78,6 +78,14 @@
                     <li>
                         @{ Html.RenderPartial("Partials/Header/Help"); }
                     </li>
+                    @if (Request.IsAuthenticated && User.IsInRole(Constants.AdminRoleName))
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Dashboard")" class="admin-link" title="Administration">
+                                <span class="aui-icon aui-icon-small aui-iconfont-configure">Administration</span>
+                            </a>
+                        </li>
+                    }
                     <li>
                         <a href="#dropdown2-header9" aria-owns="dropdown2-header9" aria-haspopup="true" class="aui-dropdown2-trigger" aria-controls="dropdown2-header9">
                             <div class="aui-avatar aui-avatar-small">

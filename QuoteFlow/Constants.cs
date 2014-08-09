@@ -2,6 +2,8 @@
 {
     public class Constants
     {
+        public const string AdminRoleName = "Admins";
+
         public const string CurrentUserOwinEnvironmentKey = "quoteflow.user";
         public const int DefaultPasswordResetTokenExpirationHours = 24;
 
