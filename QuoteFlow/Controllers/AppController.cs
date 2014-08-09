@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
@@ -21,13 +20,13 @@ using StackExchange.Profiling;
 
 namespace QuoteFlow.Controllers
 {
-    public abstract partial class BaseController : Controller
+    public abstract partial class AppController : Controller
     {
         private IOrganizationService OrganizationService { get; set; }
         private IUserService UserService { get; set; }
         private IOwinContext _overrideContext;
 
-        protected BaseController()
+        protected AppController()
         {
             OrganizationService = Container.Kernel.TryGet<OrganizationService>();
             UserService = Container.Kernel.TryGet<UserService>();
@@ -343,7 +342,7 @@ namespace QuoteFlow.Controllers
         public User CurrentUser { get { return _currentUser.Value; } }
         public Organization CurrentOrganization { get { return _currentOrganization.Value; } }
 
-        public QuoteFlowContext(BaseController ctrl)
+        public QuoteFlowContext(AppController ctrl)
         {
             Config = Container.Kernel.TryGet<ConfigurationService>();
 

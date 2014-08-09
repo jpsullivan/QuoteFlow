@@ -1,0 +1,42 @@
+﻿@using QuoteFlow.Html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui-all.css")" media="all">
+    <!--[if lt IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie.css")" media="all"><![endif]-->
+    <!--[if IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie9.css")" media="all"><![endif]-->
+    @Styles.Render("~/bundles/css_app")
+</head>
+<body class="aui-layout">
+    <div id="page">
+        @Html.Partial("_AuthenticatedHeader")
+
+        <section id="content" role="main">
+            <header class="aui-page-header">
+                <div class="aui-page-header">
+                    <div class="aui-page-header-inner">
+                        <h1>Administration</h1>
+                    </div>
+                </div>
+            </header>
+
+            @RenderBody()
+        </section>
+
+        @Html.Partial("_Footer")
+    </div>
+
+    @Scripts.Render("~/bundles/js_lib", "~/bundles/js_app")
+    @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
+    <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->
+    @RenderSection("scripts", false)
+
+    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
+
+    @RenderSection("secondaryScripts", false)
+</body>
+</html>

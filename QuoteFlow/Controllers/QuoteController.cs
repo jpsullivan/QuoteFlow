@@ -9,7 +9,7 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
-    public partial class QuoteController : BaseController
+    public partial class QuoteController : AppController
     {
         #region IoC
 

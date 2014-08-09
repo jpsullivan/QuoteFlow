@@ -8,7 +8,7 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
-    public partial class ContactController : BaseController
+    public partial class ContactController : AppController
     {
         #region IoC
 

@@ -20,7 +20,7 @@ namespace QuoteFlow
         {
             public string GetUser(HttpRequest request)
             {
-                return BaseController.GetRemoteIP(request.ServerVariables);
+                return AppController.GetRemoteIP(request.ServerVariables);
             }
         }
 

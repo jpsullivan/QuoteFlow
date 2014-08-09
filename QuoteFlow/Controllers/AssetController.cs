@@ -13,7 +13,7 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 namespace QuoteFlow.Controllers
 {
     [Authorize]
-    public partial class AssetController : BaseController
+    public partial class AssetController : AppController
     {
         #region IoC
 

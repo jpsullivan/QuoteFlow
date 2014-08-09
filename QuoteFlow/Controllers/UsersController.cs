@@ -16,7 +16,7 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
-    public partial class UsersController : BaseController
+    public partial class UsersController : AppController
     {
         public IUserService UserService { get; protected set; }
         public IMessageService MessageService { get; protected set; }

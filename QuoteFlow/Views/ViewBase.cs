@@ -34,7 +34,7 @@ namespace QuoteFlow.Views
         {
             return () =>
             {
-                var ctrl = self.ViewContext.Controller as BaseController;
+                var ctrl = self.ViewContext.Controller as AppController;
                 if (ctrl == null)
                 {
                     throw new InvalidOperationException("Viewbase should only be used on views for actions on AppControllers");

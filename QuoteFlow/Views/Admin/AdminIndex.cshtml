@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "../Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Administration - QuoteFlow";
+}
+
+<div class="aui-page-panel">
+    <div class="aui-page-panel-inner">
+        <div class="aui-page-panel-nav">
+            <nav class="aui-navgroup aui-navgroup-vertical">
+                <div class="aui-navgroup-inner">
+                    <ul class="aui-nav">
+                        <li><a href="#">Overview</a></li>
+                    </ul>
+                    <div class="aui-nav-heading">
+                        <strong>Accounts</strong>
+                    </div>
+                    <ul class="aui-nav">
+                        <li><a href="#">Users</a></li>
+                        <li><a href="#">Groups</a></li>
+                        <li><a href="#">Global permissions</a></li>
+                        <li><a href="#">Authentication</a></li>
+                        <li><a href="#">Avatars</a></li>
+                    </ul>
+                    <div class="aui-nav-heading">
+                        <strong>Support</strong>
+                    </div>
+                    <ul class="aui-nav">
+                        <li><a href="#">Atlassian Support Tools</a></li>
+                        <li><a href="#">Logging and Profiling</a></li>
+                    </ul>
+                </div>
+            </nav><!-- .aui-navgroup -->
+        </div> <!-- .aui-page-panel-nav -->
+
+        <section class="aui-page-panel-content">
+            <h2>General usage</h2>
+
+            <h3>Do</h3>
+            <ul>
+                <li>Use vertical navigation for moving between related sets of pages</li>
+                <li>Use at left hand side of pages and <a href="/design/1.4/components/modal-dialog/">modal dialogs</a></li>
+                <li>Use for navigation where you need groupings</li>
+                <li>Use when you need a scalable navigation</li>
+                <li>Use dividers and group headings for structure</li>
+            </ul>
+
+            <h3>Don't</h3>
+            <ul>
+                <li>Never nest vertical navs inside each other</li>
+                <li>Icons are not recommended in this navigation</li>
+                <li>Don't use dropdowns in the navigation</li>
+                <li>Use grouped headings as links</li>
+            </ul>
+        </section> <!-- aui-page-panel-content-->
+    </div>
+</div>
+
+
+

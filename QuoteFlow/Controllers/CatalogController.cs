@@ -19,7 +19,7 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 namespace QuoteFlow.Controllers
 {
     [Authorize]
-    public partial class CatalogController : BaseController
+    public partial class CatalogController : AppController
     {
         #region IoC
 

@@ -82,9 +82,9 @@ namespace QuoteFlow
         /// <summary>
         /// Gets the controller for the current request; should be set during init of current request's controller.
         /// </summary>
-        public BaseController Controller
+        public AppController Controller
         {
-            get { return Context.Items["Controller"] as BaseController; }
+            get { return Context.Items["Controller"] as AppController; }
             set { Context.Items["Controller"] = value; }
         }
 
