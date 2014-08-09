@@ -27,9 +27,19 @@ namespace QuoteFlow.Infrastructure.Extensions
             return url.Action("Index", "Dashboard");
         }
 
+        public static string Account(this UrlHelper url)
+        {
+            return url.Action("Account", "Users");
+        }
+
         public static string GettingStarted(this UrlHelper url)
         {
             return url.Action("GettingStarted", "Dashboard");
+        }
+
+        public static string Admin(this UrlHelper url)
+        {
+            return url.Action("AdminIndex", "Admin");
         }
 
         #endregion
@@ -168,6 +178,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return string.Format("/user/{0}/{1}", userId, username.UrlFriendly());
         }
 
+        public static string UserProfile(this UrlHelper url, string username)
+        {
+            return url.RouteUrl("User-Profile", new { username = username.UrlFriendly() });
+        }
+
         #endregion
 
         public static string ConfirmationUrl(this UrlHelper url, string action, string controller, string username, string token)
@@ -223,12 +238,6 @@ namespace QuoteFlow.Infrastructure.Extensions
         public static string Register(this UrlHelper url, string returnUrl)
         {
             return url.Action("Register", "Authentication", new {returnUrl = returnUrl});
-        }
-
-        public static string User(this UrlHelper url, User user, string scheme = null)
-        {
-            string result = url.Action(MVC.Users.Profiles(user.Username), protocol: scheme);
-            return EnsureTrailingSlash(result);
         }
 
         private static UriBuilder GetCanonicalUrl(UrlHelper url)

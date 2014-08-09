@@ -268,6 +268,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Container.cs" />
@@ -858,7 +861,7 @@
     <Content Include="Views\Users\ForgotPassword.cshtml" />
     <Content Include="Views\Users\PasswordChanged.cshtml" />
     <Content Include="Views\Users\PasswordSent.cshtml" />
-    <Content Include="Views\Users\Profiles.cshtml" />
+    <Content Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Views\Users\ResetPassword.cshtml" />
     <Content Include="Views\Users\Thanks.cshtml" />
     <None Include="T4MVC.tt.hooks.t4" />
@@ -913,6 +916,7 @@
     <Content Include="Views\Shared\Partials\Header\Help.cshtml" />
     <Content Include="Views\Admin\AdminIndex.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Shared\_LayoutHybrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

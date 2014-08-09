@@ -36,6 +36,7 @@ namespace T4MVC
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _AdminLayout = "_AdminLayout";
                 public readonly string _AuthenticatedHeader = "_AuthenticatedHeader";
                 public readonly string _FocusedLayout = "_FocusedLayout";
                 public readonly string _FocusedLayoutLarge = "_FocusedLayoutLarge";
@@ -49,6 +50,7 @@ namespace T4MVC
                 public readonly string Error = "Error";
                 public readonly string PageNotFound = "PageNotFound";
             }
+            public readonly string _AdminLayout = "~/Views/Shared/_AdminLayout.cshtml";
             public readonly string _AuthenticatedHeader = "~/Views/Shared/_AuthenticatedHeader.cshtml";
             public readonly string _FocusedLayout = "~/Views/Shared/_FocusedLayout.cshtml";
             public readonly string _FocusedLayoutLarge = "~/Views/Shared/_FocusedLayoutLarge.cshtml";

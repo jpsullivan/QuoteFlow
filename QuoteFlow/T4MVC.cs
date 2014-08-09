@@ -25,6 +25,7 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    public static QuoteFlow.Controllers.Admin.AdminController Admin = new QuoteFlow.Controllers.Admin.T4MVC_AdminController();
     public static QuoteFlow.Controllers.AssetController Asset = new QuoteFlow.Controllers.T4MVC_AssetController();
     public static QuoteFlow.Controllers.AuthenticationController Authentication = new QuoteFlow.Controllers.T4MVC_AuthenticationController();
     public static QuoteFlow.Controllers.CatalogController Catalog = new QuoteFlow.Controllers.T4MVC_CatalogController();

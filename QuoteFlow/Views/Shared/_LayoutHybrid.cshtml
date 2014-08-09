@@ -11,7 +11,7 @@
     <!--[if IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie9.css")" media="all"><![endif]-->
     @Styles.Render("~/bundles/css_app")
 </head>
-<body class="aui-layout">
+<body class="aui-layout aui-page-hybrid">
     <div id="page">
         @(User.Identity.IsAuthenticated ? Html.Partial("_AuthenticatedHeader") : Html.Partial("_UnauthenticatedHeader"))
 
@@ -21,14 +21,14 @@
 
         @Html.Partial("_Footer")
     </div>
-    
+
     @Scripts.Render("~/bundles/js_lib", "~/bundles/js_app")
     @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
     <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->
     @RenderSection("scripts", false)
 
     @StackExchange.Profiling.MiniProfiler.RenderIncludes()
-    
+
     @RenderSection("secondaryScripts", false)
 </body>
 </html>

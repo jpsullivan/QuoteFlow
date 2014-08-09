@@ -1,0 +1,49 @@
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Models.ViewModels.UserProfileModel
+@{
+    Layout = "../Shared/_LayoutHybrid.cshtml";
+    ViewBag.Title = string.Format("{0}'s profile - QuoteFlow", Model.Username);
+}
+
+<header class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-image">
+            <span class="aui-avatar aui-avatar-xxlarge user-avatar" data-username="jaysche">
+                <span class="aui-avatar-inner">
+                    <img src="http://www.gravatar.com/avatar/d5d6b2b698378817adf0fa9336d4d8ac.jpg?s=192&amp;d=mm" alt="Josh Sullivan">
+                </span>
+            </span>
+        </div>
+        <div class="aui-page-header-main entity-item">
+            <h1><span class="entity-name">Josh Sullivan</span></h1>
+            <div class="user-detail username">
+                <span class="aui-icon aui-icon-small aui-iconfont-user"></span>@Model.Username
+            </div>
+            <div class="user-detail email">
+                <span class="aui-icon aui-icon-small aui-iconfont-email"></span>@Model.EmailAddress
+            </div>
+        </div>
+        <div class="aui-page-header-actions">
+            @if (Request.IsAuthenticated && CurrentUser.Username == Model.Username)
+            {
+                <a class="aui-button" href="@Url.Account()" title="Manage your personal details, password and more" autocomplete="off" tabindex="0">Manage account</a>
+            }
+        </div>
+    </div>
+</header>
+
+<nav class="aui-navgroup-horizontal" role="navigation">
+    <div class="aui-navgroup-inner">
+        <ul class="aui-nav">
+            <li class="aui-nav-selected"><a href="#" title="View quotes">My Quotes</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="aui-page-panel content-body">
+    <div class="aui-page-panel-inner">
+        <section class="aui-page-panel-content">
+            
+        </section><!-- .aui-page-panel-content -->
+    </div><!-- .aui-page-panel-inner -->
+</div>

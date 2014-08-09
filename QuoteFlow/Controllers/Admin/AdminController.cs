@@ -4,10 +4,10 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers.Admin
 {
-    public class AdminController : AdminControllerBase
+    public partial class AdminController : AdminControllerBase
     {
         [Route("admin")]
-        public ActionResult AdminIndex()
+        public virtual ActionResult AdminIndex()
         {
             return View();
         }

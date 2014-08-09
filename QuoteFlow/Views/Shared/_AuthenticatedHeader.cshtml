@@ -81,7 +81,7 @@
                     @if (Request.IsAuthenticated && User.IsInRole(Constants.AdminRoleName))
                     {
                         <li>
-                            <a href="@Url.Action("Index", "Dashboard")" class="admin-link" title="Administration">
+                            <a href="@Url.Admin()" class="admin-link" title="Administration">
                                 <span class="aui-icon aui-icon-small aui-iconfont-configure">Administration</span>
                             </a>
                         </li>
@@ -99,7 +99,8 @@
                             {
                                 <div class="aui-dropdown2-section">
                                     <ul>
-                                        <li><a href="@Url.Action(MVC.Users.Account())" class="active">Profile</a></li>
+                                        <li><a href="@Url.UserProfile(CurrentUser.Username)" class="active">View Profile</a></li>
+                                        <li><a href="@Url.Account()" class="active">Manage Account</a></li>
                                         <li><a href="http://example.com/">Extensions</a></li>
                                     </ul>
                                 </div>

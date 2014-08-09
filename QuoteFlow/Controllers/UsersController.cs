@@ -236,7 +236,8 @@ namespace QuoteFlow.Controllers
             return View(model);
         }
 
-        public virtual ActionResult Profiles(string username)
+        [Route("users/profile/{username}", Name = "User-Profile")]
+        public virtual ActionResult UserProfile(string username)
         {
             var user = UserService.GetUser(username, null);
             if (user == null)

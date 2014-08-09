@@ -75,9 +75,9 @@ namespace QuoteFlow.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Profiles()
+        public virtual System.Web.Mvc.ActionResult UserProfile()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Profiles);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UserProfile);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -125,7 +125,7 @@ namespace QuoteFlow.Controllers
             public readonly string PasswordSent = "PasswordSent";
             public readonly string ResetPassword = "ResetPassword";
             public readonly string Confirm = "Confirm";
-            public readonly string Profiles = "Profiles";
+            public readonly string UserProfile = "UserProfile";
             public readonly string ChangeEmail = "ChangeEmail";
             public readonly string ChangePassword = "ChangePassword";
             public readonly string RemovePassword = "RemovePassword";
@@ -145,7 +145,7 @@ namespace QuoteFlow.Controllers
             public const string PasswordSent = "PasswordSent";
             public const string ResetPassword = "ResetPassword";
             public const string Confirm = "Confirm";
-            public const string Profiles = "Profiles";
+            public const string UserProfile = "UserProfile";
             public const string ChangeEmail = "ChangeEmail";
             public const string ChangePassword = "ChangePassword";
             public const string RemovePassword = "RemovePassword";
@@ -190,11 +190,11 @@ namespace QuoteFlow.Controllers
             public readonly string username = "username";
             public readonly string token = "token";
         }
-        static readonly ActionParamsClass_Profiles s_params_Profiles = new ActionParamsClass_Profiles();
+        static readonly ActionParamsClass_UserProfile s_params_UserProfile = new ActionParamsClass_UserProfile();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Profiles ProfilesParams { get { return s_params_Profiles; } }
+        public ActionParamsClass_UserProfile UserProfileParams { get { return s_params_UserProfile; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Profiles
+        public class ActionParamsClass_UserProfile
         {
             public readonly string username = "username";
         }
@@ -238,9 +238,9 @@ namespace QuoteFlow.Controllers
                 public readonly string ForgotPassword = "ForgotPassword";
                 public readonly string PasswordChanged = "PasswordChanged";
                 public readonly string PasswordSent = "PasswordSent";
-                public readonly string Profiles = "Profiles";
                 public readonly string ResetPassword = "ResetPassword";
                 public readonly string Thanks = "Thanks";
+                public readonly string UserProfile = "UserProfile";
             }
             public readonly string Account = "~/Views/Users/Account.cshtml";
             public readonly string Confirm = "~/Views/Users/Confirm.cshtml";
@@ -248,9 +248,9 @@ namespace QuoteFlow.Controllers
             public readonly string ForgotPassword = "~/Views/Users/ForgotPassword.cshtml";
             public readonly string PasswordChanged = "~/Views/Users/PasswordChanged.cshtml";
             public readonly string PasswordSent = "~/Views/Users/PasswordSent.cshtml";
-            public readonly string Profiles = "~/Views/Users/Profiles.cshtml";
             public readonly string ResetPassword = "~/Views/Users/ResetPassword.cshtml";
             public readonly string Thanks = "~/Views/Users/Thanks.cshtml";
+            public readonly string UserProfile = "~/Views/Users/UserProfile.cshtml";
         }
     }
 
@@ -390,14 +390,14 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void ProfilesOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string username);
+        partial void UserProfileOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string username);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Profiles(string username)
+        public override System.Web.Mvc.ActionResult UserProfile(string username)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Profiles);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UserProfile);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "username", username);
-            ProfilesOverride(callInfo, username);
+            UserProfileOverride(callInfo, username);
             return callInfo;
         }
 
