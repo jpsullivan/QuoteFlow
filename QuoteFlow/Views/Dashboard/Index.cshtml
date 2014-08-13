@@ -23,17 +23,27 @@ else
     <div class="aui-page-panel">
         <div class="aui-page-panel-inner">
             <section class="aui-page-panel-content">
-                <h3>Catalogs</h3>
-
-                <a href="@Url.NewCatalog()" class="aui-button">New Catalog</a>
+                <h3>Catalogs <a href="@Url.NewCatalog()" class="aui-button">New Catalog</a></h3>
 
                 @if (Model.Catalogs != null)
                 {
-                    foreach (var catalog in Model.Catalogs)
-                    {
-                        <br />
-                        <a href="@Url.Catalog(catalog.Id, catalog.Name.UrlFriendly())">@catalog.Name</a>
-                    }
+                    <table class="aui">
+                        <thead>
+                            <th>Catalog</th>
+                            <th>Description</th>
+                            <th>Total Assets</th>
+                        </thead>
+                        <tbody>
+                            @foreach (var catalog in Model.Catalogs)
+                            {
+                                <tr>
+                                    <td><a href="@Url.Catalog(catalog.Id, catalog.Name.UrlFriendly())">@catalog.Name</a></td>
+                                    <td>@catalog.Description</td>
+                                    <td>123</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 }
 
                 <h3>Quotes</h3>
