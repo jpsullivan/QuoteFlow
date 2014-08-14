@@ -10,5 +10,7 @@ namespace QuoteFlow.Models
         public int OrganizationId { get; set; }
         public DateTime LastUpdated { get; set; }
         public DateTime CreationDate { get; set; }
+
+        public ManufacturerLogo Logo { get; set; }
     }
 }

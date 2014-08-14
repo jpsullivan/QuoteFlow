@@ -413,6 +413,7 @@
     <Compile Include="Migrations\M022_CreateELMAH.cs" />
     <Compile Include="Migrations\M023_AddInitialOrganization.cs" />
     <Compile Include="Migrations\M024_AddInitialOrgUser.cs" />
+    <Compile Include="Migrations\M025_CreateManufacturerLogos.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetComment.cs" />
     <Compile Include="Models\AssetImage.cs" />
@@ -435,6 +436,7 @@
     <Compile Include="Models\Credential.cs" />
     <Compile Include="Models\EmailMessage.cs" />
     <Compile Include="Models\Manufacturer.cs" />
+    <Compile Include="Models\ManufacturerLogo.cs" />
     <Compile Include="Models\ModelBinders\Asset\EditAssetModelBinder.cs" />
     <Compile Include="Models\OptionalImportField.cs" />
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
@@ -685,6 +687,9 @@
     </Content>
     <Content Include="Content\less\layout.css">
       <DependentUpon>layout.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\layout.min.css">
+      <DependentUpon>layout.css</DependentUpon>
     </Content>
     <Content Include="Content\less\lists.css">
       <DependentUpon>lists.less</DependentUpon>

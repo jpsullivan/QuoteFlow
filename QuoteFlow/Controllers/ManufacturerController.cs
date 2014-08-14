@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Dapper;
 using QuoteFlow.Infrastructure.Attributes;
@@ -72,11 +73,19 @@ namespace QuoteFlow.Controllers
 
             // ensure that the provided asset matches the expected asset
             if (manufacturer.Id != id)
+            {
                 return SafeRedirect(returnUrl ?? Url.Manufacturer(id, manufacturerName));
+            }
+
+            // if a logo exists and it doesn't pass the file extension check, bomb out
+            if (form.ManufacturerLogo != null && !VerifyManufacturerLogoExtension(form.ManufacturerLogo))
+            {
+                ModelState.AddModelError("ManufacturerLogo", "Please upload either a GIF, JPG or PNG image.");
+            }
 
             if (!ModelState.IsValid)
             {
-                // todo: show some kind of form validation error
+                return View(form);
             }
 
             var snapshot = Snapshotter.Start(manufacturer);
@@ -91,6 +100,26 @@ namespace QuoteFlow.Controllers
             }
 
             return SafeRedirect(returnUrl ?? Url.Manufacturer(id, manufacturerName));
+        }
+
+        /// <summary>
+        /// Verifies that the uploaded manufacturer logo is of an
+        /// accepted file extension.
+        /// </summary>
+        /// <param name="file">The uploaded manufacturer logo file</param>
+        /// <returns></returns>
+        [NonAction]
+        private bool VerifyManufacturerLogoExtension(HttpPostedFileBase file)
+        {
+            var validImageTypes = new[]
+            {
+                "image/gif",
+                "image/jpeg",
+                "image/pjpeg",
+                "image/png"
+            };
+
+            return file.ContentLength <= 0 || validImageTypes.Contains(file.ContentType);
         }
     }
 }

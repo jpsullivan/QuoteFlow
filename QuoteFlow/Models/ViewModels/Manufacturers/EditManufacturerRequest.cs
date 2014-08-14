@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace QuoteFlow.Models.ViewModels.Manufacturers
 {
@@ -12,5 +13,7 @@ namespace QuoteFlow.Models.ViewModels.Manufacturers
 
         [Display(Name = "Description")]
         public string Description { get; set; }
+
+        public HttpPostedFileBase ManufacturerLogo { get; set; }
     }
 }
