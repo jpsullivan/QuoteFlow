@@ -414,6 +414,7 @@
     <Compile Include="Migrations\M023_AddInitialOrganization.cs" />
     <Compile Include="Migrations\M024_AddInitialOrgUser.cs" />
     <Compile Include="Migrations\M025_CreateManufacturerLogos.cs" />
+    <Compile Include="Migrations\M026_AddTokenToManufacturerLogos.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetComment.cs" />
     <Compile Include="Models\AssetImage.cs" />
@@ -508,6 +509,7 @@
     <Compile Include="Services\Interfaces\IFileStorageService.cs" />
     <Compile Include="Services\Interfaces\IFileSystemService.cs" />
     <Compile Include="Services\Interfaces\IFormsAuthenticationService.cs" />
+    <Compile Include="Services\Interfaces\IManufacturerLogoService.cs" />
     <Compile Include="Services\Interfaces\IManufacturerService.cs" />
     <Compile Include="Services\Interfaces\IMessageService.cs" />
     <Compile Include="Services\Interfaces\IOrganizationService.cs" />
@@ -516,6 +518,7 @@
     <Compile Include="Services\Interfaces\IUploadFileService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\LocalFileReference.cs" />
+    <Compile Include="Services\ManufacturerLogoService.cs" />
     <Compile Include="Services\ManufacturerService.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\OrganizationService.cs" />
