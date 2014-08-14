@@ -167,7 +167,7 @@ namespace QuoteFlow.Controllers
         partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, string manufacturerName, QuoteFlow.Models.ViewModels.Manufacturers.EditManufacturerRequest form, string returnUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(int id, string manufacturerName, QuoteFlow.Models.ViewModels.Manufacturers.EditManufacturerRequest form, string returnUrl)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Edit(int id, string manufacturerName, QuoteFlow.Models.ViewModels.Manufacturers.EditManufacturerRequest form, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -175,7 +175,7 @@ namespace QuoteFlow.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "form", form);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
             EditOverride(callInfo, id, manufacturerName, form, returnUrl);
-            return callInfo;
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
     }

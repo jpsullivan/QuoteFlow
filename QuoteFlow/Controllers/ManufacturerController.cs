@@ -1,11 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Dapper;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models.ViewModels.Manufacturers;
+using QuoteFlow.Services;
 using QuoteFlow.Services.Interfaces;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
@@ -16,12 +19,17 @@ namespace QuoteFlow.Controllers
         #region IoC
         
         public IManufacturerService ManufacturerService { get; set; }
+        public IUploadFileService UploadFileService { get; protected set; }
 
         public ManufacturerController() { }
 
-        public ManufacturerController(IManufacturerService manufacturerService)
+        public ManufacturerController(
+            IManufacturerService manufacturerService,
+            IUploadFileService uploadFileService
+            )
         {
             ManufacturerService = manufacturerService;
+            UploadFileService = uploadFileService;
         }
 
         #endregion
@@ -63,7 +71,8 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("manufacturer/{id:INT}/{manufacturerName}/edit", HttpVerbs.Post)]
-        public virtual ActionResult Edit(int id, string manufacturerName, EditManufacturerRequest form, string returnUrl)
+        [ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> Edit(int id, string manufacturerName, EditManufacturerRequest form, string returnUrl)
         {
             var manufacturer = ManufacturerService.GetManufacturer(id);
             if (manufacturer == null)
@@ -97,6 +106,16 @@ namespace QuoteFlow.Controllers
             if (diff.ParameterNames.Any())
             {
                 ManufacturerService.UpdateManufacturer(manufacturer.Id, diff);
+            }
+
+            if (form.ManufacturerLogo != null)
+            {
+                using (var uploadStream = form.ManufacturerLogo.InputStream)
+                {
+                    var extension = Path.GetExtension(form.ManufacturerLogo.FileName);
+                    var filename = string.Format("{0}_{1}{2}", manufacturer.Id, manufacturer.Name.UrlFriendly(), extension);
+                    await UploadFileService.SaveUploadFileAsync(GetCurrentUser().Id, uploadStream, extension, UploadType.ManufacturerLogo, filename);
+                }
             }
 
             return SafeRedirect(returnUrl ?? Url.Manufacturer(id, manufacturerName));

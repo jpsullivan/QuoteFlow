@@ -13,6 +13,7 @@ using QuoteFlow.Infrastructure.Helpers;
 using QuoteFlow.Models;
 using QuoteFlow.Models.CatalogImport;
 using QuoteFlow.Models.ViewModels;
+using QuoteFlow.Services;
 using QuoteFlow.Services.Interfaces;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
@@ -294,7 +295,7 @@ namespace QuoteFlow.Controllers
 
             using (var uploadStream = uploadFile.InputStream)
             {
-                await UploadFileService.SaveUploadFileAsync(currentUser.Id, uploadStream, Path.GetExtension(uploadFile.FileName));
+                await UploadFileService.SaveUploadFileAsync(currentUser.Id, uploadStream, Path.GetExtension(uploadFile.FileName), UploadType.Catalog);
             }
 
             return RedirectToAction("SetImportCatalogDetails", "Catalog");

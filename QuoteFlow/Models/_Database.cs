@@ -13,6 +13,7 @@ namespace QuoteFlow.Models
         public Table<Contact> Contacts { get; private set; }
         public Table<Credential> Credentials { get; private set; } 
         public Table<Manufacturer> Manufacturers { get; private set; }
+        public Table<ManufacturerLogo> ManufacturerLogos { get; private set; } 
         public Table<Organization> Organizations { get; private set; }
         public Table<OrganizationUser> OrganizationUsers { get; private set; }
         public Table<Quote> Quotes { get; private set; }

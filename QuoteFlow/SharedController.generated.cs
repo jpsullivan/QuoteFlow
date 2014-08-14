@@ -44,6 +44,7 @@ namespace T4MVC
                 public readonly string _Footer = "_Footer";
                 public readonly string _InteractiveCatalogAssetsLayout = "_InteractiveCatalogAssetsLayout";
                 public readonly string _Layout = "_Layout";
+                public readonly string _LayoutHybrid = "_LayoutHybrid";
                 public readonly string _LogOnLayout = "_LogOnLayout";
                 public readonly string _QuoteBuilderLayout = "_QuoteBuilderLayout";
                 public readonly string _UnauthenticatedHeader = "_UnauthenticatedHeader";
@@ -58,6 +59,7 @@ namespace T4MVC
             public readonly string _Footer = "~/Views/Shared/_Footer.cshtml";
             public readonly string _InteractiveCatalogAssetsLayout = "~/Views/Shared/_InteractiveCatalogAssetsLayout.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
+            public readonly string _LayoutHybrid = "~/Views/Shared/_LayoutHybrid.cshtml";
             public readonly string _LogOnLayout = "~/Views/Shared/_LogOnLayout.cshtml";
             public readonly string _QuoteBuilderLayout = "~/Views/Shared/_QuoteBuilderLayout.cshtml";
             public readonly string _UnauthenticatedHeader = "~/Views/Shared/_UnauthenticatedHeader.cshtml";

@@ -38,7 +38,7 @@ namespace QuoteFlow.Services
             return GetUploadFileAsyncCore(userId);
         }
 
-        public Task SaveUploadFileAsync(int userId, Stream fileStream, string fileExtension)
+        public Task SaveUploadFileAsync(int userId, Stream fileStream, string fileExtension, UploadType type, string filename = null)
         {
             if (userId < 1)
             {
@@ -55,8 +55,32 @@ namespace QuoteFlow.Services
                 throw new ArgumentNullException("fileExtension");
             }
 
-            var uploadFileName = BuildFileName(userId, fileExtension);
-            return _fileStorageService.SaveFileAsync(Constants.UploadsFolderName, uploadFileName, fileStream);
+            if (filename == null)
+            {
+                filename = BuildFileName(userId, fileExtension);
+            }
+
+            return _fileStorageService.SaveFileAsync(GetUploadFolder(type), filename, fileStream);
+        }
+
+        /// <summary>
+        /// Gets the upload folder name based on the specified upload type.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private static string GetUploadFolder(UploadType type)
+        {
+            switch (type)
+            {
+                case UploadType.AssetImage:
+                    return "asset_images";
+                case UploadType.Catalog:
+                    return "catalogs";
+                case UploadType.ManufacturerLogo:
+                    return "manufacturer_logos";
+                default:
+                    return Constants.UploadsFolderName;
+            }
         }
 
         private static string BuildFileName(int userId, string extension = null)
@@ -75,5 +99,15 @@ namespace QuoteFlow.Services
             var uploadFileName = BuildFileName(userId);
             return await _fileStorageService.GetFileAsync(Constants.UploadsFolderName, uploadFileName);
         }
+    }
+
+    /// <summary>
+    /// The different types of files that can be uploaded throughout QuoteFlow.
+    /// </summary>
+    public enum UploadType
+    {
+        AssetImage,
+        Catalog,
+        ManufacturerLogo
     }
 }

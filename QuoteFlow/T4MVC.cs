@@ -466,6 +466,7 @@ namespace Links
             public static readonly string layout_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/layout.min.css") ? Url("layout.min.css") : Url("layout.css");
                  
             public static readonly string layout_css_map = Url("layout.css.map");
+            public static readonly string layout_min_css = Url("layout.min.css");
             public static readonly string lists_less = Url("lists.less");
             public static readonly string lists_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/lists.min.css") ? Url("lists.min.css") : Url("lists.css");
                  
