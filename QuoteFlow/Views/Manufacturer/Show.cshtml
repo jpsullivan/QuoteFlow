@@ -2,14 +2,25 @@
 @model QuoteFlow.Models.ViewModels.Manufacturers.ManufacturerShowModel
 
 @{
-    var manufacturerName = Model.Manufacturer.Name;
-    ViewBag.Title = "QuoteFlow - " + manufacturerName;
+    ViewBag.Title = "QuoteFlow - " + Model.Manufacturer.Name;
 }
 
 <section id="content" role="main">
     <header class="aui-page-header">
-        <div class="aui-page-header">
-            <div class="aui-page-header-inner">
+        <div class="aui-page-header-inner">
+            @if (Model.Manufacturer.Logo != null)
+            {
+                <div class="aui-page-header-image">
+                    <span id="13310" class="aui-avatar aui-avatar-large aui-avatar-project">
+                        <span class="aui-avatar-inner">
+                            <img id="project-avatar" alt="@Model.Manufacturer.Name" src="@Url.ManufacturerLogo(Model.Manufacturer.Id, Model.Manufacturer.Name)">
+                        </span>
+                    </span>
+                </div>
+                <!-- .aui-page-header-image -->
+            }
+            
+            <div class="aui-page-header-main">
                 <h1>@Model.Manufacturer.Name</h1>
 
                 <ul class="operations-list">
@@ -22,10 +33,10 @@
                         <span>@Model.Manufacturer.LastUpdated.ToLongDateString()</span>
                     </li>
                 </ul>
+            </div>
 
-                <div class="header-side-buttons">
-                    <a href="@Url.EditManufacturer(@Model.Manufacturer.Id, @Model.Manufacturer.Name)" class="aui-button" title="">Edit</a>
-                </div>
+            <div class="aui-page-header-actions">
+                <a href="@Url.EditManufacturer(@Model.Manufacturer.Id, @Model.Manufacturer.Name)" class="aui-button" title="">Edit</a>
             </div>
         </div>
     </header><!-- .aui-page-header -->

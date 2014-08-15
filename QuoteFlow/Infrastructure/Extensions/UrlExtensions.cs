@@ -155,6 +155,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return string.Format("/manufacturer/{0}/{1}/edit", id, manufacturerName.UrlFriendly());
         }
 
+        public static string ManufacturerLogo(this UrlHelper url, int id, string manufacturerName)
+        {
+            return string.Format("/manufacturer/{0}/{1}/logo", id, manufacturerName.UrlFriendly());
+        }
+
         #endregion
 
         #region Quotes

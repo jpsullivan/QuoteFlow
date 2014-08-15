@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Routing;
 using QuoteFlow.Infrastructure.Extensions;
+using QuoteFlow.Infrastructure.Handlers;
 
 namespace QuoteFlow.Infrastructure.Attributes
 {
@@ -40,12 +41,13 @@ namespace QuoteFlow.Infrastructure.Attributes
                                    where m.IsDefined(typeof(RouteAttribute), false)
                                    select m;
 
-            Debug.WriteLine("MapDecoratedRoutes - found {0} methods decorated with RouteAttribute", decoratedMethods.Count());
+            var methodInfos = decoratedMethods as IList<MethodInfo> ?? decoratedMethods.ToList();
+            Debug.WriteLine("MapDecoratedRoutes - found {0} methods decorated with RouteAttribute", methodInfos.Count().ToString());
 
             var methodsToRegister = new SortedDictionary<RouteAttribute, MethodInfo>(); // sort urls alphabetically via RouteAttribute's IComparable implementation
 
             // first, collect all the methods decorated with our RouteAttribute
-            foreach (var method in decoratedMethods)
+            foreach (var method in methodInfos)
             {
                 foreach (var attr in method.GetCustomAttributes(typeof(RouteAttribute), false))
                 {
@@ -70,7 +72,7 @@ namespace QuoteFlow.Infrastructure.Attributes
 
                 Debug.WriteLine("MapDecoratedRoutes - mapping url '{0}' to {1}.{2}.{3}", attr.Url, controllerNamespace, controllerName, action);
 
-                var route = new Route(attr.Url, new MvcRouteHandler())
+                var route = new Route(attr.Url, attr.Handler)
                 {
                     Defaults = new RouteValueDictionary(new { controller = controllerName, action })
                 };
@@ -101,31 +103,50 @@ namespace QuoteFlow.Infrastructure.Attributes
 
 
         public RouteAttribute(string url)
-            : this(url, "", null, RoutePriority.Default)
+            : this(url, "", null, RoutePriority.Default, RouteHandler.Mvc)
         {
         }
 
         public RouteAttribute(string url, HttpVerbs verbs)
-            : this(url, "", verbs, RoutePriority.Default)
+            : this(url, "", verbs, RoutePriority.Default, RouteHandler.Mvc)
         {
         }
 
         public RouteAttribute(string url, RoutePriority priority)
-            : this(url, "", null, priority)
+            : this(url, "", null, priority, RouteHandler.Mvc)
         {
         }
 
         public RouteAttribute(string url, HttpVerbs verbs, RoutePriority priority)
-            : this(url, "", verbs, priority)
+            : this(url, "", verbs, priority, RouteHandler.Mvc)
         {
         }
 
-        private RouteAttribute(string url, string name, HttpVerbs? verbs, RoutePriority priority)
+        public RouteAttribute(string url, HttpVerbs verbs, RoutePriority priority, RouteHandler handler)
+            : this(url, "", verbs, priority, handler)
+        {
+            
+        }
+
+        private RouteAttribute(string url, string name, HttpVerbs? verbs, RoutePriority priority, RouteHandler handler)
         {
             Url = url.ToLower();
             Name = name;
             AcceptVerbs = verbs;
             Priority = priority;
+
+            switch (handler)
+            {
+                case RouteHandler.Mvc:
+                    Handler = new MvcRouteHandler();
+                    break;
+                case RouteHandler.ManufacturerLogo:
+                    Handler = new ManufacturerLogoRouteHandler();
+                    break;
+                default:
+                    Handler = new MvcRouteHandler();
+                    break;
+            }
         }
 
 
@@ -157,6 +178,11 @@ namespace QuoteFlow.Infrastructure.Attributes
         /// this route is added to the collection, making it match before other registered routes for a given url.
         /// </summary>
         public RoutePriority Priority { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IRouteHandler Handler { get; set; }
 
         /// <summary>
         /// Gets any optional parameters contained by this Url. Optional parameters are specified with a ?, e.g. "users/{id}/{name?}".
@@ -263,5 +289,11 @@ namespace QuoteFlow.Infrastructure.Attributes
         Low = 0,
         Default = 1,
         High = 2
+    }
+
+    public enum RouteHandler
+    {
+        Mvc,
+        ManufacturerLogo
     }
 }

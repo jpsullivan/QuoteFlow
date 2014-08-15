@@ -10,14 +10,15 @@ namespace QuoteFlow.Services.Interfaces
         /// </summary>
         /// <param name="manufacturerId"></param>
         /// <returns></returns>
-        ManufacturerLogo Get(int manufacturerId);
+        ManufacturerLogo GetByManufacturerId(int manufacturerId);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="manufacturerId"></param>
         /// <param name="token"></param>
-        void Insert(int manufacturerId, Guid token);
+        /// <param name="url"></param>
+        void CreateManufacturerLogo(int manufacturerId, Guid token, string url);
 
         /// <summary>
         /// 

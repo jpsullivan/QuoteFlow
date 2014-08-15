@@ -9,6 +9,19 @@ namespace QuoteFlow.Services
 {
     public class ManufacturerService : IManufacturerService
     {
+        #region IoC
+
+        public IManufacturerLogoService ManufacturerLogoService { get; protected set; }
+
+        public ManufacturerService() { }
+
+        public ManufacturerService(IManufacturerLogoService manufacturerLogoService)
+        {
+            ManufacturerLogoService = manufacturerLogoService;
+        }
+
+        #endregion
+
         /// <summary>
         /// Fetches a <see cref="Manufacturer"/> by its identifier.
         /// </summary>
@@ -16,7 +29,15 @@ namespace QuoteFlow.Services
         /// <returns></returns>
         public Manufacturer GetManufacturer(int manufacturerId)
         {
-            return Current.DB.Manufacturers.Get(manufacturerId);
+            if (manufacturerId == 0)
+            {
+                throw new ArgumentException("Manufacturer ID must be greater than zero.", "manufacturerId");
+            }
+
+            var manufacturer = Current.DB.Manufacturers.Get(manufacturerId);
+            manufacturer.Logo = ManufacturerLogoService.GetByManufacturerId(manufacturerId);
+            
+            return manufacturer;
         }
 
         /// <summary>
@@ -27,7 +48,14 @@ namespace QuoteFlow.Services
         public Manufacturer GetManufacturer(string manufacturerName)
         {
             const string sql = "select * from Manufacturers where Name = @manufacturerName";
-            return Current.DB.Query<Manufacturer>(sql, new { manufacturerName }).FirstOrDefault();
+            var manufacturer = Current.DB.Query<Manufacturer>(sql, new { manufacturerName }).FirstOrDefault();
+
+            if (manufacturer != null)
+            {
+                manufacturer.Logo = ManufacturerLogoService.GetByManufacturerId(manufacturer.Id);
+            }
+            
+            return manufacturer;
         }
 
         /// <summary>
@@ -60,7 +88,14 @@ namespace QuoteFlow.Services
         public IEnumerable<Manufacturer> GetManufacturers(int organizationId)
         {
             const string sql = "select * from Manufacturers where OrganizationId = @organizationId";
-            return Current.DB.Query<Manufacturer>(sql, new {organizationId});
+
+            var manufacturers = Current.DB.Query<Manufacturer>(sql, new {organizationId}).ToList();
+            foreach (var m in manufacturers)
+            {
+                m.Logo = ManufacturerLogoService.GetByManufacturerId(m.Id);
+            }
+
+            return manufacturers;
         }
 
         /// <summary>

@@ -370,6 +370,7 @@
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\UrlExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\UserExtensions.cs" />
+    <Compile Include="Infrastructure\Handlers\ManufacturerLogoRouteHandler.cs" />
     <Compile Include="Infrastructure\Helpers\DisposableAction.cs" />
     <Compile Include="Infrastructure\Attributes\RouteAttribute.cs" />
     <Compile Include="Infrastructure\Helpers\EnumHelpers.cs" />

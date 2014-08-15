@@ -14,7 +14,6 @@ using Ninject.Modules;
 using QuoteFlow.Auditing;
 using QuoteFlow.Configuration;
 using QuoteFlow.Infrastructure;
-using QuoteFlow.Models;
 using QuoteFlow.Services;
 using QuoteFlow.Services.Interfaces;
 
@@ -82,6 +81,10 @@ namespace QuoteFlow
 
             Bind<IManufacturerService>()
                 .To<ManufacturerService>()
+                .InRequestScope();
+
+            Bind<IManufacturerLogoService>()
+                .To<ManufacturerLogoService>()
                 .InRequestScope();
 
             Bind<IOrganizationService>()

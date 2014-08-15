@@ -73,11 +73,11 @@ namespace QuoteFlow.Services
             switch (type)
             {
                 case UploadType.AssetImage:
-                    return "asset_images";
+                    return "asset-images";
                 case UploadType.Catalog:
                     return "catalogs";
                 case UploadType.ManufacturerLogo:
-                    return "manufacturer_logos";
+                    return "manufacturer-logos";
                 default:
                     return Constants.UploadsFolderName;
             }

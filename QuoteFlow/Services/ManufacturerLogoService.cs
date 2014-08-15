@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using QuoteFlow.Models;
 using QuoteFlow.Services.Interfaces;
 
@@ -10,13 +8,20 @@ namespace QuoteFlow.Services
     public class ManufacturerLogoService : IManufacturerLogoService
     {
         /// <summary>
-        /// 
+        /// Gets a single <see cref="ManufacturerLogo"/> based on the supplied 
+        /// manufacturer identifier.
         /// </summary>
         /// <param name="manufacturerId"></param>
         /// <returns></returns>
-        public ManufacturerLogo Get(int manufacturerId)
+        public ManufacturerLogo GetByManufacturerId(int manufacturerId)
         {
-            throw new NotImplementedException();
+            if (manufacturerId == 0)
+            {
+                throw new ArgumentException("Manufacturer ID must be greater than zero", "manufacturerId");
+            }
+
+            const string sql = "select * from ManufacturerLogos where manufacturerId = @manufacturerId";
+            return Current.DB.Query<ManufacturerLogo>(sql, new {manufacturerId}).FirstOrDefault();
         }
 
         /// <summary>
@@ -24,18 +29,33 @@ namespace QuoteFlow.Services
         /// </summary>
         /// <param name="manufacturerId"></param>
         /// <param name="token"></param>
-        public void Insert(int manufacturerId, Guid token)
+        /// <param name="url"></param>
+        public void CreateManufacturerLogo(int manufacturerId, Guid token, string url)
         {
-            throw new NotImplementedException();
+            var logo = new ManufacturerLogo
+            {
+                ManufacturerId = manufacturerId,
+                Token = token,
+                Url = url,
+                CreationDate = DateTime.UtcNow,
+                LastUpdated = DateTime.UtcNow
+            };
+
+            var insert = Current.DB.ManufacturerLogos.Insert(logo);
         }
 
         /// <summary>
-        /// 
+        /// Deletes a <see cref="ManufacturerLogo"/> based on its supplied identifier.
         /// </summary>
         /// <param name="manufacturerId"></param>
         public void Delete(int manufacturerId)
         {
-            throw new NotImplementedException();
+            if (manufacturerId == 0)
+            {
+                throw new ArgumentException("Manufacturer ID must be greater than zero", "manufacturerId");
+            }
+
+            Current.DB.ManufacturerLogos.Delete(manufacturerId);
         }
     }
 }
