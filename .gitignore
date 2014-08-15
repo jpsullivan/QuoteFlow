@@ -150,3 +150,7 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
+
+# Uploads
+QuoteFlow/App_Data/Files/manufacturer-logos
+QuoteFlow/App_Data/Files/uploads
