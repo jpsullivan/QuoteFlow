@@ -33,12 +33,15 @@ module QuoteFlow {
 
     export module Backbone { }
     export var Catalog = {}
-    export var Collection = {}
+    export module Collection {
+        export var Asset = {};
+    }
     export module Debug {
         export var Views = [];
         export var Models = [];
         export var Collections = [];
     }
+    export var Components = {};
     export var Interactive = {};
     export module Model {
         export var Asset = {};

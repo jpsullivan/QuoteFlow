@@ -15,6 +15,12 @@ namespace QuoteFlow.Configuration
 
         public bool HasWorker { get; set; }
 
+        /// <summary>
+        /// Gets the location in which the Lucene Index is stored
+        /// </summary>
+        [DefaultValue(LuceneIndexLocation.AppData)]
+        public LuceneIndexLocation LuceneIndexLocation { get; set; }
+
         [DefaultValue("Development")]
         public string Environment { get; set; }
 

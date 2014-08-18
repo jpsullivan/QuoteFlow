@@ -38,6 +38,7 @@ namespace QuoteFlow
                 "~/Content/js/lib/handlebars.min.js",
                 "~/Content/js/lib/underscore.min.js",
                 "~/Content/js/lib/backbone.min.js",
+                "~/Content/js/lib/backbone-brace.min.js",
                 "~/Content/js/lib/aui/aui-all.js",
                 "~/Content/js/lib/moment.min.js",
                 "~/Content/js/lib/md5.js");

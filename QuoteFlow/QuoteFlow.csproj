@@ -109,6 +109,9 @@
     <Reference Include="GravatarHelper">
       <HintPath>..\packages\GravatarHelper.3.2.3\lib\Net40\GravatarHelper.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="JavaScriptEngineSwitcher.Core">
       <HintPath>..\packages\JavaScriptEngineSwitcher.Core.1.1.3\lib\net40\JavaScriptEngineSwitcher.Core.dll</HintPath>
       <Private>True</Private>
@@ -118,6 +121,39 @@
     </Reference>
     <Reference Include="Jil">
       <HintPath>..\packages\Jil.1.2.0\lib\net45\Jil.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Analyzers">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Analyzers.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Core">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.FastVectorHighlighter">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.FastVectorHighlighter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Highlighter">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Highlighter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Memory">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Queries">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Queries.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Regex">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Regex.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.SimpleFacetedSearch">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SimpleFacetedSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Snowball">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Snowball.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.SpellChecker">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SpellChecker.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownSharp">
       <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
@@ -305,6 +341,7 @@
     <Compile Include="Configuration\AppConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\IAppConfiguration.cs" />
+    <Compile Include="Configuration\LuceneIndexLocation.cs" />
     <Compile Include="Configuration\MailAddressConverter.cs" />
     <Compile Include="Configuration\SmtpUri.cs" />
     <Compile Include="Configuration\StorageType.cs" />
@@ -382,6 +419,8 @@
     <Compile Include="Infrastructure\HttpStatusCodeWithBodyResult.cs" />
     <Compile Include="Infrastructure\IoC\NinjectDependencyResolver.cs" />
     <Compile Include="Infrastructure\IoC\NinjectWebApiDependencyResolver.cs" />
+    <Compile Include="Infrastructure\Lucene\AnalysisHelper.cs" />
+    <Compile Include="Infrastructure\Lucene\LuceneCommon.cs" />
     <Compile Include="Infrastructure\Optimization\Bundler.cs" />
     <Compile Include="Infrastructure\QuoteFlowControllerFactory.cs" />
     <Compile Include="Infrastructure\RouteName.cs" />
@@ -443,6 +482,9 @@
     <Compile Include="Models\OptionalImportField.cs" />
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\Search\SearchFilter.cs" />
+    <Compile Include="Models\Search\SearchResult.cs" />
+    <Compile Include="Models\Search\SortOrder.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
     <Compile Include="Models\ViewModels\Assets\AssetVarEditRequest.cs" />
     <Compile Include="Models\ViewModels\Assets\EditAssetRequest.cs" />
@@ -515,6 +557,7 @@
     <Compile Include="Services\Interfaces\IMessageService.cs" />
     <Compile Include="Services\Interfaces\IOrganizationService.cs" />
     <Compile Include="Services\Interfaces\IQuoteService.cs" />
+    <Compile Include="Services\Interfaces\ISearchService.cs" />
     <Compile Include="Services\Interfaces\ISimpleCloudBlob.cs" />
     <Compile Include="Services\Interfaces\IUploadFileService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
@@ -617,15 +660,19 @@
     <Content Include="Content\images\get-started\birds-eye-view_2x.png" />
     <Content Include="Content\images\get-started\get-started_2x.png" />
     <Content Include="Content\images\quoteflow_logo.png" />
+    <Content Include="Content\js\app\collections\asset\searcher.js" />
     <Content Include="Content\js\app\collections\asset_vars.js" />
+    <Content Include="Content\js\app\components\query.js" />
     <Content Include="Content\js\app\components\routes.js" />
     <Content Include="Content\js\app\components\utilities.js" />
     <Content Include="Content\js\app\extensions\string_extensions.js" />
     <Content Include="Content\js\app\helpers\application_helpers.js" />
     <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\components\jqui-widget_sidebar.js" />
+    <Content Include="Content\js\app\models\asset\criteria.js" />
     <Content Include="Content\js\app\models\asset\details.js" />
     <Content Include="Content\js\app\models\asset\navigator.js" />
+    <Content Include="Content\js\app\models\asset\searcher.js" />
     <Content Include="Content\js\app\models\asset_var.js" />
     <Content Include="Content\js\app\models\asset_var_value.js" />
     <Content Include="Content\js\app\ui\asset\asset_navigator.js" />
@@ -634,6 +681,10 @@
     <Content Include="Content\js\app\ui\asset\edit\asset_var_edit_row.js" />
     <Content Include="Content\js\app\ui\asset\navigator\asset_details.js" />
     <Content Include="Content\js\app\ui\asset\navigator\asset_list.js" />
+    <Content Include="Content\js\app\models\asset\query.js" />
+    <Content Include="Content\js\app\ui\asset\navigator\criteria.js" />
+    <Content Include="Content\js\app\ui\asset\navigator\primary_criteria_container.js" />
+    <Content Include="Content\js\app\ui\asset\navigator\text_field.js" />
     <Content Include="Content\js\app\ui\asset\navigator\toolbar.js" />
     <Content Include="Content\js\app\ui\asset\show_asset.js" />
     <Content Include="Content\js\app\ui\catalog\import_asset_var_row.js" />
@@ -648,6 +699,7 @@
     <Content Include="Content\js\lib\aui\aui-ie.js" />
     <Content Include="Content\js\lib\aui\aui-soy.js" />
     <Content Include="Content\js\lib\aui\aui.js" />
+    <Content Include="Content\js\lib\backbone-brace.min.js" />
     <Content Include="Content\js\lib\backbone.min.js" />
     <Content Include="Content\js\lib\handlebars.min.js" />
     <Content Include="Content\js\lib\json2.min.js" />

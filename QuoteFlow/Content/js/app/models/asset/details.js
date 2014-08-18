@@ -19,6 +19,6 @@
             Creator: {},
             Manufacturer: {},
             Comments: {}
-        }
+        };
     }
 })

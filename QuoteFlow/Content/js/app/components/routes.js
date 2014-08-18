@@ -32,5 +32,12 @@
         var manufacturerName = routeValues.hash.name;
 
         return '{0}manufacturer/{1}/{2}/edit'.f(QuoteFlow.RootUrl, manufacturerId, QuoteFlow.Utilities.urlFriendly(manufacturerName));
+    },
+
+    manufacturerLogo: function(routeValues) {
+        var manufacturerId = routeValues.hash.id;
+        var manufacturerName = routeValues.hash.name;
+
+        return '{0}manufacturer/{1}/{2}/logo'.f(QuoteFlow.RootUrl, manufacturerId, QuoteFlow.Utilities.urlFriendly(manufacturerName));
     }
 }

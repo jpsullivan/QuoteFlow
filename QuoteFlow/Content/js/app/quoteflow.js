@@ -48,13 +48,17 @@ var QuoteFlow;
     });
 
     QuoteFlow.Catalog = {};
-    QuoteFlow.Collection = {};
+    (function (Collection) {
+        Collection.Asset = {};
+    })(QuoteFlow.Collection || (QuoteFlow.Collection = {}));
+    var Collection = QuoteFlow.Collection;
     (function (Debug) {
         Debug.Views = [];
         Debug.Models = [];
         Debug.Collections = [];
     })(QuoteFlow.Debug || (QuoteFlow.Debug = {}));
     var Debug = QuoteFlow.Debug;
+    QuoteFlow.Components = {};
     QuoteFlow.Interactive = {};
     (function (Model) {
         Model.Asset = {};

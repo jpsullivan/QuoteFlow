@@ -2,7 +2,7 @@
 @using QuoteFlow.Infrastructure.Helpers
 @model QuoteFlow.Models.ViewModels.Assets.InteractiveAssetNavigatorViewModel
 
-<form class="navigator-search query-component generic-styled">
+<form class="navigator-search query-component">
     <div class="aui-group">
         <div class="aui-item search-wrap">
             <div class="search-container" data-mode="basic">
@@ -10,7 +10,7 @@
                     <div class="search-criteria-container">
                         <div class="search-criteria">
                             <ul class="criteria-list">
-                                <li data-id="project" original-title="">
+                                <li data-id="catalog" class="catalog">
                                     <button type="button" data-id="catalog" class="criteria-selector aui-button aui-button-subtle aui-dropdown2-trigger" aria-disabled="true">
                                         <div class="criteria-wrap">
                                             <div class="searcherValue">
@@ -22,12 +22,12 @@
                                         <span class="aui-icon aui-icon-small aui-iconfont-remove"></span>
                                     </a>
                                 </li>
-                                <li data-id="manufacturers">
+                                <li data-id="manufacturer" class="manufacturer">
                                     <button type="button" data-id="manufacturers" class="criteria-selector aui-button aui-button-subtle aui-dropdown2-trigger" aria-owns="manufacturers-dropdown">
                                         <div class="criteria-wrap"><span class="fieldLabel">Manufacturer:</span> <span class="selected-criteria">All</span></div>
                                     </button>
                                 </li>
-                                <li data-id="creator">
+                                <li data-id="creator" class="creator">
                                     <button type="button" data-id="creator" class="criteria-selector aui-button aui-button-subtle aui-dropdown2-trigger" aria-owns="creators-dropdown">
                                         <div class="criteria-wrap"><span class="fieldLabel">Creator:</span> All</div>
                                     </button>
@@ -52,7 +52,8 @@
                                     <button class="aui-button" type="button">Save as</button>
                                 </li>
                             </ul>
-                        </div><div class="search-criteria-extended"><ul class="criteria-list"></ul></div>
+                        </div>
+                        <div class="search-criteria-extended"><ul class="criteria-list"></ul></div>
                     </div>
                 </div>
             </div>

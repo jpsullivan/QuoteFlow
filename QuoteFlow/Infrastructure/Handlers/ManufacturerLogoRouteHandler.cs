@@ -22,6 +22,11 @@ namespace QuoteFlow.Infrastructure.Handlers
             }
             else
             {
+                if (manufacturerLogo == null)
+                {
+                    return null;
+                }
+
                 requestContext.HttpContext.Response.Clear();
                 requestContext.HttpContext.Response.ContentType = GetContentType(manufacturerLogo.Url);
 
@@ -32,6 +37,7 @@ namespace QuoteFlow.Infrastructure.Handlers
                 requestContext.HttpContext.Response.End();
 
             }
+
             return null;
         }
 

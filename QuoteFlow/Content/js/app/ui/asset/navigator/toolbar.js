@@ -13,6 +13,12 @@
     initialize: function (options) {
         _.bindAll(this, 'manufacturerClickHandler');
 
+        var query = QuoteFlow.Components.Query.create({});
+        this.searcherCollection = new QuoteFlow.Collection.Asset.Searcher([], {
+            fixedLozenges: query.primaryClauses,
+            queryStateModel: {},
+        });
+
         if (_.isUndefined(this.model)) {
             // initialize an empty model anyway
             this.model = new QuoteFlow.Model.Asset.Navigator();
@@ -20,6 +26,9 @@
 
         this.initManufacturerDropdownClickHandlers();
         this.initManufacturersFilter();
+
+        this.primaryCriteriaContainerView = new QuoteFlow.UI.Asset.Navigator.PrimaryCriteriaContainer({ collection: this.searcherCollection });
+        this.textFieldView = new QuoteFlow.UI.Asset.Navigator.TextField({ collection: this.searcherCollection });
 
         this.listenTo(this.model, 'change:selectedManufacturers', this.updateManufacturerButtonTitle);
     },

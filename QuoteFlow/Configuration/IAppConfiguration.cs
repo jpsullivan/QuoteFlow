@@ -16,6 +16,11 @@ namespace QuoteFlow.Configuration
         bool HasWorker { get; set; }
 
         /// <summary>
+        /// Gets the location in which the Lucene Index is stored
+        /// </summary>
+        LuceneIndexLocation LuceneIndexLocation { get; set; }
+
+        /// <summary>
         /// Gets the name of the environment in which the gallery is deployed
         /// </summary>
         string Environment { get; set; }

@@ -3,7 +3,7 @@
     defaults: function () {
         return {
             selectedManufacturers: []
-        }
+        };
     },
 
     addManufacturer: function (name) {
