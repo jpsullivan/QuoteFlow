@@ -4,7 +4,6 @@
 //    contentTemplate: JIRA.Templates.IssueNavQueryBasic.criteriaButtonContent,
     events: {
         click: "hideTipsy",
-        "click .criteria-selector": "_onClickCriteriaSelector",
         "click .remove-filter": "_onClickRemoveCriteria",
         "mousedown .remove-filter": "_preventFocusWhileDisabled",
         keydown: "_onKeydown"
@@ -16,23 +15,6 @@
         this.searcherCollection.onCollectionChanged(this.update, this._onKeydown);
         this.searcherCollection.onInteractiveChanged(this._handleInteractiveChanged, this);
         this.searcherCollection.bind("change:isSelected", this._onCriteriaSelectionChanged, this);
-//        JIRA.Issues.SearcherDialog.instance.onHide(_.bind(this._addTooltip, this));
-//        JIRA.Issues.SearcherDialog.instance.onShow(_.bind(this._onCriteriaDialogShow, this));
-    },
-
-//    render: function () {
-//        this.$el.html(this.template({ id: this.model.getId() }));
-//        this.$el.attr("data-id", this.model.getId());
-//        if (this.extended) {
-//            this.$el.addClass("extended-searcher");
-//        }
-//        this.update();
-//        this.prepareForDisplay();
-//    },
-
-    prepareForDisplay: function () {
-        this._addTooltip();
-        this.delegateEvents();
     },
 
     hideTipsy: function () {
@@ -115,13 +97,6 @@
 
     _handleInteractiveChanged: function (a) {
         this.$("button, .remove-filter").attr("aria-disabled", (a) ? null : "true");
-    },
-
-    _onClickCriteriaSelector: function (a) {
-        if (this.searcherCollection.isInteractive() && this._getSearcher() && this._isValidSearcher()) {
-//            JIRA.Issues.SearcherDialog.instance.toggle(this._getSearcher());
-        }
-        a.preventDefault();
     },
 
     _onClickRemoveCriteria: function (a) {
