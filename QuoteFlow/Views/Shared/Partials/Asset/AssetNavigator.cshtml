@@ -23,7 +23,7 @@
                                     </a>
                                 </li>
                                 <li data-id="manufacturer" class="manufacturer">
-                                    <button type="button" data-id="manufacturers" class="criteria-selector aui-button aui-button-subtle aui-dropdown2-trigger" aria-owns="manufacturers-dropdown">
+                                    <button type="button" data-id="manufacturers" class="criteria-selector aui-button aui-button-subtle aui-dropdown2-trigger" aria-owns="manufacturer-dropdown">
                                         <div class="criteria-wrap"><span class="fieldLabel">Manufacturer:</span> <span class="selected-criteria">All</span></div>
                                     </button>
                                 </li>
@@ -130,7 +130,7 @@
                     <div class="aui-list-scroll" tabindex="-1">
                         <h5>All Manufacturers</h5>
                         <ul class="aui-list-section">
-                            @foreach (var manufacturer in Model.Manufacturers)
+                            @foreach (var manufacturer in Model.Manufacturers.OrderBy(m => m.Name))
                             {
                                 <li class="check-list-item">
                                     <label class="item-label" title="@manufacturer.Name">
@@ -159,7 +159,7 @@
                 <div class="aui-list">
                     <div class="aui-list-scroll" tabindex="-1">
                         <ul class="aui-list-section">
-                            @foreach (var user in Model.Creators)
+                            @foreach (var user in Model.Creators.OrderBy(u => u.Username))
                             {
                                 <li class="check-list-item">
                                     <label class="item-label" title="@user.Username">
