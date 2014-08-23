@@ -1,7 +1,7 @@
 ﻿@model QuoteFlow.Models.CatalogImport.CatalogImportSummaryRecord
 <tr>
-    <td>@(Model.RowId + 1)</td>
-    <td>
+    <td class="row-id">@(Model.RowId + 1)</td>
+    <td class="import-result-icon">
         <span class="aui-icon aui-icon-small aui-iconfont-devtools-task-cancelled"></span>
     </td>
     <td>
@@ -9,5 +9,5 @@
         <br />
         '@Model.Reason'
     </td>
-    <td><a href="#">Asset Link</a></td>
+    <td class="asset-link"><a href="#">Asset Link</a></td>
 </tr>

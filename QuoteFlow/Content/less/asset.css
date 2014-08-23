@@ -72,20 +72,6 @@
 .asset-container .asset-header .asset-header-content > .command-bar .toolbar-group {
   margin-bottom: 5px;
 }
-.asset-container #stalker .asset-header-content .aui-avatar-project img,
-.asset-container .asset-header .asset-header-content .aui-avatar-project img {
-  background-color: transparent !important;
-  border: 0 !important;
-  border-radius: 3px !important;
-  box-shadow: none !important;
-}
-.asset-container #stalker .asset-header-content .aui-avatar-project:before,
-.asset-container .asset-header .asset-header-content .aui-avatar-project:before {
-  background-color: transparent !important;
-  border: 0 !important;
-  border-radius: 3px !important;
-  box-shadow: none !important;
-}
 .asset-container #stalker .asset-header-content .ops-cont,
 .asset-container .asset-header .asset-header-content .ops-cont {
   margin: 0;

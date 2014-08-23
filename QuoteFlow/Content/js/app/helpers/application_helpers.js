@@ -115,3 +115,25 @@ Handlebars.registerHelper('select', function (value, options) {
 Handlebars.registerHelper('routeUrl', function(routeName, routeValues) {
     return QuoteFlow.Routes[routeName](routeValues);
 });
+
+
+var DateFormats = {
+    "short": "DD MMMM - YYYY",
+    "long": "dddd DD.MM.YYYY HH:mm",
+    "comment": "DD/MMM/YY hh:mm A",
+    "relative": ""
+};
+
+Handlebars.registerHelper("formatDate", function(datetime, format) {
+    if (moment) {
+        if (format === "relative") {
+            return moment(datetime).fromNow();
+        }
+
+        f = DateFormats[format];
+        return moment(datetime).format(f);
+    }
+    else {
+        return datetime;
+    }
+});

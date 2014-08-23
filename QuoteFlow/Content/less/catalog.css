@@ -52,4 +52,16 @@ table.catalog-assets td.pricing table td.markup,
 table.catalog-assets td.pricing table td.sell {
   text-align: right;
 }
+table.catalog-import-summary td.row-id {
+  white-space: nowrap;
+  width: 45px;
+}
+table.catalog-import-summary td.import-result-icon {
+  white-space: nowrap;
+  width: 18px;
+}
+table.catalog-import-summary td.asset-link {
+  white-space: nowrap;
+  width: 85px;
+}
 /*# sourceMappingURL=catalog.css.map */

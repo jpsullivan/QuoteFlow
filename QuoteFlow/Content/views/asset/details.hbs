@@ -152,7 +152,7 @@
                                                         </span>
                                                     </span> {{ Creator.FullName }}
                                                 </a>
-                                                added a comment - {{ CreatedUtc }}
+                                                added a comment - {{formatDate CreatedUtc "comment"}}
                                             </div>
                                         </div>
                                         <div class="action-body">
@@ -225,13 +225,13 @@
                                     <dl>
                                         <dt>Created:</dt>
                                         <dd>
-                                            <span>{{ CreationDate }}</span>
+                                            <span>{{formatDate CreationDate "relative"}}</span>
                                         </dd>
                                     </dl>
                                     <dl>
                                         <dt>Updated:</dt>
                                         <dd>
-                                            <span>{{ LastUpdated }}</span>
+                                            <span>{{formatDate LastUpdated "relative"}}</span>
                                         </dd>
                                     </dl>
                                 </li>

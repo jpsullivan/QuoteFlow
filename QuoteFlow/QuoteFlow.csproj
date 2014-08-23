@@ -713,6 +713,9 @@
     <Content Include="Content\less\asset.css">
       <DependentUpon>asset.less</DependentUpon>
     </Content>
+    <Content Include="Content\less\asset.min.css">
+      <DependentUpon>asset.css</DependentUpon>
+    </Content>
     <Content Include="Content\less\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
     </Content>
@@ -721,6 +724,9 @@
     </Content>
     <Content Include="Content\less\catalog.css">
       <DependentUpon>catalog.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\catalog.min.css">
+      <DependentUpon>catalog.css</DependentUpon>
     </Content>
     <Content Include="Content\less\forms.min.css">
       <DependentUpon>forms.css</DependentUpon>

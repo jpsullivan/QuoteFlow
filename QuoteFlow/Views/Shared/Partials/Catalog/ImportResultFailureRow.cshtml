@@ -1,9 +1,9 @@
 ﻿@model QuoteFlow.Models.CatalogImport.CatalogImportSummaryRecord
 <tr>
-    <td>@(Model.RowId + 1)</td>
-    <td>
+    <td class="row-id">@(Model.RowId + 1)</td>
+    <td class="import-result-icon">
         <span class="aui-icon aui-icon-small aui-iconfont-error" style="color: #C52C19"></span>
     </td>
     <td>This row could not be inserted for the following reason: '@Model.Reason'</td>
-    <td></td>
+    <td class="asset-link"></td>
 </tr>

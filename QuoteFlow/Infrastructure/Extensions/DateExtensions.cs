@@ -77,9 +77,9 @@ namespace QuoteFlow.Infrastructure.Extensions
             }
             if (days <= 330)
             {
-                return dt.ToString("MMM %d 'at' %H:mmm");
+                return dt.ToString("MMM %d 'at' %H:mmm tt");
             }
-            return dt.ToString(@"MMM %d \'yy 'at' %H:mmm");
+            return dt.ToString(@"MMM %d \'yy 'at' %H:mmm tt");
         }
 
         private static string ToRelativeTimeFuture(DateTime dt, DateTime utcNow)
