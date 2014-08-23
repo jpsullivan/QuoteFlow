@@ -120,8 +120,7 @@ Handlebars.registerHelper('routeUrl', function(routeName, routeValues) {
 var DateFormats = {
     "short": "DD MMMM - YYYY",
     "long": "dddd DD.MM.YYYY HH:mm",
-    "comment": "DD/MMM/YY hh:mm A",
-    "relative": ""
+    "comment": "DD/MMM/YY hh:mm A"
 };
 
 Handlebars.registerHelper("formatDate", function(datetime, format) {
