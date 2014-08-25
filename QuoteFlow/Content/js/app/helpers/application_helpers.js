@@ -129,7 +129,7 @@ Handlebars.registerHelper("formatDate", function(datetime, format) {
             return moment(datetime).fromNow();
         }
 
-        f = DateFormats[format];
+        var f = DateFormats[format];
         return moment(datetime).format(f);
     }
     else {

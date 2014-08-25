@@ -4,6 +4,7 @@
 //    contentTemplate: JIRA.Templates.IssueNavQueryBasic.criteriaButtonContent,
     events: {
         click: "hideTipsy",
+        "click .criteria-selector": "_onClickCriteriaSelector",
         "click .remove-filter": "_onClickRemoveCriteria",
         "mousedown .remove-filter": "_preventFocusWhileDisabled",
         keydown: "_onKeydown"
