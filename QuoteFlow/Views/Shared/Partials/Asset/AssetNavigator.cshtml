@@ -98,7 +98,6 @@
                         <div class="pagination-container aui-item">
                             <div class="pagination">
                                 @UIHelpers.PageNumber(Model.PaginationUrl, Model.Assets, "aui-nav aui-nav-pagination")
-                                
                             </div>
                         </div>
                     </div>
@@ -134,7 +133,7 @@
                             {
                                 <li class="check-list-item">
                                     <label class="item-label" title="@manufacturer.Name">
-                                        <input type="checkbox" tabindex="-1" value="1"><img src="" height="16" width="16" align="absmiddle">@manufacturer.Name
+                                        <input type="checkbox" tabindex="-1" value="@manufacturer.Id.ToString()" name="manufacturer"><img src="" height="16" width="16" align="absmiddle">@manufacturer.Name
                                     </label>
                                 </li>
                             }

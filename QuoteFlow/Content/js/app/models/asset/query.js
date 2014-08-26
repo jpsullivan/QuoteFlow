@@ -1,166 +1,61 @@
-﻿QuoteFlow.Model.Asset.Query = Brace.Evented.extend({
-    namedEvents: ["jqlChanged", "jqlTooComplex", "jqlError", "jqlSuccess", "searchRequested", "queryTooComplexSwitchToAdvanced", "changedPreferredSearchMode", "basicModeCriteriaCountWhenSearching", "verticalResize", "initialized"],
+﻿QuoteFlow.Model.Asset.QueryState = Brace.Model.extend({
+    BASIC_SEARCH: "basic",
+    ADVANCED_SEARCH: "advanced",
 
-    initialize: function (options) {
-        this.queryStateModel = options.queryStateModel;
-        this.queryStateModel.on("change:preferredSearchMode", _.bind(function () {
-            this.triggerChangedPreferredSearchMode(this.queryStateModel.getPreferredSearchMode());
-        }, this));
+    namedAttributes: [
+        "style",
+        "searchMode",
+        "preferredSearchMode",
+        "jql",
+        "without",
+        "layoutSwitcher",
+        "autocompleteEnabled",
+        "advancedAutoUpdate",
+        "basicAutoUpdate",
+        "basicOrderBy"
+    ],
 
-        JIRA.Issues.SearcherDialog.initialize({ queryStateModel: this.queryStateModel });
-
-        this._jqlQueryModule = new JIRA.Issues.JqlQueryModule({ queryStateModel: this.queryStateModel }).onSearchRequested(this.handleAdvancedSearchRequested, this).onVerticalResize(this.triggerVerticalResize, this);
-        this._errors = {};
-        this._errors[this.queryStateModel.BASIC_SEARCH] = [];
-        this._errors[this.queryStateModel.ADVANCED_SEARCH] = [];
-        this.queryStateModel.on("change:searchMode", this.showSearchErrors, this);
-        this._basicQueryModule = new JIRA.Issues.BasicQueryModule({
-            queryStateModel: this.queryStateModel,
-            primaryClauses: options.primaryClauses,
-            initialSearcherCollectionState: options.searchers
-        })
-        .onSearchRequested(this.clearSearchErrors, this)
-        .onJqlTooComplex(this.handleJqlTooComplex, this)
-        .onSearchRequested(this.handleSearchRequested, this)
-        .onVerticalResize(this.triggerVerticalResize, this)
-        .onBasicModeCriteriaCountWhenSearching(this.triggerBasicModeCriteriaCountWhenSearching, this);
+    defaults: {
+        searchMode: "basic",
+        preferredSearchMode: "basic"
     },
 
-    refreshLayout: function () {
-        this._jqlQueryModule.setQuery();
+    switchToSearchMode: function (a) {
+        this.setSearchMode(a);
     },
 
-    handleAdvancedSearchRequested: function (a) {
-        this.handleSearchRequested(a);
-        this._basicQueryModule.queryChanged();
+    switchPreferredSearchMode: function (a) {
+        this.switchToSearchMode(a);
+        this.setPreferredSearchMode(a);
+        this._savePreferredSearchMode();
     },
 
-    handleSearchRequested: function (a) {
-        this.queryStateModel.setJql(a);
-        this.clearSearchErrors();
+    switchToPreferredSearchMode: function () {
+        this.switchToSearchMode(this.getPreferredSearchMode());
     },
 
-    handleJqlTooComplex: function (a) {
-        if (this.getSearchMode() !== this.queryStateModel.ADVANCED_SEARCH) {
-            this.triggerQueryTooComplexSwitchToAdvanced();
-        }
-        this.setSearchMode(this.queryStateModel.ADVANCED_SEARCH);
-        this.triggerJqlTooComplex(a);
-        if (this._queryView) {
-            this._queryView.switcherViewModel.disableSwitching();
-        }
+    hasSearchButton: function () {
+        return this.getStyle() !== "field";
     },
 
-    getJql: function () {
-        return this.queryStateModel.getJql();
+    hasSubtleMoreCriteria: function () {
+        return this.getStyle() !== "field";
     },
 
-    getSearcherCollection: function () {
-        return this._basicQueryModule.searcherCollection;
-    },
-
-    isBasicMode: function () {
-        return this.queryStateModel.getSearchMode() === this.queryStateModel.BASIC_SEARCH;
-    },
-
-    resetToQuery: function (a, b) {
-        this.clearSearchErrors();
-        return this._basicQueryModule.queryReset(a).always(_.bind(function() {
-            this.queryStateModel.switchToPreferredSearchMode();
-            this._jqlQueryModule.setQuery();
-            if (b && b.focusQuery === true) {
-                this._queryView.getView().focus();
-            }
-            this._basicQueryModule.off("searchRequested", this.publishJqlChanges);
-            this._jqlQueryModule.off("searchRequested", this.publishJqlChanges);
-            this._basicQueryModule.onSearchRequested(this.publishJqlChanges, this);
-            this._jqlQueryModule.onSearchRequested(this.publishJqlChanges, this);
-        }, this));
-    },
-
-    publishJqlChanges: function (a) {
-        this.triggerJqlChanged(a);
-    },
-
-    setVisible: function (a) {
-        this._queryView.setVisible(a);
-    },
-
-    queryChanged: function () {
-        this.clearSearchErrors();
-        this._basicQueryModule.queryChanged();
-    },
-
-    onSearchSuccess: function (a) {
-        if (this._queryView) {
-            this._queryView.showWarnings(a);
-        }
-        this.triggerJqlSuccess();
-    },
-
-    searchersReady: function () {
-        return this._basicQueryModule.searchersReady();
-    },
-
-    onSearchError: function (b) {
-        this._errors.renderFunction = "showErrors";
-        var c = (b.errorMessages) ? b.errorMessages.concat() : [];
-        var a = [];
-        _.each(b.errors, function (e, d) {
-            if (d === "jql") {
-                a.push(e);
-            } else {
-                c.push(e);
+    _savePreferredSearchMode: function () {
+        jQuery.ajax({
+            url: AJS.contextPath() + "/rest/querycomponent/latest/userSearchMode",
+            type: "POST",
+            headers: { "X-Atlassian-Token": "nocheck" },
+            data: { searchMode: this.getPreferredSearchMode() },
+            error: _.bind(function(a) {
+                if (JIRA.Issues.displayFailSearchMessage) {
+                    JIRA.Issues.displayFailSearchMessage(a);
+                }
+            }, this),
+            success: function() {
+                JIRA.trace("jira.search.mode.changed");
             }
         });
-        if (this.getSearchMode() === this.queryStateModel.BASIC_SEARCH && !this._basicQueryModule.hasErrors() && a.length > 0) {
-            this.setSearchMode(this.queryStateModel.ADVANCED_SEARCH);
-        }
-        this._errors[this.queryStateModel.BASIC_SEARCH] = c;
-        this._errors[this.queryStateModel.ADVANCED_SEARCH] = a.concat(c);
-        this.showSearchErrors();
-        this.triggerJqlError();
-    },
-
-    showSearchErrors: function () {
-        if (this._queryView) {
-            this._queryView.clearNotifications();
-            var a = this._errors.renderFunction || "showErrors";
-            this._queryView[a](this._errors[this.getSearchMode()]);
-        }
-    },
-
-    clearSearchErrors: function () {
-        if (this._queryView) {
-            this._queryView.clearNotifications();
-            this._queryView.switcherViewModel.enableSwitching();
-        }
-        this._errors[this.queryStateModel.BASIC_SEARCH].length = 0;
-        this._errors[this.queryStateModel.ADVANCED_SEARCH].length = 0;
-    },
-
-    getSearchMode: function () {
-        return this.queryStateModel.getSearchMode();
-    },
-
-    getActiveBasicModeSearchers: function () {
-        return this._basicQueryModule.getSelectedCriteria();
-    },
-
-    setSearchMode: function (a) {
-        if (this.getSearchMode() !== a) {
-            this.queryStateModel.switchToSearchMode(a);
-            return true;
-        }
-        return false;
-    },
-
-    createAndRenderView: function (a) {
-        this._queryView = new JIRA.Issues.QueryView({ el: a, queryStateModel: this.queryStateModel, basicQueryModule: this._basicQueryModule, jqlQueryModule: this._jqlQueryModule }).onVerticalResize(this.triggerVerticalResize, this);
-        this._queryView.render();
-    },
-
-    isQueryValid: function () {
-        return (this._errors && this._errors[this.queryStateModel.BASIC_SEARCH].length === 0 && this._errors[this.queryStateModel.ADVANCED_SEARCH].length === 0);
     }
-})
+});

@@ -13,10 +13,11 @@
     initialize: function (options) {
         _.bindAll(this, 'manufacturerClickHandler');
 
-        var query = QuoteFlow.Components.Query.create({});
-        this.searcherCollection = new QuoteFlow.Collection.Asset.Searcher([], {
-            fixedLozenges: query.primaryClauses,
-            queryStateModel: {},
+        var query = QuoteFlow.Components.Query.create({
+            searchers: [],
+            preferredSearchMode: "basic",
+            layoutSwitcher: true,
+            basicAutoUpdate: true
         });
 
         if (_.isUndefined(this.model)) {
@@ -27,8 +28,8 @@
         this.initManufacturerDropdownClickHandlers();
         this.initManufacturersFilter();
 
-        this.primaryCriteriaContainerView = new QuoteFlow.UI.Asset.Navigator.PrimaryCriteriaContainer({ collection: this.searcherCollection });
-        this.textFieldView = new QuoteFlow.UI.Asset.Navigator.TextField({ collection: this.searcherCollection });
+        this.primaryCriteriaContainerView = new QuoteFlow.UI.Asset.Navigator.PrimaryCriteriaContainer({ collection: query._basicQueryModule.searcherCollection });
+        this.textFieldView = new QuoteFlow.UI.Asset.Navigator.TextField({ collection: query._basicQueryModule.searcherCollection });
 
         this.listenTo(this.model, 'change:selectedManufacturers', this.updateManufacturerButtonTitle);
     },

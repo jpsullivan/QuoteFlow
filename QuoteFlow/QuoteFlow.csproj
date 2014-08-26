@@ -677,6 +677,9 @@
     <Content Include="Content\js\app\models\asset\searcher.js" />
     <Content Include="Content\js\app\models\asset_var.js" />
     <Content Include="Content\js\app\models\asset_var_value.js" />
+    <Content Include="Content\js\app\modules\asset\basic_query.js" />
+    <Content Include="Content\js\app\modules\asset\query.js" />
+    <Content Include="Content\js\app\modules\asset\jql_query.js" />
     <Content Include="Content\js\app\ui\asset\asset_navigator.js" />
     <Content Include="Content\js\app\ui\asset\edit.js" />
     <Content Include="Content\js\app\ui\asset\edit\add_asset_var_field.js" />
@@ -685,6 +688,7 @@
     <Content Include="Content\js\app\ui\asset\navigator\asset_list.js" />
     <Content Include="Content\js\app\models\asset\query.js" />
     <Content Include="Content\js\app\ui\asset\navigator\criteria.js" />
+    <Content Include="Content\js\app\ui\asset\navigator\criteria_dialog.js" />
     <Content Include="Content\js\app\ui\asset\navigator\primary_criteria_container.js" />
     <Content Include="Content\js\app\ui\asset\navigator\text_field.js" />
     <Content Include="Content\js\app\ui\asset\navigator\toolbar.js" />

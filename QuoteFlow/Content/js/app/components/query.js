@@ -15,8 +15,12 @@
                 primaryClauses: this.DEFAULT_CLAUSES,
                 without: [],
                 style: "generic",
+                layoutSwitcher: true,
                 autocompleteEnabled: true,
-                orderBy: false
+                advancedAutoUpdate: false,
+                basicOrderBy: false,
+                basicAutoUpdate: true,
+                preferredSearchMode: "basic"
             });
             c.primaryClauses = _.reject(c.primaryClauses, function(d) {
                 return _.contains(c.without, d.id);
@@ -34,7 +38,23 @@
                 }
             });
 
-            return c;
+            var queryModule = new QuoteFlow.Module.Asset.Query({
+                primaryClauses: c.primaryClauses,
+                searchers: c.searchers,
+                queryStateModel: new QuoteFlow.Model.Asset.QueryState({
+                    jql: c.jql,
+                    without: c.without,
+                    style: c.style,
+                    layoutSwitcher: c.layoutSwitcher,
+                    autocompleteEnabled: c.autocompleteEnabled,
+                    advancedAutoUpdate: c.advancedAutoUpdate,
+                    basicAutoUpdate: c.basicAutoUpdate,
+                    preferredSearchMode: c.preferredSearchMode,
+                    basicOrderBy: c.basicOrderBy
+                })
+            });
+
+            return queryModule;
         }
     }
 }();

@@ -170,7 +170,12 @@
                 return jQuery.Deferred().reject();
             }
         } else {
-            var b = AJS.$.ajax({ url: AJS.contextPath() + "/secure/QueryComponent!Jql.jspa", headers: { "X-SITEMESH-OFF": true }, data: c, type: "POST" });
+            var b = AJS.$.ajax({
+                url: AJS.contextPath() + "/secure/QueryComponent!Jql.jspa",
+                headers: { "X-SITEMESH-OFF": true },
+                data: c,
+                type: "POST"
+            });
             b.success(_.bind(function (e) {
                 if (d) {
                     this.clearExpectingUpdate(d);
@@ -249,7 +254,11 @@
             this._activeSearcherReq.abort();
         }
         return this._activeSearcherReq = JIRA.SmartAjax.makeRequest({
-            type: "POST", data: c, processData: false, url: contextPath + "/secure/QueryComponentRendererValue!Default.jspa", success: _.bind(function (f) {
+            type: "POST",
+            data: c,
+            processData: false,
+            url: contextPath + "/secure/QueryComponentRendererValue!Default.jspa",
+            success: _.bind(function(f) {
                 var e = this.get(d);
                 if (e) {
                     if (f[d]) {
@@ -260,10 +269,12 @@
                     }
                 }
                 this._setSearchersFromData(f, true);
-            }, this), dataType: "json", error: function (e) {
+            }, this),
+            dataType: "json",
+            error: function(e) {
                 JIRA.Issues.displayFailSearchMessage(e);
             }
-        }).always(_.bind(function () {
+        }).always(_.bind(function() {
             this._activeSearcherReq = null;
         }, this));
     },

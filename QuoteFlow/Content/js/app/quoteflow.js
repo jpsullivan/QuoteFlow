@@ -64,6 +64,10 @@ var QuoteFlow;
         Model.Asset = {};
     })(QuoteFlow.Model || (QuoteFlow.Model = {}));
     var Model = QuoteFlow.Model;
+    (function (Module) {
+        Module.Asset = {};
+    })(QuoteFlow.Module || (QuoteFlow.Module = {}));
+    var Module = QuoteFlow.Module;
     QuoteFlow.Pages = {};
     QuoteFlow.Routes = {};
     (function (UI) {
