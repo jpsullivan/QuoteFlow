@@ -1,7 +1,4 @@
 ﻿QuoteFlow.UI.Asset.Navigator.Criteria = QuoteFlow.Views.Base.extend({
-//    tagName: "li",
-//    template: JIRA.Templates.IssueNavQueryBasic.criteriaButton,
-//    contentTemplate: JIRA.Templates.IssueNavQueryBasic.criteriaButtonContent,
     events: {
         click: "hideTipsy",
         "click .criteria-selector": "_onClickCriteriaSelector",
@@ -62,9 +59,8 @@
     },
 
     _showDialog: function () {
-        if (this.searcherCollection.isInteractive() && this._getSearcher() && this._isValidSearcher()) {
-            JIRA.Issues.SearcherDialog.instance.show(this._getSearcher());
-        }
+        var searcherName = this.model.getId();
+        AJS.$('[data-id="' + searcherName + '"] button').trigger("aui-button-invoke");
     },
 
     _removeCriteria: function (b) {

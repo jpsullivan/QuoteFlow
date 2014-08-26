@@ -3,6 +3,8 @@
 
     initialize: function () {
         this._criteriaViews = _.map(this.collection.fixedLozenges, function (criteria) {
+            this.setDropdownEventBindings(criteria.id);
+
             var el = $('li.' + criteria.id, this.$el);
             return new QuoteFlow.UI.Asset.Navigator.Criteria({
                 el: el,
@@ -29,5 +31,16 @@
 
     getFocusableForCriteria: function (a) {
         return this.$('.criteria-selector[data-id="' + a + '"]');
+    },
+
+    setDropdownEventBindings: function (criteria) {
+        AJS.$('#' + criteria + '-dropdown').on({
+            "aui-dropdown2-show": function (k, i) {
+                var currentTarget = $(k.currentTarget);
+                var j = currentTarget.find(":input:not(submit):visible:first");
+                j.focus();
+                currentTarget.find(".aui-list-scroll").scrollTop(0);
+            }
+        });
     }
 })
