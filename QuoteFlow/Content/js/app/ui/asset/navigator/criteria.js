@@ -115,6 +115,13 @@
             case AJS.$.ui.keyCode.DELETE:
                 this._removeCriteria(1);
                 break;
+            case AJS.$.ui.keyCode.TAB:
+                if (this.isTabbingOutOfDropdown()) {
+                    // hide the dialog
+                    this.$("button:focus").blur();
+                    e.preventDefault();
+                }
+                break;
             default:
                 return;
         }
@@ -132,5 +139,14 @@
         if (jQuery(a.target).closest("[aria-disabled=true]").length > 0) {
             a.preventDefault();
         }
+    },
+
+    isTabbingOutOfDropdown: function() {
+        var tabbableElement = AJS.$(":tabbable", this.$el);
+        var isTabbable = (tabbableElement.length === 0);
+        var d = (e.shiftKey && (document.activeElement === tabbableElement.first()[0]));
+        var c = (!e.shiftKey && (document.activeElement === tabbableElement.last()[0]));
+
+        return !!(isTabbable || d || c);
     }
 })

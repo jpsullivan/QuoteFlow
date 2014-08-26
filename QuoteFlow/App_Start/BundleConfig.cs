@@ -40,6 +40,7 @@ namespace QuoteFlow
                 "~/Content/js/lib/backbone.min.js",
                 "~/Content/js/lib/backbone-brace.min.js",
                 "~/Content/js/lib/aui/aui-all.js",
+                "~/Content/js/lib/jquery-scrolllock.min.js",
                 "~/Content/js/lib/moment.min.js",
                 "~/Content/js/lib/md5.js");
             libJs.Transforms.Add(jsTransformer);

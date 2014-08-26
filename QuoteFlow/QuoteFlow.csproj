@@ -704,6 +704,7 @@
     <Content Include="Content\js\lib\backbone-brace.min.js" />
     <Content Include="Content\js\lib\backbone.min.js" />
     <Content Include="Content\js\lib\handlebars.min.js" />
+    <Content Include="Content\js\lib\jquery-scrolllock.min.js" />
     <Content Include="Content\js\lib\json2.min.js" />
     <Content Include="Content\js\lib\md5.js" />
     <Content Include="Content\js\lib\moment.min.js" />

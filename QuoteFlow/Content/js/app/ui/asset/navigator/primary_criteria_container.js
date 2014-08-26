@@ -6,6 +6,8 @@
             this.setDropdownEventBindings(criteria.id);
 
             var el = $('li.' + criteria.id, this.$el);
+            AJS.$(el).scrollLock(".aui-list-scroll");
+
             return new QuoteFlow.UI.Asset.Navigator.Criteria({
                 el: el,
                 model: new QuoteFlow.Model.Asset.Criteria(criteria),
