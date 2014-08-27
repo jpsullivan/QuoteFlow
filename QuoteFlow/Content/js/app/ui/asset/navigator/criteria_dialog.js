@@ -8,7 +8,6 @@
         this.criteria = options.criteria;
         this.formData = "";
         this.queryStateModel = options.queryStateModel;
-        console.log(this.$el);
     },
 
     setDropdownEventBindings: function (criteria) {

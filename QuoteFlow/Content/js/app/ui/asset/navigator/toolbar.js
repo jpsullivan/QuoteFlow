@@ -14,7 +14,31 @@
         _.bindAll(this, 'manufacturerClickHandler');
 
         var query = QuoteFlow.Components.Query.create({
-            searchers: [],
+            searchers: {
+                searchers: {
+                    groups: [
+                        {
+                            searchers: [
+                                {
+                                    id: "manufacturer",
+                                    isShown: true,
+                                    key: "asset.field.manufacturer",
+                                    name: "Manufacturer"
+                                }
+                            ],
+                            title: "Details",
+                            type: "DETAILS"
+                        }
+                    ]
+                },
+                values: {
+                    manufacturer: {
+                        isShown: true,
+                        name: "Manufacturer",
+                        validSearcher: true
+                    }
+                }
+            },
             preferredSearchMode: "basic",
             layoutSwitcher: true,
             basicAutoUpdate: true

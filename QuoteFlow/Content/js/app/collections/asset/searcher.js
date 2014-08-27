@@ -6,13 +6,13 @@
     QUERY_ID: "text",
     JQL_INVALID_QUERY_PREFIX: "__jql_",
 
-    initialize: function (b, a) {
+    initialize: function (b, options) {
         if (b && b.length) {
             this._searcherCache = b;
         }
-        this.fixedLozenges = a && a.fixedLozenges ? a.fixedLozenges : [];
-        this.queryStateModel = a && a.queryStateModel;
-        this.initData = a && a.initData;
+        this.fixedLozenges = options && options.fixedLozenges ? options.fixedLozenges : [];
+        this.queryStateModel = options && options.queryStateModel;
+        this.initData = options && options.initData;
         this._interactive = true;
     },
 
