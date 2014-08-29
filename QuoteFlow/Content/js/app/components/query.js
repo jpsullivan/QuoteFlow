@@ -54,6 +54,13 @@
                 })
             });
 
+            if (c.jql || c.jql === "") {
+                queryModule.resetToQuery(c.jql).always(function() {
+                    //jQuery(c.el).addClass("ready");
+                    queryModule.triggerInitialized(c.jql);
+                });
+            }
+
             return queryModule;
         }
     }
