@@ -44,6 +44,8 @@
             basicAutoUpdate: true
         });
 
+        query._basicQueryModule.queryChanged();
+
         if (_.isUndefined(this.model)) {
             // initialize an empty model anyway
             this.model = new QuoteFlow.Model.Asset.Navigator();

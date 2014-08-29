@@ -16,6 +16,7 @@
 
         this.dialog = new QuoteFlow.UI.Asset.Navigator.CriteriaDialog({
             el: $("#" + this.model.getId() + "-dropdown"),
+            model: this._getSearcher(),
             criteria: this.model.getId(),
             queryStateModel: this.searcherCollection.queryStateModel
         });

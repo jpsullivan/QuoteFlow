@@ -4,8 +4,6 @@
     namedEvents: ["readyForDisplay"],
 
     initialize: function () {
-        this._onEditHtmlUpdated();
-        this.bind("change:editHtml", this._onEditHtmlUpdated, this);
     },
 
     parse: function (a) {
@@ -13,19 +11,6 @@
             a.viewHtml = this._cleanViewHtml(a.viewHtml);
         }
         return a;
-    },
-
-    _cleanViewHtml: function (b) {
-        var a = AJS.$("<div/>").appendCatchExceptions(b);
-        a.find(".fieldLabel").remove();
-        a.find("a").replaceWith(function () {
-            return AJS.$(this).html();
-        });
-        a.find(".searcherValue").slice(0, -1).each(function () {
-            AJS.$(this).after("-");
-        });
-        a.find("*").removeAttr("title");
-        return a.html();
     },
 
     createOrUpdateClauseWithQueryString: function (a) {
@@ -81,23 +66,6 @@
 
     select: function () {
         this.set({ isSelected: true, position: this.collection.getNextPosition(), validSearcher: true, lastViewed: this._now() });
-    },
-
-    hasErrorInEditHtml: function () {
-        var a = jQuery("<div>").htmlCatchExceptions(this.getEditHtml());
-        if (!a) {
-            return false;
-        } else {
-            return a.find(".error, .has-errors").length > 0;
-        }
-    },
-
-    clearEditHtml: function () {
-        this.setEditHtml(null);
-    },
-
-    _onEditHtmlUpdated: function () {
-        this.setSerializedParams(jQuery("<form/>").appendCatchExceptions(this.getEditHtml()).serialize());
     },
 
     getTooltipText: function () {

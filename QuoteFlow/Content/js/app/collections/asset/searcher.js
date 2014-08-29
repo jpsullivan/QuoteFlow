@@ -381,7 +381,6 @@
             this._searcherCache = a;
         }
         this.triggerCollectionChanged();
-        JIRA.trace("jira.search.searchers.updated");
     },
 
     getVariableClauses: function () {
