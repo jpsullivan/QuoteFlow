@@ -253,11 +253,11 @@
         if (this._activeSearcherReq) {
             this._activeSearcherReq.abort();
         }
-        return this._activeSearcherReq = JIRA.SmartAjax.makeRequest({
+        return this._activeSearcherReq = $.ajax({
             type: "POST",
             data: c,
             processData: false,
-            url: contextPath + "/secure/QueryComponentRendererValue!Default.jspa",
+            url: QuoteFlow.ApplicationPath + "secure/QueryComponentRendererValue!Default.jspa",
             success: _.bind(function(f) {
                 var e = this.get(d);
                 if (e) {
@@ -272,7 +272,7 @@
             }, this),
             dataType: "json",
             error: function(e) {
-                JIRA.Issues.displayFailSearchMessage(e);
+                //JIRA.Issues.displayFailSearchMessage(e);
             }
         }).always(_.bind(function() {
             this._activeSearcherReq = null;
