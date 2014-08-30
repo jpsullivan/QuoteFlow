@@ -228,17 +228,11 @@
             a = this._querySearchersByValue(c);
         }
         a.done(_.bind(function () {
-            if ((this.queryStateModel.getBasicAutoUpdate() || b) && !this.containsInvalidSearchers()) {
+            if ((this.queryStateModel.getBasicAutoUpdate() || b)) {
                 this.triggerSearchRequested(this.createJql());
             }
         }, this));
         return a;
-    },
-
-    containsInvalidSearchers: function () {
-        return this.any(function (a) {
-            return a.hasErrorInEditHtml();
-        });
     },
 
     _querySearchersByValue: function (d) {
@@ -257,7 +251,7 @@
             type: "POST",
             data: c,
             processData: false,
-            url: QuoteFlow.ApplicationPath + "secure/QueryComponentRendererValue!Default.jspa",
+            url: QuoteFlow.ApplicationPath + "api/asset/FindAsset",
             success: _.bind(function(f) {
                 var e = this.get(d);
                 if (e) {
@@ -373,7 +367,18 @@
 
     _setSearchersFromData: function (a, b) {
         _.each(a, _.bind(function (c, d) {
-            this._addOrSet(d, { groupId: c.groupId, groupName: c.groupName, isShown: c.isShown, name: c.name, viewHtml: c.viewHtml, jql: c.jql, editHtml: c.editHtml, validSearcher: c.validSearcher, key: c.key, lastViewed: c.lastViewed }, { parse: true });
+            this._addOrSet(d, {
+                groupId: c.groupId,
+                groupName: c.groupName,
+                isShown: c.isShown,
+                name: c.name,
+                viewHtml: c.viewHtml,
+                jql: c.jql,
+                editHtml: c.editHtml,
+                validSearcher: c.validSearcher,
+                key: c.key,
+                lastViewed: c.lastViewed
+            }, { parse: true });
         }, this));
         if (b) {
             this._updateSearcherCache();

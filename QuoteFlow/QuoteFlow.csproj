@@ -483,6 +483,7 @@
     <Compile Include="Models\ManufacturerLogo.cs" />
     <Compile Include="Models\ModelBinders\Asset\EditAssetModelBinder.cs" />
     <Compile Include="Models\OptionalImportField.cs" />
+    <Compile Include="Models\RequestModels\AssetCriteriaQuery.cs" />
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\Search\SearchFilter.cs" />
@@ -671,6 +672,7 @@
     <Content Include="Content\js\app\helpers\application_helpers.js" />
     <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\components\jqui-widget_sidebar.js" />
+    <Content Include="Content\js\app\helpers\underscore_helpers.js" />
     <Content Include="Content\js\app\models\asset\criteria.js" />
     <Content Include="Content\js\app\models\asset\details.js" />
     <Content Include="Content\js\app\models\asset\navigator.js" />

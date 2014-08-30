@@ -10,7 +10,7 @@
     initialize: function (a) {
         this.extended = a.extended;
         this.searcherCollection = a.searcherCollection;
-        this.searcherCollection.onCollectionChanged(this.update, this._onKeydown);
+        this.searcherCollection.onCollectionChanged(this.update, this);
         this.searcherCollection.onInteractiveChanged(this._handleInteractiveChanged, this);
         this.searcherCollection.bind("change:isSelected", this._onCriteriaSelectionChanged, this);
 
@@ -36,14 +36,14 @@
         var a = g || !b;
         var d = this.$("button");
         var c = this.$(".remove-filter");
-        this.$el.toggleClass("hidden", e);
-        d.attr("aria-disabled", a ? "true" : null).html(this.contentTemplate({
-            name: f && f.getName() || this.model.getName(),
-            viewHtml: f && f.getViewHtml(),
-            extended: this.extended
-        }));
-        this.$el.toggleClass("invalid-searcher", !b).toggleClass("partial-invalid-searcher", (b && d.find(".invalid_sel").length !== 0));
-        c.toggle(!b || !!this.extended);
+//        this.$el.toggleClass("hidden", e);
+//        d.attr("aria-disabled", a ? "true" : null).html(this.contentTemplate({
+//            name: f && f.getName() || this.model.getName(),
+//            viewHtml: f && f.getViewHtml(),
+//            extended: this.extended
+//        }));
+//        this.$el.toggleClass("invalid-searcher", !b).toggleClass("partial-invalid-searcher", (b && d.find(".invalid_sel").length !== 0));
+//        c.toggle(!b || !!this.extended);
         return this;
     },
 

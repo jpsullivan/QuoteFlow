@@ -1,6 +1,8 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Web.Http;
 using QuoteFlow.Models;
+using QuoteFlow.Models.RequestModels;
 using QuoteFlow.Services.Interfaces;
 
 namespace QuoteFlow.Controllers.Api
@@ -28,6 +30,13 @@ namespace QuoteFlow.Controllers.Api
             }
 
             return AssetService.GetAsset(id);
+        }
+
+        [HttpPost]
+        public IEnumerable<Asset> FindAsset(AssetCriteriaQuery query)
+        {
+            return new List<Asset>();
+            // todo: search controller logic, implement search service
         }
     }
 }
