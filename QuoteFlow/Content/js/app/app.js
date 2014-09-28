@@ -4,6 +4,7 @@ var $;
 window.jQuery = $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
+var BackboneBrace = required('backbone-brace');
 Backbone.$ = $;
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)
@@ -42,6 +43,7 @@ var QuoteFlow = {
 };
 
 // App Dependencies
+var jquery_browser = require('jquery.browser'); // so that aui works
 var aui = require('aui');
 var Router = require('./router');
 

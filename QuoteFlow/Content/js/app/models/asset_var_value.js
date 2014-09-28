@@ -1,10 +1,19 @@
-﻿QuoteFlow.Model.AssetVarValue = Backbone.Model.extend({
+﻿"use strict";
 
-    url: function () {
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+/**
+ * 
+ */
+var AssetVarValue = Backbone.Model.extend({
+    url: function() {
         return QuoteFlow.RootUrl + "api/assetvarvalue";
     },
 
-    defaults: function () {
+    defaults: function() {
         return {
             Id: null,
             AssetId: 0,
@@ -13,4 +22,6 @@
             OrganizationId: 0
         }
     }
-})
+});
+
+module.exports = AssetVarValue;

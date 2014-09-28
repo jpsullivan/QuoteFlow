@@ -1,4 +1,14 @@
-﻿QuoteFlow.Model.Asset.QueryState = Brace.Model.extend({
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+/**
+ * 
+ */
+var AssetQueryState = Brace.Model.extend({
     BASIC_SEARCH: "basic",
     ADVANCED_SEARCH: "advanced",
 
@@ -59,3 +69,5 @@
         });
     }
 });
+
+module.exports = AssetQueryState;

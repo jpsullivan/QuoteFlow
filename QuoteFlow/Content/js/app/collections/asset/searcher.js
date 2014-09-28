@@ -1,12 +1,24 @@
-﻿QuoteFlow.Collection.Asset.Searcher = Brace.Collection.extend({
-    model: QuoteFlow.Model.Asset.Searcher,
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+var AssetSearcherModel = require('../../models/asset/searcher');
+
+/**
+ * 
+ */
+var AssetSearcherCollection = Brace.Collection.extend({
+    model: AssetSearcherModel,
 
     namedEvents: ["searchRequested", "collectionChanged", "jqlTooComplex", "textFieldChanged", "requestUpdateFromView", "interactiveChanged", "beforeCriteriaRemoved"],
     QUERY_PARAM: "text",
     QUERY_ID: "text",
     JQL_INVALID_QUERY_PREFIX: "__jql_",
 
-    initialize: function (b, options) {
+    initialize: function(b, options) {
         if (b && b.length) {
             this._searcherCache = b;
         }
@@ -16,30 +28,32 @@
         this._interactive = true;
     },
 
-    _createItemDescriptors: function (a) {
-        return _.map(a, function (b) {
+    _createItemDescriptors: function(a) {
+        return _.map(a, function(b) {
             return new AJS.ItemDescriptor({ meta: { isShown: b.isShown }, label: b.name, title: b.isShown ? b.name : b.name + " " + "is not applicable for the current project and/or issue type.", selected: b.isSelected || b.jql, value: b.id });
         });
     },
 
-    getAddMenuGroupDescriptors: function () {
+    getAddMenuGroupDescriptors: function() {
         this._updateSearcherCache();
         var d = this.fixedLozengeIds().concat(this.QUERY_ID);
-        var a = _.filter(this._searcherCache, function (e) {
+        var a = _.filter(this._searcherCache, function(e) {
             var g = _.contains(d, e.id);
             var f = !!e.groupName;
             return !g && f;
         });
         if (a.length) {
             var b = new AJS.GroupDescriptor({
-                label: "All Criteria", items: this._createItemDescriptors(_.sortBy(a, function (e) {
+                label: "All Criteria",
+                items: this._createItemDescriptors(_.sortBy(a, function(e) {
                     return e.name.toLowerCase();
                 }))
             });
             var c = new AJS.GroupDescriptor({
-                label: "Recent Criteria", items: this._createItemDescriptors(_.first(_.sortBy(_.filter(a, function (e) {
+                label: "Recent Criteria",
+                items: this._createItemDescriptors(_.first(_.sortBy(_.filter(a, function(e) {
                     return e.lastViewed;
-                }), function (e) {
+                }), function(e) {
                     return -e.lastViewed;
                 }), AJS.Meta.getNumber("max-recent-searchers")))
             });
@@ -49,7 +63,7 @@
         }
     },
 
-    getSearcher: function (b) {
+    getSearcher: function(b) {
         var a = this.get(b);
         if (!a) {
             this.add(this._searcherCache[b]);
@@ -58,29 +72,29 @@
         return a;
     },
 
-    setJql: function (b, a) {
+    setJql: function(b, a) {
         this._addOrSet(b, { jql: a });
     },
 
-    createJql: function () {
+    createJql: function() {
         var a = this.pluck("jql");
         return _.filter(a, _.isNotBlank).join(" AND ") || "";
     },
 
-    isDirty: function () {
-        return this.any(function (a) {
+    isDirty: function() {
+        return this.any(function(a) {
             return a.getJql() !== undefined && a.getJql() !== "";
         });
     },
 
-    clearSearchState: function () {
-        this.each(function (a) {
+    clearSearchState: function() {
+        this.each(function(a) {
             a.clearSearchState();
         });
         this._querySearchersAndValues("");
     },
 
-    clearClause: function (c) {
+    clearClause: function(c) {
         var b = this.get(c);
         var a = b && b.hasClause();
         if (b) {
@@ -93,28 +107,28 @@
         }
     },
 
-    getTextQuery: function () {
+    getTextQuery: function() {
         var a = this.get(this.QUERY_ID);
         return a ? a.getViewHtml() : "";
     },
 
-    setInteractive: function (a) {
+    setInteractive: function(a) {
         if (a !== this._interactive) {
             this._interactive = a;
             this.triggerInteractiveChanged(a);
         }
     },
 
-    isInteractive: function () {
+    isInteractive: function() {
         return this._interactive;
     },
 
-    handleBasicViewSubmit: function () {
+    handleBasicViewSubmit: function() {
         this.triggerRequestUpdateFromView();
         this.triggerSearchRequested(this.createJql());
     },
 
-    updateTextQuery: function (a) {
+    updateTextQuery: function(a) {
         if (a) {
             var b = AJS.escapeHtml(a);
             this._addOrSet(this.QUERY_ID, { viewHtml: b, editHtml: b, jql: JIRA.Issues.TextQueryBuilder.buildJql(a) });
@@ -124,9 +138,9 @@
         this.triggerTextFieldChanged();
     },
 
-    getQueryString: function () {
+    getQueryString: function() {
         var a = [];
-        this.each(function (c) {
+        this.each(function(c) {
             var b = c.getQueryString();
             if (b) {
                 a.push(b);
@@ -135,7 +149,7 @@
         return a.join("&");
     },
 
-    _addOrSet: function (e, d, b) {
+    _addOrSet: function(e, d, b) {
         var a = this.get(e);
         if (a) {
             if (b && b.parse && a.parse) {
@@ -156,7 +170,7 @@
         return a;
     },
 
-    restoreFromQuery: function (a, d) {
+    restoreFromQuery: function(a, d) {
         this.queryStateModel.setJql(a);
         var c = { jql: this.queryStateModel.getJql() || "", decorator: "none" };
         if (this.initData) {
@@ -176,13 +190,13 @@
                 data: c,
                 type: "POST"
             });
-            b.success(_.bind(function (e) {
+            b.success(_.bind(function(e) {
                 if (d) {
                     this.clearExpectingUpdate(d);
                 }
                 this._onQuerySearchersAndValues(e);
             }, this));
-            b.error(_.bind(function (h) {
+            b.error(_.bind(function(h) {
                 if (d) {
                     this.clearExpectingUpdate();
                 }
@@ -195,31 +209,31 @@
                     console.log("search response error - not JSON?");
                 }
             }, this));
-            b.always(function () {
+            b.always(function() {
                 JIRA.trace("jira.search.searchers.updated");
             });
             return b;
         }
     },
 
-    clearExpectingUpdate: function () {
+    clearExpectingUpdate: function() {
         this.reset();
         this.updateTextQuery("");
     },
 
-    _handleSearcherError: function (a, b) {
+    _handleSearcherError: function(a, b) {
         if (_.include(b.errorMessages, "jqlTooComplex") || _.include(b.errorMessages, "jqlInvalid")) {
-            window.setTimeout(_.bind(function () {
+            window.setTimeout(_.bind(function() {
                 this.triggerJqlTooComplex(a);
             }, this), 0);
         }
     },
 
-    searcherAffectsContext: function (a) {
+    searcherAffectsContext: function(a) {
         return "project" === a || "issuetype" === a;
     },
 
-    createOrUpdateClauseWithQueryString: function (c, b) {
+    createOrUpdateClauseWithQueryString: function(c, b) {
         this.triggerRequestUpdateFromView();
         var a;
         if (this.searcherAffectsContext(c)) {
@@ -227,7 +241,7 @@
         } else {
             a = this._querySearchersByValue(c);
         }
-        a.done(_.bind(function () {
+        a.done(_.bind(function() {
             if ((this.queryStateModel.getBasicAutoUpdate() || b)) {
                 this.triggerSearchRequested(this.createJql());
             }
@@ -235,7 +249,7 @@
         return a;
     },
 
-    _querySearchersByValue: function (d) {
+    _querySearchersByValue: function(d) {
         var a = this.get(d);
         var c = AJS.$.param({ decorator: "none", jqlContext: this.queryStateModel.getJql() });
         if (a) {
@@ -273,11 +287,11 @@
         }, this));
     },
 
-    _parseSearcherGroups: function (c) {
+    _parseSearcherGroups: function(c) {
         var a = {};
         var b = this.queryStateModel.getWithout();
-        _.each(c.groups, function (d) {
-            _.each(d.searchers, function (e) {
+        _.each(c.groups, function(d) {
+            _.each(d.searchers, function(e) {
                 if (!_.contains(b, e.id)) {
                     e.groupId = d.type;
                     e.groupName = d.title;
@@ -288,7 +302,7 @@
         return a;
     },
 
-    _querySearchersAndValues: function (b) {
+    _querySearchersAndValues: function(b) {
         var a = "decorator=none";
         if (this._activeSearcherReq) {
             if (this._activeSearcherQuery === b) {
@@ -307,25 +321,25 @@
             data: a,
             processData: false
         });
-        this._activeSearcherReq.done(_.bind(function (c) {
+        this._activeSearcherReq.done(_.bind(function(c) {
             this._onQuerySearchersAndValues(c);
         }, this));
-        this._activeSearcherReq.fail(_.bind(function (c) {
+        this._activeSearcherReq.fail(_.bind(function(c) {
             JIRA.Issues.displayFailSearchMessage(c);
         }, this));
-        this._activeSearcherReq.always(_.bind(function () {
+        this._activeSearcherReq.always(_.bind(function() {
             this._activeSearcherReq = null;
         }, this));
         return this._activeSearcherReq;
     },
 
-    clear: function () {
+    clear: function() {
         this.reset([], { silent: true });
         this.updateTextQuery("");
         this.triggerCollectionChanged();
     },
 
-    searchersReady: function () {
+    searchersReady: function() {
         if (this._activeSearcherReq) {
             return this._activeSearcherReq;
         } else {
@@ -333,9 +347,9 @@
         }
     },
 
-    _onQuerySearchersAndValues: function (c) {
+    _onQuerySearchersAndValues: function(c) {
         var d = this, a = this._parseSearcherGroups(c.searchers);
-        _.each(c.values, _.bind(function (f, g) {
+        _.each(c.values, _.bind(function(f, g) {
             var e = a[g];
             if (!e) {
                 a[g] = f;
@@ -344,9 +358,9 @@
             }
         }, this));
         var b = [];
-        this.each(function (f) {
+        this.each(function(f) {
             var e = f.id;
-            if (!_.any(a, function (g) {
+            if (!_.any(a, function(g) {
                 return g.id === e;
             })) {
                 if (f.getIsSelected()) {
@@ -362,17 +376,17 @@
         this._setSearchersFromData(a);
     },
 
-    _updateSearcherCache: function () {
+    _updateSearcherCache: function() {
         if (this._searcherCache) {
-            this.each(_.bind(function (a) {
+            this.each(_.bind(function(a) {
                 this._searcherCache[a.id] = a.toJSON();
                 this._searcherCache[a.id].id = a.id;
             }, this));
         }
     },
 
-    _setSearchersFromData: function (a, b) {
-        _.each(a, _.bind(function (c, d) {
+    _setSearchersFromData: function(a, b) {
+        _.each(a, _.bind(function(c, d) {
             this._addOrSet(d, {
                 groupId: c.groupId,
                 groupName: c.groupName,
@@ -394,9 +408,9 @@
         this.triggerCollectionChanged();
     },
 
-    getVariableClauses: function () {
+    getVariableClauses: function() {
         var a = [];
-        this.each(_.bind(function (b) {
+        this.each(_.bind(function(b) {
             if (!this.isFixed(b) && b.hasClause()) {
                 a.push(b);
             }
@@ -404,23 +418,23 @@
         return a;
     },
 
-    getSelectedCriteria: function () {
+    getSelectedCriteria: function() {
         var a = this;
-        var b = function (c) {
+        var b = function(c) {
             return !a.isFixed(c) && (c.hasClause() || c.getIsSelected());
         };
-        return this.chain().filter(b).sortBy(function (c) {
+        return this.chain().filter(b).sortBy(function(c) {
             return c.getPosition();
         }).value();
     },
 
-    getAllSelectedCriteriaCount: function () {
+    getAllSelectedCriteriaCount: function() {
         return this.getAllSelectedCriteria().length;
     },
 
-    getAllSelectedCriteria: function () {
+    getAllSelectedCriteria: function() {
         var a = [];
-        this.each(_.bind(function (b) {
+        this.each(_.bind(function(b) {
             if (b.hasClause() || b.getIsSelected()) {
                 a.push(b);
             }
@@ -428,18 +442,20 @@
         return a;
     },
 
-    isFixed: function (a) {
+    isFixed: function(a) {
         return _.contains(this.fixedLozengeIds(), a.getId()) || a.getId() === this.QUERY_ID;
     },
 
-    fixedLozengeIds: function () {
+    fixedLozengeIds: function() {
         return _.pluck(this.fixedLozenges, "id");
     },
 
-    getNextPosition: function () {
-        return this.reduce(function (b, c) {
+    getNextPosition: function() {
+        return this.reduce(function(b, c) {
             var a = Math.max(b, c.getPosition());
             return isNaN(a) ? b : a;
         }, -1) + 1;
     }
-})
+});
+
+module.exports = AssetSearcherCollection;

@@ -1,12 +1,21 @@
-﻿QuoteFlow.Model.Asset.Navigator = Backbone.Model.extend({
+﻿"use strict";
 
-    defaults: function () {
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+/**
+ * 
+ */
+var AssetNavigatorModel = Backbone.Model.extend({
+    defaults: function() {
         return {
             selectedManufacturers: []
         };
     },
 
-    addManufacturer: function (name) {
+    addManufacturer: function(name) {
         var selected = this.get('selectedManufacturers');
         selected.push(name);
         this.set({ 'selectedManufacturers': selected });
@@ -20,4 +29,6 @@
         }
         this.set({ 'selectedManufacturers': selected });
     }
-})
+});
+
+module.exports = AssetNavigatorModel;

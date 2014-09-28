@@ -1,10 +1,19 @@
-﻿QuoteFlow.Model.Asset.Details = Backbone.Model.extend({
+﻿"use strict";
 
-    urlRoot: function () {
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+/**
+ * 
+ */
+var AssetDetailsModel = Backbone.Model.extend({
+    urlRoot: function() {
         return QuoteFlow.RootUrl + "api/asset";
     },
 
-    defaults: function () {
+    defaults: function() {
         return {
             Id: null,
             Name: "",
@@ -21,4 +30,6 @@
             Comments: {}
         };
     }
-})
+});
+
+module.exports = AssetDetailsModel;

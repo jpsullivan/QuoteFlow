@@ -1,5 +1,14 @@
-﻿QuoteFlow.Model.AssetVar = Backbone.Model.extend({
-    
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+/**
+ * 
+ */
+var AssetVarModel = Backbone.Model.extend({
     url: function() {
         return QuoteFlow.RootUrl + "api/assetvar";
     },
@@ -17,11 +26,13 @@
         }
     },
 
-    isEnabled: function () {
+    isEnabled: function() {
         var enabled = this.get("Enabled");
         if (enabled === false || enabled === undefined) {
             return false;
         }
         return true;
     },
-})
+});
+
+module.exports = AssetVarModel;
