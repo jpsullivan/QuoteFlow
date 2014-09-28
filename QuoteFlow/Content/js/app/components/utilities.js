@@ -1,11 +1,12 @@
-﻿/**
-    General utility functions
+﻿"use strict";
 
-    @class Utilities
-    @namespace QuoteFlow
-    @module QuoteFlow
-**/
-QuoteFlow.Utilities = {
+var HtmlSanitizer = require('html-sanitizer');
+var parseUri = require('parseuri');
+
+/**
+ * General utility functions
+ */
+var Utilities = {
 
     /**
         Takes a url and returns only the part that does not contain
@@ -20,7 +21,7 @@ QuoteFlow.Utilities = {
         }
 
         var parsedUrl = parseUri(url);
-        var path = parsedUrl.path.replace(QuoteFlow.applicationPath, "");
+        var path = parsedUrl.path.replace(QuoteFlow.ApplicationPath, "");
 
         if (enforceTrailingSlash) {
             if (path.charAt(path.length - 1) !== "/") {
@@ -177,3 +178,5 @@ QuoteFlow.Utilities = {
         return prevdash ? sb.substr(0, sb.length - 1) : sb.join("");
     }
 };
+
+module.exports = Utilities;

@@ -1,4 +1,24 @@
-﻿QuoteFlow.UI.Catalog.ImportSetOptionalFields = QuoteFlow.Views.Base.extend({
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var moment = require('moment');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+var BaseView = require('../../view');
+
+var AssetVarCollection = require('../../collections/asset_vars');
+var AssetVarModel = require('../../models/asset_var');
+
+var ImportAssetVarRow = require('./import_asset_var_row');
+var PanelTable = require('../common/panel-table');
+var SelectAssetVarModal = require('../catalog/select_asset_var_modal');
+
+/**
+ *
+ */
+var ImportSetOptionalFields = BaseView.extend({
     el: '.aui-page-panel-content',
 
     options: {
@@ -12,11 +32,11 @@
         "click .tooltip": "showPreview"
     },
 
-    presenter: function () {
+    presenter: function() {
         return _.extend(this.defaultPresenter(), {});
     },
 
-    initialize: function (options) {
+    initialize: function(options) {
         this.options = options || {};
 
         _.bindAll(this, 'addAssetVarRow');
@@ -32,21 +52,21 @@
         AJS.$('select').auiSelect2();
     },
 
-    getAssetVarSelectionModalView: function () {
+    getAssetVarSelectionModalView: function() {
         // todo: dispose the existing modal object if exists
-        return new QuoteFlow.UI.Catalog.SelectAssetVarModal({
+        return new SelectAssetVarModal({
             okFunc: this.addAssetVarRow
         });
     },
 
-    showAssetVarFieldSelectionModal: function () {
+    showAssetVarFieldSelectionModal: function() {
         // forcefull render the select asset var modal to reset form fields
         this.assetVarSelectionModal = this.getAssetVarSelectionModalView();
         this.$('#asset_var_selection_container').html(this.assetVarSelectionModal.render().el);
         this.assetVarSelectionModal.showModal();
     },
 
-    changeHeader: function (e) {
+    changeHeader: function(e) {
         var el = $(e.currentTarget);
         var index = el.prop('selectedIndex');
 
@@ -64,7 +84,7 @@
      * results, but assuming that the input data isn't 
      * total garbage, should yield correct estimations.
      */
-    validateHeaderSelection: function (index, valueType) {
+    validateHeaderSelection: function(index, valueType) {
 
     },
 
@@ -72,7 +92,7 @@
      * Gathers a random collection of data from the selected
      * header group and displays it in a table.
      */
-    showPreview: function (e) {
+    showPreview: function(e) {
         var el = $(e.currentTarget);
         var fieldGroup = el.parent();
 
@@ -94,7 +114,7 @@
 
         index = index - 1; // -1 to compensate for the default select opt
 
-        var panelView = new QuoteFlow.UI.Common.PanelTable({
+        var panelView = new PanelTable({
             leftHeader: "Asset Key",
             rightHeader: "Sample Values",
             rowKey: panelKey,
@@ -107,7 +127,7 @@
     /**
      * 
      */
-    getSampleRowData: function (index) {
+    getSampleRowData: function(index) {
         return _.sample(this.rows.pluck(index), 3);
     },
 
@@ -119,11 +139,13 @@
             // todo: throw some kind of validation failure
         }
 
-        var view = new QuoteFlow.UI.Catalog.ImportAssetVarRow({
+        var view = new ImportAssetVarRow({
             headers: this.options.headers,
             assetVar: assetVar
         });
 
         this.assetVarFieldsList.append(view.render().el);
     }
-})
+});
+
+module.exports = ImportSetOptionalFields;

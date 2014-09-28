@@ -2,6 +2,7 @@
 @using QuoteFlow.Infrastructure.Extensions
 @using QuoteFlow.Models.ViewModels
 @using QuoteFlow.Models.ViewModels.Assets
+@using StackExchange.Profiling
 @model CatalogShowAssetsModel
 <!DOCTYPE html>
 <html>
@@ -59,17 +60,26 @@
         </section>
     </div>
     
-    @Scripts.Render("~/bundles/js_lib", "~/bundles/js_app")
-    @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
-    <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->
-    @RenderSection("scripts", false)
-    
+    @*    @Scripts.Render("~/bundles/js_lib", "~/bundles/js_app")*@
+    @*    @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)*@
+    @*    <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->*@
+    @*    @RenderSection("scripts", false)*@
+
     <script>
-        var qf = new QuoteFlow.Initialize('@Url.SiteRoot()', '@Context.Request.ApplicationPath.EnsureTrailingSlash()', '@CurrentOrganization.Id', @ViewHelpers.JsEncode(CurrentUser));
+        // set the global application vars
+        window.siteRoot = '@Url.SiteRoot()';
+        window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
+        window.currentOrganization = '@CurrentOrganization.Id.ToString()';
+        window.currentUser = @ViewHelpers.JsEncode(CurrentUser);
     </script>
 
-    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
-
+    <script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>
+    @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
+    @RenderSection("scripts", false)
+    @RenderSection("bootstrap", false)
+    @Html.RenderJsBundle("bundle.js", BundleOptions.BuildConfigDependent)
     @RenderSection("secondaryScripts", false)
+
+    @MiniProfiler.RenderIncludes()
 </body>
 </html>

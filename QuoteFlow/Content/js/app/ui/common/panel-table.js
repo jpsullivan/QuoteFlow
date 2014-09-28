@@ -1,4 +1,16 @@
-﻿QuoteFlow.UI.Common.PanelTable = QuoteFlow.Views.Base.extend({
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+var BaseView = require('../../view');
+
+/**
+ *
+ */
+var PanelTable = BaseView.extend({
     className: "panel",
 
     templateName: 'common/panel-table',
@@ -29,7 +41,7 @@
      * an iterable object that handlebars can easily consume.
      * @return {object} The formatted body content.
      */
-    buildTableRows: function () {
+    buildTableRows: function() {
         var rows = [], key = this.options.rowKey;
 
         _.each(this.options.rowData, function(row) {
@@ -38,4 +50,6 @@
 
         return rows;
     }
-})
+});
+
+module.exports = PanelTable;

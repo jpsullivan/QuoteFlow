@@ -48,30 +48,6 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="BundleTransformer.Core, Version=1.9.13.0, Culture=neutral, PublicKeyToken=973c344c93aac60d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\BundleTransformer.Core.1.9.13\lib\net40\BundleTransformer.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="BundleTransformer.Less, Version=1.9.20.0, Culture=neutral, PublicKeyToken=973c344c93aac60d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\BundleTransformer.Less.1.9.20\lib\net40\BundleTransformer.Less.dll</HintPath>
-    </Reference>
-    <Reference Include="BundleTransformer.TypeScript, Version=1.9.13.0, Culture=neutral, PublicKeyToken=973c344c93aac60d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\BundleTransformer.TypeScript.1.9.13\lib\net40\BundleTransformer.TypeScript.dll</HintPath>
-    </Reference>
-    <Reference Include="BundleTransformer.UglifyJs, Version=1.9.17.0, Culture=neutral, PublicKeyToken=973c344c93aac60d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\BundleTransformer.UglifyJs.1.9.17\lib\net40\BundleTransformer.UglifyJs.dll</HintPath>
-    </Reference>
-    <Reference Include="BundleTransformer.Yui, Version=1.9.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\BundleTransformer.Yui.1.9.15\lib\net40\BundleTransformer.Yui.dll</HintPath>
-    </Reference>
-    <Reference Include="ClearScript, Version=5.3.11.0, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.1.12\lib\net40\ClearScript.dll</HintPath>
-    </Reference>
     <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CsvHelper.2.7.0\lib\net40-client\CsvHelper.dll</HintPath>
@@ -114,14 +90,6 @@
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="JavaScriptEngineSwitcher.Core">
-      <HintPath>..\packages\JavaScriptEngineSwitcher.Core.1.1.3\lib\net40\JavaScriptEngineSwitcher.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="JavaScriptEngineSwitcher.V8, Version=1.1.12.0, Culture=neutral, PublicKeyToken=c608b2a8cc9e4472, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.1.12\lib\net40\JavaScriptEngineSwitcher.V8.dll</HintPath>
     </Reference>
     <Reference Include="Jil, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -315,7 +283,6 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
-    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Container.cs" />
     <Compile Include="App_Start\ContainerBindings.cs" />
     <Compile Include="App_Start\MiniProfiler.cs" />
@@ -599,21 +566,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App_Code\ViewHelpers.cshtml" />
-    <None Include="BundleTransformer.Configuration.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="ClearScript.V8\ClearScriptV8-32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\ClearScriptV8-64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\v8-ia32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\v8-x64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Include="Content\compiled\css\app.css" />
+    <Content Include="Content\compiled\css\app.min.css" />
+    <Content Include="Content\compiled\js\bundle.js" />
+    <Content Include="Content\compiled\js\templates.min.js" />
     <Content Include="Content\css\lib\aui\arrow.png" />
     <Content Include="Content\css\lib\aui\atlassian-icons.eot" />
     <Content Include="Content\css\lib\aui\atlassian-icons.svg" />
@@ -667,6 +623,7 @@
     <Content Include="Content\images\get-started\birds-eye-view_2x.png" />
     <Content Include="Content\images\get-started\get-started_2x.png" />
     <Content Include="Content\images\quoteflow_logo.png" />
+    <Content Include="Content\js\app\app.js" />
     <Content Include="Content\js\app\collections\asset\searcher.js" />
     <Content Include="Content\js\app\collections\asset_vars.js" />
     <Content Include="Content\js\app\components\query.js" />
@@ -686,6 +643,8 @@
     <Content Include="Content\js\app\modules\asset\basic_query.js" />
     <Content Include="Content\js\app\modules\asset\query.js" />
     <Content Include="Content\js\app\modules\asset\jql_query.js" />
+    <Content Include="Content\js\app\pages\asset.js" />
+    <Content Include="Content\js\app\router.js" />
     <Content Include="Content\js\app\ui\asset\asset_navigator.js" />
     <Content Include="Content\js\app\ui\asset\edit.js" />
     <Content Include="Content\js\app\ui\asset\edit\add_asset_var_field.js" />
@@ -698,13 +657,13 @@
     <Content Include="Content\js\app\ui\asset\navigator\primary_criteria_container.js" />
     <Content Include="Content\js\app\ui\asset\navigator\text_field.js" />
     <Content Include="Content\js\app\ui\asset\navigator\toolbar.js" />
-    <Content Include="Content\js\app\ui\asset\show_asset.js" />
+    <Content Include="Content\js\app\ui\asset\show.js" />
     <Content Include="Content\js\app\ui\catalog\import_asset_var_row.js" />
     <Content Include="Content\js\app\ui\catalog\import_set_fields.js" />
     <Content Include="Content\js\app\ui\catalog\import_set_optional_fields.js" />
     <Content Include="Content\js\app\ui\catalog\select_asset_var_modal.js" />
     <Content Include="Content\js\app\ui\common\panel-table.js" />
-    <Content Include="Content\js\app\views.js" />
+    <Content Include="Content\js\app\view.js" />
     <Content Include="Content\js\lib\aui\aui-all.js" />
     <Content Include="Content\js\lib\aui\aui-dependencies.js" />
     <Content Include="Content\js\lib\aui\aui-experimental.js" />
@@ -714,10 +673,9 @@
     <Content Include="Content\js\lib\backbone-brace.min.js" />
     <Content Include="Content\js\lib\backbone.min.js" />
     <Content Include="Content\js\lib\handlebars.min.js" />
+    <Content Include="Content\js\lib\html-sanitizer-bundle.js" />
     <Content Include="Content\js\lib\jquery-scrolllock.min.js" />
-    <Content Include="Content\js\lib\json2.min.js" />
     <Content Include="Content\js\lib\md5.js" />
-    <Content Include="Content\js\lib\moment.min.js" />
     <Content Include="Content\less\asset-navigator.css">
       <DependentUpon>asset-navigator.less</DependentUpon>
     </Content>
@@ -881,7 +839,6 @@
     <Content Include="Content\less\typography.css.map">
       <DependentUpon>typography.css</DependentUpon>
     </Content>
-    <Content Include="Content\js\lib\underscore.min.js" />
     <Content Include="Content\views\common\panel-table.hbs" />
     <Content Include="Content\views\catalog\select-asset-var-modal.hbs" />
     <Content Include="Content\views\catalog\import-asset-var-row.hbs" />
@@ -907,6 +864,7 @@
     <Content Include="Content\less\get-started.css.map">
       <DependentUpon>get-started.css</DependentUpon>
     </Content>
+    <Content Include="Content\compiled\js\bundle.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1000,9 +958,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
-    <Folder Include="Content\compiled\" />
     <Folder Include="Content\fonts\" />
-    <Folder Include="Content\js\ui\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -1027,14 +983,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Content\js\app\quoteflow.ts" />
-    <TypeScriptCompile Include="Content\js\app\references.ts" />
-    <TypeScriptCompile Include="Content\js\app\views2.ts" />
-    <TypeScriptCompile Include="Content\js\lib\backbone.d.ts" />
-    <TypeScriptCompile Include="Content\js\lib\jquery.d.ts" />
-    <TypeScriptCompile Include="Content\js\lib\underscore.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1065,27 +1013,15 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptTarget>ES5</TypeScriptTarget>
-    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>true</TypeScriptSourceMap>
-    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <TypeScriptTarget>ES5</TypeScriptTarget>
-    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>false</TypeScriptSourceMap>
-    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
-  </PropertyGroup>
-  <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets')" />
-  <PropertyGroup>
-    <PreBuildEvent>SET mypath=%25~dp0
-echo %25mypath:~0,-1%25
-cd $(SolutionDir)QuoteFlow.Bundler
-gulp.cmd
-</PreBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <Target Name="BeforeBuild" Condition="$(Configuration)==Release">
+    <PropertyGroup>
+      <GulpCmdPath>$(SolutionDir)</GulpCmdPath>
+      <GulpCommand>gulp</GulpCommand>
+    </PropertyGroup>
+    <Message Text="Bundling assets ... " Importance="high" />
+    <Exec Command="&quot;$(GulpCommand)&quot;" LogStandardErrorAsError="true" WorkingDirectory="$(GulpCmdPath)" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

@@ -1,5 +1,16 @@
-﻿QuoteFlow.UI.Asset.Edit.AssetVarEditRow = QuoteFlow.Views.Base.extend({
+﻿"use strict";
 
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+var BaseView = require('../../../view');
+
+/**
+ *
+ */
+var AssetVarEditRow = BaseView.extend({
     className: 'field-group',
 
     templateName: 'asset/edit/asset-var-edit-row',
@@ -13,7 +24,7 @@
         "click #add_asset_var": "showAssetVarFieldSelectionModal"
     },
 
-    presenter: function () {
+    presenter: function() {
         return _.extend(this.defaultPresenter(), {
             assetVar: this.options.assetVar.toJSON(),
             assetVarNames: this.options.assetVarNames,
@@ -21,12 +32,12 @@
         });
     },
 
-    initialize: function (options) {
+    initialize: function(options) {
         this.options = options || {};
     },
 
-    postRenderTemplate: function () {
-        _.defer(function () {
+    postRenderTemplate: function() {
+        _.defer(function() {
             AJS.$('select').auiSelect2();
         });
     },
@@ -34,7 +45,9 @@
     /**
      * Removes the asset var row from the table. Disposes the view.
      */
-    removeRow: function () {
+    removeRow: function() {
         this.remove();
     }
-})
+});
+
+module.exports = AssetVarEditRow;

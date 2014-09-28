@@ -80,6 +80,12 @@
     <div id="asset_var_selection_container"></div>
 }
 
+@section bootstrap {
+    <script type="text/javascript">
+        window.assetDetailsHeaderData = { assetId: '@Model.Id.ToString()', assetVarNames: @ViewHelpers.JsEncode(Model.AssetVarNames) };
+    </script>
+}
+
 @section secondaryScripts {
     <script type="text/javascript">
         //        // for returnUrl functionality
@@ -87,14 +93,5 @@
         //        var returnUrl = href.substr(origin.length);
         //        $(document.forms.EditForm).append($('<input type="hidden" name="returnUrl" value="' + returnUrl + '">'));
         //        document.forms.EditForm.submit();
-
-        var view = new QuoteFlow.UI.Asset.EditAsset({
-            assetId: '@Model.Id.ToString()',
-            assetVarNames: @ViewHelpers.JsEncode(Model.AssetVarNames)
-        });
-
-        AJS.$(document).ready(function () {
-            AJS.$('select').auiSelect2();
-        });
     </script>
 }

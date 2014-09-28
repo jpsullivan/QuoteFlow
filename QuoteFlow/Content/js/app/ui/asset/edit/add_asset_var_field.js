@@ -1,5 +1,18 @@
-﻿QuoteFlow.UI.Asset.Edit.AddAssetVarField = QuoteFlow.Views.Base.extend({
+﻿"use strict";
 
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+var BaseView = require('../../../view');
+var AssetVarEditRow = require('../edit/asset_var_edit_row');
+var SelectAssetVarModal = require('../../catalog/select_asset_var_modal');
+
+/**
+ *
+ */
+var AddAssetVarField = BaseView.extend({
     el: ".aui-page-panel-content",
 
     options: {
@@ -10,20 +23,21 @@
         "click #add_asset_var": "showAssetVarFieldSelectionModal"
     },
 
-    presenter: function () {
+    presenter: function() {
         return _.extend(this.defaultPresenter(), {
+        
         });
     },
 
-    initialize: function (options) {
+    initialize: function(options) {
         this.options = options || {};
     },
 
-    postRenderTemplate: function () { },
+    postRenderTemplate: function() {},
 
-    getAssetVarSelectionModalView: function () {
+    getAssetVarSelectionModalView: function() {
         // todo: dispose the existing modal object if exists
-        return new QuoteFlow.UI.Catalog.SelectAssetVarModal({
+        return new SelectAssetVarModal({
             okFunc: this.addAssetVarRow
         });
     },
@@ -31,7 +45,7 @@
     /**
      * Displays the asset var modal window.
      */
-    showAssetVarFieldSelectionModal: function (e) {
+    showAssetVarFieldSelectionModal: function(e) {
         e.preventDefault();
 
         // forcefull render the select asset var modal to reset form fields
@@ -43,16 +57,18 @@
     /**
      * Adds an asset var row based on the select asset var modal result.
      */
-    addAssetVarRow: function (assetVar) {
+    addAssetVarRow: function(assetVar) {
         if (assetVar === null) {
             // todo: throw some kind of validation failure
         }
 
-        var view = new QuoteFlow.UI.Asset.Edit.AssetVarEditRow({
+        var view = new AssetVarEditRow({
             assetVarNames: this.options.assetVarNames,
             assetVar: assetVar
         });
 
         //this.assetVarFieldsList.append(view.render().el);
     }
-})
+});
+
+module.exports = AddAssetVarField;

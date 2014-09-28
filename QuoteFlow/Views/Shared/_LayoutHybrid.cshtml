@@ -1,4 +1,6 @@
 ﻿@using QuoteFlow.Html
+@using QuoteFlow.Infrastructure.Extensions
+@using StackExchange.Profiling
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,13 +24,26 @@
         @Html.Partial("_Footer")
     </div>
 
-    @Scripts.Render("~/bundles/js_lib", "~/bundles/js_app")
+    @*    @Scripts.Render("~/bundles/js_lib", "~/bundles/js_app")*@
+    @*    @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)*@
+    @*    <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->*@
+    @*    @RenderSection("scripts", false)*@
+
+    <script>
+        // set the global application vars
+        window.siteRoot = '@Url.SiteRoot()';
+        window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
+        window.currentOrganization = '@CurrentOrganization.Id.ToString()';
+        window.currentUser = @ViewHelpers.JsEncode(CurrentUser);
+    </script>
+
+    <script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>
     @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
-    <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->
     @RenderSection("scripts", false)
-
-    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
-
+    @RenderSection("bootstrap", false)
+    @Html.RenderJsBundle("bundle.js", BundleOptions.BuildConfigDependent)
     @RenderSection("secondaryScripts", false)
+
+    @MiniProfiler.RenderIncludes()
 </body>
 </html>

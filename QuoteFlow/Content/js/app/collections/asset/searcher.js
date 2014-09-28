@@ -300,7 +300,13 @@
         if (b) {
             a += "&" + b;
         }
-        this._activeSearcherReq = AJS.$.ajax({ url: contextPath + "/secure/QueryComponent!Default.jspa", headers: { "X-SITEMESH-OFF": true }, type: "POST", data: a, processData: false });
+        this._activeSearcherReq = AJS.$.ajax({
+            url: contextPath + "/secure/QueryComponent!Default.jspa",
+            headers: { "X-SITEMESH-OFF": true },
+            type: "POST",
+            data: a,
+            processData: false
+        });
         this._activeSearcherReq.done(_.bind(function (c) {
             this._onQuerySearchersAndValues(c);
         }, this));

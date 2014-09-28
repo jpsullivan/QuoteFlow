@@ -1,4 +1,20 @@
-﻿QuoteFlow.UI.Catalog.SelectAssetVarModal = QuoteFlow.Views.Base.extend({
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var moment = require('moment');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+var BaseView = require('../../view');
+
+var AssetVarCollection = require('../../collections/asset_vars');
+var AssetVarModel = require('../../models/asset_var');
+
+/**
+ *
+ */
+var SelectAssetVarModal = BaseView.extend({
     templateName: "catalog/select-asset-var-modal",
 
     options: {
@@ -7,13 +23,13 @@
 
     events: {},
 
-    presenter: function () {
+    presenter: function() {
         return _.extend(this.defaultPresenter(), {
             assetVars: this.assetVars.toJSON()
         });
     },
 
-    initialize: function (options) {
+    initialize: function(options) {
         // so we can use options throughout each function
         this.options = options || {};
 
@@ -23,10 +39,10 @@
         this.assetVars = this.fetchAssetVars();
     },
 
-    postRenderTemplate: function () {
+    postRenderTemplate: function() {
         var self = this;
 
-        _.defer(function () {
+        _.defer(function() {
             self.modalAJS = AJS.dialog2("#asset_var_selection_modal");
             self.assetVarsDropdown = AJS.$('#select_asset_var').auiSelect2();
 
@@ -38,7 +54,7 @@
     },
 
     fetchAssetVars: function() {
-        var assetVars = new QuoteFlow.Collection.AssetVars();
+        var assetVars = new AssetVarCollection();
         assetVars.fetch({
             data: $.param({ id: QuoteFlow.CurrentOrganizationId }),
             async: false
@@ -47,14 +63,14 @@
         return assetVars;
     },
 
-    showModal: function () {
+    showModal: function() {
         var self = this;
         _.defer(function() {
             self.modalAJS.show();
         });
     },
 
-    closeModal: function () {
+    closeModal: function() {
         AJS.dialog2("#asset_var_selection_modal").hide();
         this.remove();
         AJS.dialog2("#asset_var_selection_modal").remove();
@@ -81,9 +97,9 @@
         this.closeModal();
     },
 
-    newAssetVarKeypressHandler: function (e) {
+    newAssetVarKeypressHandler: function(e) {
         var el = $(e.currentTarget);
-        
+
         if (el.val() !== "") {
             this.disableAssetVarsDropdown();
         } else {
@@ -110,7 +126,7 @@
             // todo: return failed validation because assetvar already exists
         }
 
-        var assetVar = new QuoteFlow.Model.AssetVar({
+        var assetVar = new AssetVarModel({
             Name: assetVarName,
             Description: null,
             ValueType: "String",
@@ -130,4 +146,6 @@
     getSelectedExistingAssetVar: function() {
         return this.assetVarsDropdown.val();
     }
-})
+});
+
+module.exports = SelectAssetVarModal;

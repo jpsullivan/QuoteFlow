@@ -99,14 +99,19 @@ namespace QuoteFlow.Controllers
                     // Absolutely no org associated with this session; use the default
                     if (_currentOrganization == null)
                     {
-                        var user = GetCurrentUser();
-                        if (user == null)
+                        User user;
+                        try
                         {
+                            user = GetCurrentUser();
+                        }
+                        catch (Exception)
+                        {
+                            // swallow the exception
                             // both current org and user are null, then return null I guess
                             return null;
                         }
 
-                        var organizationUsers = OrganizationService.GetOrganizations(GetCurrentUser().Id);
+                        var organizationUsers = OrganizationService.GetOrganizations(user.Id);
                         if (organizationUsers == null) {
                             // no organizations for this user... this shouldn't have been possible.
                             throw new UnauthorizedAccessException("No organizations found for this user.");

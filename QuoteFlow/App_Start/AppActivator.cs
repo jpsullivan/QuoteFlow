@@ -77,7 +77,6 @@ namespace QuoteFlow
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             // Set up MVC routes so our app URLs actually work
             // IMPORTANT: This must be called last as far as routing goes
