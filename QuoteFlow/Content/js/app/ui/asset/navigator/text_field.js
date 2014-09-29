@@ -1,4 +1,21 @@
-﻿QuoteFlow.UI.Asset.Navigator.TextField = QuoteFlow.Views.Base.extend({
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+// Data Layer
+var NavigationCriteria = require('./criteria');
+var CriteriaModel = require('../../../models/asset/criteria');
+
+// UI Components
+var BaseView = require('../../../view');
+
+/**
+ *
+ */
+var NavigatorTextField = BaseView.extend({
     el: '.text-query-container input',
 
     events: {
@@ -38,3 +55,5 @@
         }
     }
 });
+
+module.exports = NavigatorTextField;

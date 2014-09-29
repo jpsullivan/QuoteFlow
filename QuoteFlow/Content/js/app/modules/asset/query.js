@@ -1,52 +1,66 @@
-﻿QuoteFlow.Module.Asset.Query = Brace.Evented.extend({
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+var Brace = require('backbone-brace');
+Backbone.$ = $;
+
+var BasicQueryModule = require('./basic_query');
+var JqlQueryModule = require('./jql_query');
+
+/**
+ * 
+ */
+var AssetQueryModule = Brace.Evented.extend({
     namedEvents: ["jqlChanged", "jqlTooComplex", "jqlError", "jqlSuccess", "searchRequested", "queryTooComplexSwitchToAdvanced", "changedPreferredSearchMode", "basicModeCriteriaCountWhenSearching", "verticalResize", "initialized"],
 
-    initialize: function (options) {
+    initialize: function(options) {
         this.queryStateModel = options.queryStateModel;
         var queryState = this.queryStateModel;
 
-        this.queryStateModel.on("change:preferredSearchMode", _.bind(function () {
+        this.queryStateModel.on("change:preferredSearchMode", _.bind(function() {
             this.triggerChangedPreferredSearchMode(queryState.getPreferredSearchMode());
         }, this));
 
-        this._jqlQueryModule = new QuoteFlow.Module.Asset.JqlQuery({
-             queryStateModel: this.queryStateModel
-        })
-        .onSearchRequested(this.handleAdvancedSearchRequested, this)
-        .onVerticalResize(this.triggerVerticalResize, this);
+        this._jqlQueryModule = new JqlQueryModule({
+                queryStateModel: this.queryStateModel
+            })
+            .onSearchRequested(this.handleAdvancedSearchRequested, this)
+            .onVerticalResize(this.triggerVerticalResize, this);
 
         this._errors = {};
         this._errors[this.queryStateModel.BASIC_SEARCH] = [];
         this._errors[this.queryStateModel.ADVANCED_SEARCH] = [];
         this.queryStateModel.on("change:searchMode", this.showSearchErrors, this);
 
-        this._basicQueryModule = new QuoteFlow.Module.Asset.BasicQuery({
-            queryStateModel: this.queryStateModel,
-            primaryClauses: options.primaryClauses,
-            initialSearcherCollectionState: options.searchers
-        })
-        .onSearchRequested(this.clearSearchErrors, this)
-        .onJqlTooComplex(this.handleJqlTooComplex, this)
-        .onSearchRequested(this.handleSearchRequested, this)
-        .onVerticalResize(this.triggerVerticalResize, this)
-        .onBasicModeCriteriaCountWhenSearching(this.triggerBasicModeCriteriaCountWhenSearching, this);
+        this._basicQueryModule = new BasicQueryModule({
+                queryStateModel: this.queryStateModel,
+                primaryClauses: options.primaryClauses,
+                initialSearcherCollectionState: options.searchers
+            })
+            .onSearchRequested(this.clearSearchErrors, this)
+            .onJqlTooComplex(this.handleJqlTooComplex, this)
+            .onSearchRequested(this.handleSearchRequested, this)
+            .onVerticalResize(this.triggerVerticalResize, this)
+            .onBasicModeCriteriaCountWhenSearching(this.triggerBasicModeCriteriaCountWhenSearching, this);
     },
 
-    refreshLayout: function () {
+    refreshLayout: function() {
         this._jqlQueryModule.setQuery();
     },
 
-    handleAdvancedSearchRequested: function (a) {
+    handleAdvancedSearchRequested: function(a) {
         this.handleSearchRequested(a);
         this._basicQueryModule.queryChanged();
     },
 
-    handleSearchRequested: function (a) {
+    handleSearchRequested: function(a) {
         this.queryStateModel.setJql(a);
         this.clearSearchErrors();
     },
 
-    handleJqlTooComplex: function (a) {
+    handleJqlTooComplex: function(a) {
         if (this.getSearchMode() !== this.queryStateModel.ADVANCED_SEARCH) {
             this.triggerQueryTooComplexSwitchToAdvanced();
         }
@@ -57,21 +71,21 @@
         }
     },
 
-    getJql: function () {
+    getJql: function() {
         return this.queryStateModel.getJql();
     },
 
-    getSearcherCollection: function () {
+    getSearcherCollection: function() {
         return this._basicQueryModule.searcherCollection;
     },
 
-    isBasicMode: function () {
+    isBasicMode: function() {
         return this.queryStateModel.getSearchMode() === this.queryStateModel.BASIC_SEARCH;
     },
 
-    resetToQuery: function (a, b) {
+    resetToQuery: function(a, b) {
         this.clearSearchErrors();
-        return this._basicQueryModule.queryReset(a).always(_.bind(function () {
+        return this._basicQueryModule.queryReset(a).always(_.bind(function() {
             this.queryStateModel.switchToPreferredSearchMode();
             this._jqlQueryModule.setQuery();
             if (b && b.focusQuery === true) {
@@ -84,35 +98,35 @@
         }, this));
     },
 
-    publishJqlChanges: function (a) {
+    publishJqlChanges: function(a) {
         this.triggerJqlChanged(a);
     },
 
-    setVisible: function (a) {
+    setVisible: function(a) {
         this._queryView.setVisible(a);
     },
 
-    queryChanged: function () {
+    queryChanged: function() {
         this.clearSearchErrors();
         this._basicQueryModule.queryChanged();
     },
 
-    onSearchSuccess: function (a) {
+    onSearchSuccess: function(a) {
         if (this._queryView) {
             this._queryView.showWarnings(a);
         }
         this.triggerJqlSuccess();
     },
 
-    searchersReady: function () {
+    searchersReady: function() {
         return this._basicQueryModule.searchersReady();
     },
 
-    onSearchError: function (b) {
+    onSearchError: function(b) {
         this._errors.renderFunction = "showErrors";
         var c = (b.errorMessages) ? b.errorMessages.concat() : [];
         var a = [];
-        _.each(b.errors, function (e, d) {
+        _.each(b.errors, function(e, d) {
             if (d === "jql") {
                 a.push(e);
             } else {
@@ -128,7 +142,7 @@
         this.triggerJqlError();
     },
 
-    showSearchErrors: function () {
+    showSearchErrors: function() {
         if (this._queryView) {
             this._queryView.clearNotifications();
             var a = this._errors.renderFunction || "showErrors";
@@ -136,7 +150,7 @@
         }
     },
 
-    clearSearchErrors: function () {
+    clearSearchErrors: function() {
         if (this._queryView) {
             this._queryView.clearNotifications();
             this._queryView.switcherViewModel.enableSwitching();
@@ -145,15 +159,15 @@
         this._errors[this.queryStateModel.ADVANCED_SEARCH].length = 0;
     },
 
-    getSearchMode: function () {
+    getSearchMode: function() {
         return this.queryStateModel.getSearchMode();
     },
 
-    getActiveBasicModeSearchers: function () {
+    getActiveBasicModeSearchers: function() {
         return this._basicQueryModule.getSelectedCriteria();
     },
 
-    setSearchMode: function (a) {
+    setSearchMode: function(a) {
         if (this.getSearchMode() !== a) {
             this.queryStateModel.switchToSearchMode(a);
             return true;
@@ -161,12 +175,14 @@
         return false;
     },
 
-    createAndRenderView: function (a) {
+    createAndRenderView: function(a) {
         this._queryView = new JIRA.Issues.QueryView({ el: a, queryStateModel: this.queryStateModel, basicQueryModule: this._basicQueryModule, jqlQueryModule: this._jqlQueryModule }).onVerticalResize(this.triggerVerticalResize, this);
         this._queryView.render();
     },
 
-    isQueryValid: function () {
+    isQueryValid: function() {
         return (this._errors && this._errors[this.queryStateModel.BASIC_SEARCH].length === 0 && this._errors[this.queryStateModel.ADVANCED_SEARCH].length === 0);
     }
-})
+});
+
+module.exports = AssetQueryModule;

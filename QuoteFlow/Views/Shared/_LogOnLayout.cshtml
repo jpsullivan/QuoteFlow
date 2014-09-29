@@ -37,11 +37,12 @@
 
     <script>
         // set the global application vars
-        window.siteRoot = '@Url.SiteRoot()';
+        window.rootUrl = '@Url.SiteRoot()';
         window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
     </script>
 
     <script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/lib/aui/aui-all.js")"></script>
     @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
     @RenderSection("scripts", false)
     @RenderSection("bootstrap", false)

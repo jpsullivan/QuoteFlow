@@ -1,4 +1,17 @@
-﻿QuoteFlow.UI.Asset.Navigator.AssetList = QuoteFlow.Views.Base.extend({
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+// UI Components
+var BaseView = require('../../../view');
+
+/**
+ *
+ */
+var AssetList = BaseView.extend({
     el: ".list-results-panel",
 
     options: {},
@@ -7,20 +20,21 @@
         "click .asset-list li": "assetClickHandler"
     },
 
-    presenter: function () {
+    presenter: function() {
         return _.extend(this.defaultPresenter(), {
+        
         });
     },
 
-    initialize: function (options) {},
+    initialize: function(options) {},
 
-    postRenderTemplate: function () { },
+    postRenderTemplate: function() {},
 
     /**
      * Selects an asset from the left navigation, loading its info
      * and rendering it on the details panel.
      */
-    assetClickHandler: function (e) {
+    assetClickHandler: function(e) {
         e.preventDefault();
         var el = $(e.currentTarget);
         this.$('.asset-list li').removeClass('focused');
@@ -30,4 +44,6 @@
 
         QuoteFlow.Vent.trigger('navigator:asset-details:load', assetId);
     }
-})
+});
+
+module.exports = AssetList;

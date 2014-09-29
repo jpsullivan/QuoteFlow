@@ -4,7 +4,7 @@ var $;
 window.jQuery = $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var BackboneBrace = required('backbone-brace');
+var BackboneBrace = require('backbone-brace');
 Backbone.$ = $;
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)
@@ -42,9 +42,10 @@ var QuoteFlow = {
     Views: {}
 };
 
+window.QuoteFlow = QuoteFlow;
+
 // App Dependencies
 var jquery_browser = require('jquery.browser'); // so that aui works
-var aui = require('aui');
 var Router = require('./router');
 
 // Helpers
@@ -59,7 +60,6 @@ var Application = {
      */
     initialize: function(rootUrl, applicationPath, currentOrgId, currentUser) {
         this.mapProperties();
-        this.initRouter();
 
         var parsedOrgId = parseInt(currentOrgId, 10);
         var parsedUserId;
@@ -77,12 +77,13 @@ var Application = {
 
         // register all the handlebars helpers
         ApplicationHelpers.initialize();
+        this.initRouter();
     },
 
     /**
      * 
      */
-    buildRootUrl: function() {
+    buildRootUrl: function(context) {
         if (context === "/") {
             return context;
         } else {

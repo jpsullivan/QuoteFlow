@@ -1,5 +1,6 @@
 ﻿"use strict";
 
+var _ = require('underscore');
 var HtmlSanitizer = require('html-sanitizer');
 var parseUri = require('parseuri');
 

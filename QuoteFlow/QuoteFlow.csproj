@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -22,7 +21,6 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
-    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -571,25 +569,56 @@
     <Content Include="Content\compiled\js\bundle.js" />
     <Content Include="Content\compiled\js\templates.min.js" />
     <Content Include="Content\css\lib\aui\arrow.png" />
-    <Content Include="Content\css\lib\aui\atlassian-icons.eot" />
     <Content Include="Content\css\lib\aui\atlassian-icons.svg" />
-    <Content Include="Content\css\lib\aui\atlassian-icons.ttf" />
-    <Content Include="Content\css\lib\aui\atlassian-icons.woff" />
     <Content Include="Content\css\lib\aui\aui-all.css" />
     <Content Include="Content\css\lib\aui\aui-experimental.css" />
-    <Content Include="Content\css\lib\aui\aui-ie.css" />
+    <Content Include="Content\css\lib\aui\aui-icon-close.png" />
+    <Content Include="Content\css\lib\aui\aui-icon-tools.gif" />
     <Content Include="Content\css\lib\aui\aui-ie9.css" />
+    <Content Include="Content\css\lib\aui\aui-toolbar-24px.png" />
     <Content Include="Content\css\lib\aui\aui.css" />
     <Content Include="Content\css\lib\aui\bg-000-trans20.png" />
     <Content Include="Content\css\lib\aui\bg-000-trans50.png" />
+    <Content Include="Content\css\lib\aui\bg-grippy.png" />
+    <Content Include="Content\css\lib\aui\core\icon-dropdown-active-d.png" />
+    <Content Include="Content\css\lib\aui\core\icon-dropdown-active.png" />
+    <Content Include="Content\css\lib\aui\core\icon-dropdown-d.png" />
+    <Content Include="Content\css\lib\aui\core\icon-dropdown.png" />
+    <Content Include="Content\css\lib\aui\core\icon-maximize-d.png" />
+    <Content Include="Content\css\lib\aui\core\icon-maximize.png" />
+    <Content Include="Content\css\lib\aui\core\icon-minimize-d.png" />
+    <Content Include="Content\css\lib\aui\core\icon-minimize.png" />
+    <Content Include="Content\css\lib\aui\core\icon-move-d.png" />
+    <Content Include="Content\css\lib\aui\core\icon-move.png" />
+    <Content Include="Content\css\lib\aui\core\icon-search.png" />
     <Content Include="Content\css\lib\aui\fav_off_16.png" />
     <Content Include="Content\css\lib\aui\fav_on_16.png" />
-    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.eot" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.svg" />
-    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
-    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
+    <Content Include="Content\css\lib\aui\forms\icon-date.png" />
+    <Content Include="Content\css\lib\aui\forms\icon-help.png" />
+    <Content Include="Content\css\lib\aui\forms\icon-range.png" />
+    <Content Include="Content\css\lib\aui\forms\icon-required.png" />
+    <Content Include="Content\css\lib\aui\forms\icon-users.png" />
     <Content Include="Content\css\lib\aui\forms\icons_form.gif" />
+    <Content Include="Content\css\lib\aui\icons\aui-icon-close.png" />
+    <Content Include="Content\css\lib\aui\icons\aui-icon-tools.gif" />
     <Content Include="Content\css\lib\aui\icons\aui-message-icon-sprite.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-dropdown-active-d.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-dropdown-active.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-dropdown-d.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-dropdown.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-maximize-d.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-maximize.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-minimize-d.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-minimize.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-move-d.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-move.png" />
+    <Content Include="Content\css\lib\aui\icons\core\icon-search.png" />
+    <Content Include="Content\css\lib\aui\icons\forms\icon-date.png" />
+    <Content Include="Content\css\lib\aui\icons\forms\icon-help.png" />
+    <Content Include="Content\css\lib\aui\icons\forms\icon-range.png" />
+    <Content Include="Content\css\lib\aui\icons\forms\icon-required.png" />
+    <Content Include="Content\css\lib\aui\icons\forms\icon-users.png" />
     <Content Include="Content\css\lib\aui\icons\messages\icon-close-inverted.png" />
     <Content Include="Content\css\lib\aui\icons\messages\icon-close.png" />
     <Content Include="Content\css\lib\aui\icons\messages\icon-error-white.png" />
@@ -616,9 +645,12 @@
     <Content Include="Content\css\lib\aui\images\icons\messages\icon-success.png" />
     <Content Include="Content\css\lib\aui\images\icons\messages\icon-warning.png" />
     <Content Include="Content\css\lib\aui\images\wait.gif" />
+    <Content Include="Content\css\lib\aui\messages\icon-close-inverted.png" />
+    <Content Include="Content\css\lib\aui\messages\icon-close.png" />
     <Content Include="Content\css\lib\aui\select2-spinner.gif" />
     <Content Include="Content\css\lib\aui\select2.png" />
     <Content Include="Content\css\lib\aui\select2x2.png" />
+    <Content Include="Content\css\lib\aui\toolbar\aui-toolbar-24px.png" />
     <Content Include="Content\css\lib\aui\wait.gif" />
     <Content Include="Content\images\get-started\birds-eye-view_2x.png" />
     <Content Include="Content\images\get-started\get-started_2x.png" />
@@ -644,6 +676,7 @@
     <Content Include="Content\js\app\modules\asset\query.js" />
     <Content Include="Content\js\app\modules\asset\jql_query.js" />
     <Content Include="Content\js\app\pages\asset.js" />
+    <Content Include="Content\js\app\pages\catalog.js" />
     <Content Include="Content\js\app\router.js" />
     <Content Include="Content\js\app\ui\asset\asset_navigator.js" />
     <Content Include="Content\js\app\ui\asset\edit.js" />
@@ -658,6 +691,7 @@
     <Content Include="Content\js\app\ui\asset\navigator\text_field.js" />
     <Content Include="Content\js\app\ui\asset\navigator\toolbar.js" />
     <Content Include="Content\js\app\ui\asset\show.js" />
+    <Content Include="Content\js\app\ui\catalog\show_interactive.js" />
     <Content Include="Content\js\app\ui\catalog\import_asset_var_row.js" />
     <Content Include="Content\js\app\ui\catalog\import_set_fields.js" />
     <Content Include="Content\js\app\ui\catalog\import_set_optional_fields.js" />
@@ -865,6 +899,12 @@
       <DependentUpon>get-started.css</DependentUpon>
     </Content>
     <Content Include="Content\compiled\js\bundle.js.map" />
+    <Content Include="Content\css\lib\aui\atlassian-icons.eot" />
+    <Content Include="Content\css\lib\aui\atlassian-icons.ttf" />
+    <Content Include="Content\css\lib\aui\atlassian-icons.woff" />
+    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.eot" />
+    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
+    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -989,7 +1029,6 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

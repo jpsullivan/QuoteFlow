@@ -1,4 +1,11 @@
-﻿QuoteFlow.Components.Query = function() {
+﻿"use strict";
+
+var _ = require('underscore');
+
+var AssetQueryModule = require('../modules/asset/query');
+var AssetQueryStateModel = require('../models/asset/query');
+
+var QueryComponent = function () {
     var fields = {
         catalog: "Catalog",
         manufacturer: "Manufacturer",
@@ -38,10 +45,10 @@
                 }
             });
 
-            var queryModule = new QuoteFlow.Module.Asset.Query({
+            var queryModule = new AssetQueryModule({
                 primaryClauses: c.primaryClauses,
                 searchers: c.searchers,
-                queryStateModel: new QuoteFlow.Model.Asset.QueryState({
+                queryStateModel: new AssetQueryStateModel({
                     jql: c.jql,
                     without: c.without,
                     style: c.style,
@@ -64,4 +71,6 @@
             return queryModule;
         }
     }
-}();
+};
+
+module.exports = QueryComponent;

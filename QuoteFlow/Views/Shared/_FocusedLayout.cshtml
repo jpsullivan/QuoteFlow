@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui-all.css")" media="all">
     <!--[if lt IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie.css")" media="all"><![endif]-->
     <!--[if IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie9.css")" media="all"><![endif]-->
-    @Styles.Render("~/bundles/css_app")
+    @Html.RenderCssBundle("app.css", BundleOptions.BuildConfigDependent)
 </head>
 <body class="aui-layout aui-page-focused aui-page-focused-medium">
     <div id="page">
@@ -37,13 +37,14 @@
     
     <script>
         // set the global application vars
-        window.siteRoot = '@Url.SiteRoot()';
+        window.rootUrl = '@Url.SiteRoot()';
         window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
         window.currentOrganization = '@CurrentOrganization.Id.ToString()';
         window.currentUser = @ViewHelpers.JsEncode(CurrentUser);
     </script>
     
     <script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/lib/aui/aui-all.js")"></script>
     @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
     @RenderSection("scripts", false)
     @RenderSection("bootstrap", false)

@@ -8,17 +8,27 @@
     "email": "jaysche.sullivan@gmail.com"
   },
   "browser": {
-    "aui": "./QuoteFlow/Content/js/lib/aui/aui.js",
+    "aui": "./QuoteFlow/Content/js/lib/aui/aui-all.js",
+    "aui-dependencies": "./QuoteFlow/Content/js/lib/aui/aui-dependencies.js",
+    "aui-experimental": "./QuoteFlow/Content/js/lib/aui/aui-experimental.js",
     "backbone-brace": "./QuoteFlow/Content/js/lib/backbone-brace.min.js",
     "html-sanitizer": "./QuoteFlow/Content/js/lib/html-sanitizer-bundle.js",
     "jquery.browser": "./node_modules/jquery.browser/dist/jquery.browser.min.js",
-    "jquery-ui-sidebar": "./QuoteFlow/Content/js/components/jqui-widget_sidebar.js"
+    "jquery-scrollLock": "./QuoteFlow/Content/js/lib/jquery-scrolllock.min.js",
+    "jquery-ui-sidebar": "./QuoteFlow/Content/js/app/components/jqui-widget_sidebar.js",
+    "string-extensions": "./QuoteFlow/Content/js/app/extensions/string_extensions.js"
   },
   "browserify": {
     "transform": []
   },
   "browserify-shim": {
-    "aui": {},
+    "aui": {
+      "depends": [
+        "jquery:$",
+        "aui-dependencies",
+        "aui-experimental"
+      ]
+    },
     "backbone-brace": {
       "depends": [
         "backbone:Backbone"
@@ -30,11 +40,17 @@
         "jquery:$"
       ]
     },
+    "jquery-scrollLock": {
+      "depends": [
+        "jquery:$"
+      ]
+    },
     "jquery-ui-sidebar": {
       "depends": [
         "jquery-ui"
       ]
-    }
+    },
+    "string-extensions": {}
   },
   "devDependencies": {
     "browser-sync": "^1.5.1",
@@ -46,7 +62,7 @@
     "gulp-debug": "^1.0.1",
     "gulp-declare": "^0.1.0",
     "gulp-filesize": "0.0.6",
-    "gulp-handlebars": "^3.0.1",
+    "gulp-handlebars": "^2.2.0",
     "gulp-less": "^1.3.6",
     "gulp-newer": "^0.3.0",
     "gulp-notify": "^1.8.0",
@@ -67,6 +83,7 @@
   },
   "dependencies": {
     "JSON2": "^0.1.0",
+    "MD5": "^1.2.1",
     "backbone": "^1.1.2",
     "backbone.subroute": "^0.4.2",
     "handlebars": "^1.3.0",

@@ -1,5 +1,6 @@
 ﻿"use strict";
 
+var StringExtensions = require('string-extensions');
 var Utilities = require('./utilities');
 
 var Routes = {

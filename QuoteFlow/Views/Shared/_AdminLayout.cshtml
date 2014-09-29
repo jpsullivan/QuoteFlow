@@ -1,4 +1,6 @@
 ﻿@using QuoteFlow.Html
+@using QuoteFlow.Infrastructure.Extensions
+@using StackExchange.Profiling
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +11,7 @@
     <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui-all.css")" media="all">
     <!--[if lt IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie.css")" media="all"><![endif]-->
     <!--[if IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie9.css")" media="all"><![endif]-->
-    @Styles.Render("~/bundles/css_app")
+    @Html.RenderCssBundle("app.css", BundleOptions.BuildConfigDependent)
 </head>
 <body class="aui-layout">
     <div id="page">
@@ -30,13 +32,22 @@
         @Html.Partial("_Footer")
     </div>
 
-    @Scripts.Render("~/bundles/js_lib", "~/bundles/js_app")
+    <script>
+        // set the global application vars
+        window.rootUrl = '@Url.SiteRoot()';
+        window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
+        window.currentOrganization = '@CurrentOrganization.Id.ToString()';
+        window.currentUser = @ViewHelpers.JsEncode(CurrentUser);
+    </script>
+    
+    <script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/lib/aui/aui-all.js")"></script>
     @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
-    <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->
     @RenderSection("scripts", false)
-
-    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
-
+    @RenderSection("bootstrap", false)
+    @Html.RenderJsBundle("bundle.js", BundleOptions.BuildConfigDependent)
     @RenderSection("secondaryScripts", false)
+
+    @MiniProfiler.RenderIncludes()
 </body>
 </html>

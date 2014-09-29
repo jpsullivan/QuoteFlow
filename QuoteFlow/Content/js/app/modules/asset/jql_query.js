@@ -1,4 +1,15 @@
-﻿QuoteFlow.Module.Asset.JqlQuery = Brace.Evented.extend({
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+var Brace = require('backbone-brace');
+Backbone.$ = $;
+
+/**
+ * 
+ */
+var AssetJqlQueryModule = Brace.Evented.extend({
     namedEvents: ["searchRequested", "verticalResize"],
 
     initialize: function(a) {
@@ -26,3 +37,5 @@
         this.view.setQuery();
     }
 });
+
+module.exports = AssetJqlQueryModule;

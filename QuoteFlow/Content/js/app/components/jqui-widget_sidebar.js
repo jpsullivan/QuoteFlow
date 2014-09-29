@@ -1,4 +1,8 @@
-﻿/* module-key = 'com.atlassian.jira.jira-issue-nav-plugin:common', location = 'content/js/util/Sidebar.js' */
+﻿"use strict";
+
+var _ = require('underscore');
+
+/* module-key = 'com.atlassian.jira.jira-issue-nav-plugin:common', location = 'content/js/util/Sidebar.js' */
 /*!
  * jQuery UI Sidebar
  * http://jqueryui.com
@@ -108,4 +112,4 @@
             this._persist();
         }
     });
-})($);
+})(window.jQuery);

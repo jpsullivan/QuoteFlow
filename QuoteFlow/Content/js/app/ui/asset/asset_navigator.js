@@ -7,6 +7,9 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 Backbone.$ = $;
 
+// Components
+var Utilities = require('../../components/utilities');
+
 // Data Layer
 var AssetVarValueModel = require('../../models/asset_var_value');
 
@@ -41,7 +44,7 @@ var AssetNavigator = BaseView.extend({
         _.bindAll(this, "adjustHeight");
 
         // initialize the resize triggers
-        QuoteFlow.Utilities.initializeResizeHooks();
+        Utilities.initializeResizeHooks();
         QuoteFlow.Interactive.onVerticalResize(this.adjustHeight);
 
         // subviews

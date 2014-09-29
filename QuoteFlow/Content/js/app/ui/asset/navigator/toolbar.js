@@ -1,19 +1,41 @@
-﻿QuoteFlow.UI.Asset.Navigator.Toolbar = QuoteFlow.Views.Base.extend({
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+// Components
+var QueryComponent = require('../../../components/query');
+
+// Data Layer
+var AssetNavigatorModel = require('../../../models/asset/navigator');
+
+// UI Components
+var BaseView = require('../../../view');
+var NavigatorTextField = require('./text_field');
+var PrimaryCriteriaContainer = require('./primary_criteria_container');
+
+/**
+ *
+ */
+var NavigatorToolbar = BaseView.extend({
     el: ".navigator-search",
 
     options: {},
 
     events: {},
 
-    presenter: function () {
+    presenter: function() {
         return _.extend(this.defaultPresenter(), {
+        
         });
     },
 
-    initialize: function (options) {
+    initialize: function(options) {
         _.bindAll(this, 'manufacturerClickHandler');
 
-        var query = QuoteFlow.Components.Query.create({
+        var query = QueryComponent().create({
             searchers: {
                 searchers: {
                     groups: [
@@ -48,19 +70,19 @@
 
         if (_.isUndefined(this.model)) {
             // initialize an empty model anyway
-            this.model = new QuoteFlow.Model.Asset.Navigator();
+            this.model = new AssetNavigatorModel();
         }
 
         this.initManufacturerDropdownClickHandlers();
         this.initManufacturersFilter();
 
-        this.primaryCriteriaContainerView = new QuoteFlow.UI.Asset.Navigator.PrimaryCriteriaContainer({ collection: query._basicQueryModule.searcherCollection });
-        this.textFieldView = new QuoteFlow.UI.Asset.Navigator.TextField({ collection: query._basicQueryModule.searcherCollection });
+        this.primaryCriteriaContainerView = new PrimaryCriteriaContainer({ collection: query._basicQueryModule.searcherCollection });
+        this.textFieldView = new NavigatorTextField({ collection: query._basicQueryModule.searcherCollection });
 
         this.listenTo(this.model, 'change:selectedManufacturers', this.updateManufacturerButtonTitle);
     },
 
-    postRenderTemplate: function () { },
+    postRenderTemplate: function() {},
 
     /**
      * Initialize the click handler for dropdown items. This occurs here
@@ -102,11 +124,11 @@
         var worker = $("#manufacturers_filter .check-list-field"),
             manufacturers = $("#manufacturers_filter .check-list-item");
 
-        worker.keyup(function () {
+        worker.keyup(function() {
             var text = $(this).val();
             if (text === "") {
                 // show all manufacturers
-                manufacturers.each(function (i, v) {
+                manufacturers.each(function(i, v) {
                     var $el = $(v);
                     $el.removeClass('hidden');
                 });
@@ -114,7 +136,7 @@
             }
 
             // perform the filter logic
-            manufacturers.each(function (i, v) {
+            manufacturers.each(function(i, v) {
                 var $el = $(v);
                 var title = $('.item-label', $el).attr('title');
 
@@ -132,11 +154,11 @@
     /**
      * Handles when a manufacturer from the popup is selected (or deselected).
      */
-    manufacturerClickHandler: function (e) {
+    manufacturerClickHandler: function(e) {
         var el = $('input', $(e.currentTarget)), parent = $(e.currentTarget);
         var manufacturer = parent.attr('title');
 
-        if(el.is(':checked')) {
+        if (el.is(':checked')) {
             // add the mfg to the selected list
             this.model.addManufacturer(manufacturer);
             return;
@@ -153,7 +175,7 @@
      * names, adding them to the button text. If none are selected, 
      * the text just says, "All".
      */
-    updateManufacturerButtonTitle: function () {
+    updateManufacturerButtonTitle: function() {
         var title = "All", button = $('button[data-id="manufacturers"]');
 
         var selectedManufacturers = this.model.get('selectedManufacturers');
@@ -163,4 +185,6 @@
 
         $('.selected-criteria', button).html(title);
     }
-})
+});
+
+module.exports = NavigatorToolbar;

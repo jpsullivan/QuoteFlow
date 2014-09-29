@@ -1,5 +1,6 @@
 ﻿"use strict";
 
+var md5 = require('MD5');
 var moment = require('moment');
 var Routes = require('../components/routes');
 
@@ -72,7 +73,7 @@ var ApplicationHelpers = {
             var email = context;
             var size = (typeof (options.hash.size) === "undefined") ? 32 : options.hash.size;
 
-            return "http://www.gravatar.com/avatar/" + MD5(email) + "?s=" + size;
+            return "http://www.gravatar.com/avatar/" + md5(email) + "?s=" + size;
         });
 
         // Converts a decimal to a percentage (including the % sign)

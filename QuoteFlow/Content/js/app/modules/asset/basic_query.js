@@ -1,9 +1,22 @@
-﻿QuoteFlow.Module.Asset.BasicQuery = Brace.Evented.extend({
+﻿"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+var Brace = require('backbone-brace');
+Backbone.$ = $;
+
+var SearcherCollection = require('../../collections/asset/searcher');
+
+/**
+ * 
+ */
+var AssetBasicQueryModule = Brace.Evented.extend({
     namedEvents: ["jqlTooComplex", "searchRequested", "basicModeCriteriaCountWhenSearching", "verticalResize"],
 
     initialize: function(a) {
         this._queryStateModel = a.queryStateModel;
-        this.searcherCollection = new QuoteFlow.Collection.Asset.Searcher([], {
+        this.searcherCollection = new SearcherCollection([], {
             fixedLozenges: a.primaryClauses,
             queryStateModel: a.queryStateModel,
             initData: a.initialSearcherCollectionState
@@ -66,3 +79,5 @@
         return a;
     }
 });
+
+module.exports = AssetBasicQueryModule;

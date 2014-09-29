@@ -3,6 +3,7 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
+var Brace = require('backbone-brace');
 Backbone.$ = $;
 
 var AssetSearcherModel = require('../../models/asset/searcher');

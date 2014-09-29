@@ -23,13 +23,7 @@ var AssetPage = BaseView.extend({
 
     presenter: function () { },
 
-    initialize: function () {
-        var data = window.assetDetailsHeaderData;
-        if (data) {
-            var headerView = new AssetDetailsHeader(data);
-            var assetDetailsGrid = new AssetDetailsGrid();
-        }
-    },
+    initialize: function () {},
 
     postRenderTemplate: function () { },
 
@@ -47,11 +41,11 @@ var AssetPage = BaseView.extend({
         // get the bootstrapped data
         var data = window.editAssetData;
         if (data) {
-            var assetId = data.assetId;
+            var theAssetId = data.assetId;
             var assetVarNames = data.assetVarNames;
 
             var view = new EditAsset({
-                assetId: assetId,
+                assetId: theAssetId,
                 assetVarNames: assetVarNames
             });
         }
