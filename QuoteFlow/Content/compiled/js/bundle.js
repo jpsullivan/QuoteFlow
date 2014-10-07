@@ -403,8 +403,9 @@ var AssetSearcherCollection = Brace.Collection.extend({
         return a;
     },
 
-    _querySearchersByValue: function(d) {
-        var a = this.get(d);
+    _querySearchersByValue: function(componentName) {
+        var a = this.get(componentName);
+        debugger;
         var c = AJS.$.param({ decorator: "none", jqlContext: this.queryStateModel.getJql() });
         if (a) {
             var b = a.getQueryString();
@@ -1706,10 +1707,10 @@ var AssetQueryModule = Brace.Evented.extend({
         }, this));
 
         this._jqlQueryModule = new JqlQueryModule({
-                queryStateModel: this.queryStateModel
-            })
-            .onSearchRequested(this.handleAdvancedSearchRequested, this)
-            .onVerticalResize(this.triggerVerticalResize, this);
+            queryStateModel: this.queryStateModel
+        })
+        .onSearchRequested(this.handleAdvancedSearchRequested, this)
+        .onVerticalResize(this.triggerVerticalResize, this);
 
         this._errors = {};
         this._errors[this.queryStateModel.BASIC_SEARCH] = [];
@@ -1717,15 +1718,15 @@ var AssetQueryModule = Brace.Evented.extend({
         this.queryStateModel.on("change:searchMode", this.showSearchErrors, this);
 
         this._basicQueryModule = new BasicQueryModule({
-                queryStateModel: this.queryStateModel,
-                primaryClauses: options.primaryClauses,
-                initialSearcherCollectionState: options.searchers
-            })
-            .onSearchRequested(this.clearSearchErrors, this)
-            .onJqlTooComplex(this.handleJqlTooComplex, this)
-            .onSearchRequested(this.handleSearchRequested, this)
-            .onVerticalResize(this.triggerVerticalResize, this)
-            .onBasicModeCriteriaCountWhenSearching(this.triggerBasicModeCriteriaCountWhenSearching, this);
+            queryStateModel: this.queryStateModel,
+            primaryClauses: options.primaryClauses,
+            initialSearcherCollectionState: options.searchers
+        })
+        .onSearchRequested(this.clearSearchErrors, this)
+        .onJqlTooComplex(this.handleJqlTooComplex, this)
+        .onSearchRequested(this.handleSearchRequested, this)
+        .onVerticalResize(this.triggerVerticalResize, this)
+        .onBasicModeCriteriaCountWhenSearching(this.triggerBasicModeCriteriaCountWhenSearching, this);
     },
 
     refreshLayout: function() {

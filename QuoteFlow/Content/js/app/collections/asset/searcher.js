@@ -250,8 +250,9 @@ var AssetSearcherCollection = Brace.Collection.extend({
         return a;
     },
 
-    _querySearchersByValue: function(d) {
-        var a = this.get(d);
+    _querySearchersByValue: function(componentName) {
+        var a = this.get(componentName);
+        debugger;
         var c = AJS.$.param({ decorator: "none", jqlContext: this.queryStateModel.getJql() });
         if (a) {
             var b = a.getQueryString();
