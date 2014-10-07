@@ -30,11 +30,15 @@ var AssetBasicQueryModule = Brace.Evented.extend({
 //            .onSearchRequested(this.triggerSearchRequested, this);
 
         var searcherCollection = this.searcherCollection;
+
         this.searcherCollection.onSearchRequested(_.bind(function(b) {
-            this.triggerBasicModeCriteriaCountWhenSearching({ count: searcherCollection.getAllSelectedCriteriaCount() });
+            this.triggerBasicModeCriteriaCountWhenSearching({
+                 count: searcherCollection.getAllSelectedCriteriaCount()
+            });
             var c = this._attachOrderByClause(b);
             this.triggerSearchRequested(c);
         }, this));
+
         this.searcherCollection.onJqlTooComplex(_.bind(function(b) {
             this.triggerJqlTooComplex(b);
         }, this));

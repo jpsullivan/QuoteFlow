@@ -154,3 +154,5 @@ $RECYCLE.BIN/
 # Uploads
 QuoteFlow/App_Data/Files/manufacturer-logos
 QuoteFlow/App_Data/Files/uploads
+QuoteFlow/Content/compiled/js/bundle.js
+QuoteFlow/Content/compiled/js/bundle.js.map
