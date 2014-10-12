@@ -384,16 +384,16 @@ var AssetSearcherCollection = Brace.Collection.extend({
     },
 
     searcherAffectsContext: function(a) {
-        return "project" === a || "issuetype" === a;
+        return "catalog" === a || "manufacturer" === a;
     },
 
-    createOrUpdateClauseWithQueryString: function(c, b) {
+    createOrUpdateClauseWithQueryString: function(criteria, b) {
         this.triggerRequestUpdateFromView();
         var a;
-        if (this.searcherAffectsContext(c)) {
+        if (this.searcherAffectsContext(criteria)) {
             a = this._querySearchersAndValues(this.getQueryString());
         } else {
-            a = this._querySearchersByValue(c);
+            a = this._querySearchersByValue(criteria);
         }
         a.done(_.bind(function() {
             if ((this.queryStateModel.getBasicAutoUpdate() || b)) {
@@ -457,17 +457,17 @@ var AssetSearcherCollection = Brace.Collection.extend({
         return a;
     },
 
-    _querySearchersAndValues: function(b) {
+    _querySearchersAndValues: function(queryString) {
         var a = "decorator=none";
         if (this._activeSearcherReq) {
-            if (this._activeSearcherQuery === b) {
+            if (this._activeSearcherQuery === queryString) {
                 return jQuery.Deferred().reject();
             }
             this._activeSearcherReq.abort();
         }
-        this._activeSearcherQuery = b;
-        if (b) {
-            a += "&" + b;
+        this._activeSearcherQuery = queryString;
+        if (queryString) {
+            a += "&" + queryString;
         }
         this._activeSearcherReq = AJS.$.ajax({
             url: contextPath + "/secure/QueryComponent!Default.jspa",
@@ -1587,11 +1587,15 @@ var AssetBasicQueryModule = Brace.Evented.extend({
 //            .onSearchRequested(this.triggerSearchRequested, this);
 
         var searcherCollection = this.searcherCollection;
+
         this.searcherCollection.onSearchRequested(_.bind(function(b) {
-            this.triggerBasicModeCriteriaCountWhenSearching({ count: searcherCollection.getAllSelectedCriteriaCount() });
+            this.triggerBasicModeCriteriaCountWhenSearching({
+                 count: searcherCollection.getAllSelectedCriteriaCount()
+            });
             var c = this._attachOrderByClause(b);
             this.triggerSearchRequested(c);
         }, this));
+
         this.searcherCollection.onJqlTooComplex(_.bind(function(b) {
             this.triggerJqlTooComplex(b);
         }, this));
@@ -2776,8 +2780,19 @@ var NavigatorTextField = BaseView.extend({
         }, this));
 
         this.collection.onTextFieldChanged(this.render);
-        this.collection.onRequestUpdateFromView(this._updateSearcherCollectionTextField);
-        this.collection.onInteractiveChanged(this._handleInteractiveChanged);
+        this.collection.onRequestUpdateFromView(this.updateSearcherCollectionTextField);
+        this.collection.onInteractiveChanged(this.handleInteractiveChanged);
+    },
+
+    render: function() {
+        var a = this.collection.get(this.collection.QUERY_ID);
+        if (a) {
+            var c = a.getEditHtml();
+            var b = AJS.$("<div></div>").html(c || "").text();
+            this.setQuery(b);
+        } else {
+            this.setQuery("");
+        }
     },
 
     handleKeypress: function (e) {
@@ -2797,6 +2812,10 @@ var NavigatorTextField = BaseView.extend({
             var query = AJS.$.trim(this.$el.val());
             this.collection.updateTextQuery(query);
         }
+    },
+
+    handleInteractiveChanged: function (a) {
+        this.$el.prop("disabled", !a);
     }
 });
 

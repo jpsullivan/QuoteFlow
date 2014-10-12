@@ -231,16 +231,16 @@ var AssetSearcherCollection = Brace.Collection.extend({
     },
 
     searcherAffectsContext: function(a) {
-        return "project" === a || "issuetype" === a;
+        return "catalog" === a || "manufacturer" === a;
     },
 
-    createOrUpdateClauseWithQueryString: function(c, b) {
+    createOrUpdateClauseWithQueryString: function(criteria, b) {
         this.triggerRequestUpdateFromView();
         var a;
-        if (this.searcherAffectsContext(c)) {
+        if (this.searcherAffectsContext(criteria)) {
             a = this._querySearchersAndValues(this.getQueryString());
         } else {
-            a = this._querySearchersByValue(c);
+            a = this._querySearchersByValue(criteria);
         }
         a.done(_.bind(function() {
             if ((this.queryStateModel.getBasicAutoUpdate() || b)) {
@@ -304,17 +304,17 @@ var AssetSearcherCollection = Brace.Collection.extend({
         return a;
     },
 
-    _querySearchersAndValues: function(b) {
+    _querySearchersAndValues: function(queryString) {
         var a = "decorator=none";
         if (this._activeSearcherReq) {
-            if (this._activeSearcherQuery === b) {
+            if (this._activeSearcherQuery === queryString) {
                 return jQuery.Deferred().reject();
             }
             this._activeSearcherReq.abort();
         }
-        this._activeSearcherQuery = b;
-        if (b) {
-            a += "&" + b;
+        this._activeSearcherQuery = queryString;
+        if (queryString) {
+            a += "&" + queryString;
         }
         this._activeSearcherReq = AJS.$.ajax({
             url: contextPath + "/secure/QueryComponent!Default.jspa",

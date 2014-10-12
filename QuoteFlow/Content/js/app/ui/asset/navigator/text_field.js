@@ -32,8 +32,19 @@ var NavigatorTextField = BaseView.extend({
         }, this));
 
         this.collection.onTextFieldChanged(this.render);
-        this.collection.onRequestUpdateFromView(this._updateSearcherCollectionTextField);
-        this.collection.onInteractiveChanged(this._handleInteractiveChanged);
+        this.collection.onRequestUpdateFromView(this.updateSearcherCollectionTextField);
+        this.collection.onInteractiveChanged(this.handleInteractiveChanged);
+    },
+
+    render: function() {
+        var a = this.collection.get(this.collection.QUERY_ID);
+        if (a) {
+            var c = a.getEditHtml();
+            var b = AJS.$("<div></div>").html(c || "").text();
+            this.setQuery(b);
+        } else {
+            this.setQuery("");
+        }
     },
 
     handleKeypress: function (e) {
@@ -53,6 +64,10 @@ var NavigatorTextField = BaseView.extend({
             var query = AJS.$.trim(this.$el.val());
             this.collection.updateTextQuery(query);
         }
+    },
+
+    handleInteractiveChanged: function (a) {
+        this.$el.prop("disabled", !a);
     }
 });
 
