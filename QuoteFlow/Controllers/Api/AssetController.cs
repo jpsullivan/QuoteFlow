@@ -38,5 +38,8 @@ namespace QuoteFlow.Controllers.Api
             return new List<Asset>();
             // todo: search controller logic, implement search service
         }
+
+        [HttpGet]
+        public string QueryComponent()
     }
 }

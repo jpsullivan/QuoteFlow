@@ -1,0 +1,92 @@
+﻿using System.Collections.Generic;
+using System.Text;
+
+namespace QuoteFlow.Models.Search.Jql.Query.Clause
+{
+    /// <summary>
+    /// Used to represent a logical NOT in the query tree.
+    /// </summary>
+    public class NotClause : IClause
+    {
+        public const string NOT = "NOT";
+
+        private readonly IClause _subClause;
+
+        public NotClause(IClause subClause)
+        {
+            _subClause = subClause;
+        }
+
+        public virtual string Name
+        {
+            get
+            {
+                return NOT;
+            }
+        }
+
+        public virtual IEnumerable<IClause> Clauses
+        {
+            get
+            {
+                return new List<IClause> { _subClause };
+            }
+        }
+
+        //JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
+        //ORIGINAL LINE: public <R> R accept(final ClauseVisitor<R> visitor)
+        public virtual T Accept<T>(IClauseVisitor<T> visitor)
+        {
+            return visitor.Visit(this);
+        }
+
+        public virtual IClause SubClause
+        {
+            get
+            {
+                return _subClause;
+            }
+        }
+
+        public override string ToString()
+        {
+            var currentPrecedence = ClausePrecedence.GetPrecedence(this);
+            var subClausePrecedence = ClausePrecedence.GetPrecedence(_subClause);
+            var sb = (new StringBuilder(NOT)).Append(" ");
+            if (subClausePrecedence.Value < currentPrecedence.Value)
+            {
+                sb.Append("( ");
+            }
+
+            sb.Append(_subClause.ToString());
+
+            if (subClausePrecedence.Value < currentPrecedence.Value)
+            {
+                sb.Append(" )");
+            }
+
+            return sb.ToString();
+        }
+
+        public override bool Equals(object o)
+        {
+            if (this == o)
+            {
+                return true;
+            }
+            if (o == null || GetType() != o.GetType())
+            {
+                return false;
+            }
+
+            var notClause = (NotClause) o;
+
+            return _subClause.Equals(notClause._subClause);
+        }
+
+        public override int GetHashCode()
+        {
+            return _subClause.GetHashCode();
+        }
+    }
+}

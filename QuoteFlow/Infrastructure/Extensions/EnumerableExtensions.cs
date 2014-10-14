@@ -21,6 +21,21 @@ namespace QuoteFlow.Infrastructure.Extensions
             return list.Distinct(new StructEqualityComparer<T, TKey>(lookup));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static IList<T> AsSingletonList<T>(this IEnumerable<T> source)
+        {
+            foreach (var item in source)
+            {
+                return new System.Collections.ObjectModel.ReadOnlyCollection<T>(new T[] { item });
+            }
+            return new System.Collections.ObjectModel.ReadOnlyCollection<T>(new T[] { default(T) });
+        }
+
         class StructEqualityComparer<T, TKey> : IEqualityComparer<T> where TKey : struct
         {
             readonly Func<T, TKey> _lookup;
