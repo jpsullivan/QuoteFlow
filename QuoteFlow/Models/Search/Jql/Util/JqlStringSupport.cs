@@ -41,6 +41,9 @@ namespace QuoteFlow.Models.Search.Jql.Util
 
 		    STRING_ENCODE_MAPPING = encoderStringMapping;
 
+            //NOTE: Changing the contents of this method will change the strings that the JQL parser will parse, so think
+            // about the change you are about to make.
+            // Also, see TestReservedWords.java in the func_test project if you are going to make changes.
 		    var bldr = new List<string>();
             bldr.AddRange(new List<string> { "abort", "access", "add", "after", "alias", "all", "alter", "and", "any", "as", "asc" });
             bldr.AddRange(new List<string> { "audit", "avg", "before", "begin", "between", "boolean", "break", "by", "byte", "catch", "cf", "changed" });
@@ -60,32 +63,7 @@ namespace QuoteFlow.Models.Search.Jql.Util
             bldr.AddRange(new List<string> { "uid", "union", "unique", "update", "user", "validate", "values", "view", "was", "when", "whenever", "where" });
             bldr.AddRange(new List<string> { "while", "with" });
 
-		    var test = new StringBuilder();
-		    var shit = new HashSet<string> {"abort", "access"};
-            shit.
-
-			//NOTE: Changing the contents of this method will change the strings that the JQL parser will parse, so think
-			// about the change you are about to make.
-			// Also, see TestReservedWords.java in the func_test project if you are going to make changes.
-			CollectionBuilder<string> builder = CollectionBuilder.newBuilder();
-			builder.addAll("abort", "access", "add", "after", "alias", "all", "alter", "and", "any", "as", "asc");
-			builder.addAll("audit", "avg", "before", "begin", "between", "boolean", "break", "by", "byte", "catch", "cf", "changed");
-			builder.addAll("char", "character", "check", "checkpoint", "collate", "collation", "column", "commit", "connect", "continue");
-			builder.addAll("count", "create", "current", "date", "decimal", "declare", "decrement", "default", "defaults", "define", "delete");
-			builder.addAll("delimiter", "desc", "difference", "distinct", "divide", "do", "double", "drop", "else", "empty", "encoding");
-			builder.addAll("end", "equals", "escape", "exclusive", "exec", "execute", "exists", "explain", "false", "fetch", "file", "field");
-			builder.addAll("first", "float", "for", "from", "function", "go", "goto", "grant", "greater", "group", "having");
-			builder.addAll("identified", "if", "immediate", "in", "increment", "index", "initial", "inner", "inout", "input", "insert");
-			builder.addAll("int", "integer", "intersect", "intersection", "into", "is", "isempty", "isnull", "join", "last", "left");
-			builder.addAll("less", "like", "limit", "lock", "long", "max", "min", "minus", "mode", "modify");
-			builder.addAll("modulo", "more", "multiply", "next", "noaudit", "not", "notin", "nowait", "null", "number", "object");
-			builder.addAll("of", "on", "option", "or", "order", "outer", "output", "power", "previous", "prior", "privileges");
-			builder.addAll("public", "raise", "raw", "remainder", "rename", "resource", "return", "returns", "revoke", "right", "row");
-			builder.addAll("rowid", "rownum", "rows", "select", "session", "set", "share", "size", "sqrt", "start", "strict");
-			builder.addAll("string", "subtract", "sum", "synonym", "table", "then", "to", "trans", "transaction", "trigger", "true");
-			builder.addAll("uid", "union", "unique", "update", "user", "validate", "values", "view", "was", "when", "whenever", "where");
-			builder.addAll("while", "with");
-			RESERVED_WORDS = builder.asSet();
+            RESERVED_WORDS = new HashSet<string>(bldr);
 		}
 
 		private readonly JqlQueryParser parser;

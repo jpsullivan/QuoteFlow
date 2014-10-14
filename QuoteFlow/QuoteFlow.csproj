@@ -458,6 +458,7 @@
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\Search\Jql\Operand\JqlOperandResolver.cs" />
     <Compile Include="Models\Search\Jql\Operand\QueryLiteral.cs" />
+    <Compile Include="Models\Search\Jql\Parser\IJqlQueryParser.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\AndClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\ClausePrecedence.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\IChangedClause.cs" />
@@ -470,17 +471,28 @@
     <Compile Include="Models\Search\Jql\Query\Clause\ITerminalClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\Property.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\TerminalClause.cs" />
+    <Compile Include="Models\Search\Jql\Query\FilteredSearcherGroup.cs" />
     <Compile Include="Models\Search\Jql\Query\History\IHistoryPredicate.cs" />
     <Compile Include="Models\Search\Jql\Query\History\IPredicateVisitor.cs" />
     <Compile Include="Models\Search\Jql\Query\IQuery.cs" />
+    <Compile Include="Models\Search\Jql\Query\IQueryCreationContext.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\ILuceneQueryParserFactory.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\EmptyOperand.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\FunctionOperand.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\IOperand.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\IOperandVisitor.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\MultiValueOperand.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\SingleValueOperand.cs" />
     <Compile Include="Models\Search\Jql\Query\Operator.cs" />
     <Compile Include="Models\Search\Jql\Query\Query.cs" />
+    <Compile Include="Models\Search\Jql\Query\QueryCreationContext.cs" />
+    <Compile Include="Models\Search\Jql\Query\Searcher.cs" />
+    <Compile Include="Models\Search\Jql\Query\Searchers.cs" />
+    <Compile Include="Models\Search\Jql\SearchRendererValue.cs" />
+    <Compile Include="Models\Search\Jql\SearchRendererValueResults.cs" />
+    <Compile Include="Models\Search\Jql\SearchResults.cs" />
+    <Compile Include="Models\Search\Jql\Util\IJqlStringSupport.cs" />
+    <Compile Include="Models\Search\Jql\Util\JqlStringSupport.cs" />
     <Compile Include="Models\Search\SearchFilter.cs" />
     <Compile Include="Models\Search\SearchResult.cs" />
     <Compile Include="Models\Search\SortOrder.cs" />
@@ -522,6 +534,7 @@
     <Compile Include="QuoteController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\AssetSearchService.cs" />
     <Compile Include="Services\AssetService.cs" />
     <Compile Include="Services\AssetVarService.cs" />
     <Compile Include="Services\CatalogImportSummaryRecordsService.cs" />
@@ -538,6 +551,7 @@
     <Compile Include="Services\FileSystemService.cs" />
     <Compile Include="Services\FormsAuthenticationService.cs" />
     <Compile Include="Services\HttpContextCacheService.cs" />
+    <Compile Include="Services\Interfaces\IAssetSearchService.cs" />
     <Compile Include="Services\Interfaces\IAssetService.cs" />
     <Compile Include="Services\Interfaces\IAssetVarService.cs" />
     <Compile Include="Services\Interfaces\ICacheService.cs" />
