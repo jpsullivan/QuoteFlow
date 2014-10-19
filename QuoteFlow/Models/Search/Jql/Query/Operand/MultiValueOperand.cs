@@ -10,7 +10,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
     {
         public const string OPERAND_NAME = "MultiValueOperand";
 
-        private IList<IOperand> Values { get; set; } 
+        public IList<IOperand> Values { get; set; } 
 
         private const string LEFT_PAREN = "(";
 		private const string COMMA_SPACE = ", ";

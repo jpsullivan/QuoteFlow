@@ -9,7 +9,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
     /// </summary>
     public class OrClause : MultiClause
     {
-        private const string Or = "OR";
+        public const string Or = "OR";
 
         public OrClause(IList<IClause> clauses) : base(clauses)
         {

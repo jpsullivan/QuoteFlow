@@ -18,7 +18,7 @@
 
         /// <summary>
         /// Allows us to perform operations over the operand based on the passed in visitor. This calls the
-        /// visit method on the visitor with this reference.
+        /// Visit method on the visitor with this reference.
         /// </summary>
         T Accept<T>(IOperandVisitor<T> visitor);
     }

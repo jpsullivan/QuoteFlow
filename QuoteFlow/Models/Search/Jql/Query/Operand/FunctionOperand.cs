@@ -33,7 +33,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
         /// <summary>
         /// 
         /// </summary>
-        private IList<string> Args { get; set; }
+        public IList<string> Args { get; set; }
 
         public string DisplayString
         {

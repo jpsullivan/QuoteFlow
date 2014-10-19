@@ -11,11 +11,11 @@
 
         /// <summary>
         /// Allows us to perform operations over the clauses based on the passed in visitor. This method calls the
-        /// visit method on the visitor with this reference.
+        /// Visit method on the visitor with this reference.
         /// </summary>
         /// <param name="visitor"> the visitor to accept.
         /// </param>
-        /// <returns>The result of the visit operation who's type is specified by the incoming visitor.</returns>
+        /// <returns>The result of the Visit operation who's type is specified by the incoming visitor.</returns>
         T Accept<T>(IPredicateVisitor<T> visitor);
     }
 }

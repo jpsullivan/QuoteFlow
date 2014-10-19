@@ -43,8 +43,9 @@
     <Reference Include="AnglicanGeek.MarkdownMailer">
       <HintPath>..\packages\AnglicanGeek.MarkdownMailer.1.2\lib\net40\AnglicanGeek.MarkdownMailer.dll</HintPath>
     </Reference>
-    <Reference Include="Antlr3.Runtime">
-      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -368,6 +369,7 @@
     <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
     <Compile Include="Infrastructure\Enumerables\SingletonList.cs" />
     <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
+    <Compile Include="Models\Search\Jql\Parser\JqlParseErrorMessage.cs" />
     <Compile Include="Infrastructure\Exceptions\ReadOnlyModeException.cs" />
     <Compile Include="Infrastructure\Exceptions\TestableStorageClientException.cs" />
     <Compile Include="Infrastructure\Extensions\AuthExtensions.cs" />
@@ -456,9 +458,17 @@
     <Compile Include="Models\RequestModels\AssetCriteriaQuery.cs" />
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\Search\Jql\jql.g4.lexer.cs">
+      <DependentUpon>jql.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Search\Jql\jql.g4.parser.cs">
+      <DependentUpon>jql.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Search\Jql\JqlParserTester.cs" />
     <Compile Include="Models\Search\Jql\Operand\JqlOperandResolver.cs" />
     <Compile Include="Models\Search\Jql\Operand\QueryLiteral.cs" />
     <Compile Include="Models\Search\Jql\Parser\IJqlQueryParser.cs" />
+    <Compile Include="Models\Search\Jql\Parser\JqlParserErrorMessages.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\AndClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\ClausePrecedence.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\IChangedClause.cs" />
@@ -493,6 +503,7 @@
     <Compile Include="Models\Search\Jql\SearchResults.cs" />
     <Compile Include="Models\Search\Jql\Util\IJqlStringSupport.cs" />
     <Compile Include="Models\Search\Jql\Util\JqlStringSupport.cs" />
+    <Compile Include="Models\Search\Jql\Util\ToJqlStringVisitor.cs" />
     <Compile Include="Models\Search\SearchFilter.cs" />
     <Compile Include="Models\Search\SearchResult.cs" />
     <Compile Include="Models\Search\SortOrder.cs" />
@@ -945,6 +956,10 @@
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.eot" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
+    <Antlr4 Include="Models\Search\Jql\jql.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>QuoteFlow.Models.Search.Jql</CustomToolNamespace>
+    </Antlr4>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
