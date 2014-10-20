@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using QuoteFlow.Infrastructure.Extensions;
+using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 using QuoteFlow.Models.Search.Jql.Query.History;
 using QuoteFlow.Models.Search.Jql.Query.Operand;
@@ -100,26 +104,28 @@ namespace QuoteFlow.Models.Search.Jql.Util
 			return BuildJqlString(clause);
 		}
 
-		public override Result Visit(IWasClause clause)
+		public Result Visit(IWasClause clause)
 		{
 			return BuildJqlString(clause);
 		}
 
-		public override Result Visit(IChangedClause clause)
+		public Result Visit(IChangedClause clause)
 		{
 			return BuildJqlString(clause);
 		}
 
-		public override string Visit(IHistoryPredicate predicate)
+		public string Visit(IHistoryPredicate predicate)
 		{
 			//depending on actual implementation of HistoryPredicate we should print them differently
-			if (predicate is TerminalHistoryPredicate)
+		    var historyPredicate = predicate as TerminalHistoryPredicate;
+		    if (historyPredicate != null)
 			{
-				return visit((TerminalHistoryPredicate) predicate);
+				return Visit(historyPredicate);
 			}
-		    if (predicate is AndHistoryPredicate)
+		    var andHistoryPredicate = predicate as AndHistoryPredicate;
+		    if (andHistoryPredicate != null)
 		    {
-		        return visit((AndHistoryPredicate) predicate);
+		        return Visit(andHistoryPredicate);
 		    }
 
 		    // default fallback for unknown implementation
@@ -129,9 +135,9 @@ namespace QuoteFlow.Models.Search.Jql.Util
 		private string Visit(TerminalHistoryPredicate predicate)
 		{
 			var sb = new StringBuilder();
-			sb.Append(predicate.Operator.DisplayString);
+			sb.Append(predicate.Operator.GetDisplayAttributeFrom(typeof(Operator)));
 			sb.Append(" ");
-			sb.Append(predicate.Operand.accept(this));
+			sb.Append(predicate.Operand.Accept(this));
 			return sb.ToString();
 		}
 
@@ -149,64 +155,57 @@ namespace QuoteFlow.Models.Search.Jql.Util
 		{
 			var sb = new StringBuilder();
 
-			for (IEnumerator<IClause> clauseIterator = andClause.Clauses.GetEnumerator(); clauseIterator.MoveNext();)
-			{
-				IClause clause = clauseIterator.Current;
-				Result clauseResult = clause.Accept(this);
-				bool brackets = clauseResult.Precedence.CompareTo(clausePrecedence) < 0;
+		    for (int i = 0; i < andClause.Clauses.Count(); i++)
+		    {
+                IClause clause = andClause.Clauses.ElementAt(i);
+                Result clauseResult = clause.Accept(this);
 
-				if (brackets)
-				{
-					sb.Append("(");
-				}
-				sb.Append(clauseResult.Jql);
-				if (brackets)
-				{
-					sb.Append(")");
-				}
+                bool brackets = clauseResult.Precedence.CompareTo(clausePrecedence) < 0;
 
-				if (clauseIterator.hasNext())
-				{
-					sb.Append(" ").Append(clauseName).Append(" ");
-				}
-			}
+                if (brackets)
+                {
+                    sb.Append("(");
+                }
+                sb.Append(clauseResult.Jql);
+                
+                if (brackets)
+                {
+                    sb.Append(")");
+                }
+
+		        if (i != andClause.Clauses.Count() - 1)
+		        {
+                    sb.Append(" ").Append(clauseName).Append(" ");
+		        }
+		    }
+
 			return new Result(sb.ToString(), clausePrecedence);
 		}
 
 		private Result BuildJqlString(ITerminalClause clause)
 		{
 			var builder = new StringBuilder(Support.EncodeFieldName(clause.Name));
-			clause.Property.@foreach(new EffectAnonymousInnerClassHelper(this, builder));
-			builder.Append(" ").Append(clause.Operator.DisplayString);
+
+		    foreach (var property in clause.Property)
+		    {
+                builder.Append("[")
+                        .Append(Support.EncodeFieldName(property.KeysAsString()))
+                        .Append("].")
+                        .Append(Support.EncodeFieldName(property.ObjectReferencesAsString()));
+		    }
+
+			builder.Append(" ").Append(clause.Operator.GetDisplayAttributeFrom(typeof(Operator)));
 			builder.Append(" ").Append(clause.Operand.Accept(this));
-			if (clause is IWasClause)
-			{
-				IHistoryPredicate predicate = ((IWasClause) clause).Predicate;
-				if (predicate != null)
-				{
-					builder.Append(" ").Append(predicate.Accept(this));
-				}
-			}
+		    
+            if (!(clause is IWasClause)) return new Result(builder.ToString(), ClausePrecedence.TERMINAL);
+		    
+            IHistoryPredicate predicate = ((IWasClause) clause).Predicate;
+		    if (predicate != null)
+		    {
+		        builder.Append(" ").Append(predicate.Accept(this));
+		    }
 
-			return new Result(builder.ToString(), ClausePrecedence.TERMINAL);
-		}
-
-		private class EffectAnonymousInnerClassHelper : Effect<Property>
-		{
-			private readonly ToJqlStringVisitor outerInstance;
-
-			private StringBuilder builder;
-
-			public EffectAnonymousInnerClassHelper(ToJqlStringVisitor outerInstance, StringBuilder builder)
-			{
-				this.outerInstance = outerInstance;
-				this.builder = builder;
-			}
-
-			public override void Apply(Property property)
-			{
-				builder.Append("[").Append(outerInstance.Support.EncodeFieldName(property.KeysAsString)).Append("].").Append(outerInstance.support.encodeFieldName(property.ObjectReferencesAsString));
-			}
+		    return new Result(builder.ToString(), ClausePrecedence.TERMINAL);
 		}
 
 		private Result BuildJqlString(IChangedClause clause)
@@ -226,18 +225,12 @@ namespace QuoteFlow.Models.Search.Jql.Util
             public string Jql { get; private set; }
             public ClausePrecedence Precedence { get; private set; }
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: private Result(final String jql, final com.atlassian.query.clause.ClausePrecedence precedence)
 			internal Result(string jql, ClausePrecedence precedence)
 			{
 				Jql = jql;
 				Precedence = precedence;
 			}
 
-			public override string ToString()
-			{
-				return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-			}
 		}
 	}
 }

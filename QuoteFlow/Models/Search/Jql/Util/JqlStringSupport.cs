@@ -102,7 +102,7 @@ namespace QuoteFlow.Models.Search.Jql.Util
 
         public string GenerateJqlString(IClause clause)
         {
-            ToJqlStringVisitor jqlStringVisitor = new ToJqlStringVisitor(this);
+            var jqlStringVisitor = new ToJqlStringVisitor(this);
             return jqlStringVisitor.ToJqlString(clause);
         }
 

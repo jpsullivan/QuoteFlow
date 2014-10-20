@@ -1,4 +1,5 @@
-﻿using QuoteFlow.Models.Search.Jql.Query.Operand;
+﻿using System.Collections.Generic;
+using QuoteFlow.Models.Search.Jql.Query.Operand;
 
 namespace QuoteFlow.Models.Search.Jql.Query.Clause
 {
@@ -18,6 +19,6 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
         /// <summary>
         /// Returns the name of the property or absent.
         /// </summary>
-        Property Property { get; }
+        IEnumerable<Property> Property { get; }
     }
 }

@@ -369,6 +369,7 @@
     <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
     <Compile Include="Infrastructure\Enumerables\SingletonList.cs" />
     <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
+    <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
     <Compile Include="Models\Search\Jql\Parser\JqlParseErrorMessage.cs" />
     <Compile Include="Infrastructure\Exceptions\ReadOnlyModeException.cs" />
     <Compile Include="Infrastructure\Exceptions\TestableStorageClientException.cs" />
@@ -482,8 +483,10 @@
     <Compile Include="Models\Search\Jql\Query\Clause\Property.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\TerminalClause.cs" />
     <Compile Include="Models\Search\Jql\Query\FilteredSearcherGroup.cs" />
+    <Compile Include="Models\Search\Jql\Query\History\AndHistoryPredicate.cs" />
     <Compile Include="Models\Search\Jql\Query\History\IHistoryPredicate.cs" />
     <Compile Include="Models\Search\Jql\Query\History\IPredicateVisitor.cs" />
+    <Compile Include="Models\Search\Jql\Query\History\TerminalHistoryPredicate.cs" />
     <Compile Include="Models\Search\Jql\Query\IQuery.cs" />
     <Compile Include="Models\Search\Jql\Query\IQueryCreationContext.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\ILuceneQueryParserFactory.cs" />

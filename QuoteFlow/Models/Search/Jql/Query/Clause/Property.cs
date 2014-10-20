@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QuoteFlow.Models.Search.Jql.Query.Clause
 {
@@ -27,6 +28,16 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
         public override string ToString()
         {
             return String.Format("[%s].%s", Keys, ObjectReferences);
+        }
+
+        public string KeysAsString()
+        {
+            return String.Join(".", Keys);
+        }
+
+        public string ObjectReferencesAsString()
+        {
+            return String.Join(".", ObjectReferences);
         }
     }
 }
