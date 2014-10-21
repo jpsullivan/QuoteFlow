@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.5.0.2 ../../QuoteFlow/Models/Search/Jql/Jql.g 2014-10-20 21:17:56
+// $ANTLR 3.5.0.2 ../../QuoteFlow/Models/Search/Jql/Jql.g 2014-10-20 23:07:49
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -215,11 +215,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LPAREN;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:902:13: ( '(' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:897:13: ( '(' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:902:16: '('
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:897:16: '('
 			{
-			DebugLocation(902, 16);
+			DebugLocation(897, 16);
 			Match('('); 
 
 			}
@@ -250,11 +250,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = RPAREN;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:900:9: ( ')' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:895:9: ( ')' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:900:11: ')'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:895:11: ')'
 			{
-			DebugLocation(900, 11);
+			DebugLocation(895, 11);
 			Match(')'); 
 
 			}
@@ -285,11 +285,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = COMMA;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:901:8: ( ',' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:896:8: ( ',' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:901:11: ','
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:896:11: ','
 			{
-			DebugLocation(901, 11);
+			DebugLocation(896, 11);
 			Match(','); 
 
 			}
@@ -320,11 +320,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LBRACKET;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:902:10: ( '[' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:897:10: ( '[' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:902:12: '['
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:897:12: '['
 			{
-			DebugLocation(902, 12);
+			DebugLocation(897, 12);
 			Match('['); 
 
 			}
@@ -355,11 +355,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = RBRACKET;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:903:11: ( ']' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:898:11: ( ']' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:903:14: ']'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:898:14: ']'
 			{
-			DebugLocation(903, 14);
+			DebugLocation(898, 14);
 			Match(']'); 
 
 			}
@@ -388,11 +388,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("MINUS", 6);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:905:15: ( '-' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:900:15: ( '-' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:905:18: '-'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:900:18: '-'
 			{
-			DebugLocation(905, 18);
+			DebugLocation(900, 18);
 			Match('-'); 
 
 			}
@@ -421,11 +421,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BANG;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:915:7: ( '!' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:910:7: ( '!' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:915:9: '!'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:910:9: '!'
 			{
-			DebugLocation(915, 9);
+			DebugLocation(910, 9);
 			Match('!'); 
 
 			}
@@ -456,11 +456,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LT;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:912:5: ( '<' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:907:5: ( '<' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:912:7: '<'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:907:7: '<'
 			{
-			DebugLocation(912, 7);
+			DebugLocation(907, 7);
 			Match('<'); 
 
 			}
@@ -491,11 +491,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = GT;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:913:5: ( '>' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:908:5: ( '>' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:913:7: '>'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:908:7: '>'
 			{
-			DebugLocation(913, 7);
+			DebugLocation(908, 7);
 			Match('>'); 
 
 			}
@@ -526,11 +526,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = GTEQ;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:914:7: ( '>=' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:909:7: ( '>=' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:914:9: '>='
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:909:9: '>='
 			{
-			DebugLocation(914, 9);
+			DebugLocation(909, 9);
 			Match(">="); 
 
 
@@ -562,11 +562,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LTEQ;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:915:8: ( '<=' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:910:8: ( '<=' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:915:10: '<='
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:910:10: '<='
 			{
-			DebugLocation(915, 10);
+			DebugLocation(910, 10);
 			Match("<="); 
 
 
@@ -598,11 +598,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EQUALS;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:916:9: ( '=' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:911:9: ( '=' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:916:11: '='
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:911:11: '='
 			{
-			DebugLocation(916, 11);
+			DebugLocation(911, 11);
 			Match('='); 
 
 			}
@@ -633,11 +633,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NOT_EQUALS;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:917:12: ( '!=' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:912:12: ( '!=' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:917:14: '!='
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:912:14: '!='
 			{
-			DebugLocation(917, 14);
+			DebugLocation(912, 14);
 			Match("!="); 
 
 
@@ -669,11 +669,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LIKE;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:918:7: ( '~' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:913:7: ( '~' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:918:9: '~'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:913:9: '~'
 			{
-			DebugLocation(918, 9);
+			DebugLocation(913, 9);
 			Match('~'); 
 
 			}
@@ -704,11 +704,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NOT_LIKE;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:919:10: ( '!~' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:914:10: ( '!~' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:919:12: '!~'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:914:12: '!~'
 			{
-			DebugLocation(919, 12);
+			DebugLocation(914, 12);
 			Match("!~"); 
 
 
@@ -740,11 +740,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = IN;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:920:5: ( ( 'I' | 'i' ) ( 'N' | 'n' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:915:5: ( ( 'I' | 'i' ) ( 'N' | 'n' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:920:7: ( 'I' | 'i' ) ( 'N' | 'n' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:915:7: ( 'I' | 'i' ) ( 'N' | 'n' )
 			{
-			DebugLocation(920, 7);
+			DebugLocation(915, 7);
 			if (input.LA(1)=='I'||input.LA(1)=='i')
 			{
 				input.Consume();
@@ -757,7 +757,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(920, 16);
+			DebugLocation(915, 16);
 			if (input.LA(1)=='N'||input.LA(1)=='n')
 			{
 				input.Consume();
@@ -799,11 +799,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = IS;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:921:5: ( ( 'I' | 'i' ) ( 'S' | 's' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:916:5: ( ( 'I' | 'i' ) ( 'S' | 's' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:921:7: ( 'I' | 'i' ) ( 'S' | 's' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:916:7: ( 'I' | 'i' ) ( 'S' | 's' )
 			{
-			DebugLocation(921, 7);
+			DebugLocation(916, 7);
 			if (input.LA(1)=='I'||input.LA(1)=='i')
 			{
 				input.Consume();
@@ -816,7 +816,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(921, 16);
+			DebugLocation(916, 16);
 			if (input.LA(1)=='S'||input.LA(1)=='s')
 			{
 				input.Consume();
@@ -858,7 +858,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = AND;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:922:7: ( ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' ) | AMPER | AMPER_AMPER )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:917:7: ( ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' ) | AMPER | AMPER_AMPER )
 			int alt1=3;
 			try { DebugEnterDecision(1, false);
 			int LA1_1 = input.LA(1);
@@ -891,15 +891,15 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:922:9: ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' )
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:917:9: ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' )
 				{
-				DebugLocation(922, 9);
+				DebugLocation(917, 9);
 				input.Consume();
 
-				DebugLocation(922, 18);
+				DebugLocation(917, 18);
 				input.Consume();
 
-				DebugLocation(922, 27);
+				DebugLocation(917, 27);
 				input.Consume();
 
 
@@ -907,18 +907,18 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:922:39: AMPER
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:917:39: AMPER
 				{
-				DebugLocation(922, 39);
+				DebugLocation(917, 39);
 				mAMPER(); 
 
 				}
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:922:47: AMPER_AMPER
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:917:47: AMPER_AMPER
 				{
-				DebugLocation(922, 47);
+				DebugLocation(917, 47);
 				mAMPER_AMPER(); 
 
 				}
@@ -951,7 +951,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = OR;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:923:5: ( ( 'O' | 'o' ) ( 'R' | 'r' ) | PIPE | PIPE_PIPE )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:918:5: ( ( 'O' | 'o' ) ( 'R' | 'r' ) | PIPE | PIPE_PIPE )
 			int alt2=3;
 			try { DebugEnterDecision(2, false);
 			int LA2_1 = input.LA(1);
@@ -984,12 +984,12 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:923:7: ( 'O' | 'o' ) ( 'R' | 'r' )
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:918:7: ( 'O' | 'o' ) ( 'R' | 'r' )
 				{
-				DebugLocation(923, 7);
+				DebugLocation(918, 7);
 				input.Consume();
 
-				DebugLocation(923, 16);
+				DebugLocation(918, 16);
 				input.Consume();
 
 
@@ -997,18 +997,18 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:923:28: PIPE
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:918:28: PIPE
 				{
-				DebugLocation(923, 28);
+				DebugLocation(918, 28);
 				mPIPE(); 
 
 				}
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:923:35: PIPE_PIPE
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:918:35: PIPE_PIPE
 				{
-				DebugLocation(923, 35);
+				DebugLocation(918, 35);
 				mPIPE_PIPE(); 
 
 				}
@@ -1041,11 +1041,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NOT;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:924:6: ( ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'T' | 't' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:919:6: ( ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'T' | 't' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:924:8: ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'T' | 't' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:919:8: ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'T' | 't' )
 			{
-			DebugLocation(924, 8);
+			DebugLocation(919, 8);
 			if (input.LA(1)=='N'||input.LA(1)=='n')
 			{
 				input.Consume();
@@ -1058,7 +1058,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(924, 17);
+			DebugLocation(919, 17);
 			if (input.LA(1)=='O'||input.LA(1)=='o')
 			{
 				input.Consume();
@@ -1071,7 +1071,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(924, 26);
+			DebugLocation(919, 26);
 			if (input.LA(1)=='T'||input.LA(1)=='t')
 			{
 				input.Consume();
@@ -1113,7 +1113,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EMPTY;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:925:8: ( ( 'E' | 'e' ) ( 'M' | 'm' ) ( 'P' | 'p' ) ( 'T' | 't' ) ( 'Y' | 'y' ) | ( 'N' | 'n' ) ( 'U' | 'u' ) ( 'L' | 'l' ) ( 'L' | 'l' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:920:8: ( ( 'E' | 'e' ) ( 'M' | 'm' ) ( 'P' | 'p' ) ( 'T' | 't' ) ( 'Y' | 'y' ) | ( 'N' | 'n' ) ( 'U' | 'u' ) ( 'L' | 'l' ) ( 'L' | 'l' ) )
 			int alt3=2;
 			try { DebugEnterDecision(3, false);
 			int LA3_1 = input.LA(1);
@@ -1137,21 +1137,21 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:925:10: ( 'E' | 'e' ) ( 'M' | 'm' ) ( 'P' | 'p' ) ( 'T' | 't' ) ( 'Y' | 'y' )
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:920:10: ( 'E' | 'e' ) ( 'M' | 'm' ) ( 'P' | 'p' ) ( 'T' | 't' ) ( 'Y' | 'y' )
 				{
-				DebugLocation(925, 10);
+				DebugLocation(920, 10);
 				input.Consume();
 
-				DebugLocation(925, 19);
+				DebugLocation(920, 19);
 				input.Consume();
 
-				DebugLocation(925, 28);
+				DebugLocation(920, 28);
 				input.Consume();
 
-				DebugLocation(925, 37);
+				DebugLocation(920, 37);
 				input.Consume();
 
-				DebugLocation(925, 46);
+				DebugLocation(920, 46);
 				input.Consume();
 
 
@@ -1159,18 +1159,18 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:925:58: ( 'N' | 'n' ) ( 'U' | 'u' ) ( 'L' | 'l' ) ( 'L' | 'l' )
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:920:58: ( 'N' | 'n' ) ( 'U' | 'u' ) ( 'L' | 'l' ) ( 'L' | 'l' )
 				{
-				DebugLocation(925, 58);
+				DebugLocation(920, 58);
 				input.Consume();
 
-				DebugLocation(925, 67);
+				DebugLocation(920, 67);
 				input.Consume();
 
-				DebugLocation(925, 76);
+				DebugLocation(920, 76);
 				input.Consume();
 
-				DebugLocation(925, 85);
+				DebugLocation(920, 85);
 				input.Consume();
 
 
@@ -1204,11 +1204,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = WAS;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:927:6: ( ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'S' | 's' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:922:6: ( ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'S' | 's' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:927:8: ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'S' | 's' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:922:8: ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'S' | 's' )
 			{
-			DebugLocation(927, 8);
+			DebugLocation(922, 8);
 			if (input.LA(1)=='W'||input.LA(1)=='w')
 			{
 				input.Consume();
@@ -1221,7 +1221,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(927, 17);
+			DebugLocation(922, 17);
 			if (input.LA(1)=='A'||input.LA(1)=='a')
 			{
 				input.Consume();
@@ -1234,7 +1234,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(927, 26);
+			DebugLocation(922, 26);
 			if (input.LA(1)=='S'||input.LA(1)=='s')
 			{
 				input.Consume();
@@ -1276,11 +1276,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = CHANGED;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:928:10: ( ( 'C' | 'c' ) ( 'H' | 'h' ) ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'D' | 'd' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:923:10: ( ( 'C' | 'c' ) ( 'H' | 'h' ) ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'D' | 'd' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:928:12: ( 'C' | 'c' ) ( 'H' | 'h' ) ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'D' | 'd' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:923:12: ( 'C' | 'c' ) ( 'H' | 'h' ) ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'D' | 'd' )
 			{
-			DebugLocation(928, 12);
+			DebugLocation(923, 12);
 			if (input.LA(1)=='C'||input.LA(1)=='c')
 			{
 				input.Consume();
@@ -1293,7 +1293,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(928, 21);
+			DebugLocation(923, 21);
 			if (input.LA(1)=='H'||input.LA(1)=='h')
 			{
 				input.Consume();
@@ -1306,7 +1306,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(928, 30);
+			DebugLocation(923, 30);
 			if (input.LA(1)=='A'||input.LA(1)=='a')
 			{
 				input.Consume();
@@ -1319,7 +1319,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(928, 39);
+			DebugLocation(923, 39);
 			if (input.LA(1)=='N'||input.LA(1)=='n')
 			{
 				input.Consume();
@@ -1332,7 +1332,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(928, 48);
+			DebugLocation(923, 48);
 			if (input.LA(1)=='G'||input.LA(1)=='g')
 			{
 				input.Consume();
@@ -1345,7 +1345,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(928, 57);
+			DebugLocation(923, 57);
 			if (input.LA(1)=='E'||input.LA(1)=='e')
 			{
 				input.Consume();
@@ -1358,7 +1358,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(928, 66);
+			DebugLocation(923, 66);
 			if (input.LA(1)=='D'||input.LA(1)=='d')
 			{
 				input.Consume();
@@ -1400,11 +1400,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BEFORE;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:930:9: ( ( 'B' | 'b' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'O' | 'o' ) ( 'R' | 'r' ) ( 'E' | 'e' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:925:9: ( ( 'B' | 'b' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'O' | 'o' ) ( 'R' | 'r' ) ( 'E' | 'e' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:930:11: ( 'B' | 'b' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'O' | 'o' ) ( 'R' | 'r' ) ( 'E' | 'e' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:925:11: ( 'B' | 'b' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'O' | 'o' ) ( 'R' | 'r' ) ( 'E' | 'e' )
 			{
-			DebugLocation(930, 11);
+			DebugLocation(925, 11);
 			if (input.LA(1)=='B'||input.LA(1)=='b')
 			{
 				input.Consume();
@@ -1417,7 +1417,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(930, 20);
+			DebugLocation(925, 20);
 			if (input.LA(1)=='E'||input.LA(1)=='e')
 			{
 				input.Consume();
@@ -1430,7 +1430,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(930, 29);
+			DebugLocation(925, 29);
 			if (input.LA(1)=='F'||input.LA(1)=='f')
 			{
 				input.Consume();
@@ -1443,7 +1443,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(930, 38);
+			DebugLocation(925, 38);
 			if (input.LA(1)=='O'||input.LA(1)=='o')
 			{
 				input.Consume();
@@ -1456,7 +1456,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(930, 47);
+			DebugLocation(925, 47);
 			if (input.LA(1)=='R'||input.LA(1)=='r')
 			{
 				input.Consume();
@@ -1469,7 +1469,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(930, 56);
+			DebugLocation(925, 56);
 			if (input.LA(1)=='E'||input.LA(1)=='e')
 			{
 				input.Consume();
@@ -1511,11 +1511,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = AFTER;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:931:8: ( ( 'A' | 'a' ) ( 'F' | 'f' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:926:8: ( ( 'A' | 'a' ) ( 'F' | 'f' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:931:10: ( 'A' | 'a' ) ( 'F' | 'f' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:926:10: ( 'A' | 'a' ) ( 'F' | 'f' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' )
 			{
-			DebugLocation(931, 10);
+			DebugLocation(926, 10);
 			if (input.LA(1)=='A'||input.LA(1)=='a')
 			{
 				input.Consume();
@@ -1528,7 +1528,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(931, 19);
+			DebugLocation(926, 19);
 			if (input.LA(1)=='F'||input.LA(1)=='f')
 			{
 				input.Consume();
@@ -1541,7 +1541,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(931, 28);
+			DebugLocation(926, 28);
 			if (input.LA(1)=='T'||input.LA(1)=='t')
 			{
 				input.Consume();
@@ -1554,7 +1554,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(931, 37);
+			DebugLocation(926, 37);
 			if (input.LA(1)=='E'||input.LA(1)=='e')
 			{
 				input.Consume();
@@ -1567,7 +1567,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(931, 46);
+			DebugLocation(926, 46);
 			if (input.LA(1)=='R'||input.LA(1)=='r')
 			{
 				input.Consume();
@@ -1609,11 +1609,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = FROM;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:932:7: ( ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:927:7: ( ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:932:9: ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:927:9: ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' )
 			{
-			DebugLocation(932, 9);
+			DebugLocation(927, 9);
 			if (input.LA(1)=='F'||input.LA(1)=='f')
 			{
 				input.Consume();
@@ -1626,7 +1626,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(932, 18);
+			DebugLocation(927, 18);
 			if (input.LA(1)=='R'||input.LA(1)=='r')
 			{
 				input.Consume();
@@ -1639,7 +1639,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(932, 27);
+			DebugLocation(927, 27);
 			if (input.LA(1)=='O'||input.LA(1)=='o')
 			{
 				input.Consume();
@@ -1652,7 +1652,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(932, 36);
+			DebugLocation(927, 36);
 			if (input.LA(1)=='M'||input.LA(1)=='m')
 			{
 				input.Consume();
@@ -1694,11 +1694,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = TO;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:933:5: ( ( 'T' | 't' ) ( 'O' | 'o' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:928:5: ( ( 'T' | 't' ) ( 'O' | 'o' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:933:7: ( 'T' | 't' ) ( 'O' | 'o' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:928:7: ( 'T' | 't' ) ( 'O' | 'o' )
 			{
-			DebugLocation(933, 7);
+			DebugLocation(928, 7);
 			if (input.LA(1)=='T'||input.LA(1)=='t')
 			{
 				input.Consume();
@@ -1711,7 +1711,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(933, 16);
+			DebugLocation(928, 16);
 			if (input.LA(1)=='O'||input.LA(1)=='o')
 			{
 				input.Consume();
@@ -1753,11 +1753,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ON;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:936:5: ( ( 'O' | 'o' ) ( 'N' | 'n' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:931:5: ( ( 'O' | 'o' ) ( 'N' | 'n' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:936:7: ( 'O' | 'o' ) ( 'N' | 'n' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:931:7: ( 'O' | 'o' ) ( 'N' | 'n' )
 			{
-			DebugLocation(936, 7);
+			DebugLocation(931, 7);
 			if (input.LA(1)=='O'||input.LA(1)=='o')
 			{
 				input.Consume();
@@ -1770,7 +1770,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(936, 16);
+			DebugLocation(931, 16);
 			if (input.LA(1)=='N'||input.LA(1)=='n')
 			{
 				input.Consume();
@@ -1812,11 +1812,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = DURING;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:937:9: ( ( 'D' | 'd' ) ( 'U' | 'u' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'G' | 'g' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:932:9: ( ( 'D' | 'd' ) ( 'U' | 'u' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'G' | 'g' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:937:11: ( 'D' | 'd' ) ( 'U' | 'u' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'G' | 'g' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:932:11: ( 'D' | 'd' ) ( 'U' | 'u' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'G' | 'g' )
 			{
-			DebugLocation(937, 11);
+			DebugLocation(932, 11);
 			if (input.LA(1)=='D'||input.LA(1)=='d')
 			{
 				input.Consume();
@@ -1829,7 +1829,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(937, 20);
+			DebugLocation(932, 20);
 			if (input.LA(1)=='U'||input.LA(1)=='u')
 			{
 				input.Consume();
@@ -1842,7 +1842,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(937, 29);
+			DebugLocation(932, 29);
 			if (input.LA(1)=='R'||input.LA(1)=='r')
 			{
 				input.Consume();
@@ -1855,7 +1855,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(937, 38);
+			DebugLocation(932, 38);
 			if (input.LA(1)=='I'||input.LA(1)=='i')
 			{
 				input.Consume();
@@ -1868,7 +1868,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(937, 47);
+			DebugLocation(932, 47);
 			if (input.LA(1)=='N'||input.LA(1)=='n')
 			{
 				input.Consume();
@@ -1881,7 +1881,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(937, 56);
+			DebugLocation(932, 56);
 			if (input.LA(1)=='G'||input.LA(1)=='g')
 			{
 				input.Consume();
@@ -1923,11 +1923,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ORDER;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:946:7: ( ( 'o' | 'O' ) ( 'r' | 'R' ) ( 'd' | 'D' ) ( 'e' | 'E' ) ( 'r' | 'R' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:941:7: ( ( 'o' | 'O' ) ( 'r' | 'R' ) ( 'd' | 'D' ) ( 'e' | 'E' ) ( 'r' | 'R' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:946:9: ( 'o' | 'O' ) ( 'r' | 'R' ) ( 'd' | 'D' ) ( 'e' | 'E' ) ( 'r' | 'R' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:941:9: ( 'o' | 'O' ) ( 'r' | 'R' ) ( 'd' | 'D' ) ( 'e' | 'E' ) ( 'r' | 'R' )
 			{
-			DebugLocation(946, 9);
+			DebugLocation(941, 9);
 			if (input.LA(1)=='O'||input.LA(1)=='o')
 			{
 				input.Consume();
@@ -1940,7 +1940,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(946, 18);
+			DebugLocation(941, 18);
 			if (input.LA(1)=='R'||input.LA(1)=='r')
 			{
 				input.Consume();
@@ -1953,7 +1953,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(946, 27);
+			DebugLocation(941, 27);
 			if (input.LA(1)=='D'||input.LA(1)=='d')
 			{
 				input.Consume();
@@ -1966,7 +1966,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(946, 36);
+			DebugLocation(941, 36);
 			if (input.LA(1)=='E'||input.LA(1)=='e')
 			{
 				input.Consume();
@@ -1979,7 +1979,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(946, 45);
+			DebugLocation(941, 45);
 			if (input.LA(1)=='R'||input.LA(1)=='r')
 			{
 				input.Consume();
@@ -2021,11 +2021,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BY;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:944:4: ( ( 'b' | 'B' ) ( 'y' | 'Y' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:939:4: ( ( 'b' | 'B' ) ( 'y' | 'Y' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:944:6: ( 'b' | 'B' ) ( 'y' | 'Y' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:939:6: ( 'b' | 'B' ) ( 'y' | 'Y' )
 			{
-			DebugLocation(944, 6);
+			DebugLocation(939, 6);
 			if (input.LA(1)=='B'||input.LA(1)=='b')
 			{
 				input.Consume();
@@ -2038,7 +2038,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(944, 15);
+			DebugLocation(939, 15);
 			if (input.LA(1)=='Y'||input.LA(1)=='y')
 			{
 				input.Consume();
@@ -2080,11 +2080,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ASC;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:945:5: ( ( 'a' | 'A' ) ( 's' | 'S' ) ( 'c' | 'C' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:940:5: ( ( 'a' | 'A' ) ( 's' | 'S' ) ( 'c' | 'C' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:945:7: ( 'a' | 'A' ) ( 's' | 'S' ) ( 'c' | 'C' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:940:7: ( 'a' | 'A' ) ( 's' | 'S' ) ( 'c' | 'C' )
 			{
-			DebugLocation(945, 7);
+			DebugLocation(940, 7);
 			if (input.LA(1)=='A'||input.LA(1)=='a')
 			{
 				input.Consume();
@@ -2097,7 +2097,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(945, 16);
+			DebugLocation(940, 16);
 			if (input.LA(1)=='S'||input.LA(1)=='s')
 			{
 				input.Consume();
@@ -2110,7 +2110,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(945, 25);
+			DebugLocation(940, 25);
 			if (input.LA(1)=='C'||input.LA(1)=='c')
 			{
 				input.Consume();
@@ -2152,11 +2152,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = DESC;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:946:5: ( ( 'd' | 'D' ) ( 'e' | 'E' ) ( 's' | 'S' ) ( 'c' | 'C' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:941:5: ( ( 'd' | 'D' ) ( 'e' | 'E' ) ( 's' | 'S' ) ( 'c' | 'C' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:946:7: ( 'd' | 'D' ) ( 'e' | 'E' ) ( 's' | 'S' ) ( 'c' | 'C' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:941:7: ( 'd' | 'D' ) ( 'e' | 'E' ) ( 's' | 'S' ) ( 'c' | 'C' )
 			{
-			DebugLocation(946, 7);
+			DebugLocation(941, 7);
 			if (input.LA(1)=='D'||input.LA(1)=='d')
 			{
 				input.Consume();
@@ -2169,7 +2169,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(946, 16);
+			DebugLocation(941, 16);
 			if (input.LA(1)=='E'||input.LA(1)=='e')
 			{
 				input.Consume();
@@ -2182,7 +2182,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(946, 25);
+			DebugLocation(941, 25);
 			if (input.LA(1)=='S'||input.LA(1)=='s')
 			{
 				input.Consume();
@@ -2195,7 +2195,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(946, 34);
+			DebugLocation(941, 34);
 			if (input.LA(1)=='C'||input.LA(1)=='c')
 			{
 				input.Consume();
@@ -2237,12 +2237,12 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = POSNUMBER;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:952:2: ( ( DIGIT )+ )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:947:2: ( ( DIGIT )+ )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:952:4: ( DIGIT )+
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:947:4: ( DIGIT )+
 			{
-			DebugLocation(952, 4);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:952:4: ( DIGIT )+
+			DebugLocation(947, 4);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:947:4: ( DIGIT )+
 			int cnt4=0;
 			try { DebugEnterSubRule(4);
 			while (true)
@@ -2264,7 +2264,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 					DebugEnterAlt(1);
 					// ../../QuoteFlow/Models/Search/Jql/Jql.g:
 					{
-					DebugLocation(952, 4);
+					DebugLocation(947, 4);
 					input.Consume();
 
 
@@ -2315,14 +2315,14 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NEGNUMBER;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:955:2: ( MINUS ( DIGIT )+ )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:950:2: ( MINUS ( DIGIT )+ )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:955:4: MINUS ( DIGIT )+
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:950:4: MINUS ( DIGIT )+
 			{
-			DebugLocation(955, 4);
+			DebugLocation(950, 4);
 			mMINUS(); 
-			DebugLocation(955, 10);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:955:10: ( DIGIT )+
+			DebugLocation(950, 10);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:950:10: ( DIGIT )+
 			int cnt5=0;
 			try { DebugEnterSubRule(5);
 			while (true)
@@ -2344,7 +2344,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 					DebugEnterAlt(1);
 					// ../../QuoteFlow/Models/Search/Jql/Jql.g:
 					{
-					DebugLocation(955, 10);
+					DebugLocation(950, 10);
 					input.Consume();
 
 
@@ -2395,11 +2395,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = CUSTOMFIELD;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:964:2: ( ( 'c' | 'C' ) ( 'f' | 'F' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:959:2: ( ( 'c' | 'C' ) ( 'f' | 'F' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:964:4: ( 'c' | 'C' ) ( 'f' | 'F' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:959:4: ( 'c' | 'C' ) ( 'f' | 'F' )
 			{
-			DebugLocation(964, 4);
+			DebugLocation(959, 4);
 			if (input.LA(1)=='C'||input.LA(1)=='c')
 			{
 				input.Consume();
@@ -2412,7 +2412,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(964, 13);
+			DebugLocation(959, 13);
 			if (input.LA(1)=='F'||input.LA(1)=='f')
 			{
 				input.Consume();
@@ -2455,12 +2455,12 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			int _type = STRING;
 			int _channel = DefaultTokenChannel;
 			 pushPosition(STRING); 
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:974:2: ( ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+ )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:969:2: ( ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+ )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:974:4: ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:969:4: ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+
 			{
-			DebugLocation(974, 4);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:974:4: ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+
+			DebugLocation(969, 4);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:969:4: ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+
 			int cnt6=0;
 			try { DebugEnterSubRule(6);
 			while (true)
@@ -2484,18 +2484,18 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:974:5: ESCAPE
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:969:5: ESCAPE
 					{
-					DebugLocation(974, 5);
+					DebugLocation(969, 5);
 					mESCAPE(); 
 
 					}
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:974:14: ~ ( BSLASH | WS | STRINGSTOP )
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:969:14: ~ ( BSLASH | WS | STRINGSTOP )
 					{
-					DebugLocation(974, 14);
+					DebugLocation(969, 14);
 					input.Consume();
 
 
@@ -2517,7 +2517,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(6); }
 
-			DebugLocation(975, 2);
+			DebugLocation(970, 2);
 
 					// Once this method is called, the text of the current token is fixed. This means that this Lexical rule
 					// should not be called from other lexical rules.
@@ -2554,19 +2554,19 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			int _type = QUOTE_STRING;
 			int _channel = DefaultTokenChannel;
 			 pushPosition(QUOTE_STRING); 
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:981:2: ( ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:976:2: ( ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:981:4: ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:976:4: ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE )
 			{
-			DebugLocation(981, 4);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:981:4: ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE )
+			DebugLocation(976, 4);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:976:4: ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:981:5: QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:976:5: QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE
 			{
-			DebugLocation(981, 5);
+			DebugLocation(976, 5);
 			mQUOTE(); 
-			DebugLocation(981, 11);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:981:11: ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )*
+			DebugLocation(976, 11);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:976:11: ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )*
 			try { DebugEnterSubRule(7);
 			while (true)
 			{
@@ -2589,18 +2589,18 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:981:12: ESCAPE
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:976:12: ESCAPE
 					{
-					DebugLocation(981, 12);
+					DebugLocation(976, 12);
 					mESCAPE(); 
 
 					}
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:981:21: ~ ( BSLASH | QUOTE | CONTROLCHARS )
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:976:21: ~ ( BSLASH | QUOTE | CONTROLCHARS )
 					{
-					DebugLocation(981, 21);
+					DebugLocation(976, 21);
 					input.Consume();
 
 
@@ -2617,12 +2617,12 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(7); }
 
-			DebugLocation(981, 56);
+			DebugLocation(976, 56);
 			mQUOTE(); 
 
 			}
 
-			DebugLocation(982, 2);
+			DebugLocation(977, 2);
 
 					//Once this method is called, the text of the current token is fixed. This means that this Lexical rule
 					//should not be called from other lexical rules.
@@ -2659,19 +2659,19 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			int _type = SQUOTE_STRING;
 			int _channel = DefaultTokenChannel;
 			 pushPosition(SQUOTE_STRING); 
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:991:2: ( ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:986:2: ( ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:991:4: ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:986:4: ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE )
 			{
-			DebugLocation(991, 4);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:991:4: ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE )
+			DebugLocation(986, 4);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:986:4: ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:991:5: SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:986:5: SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE
 			{
-			DebugLocation(991, 5);
+			DebugLocation(986, 5);
 			mSQUOTE(); 
-			DebugLocation(991, 12);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:991:12: ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )*
+			DebugLocation(986, 12);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:986:12: ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )*
 			try { DebugEnterSubRule(8);
 			while (true)
 			{
@@ -2694,18 +2694,18 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:991:13: ESCAPE
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:986:13: ESCAPE
 					{
-					DebugLocation(991, 13);
+					DebugLocation(986, 13);
 					mESCAPE(); 
 
 					}
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:991:22: ~ ( BSLASH | SQUOTE | CONTROLCHARS )
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:986:22: ~ ( BSLASH | SQUOTE | CONTROLCHARS )
 					{
-					DebugLocation(991, 22);
+					DebugLocation(986, 22);
 					input.Consume();
 
 
@@ -2722,12 +2722,12 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(8); }
 
-			DebugLocation(991, 58);
+			DebugLocation(986, 58);
 			mSQUOTE(); 
 
 			}
 
-			DebugLocation(992, 2);
+			DebugLocation(987, 2);
 
 					//Once this method is called, the text of the current token is fixed. This means that this Lexical rule
 					//should not be called from other lexical rules.
@@ -2763,12 +2763,12 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = MATCHWS;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1004:12: ( ( WS )+ )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:999:12: ( ( WS )+ )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1004:16: ( WS )+
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:999:16: ( WS )+
 			{
-			DebugLocation(1004, 16);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1004:16: ( WS )+
+			DebugLocation(999, 16);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:999:16: ( WS )+
 			int cnt9=0;
 			try { DebugEnterSubRule(9);
 			while (true)
@@ -2790,7 +2790,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 					DebugEnterAlt(1);
 					// ../../QuoteFlow/Models/Search/Jql/Jql.g:
 					{
-					DebugLocation(1004, 16);
+					DebugLocation(999, 16);
 					input.Consume();
 
 
@@ -2812,7 +2812,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(9); }
 
-			DebugLocation(1004, 20);
+			DebugLocation(999, 20);
 			 _channel = HIDDEN; 
 
 			}
@@ -2841,11 +2841,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("RESERVED_CHARS", 41);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1012:2: ( '{' | '}' | '*' | '/' | '%' | '+' | '^' | '$' | '#' | '@' | '?' | ';' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1007:2: ( '{' | '}' | '*' | '/' | '%' | '+' | '^' | '$' | '#' | '@' | '?' | ';' )
 			DebugEnterAlt(1);
 			// ../../QuoteFlow/Models/Search/Jql/Jql.g:
 			{
-			DebugLocation(1012, 2);
+			DebugLocation(1007, 2);
 			if ((input.LA(1)>='#' && input.LA(1)<='%')||(input.LA(1)>='*' && input.LA(1)<='+')||input.LA(1)=='/'||input.LA(1)==';'||(input.LA(1)>='?' && input.LA(1)<='@')||input.LA(1)=='^'||input.LA(1)=='{'||input.LA(1)=='}')
 			{
 				input.Consume();
@@ -2889,11 +2889,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			        pushPosition(ERROR_RESERVED);
 			        recover();
 			    
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1029:5: ( RESERVED_CHARS )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1024:5: ( RESERVED_CHARS )
 			DebugEnterAlt(1);
 			// ../../QuoteFlow/Models/Search/Jql/Jql.g:
 			{
-			DebugLocation(1029, 5);
+			DebugLocation(1024, 5);
 			if ((input.LA(1)>='#' && input.LA(1)<='%')||(input.LA(1)>='*' && input.LA(1)<='+')||input.LA(1)=='/'||input.LA(1)==';'||(input.LA(1)>='?' && input.LA(1)<='@')||input.LA(1)=='^'||input.LA(1)=='{'||input.LA(1)=='}')
 			{
 				input.Consume();
@@ -2940,11 +2940,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			        pushPosition(ERRORCHAR);
 			        recover();
 			    
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1044:5: ( . )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1039:5: ( . )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1044:7: .
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1039:7: .
 			{
-			DebugLocation(1044, 7);
+			DebugLocation(1039, 7);
 			MatchAny(); 
 
 			}
@@ -2974,11 +2974,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("QUOTE", 44);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1043:17: ( '\"' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1038:17: ( '\"' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1043:19: '\"'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1038:19: '\"'
 			{
-			DebugLocation(1043, 19);
+			DebugLocation(1038, 19);
 			Match('\"'); 
 
 			}
@@ -3005,11 +3005,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("SQUOTE", 45);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1044:18: ( '\\'' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1039:18: ( '\\'' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1044:20: '\\''
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1039:20: '\\''
 			{
-			DebugLocation(1044, 20);
+			DebugLocation(1039, 20);
 			Match('\''); 
 
 			}
@@ -3036,11 +3036,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("BSLASH", 46);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1045:18: ( '\\\\' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1040:18: ( '\\\\' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1045:20: '\\\\'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1040:20: '\\\\'
 			{
-			DebugLocation(1045, 20);
+			DebugLocation(1040, 20);
 			Match('\\'); 
 
 			}
@@ -3067,11 +3067,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("NL", 47);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1046:14: ( '\\r' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1041:14: ( '\\r' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1046:16: '\\r'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1041:16: '\\r'
 			{
-			DebugLocation(1046, 16);
+			DebugLocation(1041, 16);
 			Match('\r'); 
 
 			}
@@ -3098,11 +3098,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("CR", 48);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1047:14: ( '\\n' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1042:14: ( '\\n' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1047:16: '\\n'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1042:16: '\\n'
 			{
-			DebugLocation(1047, 16);
+			DebugLocation(1042, 16);
 			Match('\n'); 
 
 			}
@@ -3129,11 +3129,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("SPACE", 49);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1048:17: ( ' ' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1043:17: ( ' ' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1048:19: ' '
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1043:19: ' '
 			{
-			DebugLocation(1048, 19);
+			DebugLocation(1043, 19);
 			Match(' '); 
 
 			}
@@ -3160,11 +3160,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("AMPER", 50);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1049:16: ( '&' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1044:16: ( '&' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1049:18: '&'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1044:18: '&'
 			{
-			DebugLocation(1049, 18);
+			DebugLocation(1044, 18);
 			Match('&'); 
 
 			}
@@ -3191,11 +3191,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("AMPER_AMPER", 51);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1050:21: ( '&&' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1045:21: ( '&&' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1050:24: '&&'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1045:24: '&&'
 			{
-			DebugLocation(1050, 24);
+			DebugLocation(1045, 24);
 			Match("&&"); 
 
 
@@ -3223,11 +3223,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("PIPE", 52);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1051:15: ( '|' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1046:15: ( '|' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1051:17: '|'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1046:17: '|'
 			{
-			DebugLocation(1051, 17);
+			DebugLocation(1046, 17);
 			Match('|'); 
 
 			}
@@ -3254,11 +3254,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("PIPE_PIPE", 53);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1052:20: ( '||' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1047:20: ( '||' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1052:22: '||'
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1047:22: '||'
 			{
-			DebugLocation(1052, 22);
+			DebugLocation(1047, 22);
 			Match("||"); 
 
 
@@ -3287,14 +3287,14 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		try
 		{
 			 pushPosition(ESCAPE); 
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1060:2: ( BSLASH ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1055:2: ( BSLASH ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1060:6: BSLASH ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1055:6: BSLASH ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT )
 			{
-			DebugLocation(1060, 6);
+			DebugLocation(1055, 6);
 			mBSLASH(); 
-			DebugLocation(1061, 2);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1061:2: ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT )
+			DebugLocation(1056, 2);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1056:2: ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT )
 			int alt10=8;
 			try { DebugEnterSubRule(10);
 			try { DebugEnterDecision(10, false);
@@ -3353,80 +3353,80 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1062:15: 't'
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1057:15: 't'
 				{
-				DebugLocation(1062, 15);
+				DebugLocation(1057, 15);
 				Match('t'); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1063:17: 'n'
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1058:17: 'n'
 				{
-				DebugLocation(1063, 17);
+				DebugLocation(1058, 17);
 				Match('n'); 
 
 				}
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1064:17: 'r'
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1059:17: 'r'
 				{
-				DebugLocation(1064, 17);
+				DebugLocation(1059, 17);
 				Match('r'); 
 
 				}
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1065:17: QUOTE
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1060:17: QUOTE
 				{
-				DebugLocation(1065, 17);
+				DebugLocation(1060, 17);
 				mQUOTE(); 
 
 				}
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1066:17: SQUOTE
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1061:17: SQUOTE
 				{
-				DebugLocation(1066, 17);
+				DebugLocation(1061, 17);
 				mSQUOTE(); 
 
 				}
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1067:17: BSLASH
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1062:17: BSLASH
 				{
-				DebugLocation(1067, 17);
+				DebugLocation(1062, 17);
 				mBSLASH(); 
 
 				}
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1068:17: SPACE
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1063:17: SPACE
 				{
-				DebugLocation(1068, 17);
+				DebugLocation(1063, 17);
 				mSPACE(); 
 
 				}
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1069:16: 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:1064:16: 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT
 				{
-				DebugLocation(1069, 16);
+				DebugLocation(1064, 16);
 				Match('u'); 
-				DebugLocation(1069, 20);
+				DebugLocation(1064, 20);
 				mHEXDIGIT(); 
-				DebugLocation(1069, 29);
+				DebugLocation(1064, 29);
 				mHEXDIGIT(); 
-				DebugLocation(1069, 38);
+				DebugLocation(1064, 38);
 				mHEXDIGIT(); 
-				DebugLocation(1069, 47);
+				DebugLocation(1064, 47);
 				mHEXDIGIT(); 
 
 				}
@@ -3435,7 +3435,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			}
 			} finally { DebugExitSubRule(10); }
 
-			DebugLocation(1070, 4);
+			DebugLocation(1065, 4);
 			 popPosition(); 
 
 			}
@@ -3462,11 +3462,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("STRINGSTOP", 55);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1080:2: ( CONTROLCHARS | QUOTE | SQUOTE | EQUALS | BANG | LT | GT | LPAREN | RPAREN | LIKE | COMMA | LBRACKET | RBRACKET | PIPE | AMPER | RESERVED_CHARS | NEWLINE )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1075:2: ( CONTROLCHARS | QUOTE | SQUOTE | EQUALS | BANG | LT | GT | LPAREN | RPAREN | LIKE | COMMA | LBRACKET | RBRACKET | PIPE | AMPER | RESERVED_CHARS | NEWLINE )
 			DebugEnterAlt(1);
 			// ../../QuoteFlow/Models/Search/Jql/Jql.g:
 			{
-			DebugLocation(1080, 2);
+			DebugLocation(1075, 2);
 			if ((input.LA(1)>='\u0000' && input.LA(1)<='\u001F')||(input.LA(1)>='!' && input.LA(1)<=',')||input.LA(1)=='/'||(input.LA(1)>=';' && input.LA(1)<='@')||input.LA(1)=='['||(input.LA(1)>=']' && input.LA(1)<='^')||(input.LA(1)>='{' && input.LA(1)<='\u009F')||(input.LA(1)>='\uFDD0' && input.LA(1)<='\uFDEF')||(input.LA(1)>='\uFFFE' && input.LA(1)<='\uFFFF'))
 			{
 				input.Consume();
@@ -3504,11 +3504,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("CONTROLCHARS", 56);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1098:2: ( '\\u0000' .. '\\u0009' | '\\u000b' .. '\\u000c' | '\\u000e' .. '\\u001f' | '\\u007f' .. '\\u009f' | '\\ufdd0' .. '\\ufdef' | '\\ufffe' .. '\\uffff' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1093:2: ( '\\u0000' .. '\\u0009' | '\\u000b' .. '\\u000c' | '\\u000e' .. '\\u001f' | '\\u007f' .. '\\u009f' | '\\ufdd0' .. '\\ufdef' | '\\ufffe' .. '\\uffff' )
 			DebugEnterAlt(1);
 			// ../../QuoteFlow/Models/Search/Jql/Jql.g:
 			{
-			DebugLocation(1098, 2);
+			DebugLocation(1093, 2);
 			if ((input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\u001F')||(input.LA(1)>='\u007F' && input.LA(1)<='\u009F')||(input.LA(1)>='\uFDD0' && input.LA(1)<='\uFDEF')||(input.LA(1)>='\uFFFE' && input.LA(1)<='\uFFFF'))
 			{
 				input.Consume();
@@ -3546,11 +3546,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("NEWLINE", 57);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1113:5: ( NL | CR )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1108:5: ( NL | CR )
 			DebugEnterAlt(1);
 			// ../../QuoteFlow/Models/Search/Jql/Jql.g:
 			{
-			DebugLocation(1113, 5);
+			DebugLocation(1108, 5);
 			if (input.LA(1)=='\n'||input.LA(1)=='\r')
 			{
 				input.Consume();
@@ -3588,11 +3588,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("HEXDIGIT", 58);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1116:2: ( DIGIT | ( 'A' | 'a' ) | ( 'B' | 'b' ) | ( 'C' | 'c' ) | ( 'D' | 'd' ) | ( 'E' | 'e' ) | ( 'F' | 'f' ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1111:2: ( DIGIT | ( 'A' | 'a' ) | ( 'B' | 'b' ) | ( 'C' | 'c' ) | ( 'D' | 'd' ) | ( 'E' | 'e' ) | ( 'F' | 'f' ) )
 			DebugEnterAlt(1);
 			// ../../QuoteFlow/Models/Search/Jql/Jql.g:
 			{
-			DebugLocation(1116, 2);
+			DebugLocation(1111, 2);
 			if ((input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='F')||(input.LA(1)>='a' && input.LA(1)<='f'))
 			{
 				input.Consume();
@@ -3630,11 +3630,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("DIGIT", 59);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1120:2: ( '0' .. '9' )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1115:2: ( '0' .. '9' )
 			DebugEnterAlt(1);
 			// ../../QuoteFlow/Models/Search/Jql/Jql.g:
 			{
-			DebugLocation(1120, 2);
+			DebugLocation(1115, 2);
 			if ((input.LA(1)>='0' && input.LA(1)<='9'))
 			{
 				input.Consume();
@@ -3672,11 +3672,11 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("WS", 60);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1124:2: ( ( SPACE | '\\t' | NEWLINE ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:1119:2: ( ( SPACE | '\\t' | NEWLINE ) )
 			DebugEnterAlt(1);
 			// ../../QuoteFlow/Models/Search/Jql/Jql.g:
 			{
-			DebugLocation(1124, 2);
+			DebugLocation(1119, 2);
 			if ((input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ')
 			{
 				input.Consume();

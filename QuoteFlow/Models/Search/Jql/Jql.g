@@ -92,11 +92,6 @@ using QuoteFlow.Models.Search.Jql.Util;
         throw new RuntimeRecognitionException(message, th);
     }
 
-	@rulecatch
-	catch (RecognitionException ex)
-	{
-	    throw ex;
-	}
 }
 
 /*
@@ -299,7 +294,7 @@ terminalClause  returns [IClause clause]
                 var e = new RecognitionException(input);
                 ReportError(JqlParseErrorMessages.BadOperand(e.Token), e);
             }
-            $clause = new ITerminalClause($f.field.Name, $operator.operator, $operand.operand, Option.some($f.field.getProperty()));
+            $clause = new TerminalClause($f.field.Name, $operator.operator, $operand.operand, new List<Property>{$f.field.Property});
         }
 	    else if ($operator.operator  == Operator.CHANGED)
 	    {
@@ -308,7 +303,7 @@ terminalClause  returns [IClause clause]
                 var e = new RecognitionException(input);
                 ReportError(JqlParseErrorMessages.UnsupportedOperand($operator.operator.ToString(), $operand.operand.DisplayString),e);
             }
-            $clause = new IChangedClause($field.field.Name, $operator.operator, $chPred.predicate);
+            $clause = new ChangedClause($field.field.Name, $operator.operator, $chPred.predicate);
 	    }
 	    else
 	    {
@@ -319,7 +314,7 @@ terminalClause  returns [IClause clause]
                     var e = new RecognitionException(input);
                     ReportError(JqlParseErrorMessages.BadOperand(e.Token), e);
                 }
-                $clause = new IWasClause($field.field.Name, $operator.operator, $operand.operand, $pred.predicate);
+                $clause = new WasClause($field.field.Name, $operator.operator, $operand.operand, $pred.predicate);
                 supportsHistoryPredicate=true;
            }
            else
@@ -329,7 +324,7 @@ terminalClause  returns [IClause clause]
                     var e = new RecognitionException(input);
                     ReportError(JqlParseErrorMessages.BadOperand(e.Token), e);
                 }
-                $clause = new ITerminalClause($field.field.Name, $operator.operator, $operand.operand);
+                $clause = new TerminalClause($field.field.Name, $operator.operator, $operand.operand);
                 supportsHistoryPredicate=false;
                 if ($pred.predicate != null)
                 {
@@ -424,7 +419,7 @@ subHistoryPredicate returns [HistoryPredicate predicate]
         {
             ReportError(JqlParseErrorMessages.ExpectedText(e.Token, ")"), e);
         }
-        else
+        else@
         {
             throw e;
         }
@@ -525,7 +520,7 @@ field returns [FieldReference field]
         $field = new FieldReference(names, arrays, propertyRefs);
     }
 	:
-    num = numberString { names.Add($num.string); }
+    num = numberString { names.Add($num.stringValue); }
     |
     (
         (
@@ -536,12 +531,12 @@ field returns [FieldReference field]
 	        (
 	            LBRACKET
 	            (
-	                ref = argument {arrays.Add($ref.arg);}
+	                reff = argument {arrays.Add($reff.arg);}
 	            )
 	            RBRACKET
 	        )
 	        (
-	            ref = propertyArgument {propertyRefs.Add($ref.arg);}
+	            reff = propertyArgument {propertyRefs.Add($reff.arg);}
 	        )*
         )*
 	)
@@ -611,7 +606,7 @@ fieldCheck returns [FieldReference field]
  */
 operand	returns [IOperand operand]
 	: EMPTY { $operand = new EmptyOperand(); }
-	| str = string { $operand = new SingleValueOperand($str.string); }
+	| str = string { $operand = new SingleValueOperand($str.stringValue); }
 	| number = numberString { $operand = new SingleValueOperand(ParseLong($numberString.start)); }
 	| fn = func {$operand = $fn.func;}
 	| l = list {$operand = $l.list;}
@@ -653,21 +648,21 @@ operand	returns [IOperand operand]
 /*
  * Parse a String in JQL.
  */
-string returns [String string]
-	: str = STRING { $string = $str.text; }
-	| str = QUOTE_STRING { $string = $str.text; }
-	| str = SQUOTE_STRING { $string = $str.text; }
+string returns [String stringValue]
+	: str = STRING { $stringValue = $str.text; }
+	| str = QUOTE_STRING { $stringValue = $str.text; }
+	| str = SQUOTE_STRING { $stringValue = $str.text; }
 	;
 
-numberString returns [String string]
-	: num = (POSNUMBER | NEGNUMBER) { $string = $num.text; }
+numberString returns [String stringValue]
+	: num = (POSNUMBER | NEGNUMBER) { $stringValue = $num.text; }
 	;
 
 /*
  * 
  */
-stringValueCheck returns [String string]
-	: str = string { $string = $str.string; } EOF
+stringValueCheck returns [String stringValue]
+	: str = string { $stringValue = $str.stringValue; } EOF
 	;
 	
 /*
@@ -735,8 +730,8 @@ func returns [FunctionOperand func]
  * Rule to match function names.
  */ 
 funcName returns [string name]
-	: string { $name = checkFunctionName($string.start); }
-	| num = numberString { $name = $num.string; }
+	: string { $name = CheckFunctionName($string.start); }
+	| num = numberString { $name = $num.stringValue; }
 	;
 
 /*
@@ -793,8 +788,8 @@ propertyArgument returns [string arg]
  * Parse out a JQL function argument. Must be strings for the time being.
  */
 argument returns [string arg]
-	: str = string { $arg = $str.string; } 
-	| number = numberString { $arg = $number.string; }
+	: str = string { $arg = $str.stringValue; } 
+	| number = numberString { $arg = $number.stringValue; }
 	;
 	catch [RecognitionException e]
 	{

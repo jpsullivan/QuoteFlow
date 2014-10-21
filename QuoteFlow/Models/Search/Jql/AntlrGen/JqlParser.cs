@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.5.0.2 ../../QuoteFlow/Models/Search/Jql/Jql.g 2014-10-20 21:17:56
+// $ANTLR 3.5.0.2 ../../QuoteFlow/Models/Search/Jql/Jql.g 2014-10-20 23:07:48
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -189,11 +189,6 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	        throw new RuntimeRecognitionException(message, th);
 	    }
 
-		@rulecatch
-		catch (RecognitionException ex)
-		{
-		    throw ex;
-		}
 
 
 	partial void OnCreated();
@@ -212,7 +207,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_query();
 	partial void LeaveRule_query();
 	// $ANTLR start "query"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:191:1: query returns [IClause clause, IOrderBy order] : (where= clause )? (sort= orderBy )? EOF ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:186:1: query returns [IClause clause, IOrderBy order] : (where= clause )? (sort= orderBy )? EOF ;
 	[GrammarRule("query")]
 	private JqlParser.query_return query()
 	{
@@ -226,15 +221,15 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		IOrderBy sort = default(IOrderBy);
 
 		try { DebugEnterRule(GrammarFileName, "query");
-		DebugLocation(191, 1);
+		DebugLocation(186, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:192:2: ( (where= clause )? (sort= orderBy )? EOF )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:187:2: ( (where= clause )? (sort= orderBy )? EOF )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:192:4: (where= clause )? (sort= orderBy )? EOF
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:187:4: (where= clause )? (sort= orderBy )? EOF
 			{
-			DebugLocation(192, 4);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:192:4: (where= clause )?
+			DebugLocation(187, 4);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:187:4: (where= clause )?
 			int alt1=2;
 			try { DebugEnterSubRule(1);
 			try { DebugEnterDecision(1, false);
@@ -249,9 +244,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:192:5: where= clause
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:187:5: where= clause
 				{
-				DebugLocation(192, 11);
+				DebugLocation(187, 11);
 				PushFollow(Follow._clause_in_query85);
 				where=clause();
 				PopFollow();
@@ -263,8 +258,8 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(1); }
 
-			DebugLocation(192, 23);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:192:23: (sort= orderBy )?
+			DebugLocation(187, 23);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:187:23: (sort= orderBy )?
 			int alt2=2;
 			try { DebugEnterSubRule(2);
 			try { DebugEnterDecision(2, false);
@@ -279,9 +274,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:192:24: sort= orderBy
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:187:24: sort= orderBy
 				{
-				DebugLocation(192, 29);
+				DebugLocation(187, 29);
 				PushFollow(Follow._orderBy_in_query95);
 				sort=orderBy();
 				PopFollow();
@@ -293,9 +288,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(2); }
 
-			DebugLocation(192, 41);
+			DebugLocation(187, 41);
 			Match(input,EOF,Follow._EOF_in_query99); 
-			DebugLocation(193, 2);
+			DebugLocation(188, 2);
 
 					retval.clause = where;
 					retval.order = sort;
@@ -346,7 +341,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("query", 1);
 			LeaveRule_query();
 		}
-		DebugLocation(197, 1);
+		DebugLocation(192, 1);
 		} finally { DebugExitRule(GrammarFileName, "query"); }
 		return retval;
 
@@ -356,7 +351,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_clause();
 	partial void LeaveRule_clause();
 	// $ANTLR start "clause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:231:1: clause returns [IClause clause] : orClause ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:226:1: clause returns [IClause clause] : orClause ;
 	[GrammarRule("clause")]
 	private IClause clause()
 	{
@@ -369,19 +364,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		IClause orClause1 = default(IClause);
 
 		try { DebugEnterRule(GrammarFileName, "clause");
-		DebugLocation(231, 1);
+		DebugLocation(226, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:232:2: ( orClause )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:227:2: ( orClause )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:232:4: orClause
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:227:4: orClause
 			{
-			DebugLocation(232, 4);
+			DebugLocation(227, 4);
 			PushFollow(Follow._orClause_in_clause135);
 			orClause1=orClause();
 			PopFollow();
 
-			DebugLocation(232, 13);
+			DebugLocation(227, 13);
 			 clause = orClause1; 
 
 			}
@@ -398,7 +393,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("clause", 2);
 			LeaveRule_clause();
 		}
-		DebugLocation(233, 1);
+		DebugLocation(228, 1);
 		} finally { DebugExitRule(GrammarFileName, "clause"); }
 		return clause;
 
@@ -408,7 +403,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_orClause();
 	partial void LeaveRule_orClause();
 	// $ANTLR start "orClause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:238:1: orClause returns [IClause clause] : cl= andClause ( OR cl= andClause )* ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:233:1: orClause returns [IClause clause] : cl= andClause ( OR cl= andClause )* ;
 	[GrammarRule("orClause")]
 	private IClause orClause()
 	{
@@ -424,22 +419,22 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				var clauses = new List<IClause>();
 			
 		try { DebugEnterRule(GrammarFileName, "orClause");
-		DebugLocation(238, 1);
+		DebugLocation(233, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:243:2: (cl= andClause ( OR cl= andClause )* )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:238:2: (cl= andClause ( OR cl= andClause )* )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:243:4: cl= andClause ( OR cl= andClause )*
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:238:4: cl= andClause ( OR cl= andClause )*
 			{
-			DebugLocation(243, 7);
+			DebugLocation(238, 7);
 			PushFollow(Follow._andClause_in_orClause166);
 			cl=andClause();
 			PopFollow();
 
-			DebugLocation(243, 19);
+			DebugLocation(238, 19);
 			 clauses.Add(cl); 
-			DebugLocation(243, 48);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:243:48: ( OR cl= andClause )*
+			DebugLocation(238, 48);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:238:48: ( OR cl= andClause )*
 			try { DebugEnterSubRule(3);
 			while (true)
 			{
@@ -458,16 +453,16 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:243:49: OR cl= andClause
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:238:49: OR cl= andClause
 					{
-					DebugLocation(243, 49);
+					DebugLocation(238, 49);
 					Match(input,OR,Follow._OR_in_orClause171); 
-					DebugLocation(243, 55);
+					DebugLocation(238, 55);
 					PushFollow(Follow._andClause_in_orClause177);
 					cl=andClause();
 					PopFollow();
 
-					DebugLocation(243, 67);
+					DebugLocation(238, 67);
 					 clauses.Add(cl); 
 
 					}
@@ -483,7 +478,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(3); }
 
-			DebugLocation(243, 98);
+			DebugLocation(238, 98);
 			clause = clauses.Count == 1? clauses.ElementAt(0) : new OrClause(clauses); 
 
 			}
@@ -500,7 +495,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("orClause", 3);
 			LeaveRule_orClause();
 		}
-		DebugLocation(244, 1);
+		DebugLocation(239, 1);
 		} finally { DebugExitRule(GrammarFileName, "orClause"); }
 		return clause;
 
@@ -510,7 +505,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_andClause();
 	partial void LeaveRule_andClause();
 	// $ANTLR start "andClause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:249:1: andClause returns [IClause clause] : cl= notClause ( AND cl= notClause )* ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:244:1: andClause returns [IClause clause] : cl= notClause ( AND cl= notClause )* ;
 	[GrammarRule("andClause")]
 	private IClause andClause()
 	{
@@ -526,22 +521,22 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				var clauses = new List<IClause>();
 			
 		try { DebugEnterRule(GrammarFileName, "andClause");
-		DebugLocation(249, 1);
+		DebugLocation(244, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:253:2: (cl= notClause ( AND cl= notClause )* )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:248:2: (cl= notClause ( AND cl= notClause )* )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:253:4: cl= notClause ( AND cl= notClause )*
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:248:4: cl= notClause ( AND cl= notClause )*
 			{
-			DebugLocation(253, 7);
+			DebugLocation(248, 7);
 			PushFollow(Follow._notClause_in_andClause210);
 			cl=notClause();
 			PopFollow();
 
-			DebugLocation(253, 19);
+			DebugLocation(248, 19);
 			 clauses.Add(cl); 
-			DebugLocation(253, 48);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:253:48: ( AND cl= notClause )*
+			DebugLocation(248, 48);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:248:48: ( AND cl= notClause )*
 			try { DebugEnterSubRule(4);
 			while (true)
 			{
@@ -560,16 +555,16 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:253:49: AND cl= notClause
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:248:49: AND cl= notClause
 					{
-					DebugLocation(253, 49);
+					DebugLocation(248, 49);
 					Match(input,AND,Follow._AND_in_andClause215); 
-					DebugLocation(253, 56);
+					DebugLocation(248, 56);
 					PushFollow(Follow._notClause_in_andClause221);
 					cl=notClause();
 					PopFollow();
 
-					DebugLocation(253, 68);
+					DebugLocation(248, 68);
 					 clauses.Add(cl); 
 
 					}
@@ -585,7 +580,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(4); }
 
-			DebugLocation(253, 99);
+			DebugLocation(248, 99);
 			clause = clauses.Count == 1? clauses.ElementAt(0) : new AndClause(clauses); 
 
 			}
@@ -602,7 +597,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("andClause", 4);
 			LeaveRule_andClause();
 		}
-		DebugLocation(254, 1);
+		DebugLocation(249, 1);
 		} finally { DebugExitRule(GrammarFileName, "andClause"); }
 		return clause;
 
@@ -612,7 +607,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_notClause();
 	partial void LeaveRule_notClause();
 	// $ANTLR start "notClause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:259:1: notClause returns [IClause clause] : ( ( NOT | BANG ) nc= notClause | subClause | terminalClause );
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:254:1: notClause returns [IClause clause] : ( ( NOT | BANG ) nc= notClause | subClause | terminalClause );
 	[GrammarRule("notClause")]
 	private IClause notClause()
 	{
@@ -627,10 +622,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		IClause terminalClause3 = default(IClause);
 
 		try { DebugEnterRule(GrammarFileName, "notClause");
-		DebugLocation(259, 1);
+		DebugLocation(254, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:260:2: ( ( NOT | BANG ) nc= notClause | subClause | terminalClause )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:255:2: ( ( NOT | BANG ) nc= notClause | subClause | terminalClause )
 			int alt5=3;
 			try { DebugEnterDecision(5, false);
 			switch (input.LA(1))
@@ -669,9 +664,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:260:4: ( NOT | BANG ) nc= notClause
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:255:4: ( NOT | BANG ) nc= notClause
 				{
-				DebugLocation(260, 4);
+				DebugLocation(255, 4);
 				if (input.LA(1)==BANG||input.LA(1)==NOT)
 				{
 					input.Consume();
@@ -684,40 +679,40 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					throw mse;
 				}
 
-				DebugLocation(260, 20);
+				DebugLocation(255, 20);
 				PushFollow(Follow._notClause_in_notClause256);
 				nc=notClause();
 				PopFollow();
 
-				DebugLocation(260, 32);
+				DebugLocation(255, 32);
 				 clause = new NotClause(nc); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:261:4: subClause
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:256:4: subClause
 				{
-				DebugLocation(261, 4);
+				DebugLocation(256, 4);
 				PushFollow(Follow._subClause_in_notClause263);
 				subClause2=subClause();
 				PopFollow();
 
-				DebugLocation(261, 14);
+				DebugLocation(256, 14);
 				 clause = subClause2; 
 
 				}
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:262:25: terminalClause
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:257:25: terminalClause
 				{
-				DebugLocation(262, 25);
+				DebugLocation(257, 25);
 				PushFollow(Follow._terminalClause_in_notClause291);
 				terminalClause3=terminalClause();
 				PopFollow();
 
-				DebugLocation(262, 40);
+				DebugLocation(257, 40);
 				 clause = terminalClause3; 
 
 				}
@@ -739,7 +734,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("notClause", 5);
 			LeaveRule_notClause();
 		}
-		DebugLocation(263, 1);
+		DebugLocation(258, 1);
 		} finally { DebugExitRule(GrammarFileName, "notClause"); }
 		return clause;
 
@@ -749,7 +744,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_subClause();
 	partial void LeaveRule_subClause();
 	// $ANTLR start "subClause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:274:1: subClause returns [IClause clause] : LPAREN orClause RPAREN ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:269:1: subClause returns [IClause clause] : LPAREN orClause RPAREN ;
 	[GrammarRule("subClause")]
 	private IClause subClause()
 	{
@@ -762,23 +757,23 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		IClause orClause4 = default(IClause);
 
 		try { DebugEnterRule(GrammarFileName, "subClause");
-		DebugLocation(274, 4);
+		DebugLocation(269, 4);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:275:5: ( LPAREN orClause RPAREN )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:270:5: ( LPAREN orClause RPAREN )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:275:7: LPAREN orClause RPAREN
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:270:7: LPAREN orClause RPAREN
 			{
-			DebugLocation(275, 7);
+			DebugLocation(270, 7);
 			Match(input,LPAREN,Follow._LPAREN_in_subClause323); 
-			DebugLocation(275, 14);
+			DebugLocation(270, 14);
 			PushFollow(Follow._orClause_in_subClause325);
 			orClause4=orClause();
 			PopFollow();
 
-			DebugLocation(275, 23);
+			DebugLocation(270, 23);
 			Match(input,RPAREN,Follow._RPAREN_in_subClause327); 
-			DebugLocation(275, 30);
+			DebugLocation(270, 30);
 			 clause = orClause4; 
 
 			}
@@ -804,7 +799,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("subClause", 6);
 			LeaveRule_subClause();
 		}
-		DebugLocation(276, 4);
+		DebugLocation(271, 4);
 		} finally { DebugExitRule(GrammarFileName, "subClause"); }
 		return clause;
 
@@ -814,7 +809,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_terminalClause();
 	partial void LeaveRule_terminalClause();
 	// $ANTLR start "terminalClause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:292:1: terminalClause returns [IClause clause] : f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? ) ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:287:1: terminalClause returns [IClause clause] : f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? ) ;
 	[GrammarRule("terminalClause")]
 	private IClause terminalClause()
 	{
@@ -831,25 +826,25 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		IHistoryPredicate chPred = default(IHistoryPredicate);
 
 		try { DebugEnterRule(GrammarFileName, "terminalClause");
-		DebugLocation(292, 1);
+		DebugLocation(287, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:293:2: (f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:288:2: (f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:293:4: f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:288:4: f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? )
 			{
-			DebugLocation(293, 6);
+			DebugLocation(288, 6);
 			PushFollow(Follow._field_in_terminalClause368);
 			f=field();
 			PopFollow();
 
-			DebugLocation(293, 17);
+			DebugLocation(288, 17);
 			PushFollow(Follow._operator_in_terminalClause374);
 			op=@operator();
 			PopFollow();
 
-			DebugLocation(293, 29);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:293:29: ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? )
+			DebugLocation(288, 29);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:288:29: ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? )
 			int alt8=2;
 			try { DebugEnterSubRule(8);
 			try { DebugEnterDecision(8, false);
@@ -874,20 +869,20 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:293:31: (opand= operand (pred= historyPredicate )? )
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:288:31: (opand= operand (pred= historyPredicate )? )
 				{
-				DebugLocation(293, 31);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:293:31: (opand= operand (pred= historyPredicate )? )
+				DebugLocation(288, 31);
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:288:31: (opand= operand (pred= historyPredicate )? )
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:293:32: opand= operand (pred= historyPredicate )?
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:288:32: opand= operand (pred= historyPredicate )?
 				{
-				DebugLocation(293, 38);
+				DebugLocation(288, 38);
 				PushFollow(Follow._operand_in_terminalClause384);
 				opand=operand();
 				PopFollow();
 
-				DebugLocation(293, 52);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:293:52: (pred= historyPredicate )?
+				DebugLocation(288, 52);
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:288:52: (pred= historyPredicate )?
 				int alt6=2;
 				try { DebugEnterSubRule(6);
 				try { DebugEnterDecision(6, false);
@@ -902,9 +897,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:293:52: pred= historyPredicate
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:288:52: pred= historyPredicate
 					{
-					DebugLocation(293, 52);
+					DebugLocation(288, 52);
 					PushFollow(Follow._historyPredicate_in_terminalClause389);
 					pred=historyPredicate();
 					PopFollow();
@@ -924,10 +919,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:293:75: (chPred= historyPredicate )?
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:288:75: (chPred= historyPredicate )?
 				{
-				DebugLocation(293, 81);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:293:81: (chPred= historyPredicate )?
+				DebugLocation(288, 81);
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:288:81: (chPred= historyPredicate )?
 				int alt7=2;
 				try { DebugEnterSubRule(7);
 				try { DebugEnterDecision(7, false);
@@ -942,9 +937,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:293:81: chPred= historyPredicate
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:288:81: chPred= historyPredicate
 					{
-					DebugLocation(293, 81);
+					DebugLocation(288, 81);
 					PushFollow(Follow._historyPredicate_in_terminalClause397);
 					chPred=historyPredicate();
 					PopFollow();
@@ -963,7 +958,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(8); }
 
-			DebugLocation(294, 2);
+			DebugLocation(289, 2);
 
 			        if (f != null && (f!=null?((JqlParser.field_return)f).field:default(FieldReference)).IsEntityProperty())
 			        {
@@ -972,7 +967,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			                var e = new RecognitionException(input);
 			                ReportError(JqlParseErrorMessages.BadOperand(e.Token), e);
 			            }
-			            clause = new ITerminalClause((f!=null?((JqlParser.field_return)f).field:default(FieldReference)).Name, op, opand, Option.some((f!=null?((JqlParser.field_return)f).field:default(FieldReference)).getProperty()));
+			            clause = new TerminalClause((f!=null?((JqlParser.field_return)f).field:default(FieldReference)).Name, op, opand, new List<Property>{(f!=null?((JqlParser.field_return)f).field:default(FieldReference)).Property});
 			        }
 				    else if (op  == Operator.CHANGED)
 				    {
@@ -981,7 +976,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			                var e = new RecognitionException(input);
 			                ReportError(JqlParseErrorMessages.UnsupportedOperand(op.ToString(), opand.DisplayString),e);
 			            }
-			            clause = new IChangedClause((f!=null?((JqlParser.field_return)f).field:default(FieldReference)).Name, op, chPred);
+			            clause = new ChangedClause((f!=null?((JqlParser.field_return)f).field:default(FieldReference)).Name, op, chPred);
 				    }
 				    else
 				    {
@@ -992,7 +987,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			                    var e = new RecognitionException(input);
 			                    ReportError(JqlParseErrorMessages.BadOperand(e.Token), e);
 			                }
-			                clause = new IWasClause((f!=null?((JqlParser.field_return)f).field:default(FieldReference)).Name, op, opand, pred);
+			                clause = new WasClause((f!=null?((JqlParser.field_return)f).field:default(FieldReference)).Name, op, opand, pred);
 			                supportsHistoryPredicate=true;
 			           }
 			           else
@@ -1002,7 +997,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			                    var e = new RecognitionException(input);
 			                    ReportError(JqlParseErrorMessages.BadOperand(e.Token), e);
 			                }
-			                clause = new ITerminalClause((f!=null?((JqlParser.field_return)f).field:default(FieldReference)).Name, op, opand);
+			                clause = new TerminalClause((f!=null?((JqlParser.field_return)f).field:default(FieldReference)).Name, op, opand);
 			                supportsHistoryPredicate=false;
 			                if (pred != null)
 			                {
@@ -1046,7 +1041,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("terminalClause", 7);
 			LeaveRule_terminalClause();
 		}
-		DebugLocation(343, 1);
+		DebugLocation(338, 1);
 		} finally { DebugExitRule(GrammarFileName, "terminalClause"); }
 		return clause;
 
@@ -1056,7 +1051,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_historyPredicate();
 	partial void LeaveRule_historyPredicate();
 	// $ANTLR start "historyPredicate"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:366:1: historyPredicate returns [IHistoryPredicate predicate] : (p= terminalHistoryPredicate )+ ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:361:1: historyPredicate returns [IHistoryPredicate predicate] : (p= terminalHistoryPredicate )+ ;
 	[GrammarRule("historyPredicate")]
 	private IHistoryPredicate historyPredicate()
 	{
@@ -1072,15 +1067,15 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				var predicates = new List<IHistoryPredicate>();
 			
 		try { DebugEnterRule(GrammarFileName, "historyPredicate");
-		DebugLocation(366, 1);
+		DebugLocation(361, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:370:2: ( (p= terminalHistoryPredicate )+ )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:365:2: ( (p= terminalHistoryPredicate )+ )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:370:4: (p= terminalHistoryPredicate )+
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:365:4: (p= terminalHistoryPredicate )+
 			{
-			DebugLocation(370, 4);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:370:4: (p= terminalHistoryPredicate )+
+			DebugLocation(365, 4);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:365:4: (p= terminalHistoryPredicate )+
 			int cnt9=0;
 			try { DebugEnterSubRule(9);
 			while (true)
@@ -1100,14 +1095,14 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:370:5: p= terminalHistoryPredicate
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:365:5: p= terminalHistoryPredicate
 					{
-					DebugLocation(370, 7);
+					DebugLocation(365, 7);
 					PushFollow(Follow._terminalHistoryPredicate_in_historyPredicate437);
 					p=terminalHistoryPredicate();
 					PopFollow();
 
-					DebugLocation(370, 34);
+					DebugLocation(365, 34);
 					 predicates.Add(p);
 
 					}
@@ -1128,7 +1123,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(9); }
 
-			DebugLocation(370, 69);
+			DebugLocation(365, 69);
 			predicate = predicates.Count == 1? predicates.ElementAt(0) : new AndHistoryPredicate(predicates); 
 
 			}
@@ -1145,7 +1140,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("historyPredicate", 8);
 			LeaveRule_historyPredicate();
 		}
-		DebugLocation(371, 1);
+		DebugLocation(366, 1);
 		} finally { DebugExitRule(GrammarFileName, "historyPredicate"); }
 		return predicate;
 
@@ -1155,7 +1150,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_terminalHistoryPredicate();
 	partial void LeaveRule_terminalHistoryPredicate();
 	// $ANTLR start "terminalHistoryPredicate"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:434:1: terminalHistoryPredicate returns [IHistoryPredicate predicate] : historyPredicateOperator operand ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:429:1: terminalHistoryPredicate returns [IHistoryPredicate predicate] : historyPredicateOperator operand ;
 	[GrammarRule("terminalHistoryPredicate")]
 	private IHistoryPredicate terminalHistoryPredicate()
 	{
@@ -1169,24 +1164,24 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		IOperand operand6 = default(IOperand);
 
 		try { DebugEnterRule(GrammarFileName, "terminalHistoryPredicate");
-		DebugLocation(434, 1);
+		DebugLocation(429, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:435:2: ( historyPredicateOperator operand )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:430:2: ( historyPredicateOperator operand )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:435:4: historyPredicateOperator operand
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:430:4: historyPredicateOperator operand
 			{
-			DebugLocation(435, 4);
+			DebugLocation(430, 4);
 			PushFollow(Follow._historyPredicateOperator_in_terminalHistoryPredicate461);
 			historyPredicateOperator5=historyPredicateOperator();
 			PopFollow();
 
-			DebugLocation(435, 29);
+			DebugLocation(430, 29);
 			PushFollow(Follow._operand_in_terminalHistoryPredicate463);
 			operand6=operand();
 			PopFollow();
 
-			DebugLocation(436, 2);
+			DebugLocation(431, 2);
 
 					predicate = new TerminalHistoryPredicate(historyPredicateOperator5, operand6);
 				
@@ -1205,7 +1200,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("terminalHistoryPredicate", 9);
 			LeaveRule_terminalHistoryPredicate();
 		}
-		DebugLocation(439, 1);
+		DebugLocation(434, 1);
 		} finally { DebugExitRule(GrammarFileName, "terminalHistoryPredicate"); }
 		return predicate;
 
@@ -1215,7 +1210,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_historyPredicateOperator();
 	partial void LeaveRule_historyPredicateOperator();
 	// $ANTLR start "historyPredicateOperator"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:442:1: historyPredicateOperator returns [Operator operator] : ( FROM | TO | BY | BEFORE | AFTER | ON | DURING );
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:437:1: historyPredicateOperator returns [Operator operator] : ( FROM | TO | BY | BEFORE | AFTER | ON | DURING );
 	[GrammarRule("historyPredicateOperator")]
 	private Operator historyPredicateOperator()
 	{
@@ -1226,10 +1221,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 
 
 		try { DebugEnterRule(GrammarFileName, "historyPredicateOperator");
-		DebugLocation(442, 40);
+		DebugLocation(437, 40);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:443:2: ( FROM | TO | BY | BEFORE | AFTER | ON | DURING )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:438:2: ( FROM | TO | BY | BEFORE | AFTER | ON | DURING )
 			int alt10=7;
 			try { DebugEnterDecision(10, false);
 			switch (input.LA(1))
@@ -1282,77 +1277,77 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:443:4: FROM
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:438:4: FROM
 				{
-				DebugLocation(443, 4);
+				DebugLocation(438, 4);
 				Match(input,FROM,Follow._FROM_in_historyPredicateOperator482); 
-				DebugLocation(443, 9);
+				DebugLocation(438, 9);
 				 @operator = Operator.FROM; 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:444:4: TO
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:439:4: TO
 				{
-				DebugLocation(444, 4);
+				DebugLocation(439, 4);
 				Match(input,TO,Follow._TO_in_historyPredicateOperator489); 
-				DebugLocation(444, 7);
+				DebugLocation(439, 7);
 				@operator = Operator.TO; 
 
 				}
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:445:4: BY
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:440:4: BY
 				{
-				DebugLocation(445, 4);
+				DebugLocation(440, 4);
 				Match(input,BY,Follow._BY_in_historyPredicateOperator496); 
-				DebugLocation(445, 7);
+				DebugLocation(440, 7);
 				@operator = Operator.BY; 
 
 				}
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:446:4: BEFORE
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:441:4: BEFORE
 				{
-				DebugLocation(446, 4);
+				DebugLocation(441, 4);
 				Match(input,BEFORE,Follow._BEFORE_in_historyPredicateOperator503); 
-				DebugLocation(446, 11);
+				DebugLocation(441, 11);
 				@operator = Operator.BEFORE; 
 
 				}
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:447:4: AFTER
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:442:4: AFTER
 				{
-				DebugLocation(447, 4);
+				DebugLocation(442, 4);
 				Match(input,AFTER,Follow._AFTER_in_historyPredicateOperator510); 
-				DebugLocation(447, 10);
+				DebugLocation(442, 10);
 				@operator = Operator.AFTER; 
 
 				}
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:448:4: ON
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:443:4: ON
 				{
-				DebugLocation(448, 4);
+				DebugLocation(443, 4);
 				Match(input,ON,Follow._ON_in_historyPredicateOperator517); 
-				DebugLocation(448, 7);
+				DebugLocation(443, 7);
 				@operator = Operator.ON; 
 
 				}
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:449:4: DURING
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:444:4: DURING
 				{
-				DebugLocation(449, 4);
+				DebugLocation(444, 4);
 				Match(input,DURING,Follow._DURING_in_historyPredicateOperator525); 
-				DebugLocation(449, 11);
+				DebugLocation(444, 11);
 				@operator = Operator.DURING;
 
 				}
@@ -1371,7 +1366,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("historyPredicateOperator", 10);
 			LeaveRule_historyPredicateOperator();
 		}
-		DebugLocation(449, 40);
+		DebugLocation(444, 40);
 		} finally { DebugExitRule(GrammarFileName, "historyPredicateOperator"); }
 		return operator;
 
@@ -1381,7 +1376,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_operator();
 	partial void LeaveRule_operator();
 	// $ANTLR start "operator"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:456:1: operator returns [Operator operator] : ( EQUALS | NOT_EQUALS | LIKE | NOT_LIKE | LT | GT | LTEQ | GTEQ | IN | IS NOT | IS | NOT IN | WAS | WAS NOT | WAS IN | WAS NOT IN | CHANGED );
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:451:1: operator returns [Operator operator] : ( EQUALS | NOT_EQUALS | LIKE | NOT_LIKE | LT | GT | LTEQ | GTEQ | IN | IS NOT | IS | NOT IN | WAS | WAS NOT | WAS IN | WAS NOT IN | CHANGED );
 	[GrammarRule("operator")]
 	private Operator @operator()
 	{
@@ -1392,10 +1387,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 
 
 		try { DebugEnterRule(GrammarFileName, "operator");
-		DebugLocation(456, 4);
+		DebugLocation(451, 4);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:457:2: ( EQUALS | NOT_EQUALS | LIKE | NOT_LIKE | LT | GT | LTEQ | GTEQ | IN | IS NOT | IS | NOT IN | WAS | WAS NOT | WAS IN | WAS NOT IN | CHANGED )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:452:2: ( EQUALS | NOT_EQUALS | LIKE | NOT_LIKE | LT | GT | LTEQ | GTEQ | IN | IS NOT | IS | NOT IN | WAS | WAS NOT | WAS IN | WAS NOT IN | CHANGED )
 			int alt11=17;
 			try { DebugEnterDecision(11, false);
 			switch (input.LA(1))
@@ -1550,199 +1545,199 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:457:4: EQUALS
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:452:4: EQUALS
 				{
-				DebugLocation(457, 4);
+				DebugLocation(452, 4);
 				Match(input,EQUALS,Follow._EQUALS_in_operator546); 
-				DebugLocation(457, 11);
+				DebugLocation(452, 11);
 				 @operator = Operator.EQUALS; 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:458:4: NOT_EQUALS
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:453:4: NOT_EQUALS
 				{
-				DebugLocation(458, 4);
+				DebugLocation(453, 4);
 				Match(input,NOT_EQUALS,Follow._NOT_EQUALS_in_operator553); 
-				DebugLocation(458, 15);
+				DebugLocation(453, 15);
 				 @operator = Operator.NOT_EQUALS; 
 
 				}
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:459:4: LIKE
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:454:4: LIKE
 				{
-				DebugLocation(459, 4);
+				DebugLocation(454, 4);
 				Match(input,LIKE,Follow._LIKE_in_operator560); 
-				DebugLocation(459, 9);
+				DebugLocation(454, 9);
 				 @operator = Operator.LIKE; 
 
 				}
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:460:4: NOT_LIKE
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:455:4: NOT_LIKE
 				{
-				DebugLocation(460, 4);
+				DebugLocation(455, 4);
 				Match(input,NOT_LIKE,Follow._NOT_LIKE_in_operator567); 
-				DebugLocation(460, 13);
+				DebugLocation(455, 13);
 				 @operator = Operator.NOT_LIKE; 
 
 				}
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:461:4: LT
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:456:4: LT
 				{
-				DebugLocation(461, 4);
+				DebugLocation(456, 4);
 				Match(input,LT,Follow._LT_in_operator575); 
-				DebugLocation(461, 7);
+				DebugLocation(456, 7);
 				 @operator = Operator.LESS_THAN; 
 
 				}
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:462:4: GT
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:457:4: GT
 				{
-				DebugLocation(462, 4);
+				DebugLocation(457, 4);
 				Match(input,GT,Follow._GT_in_operator582); 
-				DebugLocation(462, 7);
+				DebugLocation(457, 7);
 				 @operator = Operator.GREATER_THAN; 
 
 				}
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:463:4: LTEQ
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:458:4: LTEQ
 				{
-				DebugLocation(463, 4);
+				DebugLocation(458, 4);
 				Match(input,LTEQ,Follow._LTEQ_in_operator589); 
-				DebugLocation(463, 9);
+				DebugLocation(458, 9);
 				 @operator = Operator.LESS_THAN_EQUALS; 
 
 				}
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:464:4: GTEQ
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:459:4: GTEQ
 				{
-				DebugLocation(464, 4);
+				DebugLocation(459, 4);
 				Match(input,GTEQ,Follow._GTEQ_in_operator596); 
-				DebugLocation(464, 9);
+				DebugLocation(459, 9);
 				 @operator = Operator.GREATER_THAN_EQUALS; 
 
 				}
 				break;
 			case 9:
 				DebugEnterAlt(9);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:465:4: IN
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:460:4: IN
 				{
-				DebugLocation(465, 4);
+				DebugLocation(460, 4);
 				Match(input,IN,Follow._IN_in_operator603); 
-				DebugLocation(465, 7);
+				DebugLocation(460, 7);
 				 @operator = Operator.IN; 
 
 				}
 				break;
 			case 10:
 				DebugEnterAlt(10);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:466:4: IS NOT
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:461:4: IS NOT
 				{
-				DebugLocation(466, 4);
+				DebugLocation(461, 4);
 				Match(input,IS,Follow._IS_in_operator610); 
-				DebugLocation(466, 7);
+				DebugLocation(461, 7);
 				Match(input,NOT,Follow._NOT_in_operator612); 
-				DebugLocation(466, 11);
+				DebugLocation(461, 11);
 				 @operator = Operator.IS_NOT; 
 
 				}
 				break;
 			case 11:
 				DebugEnterAlt(11);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:467:4: IS
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:462:4: IS
 				{
-				DebugLocation(467, 4);
+				DebugLocation(462, 4);
 				Match(input,IS,Follow._IS_in_operator619); 
-				DebugLocation(467, 7);
+				DebugLocation(462, 7);
 				 @operator = Operator.IS; 
 
 				}
 				break;
 			case 12:
 				DebugEnterAlt(12);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:468:4: NOT IN
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:463:4: NOT IN
 				{
-				DebugLocation(468, 4);
+				DebugLocation(463, 4);
 				Match(input,NOT,Follow._NOT_in_operator626); 
-				DebugLocation(468, 8);
+				DebugLocation(463, 8);
 				Match(input,IN,Follow._IN_in_operator628); 
-				DebugLocation(468, 11);
+				DebugLocation(463, 11);
 				 @operator = Operator.NOT_IN; 
 
 				}
 				break;
 			case 13:
 				DebugEnterAlt(13);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:469:4: WAS
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:464:4: WAS
 				{
-				DebugLocation(469, 4);
+				DebugLocation(464, 4);
 				Match(input,WAS,Follow._WAS_in_operator635); 
-				DebugLocation(469, 8);
+				DebugLocation(464, 8);
 				 @operator = Operator.WAS; 
 
 				}
 				break;
 			case 14:
 				DebugEnterAlt(14);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:470:4: WAS NOT
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:465:4: WAS NOT
 				{
-				DebugLocation(470, 4);
+				DebugLocation(465, 4);
 				Match(input,WAS,Follow._WAS_in_operator642); 
-				DebugLocation(470, 8);
+				DebugLocation(465, 8);
 				Match(input,NOT,Follow._NOT_in_operator644); 
-				DebugLocation(470, 12);
+				DebugLocation(465, 12);
 				 @operator = Operator.WAS_NOT; 
 
 				}
 				break;
 			case 15:
 				DebugEnterAlt(15);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:471:7: WAS IN
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:466:7: WAS IN
 				{
-				DebugLocation(471, 7);
+				DebugLocation(466, 7);
 				Match(input,WAS,Follow._WAS_in_operator654); 
-				DebugLocation(471, 11);
+				DebugLocation(466, 11);
 				Match(input,IN,Follow._IN_in_operator656); 
-				DebugLocation(471, 14);
+				DebugLocation(466, 14);
 				 @operator = Operator.WAS_IN; 
 
 				}
 				break;
 			case 16:
 				DebugEnterAlt(16);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:472:7: WAS NOT IN
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:467:7: WAS NOT IN
 				{
-				DebugLocation(472, 7);
+				DebugLocation(467, 7);
 				Match(input,WAS,Follow._WAS_in_operator666); 
-				DebugLocation(472, 11);
+				DebugLocation(467, 11);
 				Match(input,NOT,Follow._NOT_in_operator668); 
-				DebugLocation(472, 15);
+				DebugLocation(467, 15);
 				Match(input,IN,Follow._IN_in_operator670); 
-				DebugLocation(472, 18);
+				DebugLocation(467, 18);
 				 @operator = Operator.WAS_NOT_IN; 
 
 				}
 				break;
 			case 17:
 				DebugEnterAlt(17);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:473:7: CHANGED
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:468:7: CHANGED
 				{
-				DebugLocation(473, 7);
+				DebugLocation(468, 7);
 				Match(input,CHANGED,Follow._CHANGED_in_operator680); 
-				DebugLocation(473, 15);
+				DebugLocation(468, 15);
 				 @operator = Operator.CHANGED; 
 
 				}
@@ -1800,7 +1795,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("operator", 11);
 			LeaveRule_operator();
 		}
-		DebugLocation(474, 4);
+		DebugLocation(469, 4);
 		} finally { DebugExitRule(GrammarFileName, "operator"); }
 		return operator;
 
@@ -1817,7 +1812,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_field();
 	partial void LeaveRule_field();
 	// $ANTLR start "field"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:518:1: field returns [FieldReference field] : (num= numberString | ( (str= string |cf= customField ) ( ( LBRACKET (ref= argument ) RBRACKET ) (ref= propertyArgument )* )* ) );
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:513:1: field returns [FieldReference field] : (num= numberString | ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* ) );
 	[GrammarRule("field")]
 	private JqlParser.field_return field()
 	{
@@ -1830,7 +1825,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		ParserRuleReturnScope<IToken> num = default(ParserRuleReturnScope<IToken>);
 		ParserRuleReturnScope<IToken> str = default(ParserRuleReturnScope<IToken>);
 		string cf = default(string);
-		string ref = default(string);
+		string reff = default(string);
 
 
 		        var names = new List<string>();
@@ -1838,10 +1833,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		        var propertyRefs = new List<string>();
 		    
 		try { DebugEnterRule(GrammarFileName, "field");
-		DebugLocation(518, 1);
+		DebugLocation(513, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:527:2: (num= numberString | ( (str= string |cf= customField ) ( ( LBRACKET (ref= argument ) RBRACKET ) (ref= propertyArgument )* )* ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:522:2: (num= numberString | ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* ) )
 			int alt15=2;
 			try { DebugEnterDecision(15, false);
 			int LA15_1 = input.LA(1);
@@ -1865,29 +1860,29 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:528:5: num= numberString
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:523:5: num= numberString
 				{
-				DebugLocation(528, 9);
+				DebugLocation(523, 9);
 				PushFollow(Follow._numberString_in_field744);
 				num=numberString();
 				PopFollow();
 
-				DebugLocation(528, 24);
-				 names.Add((num!=null?((JqlParser.numberString_return)num).@string:default(String))); 
+				DebugLocation(523, 24);
+				 names.Add((num!=null?((JqlParser.numberString_return)num).stringValue:default(String))); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:530:5: ( (str= string |cf= customField ) ( ( LBRACKET (ref= argument ) RBRACKET ) (ref= propertyArgument )* )* )
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:525:5: ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* )
 				{
-				DebugLocation(530, 5);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:530:5: ( (str= string |cf= customField ) ( ( LBRACKET (ref= argument ) RBRACKET ) (ref= propertyArgument )* )* )
+				DebugLocation(525, 5);
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:525:5: ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* )
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:531:9: (str= string |cf= customField ) ( ( LBRACKET (ref= argument ) RBRACKET ) (ref= propertyArgument )* )*
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:526:9: (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )*
 				{
-				DebugLocation(531, 9);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:531:9: (str= string |cf= customField )
+				DebugLocation(526, 9);
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:526:9: (str= string |cf= customField )
 				int alt12=2;
 				try { DebugEnterSubRule(12);
 				try { DebugEnterDecision(12, false);
@@ -1912,28 +1907,28 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:532:13: str= string
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:527:13: str= string
 					{
-					DebugLocation(532, 17);
+					DebugLocation(527, 17);
 					PushFollow(Follow._string_in_field786);
 					str=@string();
 					PopFollow();
 
-					DebugLocation(532, 26);
+					DebugLocation(527, 26);
 					 names.Add(CheckFieldName((str!=null?((IToken)str.Start):default(IToken)))); 
 
 					}
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:533:15: cf= customField
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:528:15: cf= customField
 					{
-					DebugLocation(533, 18);
+					DebugLocation(528, 18);
 					PushFollow(Follow._customField_in_field808);
 					cf=customField();
 					PopFollow();
 
-					DebugLocation(533, 32);
+					DebugLocation(528, 32);
 					 names.Add(cf); 
 
 					}
@@ -1942,8 +1937,8 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(12); }
 
-				DebugLocation(535, 9);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:535:9: ( ( LBRACKET (ref= argument ) RBRACKET ) (ref= propertyArgument )* )*
+				DebugLocation(530, 9);
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:530:9: ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )*
 				try { DebugEnterSubRule(14);
 				while (true)
 				{
@@ -1962,37 +1957,37 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:536:10: ( LBRACKET (ref= argument ) RBRACKET ) (ref= propertyArgument )*
+						// ../../QuoteFlow/Models/Search/Jql/Jql.g:531:10: ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )*
 						{
-						DebugLocation(536, 10);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:536:10: ( LBRACKET (ref= argument ) RBRACKET )
+						DebugLocation(531, 10);
+						// ../../QuoteFlow/Models/Search/Jql/Jql.g:531:10: ( LBRACKET (reff= argument ) RBRACKET )
 						DebugEnterAlt(1);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:537:14: LBRACKET (ref= argument ) RBRACKET
+						// ../../QuoteFlow/Models/Search/Jql/Jql.g:532:14: LBRACKET (reff= argument ) RBRACKET
 						{
-						DebugLocation(537, 14);
+						DebugLocation(532, 14);
 						Match(input,LBRACKET,Follow._LBRACKET_in_field856); 
-						DebugLocation(538, 14);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:538:14: (ref= argument )
+						DebugLocation(533, 14);
+						// ../../QuoteFlow/Models/Search/Jql/Jql.g:533:14: (reff= argument )
 						DebugEnterAlt(1);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:539:18: ref= argument
+						// ../../QuoteFlow/Models/Search/Jql/Jql.g:534:18: reff= argument
 						{
-						DebugLocation(539, 22);
+						DebugLocation(534, 23);
 						PushFollow(Follow._argument_in_field894);
-						ref=argument();
+						reff=argument();
 						PopFollow();
 
-						DebugLocation(539, 33);
-						arrays.Add(ref);
+						DebugLocation(534, 34);
+						arrays.Add(reff);
 
 						}
 
-						DebugLocation(541, 14);
+						DebugLocation(536, 14);
 						Match(input,RBRACKET,Follow._RBRACKET_in_field926); 
 
 						}
 
-						DebugLocation(543, 10);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:543:10: (ref= propertyArgument )*
+						DebugLocation(538, 10);
+						// ../../QuoteFlow/Models/Search/Jql/Jql.g:538:10: (reff= propertyArgument )*
 						try { DebugEnterSubRule(13);
 						while (true)
 						{
@@ -2011,15 +2006,15 @@ public partial class JqlParser : Antlr.Runtime.Parser
 							{
 							case 1:
 								DebugEnterAlt(1);
-								// ../../QuoteFlow/Models/Search/Jql/Jql.g:544:14: ref= propertyArgument
+								// ../../QuoteFlow/Models/Search/Jql/Jql.g:539:14: reff= propertyArgument
 								{
-								DebugLocation(544, 18);
+								DebugLocation(539, 19);
 								PushFollow(Follow._propertyArgument_in_field967);
-								ref=propertyArgument();
+								reff=propertyArgument();
 								PopFollow();
 
-								DebugLocation(544, 37);
-								propertyRefs.Add(ref);
+								DebugLocation(539, 38);
+								propertyRefs.Add(reff);
 
 								}
 								break;
@@ -2103,7 +2098,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("field", 12);
 			LeaveRule_field();
 		}
-		DebugLocation(548, 1);
+		DebugLocation(543, 1);
 		} finally { DebugExitRule(GrammarFileName, "field"); }
 		return retval;
 
@@ -2113,7 +2108,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_customField();
 	partial void LeaveRule_customField();
 	// $ANTLR start "customField"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:578:1: customField returns [string field] : CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:573:1: customField returns [string field] : CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET ;
 	[GrammarRule("customField")]
 	private string customField()
 	{
@@ -2126,22 +2121,22 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		IToken posnum = default(IToken);
 
 		try { DebugEnterRule(GrammarFileName, "customField");
-		DebugLocation(578, 4);
+		DebugLocation(573, 4);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:579:5: ( CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:574:5: ( CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:579:7: CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:574:7: CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET
 			{
-			DebugLocation(579, 7);
+			DebugLocation(574, 7);
 			Match(input,CUSTOMFIELD,Follow._CUSTOMFIELD_in_customField1037); 
-			DebugLocation(579, 19);
+			DebugLocation(574, 19);
 			Match(input,LBRACKET,Follow._LBRACKET_in_customField1039); 
-			DebugLocation(579, 35);
+			DebugLocation(574, 35);
 			posnum=(IToken)Match(input,POSNUMBER,Follow._POSNUMBER_in_customField1045); 
-			DebugLocation(579, 47);
+			DebugLocation(574, 47);
 			Match(input,RBRACKET,Follow._RBRACKET_in_customField1047); 
-			DebugLocation(579, 56);
+			DebugLocation(574, 56);
 			 field = JqlCustomFieldId.ToString(ParseLong(posnum)); 
 
 			}
@@ -2176,7 +2171,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("customField", 13);
 			LeaveRule_customField();
 		}
-		DebugLocation(580, 4);
+		DebugLocation(575, 4);
 		} finally { DebugExitRule(GrammarFileName, "customField"); }
 		return field;
 
@@ -2186,7 +2181,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_fieldCheck();
 	partial void LeaveRule_fieldCheck();
 	// $ANTLR start "fieldCheck"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:605:1: fieldCheck returns [FieldReference field] : f= field EOF ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:600:1: fieldCheck returns [FieldReference field] : f= field EOF ;
 	[GrammarRule("fieldCheck")]
 	private FieldReference fieldCheck()
 	{
@@ -2199,21 +2194,21 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		ParserRuleReturnScope<IToken> f = default(ParserRuleReturnScope<IToken>);
 
 		try { DebugEnterRule(GrammarFileName, "fieldCheck");
-		DebugLocation(605, 1);
+		DebugLocation(600, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:606:2: (f= field EOF )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:601:2: (f= field EOF )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:606:4: f= field EOF
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:601:4: f= field EOF
 			{
-			DebugLocation(606, 6);
+			DebugLocation(601, 6);
 			PushFollow(Follow._field_in_fieldCheck1087);
 			f=field();
 			PopFollow();
 
-			DebugLocation(606, 14);
+			DebugLocation(601, 14);
 			 field = (f!=null?((JqlParser.field_return)f).field:default(FieldReference)); 
-			DebugLocation(606, 37);
+			DebugLocation(601, 37);
 			Match(input,EOF,Follow._EOF_in_fieldCheck1091); 
 
 			}
@@ -2230,7 +2225,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("fieldCheck", 14);
 			LeaveRule_fieldCheck();
 		}
-		DebugLocation(607, 1);
+		DebugLocation(602, 1);
 		} finally { DebugExitRule(GrammarFileName, "fieldCheck"); }
 		return field;
 
@@ -2240,7 +2235,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_operand();
 	partial void LeaveRule_operand();
 	// $ANTLR start "operand"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:612:1: operand returns [IOperand operand] : ( EMPTY |str= string |number= numberString |fn= func |l= list );
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:607:1: operand returns [IOperand operand] : ( EMPTY |str= string |number= numberString |fn= func |l= list );
 	[GrammarRule("operand")]
 	private IOperand operand()
 	{
@@ -2256,10 +2251,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		IOperand l = default(IOperand);
 
 		try { DebugEnterRule(GrammarFileName, "operand");
-		DebugLocation(612, 1);
+		DebugLocation(607, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:613:2: ( EMPTY |str= string |number= numberString |fn= func |l= list )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:608:2: ( EMPTY |str= string |number= numberString |fn= func |l= list )
 			int alt16=5;
 			try { DebugEnterDecision(16, false);
 			switch (input.LA(1))
@@ -2368,67 +2363,67 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:613:4: EMPTY
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:608:4: EMPTY
 				{
-				DebugLocation(613, 4);
+				DebugLocation(608, 4);
 				Match(input,EMPTY,Follow._EMPTY_in_operand1108); 
-				DebugLocation(613, 10);
+				DebugLocation(608, 10);
 				 operand = new EmptyOperand(); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:614:4: str= string
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:609:4: str= string
 				{
-				DebugLocation(614, 8);
+				DebugLocation(609, 8);
 				PushFollow(Follow._string_in_operand1119);
 				str=@string();
 				PopFollow();
 
-				DebugLocation(614, 17);
-				 operand = new SingleValueOperand((str!=null?((JqlParser.string_return)str).@string:default(String))); 
+				DebugLocation(609, 17);
+				 operand = new SingleValueOperand((str!=null?((JqlParser.string_return)str).stringValue:default(String))); 
 
 				}
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:615:4: number= numberString
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:610:4: number= numberString
 				{
-				DebugLocation(615, 11);
+				DebugLocation(610, 11);
 				PushFollow(Follow._numberString_in_operand1130);
 				number=numberString();
 				PopFollow();
 
-				DebugLocation(615, 26);
+				DebugLocation(610, 26);
 				 operand = new SingleValueOperand(ParseLong((number!=null?((IToken)number.Start):default(IToken)))); 
 
 				}
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:616:4: fn= func
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:611:4: fn= func
 				{
-				DebugLocation(616, 7);
+				DebugLocation(611, 7);
 				PushFollow(Follow._func_in_operand1141);
 				fn=func();
 				PopFollow();
 
-				DebugLocation(616, 14);
+				DebugLocation(611, 14);
 				operand = fn;
 
 				}
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:617:4: l= list
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:612:4: l= list
 				{
-				DebugLocation(617, 6);
+				DebugLocation(612, 6);
 				PushFollow(Follow._list_in_operand1152);
 				l=list();
 				PopFollow();
 
-				DebugLocation(617, 13);
+				DebugLocation(612, 13);
 				operand = l;
 
 				}
@@ -2480,7 +2475,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("operand", 15);
 			LeaveRule_operand();
 		}
-		DebugLocation(618, 1);
+		DebugLocation(613, 1);
 		} finally { DebugExitRule(GrammarFileName, "operand"); }
 		return operand;
 
@@ -2489,7 +2484,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 
 	private sealed partial class string_return : ParserRuleReturnScope<IToken>
 	{
-		public String string;
+		public String stringValue;
 		public string_return(JqlParser grammar) {OnCreated(grammar);}
 		partial void OnCreated(JqlParser grammar);
 	}
@@ -2497,7 +2492,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_string();
 	partial void LeaveRule_string();
 	// $ANTLR start "string"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:656:1: string returns [String string] : (str= STRING |str= QUOTE_STRING |str= SQUOTE_STRING );
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:651:1: string returns [String stringValue] : (str= STRING |str= QUOTE_STRING |str= SQUOTE_STRING );
 	[GrammarRule("string")]
 	private JqlParser.string_return @string()
 	{
@@ -2510,10 +2505,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		IToken str = default(IToken);
 
 		try { DebugEnterRule(GrammarFileName, "string");
-		DebugLocation(656, 1);
+		DebugLocation(651, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:657:2: (str= STRING |str= QUOTE_STRING |str= SQUOTE_STRING )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:652:2: (str= STRING |str= QUOTE_STRING |str= SQUOTE_STRING )
 			int alt17=3;
 			try { DebugEnterDecision(17, false);
 			switch (input.LA(1))
@@ -2546,34 +2541,34 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:657:4: str= STRING
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:652:4: str= STRING
 				{
-				DebugLocation(657, 8);
+				DebugLocation(652, 8);
 				str=(IToken)Match(input,STRING,Follow._STRING_in_string1192); 
-				DebugLocation(657, 17);
-				 retval.@string = (str!=null?str.Text:default(string)); 
+				DebugLocation(652, 17);
+				 retval.stringValue = (str!=null?str.Text:default(string)); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:658:4: str= QUOTE_STRING
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:653:4: str= QUOTE_STRING
 				{
-				DebugLocation(658, 8);
+				DebugLocation(653, 8);
 				str=(IToken)Match(input,QUOTE_STRING,Follow._QUOTE_STRING_in_string1203); 
-				DebugLocation(658, 23);
-				 retval.@string = (str!=null?str.Text:default(string)); 
+				DebugLocation(653, 23);
+				 retval.stringValue = (str!=null?str.Text:default(string)); 
 
 				}
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:659:4: str= SQUOTE_STRING
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:654:4: str= SQUOTE_STRING
 				{
-				DebugLocation(659, 8);
+				DebugLocation(654, 8);
 				str=(IToken)Match(input,SQUOTE_STRING,Follow._SQUOTE_STRING_in_string1214); 
-				DebugLocation(659, 24);
-				 retval.@string = (str!=null?str.Text:default(string)); 
+				DebugLocation(654, 24);
+				 retval.stringValue = (str!=null?str.Text:default(string)); 
 
 				}
 				break;
@@ -2593,7 +2588,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("string", 16);
 			LeaveRule_string();
 		}
-		DebugLocation(660, 1);
+		DebugLocation(655, 1);
 		} finally { DebugExitRule(GrammarFileName, "string"); }
 		return retval;
 
@@ -2602,7 +2597,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 
 	private sealed partial class numberString_return : ParserRuleReturnScope<IToken>
 	{
-		public String string;
+		public String stringValue;
 		public numberString_return(JqlParser grammar) {OnCreated(grammar);}
 		partial void OnCreated(JqlParser grammar);
 	}
@@ -2610,7 +2605,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_numberString();
 	partial void LeaveRule_numberString();
 	// $ANTLR start "numberString"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:662:1: numberString returns [String string] : num= ( POSNUMBER | NEGNUMBER ) ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:657:1: numberString returns [String stringValue] : num= ( POSNUMBER | NEGNUMBER ) ;
 	[GrammarRule("numberString")]
 	private JqlParser.numberString_return numberString()
 	{
@@ -2623,14 +2618,14 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		IToken num = default(IToken);
 
 		try { DebugEnterRule(GrammarFileName, "numberString");
-		DebugLocation(662, 1);
+		DebugLocation(657, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:663:2: (num= ( POSNUMBER | NEGNUMBER ) )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:658:2: (num= ( POSNUMBER | NEGNUMBER ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:663:4: num= ( POSNUMBER | NEGNUMBER )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:658:4: num= ( POSNUMBER | NEGNUMBER )
 			{
-			DebugLocation(663, 8);
+			DebugLocation(658, 8);
 
 			num=(IToken)input.LT(1);
 			if (input.LA(1)==NEGNUMBER||input.LA(1)==POSNUMBER)
@@ -2645,8 +2640,8 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				throw mse;
 			}
 
-			DebugLocation(663, 34);
-			 retval.@string = (num!=null?num.Text:default(string)); 
+			DebugLocation(658, 34);
+			 retval.stringValue = (num!=null?num.Text:default(string)); 
 
 			}
 
@@ -2664,7 +2659,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("numberString", 17);
 			LeaveRule_numberString();
 		}
-		DebugLocation(664, 1);
+		DebugLocation(659, 1);
 		} finally { DebugExitRule(GrammarFileName, "numberString"); }
 		return retval;
 
@@ -2674,34 +2669,34 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_stringValueCheck();
 	partial void LeaveRule_stringValueCheck();
 	// $ANTLR start "stringValueCheck"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:669:1: stringValueCheck returns [String string] : str= string EOF ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:664:1: stringValueCheck returns [String stringValue] : str= string EOF ;
 	[GrammarRule("stringValueCheck")]
 	private String stringValueCheck()
 	{
 		EnterRule_stringValueCheck();
 		EnterRule("stringValueCheck", 18);
 		TraceIn("stringValueCheck", 18);
-		String @string = default(String);
+		String stringValue = default(String);
 
 
 		ParserRuleReturnScope<IToken> str = default(ParserRuleReturnScope<IToken>);
 
 		try { DebugEnterRule(GrammarFileName, "stringValueCheck");
-		DebugLocation(669, 1);
+		DebugLocation(664, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:670:2: (str= string EOF )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:665:2: (str= string EOF )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:670:4: str= string EOF
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:665:4: str= string EOF
 			{
-			DebugLocation(670, 8);
+			DebugLocation(665, 8);
 			PushFollow(Follow._string_in_stringValueCheck1264);
 			str=@string();
 			PopFollow();
 
-			DebugLocation(670, 17);
-			 @string = (str!=null?((JqlParser.string_return)str).@string:default(String)); 
-			DebugLocation(670, 44);
+			DebugLocation(665, 17);
+			 stringValue = (str!=null?((JqlParser.string_return)str).stringValue:default(String)); 
+			DebugLocation(665, 54);
 			Match(input,EOF,Follow._EOF_in_stringValueCheck1268); 
 
 			}
@@ -2718,9 +2713,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("stringValueCheck", 18);
 			LeaveRule_stringValueCheck();
 		}
-		DebugLocation(671, 1);
+		DebugLocation(666, 1);
 		} finally { DebugExitRule(GrammarFileName, "stringValueCheck"); }
-		return string;
+		return stringValue;
 
 	}
 	// $ANTLR end "stringValueCheck"
@@ -2728,7 +2723,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_list();
 	partial void LeaveRule_list();
 	// $ANTLR start "list"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:676:1: list returns [IOperand list] : LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:671:1: list returns [IOperand list] : LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN ;
 	[GrammarRule("list")]
 	private IOperand list()
 	{
@@ -2745,24 +2740,24 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				operandLevel++;
 			
 		try { DebugEnterRule(GrammarFileName, "list");
-		DebugLocation(676, 1);
+		DebugLocation(671, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:684:2: ( LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:679:2: ( LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:684:4: LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:679:4: LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN
 			{
-			DebugLocation(684, 4);
+			DebugLocation(679, 4);
 			Match(input,LPAREN,Follow._LPAREN_in_list1298); 
-			DebugLocation(684, 16);
+			DebugLocation(679, 16);
 			PushFollow(Follow._operand_in_list1304);
 			opnd=operand();
 			PopFollow();
 
-			DebugLocation(684, 26);
+			DebugLocation(679, 26);
 			args.Add(opnd);
-			DebugLocation(685, 3);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:685:3: ( COMMA opnd= operand )*
+			DebugLocation(680, 3);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:680:3: ( COMMA opnd= operand )*
 			try { DebugEnterSubRule(18);
 			while (true)
 			{
@@ -2781,16 +2776,16 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:685:4: COMMA opnd= operand
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:680:4: COMMA opnd= operand
 					{
-					DebugLocation(685, 4);
+					DebugLocation(680, 4);
 					Match(input,COMMA,Follow._COMMA_in_list1312); 
-					DebugLocation(685, 15);
+					DebugLocation(680, 15);
 					PushFollow(Follow._operand_in_list1318);
 					opnd=operand();
 					PopFollow();
 
-					DebugLocation(685, 25);
+					DebugLocation(680, 25);
 					args.Add(opnd);
 
 					}
@@ -2806,9 +2801,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(18); }
 
-			DebugLocation(685, 54);
+			DebugLocation(680, 54);
 			Match(input,RPAREN,Follow._RPAREN_in_list1324); 
-			DebugLocation(685, 61);
+			DebugLocation(680, 61);
 			list = new MultiValueOperand(args);
 
 			}
@@ -2837,7 +2832,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("list", 19);
 			LeaveRule_list();
 		}
-		DebugLocation(686, 1);
+		DebugLocation(681, 1);
 		} finally { DebugExitRule(GrammarFileName, "list"); }
 		return list;
 
@@ -2847,7 +2842,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_func();
 	partial void LeaveRule_func();
 	// $ANTLR start "func"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:702:1: func returns [FunctionOperand func] : fname= funcName LPAREN ( arglist )? RPAREN ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:697:1: func returns [FunctionOperand func] : fname= funcName LPAREN ( arglist )? RPAREN ;
 	[GrammarRule("func")]
 	private FunctionOperand func()
 	{
@@ -2861,22 +2856,22 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		List<string> arglist7 = default(List<string>);
 
 		try { DebugEnterRule(GrammarFileName, "func");
-		DebugLocation(702, 1);
+		DebugLocation(697, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:703:2: (fname= funcName LPAREN ( arglist )? RPAREN )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:698:2: (fname= funcName LPAREN ( arglist )? RPAREN )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:703:4: fname= funcName LPAREN ( arglist )? RPAREN
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:698:4: fname= funcName LPAREN ( arglist )? RPAREN
 			{
-			DebugLocation(703, 10);
+			DebugLocation(698, 10);
 			PushFollow(Follow._funcName_in_func1362);
 			fname=funcName();
 			PopFollow();
 
-			DebugLocation(703, 21);
+			DebugLocation(698, 21);
 			Match(input,LPAREN,Follow._LPAREN_in_func1364); 
-			DebugLocation(703, 28);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:703:28: ( arglist )?
+			DebugLocation(698, 28);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:698:28: ( arglist )?
 			int alt19=2;
 			try { DebugEnterSubRule(19);
 			try { DebugEnterDecision(19, false);
@@ -2891,9 +2886,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:703:28: arglist
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:698:28: arglist
 				{
-				DebugLocation(703, 28);
+				DebugLocation(698, 28);
 				PushFollow(Follow._arglist_in_func1366);
 				arglist7=arglist();
 				PopFollow();
@@ -2905,9 +2900,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(19); }
 
-			DebugLocation(703, 37);
+			DebugLocation(698, 37);
 			Match(input,RPAREN,Follow._RPAREN_in_func1369); 
-			DebugLocation(704, 2);
+			DebugLocation(699, 2);
 
 				    List<string> args = arglist7 == null ? new List<string>() : arglist7;
 			        func = new FunctionOperand(fname, args);
@@ -2951,7 +2946,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("func", 20);
 			LeaveRule_func();
 		}
-		DebugLocation(708, 1);
+		DebugLocation(703, 1);
 		} finally { DebugExitRule(GrammarFileName, "func"); }
 		return func;
 
@@ -2961,7 +2956,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_funcName();
 	partial void LeaveRule_funcName();
 	// $ANTLR start "funcName"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:737:1: funcName returns [string name] : ( string |num= numberString );
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:732:1: funcName returns [string name] : ( string |num= numberString );
 	[GrammarRule("funcName")]
 	private string funcName()
 	{
@@ -2975,10 +2970,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		ParserRuleReturnScope<IToken> string8 = default(ParserRuleReturnScope<IToken>);
 
 		try { DebugEnterRule(GrammarFileName, "funcName");
-		DebugLocation(737, 1);
+		DebugLocation(732, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:738:2: ( string |num= numberString )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:733:2: ( string |num= numberString )
 			int alt20=2;
 			try { DebugEnterDecision(20, false);
 			int LA20_1 = input.LA(1);
@@ -3002,29 +2997,29 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:738:4: string
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:733:4: string
 				{
-				DebugLocation(738, 4);
+				DebugLocation(733, 4);
 				PushFollow(Follow._string_in_funcName1406);
 				string8=@string();
 				PopFollow();
 
-				DebugLocation(738, 11);
-				 name = checkFunctionName((string8!=null?((IToken)string8.Start):default(IToken))); 
+				DebugLocation(733, 11);
+				 name = CheckFunctionName((string8!=null?((IToken)string8.Start):default(IToken))); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:739:4: num= numberString
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:734:4: num= numberString
 				{
-				DebugLocation(739, 8);
+				DebugLocation(734, 8);
 				PushFollow(Follow._numberString_in_funcName1417);
 				num=numberString();
 				PopFollow();
 
-				DebugLocation(739, 23);
-				 name = (num!=null?((JqlParser.numberString_return)num).@string:default(String)); 
+				DebugLocation(734, 23);
+				 name = (num!=null?((JqlParser.numberString_return)num).stringValue:default(String)); 
 
 				}
 				break;
@@ -3042,7 +3037,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("funcName", 21);
 			LeaveRule_funcName();
 		}
-		DebugLocation(740, 1);
+		DebugLocation(735, 1);
 		} finally { DebugExitRule(GrammarFileName, "funcName"); }
 		return name;
 
@@ -3052,7 +3047,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_funcNameCheck();
 	partial void LeaveRule_funcNameCheck();
 	// $ANTLR start "funcNameCheck"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:745:1: funcNameCheck returns [string name] : fname= funcName EOF ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:740:1: funcNameCheck returns [string name] : fname= funcName EOF ;
 	[GrammarRule("funcNameCheck")]
 	private string funcNameCheck()
 	{
@@ -3065,21 +3060,21 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		string fname = default(string);
 
 		try { DebugEnterRule(GrammarFileName, "funcNameCheck");
-		DebugLocation(745, 1);
+		DebugLocation(740, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:746:2: (fname= funcName EOF )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:741:2: (fname= funcName EOF )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:746:4: fname= funcName EOF
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:741:4: fname= funcName EOF
 			{
-			DebugLocation(746, 10);
+			DebugLocation(741, 10);
 			PushFollow(Follow._funcName_in_funcNameCheck1441);
 			fname=funcName();
 			PopFollow();
 
-			DebugLocation(746, 21);
+			DebugLocation(741, 21);
 			 name = fname; 
-			DebugLocation(746, 46);
+			DebugLocation(741, 46);
 			Match(input,EOF,Follow._EOF_in_funcNameCheck1445); 
 
 			}
@@ -3096,7 +3091,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("funcNameCheck", 22);
 			LeaveRule_funcNameCheck();
 		}
-		DebugLocation(747, 1);
+		DebugLocation(742, 1);
 		} finally { DebugExitRule(GrammarFileName, "funcNameCheck"); }
 		return name;
 
@@ -3106,7 +3101,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_arglist();
 	partial void LeaveRule_arglist();
 	// $ANTLR start "arglist"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:752:1: arglist returns [List<string> args] : str= argument ( COMMA str= argument )* ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:747:1: arglist returns [List<string> args] : str= argument ( COMMA str= argument )* ;
 	[GrammarRule("arglist")]
 	private List<string> arglist()
 	{
@@ -3122,22 +3117,22 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				args = new List<string>();
 			
 		try { DebugEnterRule(GrammarFileName, "arglist");
-		DebugLocation(752, 1);
+		DebugLocation(747, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:766:2: (str= argument ( COMMA str= argument )* )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:761:2: (str= argument ( COMMA str= argument )* )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:766:4: str= argument ( COMMA str= argument )*
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:761:4: str= argument ( COMMA str= argument )*
 			{
-			DebugLocation(766, 8);
+			DebugLocation(761, 8);
 			PushFollow(Follow._argument_in_arglist1478);
 			str=argument();
 			PopFollow();
 
-			DebugLocation(766, 19);
+			DebugLocation(761, 19);
 			 args.Add(str); 
-			DebugLocation(767, 2);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:767:2: ( COMMA str= argument )*
+			DebugLocation(762, 2);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:762:2: ( COMMA str= argument )*
 			try { DebugEnterSubRule(21);
 			while (true)
 			{
@@ -3156,16 +3151,16 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:767:3: COMMA str= argument
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:762:3: COMMA str= argument
 					{
-					DebugLocation(767, 3);
+					DebugLocation(762, 3);
 					Match(input,COMMA,Follow._COMMA_in_arglist1484); 
-					DebugLocation(767, 13);
+					DebugLocation(762, 13);
 					PushFollow(Follow._argument_in_arglist1490);
 					str=argument();
 					PopFollow();
 
-					DebugLocation(767, 24);
+					DebugLocation(762, 24);
 					 args.Add(str); 
 
 					}
@@ -3206,7 +3201,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("arglist", 23);
 			LeaveRule_arglist();
 		}
-		DebugLocation(768, 1);
+		DebugLocation(763, 1);
 		} finally { DebugExitRule(GrammarFileName, "arglist"); }
 		return args;
 
@@ -3216,7 +3211,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_propertyArgument();
 	partial void LeaveRule_propertyArgument();
 	// $ANTLR start "propertyArgument"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:770:1: propertyArgument returns [string arg] : a= argument ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:765:1: propertyArgument returns [string arg] : a= argument ;
 	[GrammarRule("propertyArgument")]
 	private string propertyArgument()
 	{
@@ -3229,19 +3224,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		string a = default(string);
 
 		try { DebugEnterRule(GrammarFileName, "propertyArgument");
-		DebugLocation(770, 5);
+		DebugLocation(765, 5);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:771:2: (a= argument )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:766:2: (a= argument )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:771:4: a= argument
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:766:4: a= argument
 			{
-			DebugLocation(771, 6);
+			DebugLocation(766, 6);
 			PushFollow(Follow._argument_in_propertyArgument1514);
 			a=argument();
 			PopFollow();
 
-			DebugLocation(772, 2);
+			DebugLocation(767, 2);
 
 				    // property argument should at least contain one dot and property reference
 				        if (a.Length<2 || a[0] != '.' || a[1] == '.')
@@ -3276,7 +3271,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("propertyArgument", 24);
 			LeaveRule_propertyArgument();
 		}
-		DebugLocation(790, 5);
+		DebugLocation(785, 5);
 		} finally { DebugExitRule(GrammarFileName, "propertyArgument"); }
 		return arg;
 
@@ -3286,7 +3281,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_argument();
 	partial void LeaveRule_argument();
 	// $ANTLR start "argument"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:795:1: argument returns [string arg] : (str= string |number= numberString );
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:790:1: argument returns [string arg] : (str= string |number= numberString );
 	[GrammarRule("argument")]
 	private string argument()
 	{
@@ -3300,10 +3295,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		ParserRuleReturnScope<IToken> number = default(ParserRuleReturnScope<IToken>);
 
 		try { DebugEnterRule(GrammarFileName, "argument");
-		DebugLocation(795, 1);
+		DebugLocation(790, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:796:2: (str= string |number= numberString )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:791:2: (str= string |number= numberString )
 			int alt22=2;
 			try { DebugEnterDecision(22, false);
 			int LA22_1 = input.LA(1);
@@ -3327,29 +3322,29 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:796:4: str= string
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:791:4: str= string
 				{
-				DebugLocation(796, 8);
+				DebugLocation(791, 8);
 				PushFollow(Follow._string_in_argument1536);
 				str=@string();
 				PopFollow();
 
-				DebugLocation(796, 17);
-				 arg = (str!=null?((JqlParser.string_return)str).@string:default(String)); 
+				DebugLocation(791, 17);
+				 arg = (str!=null?((JqlParser.string_return)str).stringValue:default(String)); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:797:4: number= numberString
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:792:4: number= numberString
 				{
-				DebugLocation(797, 11);
+				DebugLocation(792, 11);
 				PushFollow(Follow._numberString_in_argument1548);
 				number=numberString();
 				PopFollow();
 
-				DebugLocation(797, 26);
-				 arg = (number!=null?((JqlParser.numberString_return)number).@string:default(String)); 
+				DebugLocation(792, 26);
+				 arg = (number!=null?((JqlParser.numberString_return)number).stringValue:default(String)); 
 
 				}
 				break;
@@ -3381,7 +3376,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("argument", 25);
 			LeaveRule_argument();
 		}
-		DebugLocation(798, 1);
+		DebugLocation(793, 1);
 		} finally { DebugExitRule(GrammarFileName, "argument"); }
 		return arg;
 
@@ -3391,7 +3386,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_argumentCheck();
 	partial void LeaveRule_argumentCheck();
 	// $ANTLR start "argumentCheck"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:819:1: argumentCheck returns [string arg] : a= argument EOF ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:814:1: argumentCheck returns [string arg] : a= argument EOF ;
 	[GrammarRule("argumentCheck")]
 	private string argumentCheck()
 	{
@@ -3404,21 +3399,21 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		string a = default(string);
 
 		try { DebugEnterRule(GrammarFileName, "argumentCheck");
-		DebugLocation(819, 1);
+		DebugLocation(814, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:820:2: (a= argument EOF )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:815:2: (a= argument EOF )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:820:4: a= argument EOF
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:815:4: a= argument EOF
 			{
-			DebugLocation(820, 6);
+			DebugLocation(815, 6);
 			PushFollow(Follow._argument_in_argumentCheck1579);
 			a=argument();
 			PopFollow();
 
-			DebugLocation(820, 17);
+			DebugLocation(815, 17);
 			 arg = a; 
-			DebugLocation(820, 36);
+			DebugLocation(815, 36);
 			Match(input,EOF,Follow._EOF_in_argumentCheck1583); 
 
 			}
@@ -3435,7 +3430,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("argumentCheck", 26);
 			LeaveRule_argumentCheck();
 		}
-		DebugLocation(821, 1);
+		DebugLocation(816, 1);
 		} finally { DebugExitRule(GrammarFileName, "argumentCheck"); }
 		return arg;
 
@@ -3445,7 +3440,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_orderBy();
 	partial void LeaveRule_orderBy();
 	// $ANTLR start "orderBy"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:826:1: orderBy returns [IOrderBy order] : ORDER BY f= searchSort ( COMMA f= searchSort )* ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:821:1: orderBy returns [IOrderBy order] : ORDER BY f= searchSort ( COMMA f= searchSort )* ;
 	[GrammarRule("orderBy")]
 	private IOrderBy orderBy()
 	{
@@ -3461,26 +3456,26 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				List<SearchSort> args = new List<SearchSort>();
 			
 		try { DebugEnterRule(GrammarFileName, "orderBy");
-		DebugLocation(826, 1);
+		DebugLocation(821, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:830:2: ( ORDER BY f= searchSort ( COMMA f= searchSort )* )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:825:2: ( ORDER BY f= searchSort ( COMMA f= searchSort )* )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:830:4: ORDER BY f= searchSort ( COMMA f= searchSort )*
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:825:4: ORDER BY f= searchSort ( COMMA f= searchSort )*
 			{
-			DebugLocation(830, 4);
+			DebugLocation(825, 4);
 			Match(input,ORDER,Follow._ORDER_in_orderBy1607); 
-			DebugLocation(830, 10);
+			DebugLocation(825, 10);
 			Match(input,BY,Follow._BY_in_orderBy1609); 
-			DebugLocation(830, 15);
+			DebugLocation(825, 15);
 			PushFollow(Follow._searchSort_in_orderBy1615);
 			f=searchSort();
 			PopFollow();
 
-			DebugLocation(830, 28);
+			DebugLocation(825, 28);
 			 args.Add(f); 
-			DebugLocation(831, 3);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:831:3: ( COMMA f= searchSort )*
+			DebugLocation(826, 3);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:826:3: ( COMMA f= searchSort )*
 			try { DebugEnterSubRule(23);
 			while (true)
 			{
@@ -3499,16 +3494,16 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:831:4: COMMA f= searchSort
+					// ../../QuoteFlow/Models/Search/Jql/Jql.g:826:4: COMMA f= searchSort
 					{
-					DebugLocation(831, 4);
+					DebugLocation(826, 4);
 					Match(input,COMMA,Follow._COMMA_in_orderBy1622); 
-					DebugLocation(831, 12);
+					DebugLocation(826, 12);
 					PushFollow(Follow._searchSort_in_orderBy1628);
 					f=searchSort();
 					PopFollow();
 
-					DebugLocation(831, 25);
+					DebugLocation(826, 25);
 					 args.Add(f); 
 
 					}
@@ -3524,7 +3519,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(23); }
 
-			DebugLocation(831, 44);
+			DebugLocation(826, 44);
 			 order = new OrderBy(args); 
 
 			}
@@ -3561,7 +3556,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("orderBy", 27);
 			LeaveRule_orderBy();
 		}
-		DebugLocation(832, 1);
+		DebugLocation(827, 1);
 		} finally { DebugExitRule(GrammarFileName, "orderBy"); }
 		return order;
 
@@ -3571,7 +3566,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_searchSort();
 	partial void LeaveRule_searchSort();
 	// $ANTLR start "searchSort"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:857:1: searchSort returns [SearchSort sort] : f= field (o= DESC |o= ASC )? ;
+	// ../../QuoteFlow/Models/Search/Jql/Jql.g:852:1: searchSort returns [SearchSort sort] : f= field (o= DESC |o= ASC )? ;
 	[GrammarRule("searchSort")]
 	private SearchSort searchSort()
 	{
@@ -3585,20 +3580,20 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		ParserRuleReturnScope<IToken> f = default(ParserRuleReturnScope<IToken>);
 
 		try { DebugEnterRule(GrammarFileName, "searchSort");
-		DebugLocation(857, 1);
+		DebugLocation(852, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:858:2: (f= field (o= DESC |o= ASC )? )
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:853:2: (f= field (o= DESC |o= ASC )? )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:858:4: f= field (o= DESC |o= ASC )?
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:853:4: f= field (o= DESC |o= ASC )?
 			{
-			DebugLocation(858, 6);
+			DebugLocation(853, 6);
 			PushFollow(Follow._field_in_searchSort1671);
 			f=field();
 			PopFollow();
 
-			DebugLocation(858, 14);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:858:14: (o= DESC |o= ASC )?
+			DebugLocation(853, 14);
+			// ../../QuoteFlow/Models/Search/Jql/Jql.g:853:14: (o= DESC |o= ASC )?
 			int alt24=3;
 			try { DebugEnterSubRule(24);
 			try { DebugEnterDecision(24, false);
@@ -3617,18 +3612,18 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:858:15: o= DESC
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:853:15: o= DESC
 				{
-				DebugLocation(858, 17);
+				DebugLocation(853, 17);
 				o=(IToken)Match(input,DESC,Follow._DESC_in_searchSort1678); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:858:26: o= ASC
+				// ../../QuoteFlow/Models/Search/Jql/Jql.g:853:26: o= ASC
 				{
-				DebugLocation(858, 28);
+				DebugLocation(853, 28);
 				o=(IToken)Match(input,ASC,Follow._ASC_in_searchSort1686); 
 
 				}
@@ -3637,7 +3632,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(24); }
 
-			DebugLocation(859, 2);
+			DebugLocation(854, 2);
 
 				    if (o == null)
 				    {
@@ -3686,7 +3681,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			LeaveRule("searchSort", 28);
 			LeaveRule_searchSort();
 		}
-		DebugLocation(881, 1);
+		DebugLocation(876, 1);
 		} finally { DebugExitRule(GrammarFileName, "searchSort"); }
 		return sort;
 
