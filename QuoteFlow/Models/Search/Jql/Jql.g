@@ -177,10 +177,6 @@ using QuoteFlow.Models.Search.Jql.Util;
     {
         return Stack.Count == 0 ? null : Stack.ElementAt(0);
     }
-
-    public override void mTokens()
-    {
-    }
 }
 
 query returns [IClause clause, IOrderBy order]
@@ -294,27 +290,27 @@ terminalClause  returns [IClause clause]
                 var e = new RecognitionException(input);
                 ReportError(JqlParseErrorMessages.BadOperand(e.Token), e);
             }
-            $clause = new TerminalClause($f.field.Name, $operator.operator, $operand.operand, new List<Property>{$f.field.Property});
+            $clause = new TerminalClause($f.field.Name, $operator.oprator, $operand.operand, new List<Property>{$f.field.Property});
         }
-	    else if ($operator.operator  == Operator.CHANGED)
+	    else if ($operator.oprator  == Operator.CHANGED)
 	    {
             if ($operand.operand != null)
             {
                 var e = new RecognitionException(input);
-                ReportError(JqlParseErrorMessages.UnsupportedOperand($operator.operator.ToString(), $operand.operand.DisplayString),e);
+                ReportError(JqlParseErrorMessages.UnsupportedOperand($operator.oprator.ToString(), $operand.operand.DisplayString),e);
             }
-            $clause = new ChangedClause($field.field.Name, $operator.operator, $chPred.predicate);
+            $clause = new ChangedClause($field.field.Name, $operator.oprator, $chPred.predicate);
 	    }
 	    else
 	    {
-	       if ($operator.operator == Operator.WAS || $operator.operator == Operator.WAS_NOT || $operator.operator == Operator.WAS_IN || $operator.operator == Operator.WAS_NOT_IN )
+	       if ($operator.oprator == Operator.WAS || $operator.oprator == Operator.WAS_NOT || $operator.oprator == Operator.WAS_IN || $operator.oprator == Operator.WAS_NOT_IN )
 		   {
 		        if ($operand.operand == null)
                 {
                     var e = new RecognitionException(input);
                     ReportError(JqlParseErrorMessages.BadOperand(e.Token), e);
                 }
-                $clause = new WasClause($field.field.Name, $operator.operator, $operand.operand, $pred.predicate);
+                $clause = new WasClause($field.field.Name, $operator.oprator, $operand.operand, $pred.predicate);
                 supportsHistoryPredicate=true;
            }
            else
@@ -324,11 +320,11 @@ terminalClause  returns [IClause clause]
                     var e = new RecognitionException(input);
                     ReportError(JqlParseErrorMessages.BadOperand(e.Token), e);
                 }
-                $clause = new TerminalClause($field.field.Name, $operator.operator, $operand.operand);
+                $clause = new TerminalClause($field.field.Name, $operator.oprator, $operand.operand);
                 supportsHistoryPredicate=false;
                 if ($pred.predicate != null)
                 {
-                    var errorMessage = JqlParseErrorMessages.UnsupportedPredicate($pred.predicate.DisplayString, $operator.operator.ToString());
+                    var errorMessage = JqlParseErrorMessages.UnsupportedPredicate($pred.predicate.DisplayString, $operator.oprator.ToString());
                     JqlParseException exception = new JqlParseException(errorMessage);
                     ReportError(errorMessage, exception);
                 }
@@ -429,43 +425,43 @@ subHistoryPredicate returns [HistoryPredicate predicate]
 terminalHistoryPredicate returns [IHistoryPredicate predicate]
 	: historyPredicateOperator operand
 	{
-		$predicate = new TerminalHistoryPredicate($historyPredicateOperator.operator, $operand.operand);
+		$predicate = new TerminalHistoryPredicate($historyPredicateOperator.oprator, $operand.operand);
 	}
 	;
 
 
-historyPredicateOperator returns [Operator operator]
-	: FROM { $operator = Operator.FROM; }
-	| TO {$operator = Operator.TO; }
-	| BY {$operator = Operator.BY; }
-	| BEFORE {$operator = Operator.BEFORE; }
-	| AFTER {$operator = Operator.AFTER; }
-	| ON {$operator = Operator.ON; } 
-	| DURING {$operator = Operator.DURING;};
+historyPredicateOperator returns [Operator oprator]
+	: FROM { $oprator = Operator.FROM; }
+	| TO {$oprator = Operator.TO; }
+	| BY {$oprator = Operator.BY; }
+	| BEFORE {$oprator = Operator.BEFORE; }
+	| AFTER {$oprator = Operator.AFTER; }
+	| ON {$oprator = Operator.ON; } 
+	| DURING {$oprator = Operator.DURING;};
 	
 	
 
 /*
  * Parse the current operator.
  */
-operator returns [Operator operator]
-	: EQUALS { $operator = Operator.EQUALS; }
-	| NOT_EQUALS { $operator = Operator.NOT_EQUALS; }
-	| LIKE { $operator = Operator.LIKE; }
-	| NOT_LIKE { $operator = Operator.NOT_LIKE; }	
-	| LT { $operator = Operator.LESS_THAN; }
-	| GT { $operator = Operator.GREATER_THAN; }
-	| LTEQ { $operator = Operator.LESS_THAN_EQUALS; }
-	| GTEQ { $operator = Operator.GREATER_THAN_EQUALS; }
-	| IN { $operator = Operator.IN; }
-	| IS NOT { $operator = Operator.IS_NOT; }
-	| IS { $operator = Operator.IS; }
-	| NOT IN { $operator = Operator.NOT_IN; }
-	| WAS { $operator = Operator.WAS; }
-	| WAS NOT { $operator = Operator.WAS_NOT; }
-    | WAS IN { $operator = Operator.WAS_IN; }
-    | WAS NOT IN { $operator = Operator.WAS_NOT_IN; }
-    | CHANGED { $operator = Operator.CHANGED; }
+operator returns [Operator oprator]
+	: EQUALS { $oprator = Operator.EQUALS; }
+	| NOT_EQUALS { $oprator = Operator.NOT_EQUALS; }
+	| LIKE { $oprator = Operator.LIKE; }
+	| NOT_LIKE { $oprator = Operator.NOT_LIKE; }	
+	| LT { $oprator = Operator.LESS_THAN; }
+	| GT { $oprator = Operator.GREATER_THAN; }
+	| LTEQ { $oprator = Operator.LESS_THAN_EQUALS; }
+	| GTEQ { $oprator = Operator.GREATER_THAN_EQUALS; }
+	| IN { $oprator = Operator.IN; }
+	| IS NOT { $oprator = Operator.IS_NOT; }
+	| IS { $oprator = Operator.IS; }
+	| NOT IN { $oprator = Operator.NOT_IN; }
+	| WAS { $oprator = Operator.WAS; }
+	| WAS NOT { $oprator = Operator.WAS_NOT; }
+    | WAS IN { $oprator = Operator.WAS_IN; }
+    | WAS NOT IN { $oprator = Operator.WAS_NOT_IN; }
+    | CHANGED { $oprator = Operator.CHANGED; }
     ;
 	catch [MismatchedTokenException e]
 	{
@@ -597,8 +593,8 @@ customField returns [string field]
 /*
  * Checks if a field name is actually valid.
  */
-fieldCheck returns [FieldReference field]
-	: f = field { $field = $f.field; } EOF
+fieldCheck returns [FieldReference fieldRef]
+	: f = field { $fieldRef = $f.field; } EOF
 	;
 
 /*
@@ -960,40 +956,40 @@ CUSTOMFIELD
  */
  
 STRING
-    @init { pushPosition(STRING); }
-    @after { popPosition(); }
+    @init { PushPosition(STRING); }
+    @after { PopPosition(); }
 	: (ESCAPE | ~(BSLASH | WS | STRINGSTOP))+
 	{
 		// Once this method is called, the text of the current token is fixed. This means that this Lexical rule
 		// should not be called from other lexical rules.
-		checkAndSet();
+		CheckAndSet();
 	}
 	;
 
 QUOTE_STRING
-    @init { pushPosition(QUOTE_STRING); }
-    @after { popPosition(); }
+    @init { PushPosition(QUOTE_STRING); }
+    @after { PopPosition(); }
 	: (QUOTE (ESCAPE | ~(BSLASH | QUOTE | CONTROLCHARS))* QUOTE)
 	{
 		//Once this method is called, the text of the current token is fixed. This means that this Lexical rule
 		//should not be called from other lexical rules.
-		stripAndSet();
+		StripAndSet();
 	};
 		
 SQUOTE_STRING
-    @init { pushPosition(SQUOTE_STRING); }
-    @after { popPosition(); }
+    @init { PushPosition(SQUOTE_STRING); }
+    @after { PopPosition(); }
 	: (SQUOTE (ESCAPE | ~(BSLASH | SQUOTE | CONTROLCHARS))* SQUOTE)
 	{
-		//Once this method is called, the text of the current token is fixed. This means that this Lexical rule
-		//should not be called from other lexical rules.
-		stripAndSet();
+		// Once this method is called, the text of the current token is fixed. This means that this Lexical rule
+		// should not be called from other lexical rules.
+		StripAndSet();
 	};
 
 /**
  * Match any whitespace and then ignore it.
  */	
-MATCHWS  		:  	WS+ { $channel = HIDDEN; };
+MATCHWS  		:  	WS+ { $channel = Hidden; };
 
 /**
  * These are some characters that we do not use now but we want to reserve. We have not reserved MINUS because we
@@ -1013,10 +1009,10 @@ fragment RESERVED_CHARS
 ERROR_RESERVED
     @init
     {
-        pushPosition(ERROR_RESERVED);
-        recover();
+        PushPosition(ERROR_RESERVED);
+        Recover();
     }
-    @after { popPosition(); }
+    @after { PopPosition(); }
     : RESERVED_CHARS
     ;
 
@@ -1028,10 +1024,10 @@ ERROR_RESERVED
 ERRORCHAR
     @init
     {
-        pushPosition(ERRORCHAR);
-        recover();
+        PushPosition(ERRORCHAR);
+        Recover();
     }
-    @after { popPosition(); }
+    @after { PopPosition(); }
     : .
     ;
 
@@ -1051,7 +1047,7 @@ fragment PIPE_PIPE	:	'||';
  * I would like to use the @afer rule but it does not appear to work for fragment rulez.
  */
 fragment ESCAPE
-    @init { pushPosition(ESCAPE); }
+    @init { PushPosition(ESCAPE); }
 	:   BSLASH
 	(
              	't'
@@ -1062,7 +1058,7 @@ fragment ESCAPE
              |  BSLASH 
              |  SPACE
              |	'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT
-	) { popPosition(); }
+	) { PopPosition(); }
 	;
 
 /**
