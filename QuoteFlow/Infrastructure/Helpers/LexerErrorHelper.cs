@@ -1,5 +1,6 @@
 ﻿using Antlr.Runtime;
 using QuoteFlow.Infrastructure.Exceptions.Antlr;
+using QuoteFlow.Models.Search.Jql.AntlrGen;
 using QuoteFlow.Models.Search.Jql.Parser;
 
 namespace QuoteFlow.Infrastructure.Helpers

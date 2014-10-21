@@ -11,11 +11,6 @@ namespace QuoteFlow.Services
     {
         public AssetSearchService() { }
 
-        public AssetSearchService()
-        {
-            
-        }
-
         public SearchResults Search(Dictionary<string, string[]> paramMap, long paramLong)
         {
             throw new NotImplementedException();

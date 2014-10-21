@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Antlr.Runtime;
 using QuoteFlow.Infrastructure.Extensions;
+using QuoteFlow.Models.Search.Jql.AntlrGen;
 using QuoteFlow.Models.Search.Jql.Util;
 
 namespace QuoteFlow.Models.Search.Jql.Parser

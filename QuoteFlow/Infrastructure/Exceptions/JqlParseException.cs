@@ -22,7 +22,7 @@ namespace QuoteFlow.Infrastructure.Exceptions
         }
 
         public JqlParseException(JqlParseErrorMessage errorMessage, Exception cause)
-            : base(cause)
+            : base(cause.Message)
         {
             ParseErrorMessage = errorMessage;
         }

@@ -15,8 +15,6 @@
 
         public int Take { get; set; }
 
-        public SortOrder SortOrder { get; set; }
-
         /// <summary>
         ///     Determines if only this is a count only query and does not process the source queryable.
         /// </summary>

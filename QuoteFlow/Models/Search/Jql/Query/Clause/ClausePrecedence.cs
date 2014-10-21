@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-
 namespace QuoteFlow.Models.Search.Jql.Query.Clause
 {
     /// <summary>
@@ -8,14 +6,10 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
     /// </summary>
     public enum ClausePrecedence
     {
-        [Display(Order = 700)]
-        OR,
-        [Display(Order = 1000)]
-        AND,
-        [Display(Order = 2000)]
-        NOT,
-        [Display(Order = Int32.MaxValue)]
-        TERMINAL
+        OR = 700,
+        AND = 1000,
+        NOT = 2000,
+        TERMINAL = Int32.MaxValue
     }
 
     public static class ClausePrecedenceHelper

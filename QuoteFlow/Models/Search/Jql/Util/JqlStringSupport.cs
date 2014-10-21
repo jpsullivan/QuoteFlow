@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using Microsoft.Ajax.Utilities;
+using QuoteFlow.Models.Search.Jql.Parser;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 
 namespace QuoteFlow.Models.Search.Jql.Util
@@ -67,9 +68,9 @@ namespace QuoteFlow.Models.Search.Jql.Util
             RESERVED_WORDS = new HashSet<string>(bldr);
 		}
 
-		private readonly JqlQueryParser parser;
+		private readonly IJqlQueryParser parser;
 
-        public JqlStringSupport(JqlQueryParser parser)
+        public JqlStringSupport(IJqlQueryParser parser)
 		{
 			this.parser = parser;
 		}

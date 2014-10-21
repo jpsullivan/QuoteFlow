@@ -25,13 +25,13 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
             {
                 IClause clause = Clauses.ElementAt(i);
                 var childPrecedence = ClausePrecedenceHelper.GetPrecedence(clause);
-                if (childPrecedence.Value < currentPrecedence.Value)
+                if (childPrecedence < currentPrecedence)
                 {
                     sb.Append("( ");
                 }
                 sb.Append(clause.ToString());
 
-                if (childPrecedence.Value < currentPrecedence.Value)
+                if (childPrecedence < currentPrecedence)
                 {
                     sb.Append(" )");
                 }

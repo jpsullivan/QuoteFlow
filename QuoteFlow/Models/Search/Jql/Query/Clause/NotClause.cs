@@ -45,14 +45,14 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
             var currentPrecedence = ClausePrecedenceHelper.GetPrecedence(this);
             var subClausePrecedence = ClausePrecedenceHelper.GetPrecedence(_subClause);
             var sb = (new StringBuilder(NOT)).Append(" ");
-            if (subClausePrecedence.Value < currentPrecedence.Value)
+            if (subClausePrecedence < currentPrecedence)
             {
                 sb.Append("( ");
             }
 
             sb.Append(_subClause.ToString());
 
-            if (subClausePrecedence.Value < currentPrecedence.Value)
+            if (subClausePrecedence < currentPrecedence)
             {
                 sb.Append(" )");
             }

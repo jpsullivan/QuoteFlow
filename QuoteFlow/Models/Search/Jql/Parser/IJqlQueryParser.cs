@@ -1,4 +1,5 @@
-﻿using QuoteFlow.Models.Search.Jql.Query;
+﻿using QuoteFlow.Infrastructure.Exceptions;
+using QuoteFlow.Models.Search.Jql.Query;
 
 namespace QuoteFlow.Models.Search.Jql.Parser
 {
