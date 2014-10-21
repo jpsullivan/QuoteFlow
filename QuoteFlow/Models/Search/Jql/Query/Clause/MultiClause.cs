@@ -20,11 +20,11 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
         public override string ToString()
 		{
 			var sb = new StringBuilder();
-			ClausePrecedence currentPrecedence = ClausePrecedence.GetPrecedence(this);
+			ClausePrecedence currentPrecedence = ClausePrecedenceHelper.GetPrecedence(this);
             for (int i = 0; i < Clauses.Count(); i++)
             {
                 IClause clause = Clauses.ElementAt(i);
-                var childPrecedence = ClausePrecedence.GetPrecedence(clause);
+                var childPrecedence = ClausePrecedenceHelper.GetPrecedence(clause);
                 if (childPrecedence.Value < currentPrecedence.Value)
                 {
                     sb.Append("( ");

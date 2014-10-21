@@ -56,7 +56,7 @@ namespace QuoteFlow.Models.Search.Jql.Util
 		public string Visit(MultiValueOperand multiValue)
 		{
 			var sb = new StringBuilder("(");
-			IList<IOperand> operands = multiValue.Values;
+			var operands = multiValue.Values;
 			bool first = true;
 			foreach (var operand in operands)
 			{

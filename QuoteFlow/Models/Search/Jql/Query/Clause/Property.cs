@@ -19,10 +19,10 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
         /// </summary>
         public List<string> ObjectReferences { get; set; } 
 
-        public Property(List<string> keys, List<string> objectReferences)
+        public Property(IEnumerable<string> keys, IEnumerable<string> objectReferences)
         {
-            Keys = keys;
-            ObjectReferences = objectReferences;
+            Keys = keys.ToList();
+            ObjectReferences = objectReferences.ToList();
         }
 
         public override string ToString()

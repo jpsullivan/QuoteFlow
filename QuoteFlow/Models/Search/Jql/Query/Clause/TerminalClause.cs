@@ -8,10 +8,11 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
     /// </summary>
     public class TerminalClause : ITerminalClause
     {
-        private readonly string _name;
-		private readonly Operator _operator;
-		private readonly IOperand _operand;
-		private readonly Property _property;
+        public IOperand Operand { get; set; }
+        public Operator Operator { get; set; }
+        public IEnumerable<Property> Property { get; set; }
+        public string Name { get; set; }
+        public IEnumerable<IClause> Clauses { get { return new List<IClause>(); } }
 
 		/// <summary>
 		/// Creates a terminal clause with the specified name, operator and turns the string value into a
@@ -52,12 +53,12 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
         /// <param name="oprator"> the operator for the clause. </param>
 		/// <param name="operand"> the right-hand-side value of the clause. </param>
 		/// <param name="property"> the name of the property. </param>
-		public TerminalClause(string name, Operator oprator, IOperand operand, Property property)
+		public TerminalClause(string name, Operator oprator, IOperand operand, IEnumerable<Property> property)
 		{
-		    _operator = oprator;
-			_operand = operand;
-			_name = name;
-			_property = property;
+		    Operator = oprator;
+			Operand = operand;
+			Name = name;
+			Property = property;
 		}
 
 		/// <summary>
@@ -70,18 +71,18 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
 		/// containing a string value. </param>
         public TerminalClause(string name, params string[] values)
 		{
-			_name = name;
+			Name = name;
 			if (values.Length == 1)
 			{
-				_operator = Operator.EQUALS;
-				_operand = new SingleValueOperand(values[0]);
+				Operator = Operator.EQUALS;
+				Operand = new SingleValueOperand(values[0]);
 			}
 			else
 			{
-				_operator = Operator.IN;
-				_operand = new MultiValueOperand(values);
+				Operator = Operator.IN;
+				Operand = new MultiValueOperand(values);
 			}
-		    _property = null;
+		    Property = null;
 		}
 
 		/// <summary>
@@ -94,29 +95,19 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
 		/// containing a long value.</param>
         public TerminalClause(string name, params long?[] values)
 		{
-			_name = name;
+			Name = name;
 			if (values.Length == 1)
 			{
-				_operator = Operator.EQUALS;
-				_operand = new SingleValueOperand(values[0]);
+				Operator = Operator.EQUALS;
+				Operand = new SingleValueOperand(values[0]);
 			}
 			else
 			{
-				_operator = Operator.IN;
-				_operand = new MultiValueOperand(values);
+				Operator = Operator.IN;
+				Operand = new MultiValueOperand(values);
 			}
-		    _property = null;
+		    Property = null;
 		}
-
-		public virtual IOperand Operand { get { return _operand; } }
-
-		public virtual Operator Operator { get { return _operator; } }
-
-		public virtual Property Property { get { return _property; } }
-
-		public virtual string Name { get { return _name; } }
-
-		public virtual IEnumerable<IClause> Clauses { get { return new List<IClause>(); } }
 
 		public virtual T Accept<T>(IClauseVisitor<T> visitor)
 		{
@@ -136,20 +127,20 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
 
 			var that = (TerminalClause) o;
 
-			if (!_name.Equals(that.Name))
+			if (!Name.Equals(that.Name))
 			{
 				return false;
 			}
-			if (!_operand.Equals(that.Operand))
+			if (!Operand.Equals(that.Operand))
 			{
 				return false;
 			}
-			if (_operator != that._operator)
+			if (Operator != that.Operator)
 			{
 				return false;
 			}
 			
-			if (!_property.Equals(that.Property))
+			if (!Property.Equals(that.Property))
 			{
 				return false;
 			}
@@ -159,10 +150,10 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
 
 		public override int GetHashCode()
 		{
-			int result = _operand.GetHashCode();
-			result = 31 * result + _operator.GetHashCode();
-			result = 31 * result + _name.GetHashCode();
-			result = 31 * result + _property.GetHashCode();
+			int result = Operand.GetHashCode();
+			result = 31 * result + Operator.GetHashCode();
+			result = 31 * result + Name.GetHashCode();
+			result = 31 * result + Property.GetHashCode();
 			return result;
 		}
     }

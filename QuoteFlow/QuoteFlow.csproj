@@ -324,7 +324,6 @@
     </Compile>
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\AdminControllerBase.cs" />
-    <Compile Include="Controllers\Api\AssetController.cs" />
     <Compile Include="Controllers\Api\AssetVarController.cs" />
     <Compile Include="Controllers\Api\AssetVarValueController.cs" />
     <Compile Include="Controllers\AssetController.cs" />
@@ -368,8 +367,16 @@
     <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
     <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
     <Compile Include="Infrastructure\Enumerables\SingletonList.cs" />
+    <Compile Include="Infrastructure\Exceptions\Antlr\RuntimeRecognitionException.cs" />
     <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
     <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
+    <Compile Include="Infrastructure\Helpers\LexerErrorHelper.cs" />
+    <Compile Include="Models\Search\Jql\AntlrGen\JqlLexer.cs" />
+    <Compile Include="Models\Search\Jql\AntlrGen\JqlParser.cs" />
+    <Compile Include="Models\Search\Jql\JqlLexerTester.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Search\Jql\Parser\AntlrPosition.cs" />
     <Compile Include="Models\Search\Jql\Parser\JqlParseErrorMessage.cs" />
     <Compile Include="Infrastructure\Exceptions\ReadOnlyModeException.cs" />
     <Compile Include="Infrastructure\Exceptions\TestableStorageClientException.cs" />
@@ -459,29 +466,27 @@
     <Compile Include="Models\RequestModels\AssetCriteriaQuery.cs" />
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\Roles.cs" />
-    <Compile Include="Models\Search\Jql\jql.g4.lexer.cs">
-      <DependentUpon>jql.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Search\Jql\jql.g4.parser.cs">
-      <DependentUpon>jql.g4</DependentUpon>
-    </Compile>
     <Compile Include="Models\Search\Jql\JqlParserTester.cs" />
     <Compile Include="Models\Search\Jql\Operand\JqlOperandResolver.cs" />
     <Compile Include="Models\Search\Jql\Operand\QueryLiteral.cs" />
     <Compile Include="Models\Search\Jql\Parser\IJqlQueryParser.cs" />
     <Compile Include="Models\Search\Jql\Parser\JqlParserErrorMessages.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\AndClause.cs" />
+    <Compile Include="Models\Search\Jql\Query\Clause\ChangedClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\ClausePrecedence.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\IChangedClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\IClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\IClauseVisitor.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\IWasClause.cs" />
-    <Compile Include="Models\Search\Jql\Query\Clause\MultiClause.cs" />
+    <Compile Include="Models\Search\Jql\Query\Clause\MultiClause.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\Search\Jql\Query\Clause\NotClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\OrClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\ITerminalClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\Property.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\TerminalClause.cs" />
+    <Compile Include="Models\Search\Jql\Query\Clause\WasClause.cs" />
     <Compile Include="Models\Search\Jql\Query\FilteredSearcherGroup.cs" />
     <Compile Include="Models\Search\Jql\Query\History\AndHistoryPredicate.cs" />
     <Compile Include="Models\Search\Jql\Query\History\IHistoryPredicate.cs" />
@@ -497,6 +502,10 @@
     <Compile Include="Models\Search\Jql\Query\Operand\MultiValueOperand.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\SingleValueOperand.cs" />
     <Compile Include="Models\Search\Jql\Query\Operator.cs" />
+    <Compile Include="Models\Search\Jql\Query\Order\IOrderBy.cs" />
+    <Compile Include="Models\Search\Jql\Query\Order\OrderBy.cs" />
+    <Compile Include="Models\Search\Jql\Query\Order\SearchSort.cs" />
+    <Compile Include="Models\Search\Jql\Query\Order\SortOrder.cs" />
     <Compile Include="Models\Search\Jql\Query\Query.cs" />
     <Compile Include="Models\Search\Jql\Query\QueryCreationContext.cs" />
     <Compile Include="Models\Search\Jql\Query\Searcher.cs" />
@@ -504,6 +513,7 @@
     <Compile Include="Models\Search\Jql\SearchRendererValue.cs" />
     <Compile Include="Models\Search\Jql\SearchRendererValueResults.cs" />
     <Compile Include="Models\Search\Jql\SearchResults.cs" />
+    <Compile Include="Models\Search\Jql\Util\FieldReference.cs" />
     <Compile Include="Models\Search\Jql\Util\IJqlStringSupport.cs" />
     <Compile Include="Models\Search\Jql\Util\JqlStringSupport.cs" />
     <Compile Include="Models\Search\Jql\Util\ToJqlStringVisitor.cs" />
@@ -888,6 +898,10 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Global.asax" />
     <EmbeddedResource Include="Migrations\Elmah.SqlServer.sql" />
+    <Content Include="Models\Search\Jql\Jql.g">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>QuoteFlow.Models.Search.Jql</CustomToolNamespace>
+    </Content>
     <Content Include="Scripts\async-file-upload.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -959,10 +973,10 @@
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.eot" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
-    <Antlr4 Include="Models\Search\Jql\jql.g4">
+    <Content Include="Models\Search\Jql\AntlrGen\Jql.tokens">
       <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>QuoteFlow.Models.Search.Jql</CustomToolNamespace>
-    </Antlr4>
+      <CustomToolNamespace>QuoteFlow.Models.Search.Jql.AntlrGen</CustomToolNamespace>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1114,9 +1128,15 @@
     <PropertyGroup>
       <GulpCmdPath>$(SolutionDir)</GulpCmdPath>
       <GulpCommand>gulp</GulpCommand>
+      <AntlrPath>$(SolutionDir)tools\antlr</AntlrPath>
+      <AntlrGrammerPath>$(ProjectDir)Models\Search\Jql\Jql.g</AntlrGrammerPath>
+      <AntlrOutPath>$(ProjectDir)Models\Search\Jql\AntlrGen</AntlrOutPath>
+      <AntlrCommand>.\Antlr3.exe $(AntlrGrammerPath) -o $(AntlrOutPath)</AntlrCommand>
     </PropertyGroup>
     <Message Text="Bundling assets ... " Importance="high" />
     <Exec Command="&quot;$(GulpCommand)&quot;" LogStandardErrorAsError="true" WorkingDirectory="$(GulpCmdPath)" />
+    <Message Text="Building Antlr Parser/Lexer" Importance="high" />
+    <Exec Command="&quot;$(AntlrCommand)&quot;" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

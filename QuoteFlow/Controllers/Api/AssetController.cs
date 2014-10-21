@@ -41,5 +41,8 @@ namespace QuoteFlow.Controllers.Api
 
         [HttpGet]
         public string QueryComponent()
+        {
+            return string.Empty;
+        }
     }
 }

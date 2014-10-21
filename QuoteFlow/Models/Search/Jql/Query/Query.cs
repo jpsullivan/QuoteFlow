@@ -1,7 +1,6 @@
-﻿using System;
-using System.Text;
-using QuoteFlow.Models.Search.Jql.Query;
+﻿using System.Text;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
+using QuoteFlow.Models.Search.Jql.Query.Order;
 
 namespace QuoteFlow.Models.Search.Jql.Query
 {
@@ -10,85 +9,61 @@ namespace QuoteFlow.Models.Search.Jql.Query
     /// </summary>
     public class Query : IQuery
     {
-        private readonly IClause whereClause;
-        private readonly OrderBy orderByClause;
-        private readonly string queryString;
+        public IClause WhereClause { get; set; }
+        public IOrderBy OrderByClause { get; set; }
+        public string QueryString { get; set; }
 
         public Query() : this(null, null, null)
 		{
 		}
 
         public Query(IClause whereClause)
-            : this(whereClause, new OrderByImpl(), null)
+            : this(whereClause, new OrderBy(), null)
 		{
 		}
 
         public Query(IClause whereClause, string originalQuery)
-            : this(whereClause, new OrderByImpl(), originalQuery)
+            : this(whereClause, new OrderBy(), originalQuery)
 		{
 		}
 
-        public Query(IClause whereClause, OrderBy orderByClause, string originalQuery)
+        public Query(IClause whereClause, IOrderBy orderByClause, string originalQuery)
 		{
-			this.whereClause = whereClause;
-			this.queryString = originalQuery;
-			this.orderByClause = orderByClause;
-		}
-
-        public virtual IClause WhereClause
-		{
-			get
-			{
-				return whereClause;
-			}
-		}
-
-		public virtual OrderBy OrderByClause
-		{
-			get
-			{
-				return orderByClause;
-			}
-		}
-
-		public virtual string QueryString
-		{
-			get
-			{
-				return queryString;
-			}
+			WhereClause = whereClause;
+			QueryString = originalQuery;
+			OrderByClause = orderByClause;
 		}
 
         IClause IQuery.WhereClause()
         {
-            throw new NotImplementedException();
+            return WhereClause;
         }
 
-        OrderBy IQuery.OrderByClause()
+        IOrderBy IQuery.OrderByClause()
         {
-            throw new NotImplementedException();
+            return OrderByClause;
         }
 
         string IQuery.QueryString()
         {
-            throw new NotImplementedException();
+            return QueryString;
         }
 
 		public override string ToString()
 		{
 			var builder = new StringBuilder();
-			if (whereClause != null)
+			if (WhereClause != null)
 			{
-				builder.Append(whereClause.ToString());
+				builder.Append(WhereClause.ToString());
 			}
 
-			if (orderByClause != null && orderByClause.SearchSorts.Count > 0)
+			if (OrderByClause != null && OrderByClause.SearchSorts.Count > 0)
 			{
 				if (builder.Length > 0)
 				{
 					builder.Append(" ");
 				}
-				builder.Append(orderByClause.ToString());
+				builder.Append(OrderByClause);
 			}
 
 			return builder.ToString();
@@ -107,15 +82,15 @@ namespace QuoteFlow.Models.Search.Jql.Query
 
             var that = (Query) o;
 
-            if (orderByClause != null ? !orderByClause.Equals(that.orderByClause) : that.orderByClause != null)
+            if (OrderByClause != null ? !OrderByClause.Equals(that.OrderByClause) : that.OrderByClause != null)
             {
                 return false;
             }
-            if (queryString != null ? !queryString.Equals(that.queryString) : that.queryString != null)
+            if (QueryString != null ? !QueryString.Equals(that.QueryString) : that.QueryString != null)
             {
                 return false;
             }
-            if (whereClause != null ? !whereClause.Equals(that.whereClause) : that.whereClause != null)
+            if (WhereClause != null ? !WhereClause.Equals(that.WhereClause) : that.WhereClause != null)
             {
                 return false;
             }
@@ -125,9 +100,9 @@ namespace QuoteFlow.Models.Search.Jql.Query
 
         public override int GetHashCode()
         {
-            int result = whereClause != null ? whereClause.GetHashCode() : 0;
-            result = 31 * result + (orderByClause != null ? orderByClause.GetHashCode() : 0);
-            result = 31 * result + (queryString != null ? queryString.GetHashCode() : 0);
+            int result = WhereClause != null ? WhereClause.GetHashCode() : 0;
+            result = 31 * result + (OrderByClause != null ? OrderByClause.GetHashCode() : 0);
+            result = 31 * result + (QueryString != null ? QueryString.GetHashCode() : 0);
             return result;
         }
     }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Antlr.Runtime;
+using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models.Search.Jql.Util;
 
 namespace QuoteFlow.Models.Search.Jql.Parser
@@ -19,398 +21,225 @@ namespace QuoteFlow.Models.Search.Jql.Parser
 
 		public static JqlParseErrorMessage ReservedWord(string reservedWord, int antlrLine, int antlrColumn)
 		{
-			return CreateMessage("jql.parse.reserved.word", new Position(antlrLine, antlrColumn), normalizeString(reservedWord));
+			return CreateMessage("jql.parse.reserved.word", new Position(antlrLine, antlrColumn), NormalizeString(reservedWord));
 		}
 
 		public static JqlParseErrorMessage IllegalEsacpe(string illegalEscape, int antlrLine, int antlrColumn)
 		{
-			Position pos = new Position(antlrLine, antlrColumn);
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final String normalizedString = normalizeString(illegalEscape);
-			string normalizedString = normalizeString(illegalEscape);
-			if (StringUtils.isBlank(illegalEscape))
+			var pos = new Position(antlrLine, antlrColumn);
+			string normalizedString = NormalizeString(illegalEscape);
+			if (illegalEscape.IsNullOrEmpty())
 			{
 				return CreateMessage("jql.parse.illegal.escape.blank", pos);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.illegal.escape", pos, normalizedString);
-			}
+		    return CreateMessage("jql.parse.illegal.escape", pos, normalizedString);
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage unfinishedString(final String currentString, final int antlrLine, final int antlrColumn)
-		public static JqlParseErrorMessage unfinishedString(string currentString, int antlrLine, int antlrColumn)
+		public static JqlParseErrorMessage UnfinishedString(string currentString, int antlrLine, int antlrColumn)
 		{
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(antlrLine, antlrColumn);
-			Position pos = new Position(antlrLine, antlrColumn);
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final String normalizedString = normalizeString(currentString);
-			string normalizedString = normalizeString(currentString);
+			var pos = new Position(antlrLine, antlrColumn);
+			string normalizedString = NormalizeString(currentString);
 
-			if (StringUtils.isBlank(currentString))
+			if (currentString.IsNullOrEmpty())
 			{
 				return CreateMessage("jql.parse.unfinished.string.blank", pos);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.unfinished.string", pos, normalizedString);
-			}
+		    return CreateMessage("jql.parse.unfinished.string", pos, normalizedString);
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage illegalCharacter(final char currentChar, final int antlrLine, final int antlrColumn)
-		public static JqlParseErrorMessage illegalCharacter(char currentChar, int antlrLine, int antlrColumn)
+		public static JqlParseErrorMessage IllegalCharacter(char currentChar, int antlrLine, int antlrColumn)
 		{
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(antlrLine, antlrColumn);
-			Position pos = new Position(antlrLine, antlrColumn);
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final String escapeChar = com.atlassian.jira.jql.util.JqlStringSupportImpl.encodeCharacterForce(currentChar);
-			string escapeChar = JqlStringSupportImpl.encodeCharacterForce(currentChar);
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final String printableChar = getPrintableCharacter(currentChar);
-			string printableChar = getPrintableCharacter(currentChar);
+			var pos = new Position(antlrLine, antlrColumn);
+			string escapeChar = JqlStringSupport.EncodeCharacterForce(currentChar);
+			string printableChar = GetPrintableCharacter(currentChar);
 
 			return CreateMessage("jql.parse.illegal.character", pos, printableChar, escapeChar);
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage reservedCharacter(final char currentChar, final int antlrLine, final int antlrColumn)
-		public static JqlParseErrorMessage reservedCharacter(char currentChar, int antlrLine, int antlrColumn)
+		public static JqlParseErrorMessage ReservedCharacter(char currentChar, int antlrLine, int antlrColumn)
 		{
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(antlrLine, antlrColumn);
-			Position pos = new Position(antlrLine, antlrColumn);
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final String escapeChar = com.atlassian.jira.jql.util.JqlStringSupportImpl.encodeCharacterForce(currentChar);
-			string escapeChar = JqlStringSupportImpl.encodeCharacterForce(currentChar);
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final String printableChar = getPrintableCharacter(currentChar);
-			string printableChar = getPrintableCharacter(currentChar);
+			var pos = new Position(antlrLine, antlrColumn);
+			string escapeChar = JqlStringSupport.EncodeCharacterForce(currentChar);
+			string printableChar = GetPrintableCharacter(currentChar);
 
 			return CreateMessage("jql.parse.reserved.character", pos, printableChar, escapeChar);
 		}
 
-		public static JqlParseErrorMessage genericParseError()
+		public static JqlParseErrorMessage GenericParseError()
 		{
 			return new JqlParseErrorMessage("jql.parse.unknown.no.pos", -1, -1);
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage genericParseError(final int antlrLine, final int antlrColumn)
-		public static JqlParseErrorMessage genericParseError(int antlrLine, int antlrColumn)
+		public static JqlParseErrorMessage GenericParseError(int antlrLine, int antlrColumn)
 		{
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(antlrLine, antlrColumn);
-			Position pos = new Position(antlrLine, antlrColumn);
+			var pos = new Position(antlrLine, antlrColumn);
 			return CreateMessage("jql.parse.unknown", pos);
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage genericParseError(final org.antlr.runtime.Token token)
-		public static JqlParseErrorMessage genericParseError(Token token)
+		public static JqlParseErrorMessage GenericParseError(IToken token)
 		{
-			notNull("token", token);
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position position = new Position(token);
-			Position position = new Position(token);
-			if (isEofToken(token))
+			var position = new Position(token);
+			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.unknown.no.pos", position.Line, position.Column);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.unknown", position);
-			}
+		    return CreateMessage("jql.parse.unknown", position);
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage illegalNumber(final String number, final int antlrLine, final int antlrColumn)
-		public static JqlParseErrorMessage illegalNumber(string number, int antlrLine, int antlrColumn)
+		public static JqlParseErrorMessage IllegalNumber(string number, int antlrLine, int antlrColumn)
 		{
-			notBlank("number", number);
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(antlrLine, antlrColumn);
-			Position pos = new Position(antlrLine, antlrColumn);
-			return CreateMessage("jql.parse.illegal.number", pos, normalizeString(number), long.MinValue, long.MaxValue);
+			var pos = new Position(antlrLine, antlrColumn);
+			return CreateMessage("jql.parse.illegal.number", pos, NormalizeString(number), long.MinValue, long.MaxValue);
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage emptyFieldName(final int antlrLine, final int antlrColumn)
-		public static JqlParseErrorMessage emptyFieldName(int antlrLine, int antlrColumn)
+		public static JqlParseErrorMessage EmptyFieldName(int antlrLine, int antlrColumn)
 		{
 			return CreateMessage("jql.parse.empty.field", new Position(antlrLine, antlrColumn));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage emptyFunctionName(final int antlrLine, final int antlrColumn)
-		public static JqlParseErrorMessage emptyFunctionName(int antlrLine, int antlrColumn)
+		public static JqlParseErrorMessage EmptyFunctionName(int antlrLine, int antlrColumn)
 		{
 			return CreateMessage("jql.parse.empty.function", new Position(antlrLine, antlrColumn));
 		}
 
-		public static JqlParseErrorMessage badFieldName(Token token)
+		public static JqlParseErrorMessage BadFieldName(IToken token)
 		{
-			notNull("token", token);
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(token);
-			Position pos = new Position(token);
-			if (isEofToken(token))
+			var pos = new Position(token);
+			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.no.field.eof", pos.Line, pos.Column);
 			}
-			else
-			{
-				if (token.Type == JqlLexer.LBRACKET)
-				{
-					return CreateMessage("jql.parse.no.cf.field", pos);
-				}
-				else
-				{
-					return CreateMessage("jql.parse.no.field", pos, normalizeString(token.Text));
-				}
-			}
+		    if (token.Type == JqlLexer.LBRACKET)
+		    {
+		        return CreateMessage("jql.parse.no.cf.field", pos);
+		    }
+		    return CreateMessage("jql.parse.no.field", pos, NormalizeString(token.Text));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage badSortOrder(final org.antlr.runtime.Token token)
-		public static JqlParseErrorMessage badSortOrder(Token token)
+		public static JqlParseErrorMessage BadSortOrder(IToken token)
 		{
-			notNull("token", token);
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(token);
-			Position pos = new Position(token);
-			if (isEofToken(token))
+			var pos = new Position(token);
+			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.no.order.eof", pos.Line, pos.Column);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.no.order", pos, normalizeString(token.Text));
-			}
+		    return CreateMessage("jql.parse.no.order", pos, NormalizeString(token.Text));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage badOperator(final org.antlr.runtime.Token token)
-		public static JqlParseErrorMessage badOperator(Token token)
+		public static JqlParseErrorMessage BadOperator(IToken token)
 		{
-			notNull("token", token);
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(token);
-			Position pos = new Position(token);
-			if (isEofToken(token))
+			var pos = new Position(token);
+			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.no.operator.eof", pos.Line, pos.Column);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.no.operator", pos, normalizeString(token.Text));
-			}
+		    return CreateMessage("jql.parse.no.operator", pos, NormalizeString(token.Text));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage badPropertyArgument(final org.antlr.runtime.Token token)
-		public static JqlParseErrorMessage badPropertyArgument(Token token)
+		public static JqlParseErrorMessage BadPropertyArgument(IToken token)
 		{
-			notNull("token", token);
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(token);
-			Position pos = new Position(token);
-			if (isEofToken(token))
+			var pos = new Position(token);
+			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.bad.property.id.eof", pos.Line, pos.Column);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.bad.property.id", pos, normalizeString(token.Text));
-			}
+		    return CreateMessage("jql.parse.bad.property.id", pos, NormalizeString(token.Text));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage badCustomFieldId(final org.antlr.runtime.Token token)
-		public static JqlParseErrorMessage badCustomFieldId(Token token)
+		public static JqlParseErrorMessage BadCustomFieldId(IToken token)
 		{
-			notNull("token", token);
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(token);
-			Position pos = new Position(token);
-			if (isEofToken(token))
+			var pos = new Position(token);
+			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.bad.custom.field.id.eof", pos.Line, pos.Column);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.bad.custom.field.id", pos, normalizeString(token.Text));
-			}
+		    return CreateMessage("jql.parse.bad.custom.field.id", pos, NormalizeString(token.Text));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage badFunctionArgument(final org.antlr.runtime.Token token)
-		public static JqlParseErrorMessage badFunctionArgument(Token token)
+		public static JqlParseErrorMessage BadFunctionArgument(IToken token)
 		{
-			notNull("token", token);
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(token);
-			Position pos = new Position(token);
-			if (isEofToken(token))
+			var pos = new Position(token);
+			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.bad.function.argument.eof", pos.Line, pos.Column);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.bad.function.argument", pos, normalizeString(token.Text));
-			}
+		    return CreateMessage("jql.parse.bad.function.argument", pos, NormalizeString(token.Text));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage needLogicalOperator(final org.antlr.runtime.Token token)
-		public static JqlParseErrorMessage needLogicalOperator(Token token)
+		public static JqlParseErrorMessage NeedLogicalOperator(IToken token)
 		{
-			notNull("token", token);
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(token);
-			Position pos = new Position(token);
-			if (isEofToken(token))
+			var pos = new Position(token);
+			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.logical.operator.eof", pos.Line, pos.Column);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.logical.operator", pos, normalizeString(token.Text));
-			}
+		    return CreateMessage("jql.parse.logical.operator", pos, NormalizeString(token.Text));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage badOperand(final org.antlr.runtime.Token token)
-		public static JqlParseErrorMessage badOperand(Token token)
+		public static JqlParseErrorMessage BadOperand(IToken token)
 		{
-			notNull("token", token);
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(token);
-			Position pos = new Position(token);
-			if (isEofToken(token))
+			var pos = new Position(token);
+			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.bad.operand.eof", pos.Line, pos.Column);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.bad.operand", pos, normalizeString(token.Text));
-			}
+		    return CreateMessage("jql.parse.bad.operand", pos, NormalizeString(token.Text));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage emptyFunctionArgument(final org.antlr.runtime.Token token)
-		public static JqlParseErrorMessage emptyFunctionArgument(Token token)
+		public static JqlParseErrorMessage EmptyFunctionArgument(IToken token)
 		{
-			notNull("token", token);
-
 			return CreateMessage("jql.parse.empty.function.argument", new Position(token));
 		}
 
-
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage expectedText(final org.antlr.runtime.Token token, String expected)
-		public static JqlParseErrorMessage expectedText(Token token, string expected)
+		public static JqlParseErrorMessage ExpectedText(IToken token, string expected)
 		{
-			notNull("token", token);
-			notBlank("expected", expected);
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(token);
-			Position pos = new Position(token);
-			if (isEofToken(token))
+			var pos = new Position(token);
+			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.expected.text.eof", pos.Line, pos.Column, expected);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.expected.text", pos, expected, normalizeString(token.Text));
-			}
+		    return CreateMessage("jql.parse.expected.text", pos, expected, NormalizeString(token.Text));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage expectedText(final org.antlr.runtime.Token token, String expected1, String expected2)
-		public static JqlParseErrorMessage expectedText(Token token, string expected1, string expected2)
+		public static JqlParseErrorMessage ExpectedText(IToken token, string expected1, string expected2)
 		{
-			notNull("token", token);
-			notBlank("expected1", expected1);
-			notBlank("expected2", expected2);
-
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(token);
-			Position pos = new Position(token);
-			if (isEofToken(token))
+			var pos = new Position(token);
+			if (IsEofToken(token))
 			{
-				return new JqlParseErrorMessage("jql.parse.expected.text.2.eof", pos.Line, pos.Column, expected1, expected2);
+			    var args = new List<string>{expected1, expected2};
+				return new JqlParseErrorMessage("jql.parse.expected.text.2.eof", pos.Line, pos.Column, args);
 			}
-			else
-			{
-				return CreateMessage("jql.parse.expected.text.2", pos, expected1, expected2, normalizeString(token.Text));
-			}
+		    return CreateMessage("jql.parse.expected.text.2", pos, expected1, expected2, NormalizeString(token.Text));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage unsupportedPredicate(final String predicate, final String operator)
-		public static JqlParseErrorMessage unsupportedPredicate(string predicate, string @operator)
+		public static JqlParseErrorMessage UnsupportedPredicate(string predicate, string @operator)
 		{
-			notNull("predicate", predicate);
-			notBlank("operator", @operator);
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(0, 0);
-			Position pos = new Position(0, 0);
+			var pos = new Position(0, 0);
 			return CreateMessage("jql.parse.predicate.unsupported",pos, @operator, predicate);
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-//ORIGINAL LINE: public static JqlParseErrorMessage unsupportedOperand(final String operator, final String operand)
-		public static JqlParseErrorMessage unsupportedOperand(string @operator, string operand)
+		public static JqlParseErrorMessage UnsupportedOperand(string @operator, string operand)
 		{
-			notNull("operand", operand);
-			notBlank("operator", @operator);
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Position pos = new Position(0, 0);
-			Position pos = new Position(0, 0);
+			var pos = new Position(0, 0);
 			return CreateMessage("jql.parse.operand.unsupported",pos, @operator, operand);
 		}
 
 		private static JqlParseErrorMessage CreateMessage(string key, Position pos, params object[] args)
 		{
-			IList<object> arguments = new List<object>(args.Length + 2);
-			arguments.Add(pos.LineString);
-			arguments.Add(pos.ColumnString);
-			arguments.AddRange(Arrays.asList(args));
+		    var arguments = new List<object>(args.Length + 2) {pos.LineString, pos.ColumnString};
+		    arguments.AddRange(args.ToList());
 			return new JqlParseErrorMessage(key, pos.Line, pos.Column, arguments);
 		}
 
-		private static string normalizeString(string argument)
+		private static string NormalizeString(string argument)
 		{
-			if (argument != null)
-			{
-				return argument.Replace('\n', ' ').Replace('\r', ' ');
-			}
-			else
-			{
-				return argument;
-			}
+		    return argument != null ? argument.Replace('\n', ' ').Replace('\r', ' ') : null;
 		}
 
-		private static string getPrintableCharacter(char c)
+	    private static string GetPrintableCharacter(char c)
 		{
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Character.UnicodeBlock unicodeBlock = Character.UnicodeBlock.of(c);
-			char.UnicodeBlock unicodeBlock = char.UnicodeBlock.of(c);
-			if (JqlStringSupport.IsJqlControl(c) || char.IsWhiteSpace(c) || unicodeBlock == null || unicodeBlock == char.UnicodeBlock.SPECIALS)
+			//char.UnicodeBlock unicodeBlock = char.UnicodeBlock.of(c);
+			if (JqlStringSupport.IsJqlControl(c) || char.IsWhiteSpace(c)) // || unicodeBlock == null || unicodeBlock == char.UnicodeBlock.SPECIALS)
 			{
 			    return c == '\t' ? string.Format("TAB") : string.Format("U+{0:X4}", (int) c);
 			}
@@ -419,15 +248,15 @@ namespace QuoteFlow.Models.Search.Jql.Parser
 
 		private static bool IsEofToken(IToken token)
 		{
-			return token.Type == Token.EOF;
+			return token.Type == TokenTypes.EndOfFile;
 		}
 
 		private class Position
 		{
-            private int Line { get; set; }
-            private int Column { get; set; }
+		    public int Line { get; set; }
+		    public int Column { get; set; }
 
-			internal Position(IToken token) : this(IToken.Line, token.CharPositionInLine)
+			internal Position(IToken token) : this(token.Line, token.CharPositionInLine)
 			{
 			}
 

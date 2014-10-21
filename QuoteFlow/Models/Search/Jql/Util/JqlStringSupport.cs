@@ -71,7 +71,7 @@ namespace QuoteFlow.Models.Search.Jql.Util
 
         public JqlStringSupport(JqlQueryParser parser)
 		{
-			this.parser = notNull("parser", parser);
+			this.parser = parser;
 		}
 
 

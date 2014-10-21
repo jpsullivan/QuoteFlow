@@ -10,8 +10,24 @@ namespace QuoteFlow.Models.Search.Jql.Parser
 	{
         private string Key { get; set; }
         private IList<object> Arguments { get; set; } 
-        private int LineNumber { get; set; }
-        private int ColumnNumber { get; set; }
+        public int LineNumber { get; set; }
+        public int ColumnNumber { get; set; }
+
+	    public JqlParseErrorMessage(string key, int lineNumber, int columnNumber)
+	    {
+            Key = key;
+            Arguments = new List<object>();
+            LineNumber = lineNumber <= 0 ? -1 : lineNumber;
+            ColumnNumber = columnNumber <= 0 ? -1 : columnNumber;
+	    }
+
+	    public JqlParseErrorMessage(string key, int lineNumber, int columnNumber, string argument)
+	    {
+            Key = key;
+	        Arguments = new List<object> {argument};
+            LineNumber = lineNumber <= 0 ? -1 : lineNumber;
+            ColumnNumber = columnNumber <= 0 ? -1 : columnNumber;
+	    }
 
 		public JqlParseErrorMessage(string key, int lineNumber, int columnNumber, IEnumerable<object> arguments)
 		{

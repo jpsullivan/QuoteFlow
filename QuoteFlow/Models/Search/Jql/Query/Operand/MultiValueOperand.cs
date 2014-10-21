@@ -30,7 +30,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
 			HashCode = CalculateHashCode(Values);
 		}
 
-		public MultiValueOperand(ICollection<long?> longs)
+		public MultiValueOperand(IEnumerable<long?> longs)
 		{
 			Values = new List<IOperand>(GetLongOperands(longs));
 			HashCode = CalculateHashCode(Values);
@@ -40,6 +40,12 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
 		{
 			Values = new List<IOperand>(GetLongOperands(longs.ToList()));
 			HashCode = CalculateHashCode(Values);
+		}
+
+        public MultiValueOperand(IEnumerable<IOperand> operands)
+		{
+            Values = Values.ToList();
+            hashcode = CalculateHashCode(Values);
 		}
 
 		public MultiValueOperand(params QueryLiteral[] literals)
@@ -62,20 +68,14 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
 			HashCode = CalculateHashCode(Values);
 		}
 
-//		public MultiValueOperand<T>(ICollection<T> values) where T : IOperand
-//		{
-//			this.values = CollectionUtil.copyAsImmutableList(values);
-//			this.hashcode = calculateHashCode(this.values);
-//		}
-
         private static int CalculateHashCode(IEnumerable<IOperand> values)
         {
             return values != null ? values.GetHashCode() : 0;
         }
 
-        private static IEnumerable<IOperand> GetLongOperands(ICollection<long?> operands)
+        private static IEnumerable<IOperand> GetLongOperands(IEnumerable<long?> operands)
         {
-            var tmpValues = new List<IOperand>(operands.Count);
+            var tmpValues = new List<IOperand>(operands.Count());
             tmpValues.AddRange(operands.Select(longValue => new SingleValueOperand(longValue)));
             return tmpValues;
         }

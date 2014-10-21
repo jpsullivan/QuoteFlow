@@ -1,4 +1,5 @@
 ﻿using QuoteFlow.Models.Search.Jql.Query.Clause;
+using QuoteFlow.Models.Search.Jql.Query.Order;
 
 namespace QuoteFlow.Models.Search.Jql.Query
 {
@@ -19,7 +20,7 @@ namespace QuoteFlow.Models.Search.Jql.Query
         /// the query, empty sorts will cause the default sorts to be used.
         /// </summary>
         /// <returns></returns>
-        OrderBy OrderByClause();
+        IOrderBy OrderByClause();
 
         /// <summary>
         /// Returns the original query string that the user inputted into the system. 

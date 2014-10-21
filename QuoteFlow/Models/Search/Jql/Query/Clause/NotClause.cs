@@ -19,22 +19,14 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
 
         public virtual string Name
         {
-            get
-            {
-                return NOT;
-            }
+            get { return NOT; }
         }
 
         public virtual IEnumerable<IClause> Clauses
         {
-            get
-            {
-                return new List<IClause> { _subClause };
-            }
+            get { return new List<IClause> {_subClause}; }
         }
 
-        //JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-        //ORIGINAL LINE: public <R> R accept(final ClauseVisitor<R> visitor)
         public virtual T Accept<T>(IClauseVisitor<T> visitor)
         {
             return visitor.Visit(this);
@@ -50,8 +42,8 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
 
         public override string ToString()
         {
-            var currentPrecedence = ClausePrecedence.GetPrecedence(this);
-            var subClausePrecedence = ClausePrecedence.GetPrecedence(_subClause);
+            var currentPrecedence = ClausePrecedenceHelper.GetPrecedence(this);
+            var subClausePrecedence = ClausePrecedenceHelper.GetPrecedence(_subClause);
             var sb = (new StringBuilder(NOT)).Append(" ");
             if (subClausePrecedence.Value < currentPrecedence.Value)
             {
