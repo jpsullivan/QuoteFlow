@@ -9,17 +9,17 @@ Backbone.$ = $;
 var SearcherCollection = require('../../collections/asset/searcher');
 
 /**
- * 
+ * Module for basic query mode.
  */
 var AssetBasicQueryModule = Brace.Evented.extend({
     namedEvents: ["jqlTooComplex", "searchRequested", "basicModeCriteriaCountWhenSearching", "verticalResize"],
 
-    initialize: function(a) {
-        this._queryStateModel = a.queryStateModel;
+    initialize: function(options) {
+        this._queryStateModel = options.queryStateModel;
         this.searcherCollection = new SearcherCollection([], {
-            fixedLozenges: a.primaryClauses,
-            queryStateModel: a.queryStateModel,
-            initData: a.initialSearcherCollectionState
+            fixedLozenges: options.primaryClauses,
+            queryStateModel: options.queryStateModel,
+            initData: options.initialSearcherCollectionState
         });
 
 //        this.view = new JIRA.Issues.BasicQueryView({
@@ -29,28 +29,29 @@ var AssetBasicQueryModule = Brace.Evented.extend({
 //            .onVerticalResize(this.triggerVerticalResize, this)
 //            .onSearchRequested(this.triggerSearchRequested, this);
 
-        var searcherCollection = this.searcherCollection;
-
-        this.searcherCollection.onSearchRequested(_.bind(function(b) {
+        this.searcherCollection.onSearchRequested(_.bind(function(jql) {
             this.triggerBasicModeCriteriaCountWhenSearching({
-                 count: searcherCollection.getAllSelectedCriteriaCount()
+                count: this.searcherCollection.getAllSelectedCriteriaCount()
             });
-            var c = this._attachOrderByClause(b);
-            this.triggerSearchRequested(c);
+            var jqlWithOrderBy = this._attachOrderByClause(jql);
+            this.triggerSearchRequested(jqlWithOrderBy);
         }, this));
 
-        this.searcherCollection.onJqlTooComplex(_.bind(function(b) {
-            this.triggerJqlTooComplex(b);
+        this.searcherCollection.onJqlTooComplex(_.bind(function(jql) {
+            this.triggerJqlTooComplex(jql);
         }, this));
     },
 
     hasErrors: function () {
-        var a = this.searcherCollection.any(function(b) {
-            return b.hasErrorInEditHtml();
+        var hasErrors = this.searcherCollection.any(function (searcherModel) {
+            return searcherModel.hasErrorInEditHtml();
         });
-        return a;
+        return hasErrors;
     },
 
+    /**
+     * Remove all searchers and clear the text query.
+     */
     clear: function () {
         this.searcherCollection.clear();
     },
@@ -59,28 +60,31 @@ var AssetBasicQueryModule = Brace.Evented.extend({
         this.searcherCollection.restoreFromQuery(this._queryStateModel.getJql());
     },
 
-    queryReset: function (a) {
+    queryReset: function (jql) {
         this.searcherCollection.setInteractive(false);
-        return this.searcherCollection.restoreFromQuery(a, true).always(_.bind(function() {
+        return this.searcherCollection.restoreFromQuery(jql, true).always(_.bind(function () {
             this.searcherCollection.setInteractive(true);
         }, this));
     },
 
+    /**
+     * Wait any in flight updates to search collection.
+     */
     searchersReady: function () {
         return this.searcherCollection.searchersReady();
     },
 
     getSelectedCriteria: function () {
-        return this.searcherCollection.getAllSelectedCriteria();
+        return this.searcherCollection.getAllSelectedCriteria()
     },
 
-    _attachOrderByClause: function (a) {
-        var b = /\bORDER\s+BY\b.*$/i;
-        var c = b.exec(this._queryStateModel.getJql());
-        if (c && b.exec(a) === null) {
-            a = a ? a + " " + c[0] : c[0];
+    _attachOrderByClause: function (jql) {
+        var orderByRegex = /\bORDER\s+BY\b.*$/i;
+        var existingOrderByClause = orderByRegex.exec(this._queryStateModel.getJql());
+        if (existingOrderByClause && orderByRegex.exec(jql) === null) {
+            jql = jql ? jql + ' ' + existingOrderByClause[0] : existingOrderByClause[0];
         }
-        return a;
+        return jql;
     }
 });
 

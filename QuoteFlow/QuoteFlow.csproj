@@ -324,6 +324,7 @@
     </Compile>
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\AdminControllerBase.cs" />
+    <Compile Include="Controllers\Api\AssetController.cs" />
     <Compile Include="Controllers\Api\AssetVarController.cs" />
     <Compile Include="Controllers\Api\AssetVarValueController.cs" />
     <Compile Include="Controllers\AssetController.cs" />
@@ -366,13 +367,25 @@
     <Compile Include="Infrastructure\Azure\AzureEntityList.cs" />
     <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
     <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
+    <Compile Include="Infrastructure\Enumerables\ListWithDuplicates.cs" />
     <Compile Include="Infrastructure\Enumerables\SingletonList.cs" />
     <Compile Include="Infrastructure\Exceptions\Antlr\RuntimeRecognitionException.cs" />
     <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
+    <Compile Include="Infrastructure\Exceptions\JqlParseException.cs" />
     <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
     <Compile Include="Infrastructure\Helpers\LexerErrorHelper.cs" />
+    <Compile Include="Infrastructure\QueryStringUniqueValueProviderFactory.cs" />
+    <Compile Include="Models\Assets\Fields\ICustomField.cs" />
+    <Compile Include="Models\Assets\Fields\IField.cs" />
+    <Compile Include="Models\Assets\Fields\INavigableField.cs" />
+    <Compile Include="Models\Assets\Fields\ISearchableField.cs" />
+    <Compile Include="Models\Search\ClauseNames.cs" />
+    <Compile Include="Models\Search\ClauseRegistration.cs" />
+    <Compile Include="Models\Search\ILuceneFieldSorter.cs" />
     <Compile Include="Models\Search\Jql\AntlrGen\JqlLexer.cs" />
     <Compile Include="Models\Search\Jql\AntlrGen\JqlParser.cs" />
+    <Compile Include="Models\Search\Jql\Clauses\IClauseHandler.cs" />
+    <Compile Include="Models\Search\Jql\Clauses\IClauseInformation.cs" />
     <Compile Include="Models\Search\Jql\JqlLexerTester.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -510,16 +523,21 @@
     <Compile Include="Models\Search\Jql\Query\QueryCreationContext.cs" />
     <Compile Include="Models\Search\Jql\Query\Searcher.cs" />
     <Compile Include="Models\Search\Jql\Query\Searchers.cs" />
+    <Compile Include="Models\Search\Jql\SearchRendererHolder.cs" />
     <Compile Include="Models\Search\Jql\SearchRendererValue.cs" />
     <Compile Include="Models\Search\Jql\SearchRendererValueResults.cs" />
     <Compile Include="Models\Search\Jql\SearchResults.cs" />
+    <Compile Include="Models\Search\Jql\Transport\IFieldValuesHolder.cs" />
     <Compile Include="Models\Search\Jql\Util\FieldReference.cs" />
     <Compile Include="Models\Search\Jql\Util\IJqlStringSupport.cs" />
+    <Compile Include="Models\Search\Jql\Util\JqlCustomFieldId.cs" />
     <Compile Include="Models\Search\Jql\Util\JqlStringSupport.cs" />
     <Compile Include="Models\Search\Jql\Util\ToJqlStringVisitor.cs" />
+    <Compile Include="Models\Search\SearcherRegistration.cs" />
+    <Compile Include="Models\Search\Searchers\IAssetSearcher.cs" />
     <Compile Include="Models\Search\SearchFilter.cs" />
+    <Compile Include="Models\Search\SearchHandler.cs" />
     <Compile Include="Models\Search\SearchResult.cs" />
-    <Compile Include="Models\Search\SortOrder.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
     <Compile Include="Models\ViewModels\Assets\AssetVarEditRequest.cs" />
     <Compile Include="Models\ViewModels\Assets\EditAssetRequest.cs" />

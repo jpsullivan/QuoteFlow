@@ -6,7 +6,7 @@ var AssetQueryModule = require('../modules/asset/query');
 var AssetQueryStateModel = require('../models/asset/query');
 
 var QueryComponent = function () {
-    var fields = {
+    var clauses = {
         catalog: "Catalog",
         manufacturer: "Manufacturer",
         creator: "Creator",
@@ -17,11 +17,15 @@ var QueryComponent = function () {
 
     return {
         DEFAULT_CLAUSES: ["catalog", "manufacturer", "creator"],
-        create: function(c) {
-            c = _.defaults(c, {
-                primaryClauses: this.DEFAULT_CLAUSES,
+
+        create: function (options) {
+
+            options = _.defaults(options, {
+                primaryClauses : this.DEFAULT_CLAUSES,
                 without: [],
                 style: "generic",
+                /* This has to be true :( - If issue-nav-components is anything below 6.2, the layoutSwitcher option
+                 * didn't exist when it was first consumed in 6.1. */
                 layoutSwitcher: true,
                 autocompleteEnabled: true,
                 advancedAutoUpdate: false,
@@ -29,48 +33,54 @@ var QueryComponent = function () {
                 basicAutoUpdate: true,
                 preferredSearchMode: "basic"
             });
-            c.primaryClauses = _.reject(c.primaryClauses, function(d) {
-                return _.contains(c.without, d.id);
+
+
+            options.primaryClauses = _.reject(options.primaryClauses, function (clause) {
+                return _.contains(options.without, clause.id);
             });
-            _.each(c.primaryClauses, function(e, d) {
-                if (typeof e === "string") {
-                    if (fields[e]) {
-                        c.primaryClauses[d] = {
-                            id: e,
-                            name: fields[e]
-                        }
+
+            _.each(options.primaryClauses, function (clause, idx) {
+                if (typeof clause === "string") {
+                    if (clauses[clause]) {
+                        options.primaryClauses[idx] = {id: clause, name: clauses[clause]};
                     } else {
-                        console.error("QuoteFlow.Components.Query: You have specified clause [" + e + "], but no i18n string for it could be found. Instead use {id:" + e + ", name: '[NAME_HERE]'}");
+                        console.error("JIRA.Components.Query: You have specified clause [" + clause + "]. " +
+                            "But we do not have the i18n string for it, probably a custom field. Instead use {id:" + clause + ", name: '[NAME_HERE]'}");
                     }
                 }
             });
 
             var queryModule = new AssetQueryModule({
-                primaryClauses: c.primaryClauses,
-                searchers: c.searchers,
                 queryStateModel: new AssetQueryStateModel({
-                    jql: c.jql,
-                    without: c.without,
-                    style: c.style,
-                    layoutSwitcher: c.layoutSwitcher,
-                    autocompleteEnabled: c.autocompleteEnabled,
-                    advancedAutoUpdate: c.advancedAutoUpdate,
-                    basicAutoUpdate: c.basicAutoUpdate,
-                    preferredSearchMode: c.preferredSearchMode,
-                    basicOrderBy: c.basicOrderBy
-                })
+                    jql: options.jql,
+                    without: options.without,
+                    style: options.style,
+                    layoutSwitcher: options.layoutSwitcher,
+                    autocompleteEnabled: options.autocompleteEnabled,
+                    advancedAutoUpdate: options.advancedAutoUpdate,
+                    basicAutoUpdate: options.basicAutoUpdate,
+                    preferredSearchMode: options.preferredSearchMode,
+                    basicOrderBy: options.basicOrderBy
+
+                }),
+                primaryClauses: options.primaryClauses,
+                searchers: options.searchers
             });
 
-            if (c.jql || c.jql === "") {
-                queryModule.resetToQuery(c.jql).always(function() {
-                    //jQuery(c.el).addClass("ready");
-                    queryModule.triggerInitialized(c.jql);
+//            jQuery(options.el).addClass("query-component " + options.style + "-styled");
+//
+//            queryModule.createAndRenderView(options.el);
+
+            if (options.jql || options.jql === "") {
+                queryModule.resetToQuery(options.jql).always(function () {
+                    jQuery(options.el).addClass("ready");
+                    // Consumers of this component want to know when the jql (given at construction) is represented in the ui.
+                    queryModule.triggerInitialized(options.jql);
                 });
             }
-
             return queryModule;
         }
-    }
+    };
 };
 
 module.exports = QueryComponent;

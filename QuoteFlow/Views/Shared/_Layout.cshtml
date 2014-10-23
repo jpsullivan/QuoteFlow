@@ -33,8 +33,11 @@
         // set the global application vars
         window.rootUrl = '@Url.SiteRoot()';
         window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
-        window.currentOrganization = '@CurrentOrganization.Id.ToString()';
-        window.currentUser = @ViewHelpers.JsEncode(CurrentUser);
+        @if (Request.IsAuthenticated)
+        {
+            <text>window.currentOrganization = '@CurrentOrganization.Id.ToString()';</text>
+            <text>window.currentUser = @ViewHelpers.JsEncode(CurrentUser);</text>
+        }
     </script>
     
     <script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>

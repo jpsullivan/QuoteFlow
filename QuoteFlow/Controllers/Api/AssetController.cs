@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using Microsoft.Ajax.Utilities;
+using QuoteFlow.Infrastructure.Enumerables;
 using QuoteFlow.Models;
 using QuoteFlow.Models.RequestModels;
+using QuoteFlow.Models.Search.Jql;
 using QuoteFlow.Services.Interfaces;
 
 namespace QuoteFlow.Controllers.Api
@@ -12,12 +16,15 @@ namespace QuoteFlow.Controllers.Api
         #region IoC
 
         protected IAssetService AssetService { get; set; }
+        protected IAssetSearchService AssetSearchService { get; set; }
 
         public AssetController() { }
 
-        public AssetController(IAssetService assetService)
+        public AssetController(IAssetService assetService,
+            IAssetSearchService assetSearchService)
         {
             AssetService = assetService;
+            AssetSearchService = assetSearchService;
         }
 
         #endregion
@@ -39,10 +46,25 @@ namespace QuoteFlow.Controllers.Api
             // todo: search controller logic, implement search service
         }
 
-        [HttpGet]
-        public string QueryComponent()
+        [HttpPost]
+        public SearchResults QueryComponent()
         {
-            return string.Empty;
+            // since post args can contain duplicate keys, we cannot rely on model binding
+            var data = Request.Content.ReadAsStringAsync().Result;
+            if (data.IsNullOrWhiteSpace())
+            {
+                return null;
+            }
+
+            var dataArray = data.Split('&');
+            var dataList = new ListWithDuplicates();
+            foreach (var arg in dataArray)
+            {
+                var args = arg.Split('=');
+                dataList.Add(args[0], args[1]);
+            }
+
+            return AssetSearchService.Search(new Dictionary<string, string[]>(), new long());
         }
     }
 }

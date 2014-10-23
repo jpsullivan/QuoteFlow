@@ -167,14 +167,31 @@ var AssetSearcherModel = require('../../models/asset/searcher');
 var AssetSearcherCollection = Brace.Collection.extend({
     model: AssetSearcherModel,
 
+    /**
+     * searchRequested: a user action has caused us to select a new search
+     *
+     * collectionChanged: the collection has changed. This is fired at most once per public interface method. Clients
+     * requesting changes should listen to this method to receive updates instead of add, change, remove if they
+     * want only a single notification of change.
+     *
+     * requestUpdateFromView: requests non-auto-submit views (eg text query view) to update the form values in their model
+     *
+     * beforeCriteriaRemoved: a user action caused a criteria to be removed from view. Args: id, direction
+     */
     namedEvents: ["searchRequested", "collectionChanged", "jqlTooComplex", "textFieldChanged", "requestUpdateFromView", "interactiveChanged", "beforeCriteriaRemoved"],
+
     QUERY_PARAM: "text",
     QUERY_ID: "text",
+
+    /**
+     * Prefix used to send jql for invalid searchers to the server, because we don't generate editHtml for invalid searchers
+     * (but we can generate jql)
+     */
     JQL_INVALID_QUERY_PREFIX: "__jql_",
 
-    initialize: function(b, options) {
-        if (b && b.length) {
-            this._searcherCache = b;
+    initialize: function (models, options) {
+        if (models && models.length) {
+            this._searcherCache = models;
         }
         this.fixedLozenges = options && options.fixedLozenges ? options.fixedLozenges : [];
         this.queryStateModel = options && options.queryStateModel;
@@ -182,319 +199,497 @@ var AssetSearcherCollection = Brace.Collection.extend({
         this._interactive = true;
     },
 
-    _createItemDescriptors: function(a) {
-        return _.map(a, function(b) {
-            return new AJS.ItemDescriptor({ meta: { isShown: b.isShown }, label: b.name, title: b.isShown ? b.name : b.name + " " + "is not applicable for the current project and/or issue type.", selected: b.isSelected || b.jql, value: b.id });
+    /**
+     * Converts an array of SearcherModels to an array of ItemDescriptors.
+     *
+     * @param {Array<SearcherModel>} searchers
+     * @return {Array<ItemDescriptor>}
+     */
+    _createItemDescriptors: function (searchers) {
+        return _.map(searchers, function (searcher) {
+            return new AJS.ItemDescriptor({
+                meta: {
+                    isShown: searcher.isShown
+                },
+                label: searcher.name,
+                title: searcher.isShown ? searcher.name : searcher.name + " " + AJS.I18n.getText("issuenav.inapplicable.searcher"),
+                selected: searcher.isSelected || searcher.jql,
+                value: searcher.id
+            });
         });
     },
 
-    getAddMenuGroupDescriptors: function() {
+    /**
+     * Construct group and item descriptors for the "add criteria" menu.
+     * <p/>
+     * Returns valid non-primary searchers sorted by name (case insensitive).
+     *
+     * @return {Array} AJS.GroupDescriptors for the "add criteria" menu.
+     */
+    getAddMenuGroupDescriptors: function () {
+        // Retrieve all valid, non-primary searchers.
         this._updateSearcherCache();
-        var d = this.fixedLozengeIds().concat(this.QUERY_ID);
-        var a = _.filter(this._searcherCache, function(e) {
-            var g = _.contains(d, e.id);
-            var f = !!e.groupName;
-            return !g && f;
+
+        var primarySearcherIds = this.fixedLozengeIds().concat(this.QUERY_ID);
+
+        var searchers = _.filter(this._searcherCache, function (searcher) {
+            var isPrimary = _.contains(primarySearcherIds, searcher.id);
+            var isValid = !!searcher.groupName;
+            return !isPrimary && isValid;
         });
-        if (a.length) {
-            var b = new AJS.GroupDescriptor({
-                label: "All Criteria",
-                items: this._createItemDescriptors(_.sortBy(a, function(e) {
-                    return e.name.toLowerCase();
+
+        if (searchers.length) {
+            var allSearchers = new AJS.GroupDescriptor({
+                label: AJS.I18n.getText("issues.components.query.filters.all"),
+                items: this._createItemDescriptors(_.sortBy(searchers, function (searcher) {
+                    return searcher.name.toLowerCase();
                 }))
             });
-            var c = new AJS.GroupDescriptor({
-                label: "Recent Criteria",
-                items: this._createItemDescriptors(_.first(_.sortBy(_.filter(a, function(e) {
-                    return e.lastViewed;
-                }), function(e) {
-                    return -e.lastViewed;
+            var recentSearchers = new AJS.GroupDescriptor({
+                label: AJS.I18n.getText("issues.components.query.filters.recent"),
+                items: this._createItemDescriptors(_.first(_.sortBy(_.filter(searchers, function (searcher) {
+                    return searcher.lastViewed;
+                }), function (searcher) {
+                    return -searcher.lastViewed;
                 }), AJS.Meta.getNumber("max-recent-searchers")))
             });
-            return [c, b];
+            return [recentSearchers, allSearchers];
         } else {
             return [];
         }
     },
 
-    getSearcher: function(b) {
-        var a = this.get(b);
-        if (!a) {
-            this.add(this._searcherCache[b]);
-            a = this.get(b);
+    /**
+     * Returns a searcher by id from either the model collection or the raw searcher cache.
+     *
+     * If a model is not found in the model collection it is added from the raw cache and returned.
+     *
+     * Assumes that a searcher being requested, if not present in the model collection, is in the raw searcher
+     * collection. This is done as the raw searchers are used to generate the searcher list.
+     *
+     * @param id The Searcher ID
+     */
+    getSearcher: function (id) {
+        var searcher = this.get(id);
+
+        if (!searcher) {
+            this.add(this._searcherCache[id]);
+            searcher = this.get(id);
         }
-        return a;
+
+        return searcher;
     },
 
-    setJql: function(b, a) {
-        this._addOrSet(b, { jql: a });
-    },
-
-    createJql: function() {
-        var a = this.pluck("jql");
-        return _.filter(a, _.isNotBlank).join(" AND ") || "";
-    },
-
-    isDirty: function() {
-        return this.any(function(a) {
-            return a.getJql() !== undefined && a.getJql() !== "";
+    /**
+     * Sets the jql for the model with the given id, creating one if it doesn't exist
+     * @param id id of model
+     * @param jql jql to set
+     */
+    setJql: function (id, jql) {
+        this._addOrSet(id, {
+            jql: jql
         });
     },
 
-    clearSearchState: function() {
-        this.each(function(a) {
-            a.clearSearchState();
+    /**
+     * Returns a single jql string expressing all subclauses in this collection.
+     */
+    createJql: function () {
+        var arr = this.pluck("jql");
+        return _.filter(arr, _.isNotBlank).join(" AND ") || "";
+    },
+
+    /**
+     * Has the user specified any clauses?
+     */
+    isDirty: function () {
+        return this.any(function (lozenge) {
+            // clauses are ultimately defined by a jql clause
+            return lozenge.getJql() !== undefined && lozenge.getJql() !== ""; // TODO the stupid text field strikes again. it has a "" state after routing
         });
+    },
+
+    /**
+     * Clears entire search state
+     */
+    clearSearchState: function () {
+        this.each(function (searcherModel) {
+            searcherModel.clearSearchState();
+        });
+        // TODO: optimise by only requerying server if search state changes
         this._querySearchersAndValues("");
     },
 
-    clearClause: function(c) {
-        var b = this.get(c);
-        var a = b && b.hasClause();
-        if (b) {
-            b.clearSearchState();
+    /**
+     * Clear the search state for a single searcher.
+     *
+     * If the searcher has a clause (i.e. it could be affecting search results),
+     * the search will be re-performed.
+     *
+     * @param id The id of searcher.
+     */
+    clearClause: function (id) {
+        // We don't need to requery here if invalid clauses
+        var searcher = this.get(id);
+        var hasClause = searcher && searcher.hasClause();
+
+        if (searcher) {
+            searcher.clearSearchState();
         }
+
         this.triggerCollectionChanged();
         this.triggerRequestUpdateFromView();
-        if (a) {
+
+        // We only need to refresh results if the searcher had a clause.
+        if (hasClause) {
             this.triggerSearchRequested(this.createJql());
         }
     },
 
-    getTextQuery: function() {
-        var a = this.get(this.QUERY_ID);
-        return a ? a.getViewHtml() : "";
+    getTextQuery: function () {
+        var model = this.get(this.QUERY_ID);
+        return model ? model.getViewHtml() : "";
     },
 
-    setInteractive: function(a) {
-        if (a !== this._interactive) {
-            this._interactive = a;
-            this.triggerInteractiveChanged(a);
+    /**
+     * Set the interactive flag to indicate whether searchers respond to user input.
+     * @param {boolean} interactive
+     */
+    setInteractive: function (interactive) {
+        if (interactive !== this._interactive) {
+            this._interactive = interactive;
+            this.triggerInteractiveChanged(interactive);
         }
     },
 
-    isInteractive: function() {
+    /**
+     * Determine whether searchers respond to user input.
+     * @return {boolean}
+     */
+    isInteractive: function () {
         return this._interactive;
     },
 
-    handleBasicViewSubmit: function() {
+    handleBasicViewSubmit: function () {
         this.triggerRequestUpdateFromView();
         this.triggerSearchRequested(this.createJql());
     },
 
-    updateTextQuery: function(a) {
-        if (a) {
-            var b = AJS.escapeHtml(a);
-            this._addOrSet(this.QUERY_ID, { viewHtml: b, editHtml: b, jql: JIRA.Issues.TextQueryBuilder.buildJql(a) });
-        } else {
+    updateTextQuery: function (textQuery) {
+        if (textQuery) {
+            var textQueryHtml = AJS.escapeHtml(textQuery);
+            this._addOrSet(this.QUERY_ID, {
+                viewHtml: textQueryHtml,
+                editHtml: textQueryHtml,
+                jql: JIRA.Issues.TextQueryBuilder.buildJql(textQuery)
+            });
+        }
+        else {
             this.remove(this.QUERY_ID);
         }
         this.triggerTextFieldChanged();
     },
 
-    getQueryString: function() {
-        var a = [];
-        this.each(function(c) {
-            var b = c.getQueryString();
-            if (b) {
-                a.push(b);
+    /**
+     * Creates a queryString representing all querystring members
+     * @return {string}
+     */
+    getQueryString: function () {
+        var queryStrings = [];
+        this.each(function (searcherModel) {
+            var qs = searcherModel.getQueryString();
+            if (qs) {
+                queryStrings.push(qs);
             }
         });
-        return a.join("&");
+        return queryStrings.join("&");
     },
 
-    _addOrSet: function(e, d, b) {
-        var a = this.get(e);
-        if (a) {
-            if (b && b.parse && a.parse) {
-                d = a.parse(d);
-                delete b.parse;
+    /**
+     * Adds or sets parameters. If a model with the given id is found, the values in params are set. Otherwise a model is created
+     * with the given id and params.
+     * @param id id to of model to find.
+     * @param params parameters
+     * @param options
+     */
+    _addOrSet: function (id, params, options) {
+        var model = this.get(id);
+        if (model) {
+            // Backbone doesn't support parse: true for set()
+            if (options && options.parse && model.parse) {
+                params = model.parse(params);
+                delete options.parse;
             }
-            if (d.jql) {
-                d.isSelected = true;
+            if (params.jql) {
+                params.isSelected = true;
             }
-            a.set(d, b);
+            model.set(params, options);
         } else {
-            var c = _.clone(d);
-            c.id = e;
-            c.isSelected = !!d.jql;
-            this.add(c, b);
-            a = this.get(e);
+            var paramsWithId = _.clone(params);
+            paramsWithId.id = id;
+            paramsWithId.isSelected = !!params.jql;
+            this.add(paramsWithId, options);
+            model = this.get(id);
         }
-        return a;
+        return model;
     },
 
-    restoreFromQuery: function(a, d) {
-        this.queryStateModel.setJql(a);
-        var c = { jql: this.queryStateModel.getJql() || "", decorator: "none" };
+    /**
+     * Update the basic mode query view to represent the given jql unless the jql can't fit into the basic view.
+     * If the query is "too complex" a jqlTooComplex event is fired.
+     * @param {queryStateModel} query
+     */
+    restoreFromQuery: function (jql, reset) {
+        // We won't have JQL if a filter is private; just show empty searchers.
+        this.queryStateModel.setJql(jql);
+
+        var requestData = {
+            jql: this.queryStateModel.getJql() || "",
+            decorator: "none"
+        };
+
+        // We store a json blob on the page when we first load so we don't need to go to the server.
         if (this.initData) {
             if (!this.initData.errorMessages) {
                 this._onQuerySearchersAndValues(this.initData);
                 this.initData = null;
                 return jQuery.Deferred().resolve();
             } else {
-                this._handleSearcherError(c.jql, this.initData);
+                // this json blob may also contain errors
+                this._handleSearcherError(requestData.jql, this.initData);
                 this.initData = null;
                 return jQuery.Deferred().reject();
             }
+
         } else {
-            var b = AJS.$.ajax({
+            var response = AJS.$.ajax({
                 url: AJS.contextPath() + "/secure/QueryComponent!Jql.jspa",
-                headers: { "X-SITEMESH-OFF": true },
-                data: c,
+                headers: { 'X-SITEMESH-OFF': true },
+                data: requestData,
                 type: "POST"
             });
-            b.success(_.bind(function(e) {
-                if (d) {
-                    this.clearExpectingUpdate(d);
+
+            response.success(_.bind(function (data) {
+                if (reset) {
+                    this.clearExpectingUpdate(reset);
                 }
-                this._onQuerySearchersAndValues(e);
+                this._onQuerySearchersAndValues(data);
             }, this));
-            b.error(_.bind(function(h) {
-                if (d) {
+
+            response.error(_.bind(function (resp) {
+                if (reset) {
                     this.clearExpectingUpdate();
                 }
                 try {
-                    var f = JSON.parse(h.responseText);
-                    if (f) {
-                        this._handleSearcherError(c.jql, f);
+                    var json = JSON.parse(resp.responseText);
+                    if (json) {
+                        this._handleSearcherError(requestData.jql, json);
                     }
-                } catch (g) {
+                } catch (e) {
                     console.log("search response error - not JSON?");
                 }
+
             }, this));
-            b.always(function() {
+
+            response.always(function () {
                 JIRA.trace("jira.search.searchers.updated");
             });
-            return b;
+
+            return response;
         }
     },
 
-    clearExpectingUpdate: function() {
+    /**
+     * Resets state, before we apply new values.
+     */
+    clearExpectingUpdate: function () {
         this.reset();
         this.updateTextQuery("");
     },
 
-    _handleSearcherError: function(a, b) {
-        if (_.include(b.errorMessages, "jqlTooComplex") || _.include(b.errorMessages, "jqlInvalid")) {
+    /**
+     *  Handles error when requesting searchers
+     *
+     * @param query
+     * @param data
+     * @private
+     */
+    _handleSearcherError: function (jql, data) {
+        if (_.include(data.errorMessages, "jqlTooComplex") || _.include(data.errorMessages, "jqlInvalid")) {
+            // I know I know. A bloody setTimeout.
+            // This is because when we first load the page as we are not async (we are using json blob from page) this
+            // event is triggered before switchToPreferred search is called. This means that we flick to advanced but
+            // then back to the preferred search (which could be basic). If the jql is too complex we need to be sure
+
             window.setTimeout(_.bind(function() {
-                this.triggerJqlTooComplex(a);
+                this.triggerJqlTooComplex(jql);
             }, this), 0);
         }
     },
 
-    searcherAffectsContext: function(a) {
-        return "catalog" === a || "manufacturer" === a;
+    searcherAffectsContext: function(id) {
+        return "catalog" === id || "manufacturer" === id;
     },
 
-    createOrUpdateClauseWithQueryString: function(criteria, b) {
+    /**
+     * Tells the clause to update from the values selected in its editHtml, creating or updating it as required.
+     * This update involves an AJAX request to retrieve the jql and criteria content from the server.
+     * @param id -- SearcherModel id
+     * @param {Boolean} [forceUpdate=false] Force update of the JQL, even if autoupdate is disabled
+     */
+    createOrUpdateClauseWithQueryString: function (id, forceUpdate) {
+
         this.triggerRequestUpdateFromView();
-        var a;
-        if (this.searcherAffectsContext(criteria)) {
-            a = this._querySearchersAndValues(this.getQueryString());
-        } else {
-            a = this._querySearchersByValue(criteria);
+
+        var deferred;
+        if (this.searcherAffectsContext(id)) {
+            // Requery all searchers and values
+            deferred = this._querySearchersAndValues(this.getQueryString());
         }
-        a.done(_.bind(function() {
-            if ((this.queryStateModel.getBasicAutoUpdate() || b)) {
+        else {
+            deferred = this._querySearchersByValue(id);
+        }
+
+        deferred.done(_.bind(function () {
+            if ((this.queryStateModel.getBasicAutoUpdate() || forceUpdate) && !this.containsInvalidSearchers()) {
                 this.triggerSearchRequested(this.createJql());
             }
         }, this));
-        return a;
+
+        return deferred;
+
+        // TODO: could optimise by only requesting all searchers and values when context changes (ie project or issue type)
+        // and requesting only valuehtml for other cases. see _querySingleValue
     },
 
-    _querySearchersByValue: function(componentName) {
-        var a = this.get(componentName);
-        debugger;
-        var c = AJS.$.param({ decorator: "none", jqlContext: this.queryStateModel.getJql() });
-        if (a) {
-            var b = a.getQueryString();
-            if (b) {
-                c = c + "&" + b;
+    _querySearchersByValue: function(id) {
+        var model = this.get(id);
+        var data = AJS.$.param({
+            decorator: "none",
+            jqlContext: this.queryStateModel.getJql()
+        });
+
+        if (model) {
+            var modelString = model.getQueryString();
+            if (modelString) {
+                data = data + '&' + modelString;
             }
         }
+
         if (this._activeSearcherReq) {
             this._activeSearcherReq.abort();
         }
-        return this._activeSearcherReq = $.ajax({
+
+        return this._activeSearcherReq = JIRA.SmartAjax.makeRequest({
             type: "POST",
-            data: c,
+            data: data,
             processData: false,
-            url: QuoteFlow.ApplicationPath + "api/asset/FindAsset",
-            success: _.bind(function(f) {
-                var e = this.get(d);
-                if (e) {
-                    if (f[d]) {
-                        f[d].groupName = e.getGroupName();
-                        f[d].groupId = e.getGroupId();
+            //url: QuoteFlow.ApplicationPath + "api/asset/FindAsset",
+            url: contextPath + "/secure/QueryComponentRendererValue!Default.jspa",
+            success:_.bind(function(data) {
+                var model = this.get(id);
+                if (model) {
+                    if (data[id]) {
+                        data[id].groupName = model.getGroupName();
+                        data[id].groupId = model.getGroupId();
                     } else {
-                        f[d] = _.extend(e.toJSON(), { editHtml: null, jql: null, viewHtml: null });
+                        // If the searcher isn't present in the response, then
+                        // it currently has no value and we need to reset it.
+                        data[id] = _.extend(model.toJSON(), {
+                            editHtml: null,
+                            jql: null,
+                            viewHtml: null
+                        });
                     }
                 }
-                this._setSearchersFromData(f, true);
+
+                this._setSearchersFromData(data, true);
             }, this),
             dataType: "json",
-            error: function(e) {
-                //JIRA.Issues.displayFailSearchMessage(e);
+            error: function(xhr) {
+                //JIRA.Issues.displayFailSearchMessage(xhr);
             }
-        }).always(_.bind(function() {
+        }).always(_.bind(function () {
             this._activeSearcherReq = null;
         }, this));
     },
 
-    _parseSearcherGroups: function(c) {
-        var a = {};
-        var b = this.queryStateModel.getWithout();
-        _.each(c.groups, function(d) {
-            _.each(d.searchers, function(e) {
-                if (!_.contains(b, e.id)) {
-                    e.groupId = d.type;
-                    e.groupName = d.title;
-                    a[e.id] = e;
+    /**
+     * Returns a map by id of all searchers from the response
+     * @param data response data
+     */
+    _parseSearcherGroups: function (data) {
+        var searchers = {};
+        var without = this.queryStateModel.getWithout();
+
+        _.each(data.groups, function (group) {
+            _.each(group.searchers, function (searcher) {
+                if (!_.contains(without, searcher.id)) {
+                    searcher.groupId = group.type;
+                    searcher.groupName = group.title;
+                    searchers[searcher.id] = searcher;
                 }
             });
         });
-        return a;
+
+        return searchers;
     },
 
-    _querySearchersAndValues: function(queryString) {
-        var a = "decorator=none";
+    _querySearchersAndValues: function (queryString) {
+        var data = "decorator=none";
+
         if (this._activeSearcherReq) {
+            // If it is the same as the request we are currently waiting for we can just ignore.
             if (this._activeSearcherQuery === queryString) {
                 return jQuery.Deferred().reject();
             }
+            // Otherwise we will abort and issue a new request.
             this._activeSearcherReq.abort();
         }
+
+        // store data for this request so we can use it to compare against new requests
         this._activeSearcherQuery = queryString;
+
         if (queryString) {
-            a += "&" + queryString;
+            data += "&" + queryString;
         }
+
         this._activeSearcherReq = AJS.$.ajax({
-            url: contextPath + "/secure/QueryComponent!Default.jspa",
-            headers: { "X-SITEMESH-OFF": true },
+            url: QuoteFlow.ApplicationPath + "api/asset/QueryComponent",
+            //url: contextPath + "/secure/QueryComponent!Default.jspa",
             type: "POST",
-            data: a,
+            data: data,
             processData: false
         });
-        this._activeSearcherReq.done(_.bind(function(c) {
-            this._onQuerySearchersAndValues(c);
+
+        this._activeSearcherReq.done(_.bind(function (data) {
+            this._onQuerySearchersAndValues(data);
         }, this));
-        this._activeSearcherReq.fail(_.bind(function(c) {
-            JIRA.Issues.displayFailSearchMessage(c);
+
+        this._activeSearcherReq.fail(_.bind(function (xhr) {
+            //JIRA.Issues.displayFailSearchMessage(xhr);
         }, this));
-        this._activeSearcherReq.always(_.bind(function() {
+
+        this._activeSearcherReq.always(_.bind(function () {
             this._activeSearcherReq = null;
         }, this));
+
         return this._activeSearcherReq;
     },
 
-    clear: function() {
+    /**
+     * Remove all searchers from the collection and clear the text query.
+     */
+    clear: function () {
         this.reset([], { silent: true });
         this.updateTextQuery("");
         this.triggerCollectionChanged();
     },
 
-    searchersReady: function() {
+    /**
+     * Wait any in flight updates to search collection.
+     */
+    searchersReady: function () {
         if (this._activeSearcherReq) {
             return this._activeSearcherReq;
         } else {
@@ -502,113 +697,159 @@ var AssetSearcherCollection = Brace.Collection.extend({
         }
     },
 
-    _onQuerySearchersAndValues: function(c) {
-        var d = this, a = this._parseSearcherGroups(c.searchers);
-        _.each(c.values, _.bind(function(f, g) {
-            var e = a[g];
-            if (!e) {
-                a[g] = f;
-            } else {
-                _.extend(e, f);
+    _onQuerySearchersAndValues: function (data) {
+
+        // merge searchers and values from response
+        var collection = this,
+            searchers = this._parseSearcherGroups(data.searchers);
+        _.each(data.values, _.bind(function (value, id) {
+            // compose searcher and value from response
+            var searcher = searchers[id];
+            if (!searcher) {
+                searchers[id] = value;
+            }
+            else {
+                _.extend(searcher, value);
             }
         }, this));
-        var b = [];
-        this.each(function(f) {
-            var e = f.id;
-            if (!_.any(a, function(g) {
-                return g.id === e;
-            })) {
-                if (f.getIsSelected()) {
-                    f.setValidSearcher(false);
+
+        var modelsToRemove = [];
+        this.each(function (searcher) {
+            var searcherId = searcher.id;
+            if (!_.any(searchers, function (newSearcher) { return newSearcher.id === searcherId; })) {
+                if (searcher.getIsSelected()) {
+                    searcher.setValidSearcher(false);
                 } else {
-                    b.push(f);
+                    modelsToRemove.push(searcher);
                 }
             }
         });
-        if (b.length) {
-            this.remove(b);
+        if (modelsToRemove.length) {
+            this.remove(modelsToRemove);
         }
-        this._setSearchersFromData(a);
+
+        this._setSearchersFromData(searchers);
     },
 
-    _updateSearcherCache: function() {
+    /**
+     * Updates the searcher cache to mirror the current state of the searcher collection.
+     *
+     * @private
+     */
+    _updateSearcherCache: function () {
         if (this._searcherCache) {
-            this.each(_.bind(function(a) {
-                this._searcherCache[a.id] = a.toJSON();
-                this._searcherCache[a.id].id = a.id;
+            this.each(_.bind(function (searcher) {
+                this._searcherCache[searcher.id] = searcher.toJSON();
+                this._searcherCache[searcher.id].id = searcher.id;
             }, this));
         }
     },
 
-    _setSearchersFromData: function(a, b) {
-        _.each(a, _.bind(function(c, d) {
-            this._addOrSet(d, {
-                groupId: c.groupId,
-                groupName: c.groupName,
-                isShown: c.isShown,
-                name: c.name,
-                viewHtml: c.viewHtml,
-                jql: c.jql,
-                editHtml: c.editHtml,
-                validSearcher: c.validSearcher,
-                key: c.key,
-                lastViewed: c.lastViewed
+    /**
+     * Sets the initial state of the searcher collection.
+     *
+     * Accepts a JSON object of raw searcher definitions and values and adds
+     * real SearcherModels to SearcherCollection for each if they are primary or
+     * they have viewHtml (i.e. in use).
+     *
+     * This is an optimisation to prevent every searcher model being instantiated
+     * which is an incredibly slow process in IE8.
+     *
+     * @param searchers
+     * @private
+     */
+    _setSearchersFromData: function (searchers, update) {
+        _.each(searchers, _.bind(function (value, id) {
+            this._addOrSet(id, {
+                groupId: value.groupId,
+                groupName: value.groupName,
+                isShown: value.isShown,
+                name: value.name,
+                viewHtml: value.viewHtml,
+                jql: value.jql,
+                editHtml: value.editHtml,
+                validSearcher: value.validSearcher,
+                key: value.key,
+                lastViewed: value.lastViewed
             }, { parse: true });
         }, this));
-        if (b) {
+
+        if (update) {
             this._updateSearcherCache();
         } else {
-            this._searcherCache = a;
+            this._searcherCache = searchers;
         }
+
         this.triggerCollectionChanged();
     },
 
-    getVariableClauses: function() {
-        var a = [];
-        this.each(_.bind(function(b) {
-            if (!this.isFixed(b) && b.hasClause()) {
-                a.push(b);
+    /**
+     * Return a list of extended criteria.
+     * - the searcher has a value
+     * - the searcher is not query text or a primary clause
+     */
+    getVariableClauses: function () {
+        var variableClauses = [];
+        this.each(_.bind(function (searcherModel) {
+            if (!this.isFixed(searcherModel) && searcherModel.hasClause()) {
+                variableClauses.push(searcherModel);
             }
         }, this));
-        return a;
+
+        return variableClauses;
     },
 
-    getSelectedCriteria: function() {
-        var a = this;
-        var b = function(c) {
-            return !a.isFixed(c) && (c.hasClause() || c.getIsSelected());
+    /**
+     * @return {SearcherModel[]} All selected non-prime searchers, in ascending order of position.
+     */
+    getSelectedCriteria: function () {
+        var instance = this;
+        var isSelectedCriteria = function (searcher) {
+            return !instance.isFixed(searcher) &&
+                (searcher.hasClause() || searcher.getIsSelected());
         };
-        return this.chain().filter(b).sortBy(function(c) {
-            return c.getPosition();
-        }).value();
+
+        return this.chain()
+            .filter(isSelectedCriteria)
+            .sortBy(function (searcher) { return searcher.getPosition(); })
+            .value();
     },
 
-    getAllSelectedCriteriaCount: function() {
+    getAllSelectedCriteriaCount: function () {
         return this.getAllSelectedCriteria().length;
     },
 
-    getAllSelectedCriteria: function() {
-        var a = [];
-        this.each(_.bind(function(b) {
-            if (b.hasClause() || b.getIsSelected()) {
-                a.push(b);
+    getAllSelectedCriteria: function () {
+        var selectedCriteria = [];
+
+        this.each(_.bind(function (searcherModel) {
+            if (searcherModel.hasClause() || searcherModel.getIsSelected()) {
+                selectedCriteria.push(searcherModel);
             }
         }, this));
-        return a;
+
+        return selectedCriteria;
     },
 
-    isFixed: function(a) {
-        return _.contains(this.fixedLozengeIds(), a.getId()) || a.getId() === this.QUERY_ID;
+    isFixed: function (searcherModel) {
+        return _.contains(this.fixedLozengeIds(), searcherModel.getId()) || searcherModel.getId() === this.QUERY_ID;
     },
 
-    fixedLozengeIds: function() {
+    fixedLozengeIds: function () {
         return _.pluck(this.fixedLozenges, "id");
     },
 
-    getNextPosition: function() {
-        return this.reduce(function(b, c) {
-            var a = Math.max(b, c.getPosition());
-            return isNaN(a) ? b : a;
+    /**
+     * Extended criteria searchers have position values that are used to
+     * determine their position in ExtendedCriteriaView; they appear in
+     * ascending order. This method calculates the next position value.
+     *
+     * @return {number} The next position value.
+     */
+    getNextPosition: function () {
+        return this.reduce(function (memo, searcher) {
+            var max = Math.max(memo, searcher.getPosition());
+            return isNaN(max) ? memo : max;
         }, -1) + 1;
     }
 });
@@ -762,7 +1003,7 @@ var AssetQueryModule = require('../modules/asset/query');
 var AssetQueryStateModel = require('../models/asset/query');
 
 var QueryComponent = function () {
-    var fields = {
+    var clauses = {
         catalog: "Catalog",
         manufacturer: "Manufacturer",
         creator: "Creator",
@@ -773,11 +1014,15 @@ var QueryComponent = function () {
 
     return {
         DEFAULT_CLAUSES: ["catalog", "manufacturer", "creator"],
-        create: function(c) {
-            c = _.defaults(c, {
-                primaryClauses: this.DEFAULT_CLAUSES,
+
+        create: function (options) {
+
+            options = _.defaults(options, {
+                primaryClauses : this.DEFAULT_CLAUSES,
                 without: [],
                 style: "generic",
+                /* This has to be true :( - If issue-nav-components is anything below 6.2, the layoutSwitcher option
+                 * didn't exist when it was first consumed in 6.1. */
                 layoutSwitcher: true,
                 autocompleteEnabled: true,
                 advancedAutoUpdate: false,
@@ -785,48 +1030,54 @@ var QueryComponent = function () {
                 basicAutoUpdate: true,
                 preferredSearchMode: "basic"
             });
-            c.primaryClauses = _.reject(c.primaryClauses, function(d) {
-                return _.contains(c.without, d.id);
+
+
+            options.primaryClauses = _.reject(options.primaryClauses, function (clause) {
+                return _.contains(options.without, clause.id);
             });
-            _.each(c.primaryClauses, function(e, d) {
-                if (typeof e === "string") {
-                    if (fields[e]) {
-                        c.primaryClauses[d] = {
-                            id: e,
-                            name: fields[e]
-                        }
+
+            _.each(options.primaryClauses, function (clause, idx) {
+                if (typeof clause === "string") {
+                    if (clauses[clause]) {
+                        options.primaryClauses[idx] = {id: clause, name: clauses[clause]};
                     } else {
-                        console.error("QuoteFlow.Components.Query: You have specified clause [" + e + "], but no i18n string for it could be found. Instead use {id:" + e + ", name: '[NAME_HERE]'}");
+                        console.error("JIRA.Components.Query: You have specified clause [" + clause + "]. " +
+                            "But we do not have the i18n string for it, probably a custom field. Instead use {id:" + clause + ", name: '[NAME_HERE]'}");
                     }
                 }
             });
 
             var queryModule = new AssetQueryModule({
-                primaryClauses: c.primaryClauses,
-                searchers: c.searchers,
                 queryStateModel: new AssetQueryStateModel({
-                    jql: c.jql,
-                    without: c.without,
-                    style: c.style,
-                    layoutSwitcher: c.layoutSwitcher,
-                    autocompleteEnabled: c.autocompleteEnabled,
-                    advancedAutoUpdate: c.advancedAutoUpdate,
-                    basicAutoUpdate: c.basicAutoUpdate,
-                    preferredSearchMode: c.preferredSearchMode,
-                    basicOrderBy: c.basicOrderBy
-                })
+                    jql: options.jql,
+                    without: options.without,
+                    style: options.style,
+                    layoutSwitcher: options.layoutSwitcher,
+                    autocompleteEnabled: options.autocompleteEnabled,
+                    advancedAutoUpdate: options.advancedAutoUpdate,
+                    basicAutoUpdate: options.basicAutoUpdate,
+                    preferredSearchMode: options.preferredSearchMode,
+                    basicOrderBy: options.basicOrderBy
+
+                }),
+                primaryClauses: options.primaryClauses,
+                searchers: options.searchers
             });
 
-            if (c.jql || c.jql === "") {
-                queryModule.resetToQuery(c.jql).always(function() {
-                    //jQuery(c.el).addClass("ready");
-                    queryModule.triggerInitialized(c.jql);
+//            jQuery(options.el).addClass("query-component " + options.style + "-styled");
+//
+//            queryModule.createAndRenderView(options.el);
+
+            if (options.jql || options.jql === "") {
+                queryModule.resetToQuery(options.jql).always(function () {
+                    jQuery(options.el).addClass("ready");
+                    // Consumers of this component want to know when the jql (given at construction) is represented in the ui.
+                    queryModule.triggerInitialized(options.jql);
                 });
             }
-
             return queryModule;
         }
-    }
+    };
 };
 
 module.exports = QueryComponent;
@@ -1325,9 +1576,9 @@ var Brace = require('backbone-brace');
 Backbone.$ = $;
 
 /**
- * 
+ * Represents current and preferred search modes (basic or jql)
  */
-var AssetQueryState = Brace.Model.extend({
+var AssetQueryStateModel = Brace.Model.extend({
     BASIC_SEARCH: "basic",
     ADVANCED_SEARCH: "advanced",
 
@@ -1349,16 +1600,26 @@ var AssetQueryState = Brace.Model.extend({
         preferredSearchMode: "basic"
     },
 
-    switchToSearchMode: function (a) {
-        this.setSearchMode(a);
+    /**
+     * Sets search mode
+     * @param searchMode search mode (basic or advanced)
+     */
+    switchToSearchMode: function (searchMode) {
+        this.setSearchMode(searchMode);
     },
 
-    switchPreferredSearchMode: function (a) {
-        this.switchToSearchMode(a);
-        this.setPreferredSearchMode(a);
+    /**
+     * Changes the preferred and actual search mode and saves the preferred search mode.
+     */
+    switchPreferredSearchMode: function (mode) {
+        this.switchToSearchMode(mode);
+        this.setPreferredSearchMode(mode);
         this._savePreferredSearchMode();
     },
 
+    /**
+     * Switches to whatever is the preferred search mode
+     */
     switchToPreferredSearchMode: function () {
         this.switchToSearchMode(this.getPreferredSearchMode());
     },
@@ -1367,29 +1628,36 @@ var AssetQueryState = Brace.Model.extend({
         return this.getStyle() !== "field";
     },
 
+    /**
+     * Should the more criteria button be subtly styled
+     */
     hasSubtleMoreCriteria: function () {
         return this.getStyle() !== "field";
     },
 
+    /**
+     * Persists preferred search mode to the server
+     */
     _savePreferredSearchMode: function () {
         jQuery.ajax({
-            url: AJS.contextPath() + "/rest/querycomponent/latest/userSearchMode",
-            type: "POST",
-            headers: { "X-Atlassian-Token": "nocheck" },
-            data: { searchMode: this.getPreferredSearchMode() },
-            error: _.bind(function(a) {
+            url: AJS.contextPath() + "/rest/querycomponent/latest/userSearchMode", // IssueTableResource (JIRA core)
+            type: 'POST',
+            data: {
+                searchMode: this.getPreferredSearchMode()
+            },
+            error: _.bind(function (xhr) {
                 if (JIRA.Issues.displayFailSearchMessage) {
-                    JIRA.Issues.displayFailSearchMessage(a);
+                    JIRA.Issues.displayFailSearchMessage(xhr);
                 }
             }, this),
-            success: function() {
+            success: function () {
                 JIRA.trace("jira.search.mode.changed");
             }
         });
     }
 });
 
-module.exports = AssetQueryState;
+module.exports = AssetQueryStateModel;
 },{"backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset\\searcher.js":[function(require,module,exports){
 "use strict";
 
@@ -1403,86 +1671,151 @@ Backbone.$ = $;
  * 
  */
 var AssetSearcherModel = Brace.Model.extend({
-    namedAttributes: ["id", "name", "isShown", "viewHtml", "editHtml", "groupId", "groupName", "initParams", "isSelected", "jql", "position", "serializedParams", "validSearcher", "key", "lastViewed"],
+    /**
+     * id: searcher id
+     * name: The name of the clause
+     * viewHtml: html to display in the criteria selector button, or the text to display in the input for the text searcher.
+     * editHtml: html to display in the edit dropdown
+     * groupId: group id
+     * groupName: group name
+     * isSelected: whether or not the searcher has been selected as a criteria for a search
+     * jql: jql representation of the clause
+     * position: The searcher's position in the extended criteria view.
+     * validSearcher: is entire searcher valid for current search context
+     * lastViewed: the time the searcher was last viewed in milliseconds
+     */
+    namedAttributes: [
+        "id",
+        "name",
+        "isShown",
+        "viewHtml",
+        "editHtml",
+        "groupId",
+        "groupName",
+        "initParams",
+        "isSelected",
+        "jql",
+        "position",
+        "serializedParams",
+        "validSearcher",
+        "key",
+        "lastViewed"
+    ],
 
+    /**
+     * readyForDisplay: edit html has been retrieved and is ready to be displayed
+     */
     namedEvents: ["readyForDisplay"],
 
-    initialize: function() {
-    },
+    initialize: function () {},
 
-    parse: function(a) {
-        if (a.viewHtml) {
-            a.viewHtml = this._cleanViewHtml(a.viewHtml);
+    parse: function (json) {
+        if (json.viewHtml) {
+            json.viewHtml = this._cleanViewHtml(json.viewHtml);
         }
-        return a;
+        return json;
     },
 
-    createOrUpdateClauseWithQueryString: function(a) {
-        return this.collection.createOrUpdateClauseWithQueryString(this.id, a);
+    /**
+     * @param {Boolean} [forceUpdate=false] Force update of the JQL, even if autoupdate is disabled
+     * @returns {*}
+     */
+    createOrUpdateClauseWithQueryString: function (forceUpdate) {
+        return this.collection.createOrUpdateClauseWithQueryString(this.id, forceUpdate);
     },
 
-    getQueryString: function() {
-        var a = {};
+    getQueryString: function () {
+        var params = {};
+        // custom handling for text query
         if (this.collection.QUERY_ID === this.getId()) {
             if (this.getViewHtml()) {
-                a[this.collection.QUERY_PARAM] = this.getDisplayText();
-                return AJS.$.param(a);
+                params[this.collection.QUERY_PARAM] = this.getDisplayText(); // query string shouldn't be html-encoded
+                return AJS.$.param(params);
             }
             return null;
         }
+
+        // return jql for invalid searchers as the server doesn't return editHtml if a searcher is invalid, but it does return jql
         if ((!this.getValidSearcher() || /^\s*$/.test(this.getEditHtml())) && this.getJql()) {
-            a = {};
-            a[this.collection.JQL_INVALID_QUERY_PREFIX + this.getId()] = this.getJql();
-            return AJS.$.param(a);
+            params = {};
+            params[this.collection.JQL_INVALID_QUERY_PREFIX + this.getId()] = this.getJql();
+            return AJS.$.param(params);
         }
+
         return this.getSerializedParams();
     },
 
-    getDisplayText: function() {
-        var a = this.getViewHtml();
-        var c = "";
-        if (a) {
-            var b = AJS.$("<div>").appendCatchExceptions(a);
-            c = AJS.$.trim(b.text()).replace(/[\n\r\s]+/g, " ");
+    /**
+     * Returns just the text of the viewHtml, cleaning up whitespace.
+     */
+    getDisplayText: function () {
+        var html = this.getViewHtml();
+        var text = '';
+        if (html) {
+            var $container = AJS.$('<div>').appendCatchExceptions(html);
+            text = AJS.$.trim($container.text()).replace(/[\n\r\s]+/g, ' ');
         }
-        return c;
+        return text;
     },
 
-    hasClause: function() {
+    hasClause: function () {
         if (this.collection.QUERY_ID === this.getId()) {
             return !!this.getViewHtml();
-        } else {
-            if (!this.getValidSearcher()) {
-                return !!this.getJql();
-            } else {
-                return !!this.getQueryString();
-            }
+        }
+        else if (!this.getValidSearcher()) {
+            return !!this.getJql();
+        }
+        else {
+            return !!this.getQueryString();
         }
     },
 
-    clearSearchState: function() {
-        this.set({ viewHtml: null, editHtml: null, jql: null, validSearcher: null, isSelected: false });
+    /**
+     * Reset the searcher's state.
+     */
+    clearSearchState: function () {
+        this.set({
+            viewHtml: null,
+            editHtml: null,
+            jql: null,
+            validSearcher: null,
+            isSelected: false
+        });
     },
 
-    _now: Date.now || function() {
+    /**
+     * Returns the current time in milliseconds. Cannot always use Date.now() because of IE8.
+     */
+    _now: Date.now || function () {
         return new Date().getTime();
     },
 
-    select: function() {
-        this.set({ isSelected: true, position: this.collection.getNextPosition(), validSearcher: true, lastViewed: this._now() });
+    select: function () {
+        this.set({
+            isSelected: true,
+            position: this.collection.getNextPosition(),
+            validSearcher: true,
+            lastViewed: this._now()
+        });
     },
 
-    getTooltipText: function() {
+    /**
+     * @return the text to be shown in the searcher's tooltip.
+     */
+    getTooltipText: function () {
         if (this.getValidSearcher !== false) {
-            var a = this.getDisplayText() || "All";
-            return this.getName() + ": " + a;
+            var value = this.getDisplayText() || AJS.I18n.getText("issues.components.query.search.all");
+            return this.getName() + ": " + value;
         } else {
-            return "This criteria is not valid for the project and/or issue type";
+            return AJS.I18n.getText("issues.components.query.searcher.invalid.searcher");
         }
     },
 
-    searchersReady: function() {
-        return this.collection.searchersReady();
+    /**
+     * Wait any in flight updates to search collection.
+     */
+    searchersReady: function () {
+        return this.collection.searchersReady()
     }
 });
 
@@ -1566,17 +1899,17 @@ Backbone.$ = $;
 var SearcherCollection = require('../../collections/asset/searcher');
 
 /**
- * 
+ * Module for basic query mode.
  */
 var AssetBasicQueryModule = Brace.Evented.extend({
     namedEvents: ["jqlTooComplex", "searchRequested", "basicModeCriteriaCountWhenSearching", "verticalResize"],
 
-    initialize: function(a) {
-        this._queryStateModel = a.queryStateModel;
+    initialize: function(options) {
+        this._queryStateModel = options.queryStateModel;
         this.searcherCollection = new SearcherCollection([], {
-            fixedLozenges: a.primaryClauses,
-            queryStateModel: a.queryStateModel,
-            initData: a.initialSearcherCollectionState
+            fixedLozenges: options.primaryClauses,
+            queryStateModel: options.queryStateModel,
+            initData: options.initialSearcherCollectionState
         });
 
 //        this.view = new JIRA.Issues.BasicQueryView({
@@ -1586,28 +1919,29 @@ var AssetBasicQueryModule = Brace.Evented.extend({
 //            .onVerticalResize(this.triggerVerticalResize, this)
 //            .onSearchRequested(this.triggerSearchRequested, this);
 
-        var searcherCollection = this.searcherCollection;
-
-        this.searcherCollection.onSearchRequested(_.bind(function(b) {
+        this.searcherCollection.onSearchRequested(_.bind(function(jql) {
             this.triggerBasicModeCriteriaCountWhenSearching({
-                 count: searcherCollection.getAllSelectedCriteriaCount()
+                count: this.searcherCollection.getAllSelectedCriteriaCount()
             });
-            var c = this._attachOrderByClause(b);
-            this.triggerSearchRequested(c);
+            var jqlWithOrderBy = this._attachOrderByClause(jql);
+            this.triggerSearchRequested(jqlWithOrderBy);
         }, this));
 
-        this.searcherCollection.onJqlTooComplex(_.bind(function(b) {
-            this.triggerJqlTooComplex(b);
+        this.searcherCollection.onJqlTooComplex(_.bind(function(jql) {
+            this.triggerJqlTooComplex(jql);
         }, this));
     },
 
     hasErrors: function () {
-        var a = this.searcherCollection.any(function(b) {
-            return b.hasErrorInEditHtml();
+        var hasErrors = this.searcherCollection.any(function (searcherModel) {
+            return searcherModel.hasErrorInEditHtml();
         });
-        return a;
+        return hasErrors;
     },
 
+    /**
+     * Remove all searchers and clear the text query.
+     */
     clear: function () {
         this.searcherCollection.clear();
     },
@@ -1616,28 +1950,31 @@ var AssetBasicQueryModule = Brace.Evented.extend({
         this.searcherCollection.restoreFromQuery(this._queryStateModel.getJql());
     },
 
-    queryReset: function (a) {
+    queryReset: function (jql) {
         this.searcherCollection.setInteractive(false);
-        return this.searcherCollection.restoreFromQuery(a, true).always(_.bind(function() {
+        return this.searcherCollection.restoreFromQuery(jql, true).always(_.bind(function () {
             this.searcherCollection.setInteractive(true);
         }, this));
     },
 
+    /**
+     * Wait any in flight updates to search collection.
+     */
     searchersReady: function () {
         return this.searcherCollection.searchersReady();
     },
 
     getSelectedCriteria: function () {
-        return this.searcherCollection.getAllSelectedCriteria();
+        return this.searcherCollection.getAllSelectedCriteria()
     },
 
-    _attachOrderByClause: function (a) {
-        var b = /\bORDER\s+BY\b.*$/i;
-        var c = b.exec(this._queryStateModel.getJql());
-        if (c && b.exec(a) === null) {
-            a = a ? a + " " + c[0] : c[0];
+    _attachOrderByClause: function (jql) {
+        var orderByRegex = /\bORDER\s+BY\b.*$/i;
+        var existingOrderByClause = orderByRegex.exec(this._queryStateModel.getJql());
+        if (existingOrderByClause && orderByRegex.exec(jql) === null) {
+            jql = jql ? jql + ' ' + existingOrderByClause[0] : existingOrderByClause[0];
         }
-        return a;
+        return jql;
     }
 });
 
@@ -1652,34 +1989,44 @@ var Brace = require('backbone-brace');
 Backbone.$ = $;
 
 /**
- * 
+ * Module for JQL query mode
  */
 var AssetJqlQueryModule = Brace.Evented.extend({
     namedEvents: ["searchRequested", "verticalResize"],
 
-    initialize: function(a) {
-        this._queryStateModel = a.queryStateModel;
-
+    initialize: function(options) {
+        this._queryStateModel = options.queryStateModel;
 //        this.view = new JIRA.Issues.JqlQueryView({
-//            queryStateModel: a.queryStateModel
+//            queryStateModel: options.queryStateModel
 //        })
 //        .onVerticalResize(this.triggerVerticalResize, this)
 //        .onSearchRequested(this.triggerSearchRequested, this);
 //
-//        JIRA.bind(JIRA.Events.NEW_CONTENT_ADDED, _.bind(function (d, b, c) {
-//            if (c === JIRA.CONTENT_ADDED_REASON.returnToSearch) {
+//        /* Absolute hack to prevent DESK-1623 - after return to search, the jql box is thin cause issue nav is hidden when
+//           rendered so height calculation is wrong. We need to trigger it to recalculate height on return to search.
+//           I have added a method, refreshLayout to the query component which we now call from issue-nav-plugin
+//           SearchPageModule, however jira can be using a newer version of issue-nav-components that issue-nav-plugin
+//           (installed via service desk). So we need this nasty hack until the minimum version of jira service desk
+//           supports has the updateLayout call inside of SearchPageModule.
+//         */
+//        JIRA.bind(JIRA.Events.NEW_CONTENT_ADDED, _.bind(function (e, el, reason) {
+//            if (reason === JIRA.CONTENT_ADDED_REASON.returnToSearch) {
 //                this.setQuery();
 //            }
 //        }, this));
     },
 
     search: function () {
-        //var a = this.view.readJql();
-        this.triggerSearchRequested(a);
+        var jql = this.view.readJql();
+        this.triggerSearchRequested(jql);
     },
 
     setQuery: function () {
         this.view.setQuery();
+    },
+
+    createView: function () {
+        return this.view;
     }
 });
 
@@ -1697,32 +2044,46 @@ var BasicQueryModule = require('./basic_query');
 var JqlQueryModule = require('./jql_query');
 
 /**
- * 
+ * Module for basic query mode
  */
 var AssetQueryModule = Brace.Evented.extend({
-    namedEvents: ["jqlChanged", "jqlTooComplex", "jqlError", "jqlSuccess", "searchRequested", "queryTooComplexSwitchToAdvanced", "changedPreferredSearchMode", "basicModeCriteriaCountWhenSearching", "verticalResize", "initialized"],
+    namedEvents: [
+        "jqlChanged",
+        "jqlTooComplex",
+        "jqlError",
+        "jqlSuccess",
+        "searchRequested",
+        "queryTooComplexSwitchToAdvanced",
+        "changedPreferredSearchMode",
+        "basicModeCriteriaCountWhenSearching",
+        "verticalResize",
+        "initialized"
+    ],
 
     initialize: function(options) {
-        this.queryStateModel = options.queryStateModel;
-        var queryState = this.queryStateModel;
-
-        this.queryStateModel.on("change:preferredSearchMode", _.bind(function() {
-            this.triggerChangedPreferredSearchMode(queryState.getPreferredSearchMode());
+        this._queryStateModel = options.queryStateModel;
+        this._queryStateModel.on("change:preferredSearchMode", _.bind(function() {
+            this.triggerChangedPreferredSearchMode(this._queryStateModel.getPreferredSearchMode());
         }, this));
 
+//        JIRA.Issues.SearcherDialog.initialize({
+//            queryStateModel: this._queryStateModel
+//        });
+
         this._jqlQueryModule = new JqlQueryModule({
-            queryStateModel: this.queryStateModel
+            queryStateModel: this._queryStateModel
         })
         .onSearchRequested(this.handleAdvancedSearchRequested, this)
         .onVerticalResize(this.triggerVerticalResize, this);
 
         this._errors = {};
-        this._errors[this.queryStateModel.BASIC_SEARCH] = [];
-        this._errors[this.queryStateModel.ADVANCED_SEARCH] = [];
-        this.queryStateModel.on("change:searchMode", this.showSearchErrors, this);
+        this._errors[this._queryStateModel.BASIC_SEARCH] = [];
+        this._errors[this._queryStateModel.ADVANCED_SEARCH] = [];
+
+        this._queryStateModel.on("change:searchMode", this.showSearchErrors, this);
 
         this._basicQueryModule = new BasicQueryModule({
-            queryStateModel: this.queryStateModel,
+            queryStateModel: this._queryStateModel,
             primaryClauses: options.primaryClauses,
             initialSearcherCollectionState: options.searchers
         })
@@ -1733,142 +2094,193 @@ var AssetQueryModule = Brace.Evented.extend({
         .onBasicModeCriteriaCountWhenSearching(this.triggerBasicModeCriteriaCountWhenSearching, this);
     },
 
+    /**
+     * If we have rendered in the background (when hidden), our size calculations for jql box are
+     * incorrect so we need a way for the outside world to tell us when to recalculate.
+     */
     refreshLayout: function() {
         this._jqlQueryModule.setQuery();
     },
 
-    handleAdvancedSearchRequested: function(a) {
-        this.handleSearchRequested(a);
+    handleAdvancedSearchRequested: function (jql) {
+        this.handleSearchRequested(jql);
         this._basicQueryModule.queryChanged();
     },
 
-    handleSearchRequested: function(a) {
-        this.queryStateModel.setJql(a);
+    handleSearchRequested: function (jql) {
+        this._queryStateModel.setJql(jql);
         this.clearSearchErrors();
     },
 
-    handleJqlTooComplex: function(a) {
-        if (this.getSearchMode() !== this.queryStateModel.ADVANCED_SEARCH) {
+    handleJqlTooComplex: function (jql) {
+        if (this.getSearchMode() !== this._queryStateModel.ADVANCED_SEARCH) {
             this.triggerQueryTooComplexSwitchToAdvanced();
         }
-        this.setSearchMode(this.queryStateModel.ADVANCED_SEARCH);
-        this.triggerJqlTooComplex(a);
+        this.setSearchMode(this._queryStateModel.ADVANCED_SEARCH);
+        this.triggerJqlTooComplex(jql);
         if (this._queryView) {
             this._queryView.switcherViewModel.disableSwitching();
         }
     },
 
-    getJql: function() {
-        return this.queryStateModel.getJql();
+    getJql: function () {
+        return this._queryStateModel.getJql();
     },
 
-    getSearcherCollection: function() {
-        return this._basicQueryModule.searcherCollection;
+    getSearcherCollection: function () {
+        return this._basicQueryModule.searcherCollection
     },
 
-    isBasicMode: function() {
-        return this.queryStateModel.getSearchMode() === this.queryStateModel.BASIC_SEARCH;
+    /**
+     * @return {boolean} whether the query module is currently in basic mode.
+     * @private
+     */
+    isBasicMode: function () {
+        return this._queryStateModel.getSearchMode() === this._queryStateModel.BASIC_SEARCH;
     },
 
-    resetToQuery: function(a, b) {
+    /**
+     * Reset the query module to match the current query.
+     *
+     * Clears error messages, switches to the user's preferred search mode, and
+     * hides the entire query view if the currently selected filter is invalid.
+     *
+     * If the user has requested a new search then this method will focus the search view.
+     *
+     * @param options
+     * @param options.focusQuery true if we should focus the searchers after resetting
+     */
+    resetToQuery: function (jql, options) {
         this.clearSearchErrors();
-        return this._basicQueryModule.queryReset(a).always(_.bind(function() {
-            this.queryStateModel.switchToPreferredSearchMode();
+        return this._basicQueryModule.queryReset(jql).always(_.bind(function () {
+            this._queryStateModel.switchToPreferredSearchMode();
             this._jqlQueryModule.setQuery();
-            if (b && b.focusQuery === true) {
+            if (options && options.focusQuery === true) {
                 this._queryView.getView().focus();
             }
+
             this._basicQueryModule.off("searchRequested", this.publishJqlChanges);
             this._jqlQueryModule.off("searchRequested", this.publishJqlChanges);
+
+            // subsequent search requestes are published
             this._basicQueryModule.onSearchRequested(this.publishJqlChanges, this);
             this._jqlQueryModule.onSearchRequested(this.publishJqlChanges, this);
         }, this));
     },
 
-    publishJqlChanges: function(a) {
-        this.triggerJqlChanged(a);
+    publishJqlChanges: function (jql) {
+        this.triggerJqlChanged(jql);
     },
 
-    setVisible: function(a) {
-        this._queryView.setVisible(a);
+    setVisible: function (value) {
+        this._queryView.setVisible(value);
     },
 
-    queryChanged: function() {
+    /**
+     * Notifies this module that the underlying jql has changed and it should update itself
+     */
+    queryChanged: function () {
         this.clearSearchErrors();
         this._basicQueryModule.queryChanged();
     },
 
-    onSearchSuccess: function(a) {
+    onSearchSuccess: function (warnings) {
         if (this._queryView) {
-            this._queryView.showWarnings(a);
+            this._queryView.showWarnings(warnings);
         }
         this.triggerJqlSuccess();
     },
 
-    searchersReady: function() {
+    /**
+     * Wait any in flight updates to search collection.
+     */
+    searchersReady: function () {
         return this._basicQueryModule.searchersReady();
     },
 
-    onSearchError: function(b) {
+    onSearchError: function (response) {
         this._errors.renderFunction = "showErrors";
-        var c = (b.errorMessages) ? b.errorMessages.concat() : [];
-        var a = [];
-        _.each(b.errors, function(e, d) {
-            if (d === "jql") {
-                a.push(e);
+        var basicModeErrors = (response.errorMessages) ? response.errorMessages.concat() : [];
+        var advancedModeErrors = [];
+
+        _.each(response.errors, function (message, type) {
+            if (type === "jql") {
+                advancedModeErrors.push(message);
             } else {
-                c.push(e);
+                basicModeErrors.push(message);
             }
         });
-        if (this.getSearchMode() === this.queryStateModel.BASIC_SEARCH && !this._basicQueryModule.hasErrors() && a.length > 0) {
-            this.setSearchMode(this.queryStateModel.ADVANCED_SEARCH);
+
+        if (this.getSearchMode() === this._queryStateModel.BASIC_SEARCH && !this._basicQueryModule.hasErrors() && advancedModeErrors.length > 0) {
+            // If the search was performed in basic mode, an advanced mode error was
+            // encountered, switch to advanced mode before rendering these errors.
+            this.setSearchMode(this._queryStateModel.ADVANCED_SEARCH);
         }
-        this._errors[this.queryStateModel.BASIC_SEARCH] = c;
-        this._errors[this.queryStateModel.ADVANCED_SEARCH] = a.concat(c);
+
+        this._errors[this._queryStateModel.BASIC_SEARCH] = basicModeErrors;
+        this._errors[this._queryStateModel.ADVANCED_SEARCH] = advancedModeErrors.concat(basicModeErrors);
+
         this.showSearchErrors();
         this.triggerJqlError();
     },
 
-    showSearchErrors: function() {
+    /**
+     * Show error messages applicable to the current search mode.
+     */
+    showSearchErrors: function () {
         if (this._queryView) {
             this._queryView.clearNotifications();
-            var a = this._errors.renderFunction || "showErrors";
-            this._queryView[a](this._errors[this.getSearchMode()]);
+            var renderFunction = this._errors.renderFunction || "showErrors";
+            this._queryView[renderFunction](this._errors[this.getSearchMode()]);
         }
     },
 
-    clearSearchErrors: function() {
+    /**
+     * Remove error messages from all search modes.
+     */
+    clearSearchErrors: function () {
         if (this._queryView) {
             this._queryView.clearNotifications();
             this._queryView.switcherViewModel.enableSwitching();
         }
-        this._errors[this.queryStateModel.BASIC_SEARCH].length = 0;
-        this._errors[this.queryStateModel.ADVANCED_SEARCH].length = 0;
+        this._errors[this._queryStateModel.BASIC_SEARCH].length = 0;
+        this._errors[this._queryStateModel.ADVANCED_SEARCH].length = 0;
     },
 
-    getSearchMode: function() {
-        return this.queryStateModel.getSearchMode();
+    getSearchMode: function () {
+        return this._queryStateModel.getSearchMode();
     },
 
-    getActiveBasicModeSearchers: function() {
-        return this._basicQueryModule.getSelectedCriteria();
+    getActiveBasicModeSearchers: function () {
+        return this._basicQueryModule.getSelectedCriteria()
     },
 
-    setSearchMode: function(a) {
-        if (this.getSearchMode() !== a) {
-            this.queryStateModel.switchToSearchMode(a);
+    /**
+     * @param {string} searchMode -- Either "basic" or "advanced"
+     * @return {boolean} -- Indicates whether or not the search mode actually changed
+     */
+    setSearchMode: function (searchMode) {
+        if (this.getSearchMode() !== searchMode) {
+            this._queryStateModel.switchToSearchMode(searchMode);
             return true;
         }
         return false;
     },
 
-    createAndRenderView: function(a) {
-        this._queryView = new JIRA.Issues.QueryView({ el: a, queryStateModel: this.queryStateModel, basicQueryModule: this._basicQueryModule, jqlQueryModule: this._jqlQueryModule }).onVerticalResize(this.triggerVerticalResize, this);
+    createAndRenderView: function ($el) {
+        this._queryView = new JIRA.Issues.QueryView({
+            el: $el,
+            queryStateModel: this._queryStateModel,
+            basicQueryModule: this._basicQueryModule,
+            jqlQueryModule: this._jqlQueryModule
+        }).onVerticalResize(this.triggerVerticalResize, this);
         this._queryView.render();
     },
 
-    isQueryValid: function() {
-        return (this._errors && this._errors[this.queryStateModel.BASIC_SEARCH].length === 0 && this._errors[this.queryStateModel.ADVANCED_SEARCH].length === 0);
+    isQueryValid: function () {
+        return (this._errors &&
+                this._errors[this._queryStateModel.BASIC_SEARCH].length === 0 &&
+                this._errors[this._queryStateModel.ADVANCED_SEARCH].length === 0);
     }
 });
 
@@ -2735,12 +3147,19 @@ var PrimaryCriteriaContainer = BaseView.extend({
         return this._criteriaViews;
     },
 
-    getFocusables: function() {
-        return this.$(".criteria-selector, #searcher-query, .add-criteria, .search-button");
+    /**
+     * Returns a jQuery array of elements within this container that can be tab-focused
+     */
+    getFocusables: function () {
+        return this.$('.criteria-selector, #searcher-query, .add-criteria, .search-button');
     },
 
-    getFocusableForCriteria: function(a) {
-        return this.$('.criteria-selector[data-id="' + a + '"]');
+    /**
+     * Returns the focusable element for the given criteria. The element returned should be one
+     * of the elements in getFocusables()
+     */
+    getFocusableForCriteria: function (criteriaId) {
+        return this.$('.criteria-selector[data-id="' + criteriaId + '"]');
     }
 });
 
@@ -2771,25 +3190,31 @@ var NavigatorTextField = BaseView.extend({
     },
 
     initialize: function() {
-        _.bindAll(this, "updateSearcherCollectionTextField", "render");
+        _.bindAll(this,
+            "_updateSearcherCollectionTextField",
+            "_handleInteractiveChanged",
+            "render");
 
-        this.collection.on("remove change add", _.bind(function (a) {
-            if (a.getId() === this.collection.QUERY_ID) {
+        this.collection.on("remove change add", _.bind(function (model) {
+            if (model.getId() === this.collection.QUERY_ID) {
                 this.render();
             }
         }, this));
-
         this.collection.onTextFieldChanged(this.render);
-        this.collection.onRequestUpdateFromView(this.updateSearcherCollectionTextField);
-        this.collection.onInteractiveChanged(this.handleInteractiveChanged);
+        this.collection.onRequestUpdateFromView(this._updateSearcherCollectionTextField);
+        this.collection.onInteractiveChanged(this._handleInteractiveChanged);
     },
 
     render: function() {
-        var a = this.collection.get(this.collection.QUERY_ID);
-        if (a) {
-            var c = a.getEditHtml();
-            var b = AJS.$("<div></div>").html(c || "").text();
-            this.setQuery(b);
+        // Attempt to extract the query from the model's edit HTML. If that
+        // fails, just fall back to its display value (used in tests too).
+        var model = this.collection.get(this.collection.QUERY_ID);
+
+        if (model) {
+            // the html is just a raw value html encoded
+            var val = model.getEditHtml();
+            var decodedVal = AJS.$('<div></div>').html(val || '').text();
+            this.setQuery(decodedVal);
         } else {
             this.setQuery("");
         }
@@ -2803,19 +3228,20 @@ var NavigatorTextField = BaseView.extend({
         }
     },
 
-    setQuery: function(query) {
-        this.$el.valueOf(query);
+    setQuery: function (query) {
+        this.$el.val(query);
     },
 
-    updateSearcherCollectionTextField: function() {
-        if (this.$el.is('input')) {
-            var query = AJS.$.trim(this.$el.val());
-            this.collection.updateTextQuery(query);
+    _updateSearcherCollectionTextField: function () {
+        if (this.$el.is("input")) {
+            var textFieldValue = AJS.$.trim(this.$el.val());
+            this.collection.updateTextQuery(textFieldValue);
         }
     },
 
-    handleInteractiveChanged: function (a) {
-        this.$el.prop("disabled", !a);
+    _handleInteractiveChanged: function (interactive) {
+        // Disable the text input while noninteractive.
+        this.$el.prop("disabled", !interactive);
     }
 });
 
@@ -5664,29 +6090,32 @@ if (typeof window !== 'undefined') {
     window['html_sanitize'] = html_sanitize;
 }
 },{}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\jquery-scrolllock.min.js":[function(require,module,exports){
-// AJS plugin for bundled jQuery
-(function (b) {
-    var a = 30;
-    b.fn.scrollLock = function (c, d) {
-        if (typeof c !== "string") {
-            d = c;
-            c = null
+// Prevent the page from scrolling when using the mousewheel to scroll an element with vertical scrollbars
+
+// Usage:
+// $el.scrollLock();
+// $el.scrollLock('.scrollable');
+// $el.scrollLock(50);
+// $el.scrollLock('.scrollable', 50);
+; (function ($) {
+    var DEFAULT_SCROLL_INTERVAL = 30;
+
+    $.fn.scrollLock = function (selector, scrollInterval) {
+        if (typeof selector !== 'string') {
+            scrollInterval = selector;
+            selector = null;
         }
-        if (!d) {
-            d = a
+        if (!scrollInterval) {
+            scrollInterval = DEFAULT_SCROLL_INTERVAL;
         }
-        this.on("DOMMouseScroll mousewheel", c, function (f) {
-            f.preventDefault();
-            var g;
-            if (f.originalEvent.wheelDelta) {
-                g = f.originalEvent.wheelDelta / 120
-            }
-            if (f.originalEvent.detail) {
-                g = -f.originalEvent.detail / 3
-            }
-            this.scrollTop -= g * d
-        })
-    }
+        this.on('DOMMouseScroll mousewheel', selector, function (e) {
+            e.preventDefault();
+            var d;
+            if (e.originalEvent.wheelDelta) d = e.originalEvent.wheelDelta / 120;
+            if (e.originalEvent.detail) d = -e.originalEvent.detail / 3;
+            this.scrollTop -= d * scrollInterval;
+        });
+    };
 })(AJS.$);
 },{}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\MD5\\md5.js":[function(require,module,exports){
 (function (Buffer){

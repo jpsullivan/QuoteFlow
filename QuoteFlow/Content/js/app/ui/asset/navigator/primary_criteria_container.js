@@ -43,12 +43,19 @@ var PrimaryCriteriaContainer = BaseView.extend({
         return this._criteriaViews;
     },
 
-    getFocusables: function() {
-        return this.$(".criteria-selector, #searcher-query, .add-criteria, .search-button");
+    /**
+     * Returns a jQuery array of elements within this container that can be tab-focused
+     */
+    getFocusables: function () {
+        return this.$('.criteria-selector, #searcher-query, .add-criteria, .search-button');
     },
 
-    getFocusableForCriteria: function(a) {
-        return this.$('.criteria-selector[data-id="' + a + '"]');
+    /**
+     * Returns the focusable element for the given criteria. The element returned should be one
+     * of the elements in getFocusables()
+     */
+    getFocusableForCriteria: function (criteriaId) {
+        return this.$('.criteria-selector[data-id="' + criteriaId + '"]');
     }
 });
 
