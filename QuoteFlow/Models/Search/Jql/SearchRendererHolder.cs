@@ -1,5 +1,5 @@
-﻿using QuoteFlow.Models.Search.Jql.Query.Clause;
-using QuoteFlow.Models.Search.Jql.Transport;
+﻿using QuoteFlow.Models.Assets.Transport;
+using QuoteFlow.Models.Search.Jql.Query.Clause;
 
 namespace QuoteFlow.Models.Search.Jql
 {

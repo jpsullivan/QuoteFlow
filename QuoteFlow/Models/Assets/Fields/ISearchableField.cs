@@ -1,4 +1,5 @@
-﻿using QuoteFlow.Models.Search;
+﻿using QuoteFlow.Models.Assets.Search;
+using QuoteFlow.Models.Search;
 
 namespace QuoteFlow.Models.Assets.Fields
 {

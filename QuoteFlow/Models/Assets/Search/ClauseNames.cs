@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using QuoteFlow.Models.Assets.Fields;
-using QuoteFlow.Models.Search.Jql.Util;
 
-namespace QuoteFlow.Models.Search
+namespace QuoteFlow.Models.Assets.Search
 {
     /// <summary>
     /// Represents a JQL clause name. The primary name is the name which uniquely identifies the clause, 

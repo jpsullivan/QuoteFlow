@@ -1,4 +1,4 @@
-﻿namespace QuoteFlow.Models.Search.Searchers
+﻿namespace QuoteFlow.Models.Assets.Search.Searchers
 {
     /// <summary>
     /// Represents the type of a <see cref="SearcherGroup"/>

@@ -1,9 +1,9 @@
 ﻿using Lucene.Net.Documents;
 using QuoteFlow.Models.Assets.Fields;
+using QuoteFlow.Models.Assets.Search.Searchers.Information;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
-using QuoteFlow.Models.Search.Searchers.Information;
 
-namespace QuoteFlow.Models.Search.Searchers
+namespace QuoteFlow.Models.Assets.Search.Searchers
 {
     /// <summary>
     /// The interface defines an object responsible for all search related activities in the Asset Navigator.

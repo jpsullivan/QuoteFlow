@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QuoteFlow.Models.Assets.Search;
 using QuoteFlow.Models.Search.Jql.Query;
 
 namespace QuoteFlow.Models.Search.Jql.Clauses

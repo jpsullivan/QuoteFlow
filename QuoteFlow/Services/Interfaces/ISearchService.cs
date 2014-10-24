@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using QuoteFlow.Models.Assets.Search;
 using QuoteFlow.Models.Search;
 
 namespace QuoteFlow.Services.Interfaces

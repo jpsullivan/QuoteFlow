@@ -21,9 +21,9 @@ namespace QuoteFlow.Services
             throw new NotImplementedException();
         }
 
-        private Dictionary<string, SearchRendererHolder> GenerateQuery(ListWithDuplicates paramMap, User user, IEnumerable<AssetSearcher> )
+        private Dictionary<string, SearchRendererHolder> GenerateQuery(ListWithDuplicates paramMap, User user, IEnumerable<AssetSearcher> searchers)
         {
-            
+            return new Dictionary<string, SearchRendererHolder>();
         }
     }
 }

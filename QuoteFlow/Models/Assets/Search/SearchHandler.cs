@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using QuoteFlow.Models.Assets.Index.Indexers;
+using QuoteFlow.Models.Assets.Search.Searchers;
 using QuoteFlow.Models.Search.Jql.Clauses;
-using QuoteFlow.Models.Search.Searchers;
 
-namespace QuoteFlow.Models.Search
+namespace QuoteFlow.Models.Assets.Search
 {
     /// <summary>
     /// Object used by the field to indicate how it can be searched and indexed. 
@@ -14,7 +12,7 @@ namespace QuoteFlow.Models.Search
     /// Each JQL clause in QuoteFlow is represented by a <seealso cref="ClauseRegistration"/>.
     /// It consists of a set of JQL names and the <seealso cref="IClauseHandler"/> that can be used to process
     /// those JQL names in a query.
-    /// Each field *may* have one <seealso cref="IAssetSearcher"/> that uses a list of JQL
+    /// Each field *may* have one <seealso cref="IAssetSearcher{T}"/> that uses a list of JQL
     /// clauses to create a JQL search. This is specified in the <seealso cref="SearcherRegistration"/>
     /// on the SearchHandler. QuoteFlow will keep the association between the IssueSearcher 
     /// and JQL clauses (ClauseHandler) to perform the mapping from JQL to the GUI version of 

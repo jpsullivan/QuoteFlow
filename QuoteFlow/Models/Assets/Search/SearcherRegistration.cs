@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using QuoteFlow.Models.Assets.Fields;
+using QuoteFlow.Models.Assets.Search.Searchers;
 using QuoteFlow.Models.Search.Jql.Clauses;
-using QuoteFlow.Models.Search.Searchers;
 
-namespace QuoteFlow.Models.Search
+namespace QuoteFlow.Models.Assets.Search
 {
 
     /// <summary>

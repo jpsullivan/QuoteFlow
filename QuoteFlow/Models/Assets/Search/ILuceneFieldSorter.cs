@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace QuoteFlow.Models.Search
+namespace QuoteFlow.Models.Assets.Search
 {
     /// <summary>
     /// Implementations of this interface are used to sort Lucene search results of Issue Documents.
     /// <p/>
     /// <strong>NOTE</strong>: instances of this interface are <strong>cached</strong> by Lucene and are
     /// <strong>REUSED</strong> to sort multiple Lucene search results. The Comparator returned by the
-    /// <seealso cref="Comparator()"/> method could be used by Lucene from multiple threads at once.
+    /// <seealso cref="Comparator"/> method could be used by Lucene from multiple threads at once.
     /// <p/>
     /// Therefore, the implementations of this interface <strong>MUST</strong> implement the <seealso cref="object#equals(Object)"/>
     /// and <seealso cref="GetHashCode"/> methods correctly to ensure that Lucene can find the implementations of this class

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QuoteFlow.Models.Search
+namespace QuoteFlow.Models.Assets.Search
 {
     public class SearchResult
     {

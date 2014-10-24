@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 using Microsoft.Ajax.Utilities;
@@ -64,7 +63,7 @@ namespace QuoteFlow.Controllers.Api
                 dataList.Add(args[0], args[1]);
             }
 
-            return AssetSearchService.Search(new Dictionary<string, string[]>(), new long());
+            return AssetSearchService.Search(dataList, new long());
         }
     }
 }

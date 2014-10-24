@@ -2,7 +2,7 @@
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Index.Indexers;
 
-namespace QuoteFlow.Models.Search.Searchers.Information
+namespace QuoteFlow.Models.Assets.Search.Searchers.Information
 {
     /// <summary>
     /// Identifies a searcher by name and provides a display name that is i18n'ed.
@@ -28,7 +28,7 @@ namespace QuoteFlow.Models.Search.Searchers.Information
         T Field { get; }
 
         /// <summary>
-        /// Returns a list of <see cref="FieldIndexer"/> objects. The objects should be initialised and ready for action.
+        /// Returns a list of <see cref="IFieldIndexer"/> objects. The objects should be initialised and ready for action.
         /// </summary>
         IEnumerable<IFieldIndexer> RelatedIndexers { get; }
 

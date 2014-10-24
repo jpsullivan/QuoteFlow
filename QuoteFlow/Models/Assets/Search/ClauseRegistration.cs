@@ -1,6 +1,6 @@
 ﻿using QuoteFlow.Models.Search.Jql.Clauses;
 
-namespace QuoteFlow.Models.Search
+namespace QuoteFlow.Models.Assets.Search
 {
     /// <summary>
     /// Represents a JQL clause and how to process it. Fields may use these objects to register 
