@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using QuoteFlow.Infrastructure.Enumerables;
+using QuoteFlow.Models;
 using QuoteFlow.Models.Search.Jql;
 using QuoteFlow.Services.Interfaces;
 
@@ -11,7 +11,7 @@ namespace QuoteFlow.Services
     {
         public AssetSearchService() { }
 
-        public SearchResults Search(Dictionary<string, string[]> paramMap, long paramLong)
+        public SearchResults Search(ListWithDuplicates paramMap, long paramLong)
         {
             throw new NotImplementedException();
         }
@@ -19,6 +19,11 @@ namespace QuoteFlow.Services
         public SearchResults SearchWithJql(string paramString, long paramLong)
         {
             throw new NotImplementedException();
+        }
+
+        private Dictionary<string, SearchRendererHolder> GenerateQuery(ListWithDuplicates paramMap, User user, IEnumerable<AssetSearcher> )
+        {
+            
         }
     }
 }

@@ -375,10 +375,11 @@
     <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
     <Compile Include="Infrastructure\Helpers\LexerErrorHelper.cs" />
     <Compile Include="Infrastructure\QueryStringUniqueValueProviderFactory.cs" />
-    <Compile Include="Models\Assets\Fields\ICustomField.cs" />
     <Compile Include="Models\Assets\Fields\IField.cs" />
     <Compile Include="Models\Assets\Fields\INavigableField.cs" />
     <Compile Include="Models\Assets\Fields\ISearchableField.cs" />
+    <Compile Include="Models\Assets\Index\DocumentConstants.cs" />
+    <Compile Include="Models\Assets\Index\Indexers\IFieldIndexer.cs" />
     <Compile Include="Models\Search\ClauseNames.cs" />
     <Compile Include="Models\Search\ClauseRegistration.cs" />
     <Compile Include="Models\Search\ILuceneFieldSorter.cs" />
@@ -505,6 +506,7 @@
     <Compile Include="Models\Search\Jql\Query\History\IHistoryPredicate.cs" />
     <Compile Include="Models\Search\Jql\Query\History\IPredicateVisitor.cs" />
     <Compile Include="Models\Search\Jql\Query\History\TerminalHistoryPredicate.cs" />
+    <Compile Include="Models\Search\Jql\Query\IClauseQueryFactory.cs" />
     <Compile Include="Models\Search\Jql\Query\IQuery.cs" />
     <Compile Include="Models\Search\Jql\Query\IQueryCreationContext.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\ILuceneQueryParserFactory.cs" />
@@ -521,8 +523,10 @@
     <Compile Include="Models\Search\Jql\Query\Order\SortOrder.cs" />
     <Compile Include="Models\Search\Jql\Query\Query.cs" />
     <Compile Include="Models\Search\Jql\Query\QueryCreationContext.cs" />
+    <Compile Include="Models\Search\Jql\Query\QueryFactoryResult.cs" />
     <Compile Include="Models\Search\Jql\Query\Searcher.cs" />
     <Compile Include="Models\Search\Jql\Query\Searchers.cs" />
+    <Compile Include="Models\Search\Jql\Query\TermQueryFactory.cs" />
     <Compile Include="Models\Search\Jql\SearchRendererHolder.cs" />
     <Compile Include="Models\Search\Jql\SearchRendererValue.cs" />
     <Compile Include="Models\Search\Jql\SearchRendererValueResults.cs" />
@@ -533,8 +537,12 @@
     <Compile Include="Models\Search\Jql\Util\JqlCustomFieldId.cs" />
     <Compile Include="Models\Search\Jql\Util\JqlStringSupport.cs" />
     <Compile Include="Models\Search\Jql\Util\ToJqlStringVisitor.cs" />
+    <Compile Include="Models\Search\Jql\Validator\IClauseValidator.cs" />
     <Compile Include="Models\Search\SearcherRegistration.cs" />
     <Compile Include="Models\Search\Searchers\IAssetSearcher.cs" />
+    <Compile Include="Models\Search\Searchers\Information\ISearcherInformation.cs" />
+    <Compile Include="Models\Search\Searchers\SearcherGroup.cs" />
+    <Compile Include="Models\Search\Searchers\SearcherGroupType.cs" />
     <Compile Include="Models\Search\SearchFilter.cs" />
     <Compile Include="Models\Search\SearchHandler.cs" />
     <Compile Include="Models\Search\SearchResult.cs" />

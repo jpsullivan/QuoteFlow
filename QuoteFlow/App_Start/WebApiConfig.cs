@@ -25,6 +25,9 @@ namespace QuoteFlow
 
             // allow ninject to work as the DI container
             config.DependencyResolver = new NinjectWebApiDependencyResolver(Container.Kernel);
+
+//            config.Services.Remove(typeof(ValueProviderFactory), config.Services.GetValueProviderFactories().First(f => f is QueryStringValueProviderFactory));
+//            config.Services.Add(typeof(ValueProviderFactory), new QueryStringUniqueValueProviderFactory());
         }
     }
 }

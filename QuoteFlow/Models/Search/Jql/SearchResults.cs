@@ -1,12 +1,10 @@
-﻿using QuoteFlow.Models.Search.Jql.Query;
-
-namespace QuoteFlow.Models.Search.Jql
+﻿namespace QuoteFlow.Models.Search.Jql
 {
     public class SearchResults
     {
         public SearchResults() { }
 
-        public SearchResults(Searchers searchers, SearchRendererValueResults values)
+        public SearchResults(Query.Searchers searchers, SearchRendererValueResults values)
         {
             Searchers = searchers;
             Values = values;
@@ -15,7 +13,7 @@ namespace QuoteFlow.Models.Search.Jql
         /// <summary>
         /// 
         /// </summary>
-        public Searchers Searchers { get; set; }
+        public Query.Searchers Searchers { get; set; }
 
         /// <summary>
         /// 
