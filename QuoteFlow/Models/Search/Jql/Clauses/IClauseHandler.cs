@@ -1,4 +1,5 @@
-﻿using QuoteFlow.Models.Search.Jql.Query;
+﻿using QuoteFlow.Models.Search.Jql.Context;
+using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Validator;
 
 namespace QuoteFlow.Models.Search.Jql.Clauses
@@ -25,12 +26,12 @@ namespace QuoteFlow.Models.Search.Jql.Clauses
         /// A permission handler that will check the users who is executing the queries 
         /// permission to include the clause.
         /// </summary>
-        ClausePermissionHandler PermissionHandler { get; }
+        //ClausePermissionHandler PermissionHandler { get; }
 
         /// <summary>
         /// A clause context factory that will be able to generate the clause context.
         /// </summary>
-        ClauseContextFactory ClauseContextFactory { get; }
+        IClauseContextFactory ClauseContextFactory { get; }
     }
 
 }

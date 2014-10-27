@@ -189,6 +189,9 @@
     <Reference Include="PoliteCaptcha">
       <HintPath>..\packages\PoliteCaptcha.0.4.0.1\lib\net40\PoliteCaptcha.dll</HintPath>
     </Reference>
+    <Reference Include="PowerCollections">
+      <HintPath>..\packages\XAct.Wintellect.PowerCollections.0.0.1\lib\net20\PowerCollections.dll</HintPath>
+    </Reference>
     <Reference Include="Recaptcha">
       <HintPath>..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
     </Reference>
@@ -375,6 +378,8 @@
     <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
     <Compile Include="Infrastructure\Helpers\LexerErrorHelper.cs" />
     <Compile Include="Infrastructure\QueryStringUniqueValueProviderFactory.cs" />
+    <Compile Include="Models\Assets\Context\AssetContext.cs" />
+    <Compile Include="Models\Assets\Context\IAssetContext.cs" />
     <Compile Include="Models\Assets\Fields\IField.cs" />
     <Compile Include="Models\Assets\Fields\INavigableField.cs" />
     <Compile Include="Models\Assets\Fields\ISearchableField.cs" />
@@ -383,10 +388,24 @@
     <Compile Include="Models\Assets\Search\ClauseNames.cs" />
     <Compile Include="Models\Assets\Search\ClauseRegistration.cs" />
     <Compile Include="Models\Assets\Search\ILuceneFieldSorter.cs" />
+    <Compile Include="Models\Assets\Search\ISearchContext.cs" />
+    <Compile Include="Models\Assets\Search\SearchContext.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\ISearchInputTransformer.cs" />
+    <Compile Include="Models\Assets\Transport\ActionParams.cs" />
+    <Compile Include="Models\Assets\Transport\IActionParams.cs" />
+    <Compile Include="Models\Assets\Transport\IFieldParams.cs" />
     <Compile Include="Models\Search\Jql\AntlrGen\JqlLexer.cs" />
     <Compile Include="Models\Search\Jql\AntlrGen\JqlParser.cs" />
     <Compile Include="Models\Search\Jql\Clauses\IClauseHandler.cs" />
     <Compile Include="Models\Search\Jql\Clauses\IClauseInformation.cs" />
+    <Compile Include="Models\Search\Jql\Context\AllCatalogsContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\CatalogAssetTypeContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\CatalogContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\ClauseContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\ICatalogAssetTypeContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\ICatalogContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\IClauseContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\IClauseContextFactory.cs" />
     <Compile Include="Models\Search\Jql\JqlLexerTester.cs">
       <SubType>Code</SubType>
     </Compile>

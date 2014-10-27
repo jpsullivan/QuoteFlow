@@ -70,12 +70,8 @@ namespace QuoteFlow.Models.Assets.Search
         {
             get
             {
-                var assetContexts = new List<IAssetContext>();
                 var catalogIds = (CatalogIds.AnySafe() ? CatalogIds : AllCatalogs);
-                foreach (var catalogId in catalogIds)
-                {
-                    assetContexts.Add(new AssetContext(catalogId));
-                }
+                return catalogIds.Select(catalogId => new AssetContext(catalogId));
             }
         } 
 

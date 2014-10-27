@@ -27,6 +27,11 @@ namespace QuoteFlow.Models.Assets.Context
             CatalogId = catalog != null ? catalog.Id : (int?) null;
         }
 
+        public AssetContext(int catalogId)
+        {
+            CatalogId = catalogId;
+        }
+
         public int CompareTo(object obj)
         {
             if (obj == null) return 1;

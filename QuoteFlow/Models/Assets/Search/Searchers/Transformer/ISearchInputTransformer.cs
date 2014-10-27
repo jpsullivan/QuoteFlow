@@ -1,4 +1,5 @@
-﻿using QuoteFlow.Models.Assets.Transport;
+﻿using System.Web.Http.ModelBinding;
+using QuoteFlow.Models.Assets.Transport;
 using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 
@@ -18,8 +19,8 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
         /// into a form that the other processing methods can handle (usually a mapping of the fields name as the key
         /// and a list of the values as the value).
         /// </summary>
-        /// <param name="user"> performing this action. </param>
-        /// <param name="fieldValuesHolder"> is the object that should have its values set by this method and that will contain
+        /// <param name="user">The <see cref="User"/> performing this action.</param>
+        /// <param name="fieldValuesHolder">The object that should have its values set by this method and that will contain
         /// any other values that have been set by other SearchInputTransformers. </param>
         /// <param name="actionParams"> params from the webwork front end that contains a String[] of values as submitted via the </param>
         void PopulateFromParams(User user, IFieldValuesHolder fieldValuesHolder, ActionParams actionParams);
@@ -31,9 +32,8 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
         /// <param name="user"> performing this action. </param>
         /// <param name="searchContext"> the context of the search (i.e. projects and issue types selected). </param>
         /// <param name="fieldValuesHolder"> contains values populated by the populate methods of this input transformer. </param>
-        /// <param name="i18nHelper"> used to internationalize error messages that we want to display to the users. </param>
         /// <param name="errors"> the ErrorCollection that contains the messages we want to display to the users. </param>
-        void ValidateParams(User user, SearchContext searchContext, IFieldValuesHolder fieldValuesHolder, I18nHelper i18nHelper, ErrorCollection errors);
+        void ValidateParams(User user, SearchContext searchContext, IFieldValuesHolder fieldValuesHolder, ModelState errors);
 
         /// <summary>
         /// This method transforms any query information contained in the query that is relevant to this

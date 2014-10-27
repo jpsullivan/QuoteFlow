@@ -5,8 +5,8 @@ namespace QuoteFlow.Services.Interfaces
 {
     public interface IAssetSearchService
     {
-        SearchResults Search(ListWithDuplicates paramMap, long paramLong);
+        SearchResults Search(ListWithDuplicates paramMap, long filterId);
 
-        SearchResults SearchWithJql(string paramString, long paramLong);
+        SearchResults SearchWithJql(string paramString, long filterId);
     }
 }

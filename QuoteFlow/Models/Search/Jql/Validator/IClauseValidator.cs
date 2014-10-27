@@ -16,6 +16,6 @@ namespace QuoteFlow.Models.Search.Jql.Validator
         /// A MessageSet that will contain any messages relating to failed validation. An empty message set must
         /// be returned to indicate there were no errors. null can never be returned.
         /// </returns>
-        MessageSet Validate(User searcher, ITerminalClause terminalClause);
+        //MessageSet Validate(User searcher, ITerminalClause terminalClause);
     }
 }

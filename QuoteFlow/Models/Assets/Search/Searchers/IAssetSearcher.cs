@@ -1,6 +1,8 @@
 ﻿using Lucene.Net.Documents;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Search.Searchers.Information;
+using QuoteFlow.Models.Assets.Search.Searchers.Transformer;
+using QuoteFlow.Models.Assets.Transport;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 
 namespace QuoteFlow.Models.Assets.Search.Searchers
@@ -32,13 +34,13 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
         /// field holder values to <seealso cref="IClause"/> search representations.
         /// </summary>
         /// <returns> the search input handler for this searcher. </returns>
-        SearchInputTransformer SearchInputTransformer { get; }
+        ISearchInputTransformer SearchInputTransformer { get; }
 
         /// <summary>
         /// Provides an object that will allow you to render the edit and view html for a searcher. This also provides
         /// methods that indicate if the view and edit methods should be invoked.
         /// </summary>
         /// <returns> the search renderer for this searcher. </returns>
-        SearchRenderer SearchRenderer { get; }
+        //SearchRenderer SearchRenderer { get; }
     }
 }
