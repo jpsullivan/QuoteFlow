@@ -10,4 +10,18 @@ namespace QuoteFlow.Infrastructure.Enumerables
             Add(element);
         }
     }
+
+    public class ListWithDuplicates<T> : List<KeyValuePair<string, T>>
+    {
+        public ListWithDuplicates(ListWithDuplicates<string[]> actionParams)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Add(string key, T value)
+        {
+            var element = new KeyValuePair<string, T>(key, value);
+            Add(element);
+        }
+    }
 }

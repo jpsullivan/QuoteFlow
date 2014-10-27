@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace QuoteFlow.Models.Assets.Context
 {
     public class AssetContext : IAssetContext, IComparable
     {
         /// <summary>
-        /// Gets the <see cref="Asset"/> for this context.  A null return value is used to
+        /// Gets the <see cref="Catalog"/> for this context.  A null return value is used to
         /// represent that this context applies to all catalogs.
         /// </summary>
-        public Asset AssetObject { get; private set; }
+        public Catalog CatalogObject { get; private set; }
 
         /// <summary>
         /// Gets the ID of the <see cref="Catalog"/> for this context. A null return value is used to
@@ -19,9 +16,9 @@ namespace QuoteFlow.Models.Assets.Context
         /// </summary>
         public int? CatalogId { get; private set; }
 
-        public AssetContext(Asset assetObject, int catalogId)
+        public AssetContext(Catalog catalogObject, int? catalogId)
         {
-            AssetObject = assetObject;
+            CatalogObject = catalogObject;
             CatalogId = catalogId;
         }
 
@@ -36,7 +33,12 @@ namespace QuoteFlow.Models.Assets.Context
 
             var o = (AssetContext) obj;
             var comparable = CatalogId as IComparable;
-            if (comparable != null) return comparable.CompareTo(o.CatalogId);
+            return comparable == null ? 1 : comparable.CompareTo(o.CatalogId);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("AssetContext[catalogId={0}]", CatalogId.ToString());
         }
     }
 }

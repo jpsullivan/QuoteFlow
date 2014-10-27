@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using QuoteFlow.Infrastructure.Extensions;
+using QuoteFlow.Models.Assets.Context;
 using QuoteFlow.Services.Interfaces;
 
 namespace QuoteFlow.Models.Assets.Search
@@ -80,13 +81,15 @@ namespace QuoteFlow.Models.Assets.Search
 
         public void Verify()
         {
-            if (!CatalogIds.AnySafe()) return;
-            foreach (var catalogId in CatalogIds)
+            if (CatalogIds.AnySafe())
             {
-                if (CatalogService.GetCatalog(catalogId) == null)
+                foreach (var catalogId in CatalogIds)
                 {
-                    // catalog no longer exists, remove it from the search context
-                    CatalogIds.Remove(catalogId);
+                    if (CatalogService.GetCatalog(catalogId) == null)
+                    {
+                        // catalog no longer exists, remove it from the search context
+                        CatalogIds.Remove(catalogId);
+                    }
                 }
             }
         }

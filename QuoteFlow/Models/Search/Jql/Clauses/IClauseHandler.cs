@@ -1,4 +1,5 @@
 ﻿using QuoteFlow.Models.Search.Jql.Query;
+using QuoteFlow.Models.Search.Jql.Validator;
 
 namespace QuoteFlow.Models.Search.Jql.Clauses
 {
@@ -18,7 +19,7 @@ namespace QuoteFlow.Models.Search.Jql.Clauses
         /// <summary>
         /// A validator that will inspect the clause and return any validation errors it encounters.
         /// </summary>
-        ClauseValidator Validator { get; }
+        IClauseValidator Validator { get; }
 
         /// <summary>
         /// A permission handler that will check the users who is executing the queries 

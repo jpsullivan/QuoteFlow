@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using QuoteFlow.Models.Assets.Fields;
 
 namespace QuoteFlow.Models.Assets.Search.Searchers
@@ -15,23 +14,6 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
             Type = type;
             Searchers = searchers;
             PrintHeader = printHeader;
-        }
-
-        public bool IsShown(User searcher, SearchContext searchContext)
-        {
-            if (searchContext == null)
-            {
-                throw new ArgumentNullException("searchContext");
-            }
-
-            foreach (var assetSearcher in Searchers)
-            {
-                if (assetSearcher.SearchRenderer().IsShown(searcher, searchContext))
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         public override string ToString()

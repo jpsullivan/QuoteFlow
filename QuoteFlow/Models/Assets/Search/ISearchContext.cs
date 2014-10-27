@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QuoteFlow.Models.Assets.Context;
 
 namespace QuoteFlow.Models.Assets.Search
 {

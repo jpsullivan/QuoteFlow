@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using QuoteFlow.Infrastructure.Enumerables;
 using QuoteFlow.Models;
+using QuoteFlow.Models.Assets.Fields;
+using QuoteFlow.Models.Assets.Search.Searchers;
 using QuoteFlow.Models.Search.Jql;
 using QuoteFlow.Services.Interfaces;
 
@@ -21,7 +23,7 @@ namespace QuoteFlow.Services
             throw new NotImplementedException();
         }
 
-        private Dictionary<string, SearchRendererHolder> GenerateQuery(ListWithDuplicates paramMap, User user, IEnumerable<AssetSearcher> searchers)
+        private Dictionary<string, SearchRendererHolder> GenerateQuery(ListWithDuplicates paramMap, User user, IEnumerable<IAssetSearcher<ISearchableField>> searchers)
         {
             return new Dictionary<string, SearchRendererHolder>();
         }
