@@ -48,7 +48,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
         /// any other values that have been set by other SearchInputTransformers.</param>
         /// <param name="query">The search criteria used to populate the field values holder.</param>
         /// <param name="searchContext">Contains the projects and issue types that the search and filter form is restricted to.</param>
-        void PopulateFromQuery(User user, IFieldValuesHolder fieldValuesHolder, Query query, SearchContext searchContext);
+        void PopulateFromQuery(User user, IFieldValuesHolder fieldValuesHolder, IQuery query, ISearchContext searchContext);
 
         /// <summary>
         /// Tells the caller whether or not the relevant clauses from the passed query can be represented on the issue
@@ -62,7 +62,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
         /// <param name="query"> to check if it can fit in the simple (GUI form based) issue navigator. </param>
         /// <param name="searchContext"> contains the projects and issue types that the search and filter form is restricted to </param>
         /// <returns> true if the query can be represented on navigator. </returns>
-        bool DoRelevantClausesFitFilterForm(User user, IQuery query, SearchContext searchContext);
+        bool DoRelevantClausesFitFilterForm(User user, IQuery query, ISearchContext searchContext);
 
         /// <summary>
         /// Gets the portion of the Search Query that this searcher is responsible for.
