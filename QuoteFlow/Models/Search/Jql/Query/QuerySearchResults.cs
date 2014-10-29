@@ -1,10 +1,10 @@
-﻿namespace QuoteFlow.Models.Search.Jql
+﻿namespace QuoteFlow.Models.Search.Jql.Query
 {
-    public class SearchResults
+    public class QuerySearchResults
     {
-        public SearchResults() { }
+        public QuerySearchResults() { }
 
-        public SearchResults(Query.Searchers searchers, SearchRendererValueResults values)
+        public QuerySearchResults(Searchers searchers, SearchRendererValueResults values)
         {
             Searchers = searchers;
             Values = values;
@@ -13,7 +13,7 @@
         /// <summary>
         /// 
         /// </summary>
-        public Query.Searchers Searchers { get; set; }
+        public Searchers Searchers { get; set; }
 
         /// <summary>
         /// 

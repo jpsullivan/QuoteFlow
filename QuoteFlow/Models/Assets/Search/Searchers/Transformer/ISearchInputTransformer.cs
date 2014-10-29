@@ -23,7 +23,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
         /// <param name="fieldValuesHolder">The object that should have its values set by this method and that will contain
         /// any other values that have been set by other SearchInputTransformers. </param>
         /// <param name="actionParams"> params from the webwork front end that contains a String[] of values as submitted via the </param>
-        void PopulateFromParams(User user, IFieldValuesHolder fieldValuesHolder, ActionParams actionParams);
+        void PopulateFromParams(User user, IFieldValuesHolder fieldValuesHolder, IActionParams actionParams);
 
         /// <summary>
         /// Adds error messages to the errors object if values in the fieldValuesHolder fails validation. This should be

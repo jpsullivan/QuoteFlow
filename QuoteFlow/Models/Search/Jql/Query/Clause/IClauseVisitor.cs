@@ -32,7 +32,7 @@
         /// <param name="clause"> the node being visited.
         /// </param>
         /// <returns>The return type specified by the visitor. </returns>
-        T Visit(TerminalClause clause);
+        T Visit(ITerminalClause clause);
 
 
         /// <summary>

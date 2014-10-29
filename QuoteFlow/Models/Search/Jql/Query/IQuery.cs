@@ -11,7 +11,7 @@ namespace QuoteFlow.Models.Search.Jql.Query
         /// where clause is available and all issues should be returned.
         /// </summary>
         /// <returns></returns>
-        IClause WhereClause();
+        IClause WhereClause { get; }
 
         /// <summary>
         /// Return the sorting position of the search which can be any number of 
@@ -20,13 +20,13 @@ namespace QuoteFlow.Models.Search.Jql.Query
         /// the query, empty sorts will cause the default sorts to be used.
         /// </summary>
         /// <returns></returns>
-        IOrderBy OrderByClause();
+        IOrderBy OrderByClause { get; }
 
         /// <summary>
         /// Returns the original query string that the user inputted into the system. 
         /// If not provided, will return null.
         /// </summary>
         /// <returns></returns>
-        string QueryString();
+        string QueryString { get; }
     }
 }

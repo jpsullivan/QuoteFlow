@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Index.Indexers;
 using QuoteFlow.Models.Assets.Search.Searchers;
 using QuoteFlow.Models.Search.Jql.Clauses;
@@ -12,6 +13,7 @@ namespace QuoteFlow.Models.Assets.Search
     /// Each JQL clause in QuoteFlow is represented by a <seealso cref="ClauseRegistration"/>.
     /// It consists of a set of JQL names and the <seealso cref="IClauseHandler"/> that can be used to process
     /// those JQL names in a query.
+    /// 
     /// Each field *may* have one <seealso cref="IAssetSearcher{T}"/> that uses a list of JQL
     /// clauses to create a JQL search. This is specified in the <seealso cref="SearcherRegistration"/>
     /// on the SearchHandler. QuoteFlow will keep the association between the IssueSearcher 
@@ -20,10 +22,12 @@ namespace QuoteFlow.Models.Assets.Search
     /// the AssetSearcher may result QuoteFlowe falsely determining that a JQL query cannot be 
     /// represented on the navigator GUI. Note that the JQL clauses listed in the SearcherRegistration 
     /// will also be available directly in JQL.
+    /// 
     /// The field may also have another set of JQL clauses that can be used against the field but are 
     /// not associated with any AssetSearcher. The clauses are held in the list of ClauseRegistrations 
     /// on the ClauseHandler itself. These JQL clauses cannot be represented on navigtor as they have 
     /// no AssetSearcher.
+    /// 
     /// The same ClauseHandler should not be listed in both the SearcherRegistration and the SearchHandler 
     /// directly. Doing so could result in doing QuoteFlow performing the same search twice.
     /// </summary>
@@ -43,7 +47,7 @@ namespace QuoteFlow.Models.Assets.Search
         /// <summary>
         /// The <see cref="SearcherRegistration"/> provided for searching.
         /// </summary>
-        public SearcherRegistration SearcherRegistration { get; set; }
+        public SearcherRegistration SearcherReg { get; set; }
 
         /// <summary>
         /// Create a new handler.
@@ -55,7 +59,7 @@ namespace QuoteFlow.Models.Assets.Search
         {
             ClauseRegistrations = clauseRegistrations;
             FieldIndexers = fieldIndexers;
-            SearcherRegistration = searcherRegistration;
+            SearcherReg = searcherRegistration;
         }
 
         /// <summary>
@@ -67,6 +71,48 @@ namespace QuoteFlow.Models.Assets.Search
         public SearchHandler(IEnumerable<IFieldIndexer> fieldIndexers, SearcherRegistration searcherRegistration)
             : this(fieldIndexers, searcherRegistration, Enumerable.Empty<ClauseRegistration>())
         {
+        }
+
+        /// <summary>
+        /// Holds the link between an <seealso cref="AssetSearcher"/> and the JQL clauses (as
+        /// <seealso cref="ClauseRegistration"/>s) that it uses in the background to implement searching. 
+        /// This relationship is kept within QuoteFlow so that is can perform the JQL to Asset navigator
+        /// translation.
+        /// </summary>
+        public class SearcherRegistration
+        {
+            public IAssetSearcher<ISearchableField> AssetSearcher { get; set; }
+            public IEnumerable<ClauseRegistration> ClauseHandlers { get; set; }
+
+            public SearcherRegistration(IAssetSearcher<ISearchableField> searcher, IClauseHandler clauseHandler)
+                : this(searcher, new ClauseRegistration(clauseHandler))
+            {
+            }
+
+            public SearcherRegistration(IAssetSearcher<ISearchableField> searcher, IEnumerable<ClauseRegistration> clauseHandlers)
+            {
+                AssetSearcher = searcher;
+                ClauseHandlers = clauseHandlers;
+            }
+
+            public SearcherRegistration(IAssetSearcher<ISearchableField> searcher, ClauseRegistration clauseRegistration)
+                : this(searcher, new List<ClauseRegistration> { clauseRegistration })
+            {
+            }
+        }
+
+        /// <summary>
+        /// Represents a JQL clause and how to process it. Fields may use these objects to register 
+        /// new JQL clauses within QuoteFlow.
+        /// </summary>
+        public class ClauseRegistration
+        {
+            public IClauseHandler Handler { get; set; }
+
+            public ClauseRegistration(IClauseHandler handler)
+            {
+                Handler = handler;
+            }
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿using QuoteFlow.Infrastructure.Enumerables;
-using QuoteFlow.Models.Search.Jql;
+﻿using QuoteFlow.Models.Search.Jql.Query;
+using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Services.Interfaces
 {
     public interface IAssetSearchService
     {
-        SearchResults Search(ListWithDuplicates paramMap, long filterId);
+        QuerySearchResults Search(MultiDictionary<string, string[]> paramMap, long filterId);
 
-        SearchResults SearchWithJql(string paramString, long filterId);
+        QuerySearchResults SearchWithJql(string paramString, long filterId);
     }
 }

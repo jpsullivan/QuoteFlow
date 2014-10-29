@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QuoteFlow.Infrastructure.Util;
 using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 using QuoteFlow.Models.Search.Jql.Query.Operand;
@@ -20,7 +21,7 @@ namespace QuoteFlow.Models.Search.Jql.Operand
         /// <param name="operand"> the operand whose values should be returned. Must not be null.</param>
         /// <param name="terminalClause"> the terminal clause that contained the operand</param>
         /// <returns>A list of the values in the literal. May return null on an error. </returns>
-        IList<QueryLiteral> GetValues(User searcher, IOperand operand, TerminalClause terminalClause);
+        IEnumerable<QueryLiteral> GetValues(User searcher, IOperand operand, ITerminalClause terminalClause);
 
         /// <summary>
         /// Return the values contained within the passed operand.
@@ -29,7 +30,7 @@ namespace QuoteFlow.Models.Search.Jql.Operand
         /// <param name="operand"> the operand whose values should be returned. Must not be null. </param>
         /// <param name="terminalClause"> the terminal clause that contained the operand </param>
         /// <returns> a list of the values in the literal. May return null on an error. </returns>
-        IList<QueryLiteral> GetValues(QueryCreationContext queryCreationContext, IOperand operand, TerminalClause terminalClause);
+        IList<QueryLiteral> GetValues(QueryCreationContext queryCreationContext, IOperand operand, ITerminalClause terminalClause);
 
         /// <summary>
         /// Validates the operand against its handler.
@@ -39,7 +40,7 @@ namespace QuoteFlow.Models.Search.Jql.Operand
         /// <param name="terminalClause"> the terminal clause that contained the operand </param>
         /// <returns> a <seealso cref="com.atlassian.jira.util.MessageSet"/> containing any errors reported. Note: if the operand is
         /// unknown, an error message will be added to the message set returned. Never null. </returns>
-        string Validate(User user, IOperand operand, TerminalClause terminalClause);
+        IMessageSet Validate(User user, IOperand operand, ITerminalClause terminalClause);
 
         /// <summary>
         /// Sanitise a function operand for the specified user, so that information is not leaked.
@@ -58,9 +59,7 @@ namespace QuoteFlow.Models.Search.Jql.Operand
         /// <param name="clause"> the terminal clause that contained the operand </param>
         /// <returns> the single value present in the operand, or null if there is no value. </returns>
         /// <exception cref="IllegalArgumentException"> if the operand contains more than one value. </exception>
-        //JAVA TO C# CONVERTER WARNING: 'final' parameters are not allowed in .NET:
-        //ORIGINAL LINE: QueryLiteral getSingleValue(com.atlassian.crowd.embedded.api.User user, com.atlassian.query.operand.Operand operand, final com.atlassian.query.clause.TerminalClause clause);
-        QueryLiteral GetSingleValue(User user, IOperand operand, TerminalClause clause);
+        QueryLiteral GetSingleValue(User user, IOperand operand, ITerminalClause clause);
 
         /// <summary>
         /// Returns true if the operand represents an EMPTY operand.

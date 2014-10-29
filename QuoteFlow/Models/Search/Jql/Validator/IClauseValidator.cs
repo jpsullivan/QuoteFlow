@@ -1,4 +1,5 @@
-﻿using QuoteFlow.Models.Search.Jql.Query.Clause;
+﻿using QuoteFlow.Infrastructure.Util;
+using QuoteFlow.Models.Search.Jql.Query.Clause;
 
 namespace QuoteFlow.Models.Search.Jql.Validator
 {
@@ -16,6 +17,6 @@ namespace QuoteFlow.Models.Search.Jql.Validator
         /// A MessageSet that will contain any messages relating to failed validation. An empty message set must
         /// be returned to indicate there were no errors. null can never be returned.
         /// </returns>
-        //MessageSet Validate(User searcher, ITerminalClause terminalClause);
+        IMessageSet Validate(User searcher, ITerminalClause terminalClause);
     }
 }

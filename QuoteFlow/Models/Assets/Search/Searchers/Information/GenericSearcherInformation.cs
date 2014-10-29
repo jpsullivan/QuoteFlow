@@ -29,11 +29,11 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Information
             get { return (from Type clazz in indexers select LoadIndexer(clazz)).ToList(); }
         }
 
-        internal virtual IFieldIndexer LoadIndexer(Type clazz)
+        internal IFieldIndexer LoadIndexer(Type clazz)
         {
             try
             {
-                return
+                return (IFieldIndexer) Activator.CreateInstance(clazz);
             }
             catch (Exception e)
             {

@@ -95,6 +95,10 @@ namespace QuoteFlow
                 .To<QuoteService>()
                 .InRequestScope();
 
+            Bind<ISearchService>()
+                .To<SearchService>()
+                .InRequestScope();
+
             Bind<IUserService>()
                 .To<UserService>()
                 .InRequestScope();

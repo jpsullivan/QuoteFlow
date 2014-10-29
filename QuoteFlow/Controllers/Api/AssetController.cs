@@ -6,7 +6,9 @@ using QuoteFlow.Infrastructure.Enumerables;
 using QuoteFlow.Models;
 using QuoteFlow.Models.RequestModels;
 using QuoteFlow.Models.Search.Jql;
+using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Services.Interfaces;
+using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Controllers.Api
 {
@@ -46,7 +48,7 @@ namespace QuoteFlow.Controllers.Api
         }
 
         [HttpPost]
-        public SearchResults QueryComponent()
+        public QuerySearchResults QueryComponent()
         {
             // since post args can contain duplicate keys, we cannot rely on model binding
             var data = Request.Content.ReadAsStringAsync().Result;
@@ -63,7 +65,14 @@ namespace QuoteFlow.Controllers.Api
                 dataList.Add(args[0], args[1]);
             }
 
-            return AssetSearchService.Search(dataList, new long());
+            var multiDict = new MultiDictionary<string, string[]>(true);
+            foreach (var arg in dataArray)
+            {
+                var args = arg.Split('=');
+                multiDict.Add(args[0], new[] {args[1]});
+            }
+
+            return AssetSearchService.Search(multiDict, new long());
         }
     }
 }

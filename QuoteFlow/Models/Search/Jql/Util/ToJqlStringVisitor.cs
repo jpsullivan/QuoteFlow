@@ -99,7 +99,7 @@ namespace QuoteFlow.Models.Search.Jql.Util
 		    return new Result(jql, ClausePrecedence.NOT);
 		}
 
-		public Result Visit(TerminalClause clause)
+		public Result Visit(ITerminalClause clause)
 		{
 			return BuildJqlString(clause);
 		}
