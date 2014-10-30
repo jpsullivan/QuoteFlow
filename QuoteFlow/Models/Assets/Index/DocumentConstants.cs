@@ -8,6 +8,11 @@
 
         public const string AssetId = "assetId";
         public const string AssetName = "name";
+        public const string AssetDesc = "description";
+
+        public const string AssetCreator = "asset_creator";
+        public const string AssetCreated = "created";
+        public const string AssetUpdated = "updated";
 
         // A special field that is used for searching for EMPTY values
         public const string AssetNonEmptyFieldIds = "nonemptyfieldids";

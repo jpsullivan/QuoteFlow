@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using QuoteFlow.Infrastructure;
 using QuoteFlow.Models.Assets.Search;
 using QuoteFlow.Models.Search.Jql.Query;
+using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Models.Search.Jql.Clauses
 {
@@ -29,20 +30,20 @@ namespace QuoteFlow.Models.Search.Jql.Clauses
         /// can handle for its searching.
         /// </summary>
         /// <returns>A set of supported operators.</returns>
-        HashSet<Operator> SupportedOperators { get; }
+        Set<Operator> SupportedOperators { get; }
 
-//        /// <summary>
-//        /// Provides the <seealso cref="com.atlassian.jira.JiraDataType"/> that this clause handles and searches on. This allows us
-//        /// to infer some information about how the search will behave and how it will interact with other elements in
-//        /// the system.
-//        /// 
-//        /// For example, if this returns <seealso cref="com.atlassian.jira.JiraDataTypes#DATE"/> then we know that we could provide
-//        /// users with a date picker for an input field, and we know that this clause should only be used by functions
-//        /// that also specify dates.
-//        /// </summary>
-//        /// <seealso cref= com.atlassian.jira.JiraDataTypes
-//        /// </seealso>
-//        /// <returns> the JiraDataType that this clause can handle. </returns>
-//        JiraDataType DataType { get; }
+        /// <summary>
+        /// Provides the <seealso cref="com.atlassian.jira.JiraDataType"/> that this clause handles and searches on. This allows us
+        /// to infer some information about how the search will behave and how it will interact with other elements in
+        /// the system.
+        /// 
+        /// For example, if this returns <seealso cref="com.atlassian.jira.JiraDataTypes#DATE"/> then we know that we could provide
+        /// users with a date picker for an input field, and we know that this clause should only be used by functions
+        /// that also specify dates.
+        /// </summary>
+        /// <seealso cref= com.atlassian.jira.JiraDataTypes
+        /// </seealso>
+        /// <returns> the JiraDataType that this clause can handle. </returns>
+        IQuoteFlowDataType DataType { get; }
     }
 }
