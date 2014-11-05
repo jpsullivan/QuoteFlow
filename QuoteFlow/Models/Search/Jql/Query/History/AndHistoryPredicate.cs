@@ -5,7 +5,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.History
 {
     /// <summary>
     /// Represents a sequence of <seealso cref="HistoryPredicate HistoryPredicates"/> composed with AND operators such that the
-    /// resulting predicate is true only if ALL of the composed predicates are true.
+    /// resulting predicate is true only if All of the composed predicates are true.
 
     /// </summary>
     public class AndHistoryPredicate : IHistoryPredicate

@@ -57,6 +57,8 @@ namespace QuoteFlow.Infrastructure
 
 		        return dataTypes.Any(type => other.dataTypes.Contains(type));
 		    }
+
+		    return false;
 		}
 
 		/// <summary>

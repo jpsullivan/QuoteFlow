@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Models.Assets.Index;
 using QuoteFlow.Models.Search.Jql;
@@ -17,74 +18,64 @@ namespace QuoteFlow.Models.Assets.Search.Constants
 
 		private static readonly SimpleFieldSearchConstants Catalog = new SimpleFieldSearchConstants(DocumentConstants.CatalogId, AssetFieldConstants.Catalog, "cid", AssetFieldConstants.Catalog, AssetFieldConstants.Catalog, OperatorClasses.EqualityOperatorsWithEmpty, QuoteFlowDataTypes.Catalog);
 
-		public static SimpleFieldSearchConstants forProject()
+		public static SimpleFieldSearchConstants ForCatalog()
 		{
 			return Catalog;
 		}
 
-		private static readonly SimpleFieldSearchConstants SUMMARY = new SimpleFieldSearchConstants(DocumentConstants.AssetName, AssetFieldConstants.Summary, "summary", AssetFieldConstants.Summary, AssetFieldConstants.Summary, OperatorClasses.TextOperators, QuoteFlowDataTypes.Text);
+		private static readonly SimpleFieldSearchConstants Summary = new SimpleFieldSearchConstants(DocumentConstants.AssetName, AssetFieldConstants.Summary, "summary", AssetFieldConstants.Summary, AssetFieldConstants.Summary, OperatorClasses.TextOperators, QuoteFlowDataTypes.Text);
 
-		public static SimpleFieldSearchConstants forSummary()
+		public static SimpleFieldSearchConstants ForSummary()
 		{
-			return SUMMARY;
+			return Summary;
 		}
 
-		private static readonly SimpleFieldSearchConstants DESCRIPTION = new SimpleFieldSearchConstants(DocumentConstants.AssetDesc, AssetFieldConstants.Description, "description", AssetFieldConstants.Description, AssetFieldConstants.Description, OperatorClasses.TextOperators, QuoteFlowDataTypes.Text);
+		private static readonly SimpleFieldSearchConstants Description = new SimpleFieldSearchConstants(DocumentConstants.AssetDesc, AssetFieldConstants.Description, "description", AssetFieldConstants.Description, AssetFieldConstants.Description, OperatorClasses.TextOperators, QuoteFlowDataTypes.Text);
 
-		public static SimpleFieldSearchConstants forDescription()
+		public static SimpleFieldSearchConstants ForDescription()
 		{
-			return DESCRIPTION;
+			return Description;
 		}
 
-		public static CommentsFieldSearchConstants forComments()
+		public static CommentsFieldSearchConstants ForComments()
 		{
 			return CommentsFieldSearchConstants.Instance;
 		}
 
-		private static readonly SimpleFieldSearchConstants CREATED_DATE = new SimpleFieldSearchConstants(DocumentConstants.AssetCreated, new ClauseNames(AssetFieldConstants.Created, "createdDate"), AssetFieldConstants.Created, AssetFieldConstants.Created, AssetFieldConstants.Created, OperatorClasses.EqualityAndRelationalWithEmpty, QuoteFlowDataTypes.Date);
+		private static readonly SimpleFieldSearchConstants CreatedDate = new SimpleFieldSearchConstants(DocumentConstants.AssetCreated, new ClauseNames(AssetFieldConstants.Created, "createdDate"), AssetFieldConstants.Created, AssetFieldConstants.Created, AssetFieldConstants.Created, OperatorClasses.EqualityAndRelationalWithEmpty, QuoteFlowDataTypes.Date);
 
-		public static SimpleFieldSearchConstants forCreatedDate()
+		public static SimpleFieldSearchConstants ForCreatedDate()
 		{
-			return CREATED_DATE;
+			return CreatedDate;
 		}
 
-		private static readonly SimpleFieldSearchConstants UPDATE_DATE = new SimpleFieldSearchConstants(DocumentConstants.AssetUpdated, new ClauseNames(AssetFieldConstants.Updated, "updatedDate"), AssetFieldConstants.Updated, AssetFieldConstants.Updated, AssetFieldConstants.Updated, OperatorClasses.EqualityAndRelationalWithEmpty, QuoteFlowDataTypes.Date);
+		private static readonly SimpleFieldSearchConstants UpdateDate = new SimpleFieldSearchConstants(DocumentConstants.AssetUpdated, new ClauseNames(AssetFieldConstants.Updated, "updatedDate"), AssetFieldConstants.Updated, AssetFieldConstants.Updated, AssetFieldConstants.Updated, OperatorClasses.EqualityAndRelationalWithEmpty, QuoteFlowDataTypes.Date);
 
-		public static SimpleFieldSearchConstants forUpdatedDate()
+		public static SimpleFieldSearchConstants ForUpdatedDate()
 		{
-			return UPDATE_DATE;
+			return UpdateDate;
 		}
 
-		public static UserFieldSearchConstantsWithEmpty forAssignee()
+		private static readonly UserFieldSearchConstantsWithEmpty Creator = new UserFieldSearchConstantsWithEmpty(DocumentConstants.AssetCreator, AssetFieldConstants.Creator, "creator", "creatorSelect", AssetFieldConstants.Creator, DocumentConstants.AssetCreator, AssetFieldConstants.Creator, OperatorClasses.EqualityOperatorsWithEmpty);
+
+		public static UserFieldSearchConstantsWithEmpty ForCreator()
 		{
-			return ASSIGNEE;
+			return Creator;
 		}
 
-		private static readonly UserFieldSearchConstantsWithEmpty CREATOR = new UserFieldSearchConstantsWithEmpty(DocumentConstants.AssetCreator, AssetFieldConstants.Creator, "creator", "creatorSelect", AssetFieldConstants.Creator, DocumentConstants.AssetCreator, AssetFieldConstants.Creator, OperatorClasses.EqualityOperatorsWithEmpty);
+//		public static SavedFilterSearchConstants ForSavedFilter()
+//		{
+//			return SavedFilterSearchConstants.Instance;
+//		}
+//
+//		public static AllTextSearchConstants ForAllText()
+//		{
+//			return AllTextSearchConstants.Instance;
+//		}
 
-		public static UserFieldSearchConstantsWithEmpty forCreator()
+		public static AssetIdConstants ForAssetId()
 		{
-			return CREATOR;
-		}
-
-		public static SavedFilterSearchConstants forSavedFilter()
-		{
-			return SavedFilterSearchConstants.Instance;
-		}
-
-		public static AllTextSearchConstants forAllText()
-		{
-			return AllTextSearchConstants.Instance;
-		}
-
-		public static IssueIdConstants forIssueId()
-		{
-			return IssueIdConstants.Instance;
-		}
-
-		public static IssueKeyConstants forIssueKey()
-		{
-			return IssueKeyConstants.Instance;
+            return AssetIdConstants.Instance;
 		}
 
 		private static readonly Set<string> SYSTEM_NAMES;
@@ -103,144 +94,95 @@ namespace QuoteFlow.Models.Assets.Search.Constants
 		//the last code in the file.
 		static SystemSearchConstants()
 		{
-			var names = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+			var names = new Set<string>(StringComparer.OrdinalIgnoreCase);
 			try
 			{
-				foreach (Method constantMethod in ConstantMethods)
-				{
-					names.addAll(getNames(constantMethod));
+                foreach (MethodInfo constantMethod in GetConstantMethods())
+                {
+                    names.AddMany(GetNames(constantMethod));
 				}
 			}
 			catch (Exception e)
 			{
-				Logger.error("Unable to calculate system JQL names: Unexpected Error.", e);
-				names = Collections.emptySet();
+				//Logger.error("Unable to calculate system JQL names: Unexpected Error.", e);
+				names = new Set<string>();
 			}
-			SYSTEM_NAMES = Collections.unmodifiableSet(names);
+
+			SYSTEM_NAMES = new Set<string>(names);
 		}
 
-//		private static final IDictionary<string, IClauseInformation> CLAUSE_INFORMATION_MAP = Maps.uniqueIndex(ImmutableSet.of(forAffectedVersion(), forAllText(), forAssignee(), forComments(), forComponent(), forCreatedDate(), forCreator(), forCurrentEstimate(), forDescription(), forDueDate(), forEnvironment(), forFixForVersion(), forIssueId(), forIssueKey(), forIssueParent(), forIssueType(), forLabels(), forLastViewedDate(), forOriginalEstimate(), forPriority(), forProgress(), forProject(), forProjectCategory(), forReporter(), forResolution(), forResolutionDate(), forSavedFilter(), forSecurityLevel(), forStatus(), forStatusCategory(), forSummary(), forTimeSpent(), forUpdatedDate(), forVoters(), forVotes(), forWatchers(), forWatches(), forWorkRatio(), forAttachments(), forIssueProperty()), new FunctionAnonymousInnerClassHelper()
-//	   );
-//
-//		public static IClauseInformation forIssueProperty()
-//		{
-//			return new PropertyClauseInformation(new ClauseNames(ISSUE_PROPERTY));
-//		}
+//        private static IDictionary<string, IClauseInformation> CLAUSE_INFORMATION_MAP = new Dictionary<string, IClauseInformation>()
+//        {
+//            ForComments(), ForCreatedDate(), ForCreator(), ForDescription(), ForAssetId(), ForCatalog(), ForSummary(), ForUpdatedDate()
+//        };
+
 //
 //		public static IClauseInformation getClauseInformationById(string id)
 //		{
 //			return CLAUSE_INFORMATION_MAP.get(id);
 //		}
 //
-//		private static ICollection<string> getNames(final Method constantMethod)
-//		{
-//			try
-//			{
-//				ClauseInformation information = (ClauseInformation) constantMethod.invoke(null);
-//				if (information == null)
-//				{
-//					logConstantError(constantMethod, "Clause information was not available.", null);
-//					return Collections.emptySet();
-//				}
-//
-//				ClauseNames names = information.JqlClauseNames;
-//				if (names == null)
-//				{
-//					logConstantError(constantMethod, "The ClauseName was not available.", null);
-//					return Collections.emptySet();
-//				}
-//
-//				Set<string> strings = names.JqlFieldNames;
-//				if (strings == null)
-//				{
-//					logConstantError(constantMethod, "The ClauseName returned no values.", null);
-//					return Collections.emptySet();
-//				}
-//
-//				return strings;
-//			}
-//			catch (InvocationTargetException e)
-//			{
-//				Exception exception;
-//				if (e.TargetException != null)
-//				{
-//					exception = e.TargetException;
-//				}
-//				else
-//				{
-//					exception = e;
-//				}
-//				logConstantError(constantMethod, null, exception);
-//			}
-//			catch (IllegalAccessException e)
-//			{
-//				logConstantError(constantMethod, null, e);
-//			}
-//			catch (SecurityException e)
-//			{
-//				logConstantError(constantMethod, "Security Error.", e);
-//			}
-//			catch (Exception e)
-//			{
-//				logConstantError(constantMethod, "Unexpected Error.", e);
-//			}
-//			return Collections.emptySet();
-//		}
-//
-//		private static ICollection<Method> ConstantMethods
-//		{
-//			Method[] methods;
-//			try
-//			{
-//				methods = typeof(SystemSearchConstants).Methods;
-//			}
-//			catch (SecurityException e)
-//			{
-//				Logger.error("Unable to calculate system JQL names: " + e.Message, e);
-//				return Collections.emptySet();
-//			}
-//
-//			IList<Method> returnMethods = new List<Method>(methods.Length);
-//			foreach (Method method in methods)
-//			{
-//				int modifiers = method.Modifiers;
-//				if (!Modifier.isStatic(modifiers) || !Modifier.isPublic(modifiers))
-//				{
-//					continue;
-//				}
-//
-//				if (method.ParameterTypes.length != 0)
-//				{
-//					continue;
-//				}
-//
-//				Type returnType = method.ReturnType;
-//				if (!returnType.IsSubclassOf(typeof(ClauseInformation)))
-//				{
-//					continue;
-//				}
-//
-//				returnMethods.Add(method);
-//			}
-//
-//			return returnMethods;
-//		}
-//
-//		private static void logConstantError(final Method constantMethod, final string msg, final Exception th)
-//		{
-//			string actualMessage = msg;
-//			if ((msg == null) && (th != null))
-//			{
-//				actualMessage = th.Message;
-//			}
-//
-//			Logger.error("Unable to calculate system JQL names for '" + constantMethod.Name + "': " + actualMessage, th);
-//		}
-//
-//		private static Logger Logger
-//		{
-//			return Logger.getLogger(typeof(SystemSearchConstants));
-//		}
+		private static IEnumerable<string> GetNames(MethodInfo constantMethod)
+		{
+			try
+			{
+				var information = (IClauseInformation) constantMethod.Invoke(null, null);
+				if (information == null)
+				{
+					//logConstantError(constantMethod, "Clause information was not available.", null);
+					return new HashSet<string>();
+				}
+
+				var names = information.JqlClauseNames;
+				if (names == null)
+				{
+					//logConstantError(constantMethod, "The ClauseName was not available.", null);
+					return new HashSet<string>();
+				}
+
+				var strings = names.JqlFieldNames;
+				if (strings == null)
+				{
+					//logConstantError(constantMethod, "The ClauseName returned no values.", null);
+					return new HashSet<string>();
+				}
+
+				return strings;
+			}
+			catch (Exception e)
+			{
+				//logConstantError(constantMethod, "Unexpected Error.", e);
+			}
+			return new HashSet<string>();
+		}
+
+		private static IEnumerable<MethodInfo> GetConstantMethods()
+		{
+            MethodInfo[] methods;
+			try
+			{
+                methods = typeof(SystemSearchConstants).GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
+			}
+			catch (Exception e)
+			{
+				//Logger.error("Unable to calculate system JQL names: " + e.Message, e);
+			    return new List<MethodInfo>();
+			}
+
+			IList<MethodInfo> returnMethods = new List<MethodInfo>(methods.Length);
+			foreach (MethodInfo method in methods)
+			{
+				Type returnType = method.ReturnType;
+				if (!returnType.IsSubclassOf(typeof(IClauseInformation)))
+				{
+					continue;
+				}
+
+				returnMethods.Add(method);
+			}
+
+			return returnMethods;
+		}
 	}
 
 }

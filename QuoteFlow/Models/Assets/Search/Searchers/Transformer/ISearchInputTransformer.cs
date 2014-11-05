@@ -52,7 +52,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
 
         /// <summary>
         /// Tells the caller whether or not the relevant clauses from the passed query can be represented on the issue
-        /// navigator. Implementers of this method needs to ensure that it can represent *ALL* related clauses on the
+        /// navigator. Implementers of this method needs to ensure that it can represent *All* related clauses on the
         /// navigator, and that the clauses' structure conforms to the simple navigator structure.
         /// <p/>
         /// The method should only be concerned with the clauses related to this transformer. Other irrelevant clauses should

@@ -403,9 +403,14 @@
     <Compile Include="Models\Assets\Index\DocumentConstants.cs" />
     <Compile Include="Models\Assets\Index\Indexers\IFieldIndexer.cs" />
     <Compile Include="Models\Assets\Search\ClauseNames.cs" />
+    <Compile Include="Models\Assets\Search\Constants\AssetIdConstants.cs" />
+    <Compile Include="Models\Assets\Search\Constants\ClauseInformation.cs" />
+    <Compile Include="Models\Assets\Search\Constants\CommentsFieldSearchConstants.cs" />
     <Compile Include="Models\Assets\Search\Constants\SimpleFieldSearchConstants.cs" />
     <Compile Include="Models\Assets\Search\Constants\SimpleFieldSearchConstantsWithEmpty.cs" />
     <Compile Include="Models\Assets\Search\Constants\SystemSearchConstants.cs" />
+    <Compile Include="Models\Assets\Search\Constants\UserFieldSearchConstants.cs" />
+    <Compile Include="Models\Assets\Search\Constants\UserFieldSearchConstantsWithEmpty.cs" />
     <Compile Include="Models\Assets\Search\Handlers\CatalogSearchHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\Handlers\ISearchHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\Handlers\SimpleSearchHandlerFactory.cs" />
@@ -439,6 +444,7 @@
     <Compile Include="Models\Search\Jql\JqlLexerTester.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Search\Jql\NoOpClauseHandler.cs" />
     <Compile Include="Models\Search\Jql\OperatorClasses.cs" />
     <Compile Include="Models\Search\Jql\Parser\AntlrPosition.cs" />
     <Compile Include="Models\Search\Jql\Parser\JqlParseErrorMessage.cs" />

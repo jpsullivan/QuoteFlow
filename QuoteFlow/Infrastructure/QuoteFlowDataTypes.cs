@@ -39,60 +39,21 @@ namespace QuoteFlow.Infrastructure
         public static readonly IQuoteFlowDataType Number = new QuoteFlowDataType(typeof(Int32));
 //        public static readonly IQuoteFlowDataType DURATION = new QuoteFlowDataType(typeof(Duration));
 
-        public static readonly IQuoteFlowDataType ALL = new QuoteFlowDataType(typeof(object));
+        public static readonly IQuoteFlowDataType All = new QuoteFlowDataType(typeof(object));
 
-        private static readonly IDictionary<string, IQuoteFlowDataType> FieldMap = new Dictionary<string, IQuoteFlowDataType>()
+        private static readonly IDictionary<string, IQuoteFlowDataType> FieldMap = new Dictionary<string, IQuoteFlowDataType>
         {
-            { AssetFieldConstants.Catalog, IQuoteFlowDataType.Catalog },
-            { AssetFieldConstants.Comment, IQuoteFlowDataType.TEXT },
-            { AssetFieldConstants.Description, IQuoteFlowDataType.TEXT },
-            { AssetFieldConstants.Summary, IQuoteFlowDataType.TEXT },
-            { AssetFieldConstants.Created, IQuoteFlowDataType.DATE },
-            { AssetFieldConstants.Updated, IQuoteFlowDataType.DATE }
+            { AssetFieldConstants.Catalog, QuoteFlowDataTypes.Catalog },
+            { AssetFieldConstants.Comment, QuoteFlowDataTypes.Text },
+            { AssetFieldConstants.Description, QuoteFlowDataTypes.Text },
+            { AssetFieldConstants.Summary, QuoteFlowDataTypes.Text },
+            { AssetFieldConstants.Created, QuoteFlowDataTypes.Date },
+            { AssetFieldConstants.Updated, QuoteFlowDataTypes.Date }
         };
-
-        public static string GetType(IField field)
-        {
-            if (field is CommentField)
-            {
-                return field.GetType().CanonicalName;
-            }
-
-            IQuoteFlowDataType dataType = GetFieldType(field.Id);
-            if (dataType == null)
-            {
-                return field.GetType().CanonicalName;
-            }
-
-            ICollection<string> stringCollection = dataType.AsStrings();
-            if (stringCollection.Count == 1)
-            {
-                return stringCollection.GetEnumerator().MoveNext();
-            }
-            return stringCollection.ToString();
-        }
-
-        // This is primarily for generating REST documentation and other such things where you
-        // can't get a Field easily. In real production code you should probably be using the other version
-        public static string GetType(string fieldId)
-        {
-            IQuoteFlowDataType dataType = GetFieldType(fieldId);
-            if (dataType == null)
-            {
-                return fieldId;
-            }
-            ICollection<string> stringCollection = dataType.AsStrings();
-            if (stringCollection.Count == 1)
-            {
-                return stringCollection.GetEnumerator().MoveNext();
-            }
-            return stringCollection.ToString();
-        }
 
         public static IQuoteFlowDataType GetFieldType(string fieldId)
         {
             return FieldMap[fieldId];
         }
-
     }
 }

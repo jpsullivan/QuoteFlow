@@ -402,7 +402,7 @@ namespace QuoteFlow.Authentication
             // Find the credentials we're replacing, if any
             var toRemove = user.Credentials
                 .Where(cred =>
-                    // If we're replacing a password credential, remove ALL password credentials
+                    // If we're replacing a password credential, remove All password credentials
                     (credential.Type.StartsWith(CredentialTypes.Password.Prefix, StringComparison.OrdinalIgnoreCase) &&
                      cred.Type.StartsWith(CredentialTypes.Password.Prefix, StringComparison.OrdinalIgnoreCase)) ||
                     cred.Type == credential.Type)
