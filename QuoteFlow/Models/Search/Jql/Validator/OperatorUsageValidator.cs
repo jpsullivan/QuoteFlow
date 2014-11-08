@@ -7,9 +7,9 @@ namespace QuoteFlow.Models.Search.Jql.Validator
 {
     public class OperatorUsageValidator : IOperatorUsageValidator
     {
-        private readonly JqlOperandResolver operandResolver;
+        private readonly IJqlOperandResolver operandResolver;
 
-        public OperatorUsageValidator(JqlOperandResolver operandResolver)
+        public OperatorUsageValidator(IJqlOperandResolver operandResolver)
         {
             this.operandResolver = operandResolver;
         }

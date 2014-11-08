@@ -18,12 +18,12 @@ namespace QuoteFlow.Models.Search.Jql.Validator
     public class ValidatorVisitor : IClauseVisitor<IMessageSet>
     {
         private readonly IValidatorRegistry validatorRegistry;
-        private readonly JqlOperandResolver operandResolver;
+        private readonly IJqlOperandResolver operandResolver;
         private readonly IOperatorUsageValidator operatorUsageValidator;
         private readonly User searcher;
         private readonly long? filterId;
 
-        public ValidatorVisitor(IValidatorRegistry validatorRegistry, JqlOperandResolver operandResolver, OperatorUsageValidator operatorUsageValidator, User searcher, long? filterId)
+        public ValidatorVisitor(IValidatorRegistry validatorRegistry, IJqlOperandResolver operandResolver, OperatorUsageValidator operatorUsageValidator, User searcher, long? filterId)
         {
             this.validatorRegistry = validatorRegistry;
             this.operandResolver = operandResolver;

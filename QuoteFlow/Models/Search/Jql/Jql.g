@@ -179,7 +179,7 @@ using QuoteFlow.Models.Search.Jql.Util;
     }
 }
 
-query returns [IClause clause, IOrderBy order]
+public query returns [IClause clause, IOrderBy order]
 	: (where = clause)?  (sort = orderBy)? EOF
 	{
 		$clause = $where.clause;
@@ -593,7 +593,7 @@ customField returns [string field]
 /*
  * Checks if a field name is actually valid.
  */
-fieldCheck returns [FieldReference fieldRef]
+public fieldCheck returns [FieldReference fieldRef]
 	: f = field { $fieldRef = $f.field; } EOF
 	;
 
@@ -657,7 +657,7 @@ numberString returns [String stringValue]
 /*
  * 
  */
-stringValueCheck returns [String stringValue]
+public stringValueCheck returns [String stringValue]
 	: str = string { $stringValue = $str.stringValue; } EOF
 	;
 	
@@ -733,7 +733,7 @@ funcName returns [string name]
 /*
  * Rule used to check the validity of a function name.
  */	
-funcNameCheck returns [string name]
+public funcNameCheck returns [string name]
 	: fname = funcName { $name = $fname.name; } EOF
 	;
 
@@ -807,7 +807,7 @@ argument returns [string arg]
 /*
  * Used to check that an argument value is actually valid.
  */
-argumentCheck returns [string arg]
+public argumentCheck returns [string arg]
 	: a = argument { $arg = $a.arg; } EOF
 	;
 

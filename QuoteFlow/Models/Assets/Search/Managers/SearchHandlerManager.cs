@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Search.Searchers;
 using QuoteFlow.Models.Search.Jql.Clauses;
@@ -11,16 +9,21 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 {
     public class SearchHandlerManager : ISearchHandlerManager
     {
-        private readonly FieldManager fieldManager;
-        private readonly CustomFieldManager customFieldManager;
-        private readonly SystemClauseHandlerFactory systemClauseHandlerFactory;
-        private readonly QueryCache queryCache;
+        private readonly ISystemClauseHandlerFactory systemClauseHandlerFactory;
+//        private readonly QueryCache queryCache;
+//        private readonly CachedReference<Helper> helperResettableLazyReference;
 
+        public SearchHandlerManager(ISystemClauseHandlerFactory systemClauseHandlerFactory)
+        {
+            if (systemClauseHandlerFactory == null)
+            {
+                throw new ArgumentNullException("systemClauseHandlerFactory");
+            }
 
-        private readonly CachedReference<Helper> helperResettableLazyReference;
+            this.systemClauseHandlerFactory = systemClauseHandlerFactory;
+        }
 
-
-        public ICollection<IAssetSearcher<ISearchableField>> getSearchers(User searcher, SearchContext context)
+        public ICollection<IAssetSearcher<ISearchableField>> GetSearchers(User searcher, SearchContext context)
         {
             throw new NotImplementedException();
         }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.5.0.2 ../../QuoteFlow/Models/Search/Jql/Jql.g 2014-10-20 23:45:21
+// $ANTLR 3.5.0.2 C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g 2014-11-07 20:12:40
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -122,7 +122,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	}
 
 	public override string[] TokenNames { get { return JqlParser.tokenNames; } }
-	public override string GrammarFileName { get { return "../../QuoteFlow/Models/Search/Jql/Jql.g"; } }
+	public override string GrammarFileName { get { return "C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g"; } }
 
 
 		private int operandLevel = 0;
@@ -196,7 +196,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void LeaveRule(string ruleName, int ruleIndex);
 
 	#region Rules
-	private sealed partial class query_return : ParserRuleReturnScope<IToken>
+	public sealed partial class query_return : ParserRuleReturnScope<IToken>
 	{
 		public IClause clause;
 		public IOrderBy order;
@@ -207,9 +207,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_query();
 	partial void LeaveRule_query();
 	// $ANTLR start "query"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:182:1: query returns [IClause clause, IOrderBy order] : (where= clause )? (sort= orderBy )? EOF ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:182:8: public query returns [IClause clause, IOrderBy order] : (where= clause )? (sort= orderBy )? EOF ;
 	[GrammarRule("query")]
-	private JqlParser.query_return query()
+	public JqlParser.query_return query()
 	{
 		EnterRule_query();
 		EnterRule("query", 1);
@@ -224,12 +224,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(182, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:183:2: ( (where= clause )? (sort= orderBy )? EOF )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:183:2: ( (where= clause )? (sort= orderBy )? EOF )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:183:4: (where= clause )? (sort= orderBy )? EOF
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:183:4: (where= clause )? (sort= orderBy )? EOF
 			{
 			DebugLocation(183, 4);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:183:4: (where= clause )?
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:183:4: (where= clause )?
 			int alt1=2;
 			try { DebugEnterSubRule(1);
 			try { DebugEnterDecision(1, false);
@@ -244,10 +244,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:183:5: where= clause
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:183:5: where= clause
 				{
 				DebugLocation(183, 11);
-				PushFollow(Follow._clause_in_query85);
+				PushFollow(Follow._clause_in_query87);
 				where=clause();
 				PopFollow();
 
@@ -259,7 +259,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			} finally { DebugExitSubRule(1); }
 
 			DebugLocation(183, 23);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:183:23: (sort= orderBy )?
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:183:23: (sort= orderBy )?
 			int alt2=2;
 			try { DebugEnterSubRule(2);
 			try { DebugEnterDecision(2, false);
@@ -274,10 +274,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:183:24: sort= orderBy
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:183:24: sort= orderBy
 				{
 				DebugLocation(183, 29);
-				PushFollow(Follow._orderBy_in_query95);
+				PushFollow(Follow._orderBy_in_query97);
 				sort=orderBy();
 				PopFollow();
 
@@ -289,7 +289,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			} finally { DebugExitSubRule(2); }
 
 			DebugLocation(183, 41);
-			Match(input,EOF,Follow._EOF_in_query99); 
+			Match(input,EOF,Follow._EOF_in_query101); 
 			DebugLocation(184, 2);
 
 					retval.clause = where;
@@ -351,7 +351,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_clause();
 	partial void LeaveRule_clause();
 	// $ANTLR start "clause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:222:1: clause returns [IClause clause] : orClause ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:222:1: clause returns [IClause clause] : orClause ;
 	[GrammarRule("clause")]
 	private IClause clause()
 	{
@@ -367,12 +367,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(222, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:223:2: ( orClause )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:223:2: ( orClause )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:223:4: orClause
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:223:4: orClause
 			{
 			DebugLocation(223, 4);
-			PushFollow(Follow._orClause_in_clause135);
+			PushFollow(Follow._orClause_in_clause137);
 			orClause1=orClause();
 			PopFollow();
 
@@ -403,7 +403,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_orClause();
 	partial void LeaveRule_orClause();
 	// $ANTLR start "orClause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:229:1: orClause returns [IClause clause] : cl= andClause ( OR cl= andClause )* ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:229:1: orClause returns [IClause clause] : cl= andClause ( OR cl= andClause )* ;
 	[GrammarRule("orClause")]
 	private IClause orClause()
 	{
@@ -422,19 +422,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(229, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:234:2: (cl= andClause ( OR cl= andClause )* )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:234:2: (cl= andClause ( OR cl= andClause )* )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:234:4: cl= andClause ( OR cl= andClause )*
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:234:4: cl= andClause ( OR cl= andClause )*
 			{
 			DebugLocation(234, 7);
-			PushFollow(Follow._andClause_in_orClause166);
+			PushFollow(Follow._andClause_in_orClause168);
 			cl=andClause();
 			PopFollow();
 
 			DebugLocation(234, 19);
 			 clauses.Add(cl); 
 			DebugLocation(234, 48);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:234:48: ( OR cl= andClause )*
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:234:48: ( OR cl= andClause )*
 			try { DebugEnterSubRule(3);
 			while (true)
 			{
@@ -453,12 +453,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:234:49: OR cl= andClause
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:234:49: OR cl= andClause
 					{
 					DebugLocation(234, 49);
-					Match(input,OR,Follow._OR_in_orClause171); 
+					Match(input,OR,Follow._OR_in_orClause173); 
 					DebugLocation(234, 55);
-					PushFollow(Follow._andClause_in_orClause177);
+					PushFollow(Follow._andClause_in_orClause179);
 					cl=andClause();
 					PopFollow();
 
@@ -505,7 +505,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_andClause();
 	partial void LeaveRule_andClause();
 	// $ANTLR start "andClause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:240:1: andClause returns [IClause clause] : cl= notClause ( AND cl= notClause )* ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:240:1: andClause returns [IClause clause] : cl= notClause ( AND cl= notClause )* ;
 	[GrammarRule("andClause")]
 	private IClause andClause()
 	{
@@ -524,19 +524,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(240, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:244:2: (cl= notClause ( AND cl= notClause )* )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:244:2: (cl= notClause ( AND cl= notClause )* )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:244:4: cl= notClause ( AND cl= notClause )*
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:244:4: cl= notClause ( AND cl= notClause )*
 			{
 			DebugLocation(244, 7);
-			PushFollow(Follow._notClause_in_andClause210);
+			PushFollow(Follow._notClause_in_andClause212);
 			cl=notClause();
 			PopFollow();
 
 			DebugLocation(244, 19);
 			 clauses.Add(cl); 
 			DebugLocation(244, 48);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:244:48: ( AND cl= notClause )*
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:244:48: ( AND cl= notClause )*
 			try { DebugEnterSubRule(4);
 			while (true)
 			{
@@ -555,12 +555,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:244:49: AND cl= notClause
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:244:49: AND cl= notClause
 					{
 					DebugLocation(244, 49);
-					Match(input,AND,Follow._AND_in_andClause215); 
+					Match(input,AND,Follow._AND_in_andClause217); 
 					DebugLocation(244, 56);
-					PushFollow(Follow._notClause_in_andClause221);
+					PushFollow(Follow._notClause_in_andClause223);
 					cl=notClause();
 					PopFollow();
 
@@ -607,7 +607,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_notClause();
 	partial void LeaveRule_notClause();
 	// $ANTLR start "notClause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:250:1: notClause returns [IClause clause] : ( ( NOT | BANG ) nc= notClause | subClause | terminalClause );
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:250:1: notClause returns [IClause clause] : ( ( NOT | BANG ) nc= notClause | subClause | terminalClause );
 	[GrammarRule("notClause")]
 	private IClause notClause()
 	{
@@ -625,7 +625,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(250, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:251:2: ( ( NOT | BANG ) nc= notClause | subClause | terminalClause )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:251:2: ( ( NOT | BANG ) nc= notClause | subClause | terminalClause )
 			int alt5=3;
 			try { DebugEnterDecision(5, false);
 			switch (input.LA(1))
@@ -664,7 +664,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:251:4: ( NOT | BANG ) nc= notClause
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:251:4: ( NOT | BANG ) nc= notClause
 				{
 				DebugLocation(251, 4);
 				if (input.LA(1)==BANG||input.LA(1)==NOT)
@@ -680,7 +680,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				}
 
 				DebugLocation(251, 20);
-				PushFollow(Follow._notClause_in_notClause256);
+				PushFollow(Follow._notClause_in_notClause258);
 				nc=notClause();
 				PopFollow();
 
@@ -691,10 +691,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:252:4: subClause
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:252:4: subClause
 				{
 				DebugLocation(252, 4);
-				PushFollow(Follow._subClause_in_notClause263);
+				PushFollow(Follow._subClause_in_notClause265);
 				subClause2=subClause();
 				PopFollow();
 
@@ -705,10 +705,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:253:25: terminalClause
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:253:25: terminalClause
 				{
 				DebugLocation(253, 25);
-				PushFollow(Follow._terminalClause_in_notClause291);
+				PushFollow(Follow._terminalClause_in_notClause293);
 				terminalClause3=terminalClause();
 				PopFollow();
 
@@ -744,7 +744,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_subClause();
 	partial void LeaveRule_subClause();
 	// $ANTLR start "subClause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:265:1: subClause returns [IClause clause] : LPAREN orClause RPAREN ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:265:1: subClause returns [IClause clause] : LPAREN orClause RPAREN ;
 	[GrammarRule("subClause")]
 	private IClause subClause()
 	{
@@ -760,19 +760,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(265, 4);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:266:5: ( LPAREN orClause RPAREN )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:266:5: ( LPAREN orClause RPAREN )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:266:7: LPAREN orClause RPAREN
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:266:7: LPAREN orClause RPAREN
 			{
 			DebugLocation(266, 7);
-			Match(input,LPAREN,Follow._LPAREN_in_subClause323); 
+			Match(input,LPAREN,Follow._LPAREN_in_subClause325); 
 			DebugLocation(266, 14);
-			PushFollow(Follow._orClause_in_subClause325);
+			PushFollow(Follow._orClause_in_subClause327);
 			orClause4=orClause();
 			PopFollow();
 
 			DebugLocation(266, 23);
-			Match(input,RPAREN,Follow._RPAREN_in_subClause327); 
+			Match(input,RPAREN,Follow._RPAREN_in_subClause329); 
 			DebugLocation(266, 30);
 			 clause = orClause4; 
 
@@ -809,7 +809,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_terminalClause();
 	partial void LeaveRule_terminalClause();
 	// $ANTLR start "terminalClause"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:283:1: terminalClause returns [IClause clause] : f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? ) ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:283:1: terminalClause returns [IClause clause] : f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? ) ;
 	[GrammarRule("terminalClause")]
 	private IClause terminalClause()
 	{
@@ -829,22 +829,22 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(283, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:284:2: (f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:284:2: (f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:284:4: f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:284:4: f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? )
 			{
 			DebugLocation(284, 6);
-			PushFollow(Follow._field_in_terminalClause368);
+			PushFollow(Follow._field_in_terminalClause370);
 			f=field();
 			PopFollow();
 
 			DebugLocation(284, 17);
-			PushFollow(Follow._operator_in_terminalClause374);
+			PushFollow(Follow._operator_in_terminalClause376);
 			op=@operator();
 			PopFollow();
 
 			DebugLocation(284, 29);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:284:29: ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:284:29: ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? )
 			int alt8=2;
 			try { DebugEnterSubRule(8);
 			try { DebugEnterDecision(8, false);
@@ -869,20 +869,20 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:284:31: (opand= operand (pred= historyPredicate )? )
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:284:31: (opand= operand (pred= historyPredicate )? )
 				{
 				DebugLocation(284, 31);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:284:31: (opand= operand (pred= historyPredicate )? )
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:284:31: (opand= operand (pred= historyPredicate )? )
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:284:32: opand= operand (pred= historyPredicate )?
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:284:32: opand= operand (pred= historyPredicate )?
 				{
 				DebugLocation(284, 38);
-				PushFollow(Follow._operand_in_terminalClause384);
+				PushFollow(Follow._operand_in_terminalClause386);
 				opand=operand();
 				PopFollow();
 
 				DebugLocation(284, 52);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:284:52: (pred= historyPredicate )?
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:284:52: (pred= historyPredicate )?
 				int alt6=2;
 				try { DebugEnterSubRule(6);
 				try { DebugEnterDecision(6, false);
@@ -897,10 +897,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:284:52: pred= historyPredicate
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:284:52: pred= historyPredicate
 					{
 					DebugLocation(284, 52);
-					PushFollow(Follow._historyPredicate_in_terminalClause389);
+					PushFollow(Follow._historyPredicate_in_terminalClause391);
 					pred=historyPredicate();
 					PopFollow();
 
@@ -919,10 +919,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:284:75: (chPred= historyPredicate )?
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:284:75: (chPred= historyPredicate )?
 				{
 				DebugLocation(284, 81);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:284:81: (chPred= historyPredicate )?
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:284:81: (chPred= historyPredicate )?
 				int alt7=2;
 				try { DebugEnterSubRule(7);
 				try { DebugEnterDecision(7, false);
@@ -937,10 +937,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:284:81: chPred= historyPredicate
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:284:81: chPred= historyPredicate
 					{
 					DebugLocation(284, 81);
-					PushFollow(Follow._historyPredicate_in_terminalClause397);
+					PushFollow(Follow._historyPredicate_in_terminalClause399);
 					chPred=historyPredicate();
 					PopFollow();
 
@@ -1051,7 +1051,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_historyPredicate();
 	partial void LeaveRule_historyPredicate();
 	// $ANTLR start "historyPredicate"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:357:1: historyPredicate returns [IHistoryPredicate predicate] : (p= terminalHistoryPredicate )+ ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:357:1: historyPredicate returns [IHistoryPredicate predicate] : (p= terminalHistoryPredicate )+ ;
 	[GrammarRule("historyPredicate")]
 	private IHistoryPredicate historyPredicate()
 	{
@@ -1070,12 +1070,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(357, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:361:2: ( (p= terminalHistoryPredicate )+ )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:361:2: ( (p= terminalHistoryPredicate )+ )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:361:4: (p= terminalHistoryPredicate )+
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:361:4: (p= terminalHistoryPredicate )+
 			{
 			DebugLocation(361, 4);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:361:4: (p= terminalHistoryPredicate )+
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:361:4: (p= terminalHistoryPredicate )+
 			int cnt9=0;
 			try { DebugEnterSubRule(9);
 			while (true)
@@ -1095,10 +1095,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:361:5: p= terminalHistoryPredicate
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:361:5: p= terminalHistoryPredicate
 					{
 					DebugLocation(361, 7);
-					PushFollow(Follow._terminalHistoryPredicate_in_historyPredicate437);
+					PushFollow(Follow._terminalHistoryPredicate_in_historyPredicate439);
 					p=terminalHistoryPredicate();
 					PopFollow();
 
@@ -1150,7 +1150,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_terminalHistoryPredicate();
 	partial void LeaveRule_terminalHistoryPredicate();
 	// $ANTLR start "terminalHistoryPredicate"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:425:1: terminalHistoryPredicate returns [IHistoryPredicate predicate] : historyPredicateOperator operand ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:425:1: terminalHistoryPredicate returns [IHistoryPredicate predicate] : historyPredicateOperator operand ;
 	[GrammarRule("terminalHistoryPredicate")]
 	private IHistoryPredicate terminalHistoryPredicate()
 	{
@@ -1167,17 +1167,17 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(425, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:426:2: ( historyPredicateOperator operand )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:426:2: ( historyPredicateOperator operand )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:426:4: historyPredicateOperator operand
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:426:4: historyPredicateOperator operand
 			{
 			DebugLocation(426, 4);
-			PushFollow(Follow._historyPredicateOperator_in_terminalHistoryPredicate461);
+			PushFollow(Follow._historyPredicateOperator_in_terminalHistoryPredicate463);
 			historyPredicateOperator5=historyPredicateOperator();
 			PopFollow();
 
 			DebugLocation(426, 29);
-			PushFollow(Follow._operand_in_terminalHistoryPredicate463);
+			PushFollow(Follow._operand_in_terminalHistoryPredicate465);
 			operand6=operand();
 			PopFollow();
 
@@ -1210,7 +1210,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_historyPredicateOperator();
 	partial void LeaveRule_historyPredicateOperator();
 	// $ANTLR start "historyPredicateOperator"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:433:1: historyPredicateOperator returns [Operator oprator] : ( FROM | TO | BY | BEFORE | AFTER | ON | DURING );
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:433:1: historyPredicateOperator returns [Operator oprator] : ( FROM | TO | BY | BEFORE | AFTER | ON | DURING );
 	[GrammarRule("historyPredicateOperator")]
 	private Operator historyPredicateOperator()
 	{
@@ -1224,7 +1224,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(433, 39);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:434:2: ( FROM | TO | BY | BEFORE | AFTER | ON | DURING )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:434:2: ( FROM | TO | BY | BEFORE | AFTER | ON | DURING )
 			int alt10=7;
 			try { DebugEnterDecision(10, false);
 			switch (input.LA(1))
@@ -1277,10 +1277,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:434:4: FROM
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:434:4: FROM
 				{
 				DebugLocation(434, 4);
-				Match(input,FROM,Follow._FROM_in_historyPredicateOperator482); 
+				Match(input,FROM,Follow._FROM_in_historyPredicateOperator484); 
 				DebugLocation(434, 9);
 				 oprator = Operator.FROM; 
 
@@ -1288,10 +1288,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:435:4: TO
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:435:4: TO
 				{
 				DebugLocation(435, 4);
-				Match(input,TO,Follow._TO_in_historyPredicateOperator489); 
+				Match(input,TO,Follow._TO_in_historyPredicateOperator491); 
 				DebugLocation(435, 7);
 				oprator = Operator.TO; 
 
@@ -1299,10 +1299,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:436:4: BY
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:436:4: BY
 				{
 				DebugLocation(436, 4);
-				Match(input,BY,Follow._BY_in_historyPredicateOperator496); 
+				Match(input,BY,Follow._BY_in_historyPredicateOperator498); 
 				DebugLocation(436, 7);
 				oprator = Operator.BY; 
 
@@ -1310,10 +1310,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:437:4: BEFORE
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:437:4: BEFORE
 				{
 				DebugLocation(437, 4);
-				Match(input,BEFORE,Follow._BEFORE_in_historyPredicateOperator503); 
+				Match(input,BEFORE,Follow._BEFORE_in_historyPredicateOperator505); 
 				DebugLocation(437, 11);
 				oprator = Operator.BEFORE; 
 
@@ -1321,10 +1321,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:438:4: AFTER
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:438:4: AFTER
 				{
 				DebugLocation(438, 4);
-				Match(input,AFTER,Follow._AFTER_in_historyPredicateOperator510); 
+				Match(input,AFTER,Follow._AFTER_in_historyPredicateOperator512); 
 				DebugLocation(438, 10);
 				oprator = Operator.AFTER; 
 
@@ -1332,10 +1332,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:439:4: ON
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:439:4: ON
 				{
 				DebugLocation(439, 4);
-				Match(input,ON,Follow._ON_in_historyPredicateOperator517); 
+				Match(input,ON,Follow._ON_in_historyPredicateOperator519); 
 				DebugLocation(439, 7);
 				oprator = Operator.ON; 
 
@@ -1343,10 +1343,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:440:4: DURING
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:440:4: DURING
 				{
 				DebugLocation(440, 4);
-				Match(input,DURING,Follow._DURING_in_historyPredicateOperator525); 
+				Match(input,DURING,Follow._DURING_in_historyPredicateOperator527); 
 				DebugLocation(440, 11);
 				oprator = Operator.DURING;
 
@@ -1376,7 +1376,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_operator();
 	partial void LeaveRule_operator();
 	// $ANTLR start "operator"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:447:1: operator returns [Operator oprator] : ( EQUALS | NOT_EQUALS | LIKE | NOT_LIKE | LT | GT | LTEQ | GTEQ | IN | IS NOT | IS | NOT IN | WAS | WAS NOT | WAS IN | WAS NOT IN | CHANGED );
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:447:1: operator returns [Operator oprator] : ( EQUALS | NOT_EQUALS | LIKE | NOT_LIKE | LT | GT | LTEQ | GTEQ | IN | IS NOT | IS | NOT IN | WAS | WAS NOT | WAS IN | WAS NOT IN | CHANGED );
 	[GrammarRule("operator")]
 	private Operator @operator()
 	{
@@ -1390,7 +1390,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(447, 4);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:448:2: ( EQUALS | NOT_EQUALS | LIKE | NOT_LIKE | LT | GT | LTEQ | GTEQ | IN | IS NOT | IS | NOT IN | WAS | WAS NOT | WAS IN | WAS NOT IN | CHANGED )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:448:2: ( EQUALS | NOT_EQUALS | LIKE | NOT_LIKE | LT | GT | LTEQ | GTEQ | IN | IS NOT | IS | NOT IN | WAS | WAS NOT | WAS IN | WAS NOT IN | CHANGED )
 			int alt11=17;
 			try { DebugEnterDecision(11, false);
 			switch (input.LA(1))
@@ -1545,10 +1545,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:448:4: EQUALS
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:448:4: EQUALS
 				{
 				DebugLocation(448, 4);
-				Match(input,EQUALS,Follow._EQUALS_in_operator546); 
+				Match(input,EQUALS,Follow._EQUALS_in_operator548); 
 				DebugLocation(448, 11);
 				 oprator = Operator.EQUALS; 
 
@@ -1556,10 +1556,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:449:4: NOT_EQUALS
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:449:4: NOT_EQUALS
 				{
 				DebugLocation(449, 4);
-				Match(input,NOT_EQUALS,Follow._NOT_EQUALS_in_operator553); 
+				Match(input,NOT_EQUALS,Follow._NOT_EQUALS_in_operator555); 
 				DebugLocation(449, 15);
 				 oprator = Operator.NOT_EQUALS; 
 
@@ -1567,10 +1567,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:450:4: LIKE
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:450:4: LIKE
 				{
 				DebugLocation(450, 4);
-				Match(input,LIKE,Follow._LIKE_in_operator560); 
+				Match(input,LIKE,Follow._LIKE_in_operator562); 
 				DebugLocation(450, 9);
 				 oprator = Operator.LIKE; 
 
@@ -1578,10 +1578,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:451:4: NOT_LIKE
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:451:4: NOT_LIKE
 				{
 				DebugLocation(451, 4);
-				Match(input,NOT_LIKE,Follow._NOT_LIKE_in_operator567); 
+				Match(input,NOT_LIKE,Follow._NOT_LIKE_in_operator569); 
 				DebugLocation(451, 13);
 				 oprator = Operator.NOT_LIKE; 
 
@@ -1589,10 +1589,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:452:4: LT
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:452:4: LT
 				{
 				DebugLocation(452, 4);
-				Match(input,LT,Follow._LT_in_operator575); 
+				Match(input,LT,Follow._LT_in_operator577); 
 				DebugLocation(452, 7);
 				 oprator = Operator.LESS_THAN; 
 
@@ -1600,10 +1600,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:453:4: GT
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:453:4: GT
 				{
 				DebugLocation(453, 4);
-				Match(input,GT,Follow._GT_in_operator582); 
+				Match(input,GT,Follow._GT_in_operator584); 
 				DebugLocation(453, 7);
 				 oprator = Operator.GREATER_THAN; 
 
@@ -1611,10 +1611,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:454:4: LTEQ
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:454:4: LTEQ
 				{
 				DebugLocation(454, 4);
-				Match(input,LTEQ,Follow._LTEQ_in_operator589); 
+				Match(input,LTEQ,Follow._LTEQ_in_operator591); 
 				DebugLocation(454, 9);
 				 oprator = Operator.LESS_THAN_EQUALS; 
 
@@ -1622,10 +1622,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:455:4: GTEQ
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:455:4: GTEQ
 				{
 				DebugLocation(455, 4);
-				Match(input,GTEQ,Follow._GTEQ_in_operator596); 
+				Match(input,GTEQ,Follow._GTEQ_in_operator598); 
 				DebugLocation(455, 9);
 				 oprator = Operator.GREATER_THAN_EQUALS; 
 
@@ -1633,10 +1633,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 9:
 				DebugEnterAlt(9);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:456:4: IN
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:456:4: IN
 				{
 				DebugLocation(456, 4);
-				Match(input,IN,Follow._IN_in_operator603); 
+				Match(input,IN,Follow._IN_in_operator605); 
 				DebugLocation(456, 7);
 				 oprator = Operator.IN; 
 
@@ -1644,12 +1644,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 10:
 				DebugEnterAlt(10);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:457:4: IS NOT
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:457:4: IS NOT
 				{
 				DebugLocation(457, 4);
-				Match(input,IS,Follow._IS_in_operator610); 
+				Match(input,IS,Follow._IS_in_operator612); 
 				DebugLocation(457, 7);
-				Match(input,NOT,Follow._NOT_in_operator612); 
+				Match(input,NOT,Follow._NOT_in_operator614); 
 				DebugLocation(457, 11);
 				 oprator = Operator.IS_NOT; 
 
@@ -1657,10 +1657,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 11:
 				DebugEnterAlt(11);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:458:4: IS
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:458:4: IS
 				{
 				DebugLocation(458, 4);
-				Match(input,IS,Follow._IS_in_operator619); 
+				Match(input,IS,Follow._IS_in_operator621); 
 				DebugLocation(458, 7);
 				 oprator = Operator.IS; 
 
@@ -1668,12 +1668,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 12:
 				DebugEnterAlt(12);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:459:4: NOT IN
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:459:4: NOT IN
 				{
 				DebugLocation(459, 4);
-				Match(input,NOT,Follow._NOT_in_operator626); 
+				Match(input,NOT,Follow._NOT_in_operator628); 
 				DebugLocation(459, 8);
-				Match(input,IN,Follow._IN_in_operator628); 
+				Match(input,IN,Follow._IN_in_operator630); 
 				DebugLocation(459, 11);
 				 oprator = Operator.NOT_IN; 
 
@@ -1681,10 +1681,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 13:
 				DebugEnterAlt(13);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:460:4: WAS
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:460:4: WAS
 				{
 				DebugLocation(460, 4);
-				Match(input,WAS,Follow._WAS_in_operator635); 
+				Match(input,WAS,Follow._WAS_in_operator637); 
 				DebugLocation(460, 8);
 				 oprator = Operator.WAS; 
 
@@ -1692,12 +1692,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 14:
 				DebugEnterAlt(14);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:461:4: WAS NOT
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:461:4: WAS NOT
 				{
 				DebugLocation(461, 4);
-				Match(input,WAS,Follow._WAS_in_operator642); 
+				Match(input,WAS,Follow._WAS_in_operator644); 
 				DebugLocation(461, 8);
-				Match(input,NOT,Follow._NOT_in_operator644); 
+				Match(input,NOT,Follow._NOT_in_operator646); 
 				DebugLocation(461, 12);
 				 oprator = Operator.WAS_NOT; 
 
@@ -1705,12 +1705,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 15:
 				DebugEnterAlt(15);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:462:7: WAS IN
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:462:7: WAS IN
 				{
 				DebugLocation(462, 7);
-				Match(input,WAS,Follow._WAS_in_operator654); 
+				Match(input,WAS,Follow._WAS_in_operator656); 
 				DebugLocation(462, 11);
-				Match(input,IN,Follow._IN_in_operator656); 
+				Match(input,IN,Follow._IN_in_operator658); 
 				DebugLocation(462, 14);
 				 oprator = Operator.WAS_IN; 
 
@@ -1718,14 +1718,14 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 16:
 				DebugEnterAlt(16);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:463:7: WAS NOT IN
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:463:7: WAS NOT IN
 				{
 				DebugLocation(463, 7);
-				Match(input,WAS,Follow._WAS_in_operator666); 
+				Match(input,WAS,Follow._WAS_in_operator668); 
 				DebugLocation(463, 11);
-				Match(input,NOT,Follow._NOT_in_operator668); 
+				Match(input,NOT,Follow._NOT_in_operator670); 
 				DebugLocation(463, 15);
-				Match(input,IN,Follow._IN_in_operator670); 
+				Match(input,IN,Follow._IN_in_operator672); 
 				DebugLocation(463, 18);
 				 oprator = Operator.WAS_NOT_IN; 
 
@@ -1733,10 +1733,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 17:
 				DebugEnterAlt(17);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:464:7: CHANGED
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:464:7: CHANGED
 				{
 				DebugLocation(464, 7);
-				Match(input,CHANGED,Follow._CHANGED_in_operator680); 
+				Match(input,CHANGED,Follow._CHANGED_in_operator682); 
 				DebugLocation(464, 15);
 				 oprator = Operator.CHANGED; 
 
@@ -1812,7 +1812,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_field();
 	partial void LeaveRule_field();
 	// $ANTLR start "field"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:509:1: field returns [FieldReference field] : (num= numberString | ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* ) );
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:509:1: field returns [FieldReference field] : (num= numberString | ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* ) );
 	[GrammarRule("field")]
 	private JqlParser.field_return field()
 	{
@@ -1836,7 +1836,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(509, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:518:2: (num= numberString | ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:518:2: (num= numberString | ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* ) )
 			int alt15=2;
 			try { DebugEnterDecision(15, false);
 			int LA15_1 = input.LA(1);
@@ -1860,10 +1860,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:519:5: num= numberString
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:519:5: num= numberString
 				{
 				DebugLocation(519, 9);
-				PushFollow(Follow._numberString_in_field744);
+				PushFollow(Follow._numberString_in_field746);
 				num=numberString();
 				PopFollow();
 
@@ -1874,15 +1874,15 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:521:5: ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* )
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:521:5: ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* )
 				{
 				DebugLocation(521, 5);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:521:5: ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* )
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:521:5: ( (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )* )
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:522:9: (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )*
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:522:9: (str= string |cf= customField ) ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )*
 				{
 				DebugLocation(522, 9);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:522:9: (str= string |cf= customField )
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:522:9: (str= string |cf= customField )
 				int alt12=2;
 				try { DebugEnterSubRule(12);
 				try { DebugEnterDecision(12, false);
@@ -1907,10 +1907,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:523:13: str= string
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:523:13: str= string
 					{
 					DebugLocation(523, 17);
-					PushFollow(Follow._string_in_field786);
+					PushFollow(Follow._string_in_field788);
 					str=@string();
 					PopFollow();
 
@@ -1921,10 +1921,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:524:15: cf= customField
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:524:15: cf= customField
 					{
 					DebugLocation(524, 18);
-					PushFollow(Follow._customField_in_field808);
+					PushFollow(Follow._customField_in_field810);
 					cf=customField();
 					PopFollow();
 
@@ -1938,7 +1938,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				} finally { DebugExitSubRule(12); }
 
 				DebugLocation(526, 9);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:526:9: ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )*
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:526:9: ( ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )* )*
 				try { DebugEnterSubRule(14);
 				while (true)
 				{
@@ -1957,22 +1957,22 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:527:10: ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )*
+						// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:527:10: ( LBRACKET (reff= argument ) RBRACKET ) (reff= propertyArgument )*
 						{
 						DebugLocation(527, 10);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:527:10: ( LBRACKET (reff= argument ) RBRACKET )
+						// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:527:10: ( LBRACKET (reff= argument ) RBRACKET )
 						DebugEnterAlt(1);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:528:14: LBRACKET (reff= argument ) RBRACKET
+						// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:528:14: LBRACKET (reff= argument ) RBRACKET
 						{
 						DebugLocation(528, 14);
-						Match(input,LBRACKET,Follow._LBRACKET_in_field856); 
+						Match(input,LBRACKET,Follow._LBRACKET_in_field858); 
 						DebugLocation(529, 14);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:529:14: (reff= argument )
+						// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:529:14: (reff= argument )
 						DebugEnterAlt(1);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:530:18: reff= argument
+						// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:530:18: reff= argument
 						{
 						DebugLocation(530, 23);
-						PushFollow(Follow._argument_in_field894);
+						PushFollow(Follow._argument_in_field896);
 						reff=argument();
 						PopFollow();
 
@@ -1982,12 +1982,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 						}
 
 						DebugLocation(532, 14);
-						Match(input,RBRACKET,Follow._RBRACKET_in_field926); 
+						Match(input,RBRACKET,Follow._RBRACKET_in_field928); 
 
 						}
 
 						DebugLocation(534, 10);
-						// ../../QuoteFlow/Models/Search/Jql/Jql.g:534:10: (reff= propertyArgument )*
+						// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:534:10: (reff= propertyArgument )*
 						try { DebugEnterSubRule(13);
 						while (true)
 						{
@@ -2006,10 +2006,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 							{
 							case 1:
 								DebugEnterAlt(1);
-								// ../../QuoteFlow/Models/Search/Jql/Jql.g:535:14: reff= propertyArgument
+								// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:535:14: reff= propertyArgument
 								{
 								DebugLocation(535, 19);
-								PushFollow(Follow._propertyArgument_in_field967);
+								PushFollow(Follow._propertyArgument_in_field969);
 								reff=propertyArgument();
 								PopFollow();
 
@@ -2108,7 +2108,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_customField();
 	partial void LeaveRule_customField();
 	// $ANTLR start "customField"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:569:1: customField returns [string field] : CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:569:1: customField returns [string field] : CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET ;
 	[GrammarRule("customField")]
 	private string customField()
 	{
@@ -2124,18 +2124,18 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(569, 4);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:570:5: ( CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:570:5: ( CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:570:7: CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:570:7: CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET
 			{
 			DebugLocation(570, 7);
-			Match(input,CUSTOMFIELD,Follow._CUSTOMFIELD_in_customField1037); 
+			Match(input,CUSTOMFIELD,Follow._CUSTOMFIELD_in_customField1039); 
 			DebugLocation(570, 19);
-			Match(input,LBRACKET,Follow._LBRACKET_in_customField1039); 
+			Match(input,LBRACKET,Follow._LBRACKET_in_customField1041); 
 			DebugLocation(570, 35);
-			posnum=(IToken)Match(input,POSNUMBER,Follow._POSNUMBER_in_customField1045); 
+			posnum=(IToken)Match(input,POSNUMBER,Follow._POSNUMBER_in_customField1047); 
 			DebugLocation(570, 47);
-			Match(input,RBRACKET,Follow._RBRACKET_in_customField1047); 
+			Match(input,RBRACKET,Follow._RBRACKET_in_customField1049); 
 			DebugLocation(570, 56);
 			 field = JqlCustomFieldId.ToString(ParseLong(posnum)); 
 
@@ -2181,9 +2181,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_fieldCheck();
 	partial void LeaveRule_fieldCheck();
 	// $ANTLR start "fieldCheck"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:596:1: fieldCheck returns [FieldReference fieldRef] : f= field EOF ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:596:8: public fieldCheck returns [FieldReference fieldRef] : f= field EOF ;
 	[GrammarRule("fieldCheck")]
-	private FieldReference fieldCheck()
+	public FieldReference fieldCheck()
 	{
 		EnterRule_fieldCheck();
 		EnterRule("fieldCheck", 14);
@@ -2197,19 +2197,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(596, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:597:2: (f= field EOF )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:597:2: (f= field EOF )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:597:4: f= field EOF
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:597:4: f= field EOF
 			{
 			DebugLocation(597, 6);
-			PushFollow(Follow._field_in_fieldCheck1087);
+			PushFollow(Follow._field_in_fieldCheck1091);
 			f=field();
 			PopFollow();
 
 			DebugLocation(597, 14);
 			 fieldRef = (f!=null?((JqlParser.field_return)f).field:default(FieldReference)); 
 			DebugLocation(597, 40);
-			Match(input,EOF,Follow._EOF_in_fieldCheck1091); 
+			Match(input,EOF,Follow._EOF_in_fieldCheck1095); 
 
 			}
 
@@ -2235,7 +2235,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_operand();
 	partial void LeaveRule_operand();
 	// $ANTLR start "operand"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:603:1: operand returns [IOperand operand] : ( EMPTY |str= string |number= numberString |fn= func |l= list );
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:603:1: operand returns [IOperand operand] : ( EMPTY |str= string |number= numberString |fn= func |l= list );
 	[GrammarRule("operand")]
 	private IOperand operand()
 	{
@@ -2254,7 +2254,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(603, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:604:2: ( EMPTY |str= string |number= numberString |fn= func |l= list )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:604:2: ( EMPTY |str= string |number= numberString |fn= func |l= list )
 			int alt16=5;
 			try { DebugEnterDecision(16, false);
 			switch (input.LA(1))
@@ -2363,10 +2363,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:604:4: EMPTY
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:604:4: EMPTY
 				{
 				DebugLocation(604, 4);
-				Match(input,EMPTY,Follow._EMPTY_in_operand1108); 
+				Match(input,EMPTY,Follow._EMPTY_in_operand1112); 
 				DebugLocation(604, 10);
 				 operand = new EmptyOperand(); 
 
@@ -2374,10 +2374,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:605:4: str= string
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:605:4: str= string
 				{
 				DebugLocation(605, 8);
-				PushFollow(Follow._string_in_operand1119);
+				PushFollow(Follow._string_in_operand1123);
 				str=@string();
 				PopFollow();
 
@@ -2388,10 +2388,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:606:4: number= numberString
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:606:4: number= numberString
 				{
 				DebugLocation(606, 11);
-				PushFollow(Follow._numberString_in_operand1130);
+				PushFollow(Follow._numberString_in_operand1134);
 				number=numberString();
 				PopFollow();
 
@@ -2402,10 +2402,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:607:4: fn= func
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:607:4: fn= func
 				{
 				DebugLocation(607, 7);
-				PushFollow(Follow._func_in_operand1141);
+				PushFollow(Follow._func_in_operand1145);
 				fn=func();
 				PopFollow();
 
@@ -2416,10 +2416,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:608:4: l= list
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:608:4: l= list
 				{
 				DebugLocation(608, 6);
-				PushFollow(Follow._list_in_operand1152);
+				PushFollow(Follow._list_in_operand1156);
 				l=list();
 				PopFollow();
 
@@ -2492,7 +2492,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_string();
 	partial void LeaveRule_string();
 	// $ANTLR start "string"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:647:1: string returns [String stringValue] : (str= STRING |str= QUOTE_STRING |str= SQUOTE_STRING );
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:647:1: string returns [String stringValue] : (str= STRING |str= QUOTE_STRING |str= SQUOTE_STRING );
 	[GrammarRule("string")]
 	private JqlParser.string_return @string()
 	{
@@ -2508,7 +2508,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(647, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:648:2: (str= STRING |str= QUOTE_STRING |str= SQUOTE_STRING )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:648:2: (str= STRING |str= QUOTE_STRING |str= SQUOTE_STRING )
 			int alt17=3;
 			try { DebugEnterDecision(17, false);
 			switch (input.LA(1))
@@ -2541,10 +2541,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:648:4: str= STRING
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:648:4: str= STRING
 				{
 				DebugLocation(648, 8);
-				str=(IToken)Match(input,STRING,Follow._STRING_in_string1192); 
+				str=(IToken)Match(input,STRING,Follow._STRING_in_string1196); 
 				DebugLocation(648, 17);
 				 retval.stringValue = (str!=null?str.Text:default(string)); 
 
@@ -2552,10 +2552,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:649:4: str= QUOTE_STRING
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:649:4: str= QUOTE_STRING
 				{
 				DebugLocation(649, 8);
-				str=(IToken)Match(input,QUOTE_STRING,Follow._QUOTE_STRING_in_string1203); 
+				str=(IToken)Match(input,QUOTE_STRING,Follow._QUOTE_STRING_in_string1207); 
 				DebugLocation(649, 23);
 				 retval.stringValue = (str!=null?str.Text:default(string)); 
 
@@ -2563,10 +2563,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:650:4: str= SQUOTE_STRING
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:650:4: str= SQUOTE_STRING
 				{
 				DebugLocation(650, 8);
-				str=(IToken)Match(input,SQUOTE_STRING,Follow._SQUOTE_STRING_in_string1214); 
+				str=(IToken)Match(input,SQUOTE_STRING,Follow._SQUOTE_STRING_in_string1218); 
 				DebugLocation(650, 24);
 				 retval.stringValue = (str!=null?str.Text:default(string)); 
 
@@ -2605,7 +2605,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_numberString();
 	partial void LeaveRule_numberString();
 	// $ANTLR start "numberString"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:653:1: numberString returns [String stringValue] : num= ( POSNUMBER | NEGNUMBER ) ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:653:1: numberString returns [String stringValue] : num= ( POSNUMBER | NEGNUMBER ) ;
 	[GrammarRule("numberString")]
 	private JqlParser.numberString_return numberString()
 	{
@@ -2621,9 +2621,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(653, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:654:2: (num= ( POSNUMBER | NEGNUMBER ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:654:2: (num= ( POSNUMBER | NEGNUMBER ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:654:4: num= ( POSNUMBER | NEGNUMBER )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:654:4: num= ( POSNUMBER | NEGNUMBER )
 			{
 			DebugLocation(654, 8);
 
@@ -2669,9 +2669,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_stringValueCheck();
 	partial void LeaveRule_stringValueCheck();
 	// $ANTLR start "stringValueCheck"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:660:1: stringValueCheck returns [String stringValue] : str= string EOF ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:660:8: public stringValueCheck returns [String stringValue] : str= string EOF ;
 	[GrammarRule("stringValueCheck")]
-	private String stringValueCheck()
+	public String stringValueCheck()
 	{
 		EnterRule_stringValueCheck();
 		EnterRule("stringValueCheck", 18);
@@ -2685,19 +2685,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(660, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:661:2: (str= string EOF )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:661:2: (str= string EOF )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:661:4: str= string EOF
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:661:4: str= string EOF
 			{
 			DebugLocation(661, 8);
-			PushFollow(Follow._string_in_stringValueCheck1264);
+			PushFollow(Follow._string_in_stringValueCheck1270);
 			str=@string();
 			PopFollow();
 
 			DebugLocation(661, 17);
 			 stringValue = (str!=null?((JqlParser.string_return)str).stringValue:default(String)); 
 			DebugLocation(661, 54);
-			Match(input,EOF,Follow._EOF_in_stringValueCheck1268); 
+			Match(input,EOF,Follow._EOF_in_stringValueCheck1274); 
 
 			}
 
@@ -2723,7 +2723,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_list();
 	partial void LeaveRule_list();
 	// $ANTLR start "list"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:667:1: list returns [IOperand list] : LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:667:1: list returns [IOperand list] : LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN ;
 	[GrammarRule("list")]
 	private IOperand list()
 	{
@@ -2743,21 +2743,21 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(667, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:675:2: ( LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:675:2: ( LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:675:4: LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:675:4: LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN
 			{
 			DebugLocation(675, 4);
-			Match(input,LPAREN,Follow._LPAREN_in_list1298); 
+			Match(input,LPAREN,Follow._LPAREN_in_list1304); 
 			DebugLocation(675, 16);
-			PushFollow(Follow._operand_in_list1304);
+			PushFollow(Follow._operand_in_list1310);
 			opnd=operand();
 			PopFollow();
 
 			DebugLocation(675, 26);
 			args.Add(opnd);
 			DebugLocation(676, 3);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:676:3: ( COMMA opnd= operand )*
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:676:3: ( COMMA opnd= operand )*
 			try { DebugEnterSubRule(18);
 			while (true)
 			{
@@ -2776,12 +2776,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:676:4: COMMA opnd= operand
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:676:4: COMMA opnd= operand
 					{
 					DebugLocation(676, 4);
-					Match(input,COMMA,Follow._COMMA_in_list1312); 
+					Match(input,COMMA,Follow._COMMA_in_list1318); 
 					DebugLocation(676, 15);
-					PushFollow(Follow._operand_in_list1318);
+					PushFollow(Follow._operand_in_list1324);
 					opnd=operand();
 					PopFollow();
 
@@ -2802,7 +2802,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			} finally { DebugExitSubRule(18); }
 
 			DebugLocation(676, 54);
-			Match(input,RPAREN,Follow._RPAREN_in_list1324); 
+			Match(input,RPAREN,Follow._RPAREN_in_list1330); 
 			DebugLocation(676, 61);
 			list = new MultiValueOperand(args);
 
@@ -2842,7 +2842,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_func();
 	partial void LeaveRule_func();
 	// $ANTLR start "func"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:693:1: func returns [FunctionOperand func] : fname= funcName LPAREN ( arglist )? RPAREN ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:693:1: func returns [FunctionOperand func] : fname= funcName LPAREN ( arglist )? RPAREN ;
 	[GrammarRule("func")]
 	private FunctionOperand func()
 	{
@@ -2859,19 +2859,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(693, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:694:2: (fname= funcName LPAREN ( arglist )? RPAREN )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:694:2: (fname= funcName LPAREN ( arglist )? RPAREN )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:694:4: fname= funcName LPAREN ( arglist )? RPAREN
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:694:4: fname= funcName LPAREN ( arglist )? RPAREN
 			{
 			DebugLocation(694, 10);
-			PushFollow(Follow._funcName_in_func1362);
+			PushFollow(Follow._funcName_in_func1368);
 			fname=funcName();
 			PopFollow();
 
 			DebugLocation(694, 21);
-			Match(input,LPAREN,Follow._LPAREN_in_func1364); 
+			Match(input,LPAREN,Follow._LPAREN_in_func1370); 
 			DebugLocation(694, 28);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:694:28: ( arglist )?
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:694:28: ( arglist )?
 			int alt19=2;
 			try { DebugEnterSubRule(19);
 			try { DebugEnterDecision(19, false);
@@ -2886,10 +2886,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:694:28: arglist
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:694:28: arglist
 				{
 				DebugLocation(694, 28);
-				PushFollow(Follow._arglist_in_func1366);
+				PushFollow(Follow._arglist_in_func1372);
 				arglist7=arglist();
 				PopFollow();
 
@@ -2901,7 +2901,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			} finally { DebugExitSubRule(19); }
 
 			DebugLocation(694, 37);
-			Match(input,RPAREN,Follow._RPAREN_in_func1369); 
+			Match(input,RPAREN,Follow._RPAREN_in_func1375); 
 			DebugLocation(695, 2);
 
 				    List<string> args = arglist7 == null ? new List<string>() : arglist7;
@@ -2956,7 +2956,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_funcName();
 	partial void LeaveRule_funcName();
 	// $ANTLR start "funcName"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:728:1: funcName returns [string name] : ( string |num= numberString );
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:728:1: funcName returns [string name] : ( string |num= numberString );
 	[GrammarRule("funcName")]
 	private string funcName()
 	{
@@ -2973,7 +2973,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(728, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:729:2: ( string |num= numberString )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:729:2: ( string |num= numberString )
 			int alt20=2;
 			try { DebugEnterDecision(20, false);
 			int LA20_1 = input.LA(1);
@@ -2997,10 +2997,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:729:4: string
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:729:4: string
 				{
 				DebugLocation(729, 4);
-				PushFollow(Follow._string_in_funcName1406);
+				PushFollow(Follow._string_in_funcName1412);
 				string8=@string();
 				PopFollow();
 
@@ -3011,10 +3011,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:730:4: num= numberString
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:730:4: num= numberString
 				{
 				DebugLocation(730, 8);
-				PushFollow(Follow._numberString_in_funcName1417);
+				PushFollow(Follow._numberString_in_funcName1423);
 				num=numberString();
 				PopFollow();
 
@@ -3047,9 +3047,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_funcNameCheck();
 	partial void LeaveRule_funcNameCheck();
 	// $ANTLR start "funcNameCheck"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:736:1: funcNameCheck returns [string name] : fname= funcName EOF ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:736:8: public funcNameCheck returns [string name] : fname= funcName EOF ;
 	[GrammarRule("funcNameCheck")]
-	private string funcNameCheck()
+	public string funcNameCheck()
 	{
 		EnterRule_funcNameCheck();
 		EnterRule("funcNameCheck", 22);
@@ -3063,19 +3063,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(736, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:737:2: (fname= funcName EOF )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:737:2: (fname= funcName EOF )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:737:4: fname= funcName EOF
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:737:4: fname= funcName EOF
 			{
 			DebugLocation(737, 10);
-			PushFollow(Follow._funcName_in_funcNameCheck1441);
+			PushFollow(Follow._funcName_in_funcNameCheck1449);
 			fname=funcName();
 			PopFollow();
 
 			DebugLocation(737, 21);
 			 name = fname; 
 			DebugLocation(737, 46);
-			Match(input,EOF,Follow._EOF_in_funcNameCheck1445); 
+			Match(input,EOF,Follow._EOF_in_funcNameCheck1453); 
 
 			}
 
@@ -3101,7 +3101,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_arglist();
 	partial void LeaveRule_arglist();
 	// $ANTLR start "arglist"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:743:1: arglist returns [List<string> args] : str= argument ( COMMA str= argument )* ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:743:1: arglist returns [List<string> args] : str= argument ( COMMA str= argument )* ;
 	[GrammarRule("arglist")]
 	private List<string> arglist()
 	{
@@ -3120,19 +3120,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(743, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:757:2: (str= argument ( COMMA str= argument )* )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:757:2: (str= argument ( COMMA str= argument )* )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:757:4: str= argument ( COMMA str= argument )*
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:757:4: str= argument ( COMMA str= argument )*
 			{
 			DebugLocation(757, 8);
-			PushFollow(Follow._argument_in_arglist1478);
+			PushFollow(Follow._argument_in_arglist1486);
 			str=argument();
 			PopFollow();
 
 			DebugLocation(757, 19);
 			 args.Add(str); 
 			DebugLocation(758, 2);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:758:2: ( COMMA str= argument )*
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:758:2: ( COMMA str= argument )*
 			try { DebugEnterSubRule(21);
 			while (true)
 			{
@@ -3151,12 +3151,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:758:3: COMMA str= argument
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:758:3: COMMA str= argument
 					{
 					DebugLocation(758, 3);
-					Match(input,COMMA,Follow._COMMA_in_arglist1484); 
+					Match(input,COMMA,Follow._COMMA_in_arglist1492); 
 					DebugLocation(758, 13);
-					PushFollow(Follow._argument_in_arglist1490);
+					PushFollow(Follow._argument_in_arglist1498);
 					str=argument();
 					PopFollow();
 
@@ -3211,7 +3211,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_propertyArgument();
 	partial void LeaveRule_propertyArgument();
 	// $ANTLR start "propertyArgument"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:761:1: propertyArgument returns [string arg] : a= argument ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:761:1: propertyArgument returns [string arg] : a= argument ;
 	[GrammarRule("propertyArgument")]
 	private string propertyArgument()
 	{
@@ -3227,12 +3227,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(761, 5);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:762:2: (a= argument )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:762:2: (a= argument )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:762:4: a= argument
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:762:4: a= argument
 			{
 			DebugLocation(762, 6);
-			PushFollow(Follow._argument_in_propertyArgument1514);
+			PushFollow(Follow._argument_in_propertyArgument1522);
 			a=argument();
 			PopFollow();
 
@@ -3281,7 +3281,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_argument();
 	partial void LeaveRule_argument();
 	// $ANTLR start "argument"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:786:1: argument returns [string arg] : (str= string |number= numberString );
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:786:1: argument returns [string arg] : (str= string |number= numberString );
 	[GrammarRule("argument")]
 	private string argument()
 	{
@@ -3298,7 +3298,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(786, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:787:2: (str= string |number= numberString )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:787:2: (str= string |number= numberString )
 			int alt22=2;
 			try { DebugEnterDecision(22, false);
 			int LA22_1 = input.LA(1);
@@ -3322,10 +3322,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:787:4: str= string
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:787:4: str= string
 				{
 				DebugLocation(787, 8);
-				PushFollow(Follow._string_in_argument1536);
+				PushFollow(Follow._string_in_argument1544);
 				str=@string();
 				PopFollow();
 
@@ -3336,10 +3336,10 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:788:4: number= numberString
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:788:4: number= numberString
 				{
 				DebugLocation(788, 11);
-				PushFollow(Follow._numberString_in_argument1548);
+				PushFollow(Follow._numberString_in_argument1556);
 				number=numberString();
 				PopFollow();
 
@@ -3386,9 +3386,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_argumentCheck();
 	partial void LeaveRule_argumentCheck();
 	// $ANTLR start "argumentCheck"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:810:1: argumentCheck returns [string arg] : a= argument EOF ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:810:8: public argumentCheck returns [string arg] : a= argument EOF ;
 	[GrammarRule("argumentCheck")]
-	private string argumentCheck()
+	public string argumentCheck()
 	{
 		EnterRule_argumentCheck();
 		EnterRule("argumentCheck", 26);
@@ -3402,19 +3402,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(810, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:811:2: (a= argument EOF )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:811:2: (a= argument EOF )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:811:4: a= argument EOF
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:811:4: a= argument EOF
 			{
 			DebugLocation(811, 6);
-			PushFollow(Follow._argument_in_argumentCheck1579);
+			PushFollow(Follow._argument_in_argumentCheck1589);
 			a=argument();
 			PopFollow();
 
 			DebugLocation(811, 17);
 			 arg = a; 
 			DebugLocation(811, 36);
-			Match(input,EOF,Follow._EOF_in_argumentCheck1583); 
+			Match(input,EOF,Follow._EOF_in_argumentCheck1593); 
 
 			}
 
@@ -3440,7 +3440,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_orderBy();
 	partial void LeaveRule_orderBy();
 	// $ANTLR start "orderBy"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:817:1: orderBy returns [IOrderBy order] : ORDER BY f= searchSort ( COMMA f= searchSort )* ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:817:1: orderBy returns [IOrderBy order] : ORDER BY f= searchSort ( COMMA f= searchSort )* ;
 	[GrammarRule("orderBy")]
 	private IOrderBy orderBy()
 	{
@@ -3459,23 +3459,23 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(817, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:821:2: ( ORDER BY f= searchSort ( COMMA f= searchSort )* )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:821:2: ( ORDER BY f= searchSort ( COMMA f= searchSort )* )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:821:4: ORDER BY f= searchSort ( COMMA f= searchSort )*
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:821:4: ORDER BY f= searchSort ( COMMA f= searchSort )*
 			{
 			DebugLocation(821, 4);
-			Match(input,ORDER,Follow._ORDER_in_orderBy1607); 
+			Match(input,ORDER,Follow._ORDER_in_orderBy1617); 
 			DebugLocation(821, 10);
-			Match(input,BY,Follow._BY_in_orderBy1609); 
+			Match(input,BY,Follow._BY_in_orderBy1619); 
 			DebugLocation(821, 15);
-			PushFollow(Follow._searchSort_in_orderBy1615);
+			PushFollow(Follow._searchSort_in_orderBy1625);
 			f=searchSort();
 			PopFollow();
 
 			DebugLocation(821, 28);
 			 args.Add(f); 
 			DebugLocation(822, 3);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:822:3: ( COMMA f= searchSort )*
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:822:3: ( COMMA f= searchSort )*
 			try { DebugEnterSubRule(23);
 			while (true)
 			{
@@ -3494,12 +3494,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow/Models/Search/Jql/Jql.g:822:4: COMMA f= searchSort
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:822:4: COMMA f= searchSort
 					{
 					DebugLocation(822, 4);
-					Match(input,COMMA,Follow._COMMA_in_orderBy1622); 
+					Match(input,COMMA,Follow._COMMA_in_orderBy1632); 
 					DebugLocation(822, 12);
-					PushFollow(Follow._searchSort_in_orderBy1628);
+					PushFollow(Follow._searchSort_in_orderBy1638);
 					f=searchSort();
 					PopFollow();
 
@@ -3566,7 +3566,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_searchSort();
 	partial void LeaveRule_searchSort();
 	// $ANTLR start "searchSort"
-	// ../../QuoteFlow/Models/Search/Jql/Jql.g:848:1: searchSort returns [SearchSort sort] : f= field (o= DESC |o= ASC )? ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:848:1: searchSort returns [SearchSort sort] : f= field (o= DESC |o= ASC )? ;
 	[GrammarRule("searchSort")]
 	private SearchSort searchSort()
 	{
@@ -3583,17 +3583,17 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		DebugLocation(848, 1);
 		try
 		{
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:849:2: (f= field (o= DESC |o= ASC )? )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:849:2: (f= field (o= DESC |o= ASC )? )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:849:4: f= field (o= DESC |o= ASC )?
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:849:4: f= field (o= DESC |o= ASC )?
 			{
 			DebugLocation(849, 6);
-			PushFollow(Follow._field_in_searchSort1671);
+			PushFollow(Follow._field_in_searchSort1681);
 			f=field();
 			PopFollow();
 
 			DebugLocation(849, 14);
-			// ../../QuoteFlow/Models/Search/Jql/Jql.g:849:14: (o= DESC |o= ASC )?
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:849:14: (o= DESC |o= ASC )?
 			int alt24=3;
 			try { DebugEnterSubRule(24);
 			try { DebugEnterDecision(24, false);
@@ -3612,19 +3612,19 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:849:15: o= DESC
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:849:15: o= DESC
 				{
 				DebugLocation(849, 17);
-				o=(IToken)Match(input,DESC,Follow._DESC_in_searchSort1678); 
+				o=(IToken)Match(input,DESC,Follow._DESC_in_searchSort1688); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow/Models/Search/Jql/Jql.g:849:26: o= ASC
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g:849:26: o= ASC
 				{
 				DebugLocation(849, 28);
-				o=(IToken)Match(input,ASC,Follow._ASC_in_searchSort1686); 
+				o=(IToken)Match(input,ASC,Follow._ASC_in_searchSort1696); 
 
 				}
 				break;
@@ -3693,114 +3693,114 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	#region Follow sets
 	private static class Follow
 	{
-		public static readonly BitSet _clause_in_query85 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _orderBy_in_query95 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_query99 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _orClause_in_clause135 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _andClause_in_orClause166 = new BitSet(new ulong[]{0x400000000002UL});
-		public static readonly BitSet _OR_in_orClause171 = new BitSet(new ulong[]{0xC14048400020200UL});
-		public static readonly BitSet _andClause_in_orClause177 = new BitSet(new ulong[]{0x400000000002UL});
-		public static readonly BitSet _notClause_in_andClause210 = new BitSet(new ulong[]{0x82UL});
-		public static readonly BitSet _AND_in_andClause215 = new BitSet(new ulong[]{0xC14048400020200UL});
-		public static readonly BitSet _notClause_in_andClause221 = new BitSet(new ulong[]{0x82UL});
-		public static readonly BitSet _set_in_notClause244 = new BitSet(new ulong[]{0xC14048400020200UL});
-		public static readonly BitSet _notClause_in_notClause256 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _subClause_in_notClause263 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _terminalClause_in_notClause291 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LPAREN_in_subClause323 = new BitSet(new ulong[]{0xC14048400020200UL});
-		public static readonly BitSet _orClause_in_subClause325 = new BitSet(new ulong[]{0x80000000000000UL});
-		public static readonly BitSet _RPAREN_in_subClause327 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _field_in_terminalClause368 = new BitSet(new ulong[]{0x40001C1AD8402000UL});
-		public static readonly BitSet _operator_in_terminalClause374 = new BitSet(new ulong[]{0x2C14208404301412UL});
-		public static readonly BitSet _operand_in_terminalClause384 = new BitSet(new ulong[]{0x2000200004101412UL});
-		public static readonly BitSet _historyPredicate_in_terminalClause389 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _historyPredicate_in_terminalClause397 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _terminalHistoryPredicate_in_historyPredicate437 = new BitSet(new ulong[]{0x2000200004101412UL});
-		public static readonly BitSet _historyPredicateOperator_in_terminalHistoryPredicate461 = new BitSet(new ulong[]{0xC14008400200000UL});
-		public static readonly BitSet _operand_in_terminalHistoryPredicate463 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _FROM_in_historyPredicateOperator482 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _TO_in_historyPredicateOperator489 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _BY_in_historyPredicateOperator496 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _BEFORE_in_historyPredicateOperator503 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _AFTER_in_historyPredicateOperator510 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ON_in_historyPredicateOperator517 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _DURING_in_historyPredicateOperator525 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _EQUALS_in_operator546 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NOT_EQUALS_in_operator553 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LIKE_in_operator560 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NOT_LIKE_in_operator567 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LT_in_operator575 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _GT_in_operator582 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LTEQ_in_operator589 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _GTEQ_in_operator596 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IN_in_operator603 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IS_in_operator610 = new BitSet(new ulong[]{0x40000000000UL});
-		public static readonly BitSet _NOT_in_operator612 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IS_in_operator619 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NOT_in_operator626 = new BitSet(new ulong[]{0x40000000UL});
-		public static readonly BitSet _IN_in_operator628 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _WAS_in_operator635 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _WAS_in_operator642 = new BitSet(new ulong[]{0x40000000000UL});
-		public static readonly BitSet _NOT_in_operator644 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _WAS_in_operator654 = new BitSet(new ulong[]{0x40000000UL});
-		public static readonly BitSet _IN_in_operator656 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _WAS_in_operator666 = new BitSet(new ulong[]{0x40000000000UL});
-		public static readonly BitSet _NOT_in_operator668 = new BitSet(new ulong[]{0x40000000UL});
-		public static readonly BitSet _IN_in_operator670 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _CHANGED_in_operator680 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _numberString_in_field744 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _string_in_field786 = new BitSet(new ulong[]{0x100000002UL});
-		public static readonly BitSet _customField_in_field808 = new BitSet(new ulong[]{0x100000002UL});
-		public static readonly BitSet _LBRACKET_in_field856 = new BitSet(new ulong[]{0xC14008000000000UL});
-		public static readonly BitSet _argument_in_field894 = new BitSet(new ulong[]{0x20000000000000UL});
-		public static readonly BitSet _RBRACKET_in_field926 = new BitSet(new ulong[]{0xC14008100000002UL});
-		public static readonly BitSet _propertyArgument_in_field967 = new BitSet(new ulong[]{0xC14008100000002UL});
-		public static readonly BitSet _CUSTOMFIELD_in_customField1037 = new BitSet(new ulong[]{0x100000000UL});
-		public static readonly BitSet _LBRACKET_in_customField1039 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _POSNUMBER_in_customField1045 = new BitSet(new ulong[]{0x20000000000000UL});
-		public static readonly BitSet _RBRACKET_in_customField1047 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _field_in_fieldCheck1087 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_fieldCheck1091 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _EMPTY_in_operand1108 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _string_in_operand1119 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _numberString_in_operand1130 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _func_in_operand1141 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _list_in_operand1152 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _STRING_in_string1192 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _QUOTE_STRING_in_string1203 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _SQUOTE_STRING_in_string1214 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _set_in_numberString1235 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _string_in_stringValueCheck1264 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_stringValueCheck1268 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LPAREN_in_list1298 = new BitSet(new ulong[]{0xC14008400200000UL});
-		public static readonly BitSet _operand_in_list1304 = new BitSet(new ulong[]{0x80000000004000UL});
-		public static readonly BitSet _COMMA_in_list1312 = new BitSet(new ulong[]{0xC14008400200000UL});
-		public static readonly BitSet _operand_in_list1318 = new BitSet(new ulong[]{0x80000000004000UL});
-		public static readonly BitSet _RPAREN_in_list1324 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _funcName_in_func1362 = new BitSet(new ulong[]{0x400000000UL});
-		public static readonly BitSet _LPAREN_in_func1364 = new BitSet(new ulong[]{0xC94008000000000UL});
-		public static readonly BitSet _arglist_in_func1366 = new BitSet(new ulong[]{0x80000000000000UL});
-		public static readonly BitSet _RPAREN_in_func1369 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _string_in_funcName1406 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _numberString_in_funcName1417 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _funcName_in_funcNameCheck1441 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_funcNameCheck1445 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _argument_in_arglist1478 = new BitSet(new ulong[]{0x4002UL});
-		public static readonly BitSet _COMMA_in_arglist1484 = new BitSet(new ulong[]{0xC14008000000000UL});
-		public static readonly BitSet _argument_in_arglist1490 = new BitSet(new ulong[]{0x4002UL});
-		public static readonly BitSet _argument_in_propertyArgument1514 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _string_in_argument1536 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _numberString_in_argument1548 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _argument_in_argumentCheck1579 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_argumentCheck1583 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ORDER_in_orderBy1607 = new BitSet(new ulong[]{0x1000UL});
-		public static readonly BitSet _BY_in_orderBy1609 = new BitSet(new ulong[]{0xC14008000020000UL});
-		public static readonly BitSet _searchSort_in_orderBy1615 = new BitSet(new ulong[]{0x4002UL});
-		public static readonly BitSet _COMMA_in_orderBy1622 = new BitSet(new ulong[]{0xC14008000020000UL});
-		public static readonly BitSet _searchSort_in_orderBy1628 = new BitSet(new ulong[]{0x4002UL});
-		public static readonly BitSet _field_in_searchSort1671 = new BitSet(new ulong[]{0x40102UL});
-		public static readonly BitSet _DESC_in_searchSort1678 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASC_in_searchSort1686 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _clause_in_query87 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _orderBy_in_query97 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_query101 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _orClause_in_clause137 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _andClause_in_orClause168 = new BitSet(new ulong[]{0x400000000002UL});
+		public static readonly BitSet _OR_in_orClause173 = new BitSet(new ulong[]{0xC14048400020200UL});
+		public static readonly BitSet _andClause_in_orClause179 = new BitSet(new ulong[]{0x400000000002UL});
+		public static readonly BitSet _notClause_in_andClause212 = new BitSet(new ulong[]{0x82UL});
+		public static readonly BitSet _AND_in_andClause217 = new BitSet(new ulong[]{0xC14048400020200UL});
+		public static readonly BitSet _notClause_in_andClause223 = new BitSet(new ulong[]{0x82UL});
+		public static readonly BitSet _set_in_notClause246 = new BitSet(new ulong[]{0xC14048400020200UL});
+		public static readonly BitSet _notClause_in_notClause258 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _subClause_in_notClause265 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _terminalClause_in_notClause293 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LPAREN_in_subClause325 = new BitSet(new ulong[]{0xC14048400020200UL});
+		public static readonly BitSet _orClause_in_subClause327 = new BitSet(new ulong[]{0x80000000000000UL});
+		public static readonly BitSet _RPAREN_in_subClause329 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _field_in_terminalClause370 = new BitSet(new ulong[]{0x40001C1AD8402000UL});
+		public static readonly BitSet _operator_in_terminalClause376 = new BitSet(new ulong[]{0x2C14208404301412UL});
+		public static readonly BitSet _operand_in_terminalClause386 = new BitSet(new ulong[]{0x2000200004101412UL});
+		public static readonly BitSet _historyPredicate_in_terminalClause391 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _historyPredicate_in_terminalClause399 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _terminalHistoryPredicate_in_historyPredicate439 = new BitSet(new ulong[]{0x2000200004101412UL});
+		public static readonly BitSet _historyPredicateOperator_in_terminalHistoryPredicate463 = new BitSet(new ulong[]{0xC14008400200000UL});
+		public static readonly BitSet _operand_in_terminalHistoryPredicate465 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _FROM_in_historyPredicateOperator484 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _TO_in_historyPredicateOperator491 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _BY_in_historyPredicateOperator498 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _BEFORE_in_historyPredicateOperator505 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _AFTER_in_historyPredicateOperator512 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ON_in_historyPredicateOperator519 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _DURING_in_historyPredicateOperator527 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _EQUALS_in_operator548 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NOT_EQUALS_in_operator555 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LIKE_in_operator562 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NOT_LIKE_in_operator569 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LT_in_operator577 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _GT_in_operator584 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LTEQ_in_operator591 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _GTEQ_in_operator598 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IN_in_operator605 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IS_in_operator612 = new BitSet(new ulong[]{0x40000000000UL});
+		public static readonly BitSet _NOT_in_operator614 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IS_in_operator621 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NOT_in_operator628 = new BitSet(new ulong[]{0x40000000UL});
+		public static readonly BitSet _IN_in_operator630 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _WAS_in_operator637 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _WAS_in_operator644 = new BitSet(new ulong[]{0x40000000000UL});
+		public static readonly BitSet _NOT_in_operator646 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _WAS_in_operator656 = new BitSet(new ulong[]{0x40000000UL});
+		public static readonly BitSet _IN_in_operator658 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _WAS_in_operator668 = new BitSet(new ulong[]{0x40000000000UL});
+		public static readonly BitSet _NOT_in_operator670 = new BitSet(new ulong[]{0x40000000UL});
+		public static readonly BitSet _IN_in_operator672 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _CHANGED_in_operator682 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _numberString_in_field746 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _string_in_field788 = new BitSet(new ulong[]{0x100000002UL});
+		public static readonly BitSet _customField_in_field810 = new BitSet(new ulong[]{0x100000002UL});
+		public static readonly BitSet _LBRACKET_in_field858 = new BitSet(new ulong[]{0xC14008000000000UL});
+		public static readonly BitSet _argument_in_field896 = new BitSet(new ulong[]{0x20000000000000UL});
+		public static readonly BitSet _RBRACKET_in_field928 = new BitSet(new ulong[]{0xC14008100000002UL});
+		public static readonly BitSet _propertyArgument_in_field969 = new BitSet(new ulong[]{0xC14008100000002UL});
+		public static readonly BitSet _CUSTOMFIELD_in_customField1039 = new BitSet(new ulong[]{0x100000000UL});
+		public static readonly BitSet _LBRACKET_in_customField1041 = new BitSet(new ulong[]{0x4000000000000UL});
+		public static readonly BitSet _POSNUMBER_in_customField1047 = new BitSet(new ulong[]{0x20000000000000UL});
+		public static readonly BitSet _RBRACKET_in_customField1049 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _field_in_fieldCheck1091 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_fieldCheck1095 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _EMPTY_in_operand1112 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _string_in_operand1123 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _numberString_in_operand1134 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _func_in_operand1145 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _list_in_operand1156 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _STRING_in_string1196 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _QUOTE_STRING_in_string1207 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _SQUOTE_STRING_in_string1218 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _set_in_numberString1239 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _string_in_stringValueCheck1270 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_stringValueCheck1274 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LPAREN_in_list1304 = new BitSet(new ulong[]{0xC14008400200000UL});
+		public static readonly BitSet _operand_in_list1310 = new BitSet(new ulong[]{0x80000000004000UL});
+		public static readonly BitSet _COMMA_in_list1318 = new BitSet(new ulong[]{0xC14008400200000UL});
+		public static readonly BitSet _operand_in_list1324 = new BitSet(new ulong[]{0x80000000004000UL});
+		public static readonly BitSet _RPAREN_in_list1330 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _funcName_in_func1368 = new BitSet(new ulong[]{0x400000000UL});
+		public static readonly BitSet _LPAREN_in_func1370 = new BitSet(new ulong[]{0xC94008000000000UL});
+		public static readonly BitSet _arglist_in_func1372 = new BitSet(new ulong[]{0x80000000000000UL});
+		public static readonly BitSet _RPAREN_in_func1375 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _string_in_funcName1412 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _numberString_in_funcName1423 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _funcName_in_funcNameCheck1449 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_funcNameCheck1453 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _argument_in_arglist1486 = new BitSet(new ulong[]{0x4002UL});
+		public static readonly BitSet _COMMA_in_arglist1492 = new BitSet(new ulong[]{0xC14008000000000UL});
+		public static readonly BitSet _argument_in_arglist1498 = new BitSet(new ulong[]{0x4002UL});
+		public static readonly BitSet _argument_in_propertyArgument1522 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _string_in_argument1544 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _numberString_in_argument1556 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _argument_in_argumentCheck1589 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_argumentCheck1593 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ORDER_in_orderBy1617 = new BitSet(new ulong[]{0x1000UL});
+		public static readonly BitSet _BY_in_orderBy1619 = new BitSet(new ulong[]{0xC14008000020000UL});
+		public static readonly BitSet _searchSort_in_orderBy1625 = new BitSet(new ulong[]{0x4002UL});
+		public static readonly BitSet _COMMA_in_orderBy1632 = new BitSet(new ulong[]{0xC14008000020000UL});
+		public static readonly BitSet _searchSort_in_orderBy1638 = new BitSet(new ulong[]{0x4002UL});
+		public static readonly BitSet _field_in_searchSort1681 = new BitSet(new ulong[]{0x40102UL});
+		public static readonly BitSet _DESC_in_searchSort1688 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASC_in_searchSort1696 = new BitSet(new ulong[]{0x2UL});
 	}
 	#endregion Follow sets
 }

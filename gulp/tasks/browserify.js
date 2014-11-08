@@ -70,7 +70,7 @@ gulp.task('browserify', function() {
       .pipe(isProduction ? uglify({ preserveComments: "some"}) : gutil.noop())
       .pipe(bytediff.stop())
 
-      .pipe(sourcemaps.write('./'))
+      //.pipe(sourcemaps.write('./QuoteFlow/Content/compiled/js'))
       .pipe(gulp.dest('./QuoteFlow/Content/compiled/js'))
 
       // Log when bundling completes!

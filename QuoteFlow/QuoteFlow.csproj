@@ -401,7 +401,11 @@
     <Compile Include="Models\Assets\Fields\IOrderableField.cs" />
     <Compile Include="Models\Assets\Fields\ISearchableField.cs" />
     <Compile Include="Models\Assets\Index\DocumentConstants.cs" />
+    <Compile Include="Models\Assets\Index\Indexers\AssetNameIndexer.cs" />
+    <Compile Include="Models\Assets\Index\Indexers\BaseFieldIndexer.cs" />
+    <Compile Include="Models\Assets\Index\Indexers\FieldIndexerUtil.cs" />
     <Compile Include="Models\Assets\Index\Indexers\IFieldIndexer.cs" />
+    <Compile Include="Models\Assets\Index\Indexers\UserFieldIndexer.cs" />
     <Compile Include="Models\Assets\Search\ClauseNames.cs" />
     <Compile Include="Models\Assets\Search\Constants\AssetIdConstants.cs" />
     <Compile Include="Models\Assets\Search\Constants\ClauseInformation.cs" />
@@ -415,6 +419,7 @@
     <Compile Include="Models\Assets\Search\Handlers\ISearchHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\Handlers\SimpleSearchHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\ILuceneFieldSorter.cs" />
+    <Compile Include="Models\Assets\Search\IQueryCache.cs" />
     <Compile Include="Models\Assets\Search\ISearchContext.cs" />
     <Compile Include="Models\Assets\Search\ISystemClauseHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\Managers\AssetSearcherManager.cs" />
@@ -422,6 +427,7 @@
     <Compile Include="Models\Assets\Search\Managers\ISearchHandlerManager.cs" />
     <Compile Include="Models\Assets\Search\Managers\SearchHandlerManager.cs" />
     <Compile Include="Models\Assets\Search\SearchContext.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\CreatorSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Information\GenericSearcherInformation.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\ISearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\SystemClauseHandlerFactory.cs" />
@@ -435,16 +441,23 @@
     <Compile Include="Models\Search\Jql\Clauses\IClauseInformation.cs" />
     <Compile Include="Models\Search\Jql\Context\AllCatalogsContext.cs" />
     <Compile Include="Models\Search\Jql\Context\CatalogAssetTypeContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\CatalogAssetTypeContexts.cs" />
     <Compile Include="Models\Search\Jql\Context\CatalogContext.cs" />
     <Compile Include="Models\Search\Jql\Context\ClauseContext.cs" />
     <Compile Include="Models\Search\Jql\Context\ICatalogAssetTypeContext.cs" />
     <Compile Include="Models\Search\Jql\Context\ICatalogContext.cs" />
     <Compile Include="Models\Search\Jql\Context\IClauseContext.cs" />
     <Compile Include="Models\Search\Jql\Context\IClauseContextFactory.cs" />
+    <Compile Include="Models\Search\Jql\Context\IQueryContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\SimpleClauseContextFactory.cs" />
+    <Compile Include="Models\Search\Jql\Function\AbstractJqlFunction.cs" />
+    <Compile Include="Models\Search\Jql\Function\CurrentUserFunction.cs" />
+    <Compile Include="Models\Search\Jql\Function\IJqlFunction.cs" />
     <Compile Include="Models\Search\Jql\JqlLexerTester.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Search\Jql\NoOpClauseHandler.cs" />
+    <Compile Include="Models\Search\Jql\Operand\JqlOperandResolver.cs" />
     <Compile Include="Models\Search\Jql\OperatorClasses.cs" />
     <Compile Include="Models\Search\Jql\Parser\AntlrPosition.cs" />
     <Compile Include="Models\Search\Jql\Parser\JqlParseErrorMessage.cs" />
@@ -537,10 +550,11 @@
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\Search\Jql\JqlParserTester.cs" />
-    <Compile Include="Models\Search\Jql\Operand\JqlOperandResolver.cs" />
+    <Compile Include="Models\Search\Jql\Operand\IJqlOperandResolver.cs" />
     <Compile Include="Models\Search\Jql\Operand\QueryLiteral.cs" />
     <Compile Include="Models\Search\Jql\Parser\IJqlQueryParser.cs" />
     <Compile Include="Models\Search\Jql\Parser\JqlParserErrorMessages.cs" />
+    <Compile Include="Models\Search\Jql\Parser\JqlQueryParser.cs" />
     <Compile Include="Models\Search\Jql\Parser\ParseResult.cs" />
     <Compile Include="Models\Search\Jql\Permission\ClausePermissionHandler.cs" />
     <Compile Include="Models\Search\Jql\Permission\FieldClausePermissionChecker.cs" />
@@ -549,6 +563,10 @@
     <Compile Include="Models\Search\Jql\Permission\IClauseSanitizer.cs" />
     <Compile Include="Models\Search\Jql\Permission\NoOpClausePermissionChecker.cs" />
     <Compile Include="Models\Search\Jql\Permission\NoOpClauseSanitizer.cs" />
+    <Compile Include="Models\Search\Jql\Query\AbstractEqualityQueryFactory.cs" />
+    <Compile Include="Models\Search\Jql\Query\AbstractOperatorQueryFactory.cs" />
+    <Compile Include="Models\Search\Jql\Query\CatalogClauseQueryFactory.cs" />
+    <Compile Include="Models\Search\Jql\Query\ClauseQueryFactory.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\AndClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\ChangedClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\ClausePrecedence.cs" />
@@ -565,20 +583,26 @@
     <Compile Include="Models\Search\Jql\Query\Clause\Property.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\TerminalClause.cs" />
     <Compile Include="Models\Search\Jql\Query\Clause\WasClause.cs" />
+    <Compile Include="Models\Search\Jql\Query\EqualityQueryFactory.cs" />
     <Compile Include="Models\Search\Jql\Query\FilteredSearcherGroup.cs" />
+    <Compile Include="Models\Search\Jql\Query\GenericClauseQueryFactory.cs" />
     <Compile Include="Models\Search\Jql\Query\History\AndHistoryPredicate.cs" />
     <Compile Include="Models\Search\Jql\Query\History\IHistoryPredicate.cs" />
     <Compile Include="Models\Search\Jql\Query\History\IPredicateVisitor.cs" />
     <Compile Include="Models\Search\Jql\Query\History\TerminalHistoryPredicate.cs" />
     <Compile Include="Models\Search\Jql\Query\IClauseQueryFactory.cs" />
+    <Compile Include="Models\Search\Jql\Query\IOperatorSpecificQueryFactory.cs" />
     <Compile Include="Models\Search\Jql\Query\IQuery.cs" />
     <Compile Include="Models\Search\Jql\Query\IQueryCreationContext.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\ILuceneQueryParserFactory.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\EmptyOperand.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\FunctionOperand.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\FunctionOperandHandler.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\IOperand.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\IOperandHandler.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\IOperandVisitor.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\MultiValueOperand.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\Registry\IJqlFunctionHandlerRegistry.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\SingleValueOperand.cs" />
     <Compile Include="Models\Search\Jql\Query\Operator.cs" />
     <Compile Include="Models\Search\Jql\Query\Order\IOrderBy.cs" />
@@ -591,6 +615,10 @@
     <Compile Include="Models\Search\Jql\Query\Searcher.cs" />
     <Compile Include="Models\Search\Jql\Query\Searchers.cs" />
     <Compile Include="Models\Search\Jql\Query\TermQueryFactory.cs" />
+    <Compile Include="Models\Search\Jql\Resolver\CatalogIndexInfoResolver.cs" />
+    <Compile Include="Models\Search\Jql\Resolver\CatalogResolver.cs" />
+    <Compile Include="Models\Search\Jql\Resolver\IIndexInfoResolver.cs" />
+    <Compile Include="Models\Search\Jql\Resolver\INameResolver.cs" />
     <Compile Include="Models\Search\Jql\SearchRendererHolder.cs" />
     <Compile Include="Models\Search\Jql\SearchRendererValue.cs" />
     <Compile Include="Models\Search\Jql\SearchRendererValueResults.cs" />
@@ -602,6 +630,7 @@
     <Compile Include="Models\Search\Jql\Util\JqlStringSupport.cs" />
     <Compile Include="Models\Search\Jql\Util\ToJqlStringVisitor.cs" />
     <Compile Include="Models\Search\Jql\Validator\ChangedClauseValidator.cs" />
+    <Compile Include="Models\Search\Jql\Validator\ClauseValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\IClauseValidator.cs" />
     <Compile Include="Models\Assets\Search\Searchers\IAssetSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Information\ISearcherInformation.cs" />
@@ -609,6 +638,7 @@
     <Compile Include="Models\Assets\Search\Searchers\SearcherGroupType.cs" />
     <Compile Include="Models\Search\Jql\Validator\IOperatorUsageValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\IValidatorRegistry.cs" />
+    <Compile Include="Models\Search\Jql\Validator\NumberOfArgumentsValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\OperatorUsageValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\SavedFilterClauseValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\SupportedOperatorsValidator.cs" />
@@ -1234,7 +1264,7 @@
     <PropertyGroup>
       <GulpCmdPath>$(SolutionDir)</GulpCmdPath>
       <GulpCommand>gulp</GulpCommand>
-      <AntlrPath>$(SolutionDir)tools\antlr</AntlrPath>
+      <AntlrPath>$(SolutionDir)\tools\antlr</AntlrPath>
       <AntlrGrammerPath>$(ProjectDir)Models\Search\Jql\Jql.g</AntlrGrammerPath>
       <AntlrOutPath>$(ProjectDir)Models\Search\Jql\AntlrGen</AntlrOutPath>
       <AntlrCommand>.\Antlr3.exe $(AntlrGrammerPath) -o $(AntlrOutPath)</AntlrCommand>
@@ -1242,7 +1272,7 @@
     <Message Text="Bundling assets ... " Importance="high" />
     <Exec Command="&quot;$(GulpCommand)&quot;" LogStandardErrorAsError="true" WorkingDirectory="$(GulpCmdPath)" />
     <Message Text="Building Antlr Parser/Lexer" Importance="high" />
-    <Exec Command="&quot;$(AntlrCommand)&quot;" />
+    <Exec Command="&quot;$(AntlrCommand)&quot;" LogStandardErrorAsError="true" WorkingDirectory="$(AntlrPath)" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

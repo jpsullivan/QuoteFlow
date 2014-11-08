@@ -15,6 +15,12 @@
         public const string AssetCreated = "created";
         public const string AssetUpdated = "updated";
 
+        // fields that are just indexed for sorting purposes
+        public const string AssetSortName = LuceneSortFieldPrefix + "name";
+        public const string AssetSortDesc = LuceneSortFieldPrefix + "description";
+        public const string AssetSortCreated = LuceneSortFieldPrefix + "created";
+        public const string AssetSortUpdated = LuceneSortFieldPrefix + "updated";
+
         // A special field that is used for searching for EMPTY values
         public const string AssetNonEmptyFieldIds = "nonemptyfieldids";
         // A special field that is used for searching for constraining EMPTY value searches to the issues that are relevant

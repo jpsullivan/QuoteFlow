@@ -6,6 +6,11 @@ namespace QuoteFlow.Models.Search.Jql.Context
     {
         public CatalogContext(int? catalogId)
         {
+            if (catalogId == null)
+            {
+                throw new ArgumentNullException("catalogId");
+            }
+
             CatalogId = catalogId;
         }
 
@@ -13,7 +18,7 @@ namespace QuoteFlow.Models.Search.Jql.Context
 
         public bool IsAll()
         {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }

@@ -29,28 +29,28 @@ namespace QuoteFlow.Models.Search.Jql.Operand
         {
             SourceOperand = EmptyOperand.EMPTY;
             StringValue = null;
-            LongValue = null;
+            IntValue = null;
         }
 
         public QueryLiteral(IOperand sourceOperand)
         {
             SourceOperand = sourceOperand;
             StringValue = null;
-            LongValue = null;
+            IntValue = null;
         }
 
-        public QueryLiteral(IOperand sourceOperand, long? longValue)
+        public QueryLiteral(IOperand sourceOperand, int? intValue)
         {
             SourceOperand = sourceOperand;
             StringValue = null;
-            LongValue = longValue;
+            IntValue = intValue;
         }
 
         public QueryLiteral(IOperand sourceOperand, string stringValue)
         {
             SourceOperand = sourceOperand;
             StringValue = stringValue;
-            LongValue = null;
+            IntValue = null;
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace QuoteFlow.Models.Search.Jql.Operand
         /// <summary>
         /// 
         /// </summary>
-        public long? LongValue { get; set; }
+        public int? IntValue { get; set; }
 
         /// <summary>
         /// 
@@ -73,7 +73,7 @@ namespace QuoteFlow.Models.Search.Jql.Operand
         /// </summary>
         public bool IsEmpty
         {
-            get { return StringValue == null && LongValue == null; }
+            get { return StringValue == null && IntValue == null; }
         }
 
         /// <summary>
@@ -82,44 +82,12 @@ namespace QuoteFlow.Models.Search.Jql.Operand
         /// <returns></returns>
         public string AsString()
         {
-            return LongValue != null ? LongValue.ToString() : StringValue;
+            return IntValue != null ? IntValue.ToString() : StringValue;
         }
 
         public override string ToString()
         {
-            return (LongValue != null) ? LongValue.ToString() : Convert.ToString(StringValue);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (this == obj)
-            {
-                return true;
-            }
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
-            }
-
-            var that = (QueryLiteral) obj;
-
-            if (LongValue != null ? !LongValue.Equals(that.LongValue) : that.LongValue != null)
-            {
-                return false;
-            }
-            if (StringValue != null ? !StringValue.Equals(that.StringValue) : that.StringValue != null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public override int GetHashCode()
-        {
-            int result = (StringValue != null ? StringValue.GetHashCode() : 0);
-            result = 31 * result + (LongValue != null ? LongValue.GetHashCode() : 0);
-            return result;
+            return (IntValue != null) ? IntValue.ToString() : Convert.ToString(StringValue);
         }
     }
 }

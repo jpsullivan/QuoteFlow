@@ -11,7 +11,7 @@ namespace QuoteFlow.Models.Assets.Search.Constants
     /// </summary>
     public class UserFieldSearchConstants : IClauseInformation
     {
-        private string SearcherId { get; set; }
+        public string SearcherId { get; set; }
         private string FieldUrlParameter { get; set; }
         private string SelectUrlParameter { get; set; }
         private string CurrentUserSelectFlag { get; set; }

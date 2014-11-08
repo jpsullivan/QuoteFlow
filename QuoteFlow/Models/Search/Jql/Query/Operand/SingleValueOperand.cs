@@ -29,9 +29,9 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
         /// <param name="literal">The query literal to convert to an operand; must not be null or empty.</param>
         public SingleValueOperand(QueryLiteral literal)
         {
-            if (literal.LongValue != null)
+            if (literal.IntValue != null)
             {
-                _longValue = literal.LongValue;
+                _longValue = literal.IntValue;
                 _stringValue = null;
             }
             else if (literal.StringValue != null)

@@ -10,7 +10,7 @@
 //    {
 //        private readonly SupportedOperatorsValidator supportedOperatorsValidator;
 //        private readonly SavedFilterResolver savedFilterResolver;
-//        private readonly JqlOperandResolver jqlOperandResolver;
+//        private readonly IJqlOperandResolver jqlOperandResolver;
 //        private readonly SavedFilterCycleDetector savedFilterCycleDetector;
 //
 //        public virtual IMessageSet Validate(User searcher, ITerminalClause terminalClause, long? filterId)
@@ -46,7 +46,7 @@
 //                            ? string.Format("quoteflow.jql.clause.no.value.for.name.from.function: {0}, {1}", rawValue.SourceOperand.Name, terminalClause.Name)
 //                            : string.Format("quoteflow.jql.clause.no.value.for.name: {0}, {1}", terminalClause.Name, rawValue));
 //                    }
-//                    else if (rawValue.LongValue != null)
+//                    else if (rawValue.IntValue != null)
 //                    {
 //                        messageSet.AddErrorMessage(jqlOperandResolver.IsFunctionOperand(rawValue.SourceOperand)
 //                            ? string.Format("quoteflow.jql.clause.no.value.for.name.from.function: {0}, {1}", rawValue.SourceOperand.Name, terminalClause.Name)

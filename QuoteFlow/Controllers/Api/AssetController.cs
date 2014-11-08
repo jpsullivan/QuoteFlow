@@ -5,7 +5,6 @@ using Microsoft.Ajax.Utilities;
 using QuoteFlow.Infrastructure.Enumerables;
 using QuoteFlow.Models;
 using QuoteFlow.Models.RequestModels;
-using QuoteFlow.Models.Search.Jql;
 using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Services.Interfaces;
 using Wintellect.PowerCollections;
@@ -16,15 +15,14 @@ namespace QuoteFlow.Controllers.Api
     {
         #region IoC
 
-        protected IAssetService AssetService { get; set; }
-        protected IAssetSearchService AssetSearchService { get; set; }
+        public IAssetService AssetService { get; protected set; }
+        public IAssetSearchService AssetSearchService { get; protected set; }
 
         public AssetController() { }
 
-        public AssetController(IAssetService assetService,
-            IAssetSearchService assetSearchService)
+        public AssetController(IAssetSearchService assetSearchService)
         {
-            AssetService = assetService;
+//            AssetService = assetService;
             AssetSearchService = assetSearchService;
         }
 

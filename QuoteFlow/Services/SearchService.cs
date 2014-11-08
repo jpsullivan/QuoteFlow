@@ -16,12 +16,12 @@ namespace QuoteFlow.Services
     {
         public IJqlQueryParser JqlQueryParser { get; set; }
         public IJqlStringSupport JqlStringSupport { get; set; }
-        public JqlOperandResolver JqlOperandResolver { get; set; }
+        public IJqlOperandResolver JqlOperandResolver { get; set; }
 
         public SearchService(
             IJqlQueryParser jqlQueryParser, 
             IJqlStringSupport jqlStringSupport, 
-            JqlOperandResolver jqlOperandResolver)
+            IJqlOperandResolver jqlOperandResolver)
         {
             JqlQueryParser = jqlQueryParser;
             JqlStringSupport = jqlStringSupport;

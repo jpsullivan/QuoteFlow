@@ -19,7 +19,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 		/// <param name="searcher">The user performing this action.</param>
 		/// <param name="context">The context for the list of searchers. Must not be null.</param>
 		/// <returns>Collection of <see cref="IAssetSearcher"/>.</returns>
-		ICollection<IAssetSearcher<ISearchableField>> getSearchers(User searcher, SearchContext context);
+		ICollection<IAssetSearcher<ISearchableField>> GetSearchers(User searcher, SearchContext context);
 
 		/// <summary>
 		/// Return all the active searchers in QuoteFlow. It will not return the searchers unless 

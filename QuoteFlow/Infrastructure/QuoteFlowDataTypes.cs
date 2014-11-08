@@ -19,7 +19,7 @@ namespace QuoteFlow.Infrastructure
 //        public static readonly IQuoteFlowDataType PROJECT_CATEGORY = new QuoteFlowDataType(typeof(ProjectCategory));
 //        public static readonly IQuoteFlowDataType VERSION = new QuoteFlowDataType(typeof(Version));
 //        public static readonly IQuoteFlowDataType COMPONENT = new QuoteFlowDataType(typeof(ProjectComponent));
-//        public static readonly IQuoteFlowDataType USER = new QuoteFlowDataType(typeof(User));
+        public static readonly IQuoteFlowDataType User = new QuoteFlowDataType(typeof(User));
 //        public static readonly IQuoteFlowDataType GROUP = new QuoteFlowDataType(typeof(Group));
 //        public static readonly IQuoteFlowDataType PROJECT_ROLE = new QuoteFlowDataType(typeof(ProjectRole));
 //        public static readonly IQuoteFlowDataType PRIORITY = new QuoteFlowDataType(typeof(Priority));

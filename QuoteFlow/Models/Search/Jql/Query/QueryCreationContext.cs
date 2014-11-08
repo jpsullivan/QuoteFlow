@@ -16,37 +16,5 @@
         public User User { get; set; }
 
         public bool SecurityOverriden { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            if (this == obj)
-            {
-                return true;
-            }
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
-            }
-
-            var that = (QueryCreationContext) obj;
-
-            if (SecurityOverriden != that.SecurityOverriden)
-            {
-                return false;
-            }
-            if (User != null ? !User.Equals(that.User) : that.User != null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public override int GetHashCode()
-        {
-            int result = User != null ? User.GetHashCode() : 0;
-            result = 31 * result + (SecurityOverriden ? 1 : 0);
-            return result;
-        }
     }
 }

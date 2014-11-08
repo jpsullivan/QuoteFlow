@@ -977,6 +977,7 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
 }
 .page-type-split .navigator-body .saved-search-selector .search-header-view h1 {
   float: left;
+  font-size: 24px;
   font-weight: normal;
   margin-right: 12px;
   max-width: 18em;

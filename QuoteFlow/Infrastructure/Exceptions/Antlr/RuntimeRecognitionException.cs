@@ -6,7 +6,7 @@ namespace QuoteFlow.Infrastructure.Exceptions.Antlr
 {
     public class RuntimeRecognitionException : RecognitionException
     {
-        private JqlParseErrorMessage ParseErrorMessage { get; set; }
+        public JqlParseErrorMessage ParseErrorMessage { get; set; }
 
         internal RuntimeRecognitionException(JqlParseErrorMessage errorMessage)
             : base()

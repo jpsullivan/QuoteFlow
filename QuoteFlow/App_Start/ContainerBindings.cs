@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
+using System.Reflection;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Hosting;
@@ -14,6 +15,10 @@ using Ninject.Modules;
 using QuoteFlow.Auditing;
 using QuoteFlow.Configuration;
 using QuoteFlow.Infrastructure;
+using QuoteFlow.Models;
+using QuoteFlow.Models.Search.Jql.Parser;
+using QuoteFlow.Models.Search.Jql.Resolver;
+using QuoteFlow.Models.Search.Jql.Util;
 using QuoteFlow.Services;
 using QuoteFlow.Services.Interfaces;
 
@@ -61,6 +66,10 @@ namespace QuoteFlow
 
             Bind<IAssetService>()
                 .To<AssetService>()
+                .InRequestScope();
+
+            Bind<IAssetSearchService>()
+                .To<AssetSearchService>()
                 .InRequestScope();
 
             Bind<IAssetVarService>()
@@ -174,6 +183,25 @@ namespace QuoteFlow
 
             Bind<IUploadFileService>()
                 .To<UploadFileService>();
+
+            #region Jql Support
+
+            Bind<IJqlQueryParser>().To<JqlQueryParser>().InRequestScope();
+            Bind<IJqlStringSupport>().To<JqlStringSupport>().InRequestScope();
+
+            #endregion
+
+            #region Jql Name Resolvers
+
+            Bind<INameResolver<Catalog>>().To<CatalogResolver>().InRequestScope();
+
+            #endregion
+
+            #region Jql IndexInfo Resolvers
+
+            Bind<IIndexInfoResolver<Catalog>>().To<CatalogIndexInfoResolver>().InRequestScope();
+
+            #endregion
         }
 
 //        private void ConfigureSearch(ConfigurationService configuration)
