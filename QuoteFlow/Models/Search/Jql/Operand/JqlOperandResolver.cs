@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using QuoteFlow.Infrastructure.Util;
+using QuoteFlow.Models.Assets.Search;
 using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 using QuoteFlow.Models.Search.Jql.Query.Operand;
+using QuoteFlow.Models.Search.Jql.Query.Operand.Registry;
 
 namespace QuoteFlow.Models.Search.Jql.Operand
 {
@@ -14,14 +14,14 @@ namespace QuoteFlow.Models.Search.Jql.Operand
     /// </summary>
     public class JqlOperandResolver : IJqlOperandResolver
     {
-		private readonly JqlFunctionHandlerRegistry registry;
-		private readonly OperandHandler<EmptyOperand> emptyHandler;
-		private readonly OperandHandler<SingleValueOperand> singleHandler;
-		private readonly OperandHandler<MultiValueOperand> multiHandler;
+		private readonly IJqlFunctionHandlerRegistry registry;
+		private readonly IOperandHandler<EmptyOperand> emptyHandler;
+        private readonly IOperandHandler<SingleValueOperand> singleHandler;
+        private readonly IOperandHandler<MultiValueOperand> multiHandler;
 		// this is a request scoped cache
-		private readonly QueryCache queryCache;
+		private readonly IQueryCache queryCache;
 
-		public JqlOperandResolver(JqlFunctionHandlerRegistry registry, QueryCache queryCache)
+        public JqlOperandResolver(IJqlFunctionHandlerRegistry registry, IQueryCache queryCache)
 		{
 		    if (registry == null)
 		    {
@@ -40,7 +40,7 @@ namespace QuoteFlow.Models.Search.Jql.Operand
 			this.multiHandler = new MultiValueOperandHandler(this);
 		}
 
-        internal JqlOperandResolver(JqlFunctionHandlerRegistry registry, OperandHandler<EmptyOperand> emptyHandler, OperandHandler<SingleValueOperand> singleHandler, OperandHandler<MultiValueOperand> multiHandler, QueryCache queryCache)
+        internal JqlOperandResolver(IJqlFunctionHandlerRegistry registry, IOperandHandler<EmptyOperand> emptyHandler, IOperandHandler<SingleValueOperand> singleHandler, IOperandHandler<MultiValueOperand> multiHandler, IQueryCache queryCache)
 		{
             if (registry == null)
             {

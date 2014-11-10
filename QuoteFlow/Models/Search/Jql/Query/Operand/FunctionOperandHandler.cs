@@ -13,8 +13,6 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
     /// </summary>
     public class FunctionOperandHandler : IOperandHandler<FunctionOperand>
 	{
-		protected internal readonly IJqlFunction jqlFunction;
-
 		public FunctionOperandHandler(IJqlFunction jqlFunction)
 		{
 		    if (jqlFunction == null)
@@ -22,102 +20,36 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
 		        throw new ArgumentNullException("jqlFunction");
 		    }
 
-			this.jqlFunction = jqlFunction;
+			JqlFunction = jqlFunction;
 		}
 
 		public virtual IMessageSet Validate(User searcher, FunctionOperand operand, ITerminalClause terminalClause)
 		{
+		    return JqlFunction.Validate(searcher, operand, terminalClause);
 		}
 
-        public IEnumerable<QueryLiteral> GetValues(QueryCreationContext queryCreationContext, FunctionOperand operand, ITerminalClause terminalClause)
+        public IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, FunctionOperand operand,
+            ITerminalClause terminalClause)
         {
-            throw new NotImplementedException();
+            return JqlFunction.GetValues(queryCreationContext, operand, terminalClause);
         }
 
         public bool IsList()
         {
-            throw new NotImplementedException();
+            return JqlFunction.IsList();
         }
 
         public bool IsEmpty()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool IsFunction()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
-        public virtual IList<QueryLiteral> GetValues(QueryCreationContext queryCreationContext, FunctionOperand operand, TerminalClause terminalClause)
-        {
-            return SafePluginPointAccess.call(new CallableAnonymousInnerClassHelper(this, queryCreationContext, operand, terminalClause)).getOrElse(Collections.emptyList<QueryLiteral>());
-        }
-
-        private class CallableAnonymousInnerClassHelper : Callable<IList<QueryLiteral>>
-        {
-            private readonly FunctionOperandHandler outerInstance;
-
-            private QueryCreationContext queryCreationContext;
-            private FunctionOperand operand;
-            private TerminalClause terminalClause;
-
-            public CallableAnonymousInnerClassHelper(FunctionOperandHandler outerInstance, QueryCreationContext queryCreationContext, FunctionOperand operand, TerminalClause terminalClause)
-            {
-                this.outerInstance = outerInstance;
-                this.queryCreationContext = queryCreationContext;
-                this.operand = operand;
-                this.terminalClause = terminalClause;
-            }
-
-            //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-            //ORIGINAL LINE: @Override public java.util.List<QueryLiteral> call() throws Exception
-            public override IList<QueryLiteral> call()
-            {
-                return outerInstance.jqlFunction.getValues(queryCreationContext, operand, terminalClause);
-            }
-        }
-
-        public virtual bool List
-        {
-            get
-            {
-                return SafePluginPointAccess.call(new CallableAnonymousInnerClassHelper2(this)).getOrElse(false);
-            }
-        }
-
-        private class CallableAnonymousInnerClassHelper2 : Callable<bool?>
-        {
-            private readonly FunctionOperandHandler outerInstance;
-
-            public CallableAnonymousInnerClassHelper2(FunctionOperandHandler outerInstance)
-            {
-                this.outerInstance = outerInstance;
-            }
-
-            //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-            //ORIGINAL LINE: @Override public Boolean call() throws Exception
-            public override bool? call()
-            {
-                return outerInstance.jqlFunction.IsList;
-            }
-        }
-
-        public virtual bool Empty
-        {
-            get { return false; }
-        }
-
-        public virtual bool Function
-        {
-            get { return true; }
-        }
-
-        public virtual IJqlFunction JqlFunction
-        {
-            get { return jqlFunction; }
-        }
-
+        public IJqlFunction JqlFunction { get; set; }
 	}
 
 }

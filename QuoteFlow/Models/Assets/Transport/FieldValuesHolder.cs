@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace QuoteFlow.Models.Assets.Transport
 {
@@ -11,41 +10,6 @@ namespace QuoteFlow.Models.Assets.Transport
 
 		public FieldValuesHolder(int initialCapacity) : base(initialCapacity)
 		{
-		}
-
-		public object Put(string key, object value)
-		{
-			if (value is object[])
-			{
-
-				var list = new ArrayList((object[])value);
-				if (list.Count > 0)
-				{
-					return base[key] = list;
-				}
-			}
-			else if (value is ICollection)
-			{
-				IList list = new ArrayList((ICollection)value);
-				if (list.Count > 0)
-				{
-					return base[key] = list;
-				}
-			}
-//			else if (value is ICustomFieldParams)
-//			{
-//				var @params = (ICustomFieldParams) value;
-//				if (!@params.Empty)
-//				{
-//					return base[key] = @params;
-//				}
-//			}
-			else if (value != null)
-			{
-				return base[key] = value;
-			}
-
-			return null;
 		}
     }
 

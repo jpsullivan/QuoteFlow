@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Models.Assets.Search
 {
@@ -10,7 +11,7 @@ namespace QuoteFlow.Models.Assets.Search
     /// </summary>
     public sealed class ClauseNames
     {
-        public HashSet<string> JqlFieldNames { get; set; }
+        public Set<string> JqlFieldNames { get; set; }
         public string PrimaryName { get; set; }
 
         public ClauseNames(string primaryName)

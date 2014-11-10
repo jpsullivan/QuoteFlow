@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.5.0.2 C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g 2014-11-07 20:12:40
+// $ANTLR 3.5.0.2 C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Models\\Search\\Jql\\Jql.g 2014-11-09 23:10:45
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -144,18 +144,18 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	    }
 
 	    /// <summary>
-	    /// Make sure that the passed token can be turned into a long. In ANTLR there
+	    /// Make sure that the passed token can be turned into an int. In ANTLR there
 	    /// does not appear to be an easy way to limit numbers to a valid Long range, so
-	    /// lets do so in Java.
+	    /// lets do so in C#.
 	    /// </summary>
-	    /// <param name="token"> the token to turn into a long. </param>
-	    /// <returns> the valid long. </returns>
-	    private long ParseLong(IToken token)
+	    /// <param name="token">The token to turn into an int.</param>
+	    /// <returns>The valid int.</returns>
+	    private int ParseInt(IToken token)
 	    {
 	        string text = token.Text;
 	        try
 	        {
-	            return Convert.ToInt64(text);
+	            return Convert.ToInt32(text);
 	        }
 	        catch (Exception e)
 	        {
@@ -2137,7 +2137,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			DebugLocation(570, 47);
 			Match(input,RBRACKET,Follow._RBRACKET_in_customField1049); 
 			DebugLocation(570, 56);
-			 field = JqlCustomFieldId.ToString(ParseLong(posnum)); 
+			 field = JqlCustomFieldId.ToString(ParseInt(posnum)); 
 
 			}
 
@@ -2396,7 +2396,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				PopFollow();
 
 				DebugLocation(606, 26);
-				 operand = new SingleValueOperand(ParseLong((number!=null?((IToken)number.Start):default(IToken)))); 
+				 operand = new SingleValueOperand(ParseInt((number!=null?((IToken)number.Start):default(IToken)))); 
 
 				}
 				break;

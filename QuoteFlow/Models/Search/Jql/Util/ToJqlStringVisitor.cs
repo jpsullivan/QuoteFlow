@@ -74,9 +74,9 @@ namespace QuoteFlow.Models.Search.Jql.Util
 
 		public string Visit(SingleValueOperand singleValueOperand)
 		{
-		    if (singleValueOperand.LongValue != null)
+		    if (singleValueOperand.IntValue != null)
 			{
-				return singleValueOperand.LongValue.ToString();
+				return singleValueOperand.IntValue.ToString();
 			}
 		    return Support.EncodeStringValue(singleValueOperand.StringValue);
 		}

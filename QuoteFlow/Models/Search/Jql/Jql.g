@@ -47,18 +47,18 @@ using QuoteFlow.Models.Search.Jql.Util;
     }
 
     /// <summary>
-    /// Make sure that the passed token can be turned into a long. In ANTLR there
+    /// Make sure that the passed token can be turned into an int. In ANTLR there
     /// does not appear to be an easy way to limit numbers to a valid Long range, so
-    /// lets do so in Java.
+    /// lets do so in C#.
     /// </summary>
-    /// <param name="token"> the token to turn into a long. </param>
-    /// <returns> the valid long. </returns>
-    private long ParseLong(IToken token)
+    /// <param name="token">The token to turn into an int.</param>
+    /// <returns>The valid int.</returns>
+    private int ParseInt(IToken token)
     {
         string text = token.Text;
         try
         {
-            return Convert.ToInt64(text);
+            return Convert.ToInt32(text);
         }
         catch (Exception e)
         {
@@ -567,7 +567,7 @@ field returns [FieldReference field]
 	}
 
 customField returns [string field]
-    : CUSTOMFIELD LBRACKET posnum = POSNUMBER RBRACKET { $field = JqlCustomFieldId.ToString(ParseLong($posnum)); }
+    : CUSTOMFIELD LBRACKET posnum = POSNUMBER RBRACKET { $field = JqlCustomFieldId.ToString(ParseInt($posnum)); }
     ;
     catch [MismatchedTokenException e]
     {
@@ -603,7 +603,7 @@ public fieldCheck returns [FieldReference fieldRef]
 operand	returns [IOperand operand]
 	: EMPTY { $operand = new EmptyOperand(); }
 	| str = string { $operand = new SingleValueOperand($str.stringValue); }
-	| number = numberString { $operand = new SingleValueOperand(ParseLong($numberString.start)); }
+	| number = numberString { $operand = new SingleValueOperand(ParseInt($numberString.start)); }
 	| fn = func {$operand = $fn.func;}
 	| l = list {$operand = $l.list;}
 	;

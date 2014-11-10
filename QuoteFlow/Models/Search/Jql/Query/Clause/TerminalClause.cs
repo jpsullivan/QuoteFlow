@@ -32,7 +32,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
 		/// <param name="name"> the name for the clause. </param>
         /// <param name="oprator"> the operator for the clause. </param>
 		/// <param name="operand"> the long value that will be wrapped in a SingleValueOperand. </param>
-		public TerminalClause(string name, Operator oprator, long operand) : this(name, oprator, new SingleValueOperand(operand), null)
+		public TerminalClause(string name, Operator oprator, int operand) : this(name, oprator, new SingleValueOperand(operand), null)
 		{
 		}
 
@@ -93,7 +93,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
 		/// <param name="name">The name for the clause.</param>
 		/// <param name="values">The long values that will be turned into <seealso cref="SingleValueOperand"/>'s
 		/// containing a long value.</param>
-        public TerminalClause(string name, params long?[] values)
+        public TerminalClause(string name, params int?[] values)
 		{
 			Name = name;
 			if (values.Length == 1)

@@ -368,6 +368,7 @@
     <Compile Include="Infrastructure\Auth\CredentialBuilder.cs" />
     <Compile Include="Infrastructure\Auth\QuoteFlowIdentity.cs" />
     <Compile Include="Infrastructure\Azure\AzureEntityList.cs" />
+    <Compile Include="Infrastructure\Concurrency\AtomicReference.cs" />
     <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
     <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
     <Compile Include="Infrastructure\Enumerables\ListWithDuplicates.cs" />
@@ -403,6 +404,7 @@
     <Compile Include="Models\Assets\Index\DocumentConstants.cs" />
     <Compile Include="Models\Assets\Index\Indexers\AssetNameIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\BaseFieldIndexer.cs" />
+    <Compile Include="Models\Assets\Index\Indexers\CreatorIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\FieldIndexerUtil.cs" />
     <Compile Include="Models\Assets\Index\Indexers\IFieldIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\UserFieldIndexer.cs" />
@@ -426,10 +428,16 @@
     <Compile Include="Models\Assets\Search\Managers\IAssetSearcherManager.cs" />
     <Compile Include="Models\Assets\Search\Managers\ISearchHandlerManager.cs" />
     <Compile Include="Models\Assets\Search\Managers\SearchHandlerManager.cs" />
+    <Compile Include="Models\Assets\Search\QueryCache.cs" />
+    <Compile Include="Models\Assets\Search\QueryCacheClauseHandlerKey.cs" />
+    <Compile Include="Models\Assets\Search\QueryCacheKey.cs" />
+    <Compile Include="Models\Assets\Search\QueryCacheLiteralsKey.cs" />
     <Compile Include="Models\Assets\Search\SearchContext.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\AbstractInitializationSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\CreatorSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Information\GenericSearcherInformation.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\ISearchInputTransformer.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\UserSearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\SystemClauseHandlerFactory.cs" />
     <Compile Include="Models\Assets\Transport\ActionParams.cs" />
     <Compile Include="Models\Assets\Transport\FieldValuesHolder.cs" />
@@ -457,7 +465,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Search\Jql\NoOpClauseHandler.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\EmptyOperandHandler.cs" />
     <Compile Include="Models\Search\Jql\Operand\JqlOperandResolver.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\MultiValueOperandHandler.cs" />
     <Compile Include="Models\Search\Jql\OperatorClasses.cs" />
     <Compile Include="Models\Search\Jql\Parser\AntlrPosition.cs" />
     <Compile Include="Models\Search\Jql\Parser\JqlParseErrorMessage.cs" />
@@ -604,6 +614,7 @@
     <Compile Include="Models\Search\Jql\Query\Operand\MultiValueOperand.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\Registry\IJqlFunctionHandlerRegistry.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\SingleValueOperand.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\SingleValueOperandHandler.cs" />
     <Compile Include="Models\Search\Jql\Query\Operator.cs" />
     <Compile Include="Models\Search\Jql\Query\Order\IOrderBy.cs" />
     <Compile Include="Models\Search\Jql\Query\Order\OrderBy.cs" />

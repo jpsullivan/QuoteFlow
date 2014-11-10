@@ -7,18 +7,18 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
     {
         public const string OPERAND_NAME = "SingleValueOperand";
 
-        private readonly long? _longValue;
+        private readonly int? _intValue;
         private readonly string _stringValue;
 
         public SingleValueOperand(string stringValue)
         {
             _stringValue = stringValue;
-            _longValue = null;
+            _intValue = null;
         }
 
-        public SingleValueOperand(long? longValue)
+        public SingleValueOperand(int? intValue)
         {
-            _longValue = longValue;
+            _intValue = intValue;
             _stringValue = null;
         }
 
@@ -31,13 +31,13 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
         {
             if (literal.IntValue != null)
             {
-                _longValue = literal.IntValue;
+                _intValue = literal.IntValue;
                 _stringValue = null;
             }
             else if (literal.StringValue != null)
             {
                 _stringValue = literal.StringValue;
-                _longValue = null;
+                _intValue = null;
             }
             else
             {
@@ -51,11 +51,11 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
         {
             get
             {
-                if (_longValue == null)
+                if (_intValue == null)
                 {
                     return "\"" + _stringValue + "\"";
                 }
-                return _longValue.ToString();
+                return _intValue.ToString();
             }
         }
 
@@ -64,7 +64,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
             return visitor.Visit(this);
         }
 
-        public long? LongValue { get { return _longValue; } }
+        public int? IntValue { get { return _intValue; } }
 
         public string StringValue { get { return _stringValue; } }
 
@@ -81,7 +81,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
 
             var that = (SingleValueOperand)o;
 
-            if (_longValue != null ? !_longValue.Equals(that._longValue) : that._longValue != null)
+            if (_intValue != null ? !_intValue.Equals(that._intValue) : that._intValue != null)
             {
                 return false;
             }
@@ -95,7 +95,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
 
         public override int GetHashCode()
         {
-            int result = (_longValue != null ? _longValue.GetHashCode() : 0);
+            int result = (_intValue != null ? _intValue.GetHashCode() : 0);
             result = 31 * result + (_stringValue != null ? _stringValue.GetHashCode() : 0);
             return result;
         }

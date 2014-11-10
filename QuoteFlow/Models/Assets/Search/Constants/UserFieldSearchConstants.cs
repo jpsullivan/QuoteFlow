@@ -12,11 +12,11 @@ namespace QuoteFlow.Models.Assets.Search.Constants
     public class UserFieldSearchConstants : IClauseInformation
     {
         public string SearcherId { get; set; }
-        private string FieldUrlParameter { get; set; }
-        private string SelectUrlParameter { get; set; }
-        private string CurrentUserSelectFlag { get; set; }
-        private string SpecificUserSelectFlag { get; set; }
-        private string SpecificGroupSelectFlag { get; set; }
+        public string FieldUrlParameter { get; set; }
+        public string SelectUrlParameter { get; set; }
+        public string CurrentUserSelectFlag { get; set; }
+        public string SpecificUserSelectFlag { get; set; }
+        public string SpecificGroupSelectFlag { get; set; }
 
         public UserFieldSearchConstants(string indexField, ClauseNames names, string fieldUrlParameter, string selectUrlParameter, string searcherId, string fieldId, string currentUserSelectFlag, string specificUserSelectFlag, string specificGroupSelectFlag, Set<Operator> supportedOperators)
         {

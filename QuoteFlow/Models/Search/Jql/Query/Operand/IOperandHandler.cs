@@ -28,7 +28,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
         /// <param name="operand"> the operand to get values from </param>
         /// <param name="terminalClause"> the terminal clause that contains the operand </param>
         /// <returns> a List of objects that represent this Operands raw values. This must be the values specified by the user. </returns>
-        IEnumerable<QueryLiteral> GetValues(QueryCreationContext queryCreationContext, T operand, ITerminalClause terminalClause);
+        IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, T operand, ITerminalClause terminalClause);
 
         /// <returns>True if the operand represents a list of values, false otherwise. </returns>
         bool IsList();
