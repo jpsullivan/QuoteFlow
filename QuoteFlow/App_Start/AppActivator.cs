@@ -6,6 +6,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Elmah;
 using Elmah.Contrib.Mvc;
+using Elmah.Contrib.WebApi;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject.Web.Common;
 using QuoteFlow;
@@ -33,7 +34,7 @@ namespace QuoteFlow
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
 
-            NinjectPreStart();
+            //NinjectPreStart();
             ElmahPreStart();
             GlimpsePreStart();
         }
@@ -75,7 +76,7 @@ namespace QuoteFlow
         private static void RegisterAllRouters()
         {
             AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            //GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             // Set up MVC routes so our app URLs actually work

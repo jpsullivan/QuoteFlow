@@ -33,6 +33,7 @@ namespace QuoteFlow
             yield return new ContainerBindings();
             yield return new DiagnosticsNinjectModule();
             yield return new AuthNinjectModule();
+            //yield return new GetNinjectInstanceForGlimpseModule();
         }
     }
 }

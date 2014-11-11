@@ -8,13 +8,12 @@ namespace QuoteFlow.Models.Assets.Search
     /// </summary>
     public interface ISystemClauseHandlerFactory
     {
-
         /// <summary>
         /// Will return a collection of SearchHandlers that represent the system clause search handlers that are not
         /// associated with a field or a searcher.
         /// </summary>
         /// <returns> SearchHandlers that represent the system clause search handlers that are not
         /// associated with a field or a searcher. </returns>
-        ICollection<SearchHandler> SystemClauseSearchHandlers { get; }
+        ICollection<SearchHandler> GetSystemClauseSearchHandlers();
     }
 }

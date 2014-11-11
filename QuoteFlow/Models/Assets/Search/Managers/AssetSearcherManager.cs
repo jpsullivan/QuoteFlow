@@ -18,7 +18,10 @@ namespace QuoteFlow.Models.Assets.Search.Managers
             return manager.GetSearchers(searcher, context);
         }
 
-        public ICollection<IAssetSearcher<ISearchableField>> AllSearchers { get; private set; }
+        public ICollection<IAssetSearcher<ISearchableField>> GetAllSearchers()
+        {
+            return manager.AllSearchers;
+        }
         
         public ICollection<SearcherGroup> SearcherGroups { get; private set; }
 

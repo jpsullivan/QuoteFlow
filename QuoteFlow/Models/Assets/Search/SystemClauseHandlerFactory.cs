@@ -7,11 +7,37 @@ namespace QuoteFlow.Models.Assets.Search
 {
     public class SystemClauseHandlerFactory : ISystemClauseHandlerFactory
     {
+
         public SystemClauseHandlerFactory()
         {
         }
 
-        public ICollection<SearchHandler> SystemClauseSearchHandlers { get; private set; }
+        private IEnumerable<SearchHandler> systemClauseSearchHandlers = new List<SearchHandler>()
+        {
+            createSavedFilterSearchHandler(),
+            createIssueKeySearchHandler(),
+            createIssueParentSearchHandler(),
+            createCurrentEstimateSearchHandler(),
+            createOriginalEstimateSearchHandler(),
+            createTimeSpentSearchHandler(),
+            createSecurityLevelSearchHandler(),
+            createVotesSearchHandler(),
+            createVoterSearchHandler(),
+            createWatchesSearchHandler(),
+            createWatcherSearchHandler(),
+            createProjectCategoryHandler(),
+            createSubTaskSearchHandler(),
+            createProgressSearchHandler(),
+            createLastViewedHandler(),
+            createAttachmentsSearchHandler(),
+            createIssuePropertySearchHandler(),
+            createStatusCategorySearchHandler()
+        };
+
+        public ICollection<SearchHandler> GetSystemClauseSearchHandlers()
+        {
+            
+        }
 
         private SearchHandler CreateSavedFilterSearchHandler() { throw new NotImplementedException(); }
     }

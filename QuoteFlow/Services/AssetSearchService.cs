@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Lucene.Net.Search.Vectorhighlight;
 using QuoteFlow.Models;
 using QuoteFlow.Models.Assets.Fields;
@@ -109,9 +110,13 @@ namespace QuoteFlow.Services
             return clauses;
         }
 
-        private IActionParams GetActionParameters(MultiDictionary<string, string[]> paramMap)
+        private IActionParams GetActionParameters(IEnumerable<KeyValuePair<string, ICollection<string[]>>> paramMap)
         {
-            var newParams = (MultiDictionary<string, string[]>) paramMap.FindAll(i => !i.Key.StartsWith("__jql_"));
+            var newParams = new MultiDictionary<string, string[]>(true);
+            foreach (var p in paramMap.Where(p => !p.Key.StartsWith("__jql_")))
+            {
+                newParams.Add(p);
+            }
             return new ActionParams(newParams);
         }
 

@@ -28,8 +28,13 @@ namespace QuoteFlow.Models.Assets.Search.Managers
             throw new NotImplementedException();
         }
 
-        public ICollection<IAssetSearcher<ISearchableField>> AllSearchers { get; private set; }
+        public ICollection<IAssetSearcher<ISearchableField>> GetAllSearchers()
+        {
+            return GetAll
+        }
+
         public ICollection<SearcherGroup> SearcherGroups { get; private set; }
+        
         public IAssetSearcher<ISearchableField> GetSearcher(string id)
         {
             throw new NotImplementedException();

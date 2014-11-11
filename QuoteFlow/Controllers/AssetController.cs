@@ -5,6 +5,7 @@ using Dapper;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models;
+using QuoteFlow.Models.Assets.Search.Managers;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Models.ViewModels.Assets;
 using QuoteFlow.Services.Interfaces;
@@ -18,7 +19,7 @@ namespace QuoteFlow.Controllers
         #region IoC
 
         public IAssetService AssetService { get; protected set; }
-        public IAssetSearchService AssetSearchService { get; protected set; }
+        public IAssetSearcherManager AssetSearcherManager { get; protected set; }
         public IAssetVarService AssetVarService { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
         public IManufacturerService ManufacturerService { get; protected set; }
@@ -27,14 +28,14 @@ namespace QuoteFlow.Controllers
         public AssetController() { }
 
         public AssetController(IAssetService assetService, 
-            IAssetSearchService assetSearchService,
+            IAssetSearcherManager assetSearchService,
             IAssetVarService assetVarService,
             ICatalogService catalogService, 
             IManufacturerService manufacturerService,
             IUserService userService)
         {
             AssetService = assetService;
-            AssetSearchService = assetSearchService;
+            AssetSearcherManager = assetSearchService;
             AssetVarService = assetVarService;
             CatalogService = catalogService;
             ManufacturerService = manufacturerService;

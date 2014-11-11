@@ -21,12 +21,12 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 		/// <returns>Collection of <see cref="IAssetSearcher"/>.</returns>
 		ICollection<IAssetSearcher<ISearchableField>> GetSearchers(User searcher, SearchContext context);
 
-		/// <summary>
-		/// Return all the active searchers in QuoteFlow. It will not return the searchers unless 
-		/// they are associated with a field.
-		/// </summary>
-		/// <returns>All the searchers in QuoteFlow.</returns>
-		ICollection<IAssetSearcher<ISearchableField>> AllSearchers {get;}
+        /// <summary>
+        /// Return all the active searchers in QuoteFlow. It will not return the searchers unless 
+        /// they are associated with a field.
+        /// </summary>
+        /// <returns>All the searchers in QuoteFlow.</returns>
+        ICollection<IAssetSearcher<ISearchableField>> GetAllSearchers();
 
 		/// <summary>
 		/// Get all searcher groups. Note that the <see cref="SearcherGroup"/> will

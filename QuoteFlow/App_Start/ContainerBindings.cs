@@ -18,6 +18,7 @@ using QuoteFlow.Infrastructure;
 using QuoteFlow.Models;
 using QuoteFlow.Models.Assets.CustomFields.Searchers.Transformer;
 using QuoteFlow.Models.Assets.Search;
+using QuoteFlow.Models.Assets.Search.Managers;
 using QuoteFlow.Models.Search.Jql.Operand;
 using QuoteFlow.Models.Search.Jql.Parser;
 using QuoteFlow.Models.Search.Jql.Query.Operand.Registry;
@@ -76,6 +77,8 @@ namespace QuoteFlow
                 .To<AssetSearchService>()
                 .InRequestScope();
 
+            Bind<IAssetSearcherManager>().To<AssetSearcherManager>().InRequestScope();
+
             Bind<IAssetVarService>()
                 .To<AssetVarService>()
                 .InRequestScope();
@@ -107,6 +110,8 @@ namespace QuoteFlow
             Bind<IQuoteService>()
                 .To<QuoteService>()
                 .InRequestScope();
+
+            Bind<ISearchHandlerManager>().To<SearchHandlerManager>().InRequestScope();
 
             Bind<ISearchService>()
                 .To<SearchService>()
@@ -201,6 +206,7 @@ namespace QuoteFlow
             Bind<IJqlQueryParser>().To<JqlQueryParser>().InRequestScope();
             Bind<IJqlStringSupport>().To<JqlStringSupport>().InRequestScope();
             Bind<IQueryCache>().To<QueryCache>().InRequestScope();
+            Bind<ISystemClauseHandlerFactory>().To<SystemClauseHandlerFactory>().InRequestScope();
 
             #endregion
 
