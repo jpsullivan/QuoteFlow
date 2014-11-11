@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http.ModelBinding;
 using QuoteFlow.Infrastructure.Extensions;
+using QuoteFlow.Infrastructure.Util;
+using QuoteFlow.Models.Assets.CustomFields.Searchers.Transformer;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Search.Constants;
 using QuoteFlow.Models.Assets.Search.Searchers.Transformer;
@@ -10,7 +13,6 @@ using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 using QuoteFlow.Models.Search.Jql.Query.Operand;
 using QuoteFlow.Services.Interfaces;
-using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Models.Assets.Search.Searchers
 {
@@ -20,13 +22,13 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
     public class UserSearchInputTransformer : ISearchInputTransformer
     {
         //protected internal readonly UserHistoryManager userHistoryManager;
-        protected internal readonly UserFieldSearchConstants searchConstants;
+        protected readonly UserFieldSearchConstants searchConstants;
         //protected internal readonly UserFitsNavigatorHelper userFitsNavigatorHelper;
         //protected internal readonly GroupManager groupManager;
-        protected internal IUserService userManager;
-        protected internal readonly string emptySelectFlag;
+        protected readonly IUserService userService;
+        protected readonly string emptySelectFlag;
         private readonly ICustomField customField;
-        //private readonly CustomFieldInputHelper customFieldInputHelper;
+        private readonly ICustomFieldInputHelper customFieldInputHelper;
 
         public UserSearchInputTransformer(UserFieldSearchConstantsWithEmpty searchConstants, IUserService userManager)
             : this(userManager, searchConstants.EmptySelectFlag, searchConstants, null)
@@ -43,10 +45,10 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
         {
         }
 
-        protected internal UserSearchInputTransformer(IUserService userManager, string emptySelectFlag, UserFieldSearchConstants searchConstants, ICustomField customField)
+        protected internal UserSearchInputTransformer(IUserService userService, string emptySelectFlag, UserFieldSearchConstants searchConstants, ICustomField customField)
         {
             //this.groupManager = groupManager;
-            this.userManager = userManager;
+            this.userService = userService;
             this.emptySelectFlag = emptySelectFlag;
             this.searchConstants = searchConstants;
             //this.userFitsNavigatorHelper = userFitsNavigatorHelper;
@@ -55,7 +57,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
             //this.customFieldInputHelper = customFieldInputHelper;
         }
 
-        public void PopulateFromParams(User searcher, IFieldValuesHolder fieldValuesHolder, IActionParams actionParams)
+        public virtual void PopulateFromParams(User searcher, IFieldValuesHolder fieldValuesHolder, IActionParams actionParams)
         {
             fieldValuesHolder.Add(searchConstants.SelectUrlParameter, actionParams.GetFirstValueForKey(searchConstants.SelectUrlParameter));
 
@@ -68,7 +70,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
             fieldValuesHolder.Add(searchConstants.FieldUrlParameter, actionParams.GetFirstValueForKey(searchConstants.FieldUrlParameter));
         }
 
-        public void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, ModelState errors)
+        public virtual void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, ModelState errors)
         {
             string user = (string) fieldValuesHolder[searchConstants.FieldUrlParameter];
             if (user.HasValue())
@@ -91,7 +93,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
             }
         }
 
-        public void PopulateFromQuery(User searcher, IFieldValuesHolder fieldValuesHolder, IQuery query, ISearchContext searchContext)
+        public virtual void PopulateFromQuery(User searcher, IFieldValuesHolder fieldValuesHolder, IQuery query, ISearchContext searchContext)
         {
             if (query == null)
             {
@@ -100,14 +102,15 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
 
             var clauses = GetMatchingClauses(searchConstants.JqlClauseNames.JqlFieldNames, query);
 
-            foreach (TerminalClause clause in clauses)
+            foreach (var clause in clauses)
             {
                 var operand = clause.Operand;
                 if (operand is SingleValueOperand)
                 {
                     var svop = (SingleValueOperand) operand;
                     string stringValue = svop.StringValue ?? svop.IntValue.ToString();
-                    string user = userFitsNavigatorHelper.checkUser(stringValue);
+                    //string user = userFitsNavigatorHelper.checkUser(stringValue);
+                    string user = null;
                     if (user != null)
                     {
                         fieldValuesHolder.Add(searchConstants.FieldUrlParameter, user);
@@ -116,14 +119,14 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
                 }
                 else if (operand is FunctionOperand)
                 {
-                    FunctionOperand fop = (FunctionOperand)operand;
-                    if (MembersOfFunction.FUNCTION_MEMBERSOF.equalsIgnoreCase(fop.Name) && fop.Args.Count() == 1)
+                    var fop = (FunctionOperand) operand;
+                    if (MembersOfFunction.FUNCTION_MEMBERSOF.Equals(fop.Name, StringComparison.InvariantCultureIgnoreCase) && fop.Args.Count == 1)
                     {
                         string group = fop.Args[0];
                         fieldValuesHolder.Add(searchConstants.FieldUrlParameter, group);
                         fieldValuesHolder.Add(searchConstants.SelectUrlParameter, searchConstants.SpecificGroupSelectFlag);
                     }
-                    else if (CurrentUserFunction.FUNCTION_CURRENT_USER.EqualsIgnoreCase(fop.Name))
+                    else if (CurrentUserFunction.FUNCTION_CURRENT_USER.Equals(fop.Name, StringComparison.InvariantCultureIgnoreCase))
                     {
                         fieldValuesHolder.Add(searchConstants.SelectUrlParameter, searchConstants.CurrentUserSelectFlag);
                     }
@@ -139,7 +142,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
             }
         }
 
-        public bool DoRelevantClausesFitFilterForm(User searcher, IQuery query, ISearchContext searchContext)
+        public virtual bool DoRelevantClausesFitFilterForm(User searcher, IQuery query, ISearchContext searchContext)
         {
             if (query == null || query.WhereClause == null) return true;
 
@@ -157,7 +160,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
                 return false;
             }
 
-            TerminalClause clause = clauses[0];
+            ITerminalClause clause = clauses[0];
             Operator @operator = clause.Operator;
             var operand = clause.Operand;
             if (operand is SingleValueOperand)
@@ -166,16 +169,17 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
 
                 var svop = (SingleValueOperand) operand;
                 string user = svop.StringValue ?? svop.IntValue.ToString();
-                return userFitsNavigatorHelper.checkUser(user) != null;
+                return false;
+                //return userFitsNavigatorHelper.checkUser(user) != null;
             }
             if (operand is FunctionOperand)
             {
-                var fop = (FunctionOperand)operand;
-                if (MembersOfFunction.FUNCTION_MEMBERSOF.equalsIgnoreCase(fop.Name) && fop.Args.Count() == 1 && @operator == Operator.IN)
+                var fop = (FunctionOperand) operand;
+                if (MembersOfFunction.FUNCTION_MEMBERSOF.Equals(fop.Name, StringComparison.InvariantCultureIgnoreCase) && fop.Args.Count == 1 && @operator == Operator.IN)
                 {
                     return true;
                 }
-                if (CurrentUserFunction.FUNCTION_CURRENT_USER.equalsIgnoreCase(fop.Name) && @operator == Operator.EQUALS && IsUserLoggedIn(searcher))
+                if (CurrentUserFunction.FUNCTION_CURRENT_USER.Equals(fop.Name, StringComparison.InvariantCultureIgnoreCase) && @operator == Operator.EQUALS && IsUserLoggedIn(searcher))
                 {
                     return true;
                 }
@@ -188,30 +192,32 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
             return false;
         }
 
-        public IClause GetSearchClause(User searcher, IFieldValuesHolder fieldValuesHolder)
+        public virtual IClause GetSearchClause(User searcher, IFieldValuesHolder fieldValuesHolder)
         {
             string clauseName = GetClauseName(searcher);
-            if (emptySelectFlag != null && ParameterUtils.paramContains(fieldValuesHolder, searchConstants.SelectUrlParameter, emptySelectFlag))
+            if (emptySelectFlag != null && ParameterUtils.ParamContains(fieldValuesHolder, searchConstants.SelectUrlParameter, emptySelectFlag))
             {
                 return new TerminalClause(clauseName, Operator.IS, new EmptyOperand());
             }
             
-            if (ParameterUtils.paramContains(fieldValuesHolder, searchConstants.SelectUrlParameter, searchConstants.CurrentUserSelectFlag))
+            if (ParameterUtils.ParamContains(fieldValuesHolder, searchConstants.SelectUrlParameter, searchConstants.CurrentUserSelectFlag))
             {
                 return new TerminalClause(clauseName, Operator.EQUALS, new FunctionOperand(CurrentUserFunction.FUNCTION_CURRENT_USER));
             }
             
-            //We do a specific user search when either the type is specifed or (when there is no search type and there is a value).
-            if (fieldValuesHolder.ContainsKey(searchConstants.FieldUrlParameter) && (!fieldValuesHolder.ContainsKey(searchConstants.SelectUrlParameter) || (ParameterUtils.paramContains(fieldValuesHolder, searchConstants.SelectUrlParameter, searchConstants.SpecificUserSelectFlag))))
+            // We do a specific user search when either the type is specifed or (when there is no search type and there is a value).
+            if (fieldValuesHolder.ContainsKey(searchConstants.FieldUrlParameter) && (!fieldValuesHolder.ContainsKey(searchConstants.SelectUrlParameter) || (ParameterUtils.ParamContains(fieldValuesHolder, searchConstants.SelectUrlParameter, searchConstants.SpecificUserSelectFlag))))
             {
-                string user = ParameterUtils.getStringParam(fieldValuesHolder, searchConstants.FieldUrlParameter);
+                string user = ParameterUtils.GetStringParam(fieldValuesHolder, searchConstants.FieldUrlParameter);
                 return new TerminalClause(clauseName, Operator.EQUALS, user);
             }
-            if (ParameterUtils.paramContains(fieldValuesHolder, searchConstants.SelectUrlParameter, searchConstants.SpecificGroupSelectFlag) && fieldValuesHolder.containsKey(searchConstants.FieldUrlParameter))
+            
+            if (ParameterUtils.ParamContains(fieldValuesHolder, searchConstants.SelectUrlParameter, searchConstants.SpecificGroupSelectFlag) && fieldValuesHolder.ContainsKey(searchConstants.FieldUrlParameter))
             {
-                string group = ParameterUtils.getStringParam(fieldValuesHolder, searchConstants.SelectUrlParameter, searchConstants.SpecificUserSelectFlag, searchConstants.FieldUrlParameter);
+                string group = ParameterUtils.GetStringParam(fieldValuesHolder, searchConstants.SelectUrlParameter, searchConstants.SpecificUserSelectFlag, searchConstants.FieldUrlParameter);
                 return new TerminalClause(clauseName, Operator.IN, new FunctionOperand(MembersOfFunction.FUNCTION_MEMBERSOF, @group));
             }
+            
             return null;
         }
 
@@ -221,10 +227,10 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
             {
                 return searchConstants.JqlClauseNames.PrimaryName;
             }
-            return CustomFieldInputHelper.getUniqueClauseName(user, searchConstants.JqlClauseNames.PrimaryName, customField.Name);
+            return customFieldInputHelper.GetUniqueClauseName(user, searchConstants.JqlClauseNames.PrimaryName, customField.Name);
         }
 
-        protected internal virtual IEnumerable<TerminalClause> GetMatchingClauses(Set<string> jqlClauseNames, IQuery query)
+        protected internal virtual IEnumerable<ITerminalClause> GetMatchingClauses(IEnumerable<string> jqlClauseNames, IQuery query)
         {
             var clauseVisitor = new NamedTerminalClauseCollectingVisitor(jqlClauseNames);
             if (query.WhereClause != null)
@@ -248,7 +254,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
 
         internal virtual bool UserExists(string user)
         {
-            return userManager.GetUser(user) != null;
+            return userService.GetUser(user) != null;
         }
 
         internal virtual SimpleNavigatorCollectorVisitor CreateSimpleNavigatorCollectorVisitor()

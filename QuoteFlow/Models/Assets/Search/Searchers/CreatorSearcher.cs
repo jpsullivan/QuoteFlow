@@ -20,8 +20,8 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
         {
             UserFieldSearchConstantsWithEmpty searchConstants = SystemSearchConstants.ForCreator();
 
-            SearchInformation = new GenericSearcherInformation<ISearchableField>(searchConstants.SearcherId, NAME_KEY, new List<Type>(typeof(CreatorIndexer)), fieldReference, SearcherGroupType.Asset);
-            SearchInputTransformer = new KickassUserSearchInputTransformer(searchConstants, userFitsNavigatorHelper, groupManager, userManager, userHistoryManager);
+            SearchInformation = new GenericSearcherInformation<ISearchableField>(searchConstants.SearcherId, NAME_KEY, new List<IFieldIndexer>(), fieldReference, SearcherGroupType.Asset);
+            SearchInputTransformer = new EnhancedUserSearchInputTransformer(searchConstants, userService);
         }
 
         public virtual ISearcherInformation<ISearchableField> SearchInformation { get; set; }

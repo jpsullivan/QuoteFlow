@@ -31,7 +31,7 @@ namespace QuoteFlow.Models.Assets.Search
             PrimaryName = primaryName;
             // Always make sure the names contains the primary name as well
             newNames.Add(PrimaryName);
-            JqlFieldNames = new HashSet<string>(newNames);
+            JqlFieldNames = new Set<string>(newNames);
         }
 
         public bool Contains(string name)

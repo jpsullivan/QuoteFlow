@@ -8,20 +8,24 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
     /// <summary>
     /// Handles the <see cref="EmptyOperand"/>.
     /// </summary>
-    public class EmptyOperandHandler : IOperandHandler<EmptyOperand>
+    public class EmptyOperandHandler : IOperandHandler<IOperand>
     {
-        public virtual IMessageSet Validate(User searcher, EmptyOperand operand, ITerminalClause terminalClause)
+        /// <summary>
+        /// Returns a single empty query literal.
+        /// </summary>
+        /// <param name="queryCreationContext"></param>
+        /// <param name="operand"></param>
+        /// <param name="terminalClause"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, IOperand operand, ITerminalClause terminalClause)
+        {
+            return new List<QueryLiteral> { new QueryLiteral(operand) };
+        }
+
+        public IMessageSet Validate(User searcher, IOperand operand, ITerminalClause terminalClause)
         {
             // We don't need to do any validation
             return new MessageSet();
-        }
-
-        /*
-         * Returns a single empty query literal.
-         */
-        public virtual IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, EmptyOperand operand, ITerminalClause terminalClause)
-        {
-            return new List<QueryLiteral> {new QueryLiteral(operand)};
         }
 
         public bool IsList()

@@ -11,10 +11,10 @@ namespace QuoteFlow.Models.Search.Jql.Validator
 //        private readonly IndexedChangeHistoryFieldManager indexedChangeHistoryFieldManager;
 //        private readonly HistoryPredicateValidator historyPredicateValidator;
 //
-//        public ChangedClauseValidator(IndexedChangeHistoryFieldManager indexedChangeHistoryFieldManager, PredicateOperandResolver predicateOperandResolver, JqlDateSupport jqlDateSupport, JiraAuthenticationContext authContext, HistoryFieldValueValidator historyFieldValueValidator, JqlFunctionHandlerRegistry registry, UserManager userManager)
+//        public ChangedClauseValidator(IndexedChangeHistoryFieldManager indexedChangeHistoryFieldManager, PredicateOperandResolver predicateOperandResolver, JqlDateSupport jqlDateSupport, JiraAuthenticationContext authContext, HistoryFieldValueValidator historyFieldValueValidator, JqlFunctionHandlerRegistry registry, UserManager userService)
 //        {
 //            this.indexedChangeHistoryFieldManager = indexedChangeHistoryFieldManager;
-//            this.historyPredicateValidator = new HistoryPredicateValidator(authContext, predicateOperandResolver, jqlDateSupport, historyFieldValueValidator, registry, userManager);
+//            this.historyPredicateValidator = new HistoryPredicateValidator(authContext, predicateOperandResolver, jqlDateSupport, historyFieldValueValidator, registry, userService);
 //        }
 //
 //        public virtual MessageSet Validate(User searcher, IChangedClause clause)

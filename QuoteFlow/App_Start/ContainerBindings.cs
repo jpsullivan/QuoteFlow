@@ -16,7 +16,11 @@ using QuoteFlow.Auditing;
 using QuoteFlow.Configuration;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Models;
+using QuoteFlow.Models.Assets.CustomFields.Searchers.Transformer;
+using QuoteFlow.Models.Assets.Search;
+using QuoteFlow.Models.Search.Jql.Operand;
 using QuoteFlow.Models.Search.Jql.Parser;
+using QuoteFlow.Models.Search.Jql.Query.Operand.Registry;
 using QuoteFlow.Models.Search.Jql.Resolver;
 using QuoteFlow.Models.Search.Jql.Util;
 using QuoteFlow.Services;
@@ -184,10 +188,19 @@ namespace QuoteFlow
             Bind<IUploadFileService>()
                 .To<UploadFileService>();
 
+            #region Asset Fields
+
+            Bind<ICustomFieldInputHelper>().To<CustomFieldInputHelper>().InRequestScope();
+
+            #endregion
+
             #region Jql Support
 
+            Bind<IJqlFunctionHandlerRegistry>().To<LazyResettableJqlFunctionHandlerRegistry>().InRequestScope();
+            Bind<IJqlOperandResolver>().To<JqlOperandResolver>().InRequestScope();
             Bind<IJqlQueryParser>().To<JqlQueryParser>().InRequestScope();
             Bind<IJqlStringSupport>().To<JqlStringSupport>().InRequestScope();
+            Bind<IQueryCache>().To<QueryCache>().InRequestScope();
 
             #endregion
 

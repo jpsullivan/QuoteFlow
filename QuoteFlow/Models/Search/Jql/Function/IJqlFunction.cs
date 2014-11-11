@@ -20,7 +20,7 @@ namespace QuoteFlow.Models.Search.Jql.Function
     /// values from that operand. They must also specify whether or not the function produces a list of values or a single
     /// value.
     /// 
-    /// The validate and getValues method take the <seealso cref="ITerminalClause"/> that contained the
+    /// The validate and GetValues method take the <seealso cref="ITerminalClause"/> that contained the
     /// <seealso cref="FunctionOperand"/> on its left-hand side. This can be used to create advanced functionality,
     /// such as adjusting the functions result or validation based on the clauses right-hand side value or operator.
     /// 
@@ -29,7 +29,7 @@ namespace QuoteFlow.Models.Search.Jql.Function
     /// interface, you must also provide an XML descriptor for your function. For an example, see {@link
     /// com.atlassian.jira.plugin.jql.function.JqlFunctionModuleDescriptor}.
     /// 
-    /// <seealso cref="QueryLiteral"/>s returned by the {@link #getValues(com.atlassian.jira.jql.query.QueryCreationContext,
+    /// <seealso cref="QueryLiteral"/>s returned by the {@link #GetValues(com.atlassian.jira.jql.query.QueryCreationContext,
     /// com.atlassian.query.operand.FunctionOperand, com.atlassian.query.clause.TerminalClause)} method must have the operand
     /// source of the passed in <seealso cref="FunctionOperand"/>.
     /// 

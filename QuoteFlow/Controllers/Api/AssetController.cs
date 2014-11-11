@@ -17,13 +17,15 @@ namespace QuoteFlow.Controllers.Api
 
         public IAssetService AssetService { get; protected set; }
         public IAssetSearchService AssetSearchService { get; protected set; }
+        public IUserService UserService { get; protected set; }
 
         public AssetController() { }
 
-        public AssetController(IAssetSearchService assetSearchService)
+        public AssetController(IAssetService assetService, IAssetSearchService assetSearchService, IUserService userService)
         {
-//            AssetService = assetService;
+            AssetService = assetService;
             AssetSearchService = assetSearchService;
+            UserService = userService;
         }
 
         #endregion
@@ -70,7 +72,10 @@ namespace QuoteFlow.Controllers.Api
                 multiDict.Add(args[0], new[] {args[1]});
             }
 
-            return AssetSearchService.Search(multiDict, new long());
+            // also get the user
+            var user = UserService.GetUser(RequestContext.Principal.Identity.Name, null);
+
+            return AssetSearchService.Search(user, multiDict, new long());
         }
     }
 }

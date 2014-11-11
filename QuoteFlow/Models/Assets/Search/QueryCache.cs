@@ -11,32 +11,32 @@ namespace QuoteFlow.Models.Assets.Search
 {
     public class QueryCache : IQueryCache
     {
-        public bool? GetDoesQueryFitFilterFormCache(User searcher, Query query)
+        public bool? GetDoesQueryFitFilterFormCache(User searcher, IQuery query)
         {
             throw new NotImplementedException();
         }
 
-        public void SetDoesQueryFitFilterFormCache(User searcher, Query query, bool doesItFit)
+        public void SetDoesQueryFitFilterFormCache(User searcher, IQuery query, bool doesItFit)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryContext GetQueryContextCache(User searcher, Query query)
+        public IQueryContext GetQueryContextCache(User searcher, IQuery query)
         {
             throw new NotImplementedException();
         }
 
-        public void SetQueryContextCache(User searcher, Query query, IQueryContext queryContext)
+        public void SetQueryContextCache(User searcher, IQuery query, IQueryContext queryContext)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryContext GetSimpleQueryContextCache(User searcher, Query query)
+        public IQueryContext GetSimpleQueryContextCache(User searcher, IQuery query)
         {
             throw new NotImplementedException();
         }
 
-        public void SetSimpleQueryContextCache(User searcher, Query query, IQueryContext queryContext)
+        public void SetSimpleQueryContextCache(User searcher, IQuery query, IQueryContext queryContext)
         {
             throw new NotImplementedException();
         }
@@ -51,12 +51,12 @@ namespace QuoteFlow.Models.Assets.Search
             throw new NotImplementedException();
         }
 
-        public IList<QueryLiteral> GetValues(QueryCreationContext context, IOperand operand, TerminalClause jqlClause)
+        public IList<QueryLiteral> GetValues(IQueryCreationContext context, IOperand operand, ITerminalClause jqlClause)
         {
             throw new NotImplementedException();
         }
 
-        public void SetValues(QueryCreationContext context, IOperand operand, ITerminalClause jqlClause, IList<QueryLiteral> values)
+        public void SetValues(IQueryCreationContext context, IOperand operand, ITerminalClause jqlClause, IEnumerable<QueryLiteral> values)
         {
             throw new NotImplementedException();
         }

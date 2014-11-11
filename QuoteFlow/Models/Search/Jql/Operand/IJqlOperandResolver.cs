@@ -12,7 +12,7 @@ namespace QuoteFlow.Models.Search.Jql.Operand
     /// </summary>
     public interface IJqlOperandResolver
     {
-        string Validate(User searcher, IOperand operand, IWasClause clause);
+        IMessageSet Validate(User searcher, IOperand operand, IWasClause clause);
 
         /// <summary>
         /// Return the values contained within the passed operand.
@@ -30,7 +30,7 @@ namespace QuoteFlow.Models.Search.Jql.Operand
         /// <param name="operand"> the operand whose values should be returned. Must not be null. </param>
         /// <param name="terminalClause"> the terminal clause that contained the operand </param>
         /// <returns> a list of the values in the literal. May return null on an error. </returns>
-        IList<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, IOperand operand, ITerminalClause terminalClause);
+        IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, IOperand operand, ITerminalClause terminalClause);
 
         /// <summary>
         /// Validates the operand against its handler.
@@ -48,7 +48,7 @@ namespace QuoteFlow.Models.Search.Jql.Operand
         /// <param name="searcher"> the user performing the search </param>
         /// <param name="operand"> the operand to sanitise; will only be sanitised if valid </param>
         /// <returns> the sanitised operand; never null. </returns>
-        FunctionOperand SanitiseFunctionOperand(User searcher, FunctionOperand operand);
+        FunctionOperand SanitizeFunctionOperand(User searcher, FunctionOperand operand);
 
         /// <summary>
         /// Returns the single value contained within the passed operand. If the operand contains more than one value, an

@@ -17,69 +17,69 @@ namespace QuoteFlow.Models.Assets.Search
     {
         /// <summary>
         /// Retrieve the result of the last doesQueryFitFiterForm operation in the current thread.
-        /// for the <seealso cref="User"/> <seealso cref="com.atlassian.query.Query"/> pair.
+        /// for the <seealso cref="User"/> <see cref="IQuery"/> pair.
         /// </summary>
         /// <param name="searcher"> the user who is performing the search </param>
         /// <param name="query"> the query for which to find the result for; cannot be null. </param>
         /// <returns> the last result of the doesQueryFitFiterForm operation for the
-        /// <seealso cref="User"/> <seealso cref="com.atlassian.query.Query"/> pair in the current thread, or null if
+        /// <seealso cref="User"/> <seealso cref="IQuery"/> pair in the current thread, or null if
         /// the operation has yet to be performed. </returns>
-        bool? GetDoesQueryFitFilterFormCache(User searcher, Query query);
+        bool? GetDoesQueryFitFilterFormCache(User searcher, IQuery query);
 
         /// <summary>
         /// Set the cached result of a doesQueryFitFiterForm operation on the
-        /// <seealso cref="User"/> <seealso cref="com.atlassian.query.Query"/> pair. The cache result
+        /// <seealso cref="User"/> <seealso cref="IQuery"/> pair. The cache result
         /// is only held for the current thread.
         /// </summary>
         /// <param name="searcher"> the user who is performing the search </param>
         /// <param name="query"> the query for which to store the result under; cannot be null </param>
         /// <param name="doesItFit"> the result of a doesSearchRequestFitNavigator operation for the.
-        /// <seealso cref="User"/> <seealso cref="com.atlassian.query.Query"/> </param>
-        void SetDoesQueryFitFilterFormCache(User searcher, Query query, bool doesItFit);
+        /// <seealso cref="User"/> <seealso cref="IQuery"/> </param>
+        void SetDoesQueryFitFilterFormCache(User searcher, IQuery query, bool doesItFit);
 
         /// <summary>
         /// Retrieve the result of the last getQueryContext operation in the current thread
-        /// for the <seealso cref="com.atlassian.crowd.embedded.api.User"/> <seealso cref="com.atlassian.query.Query"/> pair.
+        /// for the <seealso cref="com.atlassian.crowd.embedded.api.User"/> <seealso cref="IQuery"/> pair.
         /// </summary>
         /// <param name="searcher"> the user who is performing the search </param>
         /// <param name="query"> the query for which to find the result for; cannot be null. </param>
         /// <returns> the last result of the getQueryContext operation for the
-        /// <seealso cref="User"/> <seealso cref="com.atlassian.query.Query"/> pair in the current thread, or null if
+        /// <seealso cref="User"/> <see cref="IQuery"/> pair in the current thread, or null if
         /// the operation has yet to be performed. </returns>
-        IQueryContext GetQueryContextCache(User searcher, Query query);
+        IQueryContext GetQueryContextCache(User searcher, IQuery query);
 
         /// <summary>
         /// Set the cached result of a getQueryContext operation on the
-        /// <seealso cref="User"/> <seealso cref="com.atlassian.query.Query"/> pair. The cache result
+        /// <seealso cref="User"/> <seealso cref="IQuery"/> pair. The cache result
         /// is only held for the current thread.
         /// </summary>
         /// <param name="searcher"> the user who is performing the search </param>
         /// <param name="query"> the query for which to store the result under; cannot be null. </param>
         /// <param name="queryContext"> the queryContext result to store
         /// <seealso cref="User"/> <see cref="IQuery"/> </param>
-        void SetQueryContextCache(User searcher, Query query, IQueryContext queryContext);
+        void SetQueryContextCache(User searcher, IQuery query, IQueryContext queryContext);
 
         /// <summary>
         /// Retrieve the result of the last getSimpleQueryContext operation in the current thread
-        /// for the <seealso cref="User"/> <seealso cref="com.atlassian.query.Query"/> pair.
+        /// for the <seealso cref="User"/><see cref="IQuery"/> pair.
         /// </summary>
         /// <param name="searcher"> the user who is performing the search </param>
         /// <param name="query"> the query for which to find the result for; cannot be null. </param>
         /// <returns> the last result of the getSimpleQueryContext operation for the
-        /// <seealso cref="User"/> <seealso cref="com.atlassian.query.Query"/> pair in the current thread, or null if
+        /// <seealso cref="User"/><see cref="Query"/> pair in the current thread, or null if
         /// the operation has yet to be performed. </returns>
-        IQueryContext GetSimpleQueryContextCache(User searcher, Query query);
+        IQueryContext GetSimpleQueryContextCache(User searcher, IQuery query);
 
         /// <summary>
         /// Set the cached result of a getSimpleQueryContext operation on the
-        /// <seealso cref="User"/> <seealso cref="com.atlassian.query.Query"/> pair. The cache result
+        /// <seealso cref="User"/> <seealso cref="IQuery"/> pair. The cache result
         /// is only held for the current thread.
         /// </summary>
         /// <param name="searcher"> the user who is performing the search </param>
         /// <param name="query"> the query for which to store the result under; cannot be null. </param>
         /// <param name="queryContext"> the querySimpleContext result to store
-        /// <seealso cref="User"/> <seealso cref="com.atlassian.query.Query"/> </param>
-        void SetSimpleQueryContextCache(User searcher, Query query, IQueryContext queryContext);
+        /// <seealso cref="User"/> <seealso cref="IQuery"/> </param>
+        void SetSimpleQueryContextCache(User searcher, IQuery query, IQueryContext queryContext);
 
         /// <summary>
         /// Retrieve the collection of <seealso cref="com.atlassian.jira.jql.ClauseHandler"/>s registered
@@ -87,7 +87,7 @@ namespace QuoteFlow.Models.Assets.Search
         /// </summary>
         /// <param name="searcher"> the user who is performing the search </param>
         /// <param name="jqlClauseName"> the jQLClauseName for which to find the result for; cannot be null. </param>
-        /// <returns> the collection of <seealso cref="com.atlassian.jira.jql.ClauseHandler"/>s registered
+        /// <returns> the collection of <seealso cref="IClauseHandler"/>s registered
         /// for the <seealso cref="User"/> jqlClauseName pair. </returns>
         ICollection<IClauseHandler> GetClauseHandlers(User searcher, string jqlClauseName);
 
@@ -96,15 +96,15 @@ namespace QuoteFlow.Models.Assets.Search
         /// <seealso cref="User"/> <seealso cref="com.atlassian.query.Query"/> pair. The cache result
         /// is only held for the current thread.
         /// </summary>
-        /// <param name="searcher"> the user who is performing the search </param>
-        /// <param name="jqlClauseName"> the jQLClauseName for which to store the result under; cannot be null. </param>
-        /// <param name="clauseHandlers"> the collection of <seealso cref="com.atlassian.jira.jql.ClauseHandler"/>s
-        /// <seealso cref="User"/> <seealso cref="com.atlassian.jira.jql.ClauseHandler"/> </param>
+        /// <param name="searcher">The user who is performing the search </param>
+        /// <param name="jqlClauseName">The jQLClauseName for which to store the result under; cannot be null. </param>
+        /// <param name="clauseHandlers">The collection of <seealso cref="IClauseHandler"/>s
+        /// <seealso cref="User"/> <seealso cref="IClauseHandler"/> </param>
         void SetClauseHandlers(User searcher, string jqlClauseName, ICollection<IClauseHandler> clauseHandlers);
 
         /// <summary>
         /// Retrieve the list of <seealso cref="QueryLiteral"/>s registered
-        /// for the <seealso cref="QueryCreationContext"/> <seealso cref="Operand"/> jqlClause triplet.
+        /// for the <seealso cref="IQueryCreationContext"/> <seealso cref="IOperand"/> jqlClause triplet.
         /// 
         /// </summary>
         /// <param name="context"> the query context of the search, which cannot be null. </param>
@@ -112,17 +112,17 @@ namespace QuoteFlow.Models.Assets.Search
         /// <param name="jqlClause"> the jQLClause for which to find the result for; cannot be null. </param>
         /// <returns> the list of <seealso cref="QueryLiteral"/>s registered
         /// for the <seealso cref="QueryCreationContext"/> jqlClause pair. </returns>
-        IList<QueryLiteral> GetValues(QueryCreationContext context, IOperand operand, TerminalClause jqlClause);
+        IList<QueryLiteral> GetValues(IQueryCreationContext context, IOperand operand, ITerminalClause jqlClause);
 
         /// <summary>
-        /// Set the cached result of a getValues operation on the
-        /// for the <seealso cref="QueryCreationContext"/> <seealso cref="Operand"/> jqlClause triplet. The cache result
-        /// is only held for the current thread.
+        /// Set the cached result of a GetValues operation on the
+        /// for the <seealso cref="IQueryCreationContext"/> <seealso cref="IOperand"/> jqlClause triplet. 
+        /// The cache result is only held for the current thread.
         /// </summary>
-        /// <param name="context"> the query context the search is being performed in </param>
-        /// <param name="operand"> the Operand which cannot be null </param>
-        /// <param name="jqlClause"> the jQLClause for which to store the result under; cannot be null. </param>
-        /// <param name="values"> the collection of <seealso cref="QueryLiteral"/>s </param>
-        void SetValues(QueryCreationContext context, IOperand operand, ITerminalClause jqlClause, IList<QueryLiteral> values);
+        /// <param name="context">The query context the search is being performed in </param>
+        /// <param name="operand">The Operand which cannot be null </param>
+        /// <param name="jqlClause">The jQLClause for which to store the result under; cannot be null. </param>
+        /// <param name="values">The collection of <seealso cref="QueryLiteral"/>s </param>
+        void SetValues(IQueryCreationContext context, IOperand operand, ITerminalClause jqlClause, IEnumerable<QueryLiteral> values);
     }
 }

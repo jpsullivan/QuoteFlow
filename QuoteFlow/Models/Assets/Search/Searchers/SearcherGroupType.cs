@@ -1,4 +1,6 @@
-﻿namespace QuoteFlow.Models.Assets.Search.Searchers
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace QuoteFlow.Models.Assets.Search.Searchers
 {
     /// <summary>
     /// Represents the type of a <see cref="SearcherGroup"/>
@@ -7,8 +9,17 @@
     {
         Text,
         Context,
+
+        [Display(Name = "navigator.filter.subheading.catalogcomponents")]
         Catalog,
+
+        [Display(Name = "navigator.filter.subheading.assetattributes")]
         Asset,
-        Date
+
+        [Display(Name = "navigator.filter.subheading.datesandtimes")]
+        Date,
+
+        [Display(Name = "navigator.filter.subheading.customfields")]
+        Custom
     }
 }

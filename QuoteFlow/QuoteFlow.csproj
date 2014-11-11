@@ -389,12 +389,17 @@
     <Compile Include="Infrastructure\Paging\PagerFilter.cs" />
     <Compile Include="Infrastructure\QueryStringUniqueValueProviderFactory.cs" />
     <Compile Include="Infrastructure\Util\ListOrderedMessageSet.cs" />
+    <Compile Include="Infrastructure\Util\LuceneUtils.cs" />
     <Compile Include="Infrastructure\Util\MessageSet.cs" />
+    <Compile Include="Infrastructure\Util\ParameterUtils.cs" />
     <Compile Include="Models\Assets\AssetFieldConstants.cs" />
+    <Compile Include="Models\Assets\Comparator\NullComparator.cs" />
     <Compile Include="Models\Assets\Context\AssetContext.cs" />
     <Compile Include="Models\Assets\Context\IAssetContext.cs" />
     <Compile Include="Models\Assets\CustomFields\Searchers\ICustomFieldSearcherClauseHandler.cs" />
     <Compile Include="Models\Assets\CustomFields\Searchers\Information\CustomFieldSearcherInformation.cs" />
+    <Compile Include="Models\Assets\CustomFields\Searchers\Transformer\CustomFieldInputHelper.cs" />
+    <Compile Include="Models\Assets\CustomFields\Searchers\Transformer\ICustomFieldInputHelper.cs" />
     <Compile Include="Models\Assets\CustomFields\Searchers\UserPickerSearcher.cs" />
     <Compile Include="Models\Assets\Fields\ICustomField.cs" />
     <Compile Include="Models\Assets\Fields\IField.cs" />
@@ -436,13 +441,20 @@
     <Compile Include="Models\Assets\Search\Searchers\AbstractInitializationSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\CreatorSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Information\GenericSearcherInformation.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\EnhancedUserSearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\ISearchInputTransformer.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\NamedTerminalClauseCollectingVisitor.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\SimpleNavigatorCollectorVisitor.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\UserSearchInput.cs" />
     <Compile Include="Models\Assets\Search\Searchers\UserSearchInputTransformer.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Util\RecursiveClauseVisitor.cs" />
     <Compile Include="Models\Assets\Search\SystemClauseHandlerFactory.cs" />
     <Compile Include="Models\Assets\Transport\ActionParams.cs" />
     <Compile Include="Models\Assets\Transport\FieldValuesHolder.cs" />
     <Compile Include="Models\Assets\Transport\IActionParams.cs" />
+    <Compile Include="Models\Assets\Transport\ICollectionParams.cs" />
     <Compile Include="Models\Assets\Transport\IFieldParams.cs" />
+    <Compile Include="Models\Assets\Transport\IFieldTransportParams.cs" />
     <Compile Include="Models\Search\Jql\AntlrGen\JqlLexer.cs" />
     <Compile Include="Models\Search\Jql\AntlrGen\JqlParser.cs" />
     <Compile Include="Models\Search\Jql\Clauses\IClauseHandler.cs" />
@@ -460,7 +472,9 @@
     <Compile Include="Models\Search\Jql\Context\SimpleClauseContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Function\AbstractJqlFunction.cs" />
     <Compile Include="Models\Search\Jql\Function\CurrentUserFunction.cs" />
+    <Compile Include="Models\Search\Jql\Function\IClauseSanitizingJqlFunction.cs" />
     <Compile Include="Models\Search\Jql\Function\IJqlFunction.cs" />
+    <Compile Include="Models\Search\Jql\Function\MembersOfFunction.cs" />
     <Compile Include="Models\Search\Jql\JqlLexerTester.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -613,6 +627,7 @@
     <Compile Include="Models\Search\Jql\Query\Operand\IOperandVisitor.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\MultiValueOperand.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\Registry\IJqlFunctionHandlerRegistry.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\Registry\LazyResettableJqlFunctionHandlerRegistry.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\SingleValueOperand.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\SingleValueOperandHandler.cs" />
     <Compile Include="Models\Search\Jql\Query\Operator.cs" />

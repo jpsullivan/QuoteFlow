@@ -5,18 +5,20 @@ using QuoteFlow.Models.Search.Jql.Query.Clause;
 
 namespace QuoteFlow.Models.Search.Jql.Query.Operand
 {
-    public class SingleValueOperandHandler : IOperandHandler<SingleValueOperand>
+    public class SingleValueOperandHandler : IOperandHandler<IOperand>
     {
-        public virtual IMessageSet Validate(User searcher, SingleValueOperand operand, ITerminalClause terminalClause)
+        public IMessageSet Validate(User searcher, IOperand operand, ITerminalClause terminalClause)
         {
+            // no validation needed
             return new MessageSet();
         }
 
-        public virtual IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, SingleValueOperand operand, ITerminalClause terminalClause)
+        public IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, IOperand operand, ITerminalClause terminalClause)
         {
-            var value = operand.IntValue == null
-                ? new QueryLiteral(operand, operand.StringValue)
-                : new QueryLiteral(operand, operand.IntValue);
+            var svo = (SingleValueOperand) operand;
+            var value = svo.IntValue == null
+                ? new QueryLiteral(svo, svo.StringValue)
+                : new QueryLiteral(svo, svo.IntValue);
             return new List<QueryLiteral> { value };
         }
 

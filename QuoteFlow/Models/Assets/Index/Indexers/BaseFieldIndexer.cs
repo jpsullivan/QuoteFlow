@@ -1,6 +1,7 @@
 ﻿using System;
 using Lucene.Net.Documents;
 using QuoteFlow.Infrastructure.Extensions;
+using QuoteFlow.Infrastructure.Util;
 
 namespace QuoteFlow.Models.Assets.Index.Indexers
 {
@@ -60,13 +61,10 @@ namespace QuoteFlow.Models.Assets.Index.Indexers
         public virtual void IndexDateField(Document doc, string indexField, DateTime date, Asset asset)
         {
             Field.Index indexType = Unanalyzed(asset);
-            if (date != null)
-            {
-                doc.Add(new Field(indexField, LuceneUtils.dateToString(date), Field.Store.YES, indexType));
-            }
+            doc.Add(new Field(indexField, LuceneUtils.DateToString(date), Field.Store.YES, indexType));
             if (indexType == Field.Index.NOT_ANALYZED_NO_NORMS)
             {
-                doc.Add(new Field(DocumentConstants.LuceneSortFieldPrefix + indexField, LuceneUtils.dateToString(date), Field.Store.NO, Unanalyzed(asset)));
+                doc.Add(new Field(DocumentConstants.LuceneSortFieldPrefix + indexField, LuceneUtils.DateToString(date), Field.Store.NO, Unanalyzed(asset)));
             }
         }
 

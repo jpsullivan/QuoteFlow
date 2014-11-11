@@ -11,7 +11,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
     /// Adapter to convert the plugin point <seealso cref="JqlFunction"/> into
     /// <seealso cref="OperandHandler"/>.
     /// </summary>
-    public class FunctionOperandHandler : IOperandHandler<FunctionOperand>
+    public class FunctionOperandHandler : IOperandHandler<IOperand>
 	{
 		public FunctionOperandHandler(IJqlFunction jqlFunction)
 		{
@@ -23,15 +23,14 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
 			JqlFunction = jqlFunction;
 		}
 
-		public virtual IMessageSet Validate(User searcher, FunctionOperand operand, ITerminalClause terminalClause)
-		{
-		    return JqlFunction.Validate(searcher, operand, terminalClause);
-		}
-
-        public IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, FunctionOperand operand,
-            ITerminalClause terminalClause)
+        public IMessageSet Validate(User searcher, IOperand operand, ITerminalClause terminalClause)
         {
-            return JqlFunction.GetValues(queryCreationContext, operand, terminalClause);
+            return JqlFunction.Validate(searcher, (FunctionOperand) operand, terminalClause);
+        }
+
+        public IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, IOperand operand, ITerminalClause terminalClause)
+        {
+            return JqlFunction.GetValues(queryCreationContext, (FunctionOperand) operand, terminalClause);
         }
 
         public bool IsList()
@@ -51,5 +50,4 @@ namespace QuoteFlow.Models.Search.Jql.Query.Operand
 
         public IJqlFunction JqlFunction { get; set; }
 	}
-
 }

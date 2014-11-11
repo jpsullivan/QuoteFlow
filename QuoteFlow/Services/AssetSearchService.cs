@@ -4,6 +4,7 @@ using Lucene.Net.Search.Vectorhighlight;
 using QuoteFlow.Models;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Search;
+using QuoteFlow.Models.Assets.Search.Managers;
 using QuoteFlow.Models.Assets.Search.Searchers;
 using QuoteFlow.Models.Assets.Search.Searchers.Transformer;
 using QuoteFlow.Models.Assets.Transport;
@@ -21,22 +22,27 @@ namespace QuoteFlow.Services
         #region IoC
 
         protected ISearchService SearchService { get; set; }
+        public IAssetSearcherManager AssetSearcherManager { get; protected set; }
 
         public AssetSearchService() { }
 
-        public AssetSearchService(ISearchService searchService)
+        public AssetSearchService(IAssetSearcherManager assetSearcherManager, ISearchService searchService)
         {
+            AssetSearcherManager = assetSearcherManager;
             SearchService = searchService;
         }
 
         #endregion
 
-        public QuerySearchResults Search(MultiDictionary<string, string[]> paramMap, long filterId)
+        public QuerySearchResults Search(User user, MultiDictionary<string, string[]> paramMap, long filterId)
         {
+            var searchers = AssetSearcherManager.AllSearchers;
+            var clausesOutcome = GenerateQuery(paramMap, user, searchers);
+            
             throw new NotImplementedException();
         }
 
-        public QuerySearchResults SearchWithJql(string paramString, long filterId)
+        public QuerySearchResults SearchWithJql(User user, string paramString, long filterId)
         {
             throw new NotImplementedException();
         }
@@ -46,7 +52,7 @@ namespace QuoteFlow.Services
             var clauses = new HashMap<string, SearchRendererHolder>();
             foreach (var searcher in searchers)
             {
-                var assetSearcher = (IAssetSearcher<ISearchableField>)searcher;
+                var assetSearcher = (IAssetSearcher<ISearchableField>) searcher;
                 ISearchInputTransformer searchInputTransformer = assetSearcher.SearchInputTransformer;
                 var fieldValuesHolder = new FieldValuesHolder();
 
