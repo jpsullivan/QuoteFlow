@@ -12,31 +12,32 @@ namespace QuoteFlow.Models.Assets.Search
         {
         }
 
-        private IEnumerable<SearchHandler> systemClauseSearchHandlers = new List<SearchHandler>()
+        public IEnumerable<SearchHandler> GetSystemClauseSearchHandlers()
         {
-            createSavedFilterSearchHandler(),
-            createIssueKeySearchHandler(),
-            createIssueParentSearchHandler(),
-            createCurrentEstimateSearchHandler(),
-            createOriginalEstimateSearchHandler(),
-            createTimeSpentSearchHandler(),
-            createSecurityLevelSearchHandler(),
-            createVotesSearchHandler(),
-            createVoterSearchHandler(),
-            createWatchesSearchHandler(),
-            createWatcherSearchHandler(),
-            createProjectCategoryHandler(),
-            createSubTaskSearchHandler(),
-            createProgressSearchHandler(),
-            createLastViewedHandler(),
-            createAttachmentsSearchHandler(),
-            createIssuePropertySearchHandler(),
-            createStatusCategorySearchHandler()
-        };
+            var systemClauseSearchHandlers = new List<SearchHandler>
+            {
+                CreateSavedFilterSearchHandler(),
+//                createIssueKeySearchHandler(),
+//                createIssueParentSearchHandler(),
+//                createCurrentEstimateSearchHandler(),
+//                createOriginalEstimateSearchHandler(),
+//                createTimeSpentSearchHandler(),
+//                createSecurityLevelSearchHandler(),
+//                createVotesSearchHandler(),
+//                createVoterSearchHandler(),
+//                createWatchesSearchHandler(),
+//                createWatcherSearchHandler(),
+//                createProjectCategoryHandler(),
+//                createSubTaskSearchHandler(),
+//                createProgressSearchHandler(),
+//                createLastViewedHandler(),
+//                createAttachmentsSearchHandler(),
+//                createIssuePropertySearchHandler(),
+//                createStatusCategorySearchHandler()
+            };
 
-        public ICollection<SearchHandler> GetSystemClauseSearchHandlers()
-        {
-            
+
+            return systemClauseSearchHandlers;
         }
 
         private SearchHandler CreateSavedFilterSearchHandler() { throw new NotImplementedException(); }

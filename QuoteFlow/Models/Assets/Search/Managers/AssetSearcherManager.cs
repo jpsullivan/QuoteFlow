@@ -20,7 +20,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 
         public ICollection<IAssetSearcher<ISearchableField>> GetAllSearchers()
         {
-            return manager.AllSearchers;
+            return manager.GetAllSearchers();
         }
         
         public ICollection<SearcherGroup> SearcherGroups { get; private set; }

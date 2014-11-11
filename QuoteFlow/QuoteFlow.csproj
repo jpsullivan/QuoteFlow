@@ -313,7 +313,8 @@
     <Compile Include="App_Start\Container.cs" />
     <Compile Include="App_Start\ContainerBindings.cs" />
     <Compile Include="App_Start\MiniProfiler.cs" />
-    <Compile Include="App_Start\OwinStartup.cs" />
+    <Compile Include="App_Start\Startup.Ninject.cs" />
+    <Compile Include="App_Start\Startup.WebApi.cs" />
     <Compile Include="AssetController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -796,6 +797,7 @@
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Startup.cs" />
     <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1163,6 +1165,7 @@
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>QuoteFlow.Models.Search.Jql.AntlrGen</CustomToolNamespace>
     </Content>
+    <Compile Include="App_Start\Startup.Auth.cs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -14,6 +14,6 @@ namespace QuoteFlow.Models.Assets.Search
         /// </summary>
         /// <returns> SearchHandlers that represent the system clause search handlers that are not
         /// associated with a field or a searcher. </returns>
-        ICollection<SearchHandler> GetSystemClauseSearchHandlers();
+        IEnumerable<SearchHandler> GetSystemClauseSearchHandlers();
     }
 }

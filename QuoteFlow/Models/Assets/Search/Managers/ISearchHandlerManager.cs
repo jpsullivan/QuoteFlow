@@ -19,7 +19,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 		/// <param name="searcher">The user performing this action.</param>
 		/// <param name="context">The context for the list of searchers. Must not be null.</param>
 		/// <returns>Collection of <see cref="IAssetSearcher"/>.</returns>
-		ICollection<IAssetSearcher<ISearchableField>> GetSearchers(User searcher, SearchContext context);
+		ICollection<IAssetSearcher<ISearchableField>> GetSearchers(User searcher, ISearchContext context);
 
         /// <summary>
         /// Return all the active searchers in QuoteFlow. It will not return the searchers unless 
@@ -60,7 +60,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 		/// A collection of ClauseHandler that are associated with the passed JQL clause name. 
 		/// An empty collection will be returned to indicate failure.
 		/// </returns>
-		ICollection<ClauseHandler> GetClauseHandler(User user, string jqlClauseName);
+        IEnumerable<IClauseHandler> GetClauseHandler(User user, string jqlClauseName);
 
 		/// <summary>
 		/// Return a collection of <see cref="ClauseHandler"/>s registered against the passed JQL clause
@@ -74,7 +74,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 		/// A collection of ClauseHandler that are associated with the passed JQL clause name. An empty 
 		/// collection will be returned to indicate failure.
 		/// </returns>
-		ICollection<ClauseHandler> GetClauseHandler(string jqlClauseName);
+        IEnumerable<IClauseHandler> GetClauseHandler(string jqlClauseName);
 
 		/// <summary>
 		/// Get the <seea cref="ClauseNames"/> associated with the provided field name.
