@@ -2,23 +2,26 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Web.UI;
+using System.Linq;
+using Ninject;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models.Assets.Fields;
+using QuoteFlow.Models.Assets.Search.Handlers;
 using QuoteFlow.Models.Assets.Search.Searchers;
 using QuoteFlow.Models.Search.Jql.Clauses;
-using QuoteFlow.Models.Search.Jql.Values;
+using QuoteFlow.Services.Interfaces;
 using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Models.Assets.Search.Managers
 {
     public class SearchHandlerManager : ISearchHandlerManager
     {
+        public ICacheService CacheService { get; protected set; }
         private readonly ISystemClauseHandlerFactory systemClauseHandlerFactory;
         private readonly IQueryCache queryCache;
-//        private readonly CachedReference<Helper> helperResettableLazyReference;
+        private readonly Lazy<Helper> helperResettableLazyReference;
 
-        public SearchHandlerManager(ISystemClauseHandlerFactory systemClauseHandlerFactory, IQueryCache queryCache)
+        public SearchHandlerManager(ICacheService cacheService, ISystemClauseHandlerFactory systemClauseHandlerFactory, IQueryCache queryCache)
         {
             if (systemClauseHandlerFactory == null)
             {
@@ -27,6 +30,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 
             this.queryCache = queryCache;
             this.systemClauseHandlerFactory = systemClauseHandlerFactory;
+            helperResettableLazyReference = new Lazy<Helper>(() => CreateHelper());
         }
 
         public ICollection<IAssetSearcher<ISearchableField>> GetSearchers(User searcher, ISearchContext context)
@@ -37,7 +41,8 @@ namespace QuoteFlow.Models.Assets.Search.Managers
             }
 
             context.Verify();
-            return toList(filter(GetAllSearchers(), new IsShown(searcher, context)));
+            // eventually filter all the searchers by whether or not they are shown
+            return GetAllSearchers();
         }
 
         public ICollection<IAssetSearcher<ISearchableField>> GetAllSearchers()
@@ -50,7 +55,47 @@ namespace QuoteFlow.Models.Assets.Search.Managers
         
         public IAssetSearcher<ISearchableField> GetSearcher(string id)
         {
-            throw new NotImplementedException();
+            if (id.IsNullOrEmpty())
+            {
+                throw new ArgumentException("Searcher ID cannot be empty", "id");
+            }
+
+            return GetHelper().GetAssetSearcher(id);
+        }
+
+        private Helper CreateHelper()
+        {
+            // We must process all the system fields first to ensure that we don't overwrite custom fields with
+            // the system fields.
+            var indexer = new SearchHandlerIndexer();
+            Set<ISearchableField> allSearchableFields = fieldManager.SystemSearchableFields;
+            foreach (ISearchableField field in allSearchableFields)
+            {
+                indexer.IndexSystemField(field);
+            }
+
+            // index any textQuerySearchHandler which doesn't have a field, but does have a searcher
+            var textQuerySearchHandlerFactory = Container.Kernel.TryGet<TextQuerySearchHandlerFactory>();
+            if (textQuerySearchHandlerFactory != null)
+            {
+                indexer.indexSearchHandler(null, textQuerySearchHandlerFactory.CreateHandler(), true);
+            }
+
+            // Process all the system clause handlers, the JQL clause elements that are not associated with fields
+            indexer.IndexSystemClauseHandlers(systemClauseHandlerFactory.GetSystemClauseSearchHandlers());
+
+            var customField = CustomFieldManager.CustomFieldObjects;
+            foreach (var field in customField)
+            {
+                indexer.IndexCustomField(field);
+            }
+
+            return new Helper(indexer);
+        }
+
+        private Helper GetHelper()
+        {
+            return helperResettableLazyReference.get();
         }
 
         public void Refresh()
@@ -63,14 +108,15 @@ namespace QuoteFlow.Models.Assets.Search.Managers
             var clauseHandler = queryCache.GetClauseHandlers(user, jqlClauseName);
             if (clauseHandler == null)
             {
-                var filteredHandlers = new List<ClauseHandler>();
+                var filteredHandlers = new List<IClauseHandler>();
                 var unfilteredHandlers = GetClauseHandler(jqlClauseName);
-                foreach (ClauseHandler handler in unfilteredHandlers)
+                foreach (var handler in unfilteredHandlers)
                 {
-                    if (handler.PermissionHandler.hasPermissionToUseClause(user))
-                    {
-                        filteredHandlers.Add(handler);
-                    }
+//                    if (handler.PermissionHandler.hasPermissionToUseClause(user))
+//                    {
+//                        filteredHandlers.Add(handler);
+//                    }
+                    filteredHandlers.Add(handler);
                 }
                 clauseHandler = new List<IClauseHandler>(filteredHandlers);
                 queryCache.SetClauseHandlers(user, jqlClauseName, clauseHandler);
@@ -87,7 +133,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
                 throw new ArgumentException("Clause name cannot be empty.", "jqlClauseName");
             }
 
-            return new List<ClauseHandler>(Helper.GetSearchHandler(jqlClauseName));
+            return new List<IClauseHandler>(Helper.GetSearchHandler(jqlClauseName));
         }
 
         public ICollection<ClauseNames> GetJqlClauseNames(string fieldId)
@@ -127,6 +173,8 @@ namespace QuoteFlow.Models.Assets.Search.Managers
             {
                 throw new ArgumentException("Clause name cannot be empty.", "jqlClauseName");
             }
+
+            return GetHelper().
         }
 
         /// <summary>
@@ -137,7 +185,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 			/// <summary>
 			/// ClauseName -> ClauseHandler.
 			/// </summary>
-			internal readonly IDictionary<string, IList<IClauseHandler>> handlerIndex;
+			internal static IDictionary<string, IList<IClauseHandler>> handlerIndex;
 
 			/// <summary>
 			/// SearcherId -> IssueSearcher.
@@ -152,7 +200,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 			/// <summary>
 			/// FieldId -> ClauseName.
 			/// </summary>
-			internal readonly IDictionary<string, IList<ClauseNames>> fieldIdToClauseNames;
+			internal static IDictionary<string, IList<ClauseNames>> fieldIdToClauseNames;
 
 			/// <summary>
 			/// All JIRA's searcher groups.
@@ -161,14 +209,14 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 
 			public Helper(SearchHandlerIndexer indexer)
 			{
-				searcherIndex = indexer.createSearcherIdIndex();
+				searcherIndex = indexer.CreateSearcherIdIndex();
 				handlerIndex = indexer.createHandlerIndex();
-				searcherGroup = indexer.createSearcherGroups();
+				searcherGroup = indexer.CreateSearcherGroups();
 				searcherClauseNameIndex = indexer.createSearcherJqlNameIndex();
-				fieldIdToClauseNames = indexer.createFieldToClauseNamesIndex();
+				fieldIdToClauseNames = indexer.CreateFieldToClauseNamesIndex();
 			}
 
-			public virtual ICollection<IClauseHandler> GetSearchHandler(string jqlName)
+			public static IEnumerable<IClauseHandler> GetSearchHandler(string jqlName)
 			{
 			    var handler = handlerIndex[jqlName.ToLower(CultureInfo.CurrentCulture)];
 			    if (handler == null)
@@ -192,38 +240,318 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 				}
 			}
 
-			public virtual IssueSearcher<?> getIssueSearcher(string searcher)
+			public virtual IAssetSearcher<ISearchableField> GetAssetSearcher(string searcher)
 			{
 				return searcherIndex[searcher];
 			}
 
-//JAVA TO C# CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
-//ORIGINAL LINE: public java.util.Collection<com.atlassian.jira.issue.search.searchers.IssueSearcher<?>> getAllIssueSearchers()
-			public virtual ICollection<IssueSearcher<?>> AllIssueSearchers
+			public virtual ICollection<IAssetSearcher<ISearchableField>> AllAssetSearchers
 			{
-				get
-				{
-					return searcherIndex.Values;
-				}
+				get { return searcherIndex.Values; }
 			}
 
-			public virtual ICollection<SearchHandler.SearcherRegistration> getIssueSearcherRegistrationsByClauseName(string jqlName)
+			public virtual ICollection<SearchHandler.SearcherRegistration> GetAssetSearcherRegistrationsByClauseName(string jqlName)
 			{
-				return returnNullAsEmpty(searcherClauseNameIndex[CaseFolding.foldString(jqlName)]);
+			    var index = searcherClauseNameIndex[jqlName.ToLower()];
+			    return index ?? new Collection<SearchHandler.SearcherRegistration>();
 			}
 
 			public virtual IList<SearcherGroup> SearcherGroups
 			{
-				get
-				{
-					return searcherGroup;
-				}
+				get { return searcherGroup; }
 			}
 
-			public virtual IList<ClauseNames> getJqlClauseNames(string fieldId)
+			public static IList<ClauseNames> GetJqlClauseNames(string fieldId)
 			{
 				return fieldIdToClauseNames[fieldId];
 			}
 		}
+
+        /// <summary>
+		/// Class that is used by the manager to build its state from <seealso cref="SearchHandler"/>s.
+		/// </summary>
+        internal class SearchHandlerIndexer
+		{
+			internal readonly Set<string> systemClauses = new Set<string>();
+			internal readonly IDictionary<string, Set<IClauseHandler>> handlerIndex = new Dictionary<string, Set<IClauseHandler>>();
+			internal readonly IDictionary<string, Set<SearchHandler.SearcherRegistration>> searcherClauseNameIndex = new Dictionary<string, Set<SearchHandler.SearcherRegistration>>();
+			internal readonly IDictionary<string, IAssetSearcher<ISearchableField>> searcherIdIndex = new Dictionary<string, IAssetSearcher<ISearchableField>>();
+			internal readonly IDictionary<SearcherGroupType, Set<IAssetSearcher<ISearchableField>>> groupIndex = new Dictionary<SearcherGroupType, Set<IAssetSearcher<ISearchableField>>>();
+
+//			internal SearchHandlerIndexer()
+//			{
+//				foreach (SearcherGroupType groupType in SearcherGroupType.Values())
+//				{
+//					groupIndex[groupType] = IdentitySet.newListOrderedSet<IssueSearcher<?>> ();
+//				}
+//			}
+
+			internal virtual IDictionary<string, IList<ClauseNames>> CreateFieldToClauseNamesIndex()
+			{
+				var fieldToClauseNames = new Dictionary<string, IList<ClauseNames>>();
+				foreach (Set<IClauseHandler> handlers in handlerIndex.Values)
+				{
+					foreach (var handler in handlers)
+					{
+						IClauseInformation information = handler.Information;
+						if (information.FieldId != null)
+						{
+							var names = fieldToClauseNames[information.FieldId];
+							if (names == null)
+							{
+								names = new List<ClauseNames>();
+								fieldToClauseNames[information.FieldId] = names;
+							}
+
+							names.Add(information.JqlClauseNames);
+						}
+					}
+				}
+
+				IDictionary<string, IList<ClauseNames>> returnMe = new Dictionary<string, IList<ClauseNames>>();
+				foreach (var entry in fieldToClauseNames)
+				{
+					returnMe[entry.Key] = new List<ClauseNames>(entry.Value);
+				}
+
+				return returnMe;
+			}
+
+			internal virtual IDictionary<string, IList<IClauseHandler>> createHandlerIndex()
+			{
+				var tmpHandlerIndex = new Dictionary<string, IList<IClauseHandler>>();
+				foreach (var entry in handlerIndex)
+				{
+					tmpHandlerIndex[entry.Key] = new List<IClauseHandler>(entry.Value);
+				}
+			    return tmpHandlerIndex;
+			}
+
+			internal virtual IDictionary<string, IList<SearchHandler.SearcherRegistration>> createSearcherJqlNameIndex()
+			{
+				var tmpHandlerIndex = new Dictionary<string, IList<SearchHandler.SearcherRegistration>>();
+				foreach (var entry in searcherClauseNameIndex)
+				{
+					tmpHandlerIndex[entry.Key] = new List<SearchHandler.SearcherRegistration>(entry.Value);
+				}
+				return tmpHandlerIndex;
+			}
+
+			internal virtual IList<SearcherGroup> CreateSearcherGroups()
+			{
+				var groups = new List<SearcherGroup>();
+				foreach (var entry in groupIndex)
+				{
+					if (entry.Value.Any())
+					{
+						var searcher = new List<IAssetSearcher<ISearchableField>>(entry.Value);
+						searcher.Sort(SearcherComparatorFactory.GetSearcherComparator(entry.Key));
+						groups.Add(new SearcherGroup(entry.Key, searcher));
+					}
+					else
+					{
+						groups.Add(new SearcherGroup(entry.Key, new List<IAssetSearcher<ISearchableField>>()));
+					}
+				}
+				return new List<SearcherGroup>(groups);
+			}
+
+			internal virtual IDictionary<string, IAssetSearcher<ISearchableField>> CreateSearcherIdIndex()
+			{
+				return new Dictionary<string, IAssetSearcher<ISearchableField>>(searcherIdIndex);
+			}
+
+			internal virtual void IndexSystemField(ISearchableField systemField)
+			{
+				IndexSearchableField(systemField, true);
+			}
+
+			public virtual void IndexCustomField(ICustomField customField)
+			{
+				IndexSearchableField(customField, false);
+			}
+
+			public virtual void IndexSystemClauseHandlers(IEnumerable<SearchHandler> searchHandlers)
+			{
+				foreach (SearchHandler searchHandler in searchHandlers)
+				{
+					indexClauseHandlers(null, searchHandler.ClauseRegistrations, true);
+				}
+			}
+
+			internal virtual void IndexSearchableField(ISearchableField field, bool system)
+			{
+				SearchHandler searchHandler = field.CreateAssociatedSearchHandler();
+				if (searchHandler != null)
+				{
+					indexSearchHandler(field, searchHandler, system);
+				}
+				else
+				{
+//					if (log.DebugEnabled)
+//					{
+//						log.debug("Searchable field '" + field.Id + "' does not have a search handler, will not be searchable.");
+//					}
+				}
+			}
+
+			internal virtual void indexSearchHandler(ISearchableField field, SearchHandler handler, bool system)
+			{
+				SearchHandler.SearcherRegistration registration = handler.SearcherReg;
+				if (registration != null)
+				{
+					IndexSearcherById(field, registration.AssetSearcher, system);
+					// NOTE: you must call indexClauseHandlers first since it is populating a map of system fields, I know this sucks a bit, sorry :)
+					indexClauseHandlers(field, registration.ClauseHandlers, system);
+					indexSearcherByJqlName(field, registration, system);
+				}
+
+				indexClauseHandlers(field, handler.ClauseRegistrations, system);
+			}
+
+			internal virtual void indexClauseHandlers<T>(ISearchableField field, IEnumerable<T> clauseHandlers, bool system) where T : SearchHandler.ClauseRegistration
+			{
+				foreach (var clauseHandler in clauseHandlers)
+				{
+					indexClauseHandlerByJqlName(field, clauseHandler, system);
+				}
+			}
+
+			internal virtual void indexClauseHandlerByJqlName(IField field, SearchHandler.ClauseRegistration registration, bool system)
+			{
+				Set<string> names = GetClauseNames.get(registration.Handler).JqlFieldNames;
+				foreach (string name in names)
+				{
+					// We always want to look for a match in lowercase since that is how we cache it
+					var lowerName = name.ToLower();
+					//Do we already have a system clause of that name registered.
+                    if (systemClauses.Contains(lowerName))
+					{
+						if (system)
+						{
+						    if (field != null)
+							{
+								throw new Exception(string.Format("Two system clauses are trying to register against the same JQL name. New Field = '{0}', Jql Name = '{1}'.", field.Name, name));
+							}
+						    throw new Exception(string.Format("Two system clauses are trying to register against the same JQL name. Clause with Jql Name = '{0}'.", name));
+						}
+					    var type = ((ICustomField) field).CustomFieldType;
+					    string typeName = (type != null) ? type.Name : "Unknown Type";
+					    //log.warn(string.Format("A custom field '{0} ({1})' is trying to register a clause handler against a system clause with name '{2}'. Ignoring request.", field.Name, typeName, name));
+					}
+					else
+					{
+						if (system)
+						{
+                            systemClauses.Add(lowerName);
+						}
+
+                        Register(lowerName, registration);
+					}
+				}
+			}
+
+			// NOTE: this method must be invoked after {@link #indexClauseHandlerByJqlName } has been called since the method
+			// is responsible for populating the systemClauses set.
+			internal virtual void indexSearcherByJqlName(ISearchableField field, SearchHandler.SearcherRegistration searcherRegistration, bool system)
+			{
+				foreach (SearchHandler.ClauseRegistration clauseRegistration in searcherRegistration.ClauseHandlers)
+				{
+					foreach (string name in GetClauseNames.get(clauseRegistration.Handler).JqlFieldNames)
+					{
+						// We always want to look for a match in lower-case since that is how we cache it
+						var lowerName = name.ToLower();
+
+                        if (!system && systemClauses.Contains(lowerName))
+						{
+							var type = ((ICustomField) field).CustomFieldType;
+							string typeName = (type != null) ? type.Name : "Unknown Type";
+							//log.warn(string.Format("A custom field '{0} ({1})' is trying to register a searcher against a system clause with name '{2}'. Ignoring request.", field.Name, typeName, name));
+						}
+						else
+						{
+                            Register(lowerName, searcherRegistration);
+						}
+					}
+				}
+			}
+
+			internal virtual void Register(string name, SearchHandler.ClauseRegistration registration)
+			{
+				Set<IClauseHandler> currentHandlers = handlerIndex[name];
+				if (currentHandlers == null)
+				{
+					currentHandlers = new Set<IClauseHandler> {registration.Handler};
+				    handlerIndex[name] = currentHandlers;
+				}
+				else
+				{
+                    currentHandlers.Add(registration.Handler);
+				}
+			}
+
+			internal virtual void Register(string name, SearchHandler.SearcherRegistration searcherRegistration)
+			{
+				Set<SearchHandler.SearcherRegistration> currentSearcherRegistrations = searcherClauseNameIndex[name];
+				if (currentSearcherRegistrations == null)
+				{
+				    currentSearcherRegistrations = new Set<SearchHandler.SearcherRegistration> {searcherRegistration};
+				    searcherClauseNameIndex[name] = currentSearcherRegistrations;
+				}
+				else
+				{
+					currentSearcherRegistrations.Add(searcherRegistration);
+				}
+			}
+
+			internal virtual void IndexSearcherById(ISearchableField field, IAssetSearcher<ISearchableField> newSearcher, bool system)
+			{
+				if (newSearcher == null)
+				{
+					return;
+				}
+
+				string searcherId = newSearcher.SearchInformation.Id;
+				var currentSearcher = searcherIdIndex[searcherId];
+				if (currentSearcher != null)
+				{
+					if (currentSearcher != newSearcher)
+					{
+						//log.debug(string.Format("Trying to register two searchers to the same id. Field = '{0}', Current searcher = '{1}', New Searcher = '{2}', SearcherId ='{3}'.", field.Name, currentSearcher, newSearcher, searcherId));
+					}
+				}
+				else
+				{
+					searcherIdIndex[searcherId] = newSearcher;
+
+					SearcherGroupType type;
+
+					if (system)
+					{
+						type = newSearcher.SearchInformation.SearcherGroupType;
+						if (type == null)
+						{
+							//log.warn(string.Format("System field '{0}' does not have a group type registered. Placing in {1} group.", field.Name, SearcherGroupType.CUSTOM));
+							type = SearcherGroupType.Custom;
+						}
+					}
+					else
+					{
+						SearcherGroupType givenType = newSearcher.SearchInformation.SearcherGroupType;
+						if ((givenType != null) && (givenType != SearcherGroupType.Custom))
+						{
+							var cfType = ((ICustomField) field).CustomFieldType;
+							string typeName = (cfType != null) ? cfType.Name : "Unknown Type";
+							//log.warn(string.Format("Custom field '{0} ({1})' is trying to register itself in the '{2}' group.", field.Name, typeName, givenType));
+						}
+						type = SearcherGroupType.Custom;
+					}
+
+					groupIndex[type].Add(newSearcher);
+				}
+			}
+		}
+
+        private static readonly Func<IClauseHandler, ClauseNames> GetClauseNames = x => x.Information.JqlClauseNames; 
     }
 }

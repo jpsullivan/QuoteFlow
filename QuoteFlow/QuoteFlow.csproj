@@ -100,37 +100,48 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Jil.2.0.0\lib\net45\Jil.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net">
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net.Contrib.Analyzers">
+    <Reference Include="Lucene.Net.Contrib.Analyzers, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Analyzers.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net.Contrib.Core">
+    <Reference Include="Lucene.Net.Contrib.Core, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net.Contrib.FastVectorHighlighter">
+    <Reference Include="Lucene.Net.Contrib.FastVectorHighlighter, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.FastVectorHighlighter.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net.Contrib.Highlighter">
+    <Reference Include="Lucene.Net.Contrib.Highlighter, Version=2.3.2.1, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Highlighter.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net.Contrib.Memory">
+    <Reference Include="Lucene.Net.Contrib.Memory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Memory.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net.Contrib.Queries">
+    <Reference Include="Lucene.Net.Contrib.Queries, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Queries.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net.Contrib.Regex">
+    <Reference Include="Lucene.Net.Contrib.Regex, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Regex.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net.Contrib.SimpleFacetedSearch">
+    <Reference Include="Lucene.Net.Contrib.SimpleFacetedSearch, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SimpleFacetedSearch.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net.Contrib.Snowball">
+    <Reference Include="Lucene.Net.Contrib.Snowball, Version=2.0.0.1, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Snowball.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net.Contrib.SpellChecker">
+    <Reference Include="Lucene.Net.Contrib.SpellChecker, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SpellChecker.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownSharp">
@@ -222,6 +233,9 @@
       <HintPath>..\packages\Sigil.4.2.1\lib\net45\Sigil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\lib\Lucene.Net.Core\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Drawing" />
@@ -296,6 +310,9 @@
     </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebBackgrounder">
+      <HintPath>..\packages\WebBackgrounder.0.2.0\lib\net40\WebBackgrounder.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -397,6 +414,7 @@
     <Compile Include="Infrastructure\Concurrency\AtomicReference.cs" />
     <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
     <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
+    <Compile Include="Infrastructure\Elmah\QuietLog.cs" />
     <Compile Include="Infrastructure\Enumerables\ListWithDuplicates.cs" />
     <Compile Include="Infrastructure\Enumerables\SingletonList.cs" />
     <Compile Include="Infrastructure\Exceptions\Antlr\RuntimeRecognitionException.cs" />
@@ -406,6 +424,9 @@
     <Compile Include="Infrastructure\Helpers\LexerErrorHelper.cs" />
     <Compile Include="Infrastructure\IQuoteFlowDataType.cs" />
     <Compile Include="Infrastructure\JsonContentNegotiator.cs" />
+    <Compile Include="Infrastructure\Lucene\LuceneIndexingJob.cs" />
+    <Compile Include="Infrastructure\Lucene\LuceneVersion.cs" />
+    <Compile Include="Infrastructure\Lucene\PerFieldAnalyzer.cs" />
     <Compile Include="Infrastructure\QuoteFlowControllerFactory.cs" />
     <Compile Include="Infrastructure\QuoteFlowDataType.cs" />
     <Compile Include="Infrastructure\QuoteFlowDataTypes.cs" />
@@ -434,14 +455,20 @@
     <Compile Include="Models\Assets\Fields\INavigableField.cs" />
     <Compile Include="Models\Assets\Fields\IOrderableField.cs" />
     <Compile Include="Models\Assets\Fields\ISearchableField.cs" />
+    <Compile Include="Models\Assets\Index\Analyzer\EnglishAnalyzer.cs" />
+    <Compile Include="Models\Assets\Index\Analyzer\SubtokenFilter.cs" />
+    <Compile Include="Models\Assets\Index\Analyzer\TextAnalyzer.cs" />
     <Compile Include="Models\Assets\Index\DocumentConstants.cs" />
     <Compile Include="Models\Assets\Index\Indexers\AssetNameIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\BaseFieldIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\CreatorIndexer.cs" />
+    <Compile Include="Models\Assets\Index\Indexers\DescriptionIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\FieldIndexerUtil.cs" />
     <Compile Include="Models\Assets\Index\Indexers\IFieldIndexer.cs" />
+    <Compile Include="Models\Assets\Index\Indexers\SummaryIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\UserFieldIndexer.cs" />
     <Compile Include="Models\Assets\Search\ClauseNames.cs" />
+    <Compile Include="Models\Assets\Search\Constants\AllTextSearchConstants.cs" />
     <Compile Include="Models\Assets\Search\Constants\AssetIdConstants.cs" />
     <Compile Include="Models\Assets\Search\Constants\ClauseInformation.cs" />
     <Compile Include="Models\Assets\Search\Constants\CommentsFieldSearchConstants.cs" />
@@ -453,6 +480,7 @@
     <Compile Include="Models\Assets\Search\Handlers\CatalogSearchHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\Handlers\ISearchHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\Handlers\SimpleSearchHandlerFactory.cs" />
+    <Compile Include="Models\Assets\Search\Handlers\TextQuerySearchHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\ILuceneFieldSorter.cs" />
     <Compile Include="Models\Assets\Search\IQueryCache.cs" />
     <Compile Include="Models\Assets\Search\ISearchContext.cs" />
@@ -469,13 +497,17 @@
     <Compile Include="Models\Assets\Search\Searchers\AbstractInitializationSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\CreatorSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Information\GenericSearcherInformation.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\SearcherComparatorFactory.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\TextQuerySearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\EnhancedUserSearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\ISearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\NamedTerminalClauseCollectingVisitor.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\SimpleNavigatorCollectorVisitor.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\TextQueryValidator.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\UserSearchInput.cs" />
     <Compile Include="Models\Assets\Search\Searchers\UserSearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Util\RecursiveClauseVisitor.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Util\TextTermEscaper.cs" />
     <Compile Include="Models\Assets\Search\SystemClauseHandlerFactory.cs" />
     <Compile Include="Models\Assets\Transport\ActionParams.cs" />
     <Compile Include="Models\Assets\Transport\FieldValuesHolder.cs" />
@@ -507,6 +539,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Search\Jql\NoOpClauseHandler.cs" />
+    <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\ExtendedQueryParser.cs" />
+    <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\LuceneQueryParser.cs" />
+    <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\LuceneQueryParserFactory.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\EmptyOperandHandler.cs" />
     <Compile Include="Models\Search\Jql\Operand\JqlOperandResolver.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\MultiValueOperandHandler.cs" />
@@ -681,8 +716,11 @@
     <Compile Include="Models\Search\Jql\Util\JqlCustomFieldId.cs" />
     <Compile Include="Models\Search\Jql\Util\JqlStringSupport.cs" />
     <Compile Include="Models\Search\Jql\Util\ToJqlStringVisitor.cs" />
+    <Compile Include="Models\Search\Jql\Validator\AllTextValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\ChangedClauseValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\ClauseValidator.cs" />
+    <Compile Include="Models\Search\Jql\Validator\CommentValidator.cs" />
+    <Compile Include="Models\Search\Jql\Validator\FreeTextFieldValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\IClauseValidator.cs" />
     <Compile Include="Models\Assets\Search\Searchers\IAssetSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Information\ISearcherInformation.cs" />
@@ -774,6 +812,7 @@
     <Compile Include="Services\Interfaces\IFileStorageService.cs" />
     <Compile Include="Services\Interfaces\IFileSystemService.cs" />
     <Compile Include="Services\Interfaces\IFormsAuthenticationService.cs" />
+    <Compile Include="Services\Interfaces\IIndexingService.cs" />
     <Compile Include="Services\Interfaces\IManufacturerLogoService.cs" />
     <Compile Include="Services\Interfaces\IManufacturerService.cs" />
     <Compile Include="Services\Interfaces\IMessageService.cs" />
@@ -785,6 +824,7 @@
     <Compile Include="Services\Interfaces\IUploadFileService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\LocalFileReference.cs" />
+    <Compile Include="Services\LuceneIndexingService.cs" />
     <Compile Include="Services\LuceneSearchService.cs" />
     <Compile Include="Services\ManufacturerLogoService.cs" />
     <Compile Include="Services\ManufacturerService.cs" />

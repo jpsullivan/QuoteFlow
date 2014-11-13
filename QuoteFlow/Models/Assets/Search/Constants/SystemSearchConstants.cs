@@ -67,11 +67,11 @@ namespace QuoteFlow.Models.Assets.Search.Constants
 //		{
 //			return SavedFilterSearchConstants.Instance;
 //		}
-//
-//		public static AllTextSearchConstants ForAllText()
-//		{
-//			return AllTextSearchConstants.Instance;
-//		}
+
+		public static AllTextSearchConstants ForAllText()
+		{
+			return AllTextSearchConstants.Instance;
+		}
 
 		public static AssetIdConstants ForAssetId()
 		{
@@ -111,17 +111,29 @@ namespace QuoteFlow.Models.Assets.Search.Constants
 			SYSTEM_NAMES = new Set<string>(names);
 		}
 
-//        private static IDictionary<string, IClauseInformation> CLAUSE_INFORMATION_MAP = new Dictionary<string, IClauseInformation>()
-//        {
-//            ForComments(), ForCreatedDate(), ForCreator(), ForDescription(), ForAssetId(), ForCatalog(), ForSummary(), ForUpdatedDate()
-//        };
+        private static readonly IDictionary<string, IClauseInformation> ClauseInformationMap = new Dictionary<string, IClauseInformation>()
+        {
+            { GetClauseFieldName(ForAllText()), ForAllText() },
+            { GetClauseFieldName(ForComments()), ForComments() },
+            { GetClauseFieldName(ForCreatedDate()), ForCreatedDate() },
+            { GetClauseFieldName(ForCreator()), ForCreator() },
+            { GetClauseFieldName(ForDescription()), ForDescription() },
+            { GetClauseFieldName(ForAssetId()), ForAssetId() },
+            { GetClauseFieldName(ForCatalog()), ForCatalog() },
+            { GetClauseFieldName(ForSummary()), ForSummary() },
+            { GetClauseFieldName(ForUpdatedDate()), ForUpdatedDate() }
+        };
 
-//
-//		public static IClauseInformation getClauseInformationById(string id)
-//		{
-//			return CLAUSE_INFORMATION_MAP.get(id);
-//		}
-//
+        private static string GetClauseFieldName(IClauseInformation clauseInfo)
+        {
+            return clauseInfo.FieldId ?? clauseInfo.JqlClauseNames.PrimaryName;
+        }
+
+		public static IClauseInformation GetClauseInformationById(string id)
+		{
+			return ClauseInformationMap[id];
+		}
+
 		private static IEnumerable<string> GetNames(MethodInfo constantMethod)
 		{
 			try

@@ -37,7 +37,7 @@ namespace QuoteFlow.Services
 
         public QuerySearchResults Search(User user, MultiDictionary<string, string[]> paramMap, long filterId)
         {
-            var searchers = AssetSearcherManager.AllSearchers;
+            var searchers = AssetSearcherManager.GetAllSearchers();
             var clausesOutcome = GenerateQuery(paramMap, user, searchers);
             
             throw new NotImplementedException();

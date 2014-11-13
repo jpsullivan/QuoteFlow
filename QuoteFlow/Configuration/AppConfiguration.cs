@@ -108,5 +108,11 @@ namespace QuoteFlow.Configuration
         /// Gets the Google Analytics Property ID being used, if any.
         /// </summary>
         public string GoogleAnalyticsPropertyId { get; set; }
+
+        /// <summary>
+        /// Gets a boolean indicating if the search index should be updated automatically in the background
+        /// </summary>
+        [DefaultValue(true)]
+        public bool AutoUpdateSearchIndex { get; set; }
     }
 }

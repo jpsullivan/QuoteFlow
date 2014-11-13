@@ -15,6 +15,7 @@ using Ninject.Modules;
 using QuoteFlow.Auditing;
 using QuoteFlow.Configuration;
 using QuoteFlow.Infrastructure;
+using QuoteFlow.Infrastructure.Lucene;
 using QuoteFlow.Models;
 using QuoteFlow.Models.Assets.CustomFields.Searchers.Transformer;
 using QuoteFlow.Models.Assets.Search;
@@ -35,18 +36,15 @@ namespace QuoteFlow
         public override void Load()
         {
             var configuration = new ConfigurationService();
-            Bind<ConfigurationService>()
-                .ToMethod(context => configuration);
-            Bind<IAppConfiguration>()
-                .ToMethod(context => configuration.Current);
-            Bind<PoliteCaptcha.IConfigurationSource>()
-                .ToMethod(context => configuration);
+            Bind<ConfigurationService>().ToMethod(context => configuration);
+            Bind<IAppConfiguration>().ToMethod(context => configuration.Current);
+            Bind<PoliteCaptcha.IConfigurationSource>().ToMethod(context => configuration);
 
-//            Bind<Lucene.Net.Store.Directory>()
-//                .ToMethod(_ => LuceneCommon.GetDirectory(configuration.Current.LuceneIndexLocation))
-//                .InSingletonScope();
+            Bind<Lucene.Net.Store.Directory>()
+                .ToMethod(_ => LuceneCommon.GetDirectory(configuration.Current.LuceneIndexLocation))
+                .InSingletonScope();
 
-            //ConfigureSearch(configuration);
+            ConfigureSearch();
 
             if (!String.IsNullOrEmpty(configuration.Current.AzureStorageConnectionString))
             {
@@ -223,27 +221,11 @@ namespace QuoteFlow
             #endregion
         }
 
-//        private void ConfigureSearch(ConfigurationService configuration)
-//        {
-//            if (configuration.Current.SearchServiceUri == null)
-//            {
-//                Bind<ISearchService>()
-//                    .To<LuceneSearchService>()
-//                    .InRequestScope();
-//                Bind<IIndexingService>()
-//                    .To<LuceneIndexingService>()
-//                    .InRequestScope();
-//            }
-//            else
-//            {
-//                Bind<ISearchService>()
-//                    .To<ExternalSearchService>()
-//                    .InRequestScope();
-//                Bind<IIndexingService>()
-//                    .To<ExternalSearchService>()
-//                    .InRequestScope();
-//            }
-//        }
+        private void ConfigureSearch()
+        {
+            Bind<ISearchService>().To<LuceneSearchService>().InRequestScope();
+            Bind<IIndexingService>().To<LuceneIndexingService>().InRequestScope();
+        }
 
         private void ConfigureForLocalFileSystem()
         {

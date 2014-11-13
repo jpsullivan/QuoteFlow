@@ -9,11 +9,11 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
         public IEnumerable<IAssetSearcher<ISearchableField>> Searchers { get; set; } 
         public bool PrintHeader { get; set; }
 
-        public SearcherGroup(SearcherGroupType type, IEnumerable<IAssetSearcher<ISearchableField>> searchers, bool printHeader)
+        public SearcherGroup(SearcherGroupType type, IEnumerable<IAssetSearcher<ISearchableField>> searchers)
         {
             Type = type;
             Searchers = searchers;
-            PrintHeader = printHeader;
+            PrintHeader = false;
         }
 
         public override string ToString()
