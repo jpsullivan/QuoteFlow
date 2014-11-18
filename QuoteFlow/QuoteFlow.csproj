@@ -520,6 +520,7 @@
     <Compile Include="Models\Search\Jql\Clauses\IClauseHandler.cs" />
     <Compile Include="Models\Search\Jql\Clauses\IClauseInformation.cs" />
     <Compile Include="Models\Search\Jql\Context\AllCatalogsContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\AllTextClauseContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Context\CatalogAssetTypeContext.cs" />
     <Compile Include="Models\Search\Jql\Context\CatalogAssetTypeContexts.cs" />
     <Compile Include="Models\Search\Jql\Context\CatalogContext.cs" />
