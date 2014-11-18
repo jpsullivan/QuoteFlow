@@ -458,6 +458,7 @@
     <Compile Include="Models\Assets\Index\Analyzer\EnglishAnalyzer.cs" />
     <Compile Include="Models\Assets\Index\Analyzer\SubtokenFilter.cs" />
     <Compile Include="Models\Assets\Index\Analyzer\TextAnalyzer.cs" />
+    <Compile Include="Models\Assets\Index\Analyzer\TokenFilters.cs" />
     <Compile Include="Models\Assets\Index\DocumentConstants.cs" />
     <Compile Include="Models\Assets\Index\Indexers\AssetNameIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\BaseFieldIndexer.cs" />
@@ -467,6 +468,7 @@
     <Compile Include="Models\Assets\Index\Indexers\IFieldIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\SummaryIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\UserFieldIndexer.cs" />
+    <Compile Include="Models\Assets\Index\QuoteFlowAnalyzer.cs" />
     <Compile Include="Models\Assets\Search\ClauseNames.cs" />
     <Compile Include="Models\Assets\Search\Constants\AllTextSearchConstants.cs" />
     <Compile Include="Models\Assets\Search\Constants\AssetIdConstants.cs" />
