@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Lucene.Net.Search;
+using QuoteFlow.Models.Assets.Search;
 
 namespace QuoteFlow.Models.Assets.Fields
 {
@@ -47,12 +48,12 @@ namespace QuoteFlow.Models.Assets.Fields
         /// <returns>The name of the indexed term to be used for native Lucene sorting.</returns>
         IList<SortField> GetSortFields(bool sortOrder);
 
-//        /// <summary>
-//        /// A sorter to be used when sorting columns in a table.  This sort uses the Lucene Document Collection
-//        /// and is therefore a lot faster than sorting the issues in memory.
-//        /// </summary>
-//        /// <returns>A sorter that can be used to sort this field, or null depending on the value of <seealso cref="#getSortComparatorSource()"/></returns>
-//        ILuceneFieldSorter Sorter { get; }
+        /// <summary>
+        /// A sorter to be used when sorting columns in a table.  This sort uses the Lucene Document Collection
+        /// and is therefore a lot faster than sorting the issues in memory.
+        /// </summary>
+        /// <returns>A sorter that can be used to sort this field, or null depending on the value of <see cref="SortComparatorSource"/></returns>
+        ILuceneFieldSorter<object> Sorter { get; }
 
         /// <summary>
         /// Returns the id of the field to check for visibility. For example, with original estimate field

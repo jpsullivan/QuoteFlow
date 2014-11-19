@@ -424,6 +424,9 @@
     <Compile Include="Infrastructure\Helpers\LexerErrorHelper.cs" />
     <Compile Include="Infrastructure\IQuoteFlowDataType.cs" />
     <Compile Include="Infrastructure\JsonContentNegotiator.cs" />
+    <Compile Include="Infrastructure\Lucene\IKeywordAttribute.cs" />
+    <Compile Include="Infrastructure\Lucene\KeywordAttribute.cs" />
+    <Compile Include="Infrastructure\Lucene\KeywordRepeatFilter.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneIndexingJob.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneVersion.cs" />
     <Compile Include="Infrastructure\Lucene\PerFieldAnalyzer.cs" />
