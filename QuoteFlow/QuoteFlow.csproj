@@ -453,8 +453,15 @@
     <Compile Include="Models\Assets\CustomFields\Searchers\Transformer\CustomFieldInputHelper.cs" />
     <Compile Include="Models\Assets\CustomFields\Searchers\Transformer\ICustomFieldInputHelper.cs" />
     <Compile Include="Models\Assets\CustomFields\Searchers\UserPickerSearcher.cs" />
+    <Compile Include="Models\Assets\Fields\AbstractField.cs" />
+    <Compile Include="Models\Assets\Fields\AbstractOrderableField.cs" />
+    <Compile Include="Models\Assets\Fields\AbstractOrderableNavigableField.cs" />
+    <Compile Include="Models\Assets\Fields\CatalogSystemField.cs" />
+    <Compile Include="Models\Assets\Fields\FieldManager.cs" />
+    <Compile Include="Models\Assets\Fields\ICatalogField.cs" />
     <Compile Include="Models\Assets\Fields\ICustomField.cs" />
     <Compile Include="Models\Assets\Fields\IField.cs" />
+    <Compile Include="Models\Assets\Fields\IFieldManager.cs" />
     <Compile Include="Models\Assets\Fields\INavigableField.cs" />
     <Compile Include="Models\Assets\Fields\IOrderableField.cs" />
     <Compile Include="Models\Assets\Fields\ISearchableField.cs" />
@@ -495,6 +502,12 @@
     <Compile Include="Models\Assets\Search\Managers\IAssetSearcherManager.cs" />
     <Compile Include="Models\Assets\Search\Managers\ISearchHandlerManager.cs" />
     <Compile Include="Models\Assets\Search\Managers\SearchHandlerManager.cs" />
+    <Compile Include="Models\Assets\Search\Parameters.Lucene\IPermissionsFilterGenerator.cs" />
+    <Compile Include="Models\Assets\Search\Parameters.Lucene\Sort\DefaultMatchHandler.cs" />
+    <Compile Include="Models\Assets\Search\Parameters.Lucene\Sort\IMatchHandler.cs" />
+    <Compile Include="Models\Assets\Search\Parameters.Lucene\Sort\MappedSortComparator.cs" />
+    <Compile Include="Models\Assets\Search\Parameters.Lucene\Sort\QuoteFlowLuceneFieldFinder.cs" />
+    <Compile Include="Models\Assets\Search\Parameters.Lucene\Sort\SingleValueMatchHandler.cs" />
     <Compile Include="Models\Assets\Search\QueryCache.cs" />
     <Compile Include="Models\Assets\Search\QueryCacheClauseHandlerKey.cs" />
     <Compile Include="Models\Assets\Search\QueryCacheKey.cs" />
@@ -724,6 +737,8 @@
     <Compile Include="Models\Search\Jql\Util\JqlStringSupport.cs" />
     <Compile Include="Models\Search\Jql\Util\ToJqlStringVisitor.cs" />
     <Compile Include="Models\Search\Jql\Validator\AllTextValidator.cs" />
+    <Compile Include="Models\Search\Jql\Validator\CatalogValidator.cs" />
+    <Compile Include="Models\Search\Jql\Validator\CatalogValuesExistValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\ChangedClauseValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\ClauseValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\CommentValidator.cs" />
@@ -740,6 +755,7 @@
     <Compile Include="Models\Search\Jql\Validator\SavedFilterClauseValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\SupportedOperatorsValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\ValidatorVisitor.cs" />
+    <Compile Include="Models\Search\Jql\Validator\ValuesExistValidator.cs" />
     <Compile Include="Models\Search\Jql\Values\ClauseHandler.cs" />
     <Compile Include="Models\Search\Jql\Values\ClauseValueResult.cs" />
     <Compile Include="Models\Search\Jql\Values\ClauseValueResults.cs" />

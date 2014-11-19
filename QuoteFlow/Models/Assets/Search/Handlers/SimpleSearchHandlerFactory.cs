@@ -10,7 +10,7 @@ using QuoteFlow.Models.Search.Jql.Values;
 
 namespace QuoteFlow.Models.Assets.Search.Handlers
 {
-    internal abstract class SimpleSearchHandlerFactory : ISearchHandlerFactory
+    public abstract class SimpleSearchHandlerFactory : ISearchHandlerFactory
     {
         private readonly Type searcherClass;
         private readonly IClauseInformation clauseInformation;

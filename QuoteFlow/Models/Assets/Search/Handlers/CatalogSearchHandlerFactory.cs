@@ -13,18 +13,18 @@ using QuoteFlow.Models.Search.Jql.Values;
 
 namespace QuoteFlow.Models.Assets.Search.Handlers
 {
-//    public sealed class CatalogSearchHandlerFactory : SimpleSearchHandlerFactory
-//    {
-//        public CatalogSearchHandlerFactory(
-//            CatalogClauseQueryFactory clauseFactory, 
-//            CatalogValidator caluseValidator, 
-//            FieldClausePermissionChecker.Factory clausePermissionFactory, 
-//            PermissionManager permissionManager, 
-//            IJqlOperandResolver jqlOperandResolver, 
-//            ProjectResolver projectResolver, 
-//            MultiClauseDecoratorContextFactory.Factory multiFactory)
-//            : base(componentFactory, SystemSearchConstants.ForCatalog(), typeof(ProjectSearcher), clauseFactory, caluseValidator, clausePermissionFactory, multiFactory.create(new ProjectClauseContextFactory(jqlOperandResolver, projectResolver, permissionManager)), new ProjectClauseValuesGenerator(permissionManager), new ProjectClauseValueSanitiser(permissionManager, jqlOperandResolver, projectResolver))
-//        {
-//        }
-//    }
+    public sealed class CatalogSearchHandlerFactory : SimpleSearchHandlerFactory
+    {
+        public CatalogSearchHandlerFactory(
+            CatalogClauseQueryFactory clauseFactory, 
+            CatalogValidator caluseValidator, 
+            FieldClausePermissionChecker.Factory clausePermissionFactory, 
+            PermissionManager permissionManager, 
+            IJqlOperandResolver jqlOperandResolver, 
+            ProjectResolver projectResolver, 
+            MultiClauseDecoratorContextFactory.Factory multiFactory)
+            : base(componentFactory, SystemSearchConstants.ForCatalog(), typeof(CatalogSearcher), clauseFactory, caluseValidator, clausePermissionFactory, multiFactory.create(new ProjectClauseContextFactory(jqlOperandResolver, projectResolver, permissionManager)), new ProjectClauseValuesGenerator(permissionManager), new ProjectClauseValueSanitiser(permissionManager, jqlOperandResolver, projectResolver))
+        {
+        }
+    }
 }

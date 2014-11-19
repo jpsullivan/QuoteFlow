@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Lucene.Net.Analysis;
+using QuoteFlow.Infrastructure.Lucene;
 
 namespace QuoteFlow.Models.Assets.Index.Analyzer
 {
