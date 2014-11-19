@@ -1,4 +1,5 @@
 ﻿using Lucene.Net.Documents;
+using QuoteFlow.Models.Assets.Index.Indexers.Phrase;
 using QuoteFlow.Models.Assets.Search.Constants;
 
 namespace QuoteFlow.Models.Assets.Index.Indexers
@@ -23,9 +24,8 @@ namespace QuoteFlow.Models.Assets.Index.Indexers
         {
             string descValue = issue.Description;
             IndexText(doc, DocumentFieldId, descValue, issue);
-            IndexText(doc, PhraseQuerySupportField.forIndexField(DocumentFieldId), descValue, issue);
+            IndexText(doc, PhraseQuerySupportField.ForIndexField(DocumentFieldId), descValue, issue);
             IndexTextForSorting(doc, DocumentConstants.AssetSortDesc, descValue, issue);
         }
     }
-
 }

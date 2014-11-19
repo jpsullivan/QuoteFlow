@@ -38,14 +38,14 @@ namespace QuoteFlow.Models.Search.Jql.Validator
             this.textQueryValidator = new TextQueryValidator();
         }
 
-        IMessageSet IClauseValidator.Validate(User searcher, ITerminalClause terminalClause)
+        public virtual IMessageSet Validate(User searcher, ITerminalClause terminalClause)
         {
             var messageSet = new MessageSet();
             Operator @operator = terminalClause.Operator;
             string fieldName = terminalClause.Name;
             if (!HandlesOperator(@operator))
             {
-                messageSet.AddErrorMessage(string.Format("jira.jql.clause.does.not.support.operator: {0}, {1}, {2}", @operator.DisplayString, fieldName));
+                messageSet.AddErrorMessage(string.Format("jira.jql.clause.does.not.support.operator: {0}, {1}, {2}", @operator.GetDisplayAttributeFrom(typeof(Operator)), fieldName));
                 return messageSet;
             }
 

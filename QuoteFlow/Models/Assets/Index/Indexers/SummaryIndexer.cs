@@ -1,4 +1,5 @@
 ﻿using Lucene.Net.Documents;
+using QuoteFlow.Models.Assets.Index.Indexers.Phrase;
 using QuoteFlow.Models.Assets.Search.Constants;
 
 namespace QuoteFlow.Models.Assets.Index.Indexers
@@ -31,7 +32,7 @@ namespace QuoteFlow.Models.Assets.Index.Indexers
         public virtual void AddIndex(Document doc, Asset asset)
         {
             IndexText(doc, DocumentFieldId, asset.Name, asset);
-            IndexText(doc, PhraseQuerySupportField.forIndexField(DocumentFieldId), asset.Name, asset);
+            IndexText(doc, PhraseQuerySupportField.ForIndexField(DocumentFieldId), asset.Name, asset);
             IndexTextForSorting(doc, DocumentConstants.AssetSortName, asset.Name, asset);
         }
     }

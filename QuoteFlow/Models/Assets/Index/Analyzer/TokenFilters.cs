@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Snowball;
-using QuoteFlow.Infrastructure.Lucene;
 using SF.Snowball.Ext;
 
 namespace QuoteFlow.Models.Assets.Index.Analyzer

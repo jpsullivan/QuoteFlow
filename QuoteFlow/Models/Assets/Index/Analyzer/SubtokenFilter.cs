@@ -23,7 +23,7 @@ namespace QuoteFlow.Models.Assets.Index.Analyzer
     /// This filter tokenizes the individual numbers, as well as the full phrase, allowing searching to
     /// be done on either. (JRA-7774)
     /// </summary>
-    public class SubtokenFilter : TokenFilter
+    public sealed class SubtokenFilter : TokenFilter
     {
         private static readonly string TOKEN_TYPE_HOST = StandardTokenizer.TOKEN_TYPES[StandardTokenizer.HOST];
         private static readonly string TOKEN_TYPE_NUM = StandardTokenizer.TOKEN_TYPES[StandardTokenizer.NUM];

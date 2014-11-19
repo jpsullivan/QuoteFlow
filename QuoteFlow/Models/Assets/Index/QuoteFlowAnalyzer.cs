@@ -72,10 +72,10 @@ namespace QuoteFlow.Models.Assets.Index
         {
             return new EnglishAnalyzer(LuceneVersion.Get(),
                 indexing, stemming == Stemming.ON
-                    ? TokenFilters.English.Stemming.Aggressive()
+                    ? TokenFilters.English.Stemming.Aggressive
                     : TokenFilters.General.Stemming.none(),
                 stopWordRemoval == StopWordRemoval.ON
-                    ? TokenFilters.English.StopWordRemoval.DefaultSet()
+                    ? TokenFilters.English.StopWordRemoval.DefaultSet
                     : TokenFilters.General.StopWordRemoval.none());
 
             // Deep fallback
@@ -97,7 +97,7 @@ namespace QuoteFlow.Models.Assets.Index
                 fieldName = "";
             }
             // end workaround
-            return findAnalyzer().tokenStream(fieldName, reader);
+            return findAnalyzer().TokenStream(fieldName, reader);
         }
 
         /// <summary>

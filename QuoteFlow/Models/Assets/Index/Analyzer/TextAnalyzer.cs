@@ -62,5 +62,4 @@ namespace QuoteFlow.Models.Assets.Index.Analyzer
             return base.ReusableTokenStream(fieldName, reader);
         }
     }
-
 }

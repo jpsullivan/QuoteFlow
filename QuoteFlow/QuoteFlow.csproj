@@ -466,6 +466,7 @@
     <Compile Include="Models\Assets\Index\Indexers\DescriptionIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\FieldIndexerUtil.cs" />
     <Compile Include="Models\Assets\Index\Indexers\IFieldIndexer.cs" />
+    <Compile Include="Models\Assets\Index\Indexers\Phrase\PhraseQuerySupportField.cs" />
     <Compile Include="Models\Assets\Index\Indexers\SummaryIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\UserFieldIndexer.cs" />
     <Compile Include="Models\Assets\Index\QuoteFlowAnalyzer.cs" />

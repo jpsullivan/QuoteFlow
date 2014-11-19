@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using QuoteFlow.Infrastructure.Util;
+﻿using QuoteFlow.Infrastructure.Util;
 using QuoteFlow.Models.Assets.Search.Constants;
 using QuoteFlow.Models.Search.Jql.Operand;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
