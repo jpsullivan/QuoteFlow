@@ -7,8 +7,10 @@ namespace QuoteFlow.Models.Search.Jql.Context
     /// </summary>
     public interface IClauseContext
     {
-        /// <returns>The catalog/asset type contexts that are defined by a clause.</returns>
-        HashSet<ICatalogAssetTypeContext> Contexts { get; }
+        /// <summary>
+        /// Returns the catalog/asset type contexts that are defined by a clause.
+        /// </summary>
+        ISet<ICatalogAssetTypeContext> Contexts { get; }
 
         /// <summary>
         /// 

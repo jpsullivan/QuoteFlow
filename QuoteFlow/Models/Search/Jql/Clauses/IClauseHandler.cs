@@ -33,5 +33,4 @@ namespace QuoteFlow.Models.Search.Jql.Clauses
         /// </summary>
         IClauseContextFactory ClauseContextFactory { get; }
     }
-
 }

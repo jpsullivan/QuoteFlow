@@ -2,27 +2,21 @@
 {
     public class CatalogAssetTypeContext : ICatalogAssetTypeContext
     {
-        private static readonly ICatalogAssetTypeContext INSTANCE = new CatalogAssetTypeContext(AllCatalogsContext.INSTANCE);
-
-		private readonly ICatalogContext catalogContext;
-		//private readonly IssueTypeContext issueTypeContext;
+        private static readonly ICatalogAssetTypeContext Instance = new CatalogAssetTypeContext(AllCatalogsContext.Instance, AllAssetTypesContext.Instance);
 
 		public static ICatalogAssetTypeContext CreateGlobalContext()
 		{
-			return INSTANCE;
+			return Instance;
 		}
 
-        public CatalogAssetTypeContext(ICatalogContext catalogContext)
+        public CatalogAssetTypeContext(ICatalogContext catalogContext, IAssetTypeContext assetTypeContext)
 		{
-			this.catalogContext = catalogContext;
+            CatalogContext = catalogContext;
+            AssetTypeContext = AssetTypeContext;
 		}
 
-		public virtual ICatalogContext CatalogContext
-		{
-			get
-			{
-				return catalogContext;
-			}
-		}
+		public virtual ICatalogContext CatalogContext { get; private set; }
+
+        public IAssetTypeContext AssetTypeContext { get; private set; }
     }
 }

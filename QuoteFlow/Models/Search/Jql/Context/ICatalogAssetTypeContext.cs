@@ -7,6 +7,6 @@
     {
         ICatalogContext CatalogContext { get; }
 
-        //IAssetTypeContext AssetTypeContext { get; }
+        IAssetTypeContext AssetTypeContext { get; }
     }
 }

@@ -17,20 +17,27 @@ namespace QuoteFlow.Models.Assets.Search.Managers
     public class SearchHandlerManager : ISearchHandlerManager
     {
         public ICacheService CacheService { get; protected set; }
+        private readonly IFieldManager fieldManager;
         private readonly ISystemClauseHandlerFactory systemClauseHandlerFactory;
         private readonly IQueryCache queryCache;
         private readonly Lazy<Helper> helperResettableLazyReference;
 
-        public SearchHandlerManager(ICacheService cacheService, ISystemClauseHandlerFactory systemClauseHandlerFactory, IQueryCache queryCache)
+        public SearchHandlerManager(ICacheService cacheService, IFieldManager fieldManager, ISystemClauseHandlerFactory systemClauseHandlerFactory, IQueryCache queryCache)
         {
+            if (fieldManager == null)
+            {
+                throw new ArgumentNullException("fieldManager");
+            }
+
             if (systemClauseHandlerFactory == null)
             {
                 throw new ArgumentNullException("systemClauseHandlerFactory");
             }
 
             this.queryCache = queryCache;
+            this.fieldManager = fieldManager;
             this.systemClauseHandlerFactory = systemClauseHandlerFactory;
-            helperResettableLazyReference = new Lazy<Helper>(() => CreateHelper());
+            helperResettableLazyReference = new Lazy<Helper>(CreateHelper);
         }
 
         public ICollection<IAssetSearcher<ISearchableField>> GetSearchers(User searcher, ISearchContext context)
@@ -68,7 +75,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
             // We must process all the system fields first to ensure that we don't overwrite custom fields with
             // the system fields.
             var indexer = new SearchHandlerIndexer();
-            Set<ISearchableField> allSearchableFields = fieldManager.SystemSearchableFields;
+            var allSearchableFields = fieldManager.SystemSearchableFields;
             foreach (ISearchableField field in allSearchableFields)
             {
                 indexer.IndexSystemField(field);
@@ -84,23 +91,24 @@ namespace QuoteFlow.Models.Assets.Search.Managers
             // Process all the system clause handlers, the JQL clause elements that are not associated with fields
             indexer.IndexSystemClauseHandlers(systemClauseHandlerFactory.GetSystemClauseSearchHandlers());
 
-            var customField = CustomFieldManager.CustomFieldObjects;
-            foreach (var field in customField)
-            {
-                indexer.IndexCustomField(field);
-            }
+//            var customField = CustomFieldManager.CustomFieldObjects;
+//            foreach (var field in customField)
+//            {
+//                indexer.IndexCustomField(field);
+//            }
 
             return new Helper(indexer);
         }
 
         private Helper GetHelper()
         {
-            return helperResettableLazyReference.get();
+            return helperResettableLazyReference.Value;
         }
 
         public void Refresh()
         {
             throw new NotImplementedException();
+            //helperResettableLazyReference.Reset();
         }
 
         public IEnumerable<IClauseHandler> GetClauseHandler(User user, string jqlClauseName)
@@ -133,7 +141,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
                 throw new ArgumentException("Clause name cannot be empty.", "jqlClauseName");
             }
 
-            return new List<IClauseHandler>(Helper.GetSearchHandler(jqlClauseName));
+            return new List<IClauseHandler>(GetHelper().GetSearchHandler(jqlClauseName));
         }
 
         public ICollection<ClauseNames> GetJqlClauseNames(string fieldId)
@@ -143,28 +151,36 @@ namespace QuoteFlow.Models.Assets.Search.Managers
                 throw new ArgumentException("Field ID cannot be empty.", "fieldId");
             }
 
-            var clauseNames = Helper.GetJqlClauseNames(fieldId);
+            var clauseNames = GetHelper().GetJqlClauseNames(fieldId);
             return clauseNames ?? new List<ClauseNames>();
         }
 
         public ICollection<string> GetFieldIds(User searcher, string jqlClauseName)
         {
-            throw new NotImplementedException();
+            var handler = GetHelper().GetSearchHandler(jqlClauseName);
+            var fieldIds = handler.Select(clauseHandler => GetFieldId(clauseHandler)).ToList();
+            return fieldIds;
         }
 
         public ICollection<string> GetFieldIds(string jqlClauseName)
         {
-            throw new NotImplementedException();
+            var handler = GetHelper().GetSearchHandler(jqlClauseName);
+            var fieldIds = (from clauseHandler in handler where HasFieldId(clauseHandler) select GetFieldId(clauseHandler)).ToList();
+            return fieldIds;
         }
 
         public ICollection<ClauseNames> GetVisibleJqlClauseNames(User searcher)
         {
-            throw new NotImplementedException();
+            var handlers = GetHelper().SearchHandlers;
+            var clauseNames = handlers.Select(clauseHandler => GetClauseNames(clauseHandler)).ToList();
+            return clauseNames;
         }
 
         public ICollection<IClauseHandler> getVisibleClauseHandlers(User searcher)
         {
-            throw new NotImplementedException();
+            // typically this would evaluate a set of actually visible fields via the field manager,
+            // but seeing as we are ignoring permissions for now, just return all the search handlers.
+            return GetHelper().SearchHandlers;
         }
 
         public ICollection<IAssetSearcher<ISearchableField>> GetSearchersByClauseName(User user, string jqlClauseName)
@@ -174,7 +190,10 @@ namespace QuoteFlow.Models.Assets.Search.Managers
                 throw new ArgumentException("Clause name cannot be empty.", "jqlClauseName");
             }
 
-            return GetHelper().
+            var regs = GetHelper().GetAssetSearcherRegistrationsByClauseName(jqlClauseName);
+            var searchers = regs.Select(searcherRegistration => searcherRegistration.AssetSearcher).ToList();
+
+            return searchers;
         }
 
         /// <summary>
@@ -216,7 +235,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 				fieldIdToClauseNames = indexer.CreateFieldToClauseNamesIndex();
 			}
 
-			public static IEnumerable<IClauseHandler> GetSearchHandler(string jqlName)
+			public IEnumerable<IClauseHandler> GetSearchHandler(string jqlName)
 			{
 			    var handler = handlerIndex[jqlName.ToLower(CultureInfo.CurrentCulture)];
 			    if (handler == null)
@@ -261,7 +280,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 				get { return searcherGroup; }
 			}
 
-			public static IList<ClauseNames> GetJqlClauseNames(string fieldId)
+			public IList<ClauseNames> GetJqlClauseNames(string fieldId)
 			{
 				return fieldIdToClauseNames[fieldId];
 			}
@@ -403,7 +422,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 					IndexSearcherById(field, registration.AssetSearcher, system);
 					// NOTE: you must call indexClauseHandlers first since it is populating a map of system fields, I know this sucks a bit, sorry :)
 					indexClauseHandlers(field, registration.ClauseHandlers, system);
-					indexSearcherByJqlName(field, registration, system);
+					IndexSearcherByJqlName(field, registration, system);
 				}
 
 				indexClauseHandlers(field, handler.ClauseRegistrations, system);
@@ -419,7 +438,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 
 			internal virtual void indexClauseHandlerByJqlName(IField field, SearchHandler.ClauseRegistration registration, bool system)
 			{
-				Set<string> names = GetClauseNames.get(registration.Handler).JqlFieldNames;
+				Set<string> names = GetClauseNames.Invoke(registration.Handler).JqlFieldNames;
 				foreach (string name in names)
 				{
 					// We always want to look for a match in lowercase since that is how we cache it
@@ -435,9 +454,9 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 							}
 						    throw new Exception(string.Format("Two system clauses are trying to register against the same JQL name. Clause with Jql Name = '{0}'.", name));
 						}
-					    var type = ((ICustomField) field).CustomFieldType;
-					    string typeName = (type != null) ? type.Name : "Unknown Type";
-					    //log.warn(string.Format("A custom field '{0} ({1})' is trying to register a clause handler against a system clause with name '{2}'. Ignoring request.", field.Name, typeName, name));
+//					    var type = ((ICustomField) field).CustomFieldType;
+//					    string typeName = (type != null) ? type.Name : "Unknown Type";
+//					    log.warn(string.Format("A custom field '{0} ({1})' is trying to register a clause handler against a system clause with name '{2}'. Ignoring request.", field.Name, typeName, name));
 					}
 					else
 					{
@@ -451,22 +470,22 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 				}
 			}
 
-			// NOTE: this method must be invoked after {@link #indexClauseHandlerByJqlName } has been called since the method
+			// NOTE: this method must be invoked after {@link IndexClauseHandlerByJqlName } has been called since the method
 			// is responsible for populating the systemClauses set.
-			internal virtual void indexSearcherByJqlName(ISearchableField field, SearchHandler.SearcherRegistration searcherRegistration, bool system)
+			internal virtual void IndexSearcherByJqlName(ISearchableField field, SearchHandler.SearcherRegistration searcherRegistration, bool system)
 			{
 				foreach (SearchHandler.ClauseRegistration clauseRegistration in searcherRegistration.ClauseHandlers)
 				{
-					foreach (string name in GetClauseNames.get(clauseRegistration.Handler).JqlFieldNames)
+					foreach (string name in GetClauseNames.Invoke(clauseRegistration.Handler).JqlFieldNames)
 					{
 						// We always want to look for a match in lower-case since that is how we cache it
 						var lowerName = name.ToLower();
 
                         if (!system && systemClauses.Contains(lowerName))
 						{
-							var type = ((ICustomField) field).CustomFieldType;
-							string typeName = (type != null) ? type.Name : "Unknown Type";
-							//log.warn(string.Format("A custom field '{0} ({1})' is trying to register a searcher against a system clause with name '{2}'. Ignoring request.", field.Name, typeName, name));
+//							var type = ((ICustomField) field).CustomFieldType;
+//							string typeName = (type != null) ? type.Name : "Unknown Type";
+//							log.warn(string.Format("A custom field '{0} ({1})' is trying to register a searcher against a system clause with name '{2}'. Ignoring request.", field.Name, typeName, name));
 						}
 						else
 						{
@@ -540,9 +559,9 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 						SearcherGroupType givenType = newSearcher.SearchInformation.SearcherGroupType;
 						if ((givenType != null) && (givenType != SearcherGroupType.Custom))
 						{
-							var cfType = ((ICustomField) field).CustomFieldType;
-							string typeName = (cfType != null) ? cfType.Name : "Unknown Type";
-							//log.warn(string.Format("Custom field '{0} ({1})' is trying to register itself in the '{2}' group.", field.Name, typeName, givenType));
+//							var cfType = ((ICustomField) field).CustomFieldType;
+//							string typeName = (cfType != null) ? cfType.Name : "Unknown Type";
+//							log.warn(string.Format("Custom field '{0} ({1})' is trying to register itself in the '{2}' group.", field.Name, typeName, givenType));
 						}
 						type = SearcherGroupType.Custom;
 					}
@@ -551,6 +570,10 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 				}
 			}
 		}
+
+        private static readonly Func<IClauseHandler, string> GetFieldId = x => x.Information.FieldId;
+
+        private static readonly Predicate<IClauseHandler> HasFieldId = handler => GetFieldId(handler) != null; 
 
         private static readonly Func<IClauseHandler, ClauseNames> GetClauseNames = x => x.Information.JqlClauseNames; 
     }

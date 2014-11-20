@@ -27,7 +27,7 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
 
 		/// <summary>
 		/// Creates a terminal clause with the specified name, operator and turns the long value into a
-		/// <seealso cref="com.atlassian.query.operand.SingleValueOperand"/> populated with a long value.
+		/// <see cref="SingleValueOperand"/> populated with a long value.
 		/// </summary>
 		/// <param name="name"> the name for the clause. </param>
         /// <param name="oprator"> the operator for the clause. </param>

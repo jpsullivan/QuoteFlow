@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Models.Assets.Transport
@@ -8,13 +7,13 @@ namespace QuoteFlow.Models.Assets.Transport
     {
         MultiDictionary<string, String[]> KeysAndValues { get; }
 
-        ICollection<string[]> AllValues { get; }
-        ICollection<string[]> ValuesForNullKey { get; }
-        ICollection<string[]> GetValuesForKey(string key);
+        string[] AllValues { get; }
+        string[] ValuesForNullKey { get; }
+        string[] GetValuesForKey(string key);
 
         string FirstValueForNullKey { get; }
         string GetFirstValueForKey(string key);
 
-        void Put(string id, ICollection<string[]> values);
+        void Put(string id, string[] values);
     }
 }

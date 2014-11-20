@@ -49,17 +49,20 @@ namespace QuoteFlow.Models.Search.Jql.Validator
 		{
 			foreach (string sid in ids)
 			{
-                int id = ConvertToInt(sid);
-                Catalog project = catalogService.GetCatalog(id);
-                if (project != null)
-                {
-                    return true;
-                }
+                int? id = ConvertToInt(sid);
+				if (id != null)
+				{
+					Catalog project = catalogService.GetCatalog((int) id);
+					if (project != null)
+					{
+						return true;
+					}
+				}
 			}
 			return false;
 		}
 
-		private int ConvertToInt(string str)
+		private int? ConvertToInt(string str)
 		{
 			try
 			{

@@ -514,10 +514,12 @@
     <Compile Include="Models\Assets\Search\QueryCacheLiteralsKey.cs" />
     <Compile Include="Models\Assets\Search\SearchContext.cs" />
     <Compile Include="Models\Assets\Search\Searchers\AbstractInitializationSearcher.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\CatalogSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\CreatorSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Information\GenericSearcherInformation.cs" />
     <Compile Include="Models\Assets\Search\Searchers\SearcherComparatorFactory.cs" />
     <Compile Include="Models\Assets\Search\Searchers\TextQuerySearcher.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\CatalogSearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\EnhancedUserSearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\ISearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\NamedTerminalClauseCollectingVisitor.cs" />
@@ -538,18 +540,25 @@
     <Compile Include="Models\Search\Jql\AntlrGen\JqlParser.cs" />
     <Compile Include="Models\Search\Jql\Clauses\IClauseHandler.cs" />
     <Compile Include="Models\Search\Jql\Clauses\IClauseInformation.cs" />
+    <Compile Include="Models\Search\Jql\Context\AllAssetTypesContext.cs" />
     <Compile Include="Models\Search\Jql\Context\AllCatalogsContext.cs" />
     <Compile Include="Models\Search\Jql\Context\AllTextClauseContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Context\CatalogAssetTypeContext.cs" />
     <Compile Include="Models\Search\Jql\Context\CatalogAssetTypeContexts.cs" />
+    <Compile Include="Models\Search\Jql\Context\CatalogClauseContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Context\CatalogContext.cs" />
     <Compile Include="Models\Search\Jql\Context\ClauseContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\ContextCatalogMap.cs" />
+    <Compile Include="Models\Search\Jql\Context\ContextSetUtil.cs" />
+    <Compile Include="Models\Search\Jql\Context\IAssetTypeContext.cs" />
     <Compile Include="Models\Search\Jql\Context\ICatalogAssetTypeContext.cs" />
     <Compile Include="Models\Search\Jql\Context\ICatalogContext.cs" />
     <Compile Include="Models\Search\Jql\Context\IClauseContext.cs" />
     <Compile Include="Models\Search\Jql\Context\IClauseContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Context\IQueryContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\MultiClauseDecoratorContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Context\SimpleClauseContextFactory.cs" />
+    <Compile Include="Models\Search\Jql\Context\ValidatingDecoratorContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Function\AbstractJqlFunction.cs" />
     <Compile Include="Models\Search\Jql\Function\CurrentUserFunction.cs" />
     <Compile Include="Models\Search\Jql\Function\IClauseSanitizingJqlFunction.cs" />
@@ -559,6 +568,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Search\Jql\NoOpClauseHandler.cs" />
+    <Compile Include="Models\Search\Jql\Query\AllTextClauseQueryFactory.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\ExtendedQueryParser.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\LuceneQueryParser.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\LuceneQueryParserFactory.cs" />

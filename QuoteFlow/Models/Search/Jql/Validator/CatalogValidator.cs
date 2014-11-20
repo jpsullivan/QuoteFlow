@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using QuoteFlow.Infrastructure.Util;
+﻿using QuoteFlow.Infrastructure.Util;
 using QuoteFlow.Models.Search.Jql.Operand;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 using QuoteFlow.Models.Search.Jql.Resolver;
@@ -23,7 +19,12 @@ namespace QuoteFlow.Models.Search.Jql.Validator
 
         public IMessageSet Validate(User searcher, ITerminalClause terminalClause)
         {
-            throw new NotImplementedException();
+            var messageSet = supportedOperatorsValidator.Validate(searcher, terminalClause);
+            if (!messageSet.HasAnyErrors())
+            {
+                messageSet.AddMessageSet(catalogValuesExistValidator.Validate(searcher, terminalClause));
+            }
+            return messageSet;
         }
 
         SupportedOperatorsValidator GetSupportedOperatorsValidator()
@@ -33,7 +34,7 @@ namespace QuoteFlow.Models.Search.Jql.Validator
 
         ValuesExistValidator GetValuesValidator(CatalogResolver catalogResolver, JqlOperandResolver operandResolver, ICatalogService catalogService)
         {
-            return new ValuesExistValidator(operandResolver, new CatalogIndexInfoResolver(catalogResolver), catalogService);
+            return new CatalogValuesExistValidator(operandResolver, new CatalogIndexInfoResolver(catalogResolver), catalogService);
         }
     }
 }

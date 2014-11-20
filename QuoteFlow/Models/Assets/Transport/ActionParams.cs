@@ -9,7 +9,6 @@ namespace QuoteFlow.Models.Assets.Transport
     {
         protected internal MultiDictionary<string, String[]> actionParams;
 
-
         public ActionParams()
         {
             actionParams = new MultiDictionary<string, String[]>(true);
@@ -40,19 +39,28 @@ namespace QuoteFlow.Models.Assets.Transport
             return actionParams.Count == 0;
         }
 
-        public ICollection<string[]> AllValues
+        public string[] AllValues
         {
-            get { return actionParams.Values; }
+            get
+            {
+                var allValues = new List<string>();
+                foreach (var array in actionParams.Values)
+                {
+                    allValues.AddRange(array);
+                }
+
+                return allValues.ToArray();
+            }
         }
 
-        public ICollection<string[]> ValuesForNullKey
+        public string[] ValuesForNullKey
         {
             get { return GetValuesForKey(null); }
         }
 
-        public ICollection<string[]> GetValuesForKey(string key)
+        public string[] GetValuesForKey(string key)
         {
-            return actionParams[key];
+            return actionParams.Where(ap => ap.Key == key).Select(ap => ap.Value.First()).FirstOrDefault();
         }
 
         public string FirstValueForNullKey
@@ -63,12 +71,12 @@ namespace QuoteFlow.Models.Assets.Transport
         public string GetFirstValueForKey(string key)
         {
             var c = GetValuesForKey(key);
-            return c.Any() ? c.First()[0] : null;
+            return c.Any() ? c[0] : null;
         }
 
-        public void Put(string id, ICollection<string[]> values)
+        public void Put(string id, string[] values)
         {
-            actionParams[id] = values;
+            actionParams[id] = new[] {values};
         }
     }
 }

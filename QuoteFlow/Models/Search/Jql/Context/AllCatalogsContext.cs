@@ -7,7 +7,7 @@
     {
         public static readonly AllCatalogsContext INSTANCE = new AllCatalogsContext();
 
-        public virtual AllCatalogsContext Instance
+        public static AllCatalogsContext Instance
         {
             get { return INSTANCE; }
         }

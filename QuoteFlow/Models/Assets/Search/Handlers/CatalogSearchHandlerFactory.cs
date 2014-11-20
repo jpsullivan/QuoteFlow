@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using QuoteFlow.Models.Assets.Search.Constants;
-using QuoteFlow.Models.Search.Jql.Clauses;
+﻿using QuoteFlow.Models.Assets.Search.Constants;
+using QuoteFlow.Models.Assets.Search.Searchers;
 using QuoteFlow.Models.Search.Jql.Context;
 using QuoteFlow.Models.Search.Jql.Operand;
-using QuoteFlow.Models.Search.Jql.Permission;
 using QuoteFlow.Models.Search.Jql.Query;
+using QuoteFlow.Models.Search.Jql.Resolver;
 using QuoteFlow.Models.Search.Jql.Validator;
-using QuoteFlow.Models.Search.Jql.Values;
 
 namespace QuoteFlow.Models.Assets.Search.Handlers
 {
@@ -17,13 +12,14 @@ namespace QuoteFlow.Models.Assets.Search.Handlers
     {
         public CatalogSearchHandlerFactory(
             CatalogClauseQueryFactory clauseFactory, 
-            CatalogValidator caluseValidator, 
-            FieldClausePermissionChecker.Factory clausePermissionFactory, 
-            PermissionManager permissionManager, 
+            CatalogValidator caluseValidator,
             IJqlOperandResolver jqlOperandResolver, 
-            ProjectResolver projectResolver, 
+            CatalogResolver catalogResolver, 
             MultiClauseDecoratorContextFactory.Factory multiFactory)
-            : base(componentFactory, SystemSearchConstants.ForCatalog(), typeof(CatalogSearcher), clauseFactory, caluseValidator, clausePermissionFactory, multiFactory.create(new ProjectClauseContextFactory(jqlOperandResolver, projectResolver, permissionManager)), new ProjectClauseValuesGenerator(permissionManager), new ProjectClauseValueSanitiser(permissionManager, jqlOperandResolver, projectResolver))
+            : base(SystemSearchConstants.ForCatalog(), typeof(CatalogSearcher), clauseFactory, caluseValidator, 
+            multiFactory.Create(new CatalogClauseContextFactory(jqlOperandResolver, catalogResolver)), 
+            new CatalogClauseValuesGenerator(), 
+            new CatalogClauseValueSanitizer(jqlOperandResolver, catalogResolver))
         {
         }
     }
