@@ -6,10 +6,6 @@ namespace QuoteFlow.Models.Assets.Index.Indexers
 {
     public class DescriptionIndexer : BaseFieldIndexer
     {
-        public DescriptionIndexer() : base()
-        {
-        }
-
         public virtual string Id
         {
             get { return SystemSearchConstants.ForDescription().FieldId; }
@@ -20,7 +16,7 @@ namespace QuoteFlow.Models.Assets.Index.Indexers
             get { return SystemSearchConstants.ForDescription().IndexField; }
         }
 
-        public virtual void AddIndex(Document doc, Asset issue)
+        public override void AddIndex(Document doc, Asset issue)
         {
             string descValue = issue.Description;
             IndexText(doc, DocumentFieldId, descValue, issue);

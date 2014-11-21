@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using QuoteFlow.Models.Assets.Fields;
+using QuoteFlow.Models.Assets.Index.Indexers;
 using QuoteFlow.Models.Assets.Search.Constants;
 using QuoteFlow.Models.Assets.Search.Searchers.Information;
 using QuoteFlow.Models.Assets.Search.Searchers.Transformer;
@@ -23,7 +24,13 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
             var constants = SystemSearchConstants.ForCatalog();
 
             SearchInputTransformer = new CatalogSearchInputTransformer(projectIndexInfoResolver, operandResolver, fieldFlagOperandRegistry, catalogService);
-            SearchInformation = new GenericSearcherInformation<ISearchableField>(constants.SearcherId, "common.concepts.catalog", new List<Type>(typeof(CatalogIdIndexer)), fieldReference, SearcherGroupType.Context);
+            SearchInformation = new GenericSearcherInformation<ISearchableField>(
+                constants.SearcherId, 
+                "common.concepts.catalog",
+                new List<IFieldIndexer> { new CatalogIdIndexer() }, 
+                fieldReference, 
+                SearcherGroupType.Context
+            );
         }
 
         public virtual ISearcherInformation<ISearchableField> SearchInformation { get; private set; }

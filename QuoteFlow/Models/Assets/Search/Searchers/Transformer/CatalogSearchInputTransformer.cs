@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Http.ModelBinding;
 using QuoteFlow.Models.Assets.Search.Constants;
+using QuoteFlow.Models.Assets.Search.Searchers.Util;
 using QuoteFlow.Models.Assets.Transport;
 using QuoteFlow.Models.Search.Jql.Operand;
 using QuoteFlow.Models.Search.Jql.Query;
@@ -17,14 +16,14 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
     /// <summary>
     /// The SearchInputTransformer for the Catalog system field.
     /// </summary>
-    public class ProjectSearchInputTransformer : ISearchInputTransformer
+    public class CatalogSearchInputTransformer : ISearchInputTransformer
     {
         private readonly FieldFlagOperandRegistry fieldFlagOperandRegistry;
         private readonly IJqlOperandResolver operandResolver;
         private readonly CatalogIndexInfoResolver projectIndexInfoResolver;
         private readonly ICatalogService catalogService;
 
-        public ProjectSearchInputTransformer(CatalogIndexInfoResolver projectIndexInfoResolver, IJqlOperandResolver operandResolver, FieldFlagOperandRegistry fieldFlagOperandRegistry, ICatalogService catalogService)
+        public CatalogSearchInputTransformer(CatalogIndexInfoResolver projectIndexInfoResolver, IJqlOperandResolver operandResolver, FieldFlagOperandRegistry fieldFlagOperandRegistry, ICatalogService catalogService)
         {
             this.fieldFlagOperandRegistry = fieldFlagOperandRegistry;
             this.operandResolver = operandResolver;
@@ -39,7 +38,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
             fieldValuesHolder.Add(url, @params == null ? null : new HashSet<string>());
         }
 
-        public void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, ModelState errors)
+        public void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
         {
             // We currently dont do anything
         }
@@ -49,14 +48,23 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
             var uncleanedValues = GetNavigatorValuesAsStrings(user, query);
 
             IList<string> values = new List<string>(uncleanedValues);
-            CollectionUtils.transform(values, JiraTransformers.NULL_SWAP);
-            fieldValuesHolder.put(SystemSearchConstants.forProject().UrlParameter, values);
+
+            // null swap all of the values
+            for (int i = 0; i < values.Count; i++)
+            {
+                if (values[i] == null)
+                {
+                    values[i] = "-1";
+                }
+            }
+
+            fieldValuesHolder.Add(SystemSearchConstants.ForCatalog().UrlParameter, values);
             CatalogIdInSession = uncleanedValues;
         }
 
         public virtual bool DoRelevantClausesFitFilterForm(User user, IQuery query, ISearchContext searchContext)
         {
-            return CreateNavigatorStructureChecker().checkSearchRequest(query);
+            return true;
         }
 
         public virtual ISet<string> GetIdValuesAsStrings(User searcher, Query query)
@@ -73,7 +81,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
 
         public virtual IClause GetSearchClause(User user, IFieldValuesHolder fieldValuesHolder)
         {
-            var projects = (IList<string>)fieldValuesHolder.get(SystemSearchConstants.ForCatalog().UrlParameter);
+            var projects = (IList<string>)fieldValuesHolder[SystemSearchConstants.ForCatalog().UrlParameter];
             if (projects != null && projects.Count > 0)
             {
                 var operands = new List<IOperand>();
@@ -144,10 +152,9 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
             }
         }
         
-        internal virtual IndexedInputHelper CreateIndexedInputHelper()
+        internal virtual IIndexedInputHelper CreateIndexedInputHelper()
         {
-            return new DefaultIndexedInputHelper<Catalog>(projectIndexInfoResolver, operandResolver, fieldFlagOperandRegistry);
+            return new IndexedInputHelper<Catalog>(projectIndexInfoResolver, operandResolver, fieldFlagOperandRegistry);
         }
     }
-
 }

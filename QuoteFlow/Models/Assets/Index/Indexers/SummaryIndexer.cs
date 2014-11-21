@@ -10,10 +10,6 @@ namespace QuoteFlow.Models.Assets.Index.Indexers
     /// </summary>
     public class SummaryIndexer : BaseFieldIndexer
     {
-        public SummaryIndexer() : base()
-        {
-        }
-
         public virtual string Id
         {
             get { return SystemSearchConstants.ForSummary().FieldId; }
@@ -29,7 +25,7 @@ namespace QuoteFlow.Models.Assets.Index.Indexers
             return true;
         }
 
-        public virtual void AddIndex(Document doc, Asset asset)
+        public override void AddIndex(Document doc, Asset asset)
         {
             IndexText(doc, DocumentFieldId, asset.Name, asset);
             IndexText(doc, PhraseQuerySupportField.ForIndexField(DocumentFieldId), asset.Name, asset);

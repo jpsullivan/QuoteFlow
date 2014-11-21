@@ -1,4 +1,5 @@
 ﻿using Lucene.Net.Documents;
+using QuoteFlow.Models.Assets.Index.Indexers.Phrase;
 using QuoteFlow.Models.Assets.Search.Constants;
 
 namespace QuoteFlow.Models.Assets.Index.Indexers
@@ -7,13 +8,8 @@ namespace QuoteFlow.Models.Assets.Index.Indexers
     /// Responsible for populating a <seealso cref="Document"/> with the information held in
     /// the &quot;Name&quot; field of the <seealso cref="Asset"/>.
     /// </summary>
-
     public class AssetNameIndexer : BaseFieldIndexer
     {
-        public AssetNameIndexer()
-        {
-		}
-
 		public virtual string Id
 		{
 			get { return SystemSearchConstants.ForSummary().FieldId; }
@@ -29,10 +25,10 @@ namespace QuoteFlow.Models.Assets.Index.Indexers
 			return true;
 		}
 
-		public virtual void AddIndex(Document doc, Asset asset)
+		public override void AddIndex(Document doc, Asset asset)
 		{
 			IndexText(doc, DocumentFieldId, asset.Name, asset);
-			//IndexText(doc, PhraseQuerySupportField.forIndexField(DocumentFieldId), asset.Name, asset);
+			IndexText(doc, PhraseQuerySupportField.ForIndexField(DocumentFieldId), asset.Name, asset);
 			IndexTextForSorting(doc, DocumentConstants.AssetSortName, asset.Name, asset);
 		}
     }

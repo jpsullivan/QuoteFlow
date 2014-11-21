@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using QuoteFlow.Models.Search.Jql.Operand;
+using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 using QuoteFlow.Models.Search.Jql.Resolver;
+using QuoteFlow.Services.Interfaces;
 
 namespace QuoteFlow.Models.Search.Jql.Context
 {
@@ -15,11 +18,13 @@ namespace QuoteFlow.Models.Search.Jql.Context
     /// </summary>
     public class CatalogClauseContextFactory : IClauseContextFactory
     {
+        public ICatalogService CatalogService { get; protected set; }
 		private readonly CatalogIndexInfoResolver catalogIndexInfoResolver;
 		private readonly IJqlOperandResolver jqlOperandResolver;
 
-        public CatalogClauseContextFactory(IJqlOperandResolver jqlOperandResolver, INameResolver<Catalog> projectResolver)
-		{
+        public CatalogClauseContextFactory(ICatalogService catalogService, IJqlOperandResolver jqlOperandResolver, INameResolver<Catalog> projectResolver)
+        {
+            CatalogService = catalogService;
 			this.jqlOperandResolver = jqlOperandResolver;
             this.catalogIndexInfoResolver = new CatalogIndexInfoResolver(projectResolver);
 		}
@@ -59,49 +64,65 @@ namespace QuoteFlow.Models.Search.Jql.Context
         /// <returns> a set of projects which make up the context of these values; never null. </returns>
         private ISet<Catalog> GetProjectsInContext(IEnumerable<QueryLiteral> values, User searcher, bool negationOperator)
         {
-            var projectIds = new HashSet<string>();
+            var catalogIds = new HashSet<string>();
             if (values != null)
             {
                 foreach (QueryLiteral value in values)
                 {
                     if (value.StringValue != null)
                     {
-                        projectIds.addAll(projectIndexInfoResolver.getIndexedValues(value.StringValue));
+                        foreach (var indexedValue in catalogIndexInfoResolver.GetIndexedValues(value.StringValue))
+                        {
+                            catalogIds.Add(indexedValue);
+                        }
                     }
-                    else if (value.LongValue != null)
+                    else if (value.IntValue != null)
                     {
-                        projectIds.addAll(projectIndexInfoResolver.getIndexedValues(value.LongValue));
+                        foreach (var indexedValue in catalogIndexInfoResolver.GetIndexedValues(value.IntValue))
+                        {
+                            catalogIds.Add(indexedValue);
+                        }
                     }
-                    else if (value.Empty)
+                    else if (value.IsEmpty)
                     {
                         // empty literal does not impact on the context - we can move on
                     }
                     else
                     {
-                        throw new IllegalStateException("Invalid query literal");
+                        throw new Exception("Invalid query literal");
                     }
                 }
             }
 
-            if (projectIds.Empty)
+            if (!catalogIds.Any())
             {
-                return Collections.emptySet();
+                return new HashSet<Catalog>();
             }
 
             // Lets get all the visible projects for the user, we are going to need them to compare against the specified projects
-            var visibleProjects = permissionManager.getProjectObjects(Permissions.BROWSE, searcher);
-            var projectsInContext = new HashSet<Catalog>();
-            foreach (Catalog visibleProject in visibleProjects)
+            var allCatalogs = CatalogService.GetCatalogs(1); // todo: pass in the organization context
+            var catalogsInContext = new HashSet<Catalog>();
+            foreach (Catalog catalog in allCatalogs)
             {
-                // either we specified the project and we're a positive query,
-                // or we didn't specify the project and we're a negative query
-                if (projectIds.contains(visibleProject.Id.ToString()) ^ negationOperator)
+                // either we specified the catalog and we're a positive query,
+                // or we didn't specify the catalog and we're a negative query
+                if (catalogIds.Contains(catalog.Id.ToString()) ^ negationOperator)
                 {
-                    projectsInContext.add(visibleProject);
+                    catalogsInContext.Add(catalog);
                 }
             }
 
-            return projectsInContext;
+            return catalogsInContext;
+        }
+
+        private bool IsNegationOperator(Operator @operator)
+        {
+            return OperatorClasses.NegativeEqualityOperators.Contains(@operator);
+        }
+
+        private bool HandlesOperator(Operator @operator)
+        {
+            return OperatorClasses.EqualityOperatorsWithEmpty.Contains(@operator);
         }
     }
 }

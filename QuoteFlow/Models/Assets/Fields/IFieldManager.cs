@@ -88,16 +88,16 @@ namespace QuoteFlow.Models.Assets.Fields
         /// Return all the searchable systems fields. This set will *NOT* include defined custom fields.
         /// </summary>
         /// <returns> the set of all searchable systems fields defined. </returns>
-        ISet<ISearchableField> SystemSearchableFields { get; }
+        IEnumerable<ISearchableField> SystemSearchableFields { get; }
 
         /// <summary>
         /// Retrieve the IssueType system Field. </summary>
         /// <returns> the IssueType system Field. </returns>
-        IssueTypeField IssueTypeField { get; }
+        IAssetTypeField IssueTypeField { get; }
 
         /// <summary>
         /// Retrieve the Project system Field. </summary>
         /// <returns> the Project system Field. </returns>
-        CatalogField CatalogField { get; }
+        ICatalogField CatalogField { get; }
     }
 }

@@ -12,7 +12,7 @@ namespace QuoteFlow.Models.Search.Jql.Permission
         // shouldn't need construction
         private NoOpClauseSanitizer() { }
 
-        public IClause Sanitize(User user, TerminalClause clause)
+        public IClause Sanitize(User user, ITerminalClause clause)
         {
             return clause;
         }

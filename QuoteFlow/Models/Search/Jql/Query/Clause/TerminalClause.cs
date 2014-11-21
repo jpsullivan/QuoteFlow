@@ -113,48 +113,5 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
 		{
 			return visitor.Visit(this);
 		}
-
-		public override bool Equals(object o)
-		{
-			if (this == o)
-			{
-				return true;
-			}
-			if (o == null || GetType() != o.GetType())
-			{
-				return false;
-			}
-
-			var that = (TerminalClause) o;
-
-			if (!Name.Equals(that.Name))
-			{
-				return false;
-			}
-			if (!Operand.Equals(that.Operand))
-			{
-				return false;
-			}
-			if (Operator != that.Operator)
-			{
-				return false;
-			}
-			
-			if (!Property.Equals(that.Property))
-			{
-				return false;
-			}
-
-			return true;
-		}
-
-		public override int GetHashCode()
-		{
-			int result = Operand.GetHashCode();
-			result = 31 * result + Operator.GetHashCode();
-			result = 31 * result + Name.GetHashCode();
-			result = 31 * result + Property.GetHashCode();
-			return result;
-		}
     }
 }

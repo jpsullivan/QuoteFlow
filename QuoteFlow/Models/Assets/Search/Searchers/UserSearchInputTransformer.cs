@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Http.ModelBinding;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Infrastructure.Util;
 using QuoteFlow.Models.Assets.CustomFields.Searchers.Transformer;
@@ -70,9 +69,9 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
             fieldValuesHolder.Add(searchConstants.FieldUrlParameter, actionParams.GetFirstValueForKey(searchConstants.FieldUrlParameter));
         }
 
-        public virtual void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, ModelState errors)
+        public void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
         {
-            string user = (string) fieldValuesHolder[searchConstants.FieldUrlParameter];
+            string user = (string)fieldValuesHolder[searchConstants.FieldUrlParameter];
             if (user.HasValue())
             {
                 string userTypeSelectList = (string)fieldValuesHolder[searchConstants.SelectUrlParameter];
@@ -80,14 +79,14 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
                 {
                     if (!UserExists(user))
                     {
-                        errors.Errors.Add(string.Format("admin.errors.could.not.find.username: {0}", user));
+                        //errors.Errors.Add(string.Format("admin.errors.could.not.find.username: {0}", user));
                     }
                 }
                 else if (searchConstants.SpecificGroupSelectFlag.Equals(userTypeSelectList))
                 {
                     if (!GroupExists(user))
                     {
-                        errors.Errors.Add(string.Format("admin.errors.abstractusersearcher.could.not.find.group: {0}", user));
+                        //errors.Errors.Add(string.Format("admin.errors.abstractusersearcher.could.not.find.group: {0}", user));
                     }
                 }
             }

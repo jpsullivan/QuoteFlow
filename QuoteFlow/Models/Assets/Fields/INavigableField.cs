@@ -69,6 +69,5 @@ namespace QuoteFlow.Models.Assets.Fields
 //        /// <param name="changeHistory"> </param>
 //        /// <returns> String   change history formatted according to locale in i18nHelper </returns>
 //        string PrettyPrintChangeHistory(string changeHistory, I18nHelper i18nHelper);
-
     }
 }

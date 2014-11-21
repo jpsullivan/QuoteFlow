@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http.ModelBinding;
+using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Search.Constants;
 using QuoteFlow.Models.Assets.Transport;
@@ -46,7 +47,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
         {
             // For backwards compatability with old urls (eg assigneeSelect=issue_current_user), check selectUrlParameter
             var selectValues = actionParams.GetValuesForKey(searchConstants.SelectUrlParameter);
-            if (null != selectValues && selectValues.Count > 0)
+            if (selectValues.AnySafe())
             {
                 base.PopulateFromParams(user, fieldValuesHolder, actionParams);
                 return;
@@ -70,7 +71,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
 
             if (@params == null) return values;
 
-            foreach (string param in @params.First())
+            foreach (string param in @params)
             {
                 string[] parts = param.Split(new []{ ':' }, 2);
                 if (parts[0].Equals("empty"))
@@ -109,8 +110,9 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
 //            }
         }
 
-        public override void ValidateParams(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, ModelState errors)
+        public override void ValidateParams(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
         {
+            // nothing to do here
         }
 
         /// <summary>

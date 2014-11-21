@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using QuoteFlow.Models.Assets.Fields;
 
 namespace QuoteFlow.Models.Assets.Search.Searchers
@@ -18,11 +17,14 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
 			// Initialise
 			var mapBuilder = new MapBuilder();
 
-			mapBuilder.Add(SearcherGroupType.Text, typeof(TextQuerySearcher), typeof(SummaryQuerySearcher), typeof(DescriptionQuerySearcher), typeof(EnvironmentQuerySearcher), typeof(CommentQuerySearcher));
-			mapBuilder.Add(SearcherGroupType.Context, typeof(ProjectSearcher), typeof(IssueTypeSearcher));
-			mapBuilder.Add(SearcherGroupType.Catalog, typeof(FixForVersionsSearcher), typeof(ComponentsSearcher), typeof(AffectedVersionsSearcher));
-			mapBuilder.Add(SearcherGroupType.Asset, typeof(ReporterSearcher), typeof(AssigneeSearcher), typeof(StatusSearcher), typeof(ResolutionSearcher), typeof(PrioritySearcher), typeof(LabelsSearcher));
-			mapBuilder.Add(SearcherGroupType.Date, typeof(CreatedDateSearcher), typeof(UpdatedDateSearcher), typeof(DueDateSearcher), typeof(ResolutionDateSearcher));
+            mapBuilder.Add(SearcherGroupType.Text, typeof(TextQuerySearcher));
+            mapBuilder.Add(SearcherGroupType.Context, typeof(CatalogSearcher));
+
+//			mapBuilder.Add(SearcherGroupType.Text, typeof(TextQuerySearcher), typeof(SummaryQuerySearcher), typeof(DescriptionQuerySearcher), typeof(EnvironmentQuerySearcher), typeof(CommentQuerySearcher));
+//			mapBuilder.Add(SearcherGroupType.Context, typeof(CatalogSearcher), typeof(IssueTypeSearcher));
+//			mapBuilder.Add(SearcherGroupType.Catalog, typeof(ComponentsSearcher), typeof(AffectedVersionsSearcher));
+//			mapBuilder.Add(SearcherGroupType.Asset, typeof(ReporterSearcher), typeof(AssigneeSearcher), typeof(StatusSearcher), typeof(ResolutionSearcher), typeof(PrioritySearcher), typeof(LabelsSearcher));
+//			mapBuilder.Add(SearcherGroupType.Date, typeof(CreatedDateSearcher), typeof(UpdatedDateSearcher), typeof(DueDateSearcher), typeof(ResolutionDateSearcher));
 			mapBuilder.Add(SearcherGroupType.Custom);
 
 			ComparatorMap = mapBuilder.ToImmutableMap();
@@ -82,6 +84,5 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
 				return orderList.IndexOf(searcher.GetType());
 			}
 		}
-
     }
 }

@@ -33,7 +33,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
         /// <param name="searchContext">The context of the search (i.e. projects and issue types selected). </param>
         /// <param name="fieldValuesHolder"> contains values populated by the populate methods of this input transformer. </param>
         /// <param name="errors"> the ErrorCollection that contains the messages we want to display to the users. </param>
-        void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, ModelState errors);
+        void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder);
 
         /// <summary>
         /// This method transforms any query information contained in the query that is relevant to this

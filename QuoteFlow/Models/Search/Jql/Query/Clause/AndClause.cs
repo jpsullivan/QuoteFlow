@@ -11,6 +11,12 @@ namespace QuoteFlow.Models.Search.Jql.Query.Clause
 	{
 		public const string And = "AND";
 
+        public AndClause(params IClause[] clauses)
+            : this(clauses.ToList())
+        {
+        }
+
+
         public AndClause(IList<IClause> clauses) : base(clauses)
         {
             if (!clauses.Any())

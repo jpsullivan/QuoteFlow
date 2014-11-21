@@ -1,4 +1,5 @@
 ﻿using Lucene.Net.Documents;
+using QuoteFlow.Models.Assets.Context;
 
 namespace QuoteFlow.Models.Assets.Index.Indexers
 {

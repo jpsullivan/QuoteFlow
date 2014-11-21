@@ -28,7 +28,7 @@ namespace QuoteFlow.Models.Search.Jql.Permission
 			this.sanitizer = sanitizer;
 		}
 
-        public IClause Sanitize(User user, TerminalClause clause)
+        public IClause Sanitize(User user, ITerminalClause clause)
         {
             return sanitizer.Sanitize(user, clause);
         }

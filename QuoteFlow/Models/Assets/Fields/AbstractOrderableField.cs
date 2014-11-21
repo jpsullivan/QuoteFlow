@@ -49,10 +49,7 @@ namespace QuoteFlow.Models.Assets.Fields
             throw new NotImplementedException();
         }
 
-        public object GetValueFromParams(IDictionary fieldParams)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract object GetValueFromParams(IDictionary fieldParams);
 
         public void PopulateParamsFromString(IDictionary<string, object> fieldValuesHolder, string stringValue, Asset asset)
         {

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using QuoteFlow.Models.Search.Jql.Context;
 
 namespace QuoteFlow.Models.Assets.Fields
@@ -66,8 +64,8 @@ namespace QuoteFlow.Models.Assets.Fields
         }
 
         public ISet<ISearchableField> AllSearchableFields { get; private set; }
-        public ISet<ISearchableField> SystemSearchableFields { get; private set; }
-        public IssueTypeField IssueTypeField { get; private set; }
-        public CatalogField CatalogField { get; private set; }
+        public IEnumerable<ISearchableField> SystemSearchableFields { get; private set; }
+        public IAssetTypeField IssueTypeField { get; private set; }
+        public ICatalogField CatalogField { get; private set; }
     }
 }

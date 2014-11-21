@@ -421,6 +421,7 @@
     <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
     <Compile Include="Infrastructure\Exceptions\JqlParseException.cs" />
     <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
+    <Compile Include="Infrastructure\Helpers\DateHelpers.cs" />
     <Compile Include="Infrastructure\Helpers\LexerErrorHelper.cs" />
     <Compile Include="Infrastructure\IQuoteFlowDataType.cs" />
     <Compile Include="Infrastructure\JsonContentNegotiator.cs" />
@@ -458,13 +459,16 @@
     <Compile Include="Models\Assets\Fields\AbstractOrderableNavigableField.cs" />
     <Compile Include="Models\Assets\Fields\CatalogSystemField.cs" />
     <Compile Include="Models\Assets\Fields\FieldManager.cs" />
+    <Compile Include="Models\Assets\Fields\IAssetTypeField.cs" />
     <Compile Include="Models\Assets\Fields\ICatalogField.cs" />
+    <Compile Include="Models\Assets\Fields\IConfigurableField .cs" />
     <Compile Include="Models\Assets\Fields\ICustomField.cs" />
     <Compile Include="Models\Assets\Fields\IField.cs" />
     <Compile Include="Models\Assets\Fields\IFieldManager.cs" />
     <Compile Include="Models\Assets\Fields\INavigableField.cs" />
     <Compile Include="Models\Assets\Fields\IOrderableField.cs" />
     <Compile Include="Models\Assets\Fields\ISearchableField.cs" />
+    <Compile Include="Models\Assets\Fields\NavigableFieldOrder.cs" />
     <Compile Include="Models\Assets\Index\Analyzer\EnglishAnalyzer.cs" />
     <Compile Include="Models\Assets\Index\Analyzer\SubtokenFilter.cs" />
     <Compile Include="Models\Assets\Index\Analyzer\TextAnalyzer.cs" />
@@ -472,6 +476,7 @@
     <Compile Include="Models\Assets\Index\DocumentConstants.cs" />
     <Compile Include="Models\Assets\Index\Indexers\AssetNameIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\BaseFieldIndexer.cs" />
+    <Compile Include="Models\Assets\Index\Indexers\CatalogIdIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\CreatorIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\DescriptionIndexer.cs" />
     <Compile Include="Models\Assets\Index\Indexers\FieldIndexerUtil.cs" />
@@ -513,20 +518,33 @@
     <Compile Include="Models\Assets\Search\QueryCacheKey.cs" />
     <Compile Include="Models\Assets\Search\QueryCacheLiteralsKey.cs" />
     <Compile Include="Models\Assets\Search\SearchContext.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\AbstractDateSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\AbstractInitializationSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\CatalogSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\CreatorSearcher.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Information\GenericSearcherInformation.cs" />
     <Compile Include="Models\Assets\Search\Searchers\SearcherComparatorFactory.cs" />
     <Compile Include="Models\Assets\Search\Searchers\TextQuerySearcher.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\AbstractSearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\CatalogSearchInputTransformer.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\DateSearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\EnhancedUserSearchInputTransformer.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\FieldFlagOperandRegistry.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\IFieldFlagOperandRegistry.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\ISearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\NamedTerminalClauseCollectingVisitor.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\SimpleNavigatorCollectorVisitor.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\TextQuerySearchInputTransformer.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Transformer\TextQueryValidatingVisitor.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\TextQueryValidator.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\UserSearchInput.cs" />
     <Compile Include="Models\Assets\Search\Searchers\UserSearchInputTransformer.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Util\AbstractDateSearchInputHelper.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Util\DateSearcherConfig.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Util\DateSearcherInputHelper.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Util\IDateSearcherInputHelper.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Util\IIndexedInputHelper.cs" />
+    <Compile Include="Models\Assets\Search\Searchers\Util\IndexedInputHelper.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Util\RecursiveClauseVisitor.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Util\TextTermEscaper.cs" />
     <Compile Include="Models\Assets\Search\SystemClauseHandlerFactory.cs" />
@@ -568,6 +586,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Search\Jql\NoOpClauseHandler.cs" />
+    <Compile Include="Models\Search\Jql\Permission\AbstractLiteralSanitizingVisitor.cs" />
+    <Compile Include="Models\Search\Jql\Permission\CatalogClauseValueSanitizer.cs" />
+    <Compile Include="Models\Search\Jql\Permission\CatalogLiteralSanitizer.cs" />
+    <Compile Include="Models\Search\Jql\Permission\DefaultOperandSanitizingVisitor.cs" />
+    <Compile Include="Models\Search\Jql\Permission\ILiteralSanitizer.cs" />
+    <Compile Include="Models\Search\Jql\Permission\LiteralSanitizerResult.cs" />
     <Compile Include="Models\Search\Jql\Query\AllTextClauseQueryFactory.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\ExtendedQueryParser.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\LuceneQueryParser.cs" />
@@ -741,7 +765,9 @@
     <Compile Include="Models\Search\Jql\SearchRendererValueResults.cs" />
     <Compile Include="Models\Search\Jql\Query\QuerySearchResults.cs" />
     <Compile Include="Models\Assets\Transport\IFieldValuesHolder.cs" />
+    <Compile Include="Models\Search\Jql\Util\DateRange.cs" />
     <Compile Include="Models\Search\Jql\Util\FieldReference.cs" />
+    <Compile Include="Models\Search\Jql\Util\IJqlDateSupport.cs" />
     <Compile Include="Models\Search\Jql\Util\IJqlStringSupport.cs" />
     <Compile Include="Models\Search\Jql\Util\JqlCustomFieldId.cs" />
     <Compile Include="Models\Search\Jql\Util\JqlStringSupport.cs" />
@@ -766,9 +792,12 @@
     <Compile Include="Models\Search\Jql\Validator\SupportedOperatorsValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\ValidatorVisitor.cs" />
     <Compile Include="Models\Search\Jql\Validator\ValuesExistValidator.cs" />
+    <Compile Include="Models\Search\Jql\Values\CatalogClauseValuesGenerator.cs" />
     <Compile Include="Models\Search\Jql\Values\ClauseHandler.cs" />
     <Compile Include="Models\Search\Jql\Values\ClauseValueResult.cs" />
     <Compile Include="Models\Search\Jql\Values\ClauseValueResults.cs" />
+    <Compile Include="Models\Search\Jql\Values\ClauseValuesGeneratorResult.cs" />
+    <Compile Include="Models\Search\Jql\Values\ClauseValuesGeneratorResults.cs" />
     <Compile Include="Models\Search\Jql\Values\IClauseValuesGenerator.cs" />
     <Compile Include="Models\Search\Jql\Values\IValueGeneratingClauseHandler.cs" />
     <Compile Include="Models\Search\Jql\Values\ValuesGeneratingClauseHandler.cs" />
@@ -1333,6 +1362,7 @@
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
     <Folder Include="Content\fonts\" />
+    <Folder Include="Models\Assets\CustomFields\Converters\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

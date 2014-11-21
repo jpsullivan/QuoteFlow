@@ -83,10 +83,7 @@ namespace QuoteFlow.Models.Assets.Index.Indexers
         public string Id { get; private set; }
         public string DocumentFieldId { get; private set; }
 
-        public void AddIndex(Document doc, Asset asset)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void AddIndex(Document doc, Asset asset);
 
         public virtual bool IsFieldVisibleAndInScope(Asset asset)
         {

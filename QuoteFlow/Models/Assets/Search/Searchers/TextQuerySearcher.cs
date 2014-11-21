@@ -19,7 +19,11 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
         private const string ID = "text";
         private const string NAME_KEY = "common.words.query";
 
-        private static readonly IList<Type> CLASSIC_FIELD_INDEXERS = new List<Type> { typeof(DescriptionIndexer), typeof(SummaryIndexer) };
+        private static readonly IEnumerable<IFieldIndexer> CLASSIC_FIELD_INDEXERS = new List<IFieldIndexer>
+        {
+            new DescriptionIndexer(),
+            new SummaryIndexer()
+        };
 
         private readonly ISearcherInformation<ISearchableField> searcherInformation;
         private readonly ISearchInputTransformer searchInputTransformer;

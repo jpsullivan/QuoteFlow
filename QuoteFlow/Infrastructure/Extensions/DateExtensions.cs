@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Ajax.Utilities;
 
 namespace QuoteFlow.Infrastructure.Extensions
 {
@@ -115,6 +116,31 @@ namespace QuoteFlow.Infrastructure.Extensions
                 return "on " + dt.ToString("MMM %d 'at' %H:mmm");
             }
             return "on " + dt.ToString(@"MMM %d \'yy 'at' %H:mmm");
+        }
+
+        /// <summary>
+        /// Get a duration string with the possibility of a negative. A duration will be
+        /// considered negative if the first non-space character is a - sign.
+        /// </summary>
+        /// <param name="duration">The duration string</param>
+        /// <returns>The duration in seconds, which can be negative.</returns>
+        public static long ToDurationWithNegative(string duration)
+        {
+            var cleanedDuration = duration.Trim();
+            if (cleanedDuration.IsNullOrEmpty())
+            {
+                return 0;
+            }
+
+            bool negative = cleanedDuration[0] == '-';
+
+            if (negative)
+            {
+//                return 0 - getDuration(cleanedDurationStr.Substring(1));
+            }
+
+//            return getDuration(cleanedDurationStr);
+            return 0;
         }
     }
 }

@@ -7,6 +7,19 @@ namespace QuoteFlow.Models.Assets.Index.Analyzer
 {
     public class TokenFilters
     {
+        public class General
+        {
+            public class Stemming
+            {
+                public static readonly Func<TokenStream, TokenStream> None = stream => stream;
+            }
+
+            public class StopWordRemoval
+            {
+                public static readonly Func<TokenStream, TokenStream> None = stream => stream;
+            }
+        }
+
         public class English
         {
             public class Stemming

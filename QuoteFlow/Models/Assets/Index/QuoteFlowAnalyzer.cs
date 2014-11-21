@@ -73,10 +73,10 @@ namespace QuoteFlow.Models.Assets.Index
             return new EnglishAnalyzer(LuceneVersion.Get(),
                 indexing, stemming == Stemming.ON
                     ? TokenFilters.English.Stemming.Aggressive
-                    : TokenFilters.General.Stemming.none(),
+                    : TokenFilters.General.Stemming.None,
                 stopWordRemoval == StopWordRemoval.ON
                     ? TokenFilters.English.StopWordRemoval.DefaultSet
-                    : TokenFilters.General.StopWordRemoval.none());
+                    : TokenFilters.General.StopWordRemoval.None);
 
             // Deep fallback
             return fallbackAnalyzer;
@@ -97,7 +97,7 @@ namespace QuoteFlow.Models.Assets.Index
                 fieldName = "";
             }
             // end workaround
-            return findAnalyzer().TokenStream(fieldName, reader);
+            return FindAnalyzer().TokenStream(fieldName, reader);
         }
 
         /// <summary>
@@ -111,34 +111,29 @@ namespace QuoteFlow.Models.Assets.Index
             return base.ReusableTokenStream(fieldName, reader);
         }
 
-        private Lucene.Net.Analysis.Analyzer findAnalyzer()
+        private Lucene.Net.Analysis.Analyzer FindAnalyzer()
         {
             string language = Language;
             if (language == null)
             {
                 return fallbackAnalyzer;
             }
-            Analyzer analyzer = null;
+            Lucene.Net.Analysis.Analyzer analyzer;
             try
             {
-                analyzer = analyzers.get(language);
+                analyzer = analyzers[language];
             }
-            catch (ExecutionException e)
+            catch (Exception e)
             {
-                log.error("Invalid indexing language: '" + language + "', defaulting to '" + APKeys.Languages.OTHER + "'.");
+                //log.error("Invalid indexing language: '" + language + "', defaulting to '" + APKeys.Languages.OTHER + "'.");
                 analyzer = fallbackAnalyzer;
             }
             if (analyzer == null)
             {
-                log.error("Invalid indexing language: '" + language + "', defaulting to '" + APKeys.Languages.OTHER + "'.");
+                //log.error("Invalid indexing language: '" + language + "', defaulting to '" + APKeys.Languages.OTHER + "'.");
                 analyzer = fallbackAnalyzer;
             }
             return analyzer;
-        }
-
-        private string GetLanguage()
-        {
-            return Config.
         }
     }
 }

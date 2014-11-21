@@ -19,7 +19,7 @@ namespace QuoteFlow.Models.Search.Jql.Permission
         /// <param name="user">The user performing the search.</param>
         /// <param name="clause">The clause to be sanitised.</param>
         /// <returns>The sanitised clause; never null.</returns>
-        IClause Sanitize(User user, TerminalClause clause);
+        IClause Sanitize(User user, ITerminalClause clause);
 
     }
 }
