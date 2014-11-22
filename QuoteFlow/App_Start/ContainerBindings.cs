@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
-using System.Reflection;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Hosting;
@@ -18,6 +17,7 @@ using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Lucene;
 using QuoteFlow.Models;
 using QuoteFlow.Models.Assets.CustomFields.Searchers.Transformer;
+using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Search;
 using QuoteFlow.Models.Assets.Search.Managers;
 using QuoteFlow.Models.Search.Jql.Operand;
@@ -194,6 +194,7 @@ namespace QuoteFlow
             #region Asset Fields
 
             Bind<ICustomFieldInputHelper>().To<CustomFieldInputHelper>().InRequestScope();
+            Bind<IFieldManager>().To<FieldManager>().InRequestScope();
 
             #endregion
 

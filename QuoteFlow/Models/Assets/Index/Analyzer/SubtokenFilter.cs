@@ -29,7 +29,7 @@ namespace QuoteFlow.Models.Assets.Index.Analyzer
         private static readonly string TOKEN_TYPE_NUM = StandardTokenizer.TOKEN_TYPES[StandardTokenizer.NUM];
         private const string TOKEN_TYPE_EXCEPTION = "EXCEPTION";
 
-        private CharTermAttribute termAttribute;
+        //private CharTermAttribute termAttribute;
         private PositionIncrementAttribute incrementAttribute;
         private TypeAttribute typeAttribute;
 
@@ -40,7 +40,7 @@ namespace QuoteFlow.Models.Assets.Index.Analyzer
         public SubtokenFilter(TokenStream tokenStream)
             : base(tokenStream)
         {
-            termAttribute = AddAttribute<CharTermAttribute>();
+            //termAttribute = AddAttribute<CharTermAttribute>();
             incrementAttribute = AddAttribute<PositionIncrementAttribute>();
             AddAttribute<TypeAttribute>();
         }
@@ -53,7 +53,7 @@ namespace QuoteFlow.Models.Assets.Index.Analyzer
 
                 var remove = subtokenStack.ElementAt(0);
                 subtokenStack.RemoveAt(0);
-                termAttribute.SetLength(0).Append(remove);
+                //termAttribute.SetLength(0).Append(remove);
                 incrementAttribute.PositionIncrement = 0;
                 typeAttribute.Type = nextType;
 
@@ -80,33 +80,33 @@ namespace QuoteFlow.Models.Assets.Index.Analyzer
 
         private void AddSubtokensToStack(char separatorChar, string newTokenType)
         {
-            char[] termBuffer = termAttribute.Buffer();
-            int termLength = termAttribute.Length;
-            int offset = 0;
-
-            // We iterate over the array, trying to find the separatorChar ('.' or ',')
-            for (int index = 0; index <= termLength; index++)
-            {
-                // Note that we actually iterate past the last character in the array. At this point index == termLength.
-                // We must check for this condition first to stop ArrayIndexOutOfBoundsException.
-                // Being at the end of the array is a subtoken border just like the separator character ('.'), except we don't want to
-                // add a duplicate token if no separator was already found. Hence we also check for offset > 0.
-                if ((index < termLength && termBuffer[index] == separatorChar) || (index == termLength && offset > 0))
-                {
-                    int subtokenLength = index - offset;
-                    // Check that this is not an "empty" subtoken
-                    if (subtokenLength > 0)
-                    {
-                        if (subtokenStack.Count == 0)
-                        {
-                            nextType = newTokenType;
-                            current = CaptureState();
-                        }
-                        subtokenStack.Add(termAttribute.SubSequence(offset, subtokenLength + offset));
-                    }
-                    offset = index + 1;
-                }
-            }
+//            char[] termBuffer = termAttribute.Buffer();
+//            int termLength = termAttribute.Length;
+//            int offset = 0;
+//
+//            // We iterate over the array, trying to find the separatorChar ('.' or ',')
+//            for (int index = 0; index <= termLength; index++)
+//            {
+//                // Note that we actually iterate past the last character in the array. At this point index == termLength.
+//                // We must check for this condition first to stop ArrayIndexOutOfBoundsException.
+//                // Being at the end of the array is a subtoken border just like the separator character ('.'), except we don't want to
+//                // add a duplicate token if no separator was already found. Hence we also check for offset > 0.
+//                if ((index < termLength && termBuffer[index] == separatorChar) || (index == termLength && offset > 0))
+//                {
+//                    int subtokenLength = index - offset;
+//                    // Check that this is not an "empty" subtoken
+//                    if (subtokenLength > 0)
+//                    {
+//                        if (subtokenStack.Count == 0)
+//                        {
+//                            nextType = newTokenType;
+//                            current = CaptureState();
+//                        }
+//                        subtokenStack.Add(termAttribute.SubSequence(offset, subtokenLength + offset));
+//                    }
+//                    offset = index + 1;
+//                }
+//            }
         }
 
         public override void Reset()
