@@ -431,6 +431,7 @@
     <Compile Include="Infrastructure\Lucene\LuceneIndexingJob.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneVersion.cs" />
     <Compile Include="Infrastructure\Lucene\PerFieldAnalyzer.cs" />
+    <Compile Include="Infrastructure\Lucene\PerFieldIndexingAnalyzer.cs" />
     <Compile Include="Infrastructure\QuoteFlowControllerFactory.cs" />
     <Compile Include="Infrastructure\QuoteFlowDataType.cs" />
     <Compile Include="Infrastructure\QuoteFlowDataTypes.cs" />

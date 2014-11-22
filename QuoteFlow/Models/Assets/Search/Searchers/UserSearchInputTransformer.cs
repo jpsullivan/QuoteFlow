@@ -69,7 +69,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
             fieldValuesHolder.Add(searchConstants.FieldUrlParameter, actionParams.GetFirstValueForKey(searchConstants.FieldUrlParameter));
         }
 
-        public void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
+        public virtual void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
         {
             string user = (string)fieldValuesHolder[searchConstants.FieldUrlParameter];
             if (user.HasValue())

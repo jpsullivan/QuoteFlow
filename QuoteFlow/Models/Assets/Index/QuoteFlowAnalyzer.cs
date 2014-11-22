@@ -1,17 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
 using Lucene.Net.Analysis;
-using Lucene.Net.Analysis.BR;
-using Lucene.Net.Analysis.CJK;
-using Lucene.Net.Analysis.Cz;
-using Lucene.Net.Analysis.De;
-using Lucene.Net.Analysis.El;
-using Lucene.Net.Analysis.Fr;
-using Lucene.Net.Analysis.Th;
-using QuoteFlow.Configuration;
 using QuoteFlow.Infrastructure.Lucene;
 using QuoteFlow.Models.Assets.Index.Analyzer;
 
@@ -22,59 +12,44 @@ namespace QuoteFlow.Models.Assets.Index
         private readonly bool indexing;
 		private readonly Stemming stemming;
 		private readonly StopWordRemoval stopWordRemoval;
-        public IAppConfiguration Config { get; protected set; }
 
 		public enum Stemming
 		{
-			ON,
-			OFF
+			On, Off
 		}
 
 		public enum StopWordRemoval
 		{
-			ON,
-			OFF
+			On, Off
 		}
 
-		public static readonly Lucene.Net.Analysis.Analyzer ANALYZER_FOR_INDEXING = new PerFieldIndexingAnalyzer();
+		public static readonly Lucene.Net.Analysis.Analyzer AnalyzerForIndexing = new PerFieldIndexingAnalyzer();
 
-		public static readonly Lucene.Net.Analysis.Analyzer ANALYZER_FOR_SEARCHING = new QuoteFlowAnalyzer(false, Stemming.ON, StopWordRemoval.ON);
+		public static readonly Lucene.Net.Analysis.Analyzer AnalyzerForSearching = new QuoteFlowAnalyzer(false, Stemming.On, StopWordRemoval.On);
 
-		public static readonly Lucene.Net.Analysis.Analyzer ANALYZER_FOR_EXACT_SEARCHING = new QuoteFlowAnalyzer(false, Stemming.OFF, StopWordRemoval.OFF);
+		public static readonly Lucene.Net.Analysis.Analyzer AnalyzerForExactSearching = new QuoteFlowAnalyzer(false, Stemming.Off, StopWordRemoval.Off);
 
-		private readonly Cache<string, Lucene.Net.Analysis.Analyzer> analyzers = CacheBuilder.newBuilder().build(new CacheLoaderAnonymousInnerClassHelper());
-
-		private class CacheLoaderAnonymousInnerClassHelper : CacheLoader<string, Analyzer>
-		{
-			public CacheLoaderAnonymousInnerClassHelper()
-			{
-			}
-
-			public override Analyzer load(string key)
-			{
-				return outerInstance.makeAnalyzer(key);
-			}
-		}
+        public readonly IDictionary<string, Lucene.Net.Analysis.Analyzer> Analyzers = new Dictionary<string, Lucene.Net.Analysis.Analyzer>();
 
 		private readonly Lucene.Net.Analysis.Analyzer fallbackAnalyzer;
 
-
-		public QuoteFlowAnalyzer(IAppConfiguration config, bool indexing, Stemming stemming, StopWordRemoval stopWordRemoval)
+		public QuoteFlowAnalyzer(bool indexing, Stemming stemming, StopWordRemoval stopWordRemoval)
 		{
-		    Config = config;
 			this.indexing = indexing;
 			this.stemming = stemming;
 			this.stopWordRemoval = stopWordRemoval;
-			fallbackAnalyzer = new SimpleAnalyzer(LuceneVersion.Get(), this.indexing);
+		    fallbackAnalyzer = new SimpleAnalyzer();
+            Analyzers.Add("english", MakeAnalyzer());
+		    //fallbackAnalyzer = new SimpleAnalyzer(LuceneVersion.Get(), this.indexing);
 		}
 
-        internal virtual Lucene.Net.Analysis.Analyzer makeAnalyzer(string language)
+        internal Lucene.Net.Analysis.Analyzer MakeAnalyzer()
         {
             return new EnglishAnalyzer(LuceneVersion.Get(),
-                indexing, stemming == Stemming.ON
+                indexing, stemming == Stemming.On
                     ? TokenFilters.English.Stemming.Aggressive
                     : TokenFilters.General.Stemming.None,
-                stopWordRemoval == StopWordRemoval.ON
+                stopWordRemoval == StopWordRemoval.On
                     ? TokenFilters.English.StopWordRemoval.DefaultSet
                     : TokenFilters.General.StopWordRemoval.None);
 
@@ -113,15 +88,10 @@ namespace QuoteFlow.Models.Assets.Index
 
         private Lucene.Net.Analysis.Analyzer FindAnalyzer()
         {
-            string language = Language;
-            if (language == null)
-            {
-                return fallbackAnalyzer;
-            }
             Lucene.Net.Analysis.Analyzer analyzer;
             try
             {
-                analyzer = analyzers[language];
+                analyzer = Analyzers["english"];
             }
             catch (Exception e)
             {
