@@ -420,15 +420,20 @@
     <Compile Include="Infrastructure\Exceptions\Antlr\RuntimeRecognitionException.cs" />
     <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
     <Compile Include="Infrastructure\Exceptions\JqlParseException.cs" />
+    <Compile Include="Infrastructure\Exceptions\Search\ClauseTooComplexSearchException.cs" />
     <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
     <Compile Include="Infrastructure\Helpers\DateHelpers.cs" />
     <Compile Include="Infrastructure\Helpers\LexerErrorHelper.cs" />
     <Compile Include="Infrastructure\IQuoteFlowDataType.cs" />
     <Compile Include="Infrastructure\JsonContentNegotiator.cs" />
+    <Compile Include="Infrastructure\Lucene\ConstantScorePrefixQuery.cs" />
     <Compile Include="Infrastructure\Lucene\IKeywordAttribute.cs" />
+    <Compile Include="Infrastructure\Lucene\ILuceneQueryModifier.cs" />
     <Compile Include="Infrastructure\Lucene\KeywordAttribute.cs" />
     <Compile Include="Infrastructure\Lucene\KeywordRepeatFilter.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneIndexingJob.cs" />
+    <Compile Include="Infrastructure\Lucene\LuceneQueryBucket.cs" />
+    <Compile Include="Infrastructure\Lucene\LuceneQueryModifier.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneVersion.cs" />
     <Compile Include="Infrastructure\Lucene\PerFieldAnalyzer.cs" />
     <Compile Include="Infrastructure\Lucene\PerFieldIndexingAnalyzer.cs" />
@@ -446,6 +451,7 @@
     <Compile Include="Infrastructure\Util\LuceneUtils.cs" />
     <Compile Include="Infrastructure\Util\MessageSet.cs" />
     <Compile Include="Infrastructure\Util\ParameterUtils.cs" />
+    <Compile Include="Models\Assets\AbstractAsset.cs" />
     <Compile Include="Models\Assets\AssetFieldConstants.cs" />
     <Compile Include="Models\Assets\Comparator\NullComparator.cs" />
     <Compile Include="Models\Assets\Context\AssetContext.cs" />
@@ -470,6 +476,7 @@
     <Compile Include="Models\Assets\Fields\IOrderableField.cs" />
     <Compile Include="Models\Assets\Fields\ISearchableField.cs" />
     <Compile Include="Models\Assets\Fields\NavigableFieldOrder.cs" />
+    <Compile Include="Models\IAsset.cs" />
     <Compile Include="Models\Assets\Index\Analyzer\EnglishAnalyzer.cs" />
     <Compile Include="Models\Assets\Index\Analyzer\SubtokenFilter.cs" />
     <Compile Include="Models\Assets\Index\Analyzer\TextAnalyzer.cs" />
@@ -496,6 +503,7 @@
     <Compile Include="Models\Assets\Search\Constants\SystemSearchConstants.cs" />
     <Compile Include="Models\Assets\Search\Constants\UserFieldSearchConstants.cs" />
     <Compile Include="Models\Assets\Search\Constants\UserFieldSearchConstantsWithEmpty.cs" />
+    <Compile Include="Models\Assets\Search\Filters\AssetIdFilter.cs" />
     <Compile Include="Models\Assets\Search\Handlers\CatalogSearchHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\Handlers\ISearchHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\Handlers\SimpleSearchHandlerFactory.cs" />
@@ -503,6 +511,7 @@
     <Compile Include="Models\Assets\Search\ILuceneFieldSorter.cs" />
     <Compile Include="Models\Assets\Search\IQueryCache.cs" />
     <Compile Include="Models\Assets\Search\ISearchContext.cs" />
+    <Compile Include="Models\Assets\Search\ISearchProviderFactory.cs" />
     <Compile Include="Models\Assets\Search\ISystemClauseHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\Managers\AssetSearcherManager.cs" />
     <Compile Include="Models\Assets\Search\Managers\IAssetSearcherManager.cs" />
@@ -557,6 +566,7 @@
     <Compile Include="Models\Assets\Transport\IFieldTransportParams.cs" />
     <Compile Include="Models\Search\Jql\AntlrGen\JqlLexer.cs" />
     <Compile Include="Models\Search\Jql\AntlrGen\JqlParser.cs" />
+    <Compile Include="Models\Search\Jql\Clauses\DeMorgansVisitor.cs" />
     <Compile Include="Models\Search\Jql\Clauses\IClauseHandler.cs" />
     <Compile Include="Models\Search\Jql\Clauses\IClauseInformation.cs" />
     <Compile Include="Models\Search\Jql\Context\AllAssetTypesContext.cs" />
@@ -587,6 +597,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Search\Jql\NoOpClauseHandler.cs" />
+    <Compile Include="Models\Search\Jql\Operand\EmptyWasClauseOperandHandler.cs" />
     <Compile Include="Models\Search\Jql\Permission\AbstractLiteralSanitizingVisitor.cs" />
     <Compile Include="Models\Search\Jql\Permission\CatalogClauseValueSanitizer.cs" />
     <Compile Include="Models\Search\Jql\Permission\CatalogLiteralSanitizer.cs" />
@@ -594,11 +605,19 @@
     <Compile Include="Models\Search\Jql\Permission\ILiteralSanitizer.cs" />
     <Compile Include="Models\Search\Jql\Permission\LiteralSanitizerResult.cs" />
     <Compile Include="Models\Search\Jql\Query\AllTextClauseQueryFactory.cs" />
+    <Compile Include="Models\Search\Jql\Query\AssetIdCollector.cs" />
+    <Compile Include="Models\Search\Jql\Query\ChangedClauseQueryFactory.cs" />
+    <Compile Include="Models\Search\Jql\Query\HistoryPredicateQueryFactory.cs" />
+    <Compile Include="Models\Search\Jql\Query\ILuceneQueryBuilder.cs" />
+    <Compile Include="Models\Search\Jql\Query\IQueryRegistry.cs" />
+    <Compile Include="Models\Search\Jql\Query\LuceneQueryBuilder.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\ExtendedQueryParser.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\LuceneQueryParser.cs" />
     <Compile Include="Models\Search\Jql\Query\Lucene\Parsing\LuceneQueryParserFactory.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\EmptyOperandHandler.cs" />
     <Compile Include="Models\Search\Jql\Operand\JqlOperandResolver.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\IPredicateOperandHandler.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\IPredicateOperandResolver.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\MultiValueOperandHandler.cs" />
     <Compile Include="Models\Search\Jql\OperatorClasses.cs" />
     <Compile Include="Models\Search\Jql\Parser\AntlrPosition.cs" />
@@ -742,6 +761,8 @@
     <Compile Include="Models\Search\Jql\Query\Operand\IOperandHandler.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\IOperandVisitor.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\MultiValueOperand.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\PredicateOperandHandlerRegistry.cs" />
+    <Compile Include="Models\Search\Jql\Query\Operand\PredicateOperandResolver.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\Registry\IJqlFunctionHandlerRegistry.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\Registry\LazyResettableJqlFunctionHandlerRegistry.cs" />
     <Compile Include="Models\Search\Jql\Query\Operand\SingleValueOperand.cs" />
@@ -754,11 +775,15 @@
     <Compile Include="Models\Search\Jql\Query\Query.cs" />
     <Compile Include="Models\Search\Jql\Query\QueryCreationContext.cs" />
     <Compile Include="Models\Search\Jql\Query\QueryFactoryResult.cs" />
+    <Compile Include="Models\Search\Jql\Query\QueryRegistry.cs" />
+    <Compile Include="Models\Search\Jql\Query\QueryVisitor.cs" />
     <Compile Include="Models\Search\Jql\Query\Searcher.cs" />
     <Compile Include="Models\Search\Jql\Query\Searchers.cs" />
     <Compile Include="Models\Search\Jql\Query\TermQueryFactory.cs" />
+    <Compile Include="Models\Search\Jql\Query\WasClauseQueryFactory.cs" />
     <Compile Include="Models\Search\Jql\Resolver\CatalogIndexInfoResolver.cs" />
     <Compile Include="Models\Search\Jql\Resolver\CatalogResolver.cs" />
+    <Compile Include="Models\Search\Jql\Resolver\ChangeHistoryFieldIdResolver.cs" />
     <Compile Include="Models\Search\Jql\Resolver\IIndexInfoResolver.cs" />
     <Compile Include="Models\Search\Jql\Resolver\INameResolver.cs" />
     <Compile Include="Models\Search\Jql\SearchRendererHolder.cs" />

@@ -21,6 +21,18 @@
         public const string AssetSortCreated = LuceneSortFieldPrefix + "created";
         public const string AssetSortUpdated = LuceneSortFieldPrefix + "updated";
 
+        // extra constants
+        public const string ChangeDuration ="ch_duration";
+        public const string ChangeDate = "ch_date";
+        public const string NextChangeDate="ch_nextchangedate";
+        public const string ChangeGroupId="ch_id";
+        public const string ChangeActioner = "ch_who";
+        public const string ChangeFrom = "ch_from" ;
+        public const string ChangeTo = "ch_to" ;
+        public const string OldValue = "ch_oldvalue";
+        public const string NewValue = "ch_newvalue";
+        public const string ChangeHistoryProtocol="ch-";
+
         // A special field that is used for searching for EMPTY values
         public const string AssetNonEmptyFieldIds = "nonemptyfieldids";
         // A special field that is used for searching for constraining EMPTY value searches to the issues that are relevant

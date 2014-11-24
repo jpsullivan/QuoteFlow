@@ -4,7 +4,7 @@ using Dapper;
 
 namespace QuoteFlow.Models
 {
-    public class Asset
+    public class Asset : IAsset
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -22,6 +22,7 @@ using QuoteFlow.Models.Assets.Search;
 using QuoteFlow.Models.Assets.Search.Managers;
 using QuoteFlow.Models.Search.Jql.Operand;
 using QuoteFlow.Models.Search.Jql.Parser;
+using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Operand.Registry;
 using QuoteFlow.Models.Search.Jql.Resolver;
 using QuoteFlow.Models.Search.Jql.Util;
@@ -205,6 +206,7 @@ namespace QuoteFlow
             Bind<IJqlQueryParser>().To<JqlQueryParser>().InRequestScope();
             Bind<IJqlStringSupport>().To<JqlStringSupport>().InRequestScope();
             Bind<IQueryCache>().To<QueryCache>().InRequestScope();
+            Bind<IQueryRegistry>().To<QueryRegistry>().InRequestScope();
             Bind<ISystemClauseHandlerFactory>().To<SystemClauseHandlerFactory>().InRequestScope();
 
             #endregion
@@ -224,7 +226,9 @@ namespace QuoteFlow
 
         private void ConfigureSearch()
         {
-            Bind<ISearchService>().To<LuceneSearchService>().InRequestScope();
+            Bind<ILuceneQueryBuilder>().To<LuceneQueryBuilder>().InRequestScope();
+            Bind<ILuceneQueryModifier>().To<LuceneQueryModifier>().InRequestScope();
+            Bind<ISearchProvider>().To<LuceneSearchService>().InRequestScope();
             Bind<IIndexingService>().To<LuceneIndexingService>().InRequestScope();
         }
 

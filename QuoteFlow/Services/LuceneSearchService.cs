@@ -1,82 +1,509 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Lucene.Net.Documents;
+using Lucene.Net.Search;
+using Ninject;
+using QuoteFlow.Infrastructure.Exceptions.Search;
+using QuoteFlow.Infrastructure.Paging;
 using QuoteFlow.Infrastructure.Util;
 using QuoteFlow.Models;
+using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Search;
+using QuoteFlow.Models.Assets.Search.Managers;
 using QuoteFlow.Models.Search;
 using QuoteFlow.Models.Search.Jql.Parser;
 using QuoteFlow.Models.Search.Jql.Query;
+using QuoteFlow.Models.Search.Jql.Query.Clause;
+using QuoteFlow.Models.Search.Jql.Query.Order;
 using QuoteFlow.Services.Interfaces;
 
 namespace QuoteFlow.Services
 {
-    public class LuceneSearchService : ISearchService
+    public class LuceneSearchService : ISearchProvider
     {
-        private Lucene.Net.Store.Directory _directory;
+        private readonly ISearchProviderFactory searchProviderFactory;
+        private readonly IAssetService _asssetService;
+        private readonly PermissionsFilterGenerator permissionsFilterGenerator;
+        private readonly ISearchHandlerManager searchHandlerManager;
+        private readonly SearchSortUtil searchSortUtil;
+        private readonly ILuceneQueryBuilder luceneQueryBuilder;
 
-        private static readonly string[] FieldAliases = new[] { "Id", "Title", "Tag", "Tags", "Description", "Author", "Authors", "Owner", "Owners" };
-        private static readonly string[] Fields = new[] { "Id", "Title", "Tags", "Description", "Authors", "Owners" };
-
-        public bool ContainsAllVersions { get { return false; } }
-
-        public LuceneSearchService(Lucene.Net.Store.Directory directory)
+        public LuceneSearchService(IAssetService asssetService, ISearchProviderFactory searchProviderFactory, PermissionsFilterGenerator permissionsFilterGenerator, ISearchHandlerManager searchHandlerManager, SearchSortUtil searchSortUtil, ILuceneQueryBuilder luceneQueryBuilder)
         {
-            _directory = directory;
+            this._asssetService = asssetService;
+            this.searchProviderFactory = searchProviderFactory;
+            this.permissionsFilterGenerator = permissionsFilterGenerator;
+            this.searchHandlerManager = searchHandlerManager;
+            this.searchSortUtil = searchSortUtil;
+            this.luceneQueryBuilder = luceneQueryBuilder;
         }
 
-        public Task<SearchResult> Search(SearchFilter searchFilter)
+        public virtual SearchResults Search(IQuery query, User searcher, IPagerFilter pager)
         {
-            if (searchFilter == null)
+            return Search(query, searcher, pager, null);
+        }
+
+        public virtual SearchResults Search(IQuery query, User searcher, IPagerFilter pager, Lucene.Net.Search.Query andQuery)
+        {
+            return Search(query, searcher, pager, andQuery, false);
+        }
+
+        public virtual SearchResults searchOverrideSecurity(IQuery query, User searcher, IPagerFilter pager, Lucene.Net.Search.Query andQuery)
+        {
+            return Search(query, searcher, pager, andQuery, true);
+        }
+
+        public virtual long searchCount(IQuery query, User user)
+        {
+            IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
+            return GetHitCount(query, user, null, null, false, issueSearcher, null);
+        }
+
+        public virtual long searchCountOverrideSecurity(IQuery query, User user)
+        {
+            IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
+            return GetHitCount(query, user, null, null, true, issueSearcher, null);
+        }
+
+        public virtual void Search(IQuery query, User user, Collector collector)
+        {
+            Search(query, user, collector, null, false);
+        }
+
+        public virtual void Search(IQuery query, User searcher, Collector collector, Lucene.Net.Search.Query andQuery)
+        {
+            Search(query, searcher, collector, andQuery, false);
+        }
+
+        public virtual void searchOverrideSecurity(IQuery query, User user, Collector collector)
+        {
+            Search(query, user, collector, null, true);
+        }
+
+        public virtual void SearchAndSort(IQuery query, User user, Collector collector, IPagerFilter pagerFilter)
+        {
+            SearchAndSort(query, user, collector, pagerFilter, false);
+        }
+
+        public virtual void searchAndSortOverrideSecurity(IQuery query, User user, Collector collector, IPagerFilter pagerFilter)
+        {
+            SearchAndSort(query, user, collector, pagerFilter, true);
+        }
+
+        /// <summary>
+        /// Returns 0 if there are no Lucene parameters (search request is null), otherwise 
+        /// returns the hit count. The count is 0 if there are no matches.
+        /// </summary>
+        /// <param name="searchQuery">Search request</param>
+        /// <param name="searchUser">User performing the search </param>
+        /// <param name="sortField">Array of fields to sort by </param>
+        /// <param name="andQuery">A query to join with the request </param>
+        /// <param name="overrideSecurity">Ignore the user security permissions </param>
+        /// <param name="issueSearcher">The IndexSearcher to be used when searching </param>
+        /// <param name="pager">A pager which holds information about which page of search results is actually required.</param>
+        /// <returns>The hit count</returns>
+        /// <exception cref="ClauseTooComplexSearchException">If query creates a lucene query that is too complex to be processed.</exception>
+        private long GetHitCount(IQuery searchQuery, User searchUser, SortField[] sortField, Lucene.Net.Search.Query andQuery, bool overrideSecurity, IndexSearcher issueSearcher, IPagerFilter pager)
+        {
+            if (searchQuery == null)
             {
-                throw new ArgumentNullException("searchFilter");
+                return 0;
+            }
+            try
+            {
+                Filter permissionsFilter = GetPermissionsFilter(overrideSecurity, searchUser);
+                Lucene.Net.Search.Query finalQuery = CreateLuceneQuery(searchQuery, andQuery, searchUser, overrideSecurity);
+                TotalHitCountCollector hitCountCollector = new TotalHitCountCollector();
+                issueSearcher.search(finalQuery, permissionsFilter, hitCountCollector);
+                return hitCountCollector.TotalHits;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        /// <summary>
+        /// Returns null if there are no Lucene parameters (search request is null), otherwise returns a collection of Lucene
+        /// Document objects.
+        /// <p/>
+        /// The collection has 0 results if there are no matches.
+        /// </summary>
+        /// <param name="searchQuery">    search request </param>
+        /// <param name="searchUser"> user performing the search </param>
+        /// <param name="sortField">  array of fields to sort by </param>
+        /// <param name="andQuery">   a query to join with the request </param>
+        /// <param name="overrideSecurity"> ignore the user security permissions </param>
+        /// <param name="issueSearcher"> the IndexSearcher to be used when searching </param>
+        /// <param name="pager"> a pager which holds information about which page of search results is actually required. </param>
+        /// <returns> hits </returns>
+        /// <exception cref="SearchException"> if error occurs </exception>
+        /// <exception cref="ClauseTooComplexSearchException">If query creates a lucene query that is too complex to be processed. </exception>
+        private TopDocs GetHits(IQuery searchQuery, User searchUser, SortField[] sortField, Lucene.Net.Search.Query andQuery, bool overrideSecurity, IndexSearcher issueSearcher, IPagerFilter pager)
+        {
+            if (searchQuery == null)
+            {
+                return null;
+            }
+            try
+            {
+                Filter permissionsFilter = GetPermissionsFilter(overrideSecurity, searchUser);
+                Lucene.Net.Search.Query finalQuery = CreateLuceneQuery(searchQuery, andQuery, searchUser, overrideSecurity);
+//                if (log.DebugEnabled)
+//                {
+//                    log.debug("JQL sorts: " + Arrays.ToString(sortField));
+//                }
+                return RunSearch(issueSearcher, finalQuery, permissionsFilter, sortField, searchQuery.ToString(), pager);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        private void Search(IQuery searchQuery, User user, Collector collector, Lucene.Net.Search.Query andQuery, bool overrideSecurity)
+        {
+            IndexSearcher searcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
+            Lucene.Net.Search.Query finalQuery = andQuery;
+
+            if (searchQuery.WhereClause != null)
+            {
+                QueryCreationContext context = new QueryCreationContext(user, overrideSecurity);
+                Lucene.Net.Search.Query query = luceneQueryBuilder.CreateLuceneQuery(context, searchQuery.WhereClause);
+                if (query != null)
+                {
+                    if (finalQuery != null)
+                    {
+                        BooleanQuery join = new BooleanQuery();
+                        join.Add(finalQuery, Occur.MUST);
+                        join.Add(query, Occur.MUST);
+                        finalQuery = join;
+                    }
+                    else
+                    {
+                        finalQuery = query;
+                    }
+//                    log.debug("JQL query: " + searchQuery.ToString());
+//                    log.debug("JQL lucene query: " + finalQuery);
+                }
+                else
+                {
+                    //log.debug("Got a null query from the JQL Query.");
+                }
             }
 
-            if (searchFilter.Skip < 0)
+            Filter permissionsFilter = GetPermissionsFilter(overrideSecurity, user);
+
+            // NOTE: we do this because when you are searching for everything the query is EMPTY
+            if (finalQuery == null)
             {
-                throw new ArgumentOutOfRangeException("searchFilter");
+                finalQuery = new MatchAllDocsQuery();
+            }
+            try
+            {
+                searcher.Search(finalQuery, permissionsFilter, collector);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Exception occurred whilst searching for assets + " + e.Message, e);
+            }
+        }
+
+        private Lucene.Net.Search.Query CreateLuceneQuery(IQuery searchQuery, Lucene.Net.Search.Query andQuery, User searchUser, bool overrideSecurity)
+        {
+            string jqlSearchQuery = searchQuery.ToString();
+
+            Lucene.Net.Search.Query finalQuery = andQuery;
+
+            if (searchQuery.WhereClause != null)
+            {
+                QueryCreationContext context = new QueryCreationContext(searchUser, overrideSecurity);
+                Lucene.Net.Search.Query query = luceneQueryBuilder.CreateLuceneQuery(context, searchQuery.WhereClause);
+                if (query != null)
+                {
+//                    if (log.DebugEnabled)
+//                    {
+//                        log.debug("JQL query: " + jqlSearchQuery);
+//                    }
+
+                    if (finalQuery != null)
+                    {
+                        var join = new BooleanQuery();
+                        join.Add(finalQuery, Occur.MUST);
+                        join.Add(query, Occur.MUST);
+                        finalQuery = join;
+                    }
+                    else
+                    {
+                        finalQuery = query;
+                    }
+                }
+                else
+                {
+//                    if (log.DebugEnabled)
+//                    {
+//                        log.debug("Got a null query from the JQL Query.");
+//                    }
+                }
             }
 
-            if (searchFilter.Take < 0)
+            // NOTE: we do this because when you are searching for everything the query is null
+            if (finalQuery == null)
             {
-                throw new ArgumentOutOfRangeException("searchFilter");
+                finalQuery = new MatchAllDocsQuery();
             }
 
-            return Task.FromResult(SearchCore(searchFilter));
+//            if (log.DebugEnabled)
+//            {
+//                log.debug("JQL lucene query: " + finalQuery);
+//            }
+            return finalQuery;
         }
 
-        private SearchResult SearchCore(SearchFilter searchFilter)
+        private SearchResults Search(IQuery query, User searcher, IPagerFilter pager, Lucene.Net.Search.Query andQuery, bool overrideSecurity)
         {
-            throw new NotImplementedException();
+            IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
+            TopDocs luceneMatches = GetHits(query, searcher, GetSearchSorts(searcher, query), andQuery, overrideSecurity, issueSearcher, pager);
+
+            try
+            {
+                List<Asset> matches;
+                int totalIssueCount = luceneMatches == null ? 0 : luceneMatches.TotalHits;
+                if ((luceneMatches != null) && (luceneMatches.TotalHits >= pager.Start))
+                {
+                    int end = Math.Min(pager.End, luceneMatches.TotalHits);
+                    matches = new List<Asset>();
+                    for (int i = pager.Start; i < end; i++)
+                    {
+                        Document doc = issueSearcher.Doc(luceneMatches.ScoreDocs[i].Doc);
+                        matches.Add(_asssetService.GetAsset(doc));
+                    }
+                }
+                else
+                {
+                    //if there were no lucene-matches, or the length of the matches is less than the page start index
+                    //return an empty list of issues.
+                    matches = new List<Asset>();
+                }
+
+                return new SearchResults(matches, totalIssueCount, pager);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Exception occurred whilst searching for assets: " + e.Message, e);
+            }
         }
 
-        public SearchResults Search(User searcher, IQuery query)
+        private void SearchAndSort(IQuery query, User user, Collector collector, IPagerFilter pagerFilter, bool overrideSecurity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
+
+                TopDocs hits = GetHits(query, user, GetSearchSorts(user, query), null, overrideSecurity, issueSearcher, pagerFilter);
+                if (hits != null)
+                {
+                    if (collector is TotalHitsAwareCollector)
+                    {
+                        ((TotalHitsAwareCollector)collector).TotalHits = hits.TotalHits;
+                    }
+
+                    if (hits.TotalHits >= pagerFilter.Start)
+                    {
+                        int end = Math.Min(pagerFilter.End, hits.TotalHits);
+                        collector.SetNextReader(issueSearcher.IndexReader, 0);
+                        for (int i = pagerFilter.Start; i < end; i++)
+                        {
+                            collector.Collect(hits.ScoreDocs[i].Doc);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Exception occurred whilst searching for assets: " + e.Message, e);
+            }
         }
 
-        public long SearchCount(User searcher, IQuery query)
+        private CachedWrappedFilterCache CachedWrappedFilterCache
         {
-            throw new NotImplementedException();
+            get
+            {
+                CachedWrappedFilterCache cache = (CachedWrappedFilterCache)JiraAuthenticationContextImpl.RequestCache.get(RequestCacheKeys.CACHED_WRAPPED_FILTER_CACHE);
+
+                if (cache == null)
+                {
+                    if (log.DebugEnabled)
+                    {
+                        log.debug("Creating new CachedWrappedFilterCache");
+                    }
+                    cache = new CachedWrappedFilterCache();
+                    JiraAuthenticationContextImpl.RequestCache.put(RequestCacheKeys.CACHED_WRAPPED_FILTER_CACHE, cache);
+                }
+
+                return cache;
+            }
         }
 
-        public string GetQueryString(User searcher, string query)
+        private Filter GetPermissionsFilter(bool overRideSecurity, User searchUser)
         {
-            throw new NotImplementedException();
+            if (!overRideSecurity)
+            {
+                // JRA-14980: first attempt to retrieve the filter from cache
+                CachedWrappedFilterCache cache = CachedWrappedFilterCache;
+
+                Filter filter = cache.getFilter(searchUser);
+                if (filter != null)
+                {
+                    return filter;
+                }
+
+                // if not in cache, construct a query (also using a cache)
+                Lucene.Net.Search.Query permissionQuery = permissionsFilterGenerator.GetQuery(searchUser);
+                filter = new CachingWrapperFilter(new QueryWrapperFilter(permissionQuery));
+
+                // JRA-14980: store the wrapped filter in the cache
+                // this is because the CachingWrapperFilter gives us an extra benefit of precalculating its BitSet, and so
+                // we should use this for the duration of the request.
+                cache.StoreFilter(filter, searchUser);
+
+                return filter;
+            }
+
+            return null;
         }
 
-        public ParseResult ParseQuery(User searcher, string query)
+        private TopDocs RunSearch(IndexSearcher searcher, Lucene.Net.Search.Query query, Filter filter, SortField[] sortFields, string searchQueryString, IPagerFilter pager)
         {
-            throw new NotImplementedException();
+            TopDocs hits;
+            try
+            {
+
+                int maxHits;
+                if (pager != null && pager.End > 0)
+                {
+                    maxHits = pager.End;
+                }
+                else
+                {
+                    maxHits = int.MaxValue;
+                }
+                if ((sortFields != null) && (sortFields.Length > 0)) // a zero length array sorts in very weird ways! JRA-5151
+                {
+                    hits = searcher.Search(query, filter, maxHits, new Sort(sortFields));
+                }
+                else
+                {
+                    hits = searcher.Search(query, filter, maxHits);
+                }
+                // NOTE: this is only here so we can flag any queries in production that are taking long and try to figure out
+                // why they are doing that.
+//                long timeQueryTook = opTimer.end().MillisecondsTaken;
+//                if (timeQueryTook > 400)
+//                {
+//                    logSlowQuery(query, searchQueryString, timeQueryTook);
+//                }
+            }
+            finally
+            {
+            }
+            return hits;
         }
 
-        public IMessageSet ValidateQuery(User searcher, IQuery query)
+        public SortField[] GetSearchSorts(User searcher, IQuery query)
         {
-            throw new NotImplementedException();
+            if (query == null)
+            {
+                return null;
+            }
+
+            IList<SearchSort> sorts = searchSortUtil.GetSearchSorts(query);
+
+            IList<SortField> luceneSortFields = new List<SortField>();
+            // When the sorts have been specifically set to null then we run the search with no sorts
+            if (sorts != null)
+            {
+                FieldManager fieldManager = Container.Kernel.TryGet<FieldManager>();
+
+                foreach (SearchSort searchSort in sorts)
+                {
+                    if (searchSort.Property.Defined && EntityPropertyType.IsJqlClause(searchSort.Field))
+                    {
+                        EntityPropertyType entityPropertyType = EntityPropertyType.getEntityPropertyTypeForClause(searchSort.Field);
+                        Property property = searchSort.Property.get();
+                        luceneSortFields.Add(new SortField(entityPropertyType.IndexPrefix + "_" + property.AsPropertyString, SortField.STRING, getSortOrder(searchSort, null)));
+                    }
+                    else
+                    {
+                        // Lets figure out what field this searchSort is referring to. The {@link SearchSort#getField} method
+                        //actually a JQL name.
+                        IList<string> fieldIds = new List<string>(searchHandlerManager.GetFieldIds(searcher, searchSort.Field));
+                        // sort to get consistent ordering of fields for clauses with multiple fields
+                        fieldIds.Sort();
+
+                        foreach (string fieldId in fieldIds)
+                        {
+
+                            if (fieldManager.isNavigableField(fieldId))
+                            {
+                                INavigableField field = fieldManager.GetNavigableField(fieldId);
+                                luceneSortFields.AddRange(field.getSortFields(getSortOrder(searchSort, field)));
+                            }
+                            else
+                            {
+//                                log.debug("Search sort contains invalid field: " + searchSort);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return luceneSortFields.ToArray();
         }
 
-        public IMessageSet ValidateQuery(User searcher, IQuery query, long searchRequestId)
+        private bool getSortOrder(SearchSort searchSort, INavigableField field)
         {
-            throw new NotImplementedException();
+            bool order;
+
+            if (searchSort.Order == null)
+            {
+                // We need to handle the case where the sort order is null, we will delegate off to the fields
+                // default SearchSort for order in this case.
+                string defaultSortOrder = field == null ? "DESC" : field.DefaultSortOrder;
+                if (defaultSortOrder == null)
+                {
+                    order = false;
+                }
+                else
+                {
+                    order = SortOrder.TryParse(defaultSortOrder) == SortOrder.DESC;
+                }
+            }
+            else
+            {
+                order = searchSort.Reverse;
+            }
+            return order;
         }
+
+//        protected internal virtual void logSlowQuery(IQuery query, string searchQueryString, long timeQueryTook)
+//        {
+//            if (log.DebugEnabled || slowLog.InfoEnabled)
+//            {
+//                // truncate lucene query at 800 characters
+//                string msg = string.Format("JQL query '{0}' produced lucene query '{1,-1}' and took '{2:D}' ms to run.", searchQueryString, query.ToString(), timeQueryTook);
+//                if (log.DebugEnabled)
+//                {
+//                    log.debug(msg);
+//                }
+//                if (slowLog.InfoEnabled)
+//                {
+//                    slowLog.info(msg);
+//                }
+//            }
+//        }
     }
 }

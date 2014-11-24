@@ -30,6 +30,6 @@ namespace QuoteFlow.Models.Search.Jql.Query
         /// QueryFactoryResult contains the query that lucene can use to search and metadata about the query. 
         /// Null cannot be returned.
         /// </returns>
-        QueryFactoryResult GetQuery(QueryCreationContext queryCreationContext, ITerminalClause terminalClause);
+        QueryFactoryResult GetQuery(IQueryCreationContext queryCreationContext, ITerminalClause terminalClause);
     }
 }

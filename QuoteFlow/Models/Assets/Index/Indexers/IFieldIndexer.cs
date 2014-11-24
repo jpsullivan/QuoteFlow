@@ -56,4 +56,17 @@ namespace QuoteFlow.Models.Assets.Index.Indexers
         /// <returns> if true then this field is relevant for the issue, otherwise it is not.</returns>
         bool IsFieldVisibleAndInScope(Asset asset);
     }
+
+    public class FieldIndexerTypes
+    {
+        /// <summary>
+        /// General empty token.
+        /// </summary>
+        public static string NoValueIndexValue = "-1";
+
+        /// <summary>
+        /// Empty token specific to LabelsIndexer.
+        /// </summary>
+        public static string LabelsNoValueIndexValue = "<EMPTY>";
+    }
 }
