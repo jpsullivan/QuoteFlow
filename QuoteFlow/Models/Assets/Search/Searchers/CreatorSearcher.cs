@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Index.Indexers;
 using QuoteFlow.Models.Assets.Search.Constants;
@@ -20,7 +19,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
         {
             UserFieldSearchConstantsWithEmpty searchConstants = SystemSearchConstants.ForCreator();
 
-            SearchInformation = new GenericSearcherInformation<ISearchableField>(searchConstants.SearcherId, NAME_KEY, new List<IFieldIndexer>(), fieldReference, SearcherGroupType.Asset);
+            SearchInformation = new GenericSearcherInformation<ISearchableField>(searchConstants.SearcherId, NAME_KEY, new List<IFieldIndexer>(), FieldReference, SearcherGroupType.Asset);
             SearchInputTransformer = new EnhancedUserSearchInputTransformer(searchConstants, userService);
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
@@ -19,6 +20,16 @@ namespace QuoteFlow.Infrastructure.Extensions
                            .First()
                            .GetCustomAttribute<DisplayAttribute>()
                            .Name;
+        }
+
+        /// <summary>
+        /// Get the value members from an enum.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> GetValues<T>()
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>();
         }
     }
 }

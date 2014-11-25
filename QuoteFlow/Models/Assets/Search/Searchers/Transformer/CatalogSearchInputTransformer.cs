@@ -18,12 +18,13 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
     /// </summary>
     public class CatalogSearchInputTransformer : ISearchInputTransformer
     {
-        private readonly FieldFlagOperandRegistry fieldFlagOperandRegistry;
+        private readonly IFieldFlagOperandRegistry fieldFlagOperandRegistry;
         private readonly IJqlOperandResolver operandResolver;
         private readonly CatalogIndexInfoResolver projectIndexInfoResolver;
         private readonly ICatalogService catalogService;
 
-        public CatalogSearchInputTransformer(CatalogIndexInfoResolver projectIndexInfoResolver, IJqlOperandResolver operandResolver, FieldFlagOperandRegistry fieldFlagOperandRegistry, ICatalogService catalogService)
+        public CatalogSearchInputTransformer(CatalogIndexInfoResolver projectIndexInfoResolver, IJqlOperandResolver operandResolver, 
+            IFieldFlagOperandRegistry fieldFlagOperandRegistry, ICatalogService catalogService)
         {
             this.fieldFlagOperandRegistry = fieldFlagOperandRegistry;
             this.operandResolver = operandResolver;
@@ -34,7 +35,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
         public virtual void PopulateFromParams(User user, IFieldValuesHolder fieldValuesHolder, IActionParams actionParams)
         {
             string url = SystemSearchConstants.ForCatalog().UrlParameter;
-            var @params = actionParams.GetValuesForKey(url).ToList();
+            var @params = actionParams.GetValuesForKey(url);
             fieldValuesHolder.Add(url, @params == null ? null : new HashSet<string>());
         }
 

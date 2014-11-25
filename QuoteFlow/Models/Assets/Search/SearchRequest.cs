@@ -17,7 +17,7 @@ namespace QuoteFlow.Models.Assets.Search
     public class SearchRequest
     {
         [Inject]
-        public IUserService UserService { get; set; }
+        public IUserService UserService { private get; set; }
 
         public int Id { get; set; }
 

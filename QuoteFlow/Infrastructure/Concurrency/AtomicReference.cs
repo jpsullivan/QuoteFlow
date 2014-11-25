@@ -4,33 +4,30 @@ namespace QuoteFlow.Infrastructure.Concurrency
 {
     public class AtomicReference<T> where T : class
     {
-        private T _value;
+        private T val;
 
-        public AtomicReference() { }
-
-        public AtomicReference(T value)
+        public AtomicReference()
         {
-            OptimisticSet(value);
         }
 
-        public T CompareAndSet(T newValue)
+        public AtomicReference(T val)
         {
-            return Interlocked.Exchange(ref _value, newValue);
+            this.val = val;
         }
 
-        public void OptimisticSet(T newValue)
+        public bool CompareAndSet(T expect, T update)
         {
-            while (_value == CompareAndSet(newValue)) ;
+            return (Interlocked.CompareExchange<T>(ref val, update, expect) == expect);
         }
 
         public T Get()
         {
-            return _value;
+            return val;
         }
 
-        public void Set(T value)
+        public void Set(T t)
         {
-            _value = value;
+            val = t;
         }
     }
 }

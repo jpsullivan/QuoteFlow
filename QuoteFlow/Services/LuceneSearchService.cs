@@ -7,18 +7,21 @@ using Lucene.Net.Documents;
 using Lucene.Net.Search;
 using Ninject;
 using QuoteFlow.Infrastructure.Exceptions.Search;
+using QuoteFlow.Infrastructure.Lucene;
 using QuoteFlow.Infrastructure.Paging;
 using QuoteFlow.Infrastructure.Util;
 using QuoteFlow.Models;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Search;
 using QuoteFlow.Models.Assets.Search.Managers;
+using QuoteFlow.Models.Assets.Search.Util;
 using QuoteFlow.Models.Search;
 using QuoteFlow.Models.Search.Jql.Parser;
 using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 using QuoteFlow.Models.Search.Jql.Query.Order;
 using QuoteFlow.Services.Interfaces;
+using Query = Lucene.Net.Search.Query;
 
 namespace QuoteFlow.Services
 {
@@ -26,16 +29,15 @@ namespace QuoteFlow.Services
     {
         private readonly ISearchProviderFactory searchProviderFactory;
         private readonly IAssetService _asssetService;
-        private readonly PermissionsFilterGenerator permissionsFilterGenerator;
         private readonly ISearchHandlerManager searchHandlerManager;
-        private readonly SearchSortUtil searchSortUtil;
+        private readonly ISearchSortUtil searchSortUtil;
         private readonly ILuceneQueryBuilder luceneQueryBuilder;
 
-        public LuceneSearchService(IAssetService asssetService, ISearchProviderFactory searchProviderFactory, PermissionsFilterGenerator permissionsFilterGenerator, ISearchHandlerManager searchHandlerManager, SearchSortUtil searchSortUtil, ILuceneQueryBuilder luceneQueryBuilder)
+        public LuceneSearchService(IAssetService asssetService, ISearchProviderFactory searchProviderFactory, 
+            ISearchHandlerManager searchHandlerManager, ISearchSortUtil searchSortUtil, ILuceneQueryBuilder luceneQueryBuilder)
         {
-            this._asssetService = asssetService;
+            _asssetService = asssetService;
             this.searchProviderFactory = searchProviderFactory;
-            this.permissionsFilterGenerator = permissionsFilterGenerator;
             this.searchHandlerManager = searchHandlerManager;
             this.searchSortUtil = searchSortUtil;
             this.luceneQueryBuilder = luceneQueryBuilder;
@@ -46,12 +48,12 @@ namespace QuoteFlow.Services
             return Search(query, searcher, pager, null);
         }
 
-        public virtual SearchResults Search(IQuery query, User searcher, IPagerFilter pager, Lucene.Net.Search.Query andQuery)
+        public virtual SearchResults Search(IQuery query, User searcher, IPagerFilter pager, Query andQuery)
         {
             return Search(query, searcher, pager, andQuery, false);
         }
 
-        public virtual SearchResults searchOverrideSecurity(IQuery query, User searcher, IPagerFilter pager, Lucene.Net.Search.Query andQuery)
+        public virtual SearchResults searchOverrideSecurity(IQuery query, User searcher, IPagerFilter pager, Query andQuery)
         {
             return Search(query, searcher, pager, andQuery, true);
         }
@@ -73,7 +75,7 @@ namespace QuoteFlow.Services
             Search(query, user, collector, null, false);
         }
 
-        public virtual void Search(IQuery query, User searcher, Collector collector, Lucene.Net.Search.Query andQuery)
+        public virtual void Search(IQuery query, User searcher, Collector collector, Query andQuery)
         {
             Search(query, searcher, collector, andQuery, false);
         }
@@ -106,7 +108,7 @@ namespace QuoteFlow.Services
         /// <param name="pager">A pager which holds information about which page of search results is actually required.</param>
         /// <returns>The hit count</returns>
         /// <exception cref="ClauseTooComplexSearchException">If query creates a lucene query that is too complex to be processed.</exception>
-        private long GetHitCount(IQuery searchQuery, User searchUser, SortField[] sortField, Lucene.Net.Search.Query andQuery, bool overrideSecurity, IndexSearcher issueSearcher, IPagerFilter pager)
+        private long GetHitCount(IQuery searchQuery, User searchUser, SortField[] sortField, Query andQuery, bool overrideSecurity, IndexSearcher issueSearcher, IPagerFilter pager)
         {
             if (searchQuery == null)
             {
@@ -114,10 +116,10 @@ namespace QuoteFlow.Services
             }
             try
             {
-                Filter permissionsFilter = GetPermissionsFilter(overrideSecurity, searchUser);
-                Lucene.Net.Search.Query finalQuery = CreateLuceneQuery(searchQuery, andQuery, searchUser, overrideSecurity);
-                TotalHitCountCollector hitCountCollector = new TotalHitCountCollector();
-                issueSearcher.search(finalQuery, permissionsFilter, hitCountCollector);
+                var permissionsFilter = GetPermissionsFilter(overrideSecurity, searchUser);
+                var finalQuery = CreateLuceneQuery(searchQuery, andQuery, searchUser, overrideSecurity);
+                var hitCountCollector = new TotalHitCountCollector();
+                issueSearcher.Search(finalQuery, permissionsFilter, hitCountCollector);
                 return hitCountCollector.TotalHits;
             }
             catch (Exception e)
@@ -142,7 +144,7 @@ namespace QuoteFlow.Services
         /// <returns> hits </returns>
         /// <exception cref="SearchException"> if error occurs </exception>
         /// <exception cref="ClauseTooComplexSearchException">If query creates a lucene query that is too complex to be processed. </exception>
-        private TopDocs GetHits(IQuery searchQuery, User searchUser, SortField[] sortField, Lucene.Net.Search.Query andQuery, bool overrideSecurity, IndexSearcher issueSearcher, IPagerFilter pager)
+        private TopDocs GetHits(IQuery searchQuery, User searchUser, SortField[] sortField, Query andQuery, bool overrideSecurity, IndexSearcher issueSearcher, IPagerFilter pager)
         {
             if (searchQuery == null)
             {
@@ -151,7 +153,7 @@ namespace QuoteFlow.Services
             try
             {
                 Filter permissionsFilter = GetPermissionsFilter(overrideSecurity, searchUser);
-                Lucene.Net.Search.Query finalQuery = CreateLuceneQuery(searchQuery, andQuery, searchUser, overrideSecurity);
+                Query finalQuery = CreateLuceneQuery(searchQuery, andQuery, searchUser, overrideSecurity);
 //                if (log.DebugEnabled)
 //                {
 //                    log.debug("JQL sorts: " + Arrays.ToString(sortField));
@@ -164,15 +166,15 @@ namespace QuoteFlow.Services
             }
         }
 
-        private void Search(IQuery searchQuery, User user, Collector collector, Lucene.Net.Search.Query andQuery, bool overrideSecurity)
+        private void Search(IQuery searchQuery, User user, Collector collector, Query andQuery, bool overrideSecurity)
         {
             IndexSearcher searcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
-            Lucene.Net.Search.Query finalQuery = andQuery;
+            Query finalQuery = andQuery;
 
             if (searchQuery.WhereClause != null)
             {
                 QueryCreationContext context = new QueryCreationContext(user, overrideSecurity);
-                Lucene.Net.Search.Query query = luceneQueryBuilder.CreateLuceneQuery(context, searchQuery.WhereClause);
+                Query query = luceneQueryBuilder.CreateLuceneQuery(context, searchQuery.WhereClause);
                 if (query != null)
                 {
                     if (finalQuery != null)
@@ -212,16 +214,16 @@ namespace QuoteFlow.Services
             }
         }
 
-        private Lucene.Net.Search.Query CreateLuceneQuery(IQuery searchQuery, Lucene.Net.Search.Query andQuery, User searchUser, bool overrideSecurity)
+        private Query CreateLuceneQuery(IQuery searchQuery, Query andQuery, User searchUser, bool overrideSecurity)
         {
             string jqlSearchQuery = searchQuery.ToString();
 
-            Lucene.Net.Search.Query finalQuery = andQuery;
+            Query finalQuery = andQuery;
 
             if (searchQuery.WhereClause != null)
             {
                 QueryCreationContext context = new QueryCreationContext(searchUser, overrideSecurity);
-                Lucene.Net.Search.Query query = luceneQueryBuilder.CreateLuceneQuery(context, searchQuery.WhereClause);
+                Query query = luceneQueryBuilder.CreateLuceneQuery(context, searchQuery.WhereClause);
                 if (query != null)
                 {
 //                    if (log.DebugEnabled)
@@ -263,19 +265,19 @@ namespace QuoteFlow.Services
             return finalQuery;
         }
 
-        private SearchResults Search(IQuery query, User searcher, IPagerFilter pager, Lucene.Net.Search.Query andQuery, bool overrideSecurity)
+        private SearchResults Search(IQuery query, User searcher, IPagerFilter pager, Query andQuery, bool overrideSecurity)
         {
             IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
             TopDocs luceneMatches = GetHits(query, searcher, GetSearchSorts(searcher, query), andQuery, overrideSecurity, issueSearcher, pager);
 
             try
             {
-                List<Asset> matches;
+                List<IAsset> matches;
                 int totalIssueCount = luceneMatches == null ? 0 : luceneMatches.TotalHits;
                 if ((luceneMatches != null) && (luceneMatches.TotalHits >= pager.Start))
                 {
                     int end = Math.Min(pager.End, luceneMatches.TotalHits);
-                    matches = new List<Asset>();
+                    matches = new List<IAsset>();
                     for (int i = pager.Start; i < end; i++)
                     {
                         Document doc = issueSearcher.Doc(luceneMatches.ScoreDocs[i].Doc);
@@ -286,7 +288,7 @@ namespace QuoteFlow.Services
                 {
                     //if there were no lucene-matches, or the length of the matches is less than the page start index
                     //return an empty list of issues.
-                    matches = new List<Asset>();
+                    matches = new List<IAsset>();
                 }
 
                 return new SearchResults(matches, totalIssueCount, pager);
@@ -306,9 +308,9 @@ namespace QuoteFlow.Services
                 TopDocs hits = GetHits(query, user, GetSearchSorts(user, query), null, overrideSecurity, issueSearcher, pagerFilter);
                 if (hits != null)
                 {
-                    if (collector is TotalHitsAwareCollector)
+                    if (collector is ITotalHitsAwareCollector)
                     {
-                        ((TotalHitsAwareCollector)collector).TotalHits = hits.TotalHits;
+                        ((ITotalHitsAwareCollector)collector).TotalHits = hits.TotalHits;
                     }
 
                     if (hits.TotalHits >= pagerFilter.Start)
@@ -328,55 +330,55 @@ namespace QuoteFlow.Services
             }
         }
 
-        private CachedWrappedFilterCache CachedWrappedFilterCache
-        {
-            get
-            {
-                CachedWrappedFilterCache cache = (CachedWrappedFilterCache)JiraAuthenticationContextImpl.RequestCache.get(RequestCacheKeys.CACHED_WRAPPED_FILTER_CACHE);
-
-                if (cache == null)
-                {
-                    if (log.DebugEnabled)
-                    {
-                        log.debug("Creating new CachedWrappedFilterCache");
-                    }
-                    cache = new CachedWrappedFilterCache();
-                    JiraAuthenticationContextImpl.RequestCache.put(RequestCacheKeys.CACHED_WRAPPED_FILTER_CACHE, cache);
-                }
-
-                return cache;
-            }
-        }
+//        private CachedWrappedFilterCache CachedWrappedFilterCache
+//        {
+//            get
+//            {
+//                CachedWrappedFilterCache cache = (CachedWrappedFilterCache)JiraAuthenticationContextImpl.RequestCache.get(RequestCacheKeys.CACHED_WRAPPED_FILTER_CACHE);
+//
+//                if (cache == null)
+//                {
+//                    if (log.DebugEnabled)
+//                    {
+//                        log.debug("Creating new CachedWrappedFilterCache");
+//                    }
+//                    cache = new CachedWrappedFilterCache();
+//                    JiraAuthenticationContextImpl.RequestCache.put(RequestCacheKeys.CACHED_WRAPPED_FILTER_CACHE, cache);
+//                }
+//
+//                return cache;
+//            }
+//        }
 
         private Filter GetPermissionsFilter(bool overRideSecurity, User searchUser)
         {
-            if (!overRideSecurity)
-            {
-                // JRA-14980: first attempt to retrieve the filter from cache
-                CachedWrappedFilterCache cache = CachedWrappedFilterCache;
-
-                Filter filter = cache.getFilter(searchUser);
-                if (filter != null)
-                {
-                    return filter;
-                }
-
-                // if not in cache, construct a query (also using a cache)
-                Lucene.Net.Search.Query permissionQuery = permissionsFilterGenerator.GetQuery(searchUser);
-                filter = new CachingWrapperFilter(new QueryWrapperFilter(permissionQuery));
-
-                // JRA-14980: store the wrapped filter in the cache
-                // this is because the CachingWrapperFilter gives us an extra benefit of precalculating its BitSet, and so
-                // we should use this for the duration of the request.
-                cache.StoreFilter(filter, searchUser);
-
-                return filter;
-            }
+//            if (!overRideSecurity)
+//            {
+//                // JRA-14980: first attempt to retrieve the filter from cache
+//                CachedWrappedFilterCache cache = CachedWrappedFilterCache;
+//
+//                Filter filter = cache.getFilter(searchUser);
+//                if (filter != null)
+//                {
+//                    return filter;
+//                }
+//
+//                // if not in cache, construct a query (also using a cache)
+//                Query permissionQuery = permissionsFilterGenerator.GetQuery(searchUser);
+//                filter = new CachingWrapperFilter(new QueryWrapperFilter(permissionQuery));
+//
+//                // JRA-14980: store the wrapped filter in the cache
+//                // this is because the CachingWrapperFilter gives us an extra benefit of precalculating its BitSet, and so
+//                // we should use this for the duration of the request.
+//                cache.StoreFilter(filter, searchUser);
+//
+//                return filter;
+//            }
 
             return null;
         }
 
-        private TopDocs RunSearch(IndexSearcher searcher, Lucene.Net.Search.Query query, Filter filter, SortField[] sortFields, string searchQueryString, IPagerFilter pager)
+        private TopDocs RunSearch(IndexSearcher searcher, Query query, Filter filter, SortField[] sortFields, string searchQueryString, IPagerFilter pager)
         {
             TopDocs hits;
             try
@@ -420,42 +422,62 @@ namespace QuoteFlow.Services
                 return null;
             }
 
-            IList<SearchSort> sorts = searchSortUtil.GetSearchSorts(query);
+            var sorts = searchSortUtil.GetSearchSorts(query);
 
-            IList<SortField> luceneSortFields = new List<SortField>();
+            var luceneSortFields = new List<SortField>();
             // When the sorts have been specifically set to null then we run the search with no sorts
             if (sorts != null)
             {
-                FieldManager fieldManager = Container.Kernel.TryGet<FieldManager>();
+                var fieldManager = Container.Kernel.TryGet<FieldManager>();
 
                 foreach (SearchSort searchSort in sorts)
                 {
-                    if (searchSort.Property.Defined && EntityPropertyType.IsJqlClause(searchSort.Field))
-                    {
-                        EntityPropertyType entityPropertyType = EntityPropertyType.getEntityPropertyTypeForClause(searchSort.Field);
-                        Property property = searchSort.Property.get();
-                        luceneSortFields.Add(new SortField(entityPropertyType.IndexPrefix + "_" + property.AsPropertyString, SortField.STRING, getSortOrder(searchSort, null)));
-                    }
-                    else
-                    {
-                        // Lets figure out what field this searchSort is referring to. The {@link SearchSort#getField} method
-                        //actually a JQL name.
-                        IList<string> fieldIds = new List<string>(searchHandlerManager.GetFieldIds(searcher, searchSort.Field));
-                        // sort to get consistent ordering of fields for clauses with multiple fields
-                        fieldIds.Sort();
+//                    if (searchSort.Property.Defined && EntityPropertyType.IsJqlClause(searchSort.Field))
+//                    {
+//                        EntityPropertyType entityPropertyType = EntityPropertyType.getEntityPropertyTypeForClause(searchSort.Field);
+//                        Property property = searchSort.Property.get();
+//                        luceneSortFields.Add(new SortField(entityPropertyType.IndexPrefix + "_" + property.AsPropertyString, SortField.STRING, getSortOrder(searchSort, null)));
+//                    }
+//                    else
+//                    {
+//                        // Lets figure out what field this searchSort is referring to. The {@link SearchSort#getField} method
+//                        //actually a JQL name.
+//                        var fieldIds = new List<string>(searchHandlerManager.GetFieldIds(searcher, searchSort.Field));
+//                        // sort to get consistent ordering of fields for clauses with multiple fields
+//                        fieldIds.Sort();
+//
+//                        foreach (string fieldId in fieldIds)
+//                        {
+//
+//                            if (fieldManager.IsNavigableField(fieldId))
+//                            {
+//                                INavigableField field = fieldManager.GetNavigableField(fieldId);
+//                                luceneSortFields.AddRange(field.GetSortFields(getSortOrder(searchSort, field)));
+//                            }
+//                            else
+//                            {
+////                                log.debug("Search sort contains invalid field: " + searchSort);
+//                            }
+//                        }
+//                    }
 
-                        foreach (string fieldId in fieldIds)
+                    // Lets figure out what field this searchSort is referring to. The {@link SearchSort#getField} method
+                    //actually a JQL name.
+                    var fieldIds = new List<string>(searchHandlerManager.GetFieldIds(searcher, searchSort.Field));
+                    // sort to get consistent ordering of fields for clauses with multiple fields
+                    fieldIds.Sort();
+
+                    foreach (string fieldId in fieldIds)
+                    {
+
+                        if (fieldManager.IsNavigableField(fieldId))
                         {
-
-                            if (fieldManager.isNavigableField(fieldId))
-                            {
-                                INavigableField field = fieldManager.GetNavigableField(fieldId);
-                                luceneSortFields.AddRange(field.getSortFields(getSortOrder(searchSort, field)));
-                            }
-                            else
-                            {
-//                                log.debug("Search sort contains invalid field: " + searchSort);
-                            }
+                            INavigableField field = fieldManager.GetNavigableField(fieldId);
+                            luceneSortFields.AddRange(field.GetSortFields(getSortOrder(searchSort, field)));
+                        }
+                        else
+                        {
+                            //                                log.debug("Search sort contains invalid field: " + searchSort);
                         }
                     }
                 }
@@ -479,7 +501,9 @@ namespace QuoteFlow.Services
                 }
                 else
                 {
-                    order = SortOrder.TryParse(defaultSortOrder) == SortOrder.DESC;
+                    SortOrder enumResult;
+                    Enum.TryParse(defaultSortOrder, out enumResult);
+                    order = enumResult == SortOrder.DESC;
                 }
             }
             else

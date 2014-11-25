@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace QuoteFlow.Models.Assets.Search
 {
     public class SystemClauseHandlerFactory : ISystemClauseHandlerFactory
     {
-
         public SystemClauseHandlerFactory()
         {
         }
@@ -16,7 +13,7 @@ namespace QuoteFlow.Models.Assets.Search
         {
             var systemClauseSearchHandlers = new List<SearchHandler>
             {
-                CreateSavedFilterSearchHandler(),
+//                CreateSavedFilterSearchHandler(),
 //                createIssueKeySearchHandler(),
 //                createIssueParentSearchHandler(),
 //                createCurrentEstimateSearchHandler(),
@@ -35,7 +32,6 @@ namespace QuoteFlow.Models.Assets.Search
 //                createIssuePropertySearchHandler(),
 //                createStatusCategorySearchHandler()
             };
-
 
             return systemClauseSearchHandlers;
         }

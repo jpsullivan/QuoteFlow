@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Dapper;
+using Lucene.Net.Documents;
 using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
 
@@ -13,6 +14,13 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="assetId">The Id of the asset to fetch.</param>
         /// <returns></returns>
         Asset GetAsset(int assetId);
+
+        /// <summary>
+        /// Creates an <see cref="Asset"/> object for an asset represented by the Lucene document.
+        /// </summary>
+        /// <param name="assetDocument">The Lucene document representing an asset.</param>
+        /// <returns></returns>
+        IAsset GetAsset(Document assetDocument);
 
         /// <summary>
         /// Return a list of all the assets for a given catalog along with the manufacturer info.

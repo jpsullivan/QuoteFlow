@@ -429,6 +429,7 @@
     <Compile Include="Infrastructure\Lucene\ConstantScorePrefixQuery.cs" />
     <Compile Include="Infrastructure\Lucene\IKeywordAttribute.cs" />
     <Compile Include="Infrastructure\Lucene\ILuceneQueryModifier.cs" />
+    <Compile Include="Infrastructure\Lucene\ITotalHitsAwareCollector.cs" />
     <Compile Include="Infrastructure\Lucene\KeywordAttribute.cs" />
     <Compile Include="Infrastructure\Lucene\KeywordRepeatFilter.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneIndexingJob.cs" />
@@ -437,6 +438,7 @@
     <Compile Include="Infrastructure\Lucene\LuceneVersion.cs" />
     <Compile Include="Infrastructure\Lucene\PerFieldAnalyzer.cs" />
     <Compile Include="Infrastructure\Lucene\PerFieldIndexingAnalyzer.cs" />
+    <Compile Include="Infrastructure\Lucene\TotalHitCountCollector.cs" />
     <Compile Include="Infrastructure\QuoteFlowControllerFactory.cs" />
     <Compile Include="Infrastructure\QuoteFlowDataType.cs" />
     <Compile Include="Infrastructure\QuoteFlowDataTypes.cs" />
@@ -477,6 +479,10 @@
     <Compile Include="Models\Assets\Fields\IOrderableField.cs" />
     <Compile Include="Models\Assets\Fields\ISearchableField.cs" />
     <Compile Include="Models\Assets\Fields\NavigableFieldOrder.cs" />
+    <Compile Include="Models\Assets\Search\SearchRequest.cs" />
+    <Compile Include="Models\Assets\Search\Util\FreeTextVisitor.cs" />
+    <Compile Include="Models\Assets\Search\Util\ISearchSortUtil.cs" />
+    <Compile Include="Models\Assets\Search\Util\SearchSortUtil.cs" />
     <Compile Include="Models\IAsset.cs" />
     <Compile Include="Models\Assets\Index\Analyzer\EnglishAnalyzer.cs" />
     <Compile Include="Models\Assets\Index\Analyzer\SubtokenFilter.cs" />
@@ -873,6 +879,7 @@
     <Compile Include="Services\AssetSearchService.cs" />
     <Compile Include="Services\AssetService.cs" />
     <Compile Include="Services\AssetVarService.cs" />
+    <Compile Include="Services\CatalogImportService.cs" />
     <Compile Include="Services\CatalogImportSummaryRecordsService.cs" />
     <Compile Include="Services\CatalogService.cs" />
     <Compile Include="Services\CloudBlobClientWrapper.cs" />
@@ -891,6 +898,7 @@
     <Compile Include="Services\Interfaces\IAssetService.cs" />
     <Compile Include="Services\Interfaces\IAssetVarService.cs" />
     <Compile Include="Services\Interfaces\ICacheService.cs" />
+    <Compile Include="Services\Interfaces\ICatalogImportService.cs" />
     <Compile Include="Services\Interfaces\ICatalogImportSummaryRecordsService.cs" />
     <Compile Include="Services\Interfaces\ICatalogService.cs" />
     <Compile Include="Services\Interfaces\ICloudBlobClient.cs" />

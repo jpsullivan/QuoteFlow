@@ -8,14 +8,18 @@ namespace QuoteFlow.Models.Assets.Fields
     public class FieldManager : IFieldManager
     {
         private readonly IDictionary<string, IField> _fields = new Dictionary<string, IField>(); 
-        private readonly ICollection<IOrderableField> _orderableFields = new Collection<IOrderableField>(); 
+        private readonly ICollection<IOrderableField> _orderableFields = new Collection<IOrderableField>();
+        private readonly List<ISearchableField> _searchableFields = new List<ISearchableField>(); 
 
         public FieldManager(CatalogSystemField catalogSystemField)
         {
             _fields.Add(catalogSystemField.Id, catalogSystemField);
 
             // special case: CatalogSystemField is not orderable, even though it implements IOrderableField
-            // todo: add orderable, sortable etc field copies
+            foreach (var field in _fields)
+            {
+                _searchableFields.Add((ISearchableField) field.Value);
+            }
         }
 
         public IField GetField(string id)
@@ -96,7 +100,13 @@ namespace QuoteFlow.Models.Assets.Fields
         }
 
         public ISet<ISearchableField> AllSearchableFields { get; private set; }
-        public IEnumerable<ISearchableField> SystemSearchableFields { get; private set; }
+
+        public IEnumerable<ISearchableField> SystemSearchableFields
+        {
+            get { return new HashSet<ISearchableField>(_searchableFields); }
+            set { throw new NotImplementedException(); }
+        }
+        
         public IAssetTypeField IssueTypeField { get; private set; }
         public ICatalogField CatalogField { get; private set; }
     }

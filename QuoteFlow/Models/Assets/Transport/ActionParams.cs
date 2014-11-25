@@ -71,6 +71,7 @@ namespace QuoteFlow.Models.Assets.Transport
         public string GetFirstValueForKey(string key)
         {
             var c = GetValuesForKey(key);
+            if (c == null) return null;
             return c.Any() ? c[0] : null;
         }
 

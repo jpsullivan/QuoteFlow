@@ -22,9 +22,9 @@ namespace QuoteFlow.Models.Assets.Search.Util
         /// <param name="oldSorts">The old sorts that should be in the end of the sort list; may be null.</param>
         /// <param name="maxLength">The max size of the produced list.</param>
         /// <returns>A list of search sorts that contains the newest and oldest sorts respecting the max length.</returns>
-        IList<SearchSort> mergeSearchSorts(User user, ICollection<SearchSort> newSorts, ICollection<SearchSort> oldSorts, int maxLength);
+        IList<SearchSort> MergeSearchSorts(User user, ICollection<SearchSort> newSorts, ICollection<SearchSort> oldSorts, int maxLength);
 
-        IList<SearchSort> getSearchSorts(Query query);
+        IEnumerable<SearchSort> GetSearchSorts(IQuery query);
 
         /// <summary>
         /// This method is used to convert incomming, request-style, parameters into SearchSort objects.
@@ -42,7 +42,7 @@ namespace QuoteFlow.Models.Assets.Search.Util
         /// of SearchSort's that relate to the passed in parameters. Will be an order by with empty sorts if there are no
         /// search sorts in the parameters.
         /// </returns>
-        IOrderBy getOrderByClause(IDictionary parameterMap);
+        IOrderBy GetOrderByClause(IDictionary parameterMap);
 
         /// <summary>
         /// Concatenate the new search sorts and the old search sorts returning a list of sorts that is only of size maxLength.
@@ -52,7 +52,7 @@ namespace QuoteFlow.Models.Assets.Search.Util
         /// <param name="oldSorts">The old sorts that should be in the end of the sort list; may be null.</param>
         /// <param name="maxLength">The max size of the produced list.</param>
         /// <returns>A list of search sorts that contains the newest and oldest sorts respecting the max length.</returns>
-        IList<SearchSort> concatSearchSorts(ICollection<SearchSort> newSorts, ICollection<SearchSort> oldSorts, int maxLength);
+        IList<SearchSort> ConcatSearchSorts(IEnumerable<SearchSort> newSorts, IEnumerable<SearchSort> oldSorts, int maxLength);
 
         /// <summary>
         /// Returns a list of the descriptions of each sorter defined in the search request. 
@@ -61,7 +61,7 @@ namespace QuoteFlow.Models.Assets.Search.Util
         /// <param name="searchRequest">The search request containing the sorts; must not be null.</param>
         /// <param name="searcher"> the user making the request </param>
         /// <returns>A list of strings describing the sorters; never null.</returns>
-        IEnumerable<string> getSearchSortDescriptions(SearchRequest searchRequest, User searcher);
+        IEnumerable<string> GetSearchSortDescriptions(SearchRequest searchRequest, User searcher);
 
     }
 

@@ -16,7 +16,7 @@ namespace QuoteFlow.Models.Search
         private int start;
         private readonly int max;
         private readonly int total;
-        private readonly IList<Asset> assets;
+        private readonly IList<IAsset> assets;
 
         /// <summary>
         /// Construct searchResults using a list of assets.  The assets returned by <seealso cref="#getIssues()"/> will
@@ -24,7 +24,7 @@ namespace QuoteFlow.Models.Search
         /// </summary>
         /// <param name="assets">A list of <see cref="Asset"/> objects.</param>
         /// <param name="pagerFilter">Representing which assets to limit the results to.</param>
-        public SearchResults(List<Asset> assets, PagerFilter<Asset> pagerFilter)
+        public SearchResults(List<IAsset> assets, PagerFilter<IAsset> pagerFilter)
         {
             // Reset the pager filters start value if the current value is not sane
             if (assets.Count < pagerFilter.Start)
@@ -44,7 +44,7 @@ namespace QuoteFlow.Models.Search
         /// <param name="assetsInPage">A list of <see cref="Asset"/> objects.</param>
         /// <param name="totalIssueCount">The count of the number of assets returned.</param>
         /// <param name="pagerFilter">Representing the users preference for paging.</param>
-        public SearchResults(IList<Asset> assetsInPage, int totalIssueCount, IPagerFilter pagerFilter)
+        public SearchResults(IList<IAsset> assetsInPage, int totalIssueCount, IPagerFilter pagerFilter)
         {
             // Reset the pager filters start value if the current value is not sane
             if (totalIssueCount < pagerFilter.Start)
@@ -66,7 +66,7 @@ namespace QuoteFlow.Models.Search
         /// <param name="totalIssueCount">The count of the number of assets returned.</param>
         /// <param name="maxIssueCount">The maximum number of assets to include in the search.</param>
         /// <param name="startIndex">The index of the first issue in the search.</param>
-        public SearchResults(IList<Asset> assetsInPage, int totalIssueCount, int maxIssueCount, int startIndex)
+        public SearchResults(IList<IAsset> assetsInPage, int totalIssueCount, int maxIssueCount, int startIndex)
         {
             // Reset the pager filters start value if the current value is not sane
             if (totalIssueCount < startIndex)
@@ -80,9 +80,10 @@ namespace QuoteFlow.Models.Search
         }
 
         /// <summary>
-        /// Get the assets available in this page. </summary>
-        /// <returns> A list of <see cref="Asset"/> objects.</returns>
-        public virtual IEnumerable<Asset> Assets
+        /// Get the assets available in this page.
+        /// </summary>
+        /// <returns> A list of <see cref="IAsset"/> objects.</returns>
+        public virtual IEnumerable<IAsset> Assets
         {
             get { return assets; }
         }

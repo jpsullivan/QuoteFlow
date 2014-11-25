@@ -27,6 +27,7 @@ namespace QuoteFlow.Controllers
         public IAssetService AssetService { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
         public ICatalogImportSummaryRecordsService CatalogImportSummaryService { get; set; }
+        public ICatalogImportService CatalogImportService { get; protected set; }
         public IOrganizationService OrganizationService { get; protected set; }
         public IUserService UserService { get; protected set; }
         public IUploadFileService UploadFileService { get; protected set; }
@@ -35,12 +36,13 @@ namespace QuoteFlow.Controllers
         public CatalogController() { }
 
         public CatalogController(IAssetService assetService, ICatalogService catalogService, 
-            ICatalogImportSummaryRecordsService catalogImportSummaryService,
+            ICatalogImportService catalogImportService, ICatalogImportSummaryRecordsService catalogImportSummaryService,
             IOrganizationService organizationService, IUserService userService,
             IUploadFileService uploadFileService, ICacheService cacheService)
         {
             AssetService = assetService;
             CatalogService = catalogService;
+            CatalogImportService = catalogImportService;
             CatalogImportSummaryService = catalogImportSummaryService;
             OrganizationService = organizationService;
             UserService = userService;
@@ -458,7 +460,7 @@ namespace QuoteFlow.Controllers
             };
 
             // Do the import!
-            var id = CatalogService.ImportCatalog(model, currentUser.Id, CurrentOrganization.Id);
+            var id = CatalogImportService.ImportCatalog(model, currentUser.Id, CurrentOrganization.Id);
 
             await UploadFileService.DeleteUploadFileAsync(currentUser.Id);
 

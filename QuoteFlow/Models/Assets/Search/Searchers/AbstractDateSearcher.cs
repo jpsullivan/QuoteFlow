@@ -27,7 +27,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
             CustomFieldInputHelper customFieldInputHelper)
         {
             var config = new DateSearcherConfig(constants.UrlParameter, constants.JqlClauseNames, constants.JqlClauseNames.PrimaryName);
-            this.searcherInformation = new GenericSearcherInformation<ISearchableField>(constants.SearcherId, nameKey, new List<IFieldIndexer>() { indexer }, fieldReference, SearcherGroupType.Date);
+            this.searcherInformation = new GenericSearcherInformation<ISearchableField>(constants.SearcherId, nameKey, new List<IFieldIndexer>() { indexer }, FieldReference, SearcherGroupType.Date);
             this.searchInputTransformer = new DateSearchInputTransformer(false, config, operandResolver, dateSupport, customFieldInputHelper);
         }
 

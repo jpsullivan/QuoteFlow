@@ -1,4 +1,5 @@
 ﻿using System;
+using Ninject;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Search.Searchers;
 using QuoteFlow.Models.Search.Jql.Clauses;
@@ -83,12 +84,19 @@ namespace QuoteFlow.Models.Assets.Search.Handlers
         /// </summary>
         /// <param name="clazz">The searcher to create.</param>
         /// <param name="field">The field the searcher is being created for.</param>
-        /// <returns>The new initialised searcher.</returns>
+        /// <returns>The new initialized searcher.</returns>
         private IAssetSearcher<ISearchableField> CreateSearchableField(Type clazz, ISearchableField field)
         {
-            var searcher = (IAssetSearcher<ISearchableField>) Activator.CreateInstance(clazz);
-            searcher.Init(field);
-            return searcher;
+            try
+            {
+                var searcher = (IAssetSearcher<ISearchableField>)Container.Kernel.Get(clazz);
+                searcher.Init(field);
+                return searcher;
+            }
+            catch (Exception e)
+            {   
+                throw e;
+            }
         }
 
         private IClausePermissionHandler CreateClausePermissionHandler(IField field)

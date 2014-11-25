@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using QuoteFlow.Infrastructure.Concurrency;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Index.Indexers;
@@ -47,6 +46,5 @@ namespace QuoteFlow.Models.Assets.CustomFields.Searchers.Information
                 return fieldReference.Get().NameKey;
             }
         }
-
     }
 }

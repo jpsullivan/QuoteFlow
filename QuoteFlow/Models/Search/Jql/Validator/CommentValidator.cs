@@ -12,7 +12,7 @@ namespace QuoteFlow.Models.Search.Jql.Validator
     {
         private readonly IJqlOperandResolver jqlOperandResolver;
         
-        public CommentValidator(JqlOperandResolver jqlOperandResolver)
+        public CommentValidator(IJqlOperandResolver jqlOperandResolver)
             : base(SystemSearchConstants.ForComments().IndexField, jqlOperandResolver)
         {
             this.jqlOperandResolver = jqlOperandResolver;

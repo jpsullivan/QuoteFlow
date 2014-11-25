@@ -20,12 +20,15 @@ using QuoteFlow.Models.Assets.CustomFields.Searchers.Transformer;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Search;
 using QuoteFlow.Models.Assets.Search.Managers;
+using QuoteFlow.Models.Assets.Search.Searchers;
+using QuoteFlow.Models.Assets.Search.Searchers.Transformer;
 using QuoteFlow.Models.Search.Jql.Operand;
 using QuoteFlow.Models.Search.Jql.Parser;
 using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Operand.Registry;
 using QuoteFlow.Models.Search.Jql.Resolver;
 using QuoteFlow.Models.Search.Jql.Util;
+using QuoteFlow.Models.Search.Jql.Validator;
 using QuoteFlow.Services;
 using QuoteFlow.Services.Interfaces;
 
@@ -81,6 +84,8 @@ namespace QuoteFlow
             Bind<IAssetVarService>()
                 .To<AssetVarService>()
                 .InRequestScope();
+
+            Bind<ICatalogImportService>().To<CatalogImportService>().InRequestScope();
 
             Bind<ICatalogImportSummaryRecordsService>()
                 .To<CatalogImportSummaryRecordsService>()
@@ -195,6 +200,7 @@ namespace QuoteFlow
             #region Asset Fields
 
             Bind<ICustomFieldInputHelper>().To<CustomFieldInputHelper>().InRequestScope();
+            Bind<IFieldFlagOperandRegistry>().To<FieldFlagOperandRegistry>().InRequestScope();
             Bind<IFieldManager>().To<FieldManager>().InRequestScope();
 
             #endregion
@@ -205,6 +211,7 @@ namespace QuoteFlow
             Bind<IJqlOperandResolver>().To<JqlOperandResolver>().InRequestScope();
             Bind<IJqlQueryParser>().To<JqlQueryParser>().InRequestScope();
             Bind<IJqlStringSupport>().To<JqlStringSupport>().InRequestScope();
+            Bind<IOperatorUsageValidator>().To<OperatorUsageValidator>().InRequestScope();
             Bind<IQueryCache>().To<QueryCache>().InRequestScope();
             Bind<IQueryRegistry>().To<QueryRegistry>().InRequestScope();
             Bind<ISystemClauseHandlerFactory>().To<SystemClauseHandlerFactory>().InRequestScope();
@@ -232,6 +239,7 @@ namespace QuoteFlow
 
         private void ConfigureSearch()
         {
+            Bind<CatalogSearcher>().ToSelf().InRequestScope();
             Bind<ILuceneQueryBuilder>().To<LuceneQueryBuilder>().InRequestScope();
             Bind<ILuceneQueryModifier>().To<LuceneQueryModifier>().InRequestScope();
             Bind<ISearchProvider>().To<LuceneSearchService>().InRequestScope();

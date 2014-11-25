@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ninject;
 using QuoteFlow.Infrastructure.Concurrency;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models.Assets.Fields;
@@ -17,7 +18,8 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Information
 
         private IEnumerable<IFieldIndexer> indexers;
 
-        public GenericSearcherInformation(string id, string nameKey, IEnumerable<IFieldIndexer> indexers, AtomicReference<T> fieldReference, SearcherGroupType searcherGroupType)
+        public GenericSearcherInformation(string id, string nameKey, IEnumerable<IFieldIndexer> indexers, 
+            AtomicReference<T> fieldReference, SearcherGroupType searcherGroupType)
         {
             if (id.IsNullOrEmpty())
             {
@@ -43,18 +45,22 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Information
 
         public virtual IEnumerable<IFieldIndexer> RelatedIndexers
         {
-            get { return (from Type clazz in indexers select LoadIndexer(clazz)).ToList(); }
+            get
+            {
+                return indexers.Select(LoadIndexer).ToList();
+            }
         }
 
-        private static IFieldIndexer LoadIndexer(Type clazz)
+        private static IFieldIndexer LoadIndexer(IFieldIndexer clazz)
         {
             try
             {
-                return (IFieldIndexer) Activator.CreateInstance(clazz);
+                var type = clazz.GetType();
+                return (IFieldIndexer) Container.Kernel.Get(type);
             }
             catch (Exception e)
             {
-                throw new Exception("Failed to load indexer '" + clazz.Name + "'", e);
+                throw new Exception("Failed to load indexer '" + clazz.GetType() + "'", e);
             }
         }
 

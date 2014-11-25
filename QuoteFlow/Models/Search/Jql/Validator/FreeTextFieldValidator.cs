@@ -18,10 +18,10 @@ namespace QuoteFlow.Models.Search.Jql.Validator
     public class FreeTextFieldValidator : IClauseValidator
     {
         private readonly string indexField;
-        private readonly JqlOperandResolver operandResolver;
+        private readonly IJqlOperandResolver operandResolver;
         private readonly TextQueryValidator textQueryValidator;
 
-        public FreeTextFieldValidator(string indexField, JqlOperandResolver operandResolver)
+        public FreeTextFieldValidator(string indexField, IJqlOperandResolver operandResolver)
         {
             if (indexField.IsNullOrEmpty())
             {

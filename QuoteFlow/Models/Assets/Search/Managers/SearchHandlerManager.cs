@@ -55,7 +55,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
         public ICollection<IAssetSearcher<ISearchableField>> GetAllSearchers()
         {
             // eventually filter all the searchers by whether or not they are shown
-            return GetAllSearchers();
+            return GetHelper().AllAssetSearchers;
         }
 
         public ICollection<SearcherGroup> SearcherGroups { get; private set; }
@@ -269,7 +269,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 				get { return searcherIndex.Values; }
 			}
 
-			public virtual ICollection<SearchHandler.SearcherRegistration> GetAssetSearcherRegistrationsByClauseName(string jqlName)
+			public virtual IEnumerable<SearchHandler.SearcherRegistration> GetAssetSearcherRegistrationsByClauseName(string jqlName)
 			{
 			    var index = searcherClauseNameIndex[jqlName.ToLower()];
 			    return index ?? new Collection<SearchHandler.SearcherRegistration>();
@@ -297,13 +297,13 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 			internal readonly IDictionary<string, IAssetSearcher<ISearchableField>> searcherIdIndex = new Dictionary<string, IAssetSearcher<ISearchableField>>();
 			internal readonly IDictionary<SearcherGroupType, Set<IAssetSearcher<ISearchableField>>> groupIndex = new Dictionary<SearcherGroupType, Set<IAssetSearcher<ISearchableField>>>();
 
-//			internal SearchHandlerIndexer()
-//			{
-//				foreach (SearcherGroupType groupType in SearcherGroupType.Values())
-//				{
-//					groupIndex[groupType] = IdentitySet.newListOrderedSet<IssueSearcher<?>> ();
-//				}
-//			}
+			internal SearchHandlerIndexer()
+			{
+				foreach (SearcherGroupType groupType in EnumExtensions.GetValues<SearcherGroupType>())
+				{
+					groupIndex[groupType] = new Set<IAssetSearcher<ISearchableField>>();
+				}
+			}
 
 			internal virtual IDictionary<string, IList<ClauseNames>> CreateFieldToClauseNamesIndex()
 			{
@@ -315,7 +315,8 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 						IClauseInformation information = handler.Information;
 						if (information.FieldId != null)
 						{
-							var names = fieldToClauseNames[information.FieldId];
+						    IList<ClauseNames> names;
+                            fieldToClauseNames.TryGetValue(information.FieldId, out names);
 							if (names == null)
 							{
 								names = new List<ClauseNames>();
@@ -497,7 +498,8 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 
 			internal virtual void Register(string name, SearchHandler.ClauseRegistration registration)
 			{
-				Set<IClauseHandler> currentHandlers = handlerIndex[name];
+                Set<IClauseHandler> currentHandlers;
+				handlerIndex.TryGetValue(name, out currentHandlers);
 				if (currentHandlers == null)
 				{
 					currentHandlers = new Set<IClauseHandler> {registration.Handler};
@@ -511,7 +513,8 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 
 			internal virtual void Register(string name, SearchHandler.SearcherRegistration searcherRegistration)
 			{
-				Set<SearchHandler.SearcherRegistration> currentSearcherRegistrations = searcherClauseNameIndex[name];
+			    Set<SearchHandler.SearcherRegistration> currentSearcherRegistrations;
+				 searcherClauseNameIndex.TryGetValue(name, out currentSearcherRegistrations);
 				if (currentSearcherRegistrations == null)
 				{
 				    currentSearcherRegistrations = new Set<SearchHandler.SearcherRegistration> {searcherRegistration};
@@ -531,7 +534,8 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 				}
 
 				string searcherId = newSearcher.SearchInformation.Id;
-				var currentSearcher = searcherIdIndex[searcherId];
+			    IAssetSearcher<ISearchableField> currentSearcher;
+			    searcherIdIndex.TryGetValue(searcherId, out currentSearcher);
 				if (currentSearcher != null)
 				{
 					if (currentSearcher != newSearcher)

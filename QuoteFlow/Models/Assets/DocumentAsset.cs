@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Web;
 using Lucene.Net.Documents;
+using Ninject;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Index;
 using QuoteFlow.Models.Assets.Search;
@@ -24,7 +22,7 @@ namespace QuoteFlow.Models.Assets
         public DocumentAsset(Document document, IFieldManager fieldManager, IAssetService assetService, ICatalogService catalogService)
         {
             Document = document;
-            FieldManager = fieldManager;
+            FieldManager = Container.Kernel.TryGet<IFieldManager>();
             AssetService = assetService;
             CatalogService = catalogService;
         }

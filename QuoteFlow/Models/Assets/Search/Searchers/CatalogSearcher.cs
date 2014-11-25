@@ -18,7 +18,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
     {
         public CatalogSearcher(IJqlOperandResolver operandResolver, 
             CatalogResolver catalogResolver, ICatalogService catalogService, 
-            FieldFlagOperandRegistry fieldFlagOperandRegistry)
+            IFieldFlagOperandRegistry fieldFlagOperandRegistry)
         {
             var projectIndexInfoResolver = new CatalogIndexInfoResolver(catalogResolver);
             var constants = SystemSearchConstants.ForCatalog();
@@ -28,7 +28,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
                 constants.SearcherId, 
                 "common.concepts.catalog",
                 new List<IFieldIndexer> { new CatalogIdIndexer() }, 
-                fieldReference, 
+                FieldReference, 
                 SearcherGroupType.Context
             );
         }

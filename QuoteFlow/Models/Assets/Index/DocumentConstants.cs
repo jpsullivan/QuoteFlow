@@ -9,7 +9,6 @@
         public const string AssetId = "assetId";
         public const string AssetName = "name";
         public const string AssetDesc = "description";
-
         public const string AssetCurrentUser = "asset_current_user";
         public const string AssetCreator = "asset_creator";
         public const string AssetCreated = "created";
@@ -20,6 +19,8 @@
         public const string AssetSortDesc = LuceneSortFieldPrefix + "description";
         public const string AssetSortCreated = LuceneSortFieldPrefix + "created";
         public const string AssetSortUpdated = LuceneSortFieldPrefix + "updated";
+
+        public const string CommentId = "id";
 
         // extra constants
         public const string ChangeDuration ="ch_duration";

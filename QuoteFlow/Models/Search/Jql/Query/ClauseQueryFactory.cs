@@ -5,7 +5,7 @@ namespace QuoteFlow.Models.Search.Jql.Query
 {
     public class ClauseQueryFactory : IClauseQueryFactory
     {
-        public QueryFactoryResult GetQuery(QueryCreationContext queryCreationContext, ITerminalClause terminalClause)
+        public QueryFactoryResult GetQuery(IQueryCreationContext queryCreationContext, ITerminalClause terminalClause)
         {
             return new QueryFactoryResult(new BooleanQuery());
         }

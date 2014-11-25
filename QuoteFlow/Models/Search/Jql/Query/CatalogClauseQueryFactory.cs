@@ -21,9 +21,9 @@ namespace QuoteFlow.Models.Search.Jql.Query
 			delegateClauseQueryFactory = new GenericClauseQueryFactory(SystemSearchConstants.ForCatalog(), operatorFactories, operandResolver);
 		}
 
-		public virtual QueryFactoryResult GetQuery(QueryCreationContext queryCreationContext, ITerminalClause terminalClause)
-		{
-			return delegateClauseQueryFactory.GetQuery(queryCreationContext, terminalClause);
-		}
+        public QueryFactoryResult GetQuery(IQueryCreationContext queryCreationContext, ITerminalClause terminalClause)
+        {
+            return delegateClauseQueryFactory.GetQuery(queryCreationContext, terminalClause);
+        }
     }
 }

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
+using Lucene.Net.Documents;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models;
+using QuoteFlow.Models.Assets;
+using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Services.Interfaces;
 using StackExchange.Profiling.Helpers.Dapper;
@@ -15,15 +18,18 @@ namespace QuoteFlow.Services
         #region IoC
 
         public IAssetVarService AssetVarService { get; protected set; }
+        public IFieldManager FieldManager { get; protected set; }
         private IManufacturerService ManufacturerService { get; set; }
 
         public AssetService() { }
 
         public AssetService(
             IAssetVarService assetVarService,
+            IFieldManager fieldManager,
             IManufacturerService manufacturerService)
         {
             AssetVarService = assetVarService;
+            FieldManager = fieldManager;
             ManufacturerService = manufacturerService;
         }
 
@@ -50,6 +56,16 @@ namespace QuoteFlow.Services
             asset.Manufacturer = manufacturer;
             
             return asset;
+        }
+
+        /// <summary>
+        /// Creates an <see cref="Asset"/> object for an asset represented by the Lucene document.
+        /// </summary>
+        /// <param name="assetDocument">The Lucene document representing an asset.</param>
+        /// <returns></returns>
+        public IAsset GetAsset(Document assetDocument)
+        {
+            return new DocumentAsset(assetDocument, FieldManager, this, new CatalogService());
         }
 
         /// <summary>
