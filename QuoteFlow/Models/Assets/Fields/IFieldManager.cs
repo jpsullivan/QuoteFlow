@@ -16,6 +16,12 @@ namespace QuoteFlow.Models.Assets.Fields
 
         bool IsCustomField(IField field);
 
+        bool IsNavigableField(string id);
+
+        bool IsNavigableField(IField field);
+
+        INavigableField GetNavigableField(string id);
+
         /// <summary>
         /// Get a CustomField by its text key (eg 'customfield_10000'). 
         /// </summary>
@@ -28,16 +34,16 @@ namespace QuoteFlow.Models.Assets.Fields
         ISet<INavigableField> NavigableFields { get; }
 
         /// <summary>
-        /// Invalidates <em>all field-related caches</em> in JIRA.
+        /// Invalidates <em>all field-related caches</em> in QuoteFlow.
         /// <font color="red"><h1>WARNING</h1></font>
-        /// This method invalidates a whole lot of JIRA caches, which means that JIRA performance significantly degrades
+        /// This method invalidates a whole lot of QuoteFlow caches, which means that QuoteFlow performance significantly degrades
         /// after this method has been called. For this reason, you should <b>avoid calling this method at all costs</b>.
         /// <p/>
         /// The correct approach to invalidate the cache entries is to do it in the "store" inside the {@code FooStore.updateFoo()}
         /// method, where you can invalidate a <b>single</b> cache entry. If the cache lives in another class then the store
         /// should raise a {@code FooUpdatedEvent} which that class can listen to in order to keep its caches up to date.
         /// <p/>
-        /// If you add any calls to this method in JIRA I will hunt you down and subject you to a Spanish inquisition.
+        /// If you add any calls to this method in QuoteFlow I will hunt you down and subject you to a Spanish inquisition.
         /// </summary>
         void Refresh();
 

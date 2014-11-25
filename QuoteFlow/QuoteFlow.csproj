@@ -461,6 +461,7 @@
     <Compile Include="Models\Assets\CustomFields\Searchers\Transformer\CustomFieldInputHelper.cs" />
     <Compile Include="Models\Assets\CustomFields\Searchers\Transformer\ICustomFieldInputHelper.cs" />
     <Compile Include="Models\Assets\CustomFields\Searchers\UserPickerSearcher.cs" />
+    <Compile Include="Models\Assets\DocumentAsset.cs" />
     <Compile Include="Models\Assets\Fields\AbstractField.cs" />
     <Compile Include="Models\Assets\Fields\AbstractOrderableField.cs" />
     <Compile Include="Models\Assets\Fields\AbstractOrderableNavigableField.cs" />

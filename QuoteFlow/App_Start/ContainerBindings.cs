@@ -222,6 +222,12 @@ namespace QuoteFlow
             Bind<IIndexInfoResolver<Catalog>>().To<CatalogIndexInfoResolver>().InRequestScope();
 
             #endregion
+
+            #region System Fields
+
+            Bind<CatalogSystemField>().ToSelf().InRequestScope();
+
+            #endregion
         }
 
         private void ConfigureSearch()

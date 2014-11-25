@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using QuoteFlow.Models.Search.Jql.Context;
 
 namespace QuoteFlow.Models.Assets.Fields
 {
     public class FieldManager : IFieldManager
     {
-        // WARNING!
-        // If you add a column here - some tests will fail.  Make sure you run tests before you check in!
-        // The order *is* significant!
-        private static readonly IEnumerable<Type> SystemFieldClasses = new List<Type>
+        private readonly IDictionary<string, IField> _fields = new Dictionary<string, IField>(); 
+        private readonly ICollection<IOrderableField> _orderableFields = new Collection<IOrderableField>(); 
+
+        public FieldManager(CatalogSystemField catalogSystemField)
         {
-            typeof(CatalogSystemField)
-        }; 
+            _fields.Add(catalogSystemField.Id, catalogSystemField);
+
+            // special case: CatalogSystemField is not orderable, even though it implements IOrderableField
+            // todo: add orderable, sortable etc field copies
+        }
 
         public IField GetField(string id)
         {
-            throw new NotImplementedException();
+            return IsCustomField(id) ? GetCustomField(id) : _fields[id];
         }
 
         public bool IsCustomField(string id)
@@ -29,6 +33,33 @@ namespace QuoteFlow.Models.Assets.Fields
             throw new NotImplementedException();
         }
 
+        public bool IsNavigableField(string id)
+        {
+            return IsCustomField(id) || IsNavigableField(_fields[id]);
+        }
+
+        public bool IsNavigableField(IField field)
+        {
+            // CustomField implements INavigableField, so checking for it would be redundant
+            return field is INavigableField;
+        }
+
+        public INavigableField GetNavigableField(string id)
+        {
+            if (IsCustomField(id))
+            {
+                return GetCustomField(id);
+            }
+
+            var field = _fields[id];
+            if (field is INavigableField)
+            {
+                return (INavigableField) field;
+            }
+
+            throw new Exception("The field with id '" + id + "' is not a NavigableField.");
+        }
+
         public ICustomField GetCustomField(string id)
         {
             throw new NotImplementedException();
@@ -36,12 +67,13 @@ namespace QuoteFlow.Models.Assets.Fields
 
         public ISet<IOrderableField> OrderableFields { get; private set; }
         public ISet<INavigableField> NavigableFields { get; private set; }
+        public ISet<IField> UnavailableFields { get; private set; }
+
         public void Refresh()
         {
             throw new NotImplementedException();
         }
-
-        public ISet<IField> UnavailableFields { get; private set; }
+        
         public ISet<INavigableField> GetAvailableNavigableFieldsWithScope(User user)
         {
             throw new NotImplementedException();

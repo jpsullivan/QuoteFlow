@@ -35,12 +35,33 @@ namespace QuoteFlow.Models.Assets
             set { throw new NotImplementedException(); }
         }
 
-        public override string Name { get; set; }
+        public override string Name
+        {
+            get { return Document.Get(DocumentConstants.AssetName); }
+            set { throw new NotImplementedException(); }
+        }
+
         public override string SKU { get; set; }
         public override string Type { get; set; }
-        public override string Description { get; set; }
-        public override DateTime LastUpdated { get; set; }
-        public override DateTime CreationDate { get; set; }
+
+        public override string Description
+        {
+            get { return Document.Get(DocumentConstants.AssetDesc); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public override DateTime LastUpdated
+        {
+            get { return Convert.ToDateTime(Document.Get(DocumentConstants.AssetUpdated)); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public override DateTime CreationDate
+        {
+            get { return Convert.ToDateTime(Document.Get(DocumentConstants.AssetCreated)); }
+            set { throw new NotImplementedException(); }
+        }
+
         public override decimal Cost { get; set; }
 
         public override decimal Price
@@ -48,28 +69,45 @@ namespace QuoteFlow.Models.Assets
             get { throw new NotImplementedException(); }
         }
 
-        public override int CreatorId { get; set; }
-        public override User Creator { get; set; }
+        public override int CreatorId
+        {
+            get { return Convert.ToInt32(Document.Get(DocumentConstants.AssetCreator)); }
+            set { throw new NotImplementedException(); }
+        }
+        public override User Creator
+        {
+            get { return (User) GetSingleValueFromField(AssetFieldConstants.Creator); }
+            set { throw new NotImplementedException(); }
+        }
+        
         public override int ManufacturerId { get; set; }
         public override Manufacturer Manufacturer { get; set; }
-        public override int CatalogId { get; set; }
-        
+
+        public override int CatalogId
+        {
+            get
+            {
+                var catalog = Catalog;
+                return catalog != null ? catalog.Id : 0;
+            }
+            set { throw new NotImplementedException(); }
+        }
         public override Catalog Catalog
         {
-            get { }
+            get { return (Catalog) GetSingleValueFromField(AssetFieldConstants.Catalog); }
             set { throw new NotImplementedException(); }
         }
 
         public override IEnumerable<AssetVar> AssetVars { get; set; }
         public override IEnumerable<AssetComment> Comments { get; set; }
 
-        private object getSingleValueFromField(string fieldName)
+        private object GetSingleValueFromField(string fieldName)
         {
             ILuceneFieldSorter<object> sorter = FieldManager.GetNavigableField(fieldName).Sorter;
             return sorter.GetValueFromLuceneField(Document.Get(sorter.DocumentConstant));
         }
 
-        private IList getMultipleValuesFromField(string fieldName)
+        private IList GetMultipleValuesFromField(string fieldName)
         {
             ILuceneFieldSorter<object> sorter = FieldManager.GetNavigableField(fieldName).Sorter;
             string[] documentValues = Document.GetValues(sorter.DocumentConstant);
@@ -78,7 +116,7 @@ namespace QuoteFlow.Models.Assets
                 return new ArrayList();
             }
 
-            IList values = new ArrayList();
+            var values = new List<object>();
             foreach (string documentValue in documentValues)
             {
                 object value = sorter.GetValueFromLuceneField(documentValue);
@@ -87,9 +125,9 @@ namespace QuoteFlow.Models.Assets
                     values.Add(value);
                 }
             }
+
             values.Sort(sorter.Comparator);
             return values;
         }
-
     }
 }
