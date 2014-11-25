@@ -39,6 +39,7 @@ namespace QuoteFlow.Services
         {
             var searchers = AssetSearcherManager.GetAllSearchers();
             var clausesOutcome = GenerateQuery(paramMap, user, searchers);
+            var query = BuildQuery(clauseOutcome);
             
             throw new NotImplementedException();
         }
@@ -108,6 +109,11 @@ namespace QuoteFlow.Services
             }
 
             return clauses;
+        }
+
+        private IQuery BuildQuery(IDictionary<string, SearchRendererHolder> clauses)
+        {
+            var actualClauses = clauses
         }
 
         private IActionParams GetActionParameters(IEnumerable<KeyValuePair<string, ICollection<string[]>>> paramMap)
