@@ -39,7 +39,7 @@ namespace QuoteFlow.Services
         {
             var searchers = AssetSearcherManager.GetAllSearchers();
             var clausesOutcome = GenerateQuery(paramMap, user, searchers);
-            var query = BuildQuery(clauseOutcome);
+            var query = BuildQuery(clausesOutcome);
             
             throw new NotImplementedException();
         }
@@ -113,7 +113,9 @@ namespace QuoteFlow.Services
 
         private IQuery BuildQuery(IDictionary<string, SearchRendererHolder> clauses)
         {
-            var actualClauses = clauses
+            var actualClauses = clauses.Values.Select(c => c.Clause).ToList();
+            IClause jqlClause = clauses.Any() ? new AndClause(actualClauses) : null;
+            return new Query(jqlClause);
         }
 
         private IActionParams GetActionParameters(IEnumerable<KeyValuePair<string, ICollection<string[]>>> paramMap)
