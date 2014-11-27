@@ -1,6 +1,6 @@
 ﻿namespace QuoteFlow.Models.Assets.Fields
 {
-    public interface IAssetTypeField
+    public interface IManufacturerField
     {
          
     }

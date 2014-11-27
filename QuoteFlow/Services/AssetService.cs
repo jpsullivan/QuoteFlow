@@ -381,5 +381,25 @@ namespace QuoteFlow.Services
         {
             return name.Length > 250;
         }
+
+        /// <summary>
+        /// Returns a set of catalog ID / manufacturer combinations that given asset IDs cover.
+        /// </summary>
+        /// <param name="assetIds">Set of asset IDs.</param>
+        /// <returns>Catalog ID / Manufacturer pairs</returns>
+        public ISet<KeyValuePair<int, string>> GetCatalogManufacturerPairsByIds(ISet<int> assetIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Check existance of assets for hte given set of IDs.
+        /// </summary>
+        /// <param name="assetIds">Set of asset IDs</param>
+        /// <returns>Set of IDs that don't represent an asset.</returns>
+        public ISet<int> GetIdsOfMissingAssets(ISet<int> assetIds)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

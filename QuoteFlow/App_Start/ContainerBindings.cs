@@ -19,6 +19,7 @@ using QuoteFlow.Models;
 using QuoteFlow.Models.Assets.CustomFields.Searchers.Transformer;
 using QuoteFlow.Models.Assets.Fields;
 using QuoteFlow.Models.Assets.Search;
+using QuoteFlow.Models.Assets.Search.Handlers;
 using QuoteFlow.Models.Assets.Search.Managers;
 using QuoteFlow.Models.Assets.Search.Searchers;
 using QuoteFlow.Models.Assets.Search.Searchers.Transformer;
@@ -207,6 +208,7 @@ namespace QuoteFlow
 
             #region Jql Support
 
+            Bind<IJqlAssetIdSupport>().To<JqlAssetIdSupport>().InRequestScope();
             Bind<IJqlFunctionHandlerRegistry>().To<LazyResettableJqlFunctionHandlerRegistry>().InRequestScope();
             Bind<IJqlOperandResolver>().To<JqlOperandResolver>().InRequestScope();
             Bind<IJqlQueryParser>().To<JqlQueryParser>().InRequestScope();
@@ -233,6 +235,21 @@ namespace QuoteFlow
             #region System Fields
 
             Bind<CatalogSystemField>().ToSelf().InRequestScope();
+
+            #endregion
+
+            #region Jql Searchers
+
+            // catalog searching
+            Bind<CatalogClauseQueryFactory>().ToSelf().InRequestScope();
+            Bind<CatalogValidator>().ToSelf().InRequestScope();
+            Bind<CatalogSearchHandlerFactory>().ToSelf().InRequestScope();
+            Bind<CatalogResolver>().ToSelf().InRequestScope();
+
+            // summary (asset name) searching
+            Bind<SummaryValidator>().ToSelf().InRequestScope();
+            Bind<SummaryClauseQueryFactory>().ToSelf().InRequestScope();
+            Bind<SummarySearchHandlerFactory>().ToSelf().InRequestScope();
 
             #endregion
         }

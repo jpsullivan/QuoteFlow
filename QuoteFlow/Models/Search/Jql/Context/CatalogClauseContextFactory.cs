@@ -46,13 +46,13 @@ namespace QuoteFlow.Models.Search.Jql.Context
                 return ClauseContext.CreateGlobalClauseContext();
             }
 
-            var contexts = new HashSet<ICatalogAssetTypeContext>();
+            var contexts = new HashSet<ICatalogManufacturerContext>();
 
             // Now that we have all the projects in context we need to get all the issue types for each project and
             // create a ProjectIssueTypeContext for that project/issue type pair.
             foreach (Catalog project in projectsInContext)
             {
-                contexts.Add(new CatalogAssetTypeContext(new CatalogContext(project.Id), AllAssetTypesContext.Instance));
+                contexts.Add(new CatalogManufacturerContext(new CatalogContext(project.Id), AllManufacturersContext.Instance));
             }
 
             return contexts.Any() ? new ClauseContext(contexts) : ClauseContext.CreateGlobalClauseContext();

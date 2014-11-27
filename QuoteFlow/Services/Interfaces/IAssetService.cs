@@ -122,5 +122,19 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="name">The asset name</param>
         /// <returns></returns>
         bool AssetNameExceedsMaximumLength(string name);
+
+        /// <summary>
+        /// Returns a set of catalog ID / manufacturer combinations that given asset IDs cover.
+        /// </summary>
+        /// <param name="assetIds">Set of asset IDs.</param>
+        /// <returns>Catalog ID / Manufacturer pairs</returns>
+        ISet<KeyValuePair<int, string>> GetCatalogManufacturerPairsByIds(ISet<int> assetIds);
+
+        /// <summary>
+        /// Check existance of assets for hte given set of IDs.
+        /// </summary>
+        /// <param name="assetIds">Set of asset IDs</param>
+        /// <returns>Set of IDs that don't represent an asset.</returns>
+        ISet<int> GetIdsOfMissingAssets(ISet<int> assetIds);
     }
 }

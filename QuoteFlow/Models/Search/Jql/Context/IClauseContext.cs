@@ -10,7 +10,7 @@ namespace QuoteFlow.Models.Search.Jql.Context
         /// <summary>
         /// Returns the catalog/asset type contexts that are defined by a clause.
         /// </summary>
-        ISet<ICatalogAssetTypeContext> Contexts { get; }
+        ISet<ICatalogManufacturerContext> Contexts { get; }
 
         /// <summary>
         /// 

@@ -99,7 +99,7 @@ namespace QuoteFlow.Models.Assets.Fields
         /// <summary>
         /// Retrieve the IssueType system Field. </summary>
         /// <returns> the IssueType system Field. </returns>
-        IAssetTypeField IssueTypeField { get; }
+        IManufacturerField IssueTypeField { get; }
 
         /// <summary>
         /// Retrieve the Project system Field. </summary>

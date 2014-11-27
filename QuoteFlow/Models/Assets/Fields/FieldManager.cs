@@ -107,7 +107,7 @@ namespace QuoteFlow.Models.Assets.Fields
             set { throw new NotImplementedException(); }
         }
         
-        public IAssetTypeField IssueTypeField { get; private set; }
+        public IManufacturerField IssueTypeField { get; private set; }
         public ICatalogField CatalogField { get; private set; }
     }
 }

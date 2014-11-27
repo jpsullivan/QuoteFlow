@@ -9,12 +9,12 @@ namespace QuoteFlow.Models.Search.Jql.Context
     /// </summary>
     public static class ContextSetUtil
     {
-        private static readonly ICatalogAssetTypeContext GlobalContext = CatalogAssetTypeContext.CreateGlobalContext();
+        private static readonly ICatalogManufacturerContext GlobalContext = CatalogManufacturerContext.CreateGlobalContext();
 
         /// <summary>
         /// Performs an itersection of the ClauseContext's passed in.
         /// 
-        /// NOTE: When <see cref="CatalogAssetTypeContext"/>'s are compared they are considered
+        /// NOTE: When <see cref="CatalogManufacturerContext"/>'s are compared they are considered
         /// equivilent if the id values are the same, we do not compare if they are Explicit or Implicit. When combined
         /// an Explicit flag will always replace an Implicit flag.
         /// </summary>
@@ -31,7 +31,7 @@ namespace QuoteFlow.Models.Search.Jql.Context
 
             var iter = childClauseContexts.GetEnumerator();
 
-            // Our initial result set is the first set of CatalogAssetTypeContext's in our childClauseContexts
+            // Our initial result set is the first set of CatalogManufacturerContext's in our childClauseContexts
             iter.MoveNext();
             IClauseContext intersection = iter.Current;
 
@@ -52,7 +52,7 @@ namespace QuoteFlow.Models.Search.Jql.Context
         /// <summary>
         /// Performs a union of the ClauseContext's passed in.
         /// 
-        /// NOTE: When <seea cref="CatalogAssetTypeContext"/>'s are compared they are considered
+        /// NOTE: When <seea cref="CatalogManufacturerContext"/>'s are compared they are considered
         /// equivilent if the id values are the same, we do not compare if they are Explicit or Implicit. When combined
         /// an Explicit flag will always replace an Implicit flag.
         /// </summary>
@@ -100,9 +100,9 @@ namespace QuoteFlow.Models.Search.Jql.Context
             return contextProjectMap1.Union(contextProjectMap2);
         }
 
-        private static IDictionary<ICatalogContext, ISet<IAssetTypeContext>> HandleCatalogGlobals(ISet<IAssetTypeContext> issueTypeContexts, ISet<ICatalogContext> projectContexts)
+        private static IDictionary<ICatalogContext, ISet<IManufacturerContext>> HandleCatalogGlobals(ISet<IManufacturerContext> issueTypeContexts, ISet<ICatalogContext> projectContexts)
         {
-            var resultsMap = new HashMap<ICatalogContext, ISet<IAssetTypeContext>>();
+            var resultsMap = new HashMap<ICatalogContext, ISet<IManufacturerContext>>();
             if (issueTypeContexts != null)
             {
                 foreach (ICatalogContext projectContext in projectContexts)
