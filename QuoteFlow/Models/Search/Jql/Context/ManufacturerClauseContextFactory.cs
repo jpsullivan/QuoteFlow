@@ -1,26 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ninject;
 using QuoteFlow.Models.Search.Jql.Operand;
 using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
+using QuoteFlow.Models.Search.Jql.Resolver;
+using QuoteFlow.Services;
 using QuoteFlow.Services.Interfaces;
 
 namespace QuoteFlow.Models.Search.Jql.Context
 {
     /// <summary>
-    /// Generates a <seealso cref="ClauseContext"/> based on the manufacturer values and 
+    /// Generates a <see cref="ClauseContext"/> based on the manufacturer values and 
     /// the catalog they are visible in.
     /// </summary>
     public class ManufacturerClauseContextFactory : IClauseContextFactory
     {
         public IJqlOperandResolver JqlOperandResolver { get; protected set; }
+        public ManufacturerResolver ManufacturerResolver { get; protected set; }
         public IManufacturerService ManufacturerService { get; protected set; }
 
-        public ManufacturerClauseContextFactory(IJqlOperandResolver jqlOperandResolver, IManufacturerService manufacturerService)
+        // todo: Use the resolver to fetch *indexed* values instead of calling the service each time
+
+        public ManufacturerClauseContextFactory(ManufacturerResolver resolver, IJqlOperandResolver jqlOperandResolver)
         {
+            ManufacturerResolver = resolver;
             JqlOperandResolver = jqlOperandResolver;
-            ManufacturerService = manufacturerService;
+            ManufacturerService = Container.Kernel.TryGet<ManufacturerService>();
         }
 
         public IClauseContext GetClauseContext(User searcher, ITerminalClause terminalClause)
@@ -50,7 +57,7 @@ namespace QuoteFlow.Models.Search.Jql.Context
 
 			if (manufacturerIds.Any() && isNegationOperator(@operator))
 			{
-			    var ids = ManufacturerService.GetManufacturers(0).Select(m => m.Id);
+			    var ids = ManufacturerService.GetManufacturers(1).Select(m => m.Id); // todo: replace organization id
 			    ISet<int> allManufacturerIds = new HashSet<int>(ids);
 			    foreach (var id in manufacturerIds)
 			    {
@@ -93,12 +100,12 @@ namespace QuoteFlow.Models.Search.Jql.Context
             if (value.StringValue != null)
 			{
 				//return resolver.getIndexedValues(value.StringValue);
-                ManufacturerService.GetManufacturers(0).Select(m => m.Id);
+                ManufacturerService.GetManufacturers(1).Select(m => m.Id); // todo: replace organization id
 			}
             if (value.IntValue != null)
             {
                 //return resolver.getIndexedValues(value.IntValue);
-                return ManufacturerService.GetManufacturers(0).Select(m => m.Id);
+                return ManufacturerService.GetManufacturers(1).Select(m => m.Id); // todo: replace organization id
             }
             throw new Exception("Invalid query literal.");
         }

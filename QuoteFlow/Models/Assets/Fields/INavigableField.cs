@@ -46,14 +46,14 @@ namespace QuoteFlow.Models.Assets.Fields
         /// If you implement this method there is no need to implement <seealso cref="#getSortComparatorSource()"/>.
         /// </summary>
         /// <returns>The name of the indexed term to be used for native Lucene sorting.</returns>
-        IList<SortField> GetSortFields(bool sortOrder);
+        IEnumerable<SortField> GetSortFields(bool sortOrder);
 
         /// <summary>
         /// A sorter to be used when sorting columns in a table.  This sort uses the Lucene Document Collection
         /// and is therefore a lot faster than sorting the issues in memory.
         /// </summary>
         /// <returns>A sorter that can be used to sort this field, or null depending on the value of <see cref="SortComparatorSource"/></returns>
-        ILuceneFieldSorter<object> Sorter { get; }
+        ILuceneFieldSorter<object> Sorter { get; } 
 
         /// <summary>
         /// Returns the id of the field to check for visibility. For example, with original estimate field
@@ -69,5 +69,15 @@ namespace QuoteFlow.Models.Assets.Fields
 //        /// <param name="changeHistory"> </param>
 //        /// <returns> String   change history formatted according to locale in i18nHelper </returns>
 //        string PrettyPrintChangeHistory(string changeHistory, I18nHelper i18nHelper);
+    }
+
+    public interface INavigableField<T> : INavigableField
+    {
+        /// <summary>
+        /// A sorter to be used when sorting columns in a table.  This sort uses the Lucene Document Collection
+        /// and is therefore a lot faster than sorting the issues in memory.
+        /// </summary>
+        /// <returns>A sorter that can be used to sort this field, or null depending on the value of <see cref="SortComparatorSource"/></returns>
+        new ILuceneFieldSorter<T> Sorter { get; } 
     }
 }

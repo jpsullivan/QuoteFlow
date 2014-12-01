@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using QuoteFlow.Models.Assets.Search.Constants;
 using QuoteFlow.Models.Search.Jql.Query.Operand;
 
 namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
@@ -14,8 +15,8 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
 
         static FieldFlagOperandRegistry()
 		{
-            IDictionary<string, IOperand> issueTypeFlags = new Dictionary<string, IOperand>();
-//            issueTypeFlags.Add(QuoteFlow.Constants.ALL_STANDARD_ASSET_TYPES, new FunctionOperand(AllStandardIssueTypesFunction.FUNCTION_STANDARD_ISSUE_TYPES));
+            IDictionary<string, IOperand> manufacturerFlags = new Dictionary<string, IOperand>();
+            //issueTypeFlags.Add(QuoteFlow.Constants.ALL_STANDARD_ASSET_TYPES, new FunctionOperand(AllStandardIssueTypesFunction.FUNCTION_STANDARD_ISSUE_TYPES));
 
             IDictionary<string, IOperand> versionFlags = new Dictionary<string, IOperand>();
 //            versionFlags.Add(VersionManager.ALL_RELEASED_VERSIONS, new FunctionOperand(AllReleasedVersionsFunction.FUNCTION_RELEASED_VERSIONS));
@@ -31,7 +32,7 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
 
 			IDictionary<string, IDictionary<string, IOperand>> tmpRegistry = new Dictionary<string, IDictionary<string, IOperand>>();
 
-			//tmpRegistry[SystemSearchConstants.forIssueType().JqlClauseNames.PrimaryName] = issueTypeFlags;
+			tmpRegistry[SystemSearchConstants.ForManufacturer().JqlClauseNames.PrimaryName] = manufacturerFlags;
 			//tmpRegistry[SystemSearchConstants.forComponent().JqlClauseNames.PrimaryName] = componentFlags;
 			//tmpRegistry[SystemSearchConstants.forAffectedVersion().JqlClauseNames.PrimaryName] = versionFlags;
 			//tmpRegistry[SystemSearchConstants.forFixForVersion().JqlClauseNames.PrimaryName] = versionFlags;
@@ -40,11 +41,16 @@ namespace QuoteFlow.Models.Assets.Search.Searchers.Transformer
 			REGISTRY = new Dictionary<string, IDictionary<string, IOperand>>(tmpRegistry);
 		}
 
-
         public IOperand GetOperandForFlag(string fieldName, string flagValue)
         {
             var fieldFlags = REGISTRY[fieldName];
-            return fieldFlags != null ? fieldFlags[flagValue] : null;
+            if (fieldFlags != null)
+            {
+                IOperand value;
+                return fieldFlags.TryGetValue(flagValue, out value) ? value : null;
+            }
+
+            return null;
         }
 
         public ISet<string> GetFlagForOperand(string fieldName, IOperand operand)

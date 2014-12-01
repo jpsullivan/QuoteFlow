@@ -3,6 +3,7 @@ using QuoteFlow.Infrastructure.Util;
 using QuoteFlow.Models;
 using QuoteFlow.Models.Assets.Search;
 using QuoteFlow.Models.Search;
+using QuoteFlow.Models.Search.Jql.Context;
 using QuoteFlow.Models.Search.Jql.Parser;
 using QuoteFlow.Models.Search.Jql.Query;
 
@@ -77,5 +78,71 @@ namespace QuoteFlow.Services.Interfaces
         /// <param name="searchRequestId">Validate in the context of this search request.</param>
         /// <returns></returns>
         IMessageSet ValidateQuery(User searcher, IQuery query, long searchRequestId);
+
+        /// <summary>
+        /// Generates a full QueryContext for the specified <see cref="IQuery"/> for the searching user. 
+        /// The full QueryContext contains all explicit and implicitly specified catalogs and manufacturers 
+        /// from the Query.
+        /// For a better explanation of the differences between the full and simple QueryContexts, see
+        /// <see cref="QueryContextVisitor"/>.
+        /// </summary>
+        /// <param name="searcher">The user performing the search.</param>
+        /// <param name="query">The search query to generate the context for.</param>
+        /// <returns>A QueryContext that contains the implicit and explicit catalog / manufacturers implied by the included clauses in the query.</returns>
+        IQueryContext GetQueryContext(User searcher, IQuery query);
+
+        /// <summary>
+        /// Generates a simple QueryContext for the specified <seealso cref="IQuery"/> for the searching user.
+        /// The simple QueryContext contains only the explicit projects and issue types specified in the Query. If none were
+        /// specified, it will be the Global context.
+        /// For a better explanation of the differences between the full and simple QueryContexts, see
+        /// <seealso cref="QueryContextVisitor"/>.
+        /// </summary>
+        /// <param name="searcher">The user performing the search</param>
+        /// <param name="query">The search query to generate the context for.</param>
+        /// <returns>A QueryContext that contains only the explicit catalog / manufacturers from the included clauses in the query.</returns>
+        IQueryContext GetSimpleQueryContext(User searcher, IQuery query);
+
+        /// <summary>
+        /// This produces an old-style <see cref="SearchContext"/> based on the passed in
+        /// search query and the user that is performing the search.
+        /// 
+        /// This will only make sense if the query returns true for <seealso cref="#doesQueryFitFilterForm(com.atlassian.crowd.embedded.api.User, com.atlassian.query.Query)"/>
+        /// since SearchContext is only relevant for simple queries.
+        /// 
+        /// The more acurate context can be gotten by calling <seealso cref="#getQueryContext(com.atlassian.crowd.embedded.api.User, com.atlassian.query.Query)"/>.
+        /// 
+        /// If the query will not fit in the simple issue navigator then the generated SearchContext will be empty. This
+        /// method never returns a null SearchContext, even when passed a null SearchQuery.
+        /// </summary>
+        /// <param name="searcher"> the user performing the search, not always the SearchRequest's owner </param>
+        /// <param name="query"> the query for which you want a context </param>
+        /// <returns> a SearchContext with the correct project/issue types if the query fits in the issue navigator, otherwise
+        /// an empty SearchContext. Never null. </returns>
+        SearchContext GetSearchContext(User searcher, IQuery query);
+
+        /// <summary>
+        /// Gets the JQL string representation for the passed query. Returns the string from <seealso cref="com.atlassian.query.Query#getQueryString()"/>
+        /// if it exists or generates one if it does not. Equilavent to:
+        /// <pre>
+        ///  if (query.getQueryString() != null)
+        ///    return query.getQueryString();
+        ///  else
+        ///    return getGeneratedJqlString(query);
+        /// 
+        /// </pre>
+        /// </summary>
+        /// <param name="query"> the query. Cannot be null. </param>
+        /// <returns> the JQL string represenation of the passed query. </returns>
+        string GetJqlString(IQuery query);
+
+        /// <summary>
+        /// Generates a JQL string representation for the passed query. The JQL string is always generated, that is, <seealso cref="com.atlassian.query.Query#getQueryString()"/>
+        /// is completely ignored if it exists. The returned JQL is automatically escaped as necessary.
+        /// </summary>
+        /// <param name="query"> the query. Cannot be null. </param>
+        /// <returns> the generated JQL string representation of the passed query. </returns>
+        string GetGeneratedJqlString(IQuery query);
+
     }
 }

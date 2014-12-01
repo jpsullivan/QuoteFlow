@@ -96,10 +96,8 @@ namespace QuoteFlow.Models.Search.Jql.Context
         }
 
         /// <summary>
-        /// Factory to create a <seealso cref="MultiClauseDecoratorContextFactory"/> given a
-        /// <seealso cref="com.atlassian.jira.jql.context.ClauseContextFactory"/> to wrap.
-        /// 
-        /// @since 4.0
+        /// Factory to create a <see cref="MultiClauseDecoratorContextFactory"/> given a
+        /// <see cref="IClauseContextFactory"/> to wrap.
         /// </summary>
         public class Factory
         {

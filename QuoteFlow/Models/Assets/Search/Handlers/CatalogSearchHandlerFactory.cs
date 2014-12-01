@@ -17,7 +17,7 @@ namespace QuoteFlow.Models.Assets.Search.Handlers
             CatalogClauseQueryFactory clauseFactory, CatalogValidator caluseValidator, 
             ICatalogService catalogService, IJqlOperandResolver jqlOperandResolver, 
             CatalogResolver catalogResolver, MultiClauseDecoratorContextFactory.Factory multiFactory
-        ) : base(SystemSearchConstants.ForCatalog(), typeof(CatalogSearcher), clauseFactory, caluseValidator, 
+        ) : base(SystemSearchConstants.ForCatalog(), typeof(CatalogSearcher), clauseFactory, caluseValidator, null,
                 multiFactory.Create(new CatalogClauseContextFactory(catalogService, jqlOperandResolver, catalogResolver)), 
                 new CatalogClauseValuesGenerator(catalogService),
                 new CatalogClauseValueSanitizer(catalogService, jqlOperandResolver, catalogResolver))

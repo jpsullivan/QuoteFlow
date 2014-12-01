@@ -1,8 +1,9 @@
 ﻿using System;
+using QuoteFlow.Models.Assets;
 
 namespace QuoteFlow.Models
 {
-    public class Manufacturer
+    public class Manufacturer : IAssetConstant
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -12,5 +13,7 @@ namespace QuoteFlow.Models
         public DateTime CreationDate { get; set; }
 
         public ManufacturerLogo Logo { get; set; }
+
+        string IAssetConstant.Id { get; set; }
     }
 }

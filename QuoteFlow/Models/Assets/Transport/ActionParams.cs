@@ -60,7 +60,24 @@ namespace QuoteFlow.Models.Assets.Transport
 
         public string[] GetValuesForKey(string key)
         {
-            return actionParams.Where(ap => ap.Key == key).Select(ap => ap.Value.First()).FirstOrDefault();
+            var values = new List<string>();
+            foreach (var actionParam in actionParams)
+            {
+                if (actionParam.Key == key)
+                {
+                    
+                    foreach (var value in actionParam.Value)
+                    {
+                        values.Add(value[0]);
+                    }
+                }
+            }
+
+            return values.Any() ? values.ToArray() : null;
+
+            //return values.ToArray();
+
+            //return actionParams.Where(ap => ap.Key == key).Select(ap => ap.Value.First()).FirstOrDefault();
         }
 
         public string FirstValueForNullKey

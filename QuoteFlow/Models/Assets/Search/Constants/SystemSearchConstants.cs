@@ -17,18 +17,22 @@ namespace QuoteFlow.Models.Assets.Search.Constants
 		public const string QUERY_SEARCHER_ID = "text";
 
 		private static readonly SimpleFieldSearchConstants Catalog = new SimpleFieldSearchConstants(DocumentConstants.CatalogId, AssetFieldConstants.Catalog, "cid", AssetFieldConstants.Catalog, AssetFieldConstants.Catalog, OperatorClasses.EqualityOperatorsWithEmpty, QuoteFlowDataTypes.Catalog);
-
 		public static SimpleFieldSearchConstants ForCatalog()
 		{
 			return Catalog;
 		}
 
 		private static readonly SimpleFieldSearchConstants Summary = new SimpleFieldSearchConstants(DocumentConstants.AssetName, AssetFieldConstants.Summary, "summary", AssetFieldConstants.Summary, AssetFieldConstants.Summary, OperatorClasses.TextOperators, QuoteFlowDataTypes.Text);
-
 		public static SimpleFieldSearchConstants ForSummary()
 		{
 			return Summary;
 		}
+
+        private static readonly SimpleFieldSearchConstants Manufacturer = new SimpleFieldSearchConstants(DocumentConstants.ManufacturerId, AssetFieldConstants.Manufacturer, "manufacturer", AssetFieldConstants.Manufacturer, AssetFieldConstants.Manufacturer, OperatorClasses.EqualityOperatorsWithEmpty, QuoteFlowDataTypes.Manufacturer);
+        public static SimpleFieldSearchConstants ForManufacturer()
+        {
+            return Manufacturer;
+        }
 
 		private static readonly SimpleFieldSearchConstants Description = new SimpleFieldSearchConstants(DocumentConstants.AssetDesc, AssetFieldConstants.Description, "description", AssetFieldConstants.Description, AssetFieldConstants.Description, OperatorClasses.TextOperators, QuoteFlowDataTypes.Text);
 
@@ -120,6 +124,7 @@ namespace QuoteFlow.Models.Assets.Search.Constants
             { GetClauseFieldName(ForDescription()), ForDescription() },
             { GetClauseFieldName(ForAssetId()), ForAssetId() },
             { GetClauseFieldName(ForCatalog()), ForCatalog() },
+            { GetClauseFieldName(ForManufacturer()), ForManufacturer() },
             { GetClauseFieldName(ForSummary()), ForSummary() },
             { GetClauseFieldName(ForUpdatedDate()), ForUpdatedDate() }
         };
@@ -196,5 +201,4 @@ namespace QuoteFlow.Models.Assets.Search.Constants
 			return returnMethods;
 		}
 	}
-
 }

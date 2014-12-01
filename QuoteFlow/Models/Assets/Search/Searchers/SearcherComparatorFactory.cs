@@ -17,8 +17,11 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
 			// Initialise
 			var mapBuilder = new MapBuilder();
 
-            mapBuilder.Add(SearcherGroupType.Text, typeof(TextQuerySearcher));
-            mapBuilder.Add(SearcherGroupType.Context, typeof(CatalogSearcher));
+            mapBuilder.Add(SearcherGroupType.Text, typeof(TextQuerySearcher), typeof(SummaryQuerySearcher));
+            mapBuilder.Add(SearcherGroupType.Context, typeof(CatalogSearcher), typeof(ManufacturerSearcher));
+            mapBuilder.Add(SearcherGroupType.Catalog);
+            mapBuilder.Add(SearcherGroupType.Asset);
+            mapBuilder.Add(SearcherGroupType.Date);
 
 //			mapBuilder.Add(SearcherGroupType.Text, typeof(TextQuerySearcher), typeof(SummaryQuerySearcher), typeof(DescriptionQuerySearcher), typeof(EnvironmentQuerySearcher), typeof(CommentQuerySearcher));
 //			mapBuilder.Add(SearcherGroupType.Context, typeof(CatalogSearcher), typeof(IssueTypeSearcher));
@@ -35,28 +38,28 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
 			return ComparatorMap[searcherGroupType];
 		}
 
-		private class MapBuilder
+		private sealed class MapBuilder
 		{
-			internal readonly Dictionary<SearcherGroupType, SearcherComparator> Map = new Dictionary<SearcherGroupType, SearcherComparator>();
+		    private readonly Dictionary<SearcherGroupType, SearcherComparator> _map = new Dictionary<SearcherGroupType, SearcherComparator>();
 
-			public virtual void Add(SearcherGroupType searcherGroupType, params Type[] classes)
+			public void Add(SearcherGroupType searcherGroupType, params Type[] classes)
 			{
-				Map[searcherGroupType] = new SearcherComparator(classes.ToList());
+				_map[searcherGroupType] = new SearcherComparator(classes.ToList());
 			}
 
-			public virtual IDictionary<SearcherGroupType, SearcherComparator> ToImmutableMap()
+			public IDictionary<SearcherGroupType, SearcherComparator> ToImmutableMap()
 			{
-				return new Dictionary<SearcherGroupType, SearcherComparator>(Map);
+				return new Dictionary<SearcherGroupType, SearcherComparator>(_map);
 			}
 		}
 
-        internal sealed class SearcherComparator : IComparer<IAssetSearcher<ISearchableField>>
+        private sealed class SearcherComparator : IComparer<IAssetSearcher<ISearchableField>>
 		{
-			internal readonly IList<Type> orderList;
+            private readonly IList<Type> _orderList;
 
 			internal SearcherComparator(IList<Type> orderList)
 			{
-				this.orderList = orderList;
+				_orderList = orderList;
 			}
 
             public int Compare(IAssetSearcher<ISearchableField> o1, IAssetSearcher<ISearchableField> o2)
@@ -79,9 +82,9 @@ namespace QuoteFlow.Models.Assets.Search.Searchers
 			    return o1position - o2position;
 			}
 
-			internal int IndexOf(IAssetSearcher<ISearchableField> searcher)
+            private int IndexOf(IAssetSearcher<ISearchableField> searcher)
 			{
-				return orderList.IndexOf(searcher.GetType());
+				return _orderList.IndexOf(searcher.GetType());
 			}
 		}
     }

@@ -25,6 +25,7 @@ using QuoteFlow.Models.Assets.Search.Searchers;
 using QuoteFlow.Models.Assets.Search.Searchers.Transformer;
 using QuoteFlow.Models.Search.Jql.Operand;
 using QuoteFlow.Models.Search.Jql.Parser;
+using QuoteFlow.Models.Search.Jql.Permission;
 using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Operand.Registry;
 using QuoteFlow.Models.Search.Jql.Resolver;
@@ -200,6 +201,7 @@ namespace QuoteFlow
 
             #region Asset Fields
 
+            Bind<FieldClausePermissionChecker.IFactory>().To<FieldClausePermissionChecker.Factory>().InRequestScope();
             Bind<ICustomFieldInputHelper>().To<CustomFieldInputHelper>().InRequestScope();
             Bind<IFieldFlagOperandRegistry>().To<FieldFlagOperandRegistry>().InRequestScope();
             Bind<IFieldManager>().To<FieldManager>().InRequestScope();
@@ -223,6 +225,7 @@ namespace QuoteFlow
             #region Jql Name Resolvers
 
             Bind<INameResolver<Catalog>>().To<CatalogResolver>().InRequestScope();
+            Bind<INameResolver<Manufacturer>>().To<ManufacturerResolver>().InRequestScope();
 
             #endregion
 
@@ -235,6 +238,7 @@ namespace QuoteFlow
             #region System Fields
 
             Bind<CatalogSystemField>().ToSelf().InRequestScope();
+            Bind<SummarySystemField>().ToSelf().InRequestScope();
 
             #endregion
 
@@ -245,6 +249,14 @@ namespace QuoteFlow
             Bind<CatalogValidator>().ToSelf().InRequestScope();
             Bind<CatalogSearchHandlerFactory>().ToSelf().InRequestScope();
             Bind<CatalogResolver>().ToSelf().InRequestScope();
+            Bind<CatalogSearcher>().ToSelf().InRequestScope();
+
+            // manufacturer searching
+            Bind<ManufacturerResolver>().ToSelf().InRequestScope();
+            Bind<ManufacturerClauseQueryFactory>().ToSelf().InRequestScope();
+            Bind<ManufacturerValidator>().ToSelf().InRequestScope();
+            Bind<ManufacturerSearchHandlerFactory>().ToSelf().InRequestScope();
+            Bind<ManufacturerSearcher>().ToSelf().InRequestScope();
 
             // summary (asset name) searching
             Bind<SummaryValidator>().ToSelf().InRequestScope();
@@ -256,7 +268,6 @@ namespace QuoteFlow
 
         private void ConfigureSearch()
         {
-            Bind<CatalogSearcher>().ToSelf().InRequestScope();
             Bind<ILuceneQueryBuilder>().To<LuceneQueryBuilder>().InRequestScope();
             Bind<ILuceneQueryModifier>().To<LuceneQueryModifier>().InRequestScope();
             Bind<ISearchProvider>().To<LuceneSearchService>().InRequestScope();

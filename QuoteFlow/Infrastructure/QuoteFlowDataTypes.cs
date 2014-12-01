@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using QuoteFlow.Models;
 using QuoteFlow.Models.Assets;
-using QuoteFlow.Models.Assets.Fields;
 
 namespace QuoteFlow.Infrastructure
 {
@@ -16,6 +15,7 @@ namespace QuoteFlow.Infrastructure
         /// </summary>
         public static readonly IQuoteFlowDataType Asset = new QuoteFlowDataType(typeof(Asset));
         public static readonly IQuoteFlowDataType Catalog = new QuoteFlowDataType(typeof(Catalog));
+        public static readonly IQuoteFlowDataType Manufacturer = new QuoteFlowDataType(typeof(Manufacturer));
 //        public static readonly IQuoteFlowDataType PROJECT_CATEGORY = new QuoteFlowDataType(typeof(ProjectCategory));
 //        public static readonly IQuoteFlowDataType VERSION = new QuoteFlowDataType(typeof(Version));
 //        public static readonly IQuoteFlowDataType COMPONENT = new QuoteFlowDataType(typeof(ProjectComponent));
@@ -43,12 +43,13 @@ namespace QuoteFlow.Infrastructure
 
         private static readonly IDictionary<string, IQuoteFlowDataType> FieldMap = new Dictionary<string, IQuoteFlowDataType>
         {
-            { AssetFieldConstants.Catalog, QuoteFlowDataTypes.Catalog },
-            { AssetFieldConstants.Comment, QuoteFlowDataTypes.Text },
-            { AssetFieldConstants.Description, QuoteFlowDataTypes.Text },
-            { AssetFieldConstants.Summary, QuoteFlowDataTypes.Text },
-            { AssetFieldConstants.Created, QuoteFlowDataTypes.Date },
-            { AssetFieldConstants.Updated, QuoteFlowDataTypes.Date }
+            { AssetFieldConstants.Catalog, Catalog },
+            { AssetFieldConstants.Manufacturer, Manufacturer },
+            { AssetFieldConstants.Comment, Text },
+            { AssetFieldConstants.Description, Text },
+            { AssetFieldConstants.Summary, Text },
+            { AssetFieldConstants.Created, Date },
+            { AssetFieldConstants.Updated, Date }
         };
 
         public static IQuoteFlowDataType GetFieldType(string fieldId)

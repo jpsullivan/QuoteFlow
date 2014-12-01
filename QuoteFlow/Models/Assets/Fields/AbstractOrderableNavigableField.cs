@@ -20,7 +20,7 @@ namespace QuoteFlow.Models.Assets.Fields
         {
         }
 
-        public IList<SortField> GetSortFields(bool sortOrder)
+        public IEnumerable<SortField> GetSortFields(bool sortOrder)
         {
             // if Sorter returns null here, then we are already in a whole heap of pain.
             var fieldName = Sorter.DocumentConstant;

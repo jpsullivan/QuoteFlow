@@ -10,10 +10,10 @@ namespace QuoteFlow.Models.Search.Jql.Validator
     /// </summary>
     public abstract class ValuesExistValidator
     {
-        private readonly JqlOperandResolver _operandResolver;
+        private readonly IJqlOperandResolver _operandResolver;
         private readonly MessageSetLevel _level;
 
-        internal ValuesExistValidator(JqlOperandResolver operandResolver, MessageSetLevel level = MessageSetLevel.Error)
+        internal ValuesExistValidator(IJqlOperandResolver operandResolver, MessageSetLevel level = MessageSetLevel.Error)
         {
             if (operandResolver == null)
             {
