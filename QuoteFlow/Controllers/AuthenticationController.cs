@@ -19,7 +19,7 @@ namespace QuoteFlow.Controllers
 {
     public partial class AuthenticationController : AppController
     {
-        #region IoC 
+        #region IoC
 
         public AuthenticationService AuthService { get; protected set; }
         public IUserService UserService { get; protected set; }
