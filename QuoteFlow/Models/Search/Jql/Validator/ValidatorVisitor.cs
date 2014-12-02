@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using QuoteFlow.Infrastructure.Util;
 using QuoteFlow.Models.Search.Jql.Operand;
+using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 using QuoteFlow.Models.Search.Jql.Query.Operand;
 
 namespace QuoteFlow.Models.Search.Jql.Validator
 {
     /// <summary>
-    /// Used to perform validation over a <seealso cref="Query"/>. Uses
+    /// Used to perform validation over a <seealso cref="IQuery"/>. Uses
     /// <seealso cref="IClauseValidator"/>'s to validate the individual clauses and
     /// <seealso cref="OperandHandler.Validate(User, IOperand, TerminalClause)"/>
     /// to validate the operands.
-    /// 
-    /// @since v4.0
     /// </summary>
     public class ValidatorVisitor : IClauseVisitor<IMessageSet>
     {
@@ -23,7 +22,7 @@ namespace QuoteFlow.Models.Search.Jql.Validator
         private readonly User searcher;
         private readonly long? filterId;
 
-        public ValidatorVisitor(IValidatorRegistry validatorRegistry, IJqlOperandResolver operandResolver, OperatorUsageValidator operatorUsageValidator, User searcher, long? filterId)
+        public ValidatorVisitor(IValidatorRegistry validatorRegistry, IJqlOperandResolver operandResolver, IOperatorUsageValidator operatorUsageValidator, User searcher, long? filterId)
         {
             this.validatorRegistry = validatorRegistry;
             this.operandResolver = operandResolver;
@@ -162,5 +161,23 @@ namespace QuoteFlow.Models.Search.Jql.Validator
             return messages;
         }
 
+        public class ValidatorVisitorFactory
+        {
+            internal readonly IValidatorRegistry validatorRegistry;
+            internal readonly IJqlOperandResolver operandResolver;
+            internal readonly IOperatorUsageValidator operatorUsageValidator;
+
+            public ValidatorVisitorFactory(IValidatorRegistry validatorRegistry, IJqlOperandResolver operandResolver, IOperatorUsageValidator operatorUsageValidator)
+            {
+                this.validatorRegistry = validatorRegistry;
+                this.operandResolver = operandResolver;
+                this.operatorUsageValidator = operatorUsageValidator;
+            }
+
+            public virtual ValidatorVisitor CreateVisitor(User searcher, long? filterId)
+            {
+                return new ValidatorVisitor(validatorRegistry, operandResolver, operatorUsageValidator, searcher, filterId);
+            }
+        }
     }
 }

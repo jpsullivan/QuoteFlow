@@ -207,7 +207,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
 			internal static IDictionary<string, IList<IClauseHandler>> handlerIndex;
 
 			/// <summary>
-			/// SearcherId -> IssueSearcher.
+			/// SearcherId -> AssetSearcher.
 			/// </summary>
 			internal readonly IDictionary<string, IAssetSearcher<ISearchableField>> searcherIndex;
 

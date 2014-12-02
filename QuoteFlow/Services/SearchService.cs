@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using QuoteFlow.Infrastructure.Util;
 using QuoteFlow.Models;
 using QuoteFlow.Models.Assets.Search;
+using QuoteFlow.Models.Assets.Search.Managers;
 using QuoteFlow.Models.Search;
 using QuoteFlow.Models.Search.Jql.Context;
 using QuoteFlow.Models.Search.Jql.Operand;
@@ -10,24 +11,32 @@ using QuoteFlow.Models.Search.Jql.Parser;
 using QuoteFlow.Models.Search.Jql.Query;
 using QuoteFlow.Models.Search.Jql.Query.Clause;
 using QuoteFlow.Models.Search.Jql.Util;
+using QuoteFlow.Models.Search.Jql.Validator;
 using QuoteFlow.Services.Interfaces;
 
 namespace QuoteFlow.Services
 {
     public class SearchService : ISearchService
     {
-        public IJqlQueryParser JqlQueryParser { get; set; }
-        public IJqlStringSupport JqlStringSupport { get; set; }
-        public IJqlOperandResolver JqlOperandResolver { get; set; }
+        public IJqlQueryParser JqlQueryParser { get; protected set; }
+        public IJqlStringSupport JqlStringSupport { get; protected set; }
+        public IJqlOperandResolver JqlOperandResolver { get; protected set; }
+        public ValidatorVisitor.ValidatorVisitorFactory ValidatorVisitorFactory { get; protected set; }
+        public ISearchHandlerManager SearchHandlerManager { get; protected set; }
+        public QueryContextVisitor.QueryContextVisitorFactory QueryContextVisitorFactory { get; protected set; }
+        public IQueryCache QueryCache { get; protected set; } // request-level cache, not persistent
+        public ISearchProvider SearchProvider { get; protected set; }
 
-        public SearchService(
-            IJqlQueryParser jqlQueryParser, 
-            IJqlStringSupport jqlStringSupport, 
-            IJqlOperandResolver jqlOperandResolver)
+        public SearchService(IJqlQueryParser jqlQueryParser, IJqlStringSupport jqlStringSupport, IJqlOperandResolver jqlOperandResolver, ValidatorVisitor.ValidatorVisitorFactory validatorVisitorFactory, ISearchHandlerManager searchHandlerManager, QueryContextVisitor.QueryContextVisitorFactory queryContextVisitorFactory, IQueryCache queryCache, ISearchProvider searchProvider)
         {
             JqlQueryParser = jqlQueryParser;
             JqlStringSupport = jqlStringSupport;
             JqlOperandResolver = jqlOperandResolver;
+            ValidatorVisitorFactory = validatorVisitorFactory;
+            SearchHandlerManager = searchHandlerManager;
+            QueryContextVisitorFactory = queryContextVisitorFactory;
+            QueryCache = queryCache;
+            SearchProvider = searchProvider;
         }
 
         public Task<SearchResult> Search(SearchFilter filter)
@@ -78,25 +87,23 @@ namespace QuoteFlow.Services
             if (clause == null)
             {
                 // return the ALL-ALL context for the all query
-                return new QueryContext(ClauseContextImpl.createGlobalClauseContext());
+                return new QueryContext(ClauseContext.CreateGlobalClauseContext());
             }
-            else
+            
+            IQueryContext queryContext = QueryCache.GetQueryContextCache(searcher, query);
+            if (queryContext == null)
             {
-                QueryContext queryContext = queryCache.getQueryContextCache(searcher, query);
-                if (queryContext == null)
-                {
-                    // calculate both the full and simple contexts and cache them
-                    QueryContextVisitor visitor = queryContextVisitorFactory.createVisitor(searcher);
-                    QueryContextVisitor.ContextResult result = clause.accept(visitor);
-                    queryContext = new QueryContextImpl(result.FullContext);
-                    QueryContext explicitQueryContext = new QueryContextImpl(result.SimpleContext);
-                    queryCache.setQueryContextCache(searcher, query, queryContext);
-                    queryCache.setSimpleQueryContextCache(searcher, query, explicitQueryContext);
-                }
-                return queryContext;
-            }
+                // calculate both the full and simple contexts and cache them
+                var factory = new QueryContextVisitor.QueryContextVisitorFactory(SearchHandlerManager);
+                QueryContextVisitor visitor = factory.CreateVisitor(searcher);
 
-            throw new NotImplementedException();
+                QueryContextVisitor.ContextResult result = clause.Accept(visitor);
+                queryContext = new QueryContext(result.FullContext);
+                var explicitQueryContext = new QueryContext(result.SimpleContext);
+                QueryCache.SetQueryContextCache(searcher, query, queryContext);
+                QueryCache.SetSimpleQueryContextCache(searcher, query, explicitQueryContext);
+            }
+            return queryContext;
         }
 
         public IQueryContext GetSimpleQueryContext(User searcher, IQuery query)

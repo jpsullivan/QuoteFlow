@@ -219,6 +219,8 @@ namespace QuoteFlow
             Bind<IQueryCache>().To<QueryCache>().InRequestScope();
             Bind<IQueryRegistry>().To<QueryRegistry>().InRequestScope();
             Bind<ISystemClauseHandlerFactory>().To<SystemClauseHandlerFactory>().InRequestScope();
+            Bind<IValidatorRegistry>().To<ValidatorRegistry>().InRequestScope();
+            Bind<ValidatorVisitor.ValidatorVisitorFactory>().ToSelf().InRequestScope();
 
             #endregion
 

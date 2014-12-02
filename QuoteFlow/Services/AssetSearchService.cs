@@ -41,7 +41,7 @@ namespace QuoteFlow.Services
             var clausesOutcome = GenerateQuery(paramMap, user, searchers);
             var query = BuildQuery(clausesOutcome);
 
-            var searchContext = SearchService.GetQueryString()
+            var searchContext = SearchService.GetSearchContext(user, query);
             
             throw new NotImplementedException();
         }

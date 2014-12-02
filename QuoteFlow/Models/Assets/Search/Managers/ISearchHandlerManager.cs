@@ -13,7 +13,7 @@ namespace QuoteFlow.Models.Assets.Search.Managers
     {
         /// <summary>
 		/// Get searchers that are applicable for a given context. This is found through the {@link
-		/// com.atlassian.jira.issue.search.searchers.IssueSearcher#getSearchRenderer()#isShown(com.atlassian.jira.issue.search.SearchContext)}
+		/// com.atlassian.jira.issue.search.searchers.AssetSearcher#getSearchRenderer()#isShown(com.atlassian.jira.issue.search.SearchContext)}
 		/// method.
 		/// </summary>
 		/// <param name="searcher">The user performing this action.</param>

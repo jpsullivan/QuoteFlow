@@ -25,8 +25,7 @@ namespace QuoteFlow.Services
 
         private Lucene.Net.Store.Directory _directory;
         private IndexWriter _indexWriter;
-//        private IEntityRepository<Package> _packageRepository;
-//        private IEntityRepository<CuratedPackage> _curatedPackageRepository;
+        private IAssetService _assetService;
         private Func<bool> _getShouldAutoUpdate;
 
         private IDiagnosticsSource Trace { get; set; }
@@ -42,14 +41,12 @@ namespace QuoteFlow.Services
         }
 
         public LuceneIndexingService(
-//            IEntityRepository<Package> packageSource,
-//            IEntityRepository<CuratedPackage> curatedPackageSource,
+            IAssetService assetService,
             Lucene.Net.Store.Directory directory,
             IDiagnosticsService diagnostics,
             IAppConfiguration config)
         {
-//            _packageRepository = packageSource;
-//            _curatedPackageRepository = curatedPackageSource;
+            _assetService = assetService;
             _directory = directory;
             _getShouldAutoUpdate = config == null ? (() => true) : new Func<bool>(() => config.AutoUpdateSearchIndex);
             Trace = diagnostics.SafeGetSource("LuceneIndexingService");
@@ -84,12 +81,12 @@ namespace QuoteFlow.Services
                     UpdateIndexRefreshTime();
                 }
 
-//                var packages = GetPackages(lastWriteTime);
-//                if (packages.Count > 0)
-//                {
-//                    EnsureIndexWriter(creatingIndex: lastWriteTime == null);
-//                    AddPackagesCore(packages, creatingIndex: lastWriteTime == null);
-//                }
+                var packages = GetPackages(lastWriteTime);
+                if (packages.Count > 0)
+                {
+                    EnsureIndexWriter(creatingIndex: lastWriteTime == null);
+                    AddPackagesCore(packages, creatingIndex: lastWriteTime == null);
+                }
 
                 UpdateLastWriteTime();
             }
@@ -133,51 +130,51 @@ namespace QuoteFlow.Services
 //            }
 //        }
 //
-//        private List<PackageIndexEntity> GetPackages(DateTime? lastIndexTime)
-//        {
-//            IQueryable<Package> set = _packageRepository.GetAll();
-//
-//            if (lastIndexTime.HasValue)
-//            {
-//                // Retrieve the Latest and LatestStable version of packages if any package for that registration changed since we last updated the index.
-//                // We need to do this because some attributes that we index such as DownloadCount are values in the PackageRegistration table that may
-//                // update independent of the package.
-//                set = set.Where(
-//                    p => (p.IsLatest || p.IsLatestStable) &&
-//                        p.PackageRegistration.Packages.Any(p2 => p2.LastUpdated > lastIndexTime));
-//            }
-//            else
-//            {
-//                set = set.Where(p => p.IsLatest || p.IsLatestStable);  // which implies that p.IsListed by the way!
-//            }
-//
-//            var list = set
-//                .Include(p => p.PackageRegistration)
-//                .Include(p => p.PackageRegistration.Owners)
-//                .Include(p => p.SupportedFrameworks)
-//                .ToList();
-//
-//            var curatedFeedsPerPackageRegistration = _curatedPackageRepository.GetAll()
-//                .Select(cp => new { cp.PackageRegistrationKey, cp.CuratedFeedKey })
-//                .GroupBy(x => x.PackageRegistrationKey)
-//                .ToDictionary(group => group.Key, element => element.Select(x => x.CuratedFeedKey));
-//
-//            Func<int, IEnumerable<int>> GetFeeds = packageRegistrationKey =>
-//            {
-//                IEnumerable<int> ret = null;
-//                curatedFeedsPerPackageRegistration.TryGetValue(packageRegistrationKey, out ret);
-//                return ret;
-//            };
-//
-//            var packagesForIndexing = list.Select(
-//                p => new PackageIndexEntity
-//                {
-//                    Package = p,
-//                    CuratedFeedKeys = GetFeeds(p.PackageRegistrationKey)
-//                });
-//
-//            return packagesForIndexing.ToList();
-//        }
+        private List<PackageIndexEntity> GetPackages(DateTime? lastIndexTime)
+        {
+            IQueryable<Package> set = _packageRepository.GetAll();
+
+            if (lastIndexTime.HasValue)
+            {
+                // Retrieve the Latest and LatestStable version of packages if any package for that registration changed since we last updated the index.
+                // We need to do this because some attributes that we index such as DownloadCount are values in the PackageRegistration table that may
+                // update independent of the package.
+                set = set.Where(
+                    p => (p.IsLatest || p.IsLatestStable) &&
+                        p.PackageRegistration.Packages.Any(p2 => p2.LastUpdated > lastIndexTime));
+            }
+            else
+            {
+                set = set.Where(p => p.IsLatest || p.IsLatestStable);  // which implies that p.IsListed by the way!
+            }
+
+            var list = set
+                .Include(p => p.PackageRegistration)
+                .Include(p => p.PackageRegistration.Owners)
+                .Include(p => p.SupportedFrameworks)
+                .ToList();
+
+            var curatedFeedsPerPackageRegistration = _curatedPackageRepository.GetAll()
+                .Select(cp => new { cp.PackageRegistrationKey, cp.CuratedFeedKey })
+                .GroupBy(x => x.PackageRegistrationKey)
+                .ToDictionary(group => group.Key, element => element.Select(x => x.CuratedFeedKey));
+
+            Func<int, IEnumerable<int>> GetFeeds = packageRegistrationKey =>
+            {
+                IEnumerable<int> ret = null;
+                curatedFeedsPerPackageRegistration.TryGetValue(packageRegistrationKey, out ret);
+                return ret;
+            };
+
+            var packagesForIndexing = list.Select(
+                p => new PackageIndexEntity
+                {
+                    Package = p,
+                    CuratedFeedKeys = GetFeeds(p.PackageRegistrationKey)
+                });
+
+            return packagesForIndexing.ToList();
+        }
 //
 //        public void AddPackages(IList<PackageIndexEntity> packages, bool creatingIndex)
 //        {
@@ -326,7 +323,7 @@ namespace QuoteFlow.Services
 
             return
                 dir.EnumerateFiles().Sum(f => f.Length) +
-                dir.EnumerateDirectories().Select(d => CalculateSize(d)).Sum();
+                dir.EnumerateDirectories().Select(CalculateSize).Sum();
         }
     }
 }

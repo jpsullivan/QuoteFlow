@@ -7,7 +7,7 @@ namespace QuoteFlow.Models.Search.Jql.Context
     /// </summary>
     public interface IQueryContext
     {
-        IEnumerable<CatalogAssetTypeContexts> CatalogAssetTypeContexts { get; set; }
+        IEnumerable<QueryContextCatalogManufacturerContexts> CatalogManufacturerContexts { get; set; }
     }
 
     public class QueryContextCatalogManufacturerContexts

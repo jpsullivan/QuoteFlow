@@ -411,6 +411,7 @@
     <Compile Include="Infrastructure\Auth\CredentialBuilder.cs" />
     <Compile Include="Infrastructure\Auth\QuoteFlowIdentity.cs" />
     <Compile Include="Infrastructure\Azure\AzureEntityList.cs" />
+    <Compile Include="Infrastructure\Collect\ISized.cs" />
     <Compile Include="Infrastructure\Concurrency\AtomicReference.cs" />
     <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
     <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
@@ -427,6 +428,7 @@
     <Compile Include="Infrastructure\IQuoteFlowDataType.cs" />
     <Compile Include="Infrastructure\JsonContentNegotiator.cs" />
     <Compile Include="Infrastructure\Lucene\ConstantScorePrefixQuery.cs" />
+    <Compile Include="Infrastructure\Lucene\IIndexLifecycleManager.cs" />
     <Compile Include="Infrastructure\Lucene\IKeywordAttribute.cs" />
     <Compile Include="Infrastructure\Lucene\ILuceneQueryModifier.cs" />
     <Compile Include="Infrastructure\Lucene\ITotalHitsAwareCollector.cs" />
@@ -449,6 +451,7 @@
     <Compile Include="Infrastructure\Paging\IPagerFilter.cs" />
     <Compile Include="Infrastructure\Paging\PagerFilter.cs" />
     <Compile Include="Infrastructure\QueryStringUniqueValueProviderFactory.cs" />
+    <Compile Include="Infrastructure\Util\IShutdown.cs" />
     <Compile Include="Infrastructure\Util\ListOrderedMessageSet.cs" />
     <Compile Include="Infrastructure\Util\LuceneUtils.cs" />
     <Compile Include="Infrastructure\Util\MessageSet.cs" />
@@ -484,6 +487,12 @@
     <Compile Include="Models\Assets\Fields\NavigableFieldOrder.cs" />
     <Compile Include="Models\Assets\Fields\SummarySystemField.cs" />
     <Compile Include="Models\Assets\IAssetConstant.cs" />
+    <Compile Include="Models\Assets\Index\AssetIndexer.cs" />
+    <Compile Include="Models\Assets\Index\AssetIndexHelper.cs" />
+    <Compile Include="Models\Assets\Index\AssetIndexManager.cs" />
+    <Compile Include="Models\Assets\Index\IAssetIndexer.cs" />
+    <Compile Include="Models\Assets\Index\IAssetIndexManager.cs" />
+    <Compile Include="Models\Assets\Index\IIndex.cs" />
     <Compile Include="Models\Assets\Index\Indexers\ManufacturerIndexer.cs" />
     <Compile Include="Models\Assets\Search\Handlers\ManufacturerSearchHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\Handlers\SummarySearchHandlerFactory.cs" />
@@ -494,6 +503,7 @@
     <Compile Include="Models\Assets\Search\Searchers\Transformer\IdIndexedSearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Transformer\ManufacturerSearchInputTransformer.cs" />
     <Compile Include="Models\Assets\Search\Searchers\Util\AssetConstantIndexedInputHelper.cs" />
+    <Compile Include="Models\Assets\Search\SearchProviderFactory.cs" />
     <Compile Include="Models\Assets\Search\SearchRequest.cs" />
     <Compile Include="Models\Assets\Search\Util\FreeTextVisitor.cs" />
     <Compile Include="Models\Assets\Search\Util\ISearchSortUtil.cs" />
@@ -596,7 +606,6 @@
     <Compile Include="Models\Search\Jql\Context\AllCatalogsContext.cs" />
     <Compile Include="Models\Search\Jql\Context\AllTextClauseContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Context\CatalogManufacturerContext.cs" />
-    <Compile Include="Models\Search\Jql\Context\CatalogAssetTypeContexts.cs" />
     <Compile Include="Models\Search\Jql\Context\CatalogClauseContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Context\CatalogContext.cs" />
     <Compile Include="Models\Search\Jql\Context\ClauseContext.cs" />
@@ -612,6 +621,7 @@
     <Compile Include="Models\Search\Jql\Context\ManufacturerContext.cs" />
     <Compile Include="Models\Search\Jql\Context\MultiClauseDecoratorContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Context\QueryContext.cs" />
+    <Compile Include="Models\Search\Jql\Context\QueryContextVisitor.cs" />
     <Compile Include="Models\Search\Jql\Context\SimpleClauseContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Context\ValidatingDecoratorContextFactory.cs" />
     <Compile Include="Models\Search\Jql\Function\AbstractJqlFunction.cs" />
@@ -857,8 +867,10 @@
     <Compile Include="Models\Search\Jql\Validator\SavedFilterClauseValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\SummaryValidator.cs" />
     <Compile Include="Models\Search\Jql\Validator\SupportedOperatorsValidator.cs" />
+    <Compile Include="Models\Search\Jql\Validator\ValidatorRegistry.cs" />
     <Compile Include="Models\Search\Jql\Validator\ValidatorVisitor.cs" />
     <Compile Include="Models\Search\Jql\Validator\ValuesExistValidator.cs" />
+    <Compile Include="Models\Search\Jql\Validator\WasClauseValidator.cs" />
     <Compile Include="Models\Search\Jql\Values\CatalogClauseValuesGenerator.cs" />
     <Compile Include="Models\Search\Jql\Values\ClauseHandler.cs" />
     <Compile Include="Models\Search\Jql\Values\ClauseValueResult.cs" />

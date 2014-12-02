@@ -16,7 +16,7 @@ namespace QuoteFlow.Models.Assets.Search
     /// 
     /// Each field *may* have one <seealso cref="IAssetSearcher{T}"/> that uses a list of JQL
     /// clauses to create a JQL search. This is specified in the <seealso cref="SearcherRegistration"/>
-    /// on the SearchHandler. QuoteFlow will keep the association between the IssueSearcher 
+    /// on the SearchHandler. QuoteFlow will keep the association between the AssetSearcher 
     /// and JQL clauses (ClauseHandler) to perform the mapping from JQL to the GUI version of 
     /// Asset Navigator. Listing ClauseHandlers in the SearcherRegistration that are not related to 
     /// the AssetSearcher may result QuoteFlowe falsely determining that a JQL query cannot be 
