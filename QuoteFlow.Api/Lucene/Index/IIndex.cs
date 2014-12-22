@@ -1,7 +1,7 @@
 ﻿using System;
 using Lucene.Net.Search;
 
-namespace QuoteFlow.Models.Assets.Index
+namespace QuoteFlow.Api.Lucene.Index
 {
     /// <summary>
     /// An <seealso cref="Index"/> is where data is stored for fast retrieval. The

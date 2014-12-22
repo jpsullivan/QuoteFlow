@@ -15,15 +15,22 @@ namespace QuoteFlow.Configuration
     public class ConfigurationService : IConfigurationSource
     {
         private const string SettingPrefix = "QuoteFlow.";
+        private const string IndexPrefix = "Index.";
         private const string FeaturePrefix = "Feature.";
         private const string AuthPrefix = "Auth.";
 
         private IAppConfiguration _current;
-
         public virtual IAppConfiguration Current
         {
             get { return _current ?? (_current = ResolveSettings()); }
             set { _current = value; }
+        }
+
+        private IndexConfiguration _indexConfig;
+        public virtual IndexConfiguration IndexSettings
+        {
+            get { return _indexConfig ?? (_indexConfig = ResolveIndexSettings()); }
+            set { _indexConfig = value; }
         }
 
         private readonly Lazy<string> _httpSiteRootThunk;
@@ -43,6 +50,11 @@ namespace QuoteFlow.Configuration
         public virtual string GetSiteRoot(bool useHttps)
         {
             return useHttps ? _httpsSiteRootThunk.Value : _httpSiteRootThunk.Value;
+        }
+
+        public virtual IndexConfiguration ResolveIndexSettings()
+        {
+            return ResolveConfigObject(new IndexConfiguration(), IndexPrefix);
         }
 
         public virtual IAppConfiguration ResolveSettings()
@@ -71,10 +83,7 @@ namespace QuoteFlow.Configuration
                             property.SetValue(instance, defaultValue.Value);
                             continue;
                         }
-                        else
-                        {
-                            value = defaultValue.Value as string;
-                        }
+                        value = defaultValue.Value as string;
                     }
                 }
 

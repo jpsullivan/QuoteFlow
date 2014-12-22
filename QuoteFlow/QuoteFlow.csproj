@@ -360,7 +360,11 @@
     <Compile Include="Configuration\AppConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\IAppConfiguration.cs" />
+    <Compile Include="Configuration\IndexConfiguration.cs" />
     <Compile Include="Configuration\LuceneIndexLocation.cs" />
+    <Compile Include="Configuration\Lucene\DefaultIndexWriterConfiguration.cs" />
+    <Compile Include="Configuration\Lucene\IIndexWriterConfiguration.cs" />
+    <Compile Include="Configuration\Lucene\WriterSettings.cs" />
     <Compile Include="Configuration\MailAddressConverter.cs" />
     <Compile Include="Configuration\SmtpUri.cs" />
     <Compile Include="Configuration\StorageType.cs" />

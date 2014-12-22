@@ -76,7 +76,6 @@ namespace QuoteFlow
         private static void RegisterAllRouters()
         {
             AreaRegistration.RegisterAllAreas();
-            //GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             // Set up MVC routes so our app URLs actually work
