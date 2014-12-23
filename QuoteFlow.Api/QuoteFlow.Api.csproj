@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Index\AccumulatingResultBuilder.cs" />
+    <Compile Include="Index\ISearcherFunction.cs" />
     <Compile Include="Lucene\Index\IIndex.cs" />
     <Compile Include="Lucene\Index\IIndexConfiguration.cs" />
     <Compile Include="Lucene\Index\IIndexManager.cs" />
