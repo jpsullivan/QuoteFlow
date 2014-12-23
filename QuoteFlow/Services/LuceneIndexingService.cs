@@ -20,8 +20,7 @@ namespace QuoteFlow.Services
 
         private static readonly TimeSpan IndexRecreateInterval = TimeSpan.FromHours(3);
 
-        private static ConcurrentDictionary<Lucene.Net.Store.Directory, IndexWriter> WriterCache =
-            new ConcurrentDictionary<Lucene.Net.Store.Directory, IndexWriter>();
+        private static ConcurrentDictionary<Lucene.Net.Store.Directory, IndexWriter> WriterCache = new ConcurrentDictionary<Lucene.Net.Store.Directory, IndexWriter>();
 
         private Lucene.Net.Store.Directory _directory;
         private IndexWriter _indexWriter;
@@ -81,12 +80,12 @@ namespace QuoteFlow.Services
                     UpdateIndexRefreshTime();
                 }
 
-                var packages = GetPackages(lastWriteTime);
-                if (packages.Count > 0)
-                {
-                    EnsureIndexWriter(creatingIndex: lastWriteTime == null);
-                    AddPackagesCore(packages, creatingIndex: lastWriteTime == null);
-                }
+//                var packages = GetPackages(lastWriteTime);
+//                if (packages.Count > 0)
+//                {
+//                    EnsureIndexWriter(creatingIndex: lastWriteTime == null);
+//                    AddPackagesCore(packages, creatingIndex: lastWriteTime == null);
+//                }
 
                 UpdateLastWriteTime();
             }
@@ -129,52 +128,6 @@ namespace QuoteFlow.Services
 //                }
 //            }
 //        }
-//
-        private List<PackageIndexEntity> GetPackages(DateTime? lastIndexTime)
-        {
-            IQueryable<Package> set = _packageRepository.GetAll();
-
-            if (lastIndexTime.HasValue)
-            {
-                // Retrieve the Latest and LatestStable version of packages if any package for that registration changed since we last updated the index.
-                // We need to do this because some attributes that we index such as DownloadCount are values in the PackageRegistration table that may
-                // update independent of the package.
-                set = set.Where(
-                    p => (p.IsLatest || p.IsLatestStable) &&
-                        p.PackageRegistration.Packages.Any(p2 => p2.LastUpdated > lastIndexTime));
-            }
-            else
-            {
-                set = set.Where(p => p.IsLatest || p.IsLatestStable);  // which implies that p.IsListed by the way!
-            }
-
-            var list = set
-                .Include(p => p.PackageRegistration)
-                .Include(p => p.PackageRegistration.Owners)
-                .Include(p => p.SupportedFrameworks)
-                .ToList();
-
-            var curatedFeedsPerPackageRegistration = _curatedPackageRepository.GetAll()
-                .Select(cp => new { cp.PackageRegistrationKey, cp.CuratedFeedKey })
-                .GroupBy(x => x.PackageRegistrationKey)
-                .ToDictionary(group => group.Key, element => element.Select(x => x.CuratedFeedKey));
-
-            Func<int, IEnumerable<int>> GetFeeds = packageRegistrationKey =>
-            {
-                IEnumerable<int> ret = null;
-                curatedFeedsPerPackageRegistration.TryGetValue(packageRegistrationKey, out ret);
-                return ret;
-            };
-
-            var packagesForIndexing = list.Select(
-                p => new PackageIndexEntity
-                {
-                    Package = p,
-                    CuratedFeedKeys = GetFeeds(p.PackageRegistrationKey)
-                });
-
-            return packagesForIndexing.ToList();
-        }
 //
 //        public void AddPackages(IList<PackageIndexEntity> packages, bool creatingIndex)
 //        {
@@ -285,7 +238,6 @@ namespace QuoteFlow.Services
             }
         }
 
-
         public Task<int> GetDocumentCount()
         {
             using (IndexReader reader = IndexReader.Open(_directory, readOnly: true))
@@ -294,13 +246,11 @@ namespace QuoteFlow.Services
             }
         }
 
-
         public Task<long> GetIndexSizeInBytes()
         {
             var path = IndexPath;
             return Task.FromResult(CalculateSize(new DirectoryInfo(path)));
         }
-
 
         public void RegisterBackgroundJobs(IList<IJob> jobs, IAppConfiguration configuration)
         {

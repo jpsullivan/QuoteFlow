@@ -496,7 +496,6 @@
     <Compile Include="Models\Assets\Index\AssetIndexManager.cs" />
     <Compile Include="Models\Assets\Index\IAssetIndexer.cs" />
     <Compile Include="Models\Assets\Index\IAssetIndexManager.cs" />
-    <Compile Include="Models\Assets\Index\IIndex.cs" />
     <Compile Include="Models\Assets\Index\Indexers\ManufacturerIndexer.cs" />
     <Compile Include="Models\Assets\Search\Handlers\ManufacturerSearchHandlerFactory.cs" />
     <Compile Include="Models\Assets\Search\Handlers\SummarySearchHandlerFactory.cs" />
@@ -1473,6 +1472,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuoteFlow.Api\QuoteFlow.Api.csproj">
+      <Project>{CD0673A9-2E26-496F-BEE1-0CB898C1C2C3}</Project>
+      <Name>QuoteFlow.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

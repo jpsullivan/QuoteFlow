@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Lucene.Net.Search;
+using QuoteFlow.Api.Lucene.Index;
 using WebBackgrounder;
 
 namespace QuoteFlow.Models.Assets.Index

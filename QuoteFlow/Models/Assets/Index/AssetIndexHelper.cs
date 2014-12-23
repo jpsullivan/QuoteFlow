@@ -18,6 +18,5 @@ namespace QuoteFlow.Models.Assets.Index
 			this.issueIndexer = issueIndexer;
 			this.issueFactory = issueFactory;
 		}
-
     }
 }
