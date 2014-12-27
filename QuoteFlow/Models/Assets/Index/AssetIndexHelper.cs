@@ -71,38 +71,36 @@ namespace QuoteFlow.Models.Assets.Index
             return assetIds;
         }
 
-        public virtual void FixupConcurrentlyIndexedAssets(Job context, AccumulatingResultBuilder resultBuilder, BackgroundIndexListener backgroundIndexListener, bool reIndexComments, bool reIndexChangeHistory)
-        {
-            // Safely reindex any asset that were concurrently updated - even if we have been cancelled.
-            AssetIdsAssetIterable issueIterable = new AssetIdsAssetIterable(backgroundIndexListener.UpdatedAssets, issueManager);
-
-            resultBuilder.add(issueIndexer.reindexIssues(issueIterable, context, reIndexComments, reIndexChangeHistory, true));
-            resultBuilder.toResult().@await();
-
-            // Make sure we haven't accidentally replaced any issues that were concurrently deleted.
-            safelyRemoveOrphans(resultBuilder, backgroundIndexListener.DeletedIssues);
-            resultBuilder.toResult().@await();
-
-        }
-
-        public virtual void fixupIndexCorruptions(AccumulatingResultBuilder resultBuilder, IndexReconciler reconciler)
-        {
-            // Get issue that were found in the database but not in the index, They need to be reindexed again
-            // if they still exist in the database and if they are still not in the index.
-            // If they are in the database, then they have been indexed since we began the reindex and so all is well.
-            safelyAddMissing(resultBuilder, reconciler.Unindexed);
-            resultBuilder.toResult().@await();
-
-            log.debug("" + reconciler.Unindexed.size() + " missing issues add to the index.");
-
-            // These issue were not found in the database but were in the index, They need to be removed
-            // if they still do not exist in the database.
-            safelyRemoveOrphans(resultBuilder, reconciler.Orphans);
-            resultBuilder.toResult().@await();
-
-            log.debug("" + reconciler.Orphans.size() + " deleted issues removed from the index.");
-        }
-
+//        public virtual void FixupConcurrentlyIndexedAssets(Job context, AccumulatingResultBuilder resultBuilder, BackgroundIndexListener backgroundIndexListener, bool reIndexComments, bool reIndexChangeHistory)
+//        {
+//            // Safely reindex any asset that were concurrently updated - even if we have been cancelled.
+//            AssetIdsAssetIterable issueIterable = new AssetIdsAssetIterable(backgroundIndexListener.UpdatedAssets, issueManager);
+//
+//            resultBuilder.add(issueIndexer.reindexIssues(issueIterable, context, reIndexComments, reIndexChangeHistory, true));
+//            resultBuilder.toResult().@await();
+//
+//            // Make sure we haven't accidentally replaced any issues that were concurrently deleted.
+//            safelyRemoveOrphans(resultBuilder, backgroundIndexListener.DeletedIssues);
+//            resultBuilder.toResult().@await();
+//        }
+//
+//        public virtual void FixupIndexCorruptions(AccumulatingResultBuilder resultBuilder, IndexReconciler reconciler)
+//        {
+//            // Get issue that were found in the database but not in the index, They need to be reindexed again
+//            // if they still exist in the database and if they are still not in the index.
+//            // If they are in the database, then they have been indexed since we began the reindex and so all is well.
+//            safelyAddMissing(resultBuilder, reconciler.Unindexed);
+//            resultBuilder.toResult().@await();
+//
+//            log.debug("" + reconciler.Unindexed.size() + " missing issues add to the index.");
+//
+//            // These issue were not found in the database but were in the index, They need to be removed
+//            // if they still do not exist in the database.
+//            safelyRemoveOrphans(resultBuilder, reconciler.Orphans);
+//            resultBuilder.toResult().@await();
+//
+//            log.debug("" + reconciler.Orphans.size() + " deleted issues removed from the index.");
+//        }
 
         private class AssetIdsHelper : ISearcherFunction<int[]>
         {
