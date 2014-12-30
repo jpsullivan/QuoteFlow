@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lucene\Index\AccumulatingResultBuilder.cs" />
     <Compile Include="Lucene\Index\IndexConfiguration.cs" />
+    <Compile Include="Lucene\Index\IndexingFailureException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

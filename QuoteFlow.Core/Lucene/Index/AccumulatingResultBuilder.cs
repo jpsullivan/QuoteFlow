@@ -17,9 +17,10 @@ namespace QuoteFlow.Core.Lucene.Index
     public sealed class AccumulatingResultBuilder
     {
         //private static readonly RateLimitingLogger log = new RateLimitingLogger(typeof(AccumulatingResultBuilder));
-        private readonly IEnumerable<InFlightResult> inFlightResults = new BlockingCollection<InFlightResult>();
+        private readonly BlockingCollection<InFlightResult> _inFlightResults = new BlockingCollection<InFlightResult>();
         private int successesToDate = 0;
         private int failuresToDate = 0;
+        private readonly ICollection<ThreadStart> completionTasks = new LinkedList<ThreadStart>();
 
         public AccumulatingResultBuilder Add(IIndexResult result)
         {
@@ -34,19 +35,86 @@ namespace QuoteFlow.Core.Lucene.Index
                 CompositeResult compositeResult = compResult;
                 foreach (InFlightResult ifr in compositeResult.Results)
                 {
-                    addInternal(ifr);
+                    AddInternal(ifr);
                 }
                 successesToDate += compositeResult.Successes;
                 failuresToDate += compositeResult.Failures;
             }
             else
             {
-                addInternal(null, null, result);
+                AddInternal(null, null, result);
             }
             return this;
         }
 
-        private static void logFailure(string indexName, long? identifier, Exception e)
+        private void AddInternal(InFlightResult ifr)
+        {
+            CheckCompleted();
+            if (ifr.Result.Done)
+            {
+                CollectResult(ifr.IndexName, ifr.Identifier, ifr.Result);
+            }
+            else
+            {
+                _inFlightResults.Add(ifr);
+            }
+        }
+
+        private void AddInternal(string indexName, long? identifier, IIndexResult result)
+        {
+            CheckCompleted();
+            if (result.Done)
+            {
+                CollectResult(indexName, identifier, result);
+            }
+            else
+            {
+                _inFlightResults.Add(new InFlightResult(indexName, identifier, result));
+            }
+        }
+
+        public void AddCompletionTask(ThreadStart runnable)
+        {
+            completionTasks.Add(runnable);
+        }
+
+        /// <summary>
+        /// Keep the results list small, we don't want to waste too much ram with
+        /// complete results.
+        /// </summary>
+        private void CheckCompleted()
+        {
+            for (IEnumerator<InFlightResult> iterator = _inFlightResults.GetEnumerator(); iterator.MoveNext();)
+            {
+                InFlightResult ifr = iterator.Current;
+                if (ifr.Result.Done)
+                {
+                    CollectResult(ifr.IndexName, ifr.Identifier, ifr.Result);
+                    iterator.remove();
+                }
+            }
+        }
+
+        private void CollectResult(string indexName, long? identifier, IIndexResult result)
+        {
+            try
+            {
+                result.Await();
+                successesToDate++;
+            }
+            catch (Exception e)
+            {
+                failuresToDate++;
+                LogFailure(indexName, identifier, e);
+            }
+        }
+
+        public IIndexResult ToResult()
+        {
+            return new CompositeResult(_inFlightResults, successesToDate, failuresToDate, completionTasks);
+        }
+
+        private static void LogFailure(string indexName, long? identifier, Exception e)
         {
             // We don't want to flood the logs if an indexing operation is going awry, but
             // we do want the ability to debug it in production when required.
@@ -96,7 +164,7 @@ namespace QuoteFlow.Core.Lucene.Index
                     catch (Exception e)
                     {
                         Failures++;
-                        logFailure(ifr.IndexName, ifr.Identifier, e);
+                        LogFailure(ifr.IndexName, ifr.Identifier, e);
                     }
 
                     // once run, they should be removed
@@ -107,6 +175,7 @@ namespace QuoteFlow.Core.Lucene.Index
 				{
 					throw new IndexingFailureException(Failures);
 				}
+
 				Complete();
 			}
 
@@ -142,10 +211,10 @@ namespace QuoteFlow.Core.Lucene.Index
                     catch (Exception e)
                     {
                         Failures++;
-                        logFailure(ifr.IndexName, ifr.Identifier, e);
+                        LogFailure(ifr.IndexName, ifr.Identifier, e);
                     }
                     // once run, they should be removed
-                    it.remove();
+                    it.Remove();
                 }
 
                 if (Failures > 0)
