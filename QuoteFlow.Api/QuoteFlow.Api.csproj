@@ -50,6 +50,7 @@
     <Compile Include="Lucene\Index\IIndexConfiguration.cs" />
     <Compile Include="Lucene\Index\IIndexManager.cs" />
     <Compile Include="Lucene\Index\IIndexResult.cs" />
+    <Compile Include="Lucene\Index\IndexLocation.cs" />
     <Compile Include="Lucene\Index\UpdateMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
