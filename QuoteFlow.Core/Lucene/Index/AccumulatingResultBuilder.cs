@@ -17,7 +17,7 @@ namespace QuoteFlow.Core.Lucene.Index
     public sealed class AccumulatingResultBuilder
     {
         //private static readonly RateLimitingLogger log = new RateLimitingLogger(typeof(AccumulatingResultBuilder));
-        private readonly BlockingCollection<InFlightResult> _inFlightResults = new BlockingCollection<InFlightResult>();
+        private readonly List<InFlightResult> _inFlightResults = new List<InFlightResult>();
         private int successesToDate = 0;
         private int failuresToDate = 0;
         private readonly ICollection<ThreadStart> completionTasks = new LinkedList<ThreadStart>();
@@ -37,6 +37,7 @@ namespace QuoteFlow.Core.Lucene.Index
                 {
                     AddInternal(ifr);
                 }
+
                 successesToDate += compositeResult.Successes;
                 failuresToDate += compositeResult.Failures;
             }
@@ -90,7 +91,7 @@ namespace QuoteFlow.Core.Lucene.Index
                 if (ifr.Result.Done)
                 {
                     CollectResult(ifr.IndexName, ifr.Identifier, ifr.Result);
-                    iterator.remove();
+                    _inFlightResults.Remove(ifr);
                 }
             }
         }
@@ -131,7 +132,7 @@ namespace QuoteFlow.Core.Lucene.Index
         /// </summary>
         private sealed class CompositeResult : IIndexResult
         {
-            private readonly IEnumerable<InFlightResult> results;
+            private readonly List<InFlightResult> results;
             private readonly LinkedList<ThreadStart> completionTasks;
 
             internal CompositeResult(IEnumerable<InFlightResult> inFlightResults, int successes, int failures, ICollection<ThreadStart> completionTasks)
@@ -139,11 +140,7 @@ namespace QuoteFlow.Core.Lucene.Index
                 Successes = successes;
                 Failures = failures;
 
-                var bc = new BlockingCollection<InFlightResult>();
-                foreach (var inFlightResult in inFlightResults)
-                {
-                    bc.Add(inFlightResult);
-                }
+                var bc = inFlightResults.ToList();
                 results = bc;
                 this.completionTasks = new LinkedList<ThreadStart>(completionTasks);
             }
@@ -168,7 +165,7 @@ namespace QuoteFlow.Core.Lucene.Index
                     }
 
                     // once run, they should be removed
-                    it.Remove();
+                    results.Remove(ifr);
                 }
 
 				if (Failures > 0)
@@ -192,39 +189,39 @@ namespace QuoteFlow.Core.Lucene.Index
                 }
             }
 
-            public bool Await(long time, TimeSpan unit)
-            {
-				var timeout = TimeSpan.getNanosTimeout(time, unit);
-                for (IEnumerator<InFlightResult> it = results.GetEnumerator(); it.MoveNext(); )
-                {
-                    // all threads should await
-                    InFlightResult ifr = it.Current;
-                    IIndexResult result = ifr.Result;
-                    try
-                    {
-                        if (!result.Await(timeout.Time, timeout.Unit))
-                        {
-                            return false;
-                        }
-                        Successes++;
-                    }
-                    catch (Exception e)
-                    {
-                        Failures++;
-                        LogFailure(ifr.IndexName, ifr.Identifier, e);
-                    }
-                    // once run, they should be removed
-                    it.Remove();
-                }
-
-                if (Failures > 0)
-                {
-                    throw new IndexingFailureException(Failures);
-                }
-                
-                Complete();
-                return true;
-			}
+//            public bool Await(long time, TimeSpan unit)
+//            {
+//				var timeout = TimeSpan.getNanosTimeout(time, unit);
+//                for (IEnumerator<InFlightResult> it = results.GetEnumerator(); it.MoveNext(); )
+//                {
+//                    // all threads should await
+//                    InFlightResult ifr = it.Current;
+//                    IIndexResult result = ifr.Result;
+//                    try
+//                    {
+//                        if (!result.Await(timeout.Time, timeout.Unit))
+//                        {
+//                            return false;
+//                        }
+//                        Successes++;
+//                    }
+//                    catch (Exception e)
+//                    {
+//                        Failures++;
+//                        LogFailure(ifr.IndexName, ifr.Identifier, e);
+//                    }
+//                    // once run, they should be removed
+//                    it.Remove();
+//                }
+//
+//                if (Failures > 0)
+//                {
+//                    throw new IndexingFailureException(Failures);
+//                }
+//                
+//                Complete();
+//                return true;
+//			}
 
             public bool Done
             {

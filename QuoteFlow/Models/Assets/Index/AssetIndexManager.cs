@@ -164,6 +164,7 @@ namespace QuoteFlow.Models.Assets.Index
         }
 
         public bool Held { get; private set; }
+
         public long Release()
         {
             throw new NotImplementedException();
