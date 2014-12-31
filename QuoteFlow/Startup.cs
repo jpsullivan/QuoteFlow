@@ -3,7 +3,7 @@ using Microsoft.Owin.Logging;
 using Ninject;
 using Owin;
 using QuoteFlow.Authentication;
-using QuoteFlow.Configuration;
+using QuoteFlow.Core.Configuration;
 
 [assembly: OwinStartup(typeof(QuoteFlow.Startup))]
 namespace QuoteFlow

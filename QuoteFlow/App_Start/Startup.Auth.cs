@@ -6,7 +6,7 @@ using Owin;
 using QuoteFlow.Authentication;
 using QuoteFlow.Authentication.Providers;
 using QuoteFlow.Authentication.Providers.LocalUser;
-using QuoteFlow.Configuration;
+using QuoteFlow.Core.Configuration;
 
 namespace QuoteFlow
 {

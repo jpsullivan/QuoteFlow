@@ -1,4 +1,4 @@
-﻿namespace QuoteFlow.Configuration.Lucene
+﻿namespace QuoteFlow.Core.Configuration.Lucene
 {
     /// <summary>
     /// Controls how the Lucene IndexWriter will be set up.

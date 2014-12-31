@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using Glimpse.Core.Extensibility;
-using QuoteFlow.Configuration;
+using QuoteFlow.Api.Configuration;
+using QuoteFlow.Core.Configuration;
 
 namespace QuoteFlow.Diagnostics
 {

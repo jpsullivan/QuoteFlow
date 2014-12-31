@@ -3,8 +3,9 @@ using System.Globalization;
 using System.Net;
 using System.Web.Mvc;
 using Ninject;
+using QuoteFlow.Api.Configuration;
 using QuoteFlow.Infrastructure;
-using QuoteFlow.Configuration;
+using QuoteFlow.Core.Configuration;
 
 namespace QuoteFlow.Infrastructure.Attributes
 {

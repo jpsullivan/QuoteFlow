@@ -4,8 +4,9 @@ using System.Net.Mail;
 using System.Web;
 using AnglicanGeek.MarkdownMailer;
 using Elmah;
+using QuoteFlow.Api.Configuration;
 using QuoteFlow.Authentication;
-using QuoteFlow.Configuration;
+using QuoteFlow.Core.Configuration;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models;
 

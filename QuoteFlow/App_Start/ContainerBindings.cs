@@ -11,8 +11,9 @@ using Microsoft.WindowsAzure.ServiceRuntime;
 using Ninject;
 using Ninject.Web.Common;
 using Ninject.Modules;
+using QuoteFlow.Api.Configuration;
 using QuoteFlow.Auditing;
-using QuoteFlow.Configuration;
+using QuoteFlow.Core.Configuration;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Lucene;
 using QuoteFlow.Models;
@@ -44,7 +45,7 @@ namespace QuoteFlow
             var configuration = new ConfigurationService();
             Bind<ConfigurationService>().ToMethod(context => configuration);
             Bind<IAppConfiguration>().ToMethod(context => configuration.Current);
-            Bind<PoliteCaptcha.IConfigurationSource>().ToMethod(context => configuration);
+            Bind<IConfigurationSource>().ToMethod(context => configuration);
 
             Bind<Lucene.Net.Store.Directory>()
                 .ToMethod(_ => LuceneCommon.GetDirectory(configuration.Current.LuceneIndexLocation))

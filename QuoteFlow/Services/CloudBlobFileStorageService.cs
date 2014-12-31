@@ -10,7 +10,8 @@ using System.Web.Mvc;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Blob.Protocol;
-using QuoteFlow.Configuration;
+using QuoteFlow.Api.Configuration;
+using QuoteFlow.Core.Configuration;
 using QuoteFlow.Infrastructure.Exceptions;
 using QuoteFlow.Services.Interfaces;
 

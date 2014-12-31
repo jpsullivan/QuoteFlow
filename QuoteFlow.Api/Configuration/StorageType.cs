@@ -1,4 +1,4 @@
-﻿namespace QuoteFlow.Configuration
+﻿namespace QuoteFlow.Api.Configuration
 {
     public enum StorageType
     {

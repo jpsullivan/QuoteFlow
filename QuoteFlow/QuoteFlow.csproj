@@ -219,14 +219,8 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="PoliteCaptcha">
-      <HintPath>..\packages\PoliteCaptcha.0.4.0.1\lib\net40\PoliteCaptcha.dll</HintPath>
-    </Reference>
     <Reference Include="PowerCollections">
       <HintPath>..\packages\XAct.Wintellect.PowerCollections.0.0.1\lib\net20\PowerCollections.dll</HintPath>
-    </Reference>
-    <Reference Include="Recaptcha">
-      <HintPath>..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
     </Reference>
     <Reference Include="Sigil, Version=4.2.1.0, Culture=neutral, PublicKeyToken=2d06c3494341c8ab, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -357,17 +351,6 @@
     <Compile Include="CatalogController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Configuration\AppConfiguration.cs" />
-    <Compile Include="Configuration\ConfigurationService.cs" />
-    <Compile Include="Configuration\IAppConfiguration.cs" />
-    <Compile Include="Configuration\IndexConfiguration.cs" />
-    <Compile Include="Configuration\LuceneIndexLocation.cs" />
-    <Compile Include="Configuration\Lucene\DefaultIndexWriterConfiguration.cs" />
-    <Compile Include="Configuration\Lucene\IIndexWriterConfiguration.cs" />
-    <Compile Include="Configuration\Lucene\WriterSettings.cs" />
-    <Compile Include="Configuration\MailAddressConverter.cs" />
-    <Compile Include="Configuration\SmtpUri.cs" />
-    <Compile Include="Configuration\StorageType.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContactController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -1477,6 +1460,10 @@
     <ProjectReference Include="..\QuoteFlow.Api\QuoteFlow.Api.csproj">
       <Project>{CD0673A9-2E26-496F-BEE1-0CB898C1C2C3}</Project>
       <Name>QuoteFlow.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuoteFlow.Core\QuoteFlow.Core.csproj">
+      <Project>{0d7a1a6b-7409-4cf7-9e2e-94366651cf50}</Project>
+      <Name>QuoteFlow.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

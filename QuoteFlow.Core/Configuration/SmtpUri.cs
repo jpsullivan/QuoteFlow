@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text.RegularExpressions;
 
-namespace QuoteFlow.Configuration
+namespace QuoteFlow.Core.Configuration
 {
     public class SmtpUri
     {

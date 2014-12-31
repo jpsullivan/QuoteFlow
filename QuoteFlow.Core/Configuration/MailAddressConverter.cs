@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Net.Mail;
 
-namespace QuoteFlow.Configuration
+namespace QuoteFlow.Core.Configuration
 {
     public class MailAddressConverter : TypeConverter
     {

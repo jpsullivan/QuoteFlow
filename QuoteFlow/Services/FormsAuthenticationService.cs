@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
-using QuoteFlow.Configuration;
+using QuoteFlow.Api.Configuration;
+using QuoteFlow.Core.Configuration;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Services.Interfaces;
 

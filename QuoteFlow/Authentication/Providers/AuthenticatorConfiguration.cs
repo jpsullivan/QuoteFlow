@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Microsoft.Owin.Security;
-using QuoteFlow.Configuration;
+using QuoteFlow.Core.Configuration;
 using QuoteFlow.Infrastructure.Extensions;
 
 namespace QuoteFlow.Authentication.Providers

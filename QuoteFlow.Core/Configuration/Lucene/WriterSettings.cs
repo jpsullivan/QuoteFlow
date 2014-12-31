@@ -1,7 +1,6 @@
 ﻿using Lucene.Net.Analysis;
-using QuoteFlow.Infrastructure.Lucene;
 
-namespace QuoteFlow.Configuration.Lucene
+namespace QuoteFlow.Core.Configuration.Lucene
 {
     public abstract class WriterSettings
     {

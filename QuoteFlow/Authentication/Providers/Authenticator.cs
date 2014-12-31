@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
-using QuoteFlow.Configuration;
 using Owin;
+using QuoteFlow.Core.Configuration;
 
 namespace QuoteFlow.Authentication.Providers
 {

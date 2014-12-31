@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace QuoteFlow.Configuration
+namespace QuoteFlow.Core.Configuration
 {
     public class IndexConfiguration
     {

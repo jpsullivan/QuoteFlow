@@ -8,9 +8,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using Microsoft.WindowsAzure.ServiceRuntime;
-using PoliteCaptcha;
+using QuoteFlow.Api.Configuration;
 
-namespace QuoteFlow.Configuration
+namespace QuoteFlow.Core.Configuration
 {
     public class ConfigurationService : IConfigurationSource
     {
@@ -107,7 +107,7 @@ namespace QuoteFlow.Configuration
             return instance;
         }
 
-        internal static IEnumerable<PropertyDescriptor> GetConfigProperties<T>(T instance)
+        public static IEnumerable<PropertyDescriptor> GetConfigProperties<T>(T instance)
         {
             return TypeDescriptor.GetProperties(instance).Cast<PropertyDescriptor>().Where(p => !p.IsReadOnly);
         }

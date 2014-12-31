@@ -37,6 +37,7 @@
       <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\AppConfiguration.cs" />
+    <Compile Include="Configuration\ConfigurationService.cs" />
+    <Compile Include="Configuration\IndexConfiguration.cs" />
+    <Compile Include="Configuration\Lucene\DefaultIndexWriterConfiguration.cs" />
+    <Compile Include="Configuration\Lucene\IIndexWriterConfiguration.cs" />
+    <Compile Include="Configuration\Lucene\WriterSettings.cs" />
+    <Compile Include="Configuration\MailAddressConverter.cs" />
+    <Compile Include="Configuration\SmtpUri.cs" />
     <Compile Include="Lucene\Index\AccumulatingResultBuilder.cs" />
     <Compile Include="Lucene\Index\IndexConfiguration.cs" />
     <Compile Include="Lucene\Index\IndexingFailureException.cs" />

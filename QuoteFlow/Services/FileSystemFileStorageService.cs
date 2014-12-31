@@ -4,7 +4,8 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using QuoteFlow.Configuration;
+using QuoteFlow.Api.Configuration;
+using QuoteFlow.Core.Configuration;
 using QuoteFlow.Services.Interfaces;
 
 namespace QuoteFlow.Services

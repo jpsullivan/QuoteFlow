@@ -1,4 +1,4 @@
-﻿namespace QuoteFlow.Configuration
+﻿namespace QuoteFlow.Core.Configuration
 {
     public enum LuceneIndexLocation
     {

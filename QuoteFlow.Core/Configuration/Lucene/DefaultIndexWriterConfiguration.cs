@@ -1,6 +1,6 @@
 ﻿using Lucene.Net.Index;
 
-namespace QuoteFlow.Configuration.Lucene
+namespace QuoteFlow.Core.Configuration.Lucene
 {
     public sealed class DefaultIndexWriterConfiguration
     {

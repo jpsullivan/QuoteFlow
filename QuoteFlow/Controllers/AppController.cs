@@ -10,7 +10,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Microsoft.Owin;
 using Ninject;
-using QuoteFlow.Configuration;
+using QuoteFlow.Core.Configuration;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Models;

@@ -45,12 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\IAppConfiguration.cs" />
+    <Compile Include="Configuration\IConfigurationSource.cs" />
+    <Compile Include="Configuration\LuceneIndexLocation.cs" />
+    <Compile Include="Configuration\StorageType.cs" />
     <Compile Include="Index\ISearcherFunction.cs" />
     <Compile Include="Lucene\Index\IIndex.cs" />
     <Compile Include="Lucene\Index\IIndexConfiguration.cs" />
     <Compile Include="Lucene\Index\IIndexManager.cs" />
     <Compile Include="Lucene\Index\IIndexResult.cs" />
     <Compile Include="Lucene\Index\IndexLocation.cs" />
+    <Compile Include="Lucene\Index\IndexOperation.cs" />
+    <Compile Include="Lucene\Index\IWriter.cs" />
     <Compile Include="Lucene\Index\UpdateMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
