@@ -8,7 +8,6 @@ namespace QuoteFlow.Core.Configuration.Lucene
         private const int MAX_FIELD_LENGTH = IndexWriter.DEFAULT_MAX_FIELD_LENGTH;
 
         public static readonly WriterSettings Batch = new BatchWriterSettings();
-
         private class BatchWriterSettings : WriterSettings
         {
             public BatchWriterSettings()
@@ -37,7 +36,6 @@ namespace QuoteFlow.Core.Configuration.Lucene
         }
 
         public static readonly WriterSettings Interactive = new InteractiveWriterSettings();
-
         private class InteractiveWriterSettings : WriterSettings
         {
             public InteractiveWriterSettings()

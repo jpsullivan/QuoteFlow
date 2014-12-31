@@ -1,75 +1,111 @@
 ﻿using System;
-using System.IO;
-using System.Web.Hosting;
 using Lucene.Net.Analysis;
 using Lucene.Net.Store;
 using QuoteFlow.Api.Lucene.Index;
-using Directory = Lucene.Net.Store.Directory;
-using Version = Lucene.Net.Util.Version;
+using QuoteFlow.Core.Configuration.Lucene;
 
 namespace QuoteFlow.Core.Lucene.Index
 {
     public class IndexConfiguration : IIndexConfiguration
     {
-        internal static readonly Version LuceneVersion = Version.LUCENE_30;
-
-        private static readonly SingleInstanceLockFactory LuceneLock = new SingleInstanceLockFactory();
-
-        // Factory method for DI/IOC that creates the directory the index is stored in.
-        // Used by real website. Bypassed for unit tests.
-        private static SimpleFSDirectory _directorySingleton;
-
-        internal static string GetDirectoryLocation()
+        private sealed class Default
         {
-            // Don't create the directory if it's not already present.
-            return _directorySingleton == null ? null : _directorySingleton.Directory.FullName;
-        }
+            /// <summary>
+            /// 1million (the lucene default is 10,000).
+            /// at (say) 10chars per token, that is a 10meg limit. Fair enough.
+            /// </summary>
+            internal const int MAX_FIELD_LENGTH = 1000000;
 
-        internal static string GetIndexMetadataPath()
-        {
-            // Don't create the directory if it's not already present.
-            string root = _directorySingleton == null ? "." : (_directorySingleton.Directory.FullName ?? ".");
-            return Path.Combine(root, "index.metadata");
-        }
-
-        internal static Directory GetDirectory(IndexLocation location)
-        {
-            if (_directorySingleton == null)
+            public static readonly WriterSettings Interactive = new InteractiveWriterSettings();
+            private class InteractiveWriterSettings : WriterSettings
             {
-                var index = GetIndexLocation(location);
-                if (!System.IO.Directory.Exists(index))
+                public override int MergeFactor
                 {
-                    System.IO.Directory.CreateDirectory(index);
+                    get { return 4; }
                 }
 
-                var directoryInfo = new DirectoryInfo(index);
-                _directorySingleton = new SimpleFSDirectory(directoryInfo, LuceneLock);
+                public override int MaxMergeDocs
+                {
+                    get { return 5000; }
+                }
+
+                public override int MaxBufferedDocs
+                {
+                    get { return 300; }
+                }
+
+                public override int MaxFieldLength
+                {
+                    get { return MAX_FIELD_LENGTH; }
+                }
             }
 
-            return _directorySingleton;
-        }
-
-        private static string GetIndexLocation(IndexLocation location)
-        {
-            switch (location)
+            public static readonly WriterSettings Batch = new BatchWriterSettings();
+            private class BatchWriterSettings : WriterSettings
             {
-                case IndexLocation.Temp:
-                    return Path.Combine(Path.GetTempPath(), "QuoteFlow", "Lucene");
-                default:
-                    return HostingEnvironment.MapPath("~/App_Data/Lucene");
+                public override int MergeFactor
+                {
+                    get { return 50; }
+                }
+
+                public override int MaxMergeDocs
+                {
+                    get { return Int32.MaxValue; }
+                }
+
+                public override int MaxBufferedDocs
+                {
+                    get { return 300; }
+                }
+
+                public override int MaxFieldLength
+                {
+                    get { return MAX_FIELD_LENGTH; }
+                }
+            }
+
+            public static readonly IndexWriterConfiguration WriterConfiguration = new IndexWriterConfiguration();
+            internal class IndexWriterConfiguration : IIndexWriterConfiguration
+            {
+                public DefaultIndexWriterConfiguration Default { get; set; }
+
+                public WriterSettings InterativeSettings
+                {
+                    get { return Interactive; }
+                }
+
+                public WriterSettings BatchSettings
+                {
+                    get { return Batch; }
+                }
             }
         }
 
-        public Directory Directory
+        public Directory Directory { get; set; }
+        public Analyzer Analyzer { get; set; }
+        public IIndexWriterConfiguration WriterConfiguration { get; set; }
+
+        public IndexConfiguration(Directory directory, Analyzer analyzer) : this(directory, analyzer, Default.WriterConfiguration)
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
         }
 
-        public Analyzer Analyzer
+        public IndexConfiguration(Directory directory, Analyzer analyzer, IIndexWriterConfiguration writerConfiguration)
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            Directory = directory;
+            Analyzer = analyzer;
+            WriterConfiguration = writerConfiguration;
+        }
+
+        public WriterSettings GetWriterSettings(UpdateMode mode)
+        {
+            switch (mode)
+            {
+                case UpdateMode.Batch:
+                    return WriterConfiguration.BatchSettings;
+                case UpdateMode.Interactive:
+                    return WriterConfiguration.InterativeSettings;
+            }
+            return null;
         }
     }
 }
