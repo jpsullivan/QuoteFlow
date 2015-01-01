@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -119,22 +120,60 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public void Optimize()
         {
-            throw new NotImplementedException();
-        }
-
-        public void Close()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
+            _writer.Optimize();
         }
 
         public void Commit()
         {
-            throw new NotImplementedException();
+            try
+            {
+                _writer.Commit();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [Obsolete("Use Dispose() instead.")]
+        public void Close()
+        {
+            try
+            {
+                _writer.Dispose();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Dispose()
+        {
+            try
+            {
+                _writer.Dispose();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private static void CloseQuietly(IndexSearcher searcher)
+        {
+            try
+            {
+                if (searcher != null)
+                {
+                    searcher.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error closing: " + searcher, ex);
+                //QuietLog.LogError(ex);
+            }
         }
     }
 }
