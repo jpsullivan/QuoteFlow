@@ -61,9 +61,15 @@
     <Compile Include="Configuration\MailAddressConverter.cs" />
     <Compile Include="Configuration\SmtpUri.cs" />
     <Compile Include="Lucene\Index\AccumulatingResultBuilder.cs" />
+    <Compile Include="Lucene\Index\IDisposableIndex.cs" />
+    <Compile Include="Lucene\Index\IEngine.cs" />
     <Compile Include="Lucene\Index\IIndexConfiguration.cs" />
+    <Compile Include="Lucene\Index\Index.cs" />
     <Compile Include="Lucene\Index\IndexConfiguration.cs" />
+    <Compile Include="Lucene\Index\IndexEngine.cs" />
     <Compile Include="Lucene\Index\IndexingFailureException.cs" />
+    <Compile Include="Lucene\Index\IWriter.cs" />
+    <Compile Include="Lucene\Index\WriterWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
