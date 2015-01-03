@@ -66,15 +66,15 @@ namespace QuoteFlow.Core.Lucene.Index
             protected virtual void IncReaderRef()
             {
                 searcher.IndexReader.IncRef();
-                Counter searcherLuceneOpenInstrument = Instrumentation.pullCounter(InstrumentationName.SEARCHER_LUCENE_OPEN);
-                searcherLuceneOpenInstrument.IncrementAndGet();
+//                Counter searcherLuceneOpenInstrument = Instrumentation.pullCounter(InstrumentationName.SEARCHER_LUCENE_OPEN);
+//                searcherLuceneOpenInstrument.IncrementAndGet();
             }
 
             protected virtual void DecReaderRef()
             {
                 searcher.IndexReader.DecRef();
-                Counter searcherLuceneCloseInstrument = Instrumentation.pullCounter(InstrumentationName.SEARCHER_LUCENE_CLOSE);
-                searcherLuceneCloseInstrument.IncrementAndGet();
+//                Counter searcherLuceneCloseInstrument = Instrumentation.pullCounter(InstrumentationName.SEARCHER_LUCENE_CLOSE);
+//                searcherLuceneCloseInstrument.IncrementAndGet();
             }
         }
     }
