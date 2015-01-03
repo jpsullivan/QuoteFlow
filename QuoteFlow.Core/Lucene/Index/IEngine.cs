@@ -13,11 +13,6 @@ namespace QuoteFlow.Core.Lucene.Index
         void Write(IndexOperation operation);
 
         /// <summary>
-        /// Wait until any open Searchers are closed and then close the connection.
-        /// </summary>
-        void Close();
-
-        /// <summary>
         /// Get the current searcher. Must be closed after use.
         /// </summary>
         IndexSearcher Searcher { get; }

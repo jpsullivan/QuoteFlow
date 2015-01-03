@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Data.Common;
 using QuoteFlow.Infrastructure.DB;
 using StackExchange.Profiling;
 using QuoteFlow.Controllers;
+using QuoteFlow.Infrastructure.Elmah;
 using QuoteFlow.Models;
 
 namespace QuoteFlow
@@ -51,7 +53,7 @@ namespace QuoteFlow
                 {
                     if (connection.State != ConnectionState.Closed)
                     {
-                        //GlobalApplication.LogException("Connection was not in a closed state.");
+                        QuietLog.LogHandledException(new Exception("Connection was not in a closed state."));
                     }
 
                     connection.Dispose();
