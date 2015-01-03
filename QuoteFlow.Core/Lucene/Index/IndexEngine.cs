@@ -104,6 +104,9 @@ namespace QuoteFlow.Core.Lucene.Index
         {
         }
 
+        /// <summary>
+        /// "Thread-safe" holder of the current Writer.
+        /// </summary>
         private class WriterReference : ReferenceHolder<IWriter>
         {
             private readonly IWriter _writerFactory;
@@ -118,14 +121,22 @@ namespace QuoteFlow.Core.Lucene.Index
                 _writerFactory = writerFactory;
             }
 
+            public virtual void Commit()
+            {
+                if (!IsNull)
+                {
+                    Get().Commit();
+                }
+            }
+
             protected override void DoClose(IWriter element)
             {
-                throw new NotImplementedException();
+                element.Dispose();
             }
 
             protected override IWriter Open(IWriter element)
             {
-                throw new NotImplementedException();
+                return element;
             }
         }
 

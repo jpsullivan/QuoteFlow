@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuoteFlow.Core.Lucene.Index
 {
-    class DelayCloseSearcher
+    internal class DelayCloseSearcher : DelegateSearcher, IDelayDisposable
     {
     }
 }
