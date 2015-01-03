@@ -31,7 +31,7 @@ namespace QuoteFlow.Core.Lucene.Index
         // delegate?
         private readonly IDisposable _disposable;
 
-        private readonly UsageTracker usageTracker = new UsageTracker();
+        private readonly UsageTracker _usageTracker = new UsageTracker();
 
         internal DelayDisposableHelper(IDisposable disposable)
         {
@@ -46,7 +46,7 @@ namespace QuoteFlow.Core.Lucene.Index
         /// </summary>
         public void Open()
         {
-            if (!usageTracker.IncrementUsage())
+            if (!_usageTracker.IncrementUsage())
             {
                 throw new AlreadyClosedException();
             }
@@ -54,7 +54,7 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public void CloseWhenDone()
         {
-            if (!usageTracker.Close())
+            if (!_usageTracker.Close())
             {
                 throw new AlreadyClosedException();
             }
@@ -64,7 +64,7 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public void Dispose()
         {
-            usageTracker.Decrement();
+            _usageTracker.Decrement();
             CheckClosed();
         }
 
@@ -75,7 +75,7 @@ namespace QuoteFlow.Core.Lucene.Index
         /// <returns>Whether the underlying IndexSearcher has really been closed.</returns>
         public bool IsClosed
         {
-            get { return usageTracker.Closed; }
+            get { return _usageTracker.Closed; }
         }
 
         private void CheckClosed()
