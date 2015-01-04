@@ -45,10 +45,7 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public override IndexReader[] SubReaders
         {
-            get
-            {
-                return _searcher.SubReaders;
-            }
+            get { return _searcher.SubReaders; }
         }
 
         public override TopFieldDocs Search(Weight weight, Filter filter, int nDocs, Sort sort, bool fillFields)

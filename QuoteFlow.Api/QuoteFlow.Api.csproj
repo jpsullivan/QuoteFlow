@@ -49,6 +49,7 @@
     <Compile Include="Configuration\IConfigurationSource.cs" />
     <Compile Include="Configuration\LuceneIndexLocation.cs" />
     <Compile Include="Configuration\StorageType.cs" />
+    <Compile Include="Index\IEntitySearchExtractor.cs" />
     <Compile Include="Index\ISearcherFunction.cs" />
     <Compile Include="Lucene\Index\IIndexResult.cs" />
     <Compile Include="Lucene\Index\IndexLocation.cs" />

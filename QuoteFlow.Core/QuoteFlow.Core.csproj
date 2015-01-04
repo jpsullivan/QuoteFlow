@@ -77,6 +77,7 @@
     <Compile Include="Lucene\Index\AccumulatingResultBuilder.cs" />
     <Compile Include="Lucene\Index\DelayCloseSearcher.cs" />
     <Compile Include="Lucene\Index\DelegateSearcher.cs" />
+    <Compile Include="Lucene\Index\GenericSearchExtractorContext.cs" />
     <Compile Include="Lucene\Index\IDelayDisposable.cs" />
     <Compile Include="Lucene\Index\IDisposableIndex.cs" />
     <Compile Include="Lucene\Index\IEngine.cs" />
