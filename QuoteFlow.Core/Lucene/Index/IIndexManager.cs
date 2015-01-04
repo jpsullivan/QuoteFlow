@@ -1,7 +1,7 @@
 ﻿using System;
 using Lucene.Net.Search;
 
-namespace QuoteFlow.Api.Lucene.Index
+namespace QuoteFlow.Core.Lucene.Index
 {
     /// <summary>
     /// Management of an <seealso cref="Index"/>

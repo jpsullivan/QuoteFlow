@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Reactive.Disposables;
 using Lucene.Net.Search;
-using QuoteFlow.Core.Util;
 
 namespace QuoteFlow.Core.Lucene.Index
 {

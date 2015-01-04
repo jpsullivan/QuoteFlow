@@ -50,7 +50,6 @@
     <Compile Include="Configuration\LuceneIndexLocation.cs" />
     <Compile Include="Configuration\StorageType.cs" />
     <Compile Include="Index\ISearcherFunction.cs" />
-    <Compile Include="Lucene\Index\IIndexManager.cs" />
     <Compile Include="Lucene\Index\IIndexResult.cs" />
     <Compile Include="Lucene\Index\IndexLocation.cs" />
     <Compile Include="Lucene\Index\LuceneVersion.cs" />
