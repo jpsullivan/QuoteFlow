@@ -1,5 +1,4 @@
 ﻿using System;
-using QuoteFlow.Api.Lucene.Index;
 
 namespace QuoteFlow.Core.Lucene.Index
 {

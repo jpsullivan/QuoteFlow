@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asset\Index\IAssetDocumentFactory.cs" />
     <Compile Include="Configuration\AppConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\IndexConfiguration.cs" />
@@ -66,11 +67,14 @@
     <Compile Include="Lucene\Index\IDelayDisposable.cs" />
     <Compile Include="Lucene\Index\IDisposableIndex.cs" />
     <Compile Include="Lucene\Index\IEngine.cs" />
+    <Compile Include="Lucene\Index\IEntityDocumentFactory.cs" />
+    <Compile Include="Lucene\Index\IIndex.cs" />
     <Compile Include="Lucene\Index\IIndexConfiguration.cs" />
     <Compile Include="Lucene\Index\Index.cs" />
     <Compile Include="Lucene\Index\IndexConfiguration.cs" />
     <Compile Include="Lucene\Index\IndexEngine.cs" />
     <Compile Include="Lucene\Index\IndexingFailureException.cs" />
+    <Compile Include="Lucene\Index\IndexOperation.cs" />
     <Compile Include="Lucene\Index\IWriter.cs" />
     <Compile Include="Lucene\Index\WriterWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,9 +89,7 @@
       <Name>QuoteFlow.Api</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Asset\Index\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

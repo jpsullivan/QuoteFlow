@@ -1,4 +1,6 @@
-﻿namespace QuoteFlow.Api.Lucene.Index
+﻿using QuoteFlow.Api.Lucene.Index;
+
+namespace QuoteFlow.Core.Lucene.Index
 {
     /// <summary>
     /// An operation that is performed on an Index. See <seealso cref="Operations"/> for
@@ -14,8 +16,8 @@
         {
         }
 
-        internal abstract void Perform(IWriter writer);
+        public abstract void Perform(IWriter writer);
 
-        internal abstract UpdateMode Mode { get; set; }
+        public abstract UpdateMode Mode { get; set; }
     }
 }

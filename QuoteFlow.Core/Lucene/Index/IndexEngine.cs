@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Lucene.Net.Analysis;
+using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Lucene.Index;
@@ -37,7 +39,7 @@ namespace QuoteFlow.Core.Lucene.Index
             _configuration = configuration;
             _searcherFactory = searcherFactory;
             _searcherReference = new SearcherReference(searcherFactory);
-            _writerReference = new WriterReference(writerFactory == null ? new DefaultWriterFactory(Searcher) : writerFactory);
+            _writerReference = new WriterReference(new DefaultWriterFactory(Searcher));
         }
 
         /// <summary>
@@ -52,7 +54,14 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public void Write(IndexOperation operation)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _writePolicy.Perform(operation, _writerReference);
+            }
+            finally
+            {
+                _searcherReference.Dispose();
+            }
         }
 
         public IndexSearcher Searcher
@@ -100,6 +109,8 @@ namespace QuoteFlow.Core.Lucene.Index
             Close
         }
 
+        #region Searcher / Writer Reference
+
         /// <summary>
         /// "Thread-safe" holder of the current Searcher
         /// </summary>
@@ -107,7 +118,7 @@ namespace QuoteFlow.Core.Lucene.Index
         {
             private readonly ISearcherFactory searcherSupplier;
 
-            internal SearcherReference(SearcherFactory searcherSupplier)
+            internal SearcherReference(ISearcherFactory searcherSupplier)
             {
                 if (searcherSupplier == null)
                 {
@@ -133,7 +144,7 @@ namespace QuoteFlow.Core.Lucene.Index
         /// <summary>
         /// "Thread-safe" holder of the current Writer.
         /// </summary>
-        private class WriterReference : ReferenceHolder<IWriter>
+        public class WriterReference : ReferenceHolder<IWriter>
         {
             private readonly IWriter _writerFactory;
 
@@ -166,9 +177,11 @@ namespace QuoteFlow.Core.Lucene.Index
             }
         }
 
+        #endregion
+
         #region Writer Factory Implementation
 
-        private class DefaultWriterFactory
+        private class DefaultWriterFactory : IWriter
         {
             private readonly IndexSearcher _searcher;
 
@@ -181,6 +194,46 @@ namespace QuoteFlow.Core.Lucene.Index
             {
                 // be default, create a writer wrapper that has access to this engines searcher.
                 return new WriterWrapper(_configuration, mode, new WriterFactorySupplier(_searcher));
+            }
+
+            public void Dispose()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void AddDocuments(IEnumerable<Document> documents)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void DeleteDocuments(Term identifyingTerm)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void UpdateDocuments(Term identifyingTerm, IEnumerable<Document> documents)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void UpdateDocumentConditionally(Term identifyingTerm, Document document, string optimisticLockField)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Optimize()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Close()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Commit()
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -201,7 +254,7 @@ namespace QuoteFlow.Core.Lucene.Index
 
         #endregion
 
-        internal abstract class ReferenceHolder<T> : IDisposable
+        public abstract class ReferenceHolder<T> : IDisposable
         {
             private readonly Lazy<T> _reference = new Lazy<T>(); 
 
@@ -227,11 +280,11 @@ namespace QuoteFlow.Core.Lucene.Index
             {
                 while (true)
                 {
-                    var reference = _reference;
-                    if (reference == null)
-                    {
-                        reference = new Lazy<T>();
-                    }
+//                    var reference = _reference;
+//                    if (reference == null)
+//                    {
+//                        reference = new Lazy<T>();
+//                    }
 
                     try
                     {
@@ -336,6 +389,26 @@ namespace QuoteFlow.Core.Lucene.Index
                     throw ex;
                 }
             }
+        }
+    }
+
+    public static class FlushPolicyExtensions
+    {
+        public static void Perform(this IndexEngine.FlushPolicy policy, IndexOperation operation, IndexEngine.WriterReference writer)
+        {
+            try
+            {
+                operation.Perform(writer.Get(operation.Mode));
+            }
+            finally
+            {
+                Commit(writer);
+            }
+        }
+
+        private static void Commit(IndexEngine.WriterReference writer)
+        {
+            throw new NotImplementedException();
         }
     }
 }
