@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Lucene.Net.Analysis;
+using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Infrastructure.Lucene;
 using QuoteFlow.Models.Assets.Index.Analyzer;
 

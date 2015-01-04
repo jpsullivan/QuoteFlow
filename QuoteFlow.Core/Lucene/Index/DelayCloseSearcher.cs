@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lucene.Net.Search;
+using QuoteFlow.Core.Util;
 
 namespace QuoteFlow.Core.Lucene.Index
 {
@@ -18,7 +15,7 @@ namespace QuoteFlow.Core.Lucene.Index
 
         internal DelayCloseSearcher(IndexSearcher searcher, IDisposable closeAction) : base(searcher)
         {
-            helper = new DelayDisposableHelper(new CompositeCloseable(closeAction, new SearcherCloser(searcher)));
+            helper = new DelayDisposableHelper(new CompositeDisposable(closeAction, new SearcherCloser(searcher)));
         }
 
         public void Open()
@@ -43,18 +40,18 @@ namespace QuoteFlow.Core.Lucene.Index
 
         private class SearcherCloser : IDisposable
         {
-            internal readonly IndexSearcher searcher;
+            internal readonly IndexSearcher Searcher;
 
             internal SearcherCloser(IndexSearcher searcher)
             {
-                this.searcher = searcher;
+                Searcher = searcher;
             }
 
             public void Dispose()
             {
                 try
                 {
-                    searcher.Dispose();
+                    Searcher.Dispose();
                     IncReaderRef();
                 }
                 catch (Exception ex)
@@ -65,14 +62,14 @@ namespace QuoteFlow.Core.Lucene.Index
 
             protected virtual void IncReaderRef()
             {
-                searcher.IndexReader.IncRef();
+                Searcher.IndexReader.IncRef();
 //                Counter searcherLuceneOpenInstrument = Instrumentation.pullCounter(InstrumentationName.SEARCHER_LUCENE_OPEN);
 //                searcherLuceneOpenInstrument.IncrementAndGet();
             }
 
             protected virtual void DecReaderRef()
             {
-                searcher.IndexReader.DecRef();
+                Searcher.IndexReader.DecRef();
 //                Counter searcherLuceneCloseInstrument = Instrumentation.pullCounter(InstrumentationName.SEARCHER_LUCENE_CLOSE);
 //                searcherLuceneCloseInstrument.IncrementAndGet();
             }

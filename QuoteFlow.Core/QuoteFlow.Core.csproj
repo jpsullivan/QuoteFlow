@@ -74,6 +74,7 @@
     <Compile Include="Lucene\Index\IWriter.cs" />
     <Compile Include="Lucene\Index\WriterWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\CompositeDisposable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

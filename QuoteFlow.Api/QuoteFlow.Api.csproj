@@ -56,6 +56,7 @@
     <Compile Include="Lucene\Index\IndexLocation.cs" />
     <Compile Include="Lucene\Index\IndexOperation.cs" />
     <Compile Include="Lucene\Index\IWriter.cs" />
+    <Compile Include="Lucene\Index\LuceneVersion.cs" />
     <Compile Include="Lucene\Index\UpdateMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ISupplier.cs" />

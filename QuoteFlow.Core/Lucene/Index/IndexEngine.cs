@@ -60,7 +60,7 @@ namespace QuoteFlow.Core.Lucene.Index
             get
             {
                 // mode is irrelevant to a Searcher
-                return _searcherReference.
+                return _searcherReference.Get(UpdateMode.Interactive);
             }
         }
 
@@ -100,8 +100,34 @@ namespace QuoteFlow.Core.Lucene.Index
             Close
         }
 
+        /// <summary>
+        /// "Thread-safe" holder of the current Searcher
+        /// </summary>
         private class SearcherReference : ReferenceHolder<DelayCloseSearcher>
         {
+            private readonly ISearcherFactory searcherSupplier;
+
+            internal SearcherReference(SearcherFactory searcherSupplier)
+            {
+                if (searcherSupplier == null)
+                {
+                    throw new ArgumentNullException("searcherSupplier");
+                }
+
+                this.searcherSupplier = searcherSupplier;
+            }
+
+
+            protected override void DoClose(DelayCloseSearcher element)
+            {
+                element.CloseWhenDone();
+            }
+
+            protected override DelayCloseSearcher Open(DelayCloseSearcher element)
+            {
+                element.Open();
+                return element;
+            }
         }
 
         /// <summary>

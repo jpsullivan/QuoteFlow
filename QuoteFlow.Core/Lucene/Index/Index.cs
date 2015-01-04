@@ -40,7 +40,7 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public void Dispose()
         {
-            Engine.Close();
+            Engine.Dispose();
         }
 
         /// <summary>

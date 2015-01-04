@@ -1,6 +1,6 @@
 ﻿using Version = Lucene.Net.Util.Version;
 
-namespace QuoteFlow.Infrastructure.Lucene
+namespace QuoteFlow.Api.Lucene.Index
 {
     /// <summary>
     /// This is the value used by QuoteFlow when it interacts with Lucene.Net classes.

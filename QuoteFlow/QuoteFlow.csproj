@@ -424,7 +424,6 @@
     <Compile Include="Infrastructure\Lucene\LuceneIndexingJob.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneQueryBucket.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneQueryModifier.cs" />
-    <Compile Include="Infrastructure\Lucene\LuceneVersion.cs" />
     <Compile Include="Infrastructure\Lucene\PerFieldAnalyzer.cs" />
     <Compile Include="Infrastructure\Lucene\PerFieldIndexingAnalyzer.cs" />
     <Compile Include="Infrastructure\Lucene\TotalHitCountCollector.cs" />
