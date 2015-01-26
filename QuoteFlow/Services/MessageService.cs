@@ -5,10 +5,10 @@ using System.Web;
 using AnglicanGeek.MarkdownMailer;
 using Elmah;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
 using QuoteFlow.Authentication;
-using QuoteFlow.Core.Configuration;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models;
 
 namespace QuoteFlow.Services
 {

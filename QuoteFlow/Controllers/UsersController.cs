@@ -3,16 +3,15 @@ using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using QuoteFlow.Api.Authentication;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
 using QuoteFlow.Authentication;
-using QuoteFlow.Core.Configuration;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Exceptions;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
-using QuoteFlow.Services.Interfaces;
-using CredentialTypes = QuoteFlow.Authentication.CredentialTypes;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers

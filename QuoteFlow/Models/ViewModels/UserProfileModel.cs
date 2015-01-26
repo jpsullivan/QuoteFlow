@@ -1,4 +1,6 @@
-﻿namespace QuoteFlow.Models.ViewModels
+﻿using QuoteFlow.Api.Models;
+
+namespace QuoteFlow.Models.ViewModels
 {
     public class UserProfileModel
     {

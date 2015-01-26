@@ -2,6 +2,7 @@
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Web.Configuration;
+using QuoteFlow.Core;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Data;
 

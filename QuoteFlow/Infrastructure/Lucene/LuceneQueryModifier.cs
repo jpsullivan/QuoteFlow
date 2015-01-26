@@ -1,5 +1,6 @@
 ﻿using System;
 using Lucene.Net.Search;
+using QuoteFlow.Api.Infrastructure.Lucene;
 
 namespace QuoteFlow.Infrastructure.Lucene
 {

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading;
 using System.Web;
 using Ninject;
-using QuoteFlow.Services.Interfaces;
+using QuoteFlow.Api.Services;
 
 namespace QuoteFlow.Infrastructure.AsyncFileUpload
 {
@@ -62,7 +64,7 @@ namespace QuoteFlow.Infrastructure.AsyncFileUpload
             ReadStream(uploadStream, request, username, progress, requestParser);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "request", Justification = "'request' parameter is used in debug build.")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "request", Justification = "'request' parameter is used in debug build.")]
         private void ReadStream(Stream stream, HttpRequest request, string username, AsyncFileUploadProgress progress, AsyncFileUploadRequestParser parser)
         {
             const int bufferSize = 1024 * 4; // in bytes
@@ -88,7 +90,7 @@ namespace QuoteFlow.Infrastructure.AsyncFileUpload
                 {
                     // If the request is from local machine, the upload will be too fast to see the progress.
                     // Slow it down a bit.
-                    System.Threading.Thread.Sleep(30);
+                    Thread.Sleep(30);
                 }
 #endif
             }

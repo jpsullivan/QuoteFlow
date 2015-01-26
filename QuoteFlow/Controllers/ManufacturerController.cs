@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Dapper;
+using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Infrastructure.Handlers;
 using QuoteFlow.Models.ViewModels.Manufacturers;
 using QuoteFlow.Services;
-using QuoteFlow.Services.Interfaces;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers

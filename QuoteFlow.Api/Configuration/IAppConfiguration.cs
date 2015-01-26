@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Mail;
-using QuoteFlow.Core.Configuration;
 
 namespace QuoteFlow.Api.Configuration
 {

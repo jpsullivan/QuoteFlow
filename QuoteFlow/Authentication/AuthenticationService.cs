@@ -6,18 +6,19 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.Owin;
+using QuoteFlow.Api.Authentication;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
 using QuoteFlow.Auditing;
 using QuoteFlow.Authentication.Providers;
-using QuoteFlow.Core.Configuration;
+using QuoteFlow.Core;
+using QuoteFlow.Core.Services;
 using QuoteFlow.Diagnostics;
 using QuoteFlow.Infrastructure.Auth;
 using QuoteFlow.Infrastructure.Exceptions;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models;
 using QuoteFlow.Models.ViewModels;
-using QuoteFlow.Services;
-using QuoteFlow.Services.Interfaces;
 
 namespace QuoteFlow.Authentication
 {

@@ -1,4 +1,5 @@
 ﻿using Lucene.Net.Analysis;
+using QuoteFlow.Api.Infrastructure.Lucene;
 using Attribute = Lucene.Net.Util.Attribute;
 
 namespace QuoteFlow.Infrastructure.Lucene

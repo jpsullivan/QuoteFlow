@@ -2,8 +2,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using QuoteFlow.Core.Services;
 using QuoteFlow.Infrastructure.Elmah;
-using QuoteFlow.Services;
 using WebBackgrounder;
 
 namespace QuoteFlow.Infrastructure.Lucene

@@ -1,6 +1,7 @@
-﻿using QuoteFlow.Authentication;
-using QuoteFlow.Models;
-using QuoteFlow.Services;
+﻿using QuoteFlow.Api.Authentication;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Authentication;
+using QuoteFlow.Core.Services;
 
 namespace QuoteFlow.Infrastructure.Auth
 {

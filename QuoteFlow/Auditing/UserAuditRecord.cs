@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using QuoteFlow.Api.Models;
 using QuoteFlow.Models;
-using CredentialTypes = QuoteFlow.Authentication.CredentialTypes;
+using CredentialTypes = QuoteFlow.Api.Authentication.CredentialTypes;
 
 namespace QuoteFlow.Auditing
 {

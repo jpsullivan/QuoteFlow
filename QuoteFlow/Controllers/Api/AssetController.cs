@@ -2,11 +2,11 @@
 using System.Net;
 using System.Web.Http;
 using Microsoft.Ajax.Utilities;
+using QuoteFlow.Api.Jql.Query;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure.Enumerables;
-using QuoteFlow.Models;
 using QuoteFlow.Models.RequestModels;
-using QuoteFlow.Models.Search.Jql.Query;
-using QuoteFlow.Services.Interfaces;
 using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Controllers.Api

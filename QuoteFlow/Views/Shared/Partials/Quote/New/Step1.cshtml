@@ -1,4 +1,6 @@
-﻿@using QuoteFlow.Models
+﻿@using QuoteFlow.Api.Models
+@using QuoteFlow.Core
+@using QuoteFlow.Models
 @model QuoteFlow.Models.ViewModels.Quotes.NewQuoteModel
 @{
     var orgs = Organization.GetOrganizations(Current.User.Organizations);

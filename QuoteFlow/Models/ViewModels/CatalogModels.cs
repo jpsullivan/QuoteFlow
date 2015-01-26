@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Models.CatalogImport;
 using QuoteFlow.Infrastructure.Helpers;
-using QuoteFlow.Models.CatalogImport;
 
 namespace QuoteFlow.Models.ViewModels
 {

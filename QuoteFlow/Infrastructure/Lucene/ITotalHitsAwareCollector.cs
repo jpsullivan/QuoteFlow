@@ -1,5 +1,5 @@
 ﻿using Lucene.Net.Search;
-using QuoteFlow.Infrastructure.Paging;
+using QuoteFlow.Api.Infrastructure.Paging;
 
 namespace QuoteFlow.Infrastructure.Lucene
 {

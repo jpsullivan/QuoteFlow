@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CsvHelper;
+using Jil;
+using QuoteFlow.Api.Infrastructure.Extensions;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Models.CatalogImport;
+using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure.AsyncFileUpload;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Infrastructure.Helpers;
-using QuoteFlow.Models;
-using QuoteFlow.Models.CatalogImport;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Services;
-using QuoteFlow.Services.Interfaces;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
@@ -371,7 +373,7 @@ namespace QuoteFlow.Controllers
         [ValidateAntiForgeryToken]
         public virtual async Task<ActionResult> VerifyImport(VerifyCatalogImportViewModel formData)
         {
-            var catalogInformation = Jil.JSON.Deserialize<NewCatalogModel>(Request.Form["CatalogInformation"]);
+            var catalogInformation = JSON.Deserialize<NewCatalogModel>(Request.Form["CatalogInformation"]);
 
             // todo: validate the previous form to ensure that no two dropdowns have the same value selected
 
@@ -424,8 +426,8 @@ namespace QuoteFlow.Controllers
         {
             var currentUser = GetCurrentUser();
 
-            var catalogInformation = Jil.JSON.Deserialize<NewCatalogModel>(form["CatalogInformation"]);
-            var primaryFields = Jil.JSON.Deserialize<PrimaryCatalogFieldsViewModel>(form["PrimaryCatalogFields"]);
+            var catalogInformation = JSON.Deserialize<NewCatalogModel>(form["CatalogInformation"]);
+            var primaryFields = JSON.Deserialize<PrimaryCatalogFieldsViewModel>(form["PrimaryCatalogFields"]);
             var fields = new List<OptionalImportField>();
 
             foreach (var key in form.AllKeys) 

@@ -2,13 +2,13 @@
 using System.Linq;
 using System.Web.Mvc;
 using Dapper;
+using QuoteFlow.Api.Asset.Search.Managers;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models;
-using QuoteFlow.Models.Assets.Search.Managers;
 using QuoteFlow.Models.ViewModels;
 using QuoteFlow.Models.ViewModels.Assets;
-using QuoteFlow.Services.Interfaces;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers

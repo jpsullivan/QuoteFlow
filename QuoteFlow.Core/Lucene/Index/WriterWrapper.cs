@@ -46,8 +46,10 @@ namespace QuoteFlow.Core.Lucene.Index
                 try
                 {
                     var writerSettings = _configuration.GetWriterSettings(_mode);
-                    var luceneConfig = writerSettings.GetWriterConfiguration(_configuration.Analyzer);
-                    return new IndexWriter(_configuration.Directory, luceneConfig);
+                    // todo: uncomment until lucene 4.8
+                    //var luceneConfig = writerSettings.GetWriterConfiguration(_configuration.Analyzer);
+                    //return new IndexWriter(_configuration.Directory, luceneConfig);
+                    return new IndexWriter(_configuration.Directory, _configuration.Analyzer, new IndexWriter.MaxFieldLength(writerSettings.MaxFieldLength));
                 }
                 catch (Exception ex)
                 {

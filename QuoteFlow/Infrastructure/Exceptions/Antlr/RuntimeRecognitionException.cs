@@ -1,6 +1,6 @@
 ﻿using System;
 using Antlr.Runtime;
-using QuoteFlow.Models.Search.Jql.Parser;
+using QuoteFlow.Api.Jql.Parser;
 
 namespace QuoteFlow.Infrastructure.Exceptions.Antlr
 {

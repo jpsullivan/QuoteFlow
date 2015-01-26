@@ -1,5 +1,5 @@
 ﻿using System;
-using QuoteFlow.Services.Interfaces;
+using QuoteFlow.Api.Services;
 
 namespace QuoteFlow.Infrastructure.AsyncFileUpload
 {

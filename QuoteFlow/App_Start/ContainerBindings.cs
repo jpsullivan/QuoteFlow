@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Principal;
@@ -7,39 +8,54 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using AnglicanGeek.MarkdownMailer;
 using Elmah;
+using Lucene.Net.Store;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Ninject;
-using Ninject.Web.Common;
 using Ninject.Modules;
+using Ninject.Web.Common;
+using QuoteFlow.Api.Asset.CustomFields.Searchers.Transformer;
+using QuoteFlow.Api.Asset.Fields;
+using QuoteFlow.Api.Asset.Index;
+using QuoteFlow.Api.Asset.Search;
+using QuoteFlow.Api.Asset.Search.Managers;
+using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
+using QuoteFlow.Api.Asset.Search.Util;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Api.Infrastructure.Lucene;
+using QuoteFlow.Api.Jql.Operand;
+using QuoteFlow.Api.Jql.Parser;
+using QuoteFlow.Api.Jql.Permission;
+using QuoteFlow.Api.Jql.Query;
+using QuoteFlow.Api.Jql.Query.Operand.Registry;
+using QuoteFlow.Api.Jql.Resolver;
+using QuoteFlow.Api.Jql.Util;
+using QuoteFlow.Api.Jql.Validator;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
 using QuoteFlow.Auditing;
+using QuoteFlow.Core.Asset.Search;
+using QuoteFlow.Core.Asset.Search.Handlers;
+using QuoteFlow.Core.Asset.Search.Managers;
+using QuoteFlow.Core.Asset.Search.Searchers;
 using QuoteFlow.Core.Configuration;
+using QuoteFlow.Core.Jql.Context;
+using QuoteFlow.Core.Jql.Operand;
+using QuoteFlow.Core.Jql.Parser;
+using QuoteFlow.Core.Jql.Query;
+using QuoteFlow.Core.Jql.Resolver;
+using QuoteFlow.Core.Jql.Util;
+using QuoteFlow.Core.Jql.Validator;
+using QuoteFlow.Core.Services;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Lucene;
-using QuoteFlow.Models;
-using QuoteFlow.Models.Assets.CustomFields.Searchers.Transformer;
-using QuoteFlow.Models.Assets.Fields;
-using QuoteFlow.Models.Assets.Search;
-using QuoteFlow.Models.Assets.Search.Handlers;
-using QuoteFlow.Models.Assets.Search.Managers;
-using QuoteFlow.Models.Assets.Search.Searchers;
-using QuoteFlow.Models.Assets.Search.Searchers.Transformer;
-using QuoteFlow.Models.Search.Jql.Operand;
-using QuoteFlow.Models.Search.Jql.Parser;
-using QuoteFlow.Models.Search.Jql.Permission;
-using QuoteFlow.Models.Search.Jql.Query;
-using QuoteFlow.Models.Search.Jql.Query.Operand.Registry;
-using QuoteFlow.Models.Search.Jql.Resolver;
-using QuoteFlow.Models.Search.Jql.Util;
-using QuoteFlow.Models.Search.Jql.Validator;
 using QuoteFlow.Services;
-using QuoteFlow.Services.Interfaces;
+using MessageService = QuoteFlow.Services.MessageService;
 
 namespace QuoteFlow
 {
     public class ContainerBindings : NinjectModule
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:CyclomaticComplexity", Justification = "This code is more maintainable in the same function.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:CyclomaticComplexity", Justification = "This code is more maintainable in the same function.")]
         public override void Load()
         {
             var configuration = new ConfigurationService();
@@ -47,7 +63,7 @@ namespace QuoteFlow
             Bind<IAppConfiguration>().ToMethod(context => configuration.Current);
             Bind<IConfigurationSource>().ToMethod(context => configuration);
 
-            Bind<Lucene.Net.Store.Directory>()
+            Bind<Directory>()
                 .ToMethod(_ => LuceneCommon.GetDirectory(configuration.Current.LuceneIndexLocation))
                 .InSingletonScope();
 
@@ -212,7 +228,8 @@ namespace QuoteFlow
             #region Jql Support
 
             Bind<IJqlAssetIdSupport>().To<JqlAssetIdSupport>().InRequestScope();
-            Bind<IJqlFunctionHandlerRegistry>().To<LazyResettableJqlFunctionHandlerRegistry>().InRequestScope();
+            Bind<IJqlDateSupport>().To<JqlDateSupport>().InRequestScope();
+            RequestScopeExtensionMethod.InRequestScope<LazyResettableJqlFunctionHandlerRegistry>(Bind<IJqlFunctionHandlerRegistry>().To<LazyResettableJqlFunctionHandlerRegistry>());
             Bind<IJqlOperandResolver>().To<JqlOperandResolver>().InRequestScope();
             Bind<IJqlQueryParser>().To<JqlQueryParser>().InRequestScope();
             Bind<IJqlStringSupport>().To<JqlStringSupport>().InRequestScope();
@@ -271,10 +288,33 @@ namespace QuoteFlow
 
         private void ConfigureSearch()
         {
+            Bind<IAssetIndexManager>().To<AssetIndexManager>().InRequestScope();
             Bind<ILuceneQueryBuilder>().To<LuceneQueryBuilder>().InRequestScope();
             Bind<ILuceneQueryModifier>().To<LuceneQueryModifier>().InRequestScope();
             Bind<ISearchProvider>().To<LuceneSearchService>().InRequestScope();
+            Bind<ISearchProviderFactory>().To<SearchProviderFactory>().InRequestScope();
+            Bind<ISearchSortUtil>().To<SearchSortUtil>().InRequestScope();
             Bind<IIndexingService>().To<LuceneIndexingService>().InRequestScope();
+
+            #region All-Text Searching
+
+            Bind<AllTextClauseQueryFactory>().ToSelf().InRequestScope();
+            Bind<AllTextValidator>().ToSelf().InRequestScope();
+            Bind<AllTextClauseContextFactory>().ToSelf().InRequestScope();
+
+            #endregion
+
+            #region Change History Searching
+
+            Bind<HistoryPredicateQueryFactory>().ToSelf().InRequestScope();
+            Bind<EmptyWasClauseOperandHandler>().ToSelf().InRequestScope();
+            Bind<WasClauseQueryFactory>().ToSelf().InRequestScope();
+            Bind<WasClauseValidator>().ToSelf().InRequestScope();
+            Bind<ChangedClauseQueryFactory>().ToSelf().InRequestScope();
+            Bind<ChangedClauseValidator>().ToSelf().InRequestScope();
+            Bind<ChangeHistoryFieldIdResolver>().ToSelf().InRequestScope();
+
+            #endregion
         }
 
         private void ConfigureForLocalFileSystem()

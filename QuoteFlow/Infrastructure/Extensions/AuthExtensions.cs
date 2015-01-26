@@ -5,6 +5,8 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Owin;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Core.Services;
 using QuoteFlow.Models;
 using QuoteFlow.Services;
 

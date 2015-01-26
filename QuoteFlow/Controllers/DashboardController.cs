@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Models.ViewModels;
-using QuoteFlow.Services.Interfaces;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
@@ -22,6 +22,7 @@ namespace QuoteFlow.Controllers
 
         #endregion
 
+        [Authorize]
         [Route("")]
         public virtual ActionResult Index(int? skipGettingStarted)
         {

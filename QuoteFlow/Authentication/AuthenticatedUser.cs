@@ -1,4 +1,5 @@
 ﻿using System;
+using QuoteFlow.Api.Models;
 using QuoteFlow.Models;
 
 namespace QuoteFlow.Authentication

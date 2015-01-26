@@ -1,4 +1,6 @@
-﻿namespace QuoteFlow.Models.ViewModels.Manufacturers
+﻿using QuoteFlow.Api.Models;
+
+namespace QuoteFlow.Models.ViewModels.Manufacturers
 {
     public class ManufacturerShowModel
     {

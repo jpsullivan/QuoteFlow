@@ -11,7 +11,7 @@ using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject.Web.Common;
 using QuoteFlow;
 using QuoteFlow.Infrastructure.Attributes;
-using QuoteFlow.Models.ModelBinders.Asset;
+using QuoteFlow.Infrastructure.ModelBinders.Asset;
 using QuoteFlow.Models.ViewModels.Assets;
 using WebActivatorEx;
 using RouteAttribute = QuoteFlow.Infrastructure.Attributes.RouteAttribute;

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using QuoteFlow.Api.Models;
 
 namespace QuoteFlow.Models.ViewModels.Quotes
 {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QuoteFlow.Api.Models;
 
 namespace QuoteFlow.Models.ViewModels
 {

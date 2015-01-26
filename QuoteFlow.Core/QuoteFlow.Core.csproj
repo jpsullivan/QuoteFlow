@@ -30,17 +30,38 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AnglicanGeek.MarkdownMailer">
+      <HintPath>..\packages\AnglicanGeek.MarkdownMailer.1.2\lib\net40\AnglicanGeek.MarkdownMailer.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.38\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.Rainbow">
+      <HintPath>..\lib\Dapper.Rainbow.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
     </Reference>
+    <Reference Include="MarkdownSharp">
+      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="PowerCollections">
+      <HintPath>..\packages\XAct.Wintellect.PowerCollections.0.0.1\lib\net20\PowerCollections.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\lib\Lucene.Net.Core\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -65,7 +86,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asset\CustomFields\Searchers\Transformer\CatalogSearchHandlerFactory.cs" />
     <Compile Include="Asset\Index\IAssetDocumentFactory.cs" />
+    <Compile Include="Asset\Search\Handlers\ManufacturerSearchHandlerFactory.cs" />
+    <Compile Include="Asset\Search\Handlers\SimpleSearchHandlerFactory.cs" />
+    <Compile Include="Asset\Search\Handlers\SummarySearchHandlerFactory.cs" />
+    <Compile Include="Asset\Search\Handlers\TextQuerySearchHandlerFactory.cs" />
+    <Compile Include="Asset\Search\IQueryCache.cs" />
+    <Compile Include="Asset\Search\Managers\AssetSearcherManager.cs" />
+    <Compile Include="Asset\Search\Managers\SearchHandlerManager.cs" />
+    <Compile Include="Asset\Search\QueryCache.cs" />
+    <Compile Include="Asset\Search\QueryContextConverter.cs" />
+    <Compile Include="Asset\Search\SearchContext.cs" />
+    <Compile Include="Asset\Search\Searchers\AbstractDateSearcher.cs" />
+    <Compile Include="Asset\Search\Searchers\CatalogSearcher.cs" />
+    <Compile Include="Asset\Search\Searchers\ManufacturerSearcher.cs" />
+    <Compile Include="Asset\Search\Searchers\SearcherComparatorFactory.cs" />
+    <Compile Include="Asset\Search\Searchers\TextQuerySearcher.cs" />
+    <Compile Include="Asset\Search\Searchers\Transformer\AbstractSearchInputTransformer.cs" />
+    <Compile Include="Asset\Search\Searchers\Transformer\CatalogSearchInputTransformer.cs" />
+    <Compile Include="Asset\Search\SearchProviderFactory.cs" />
     <Compile Include="Configuration\AppConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\IndexConfiguration.cs" />
@@ -74,6 +114,80 @@
     <Compile Include="Configuration\Lucene\WriterSettings.cs" />
     <Compile Include="Configuration\MailAddressConverter.cs" />
     <Compile Include="Configuration\SmtpUri.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Current.cs" />
+    <Compile Include="Jql\AntlrGen\JqlLexer.cs" />
+    <Compile Include="Jql\AntlrGen\JqlParser.cs" />
+    <Compile Include="Jql\Antlr\RuntimeRecognitionException.cs" />
+    <Compile Include="Jql\ClauseHandler.cs" />
+    <Compile Include="Jql\Clause\DeMorgansVisitor.cs" />
+    <Compile Include="Jql\Context\AllTextClauseContextFactory.cs" />
+    <Compile Include="Jql\Context\CatalogClauseContextFactory.cs" />
+    <Compile Include="Jql\Context\CatalogContext.cs" />
+    <Compile Include="Jql\Context\ClauseContext.cs" />
+    <Compile Include="Jql\Context\ManufacturerClauseContextFactory.cs" />
+    <Compile Include="Jql\Context\ManufacturerContext.cs" />
+    <Compile Include="Jql\Context\QueryContext.cs" />
+    <Compile Include="Jql\Context\QueryContextVisitor.cs" />
+    <Compile Include="Jql\Context\SimpleClauseContextFactory.cs" />
+    <Compile Include="Jql\Function\AbstractManufacturerFunction.cs" />
+    <Compile Include="Jql\JqlLexerTester.cs" />
+    <Compile Include="Jql\JqlParserTester.cs" />
+    <Compile Include="Jql\NoOpClauseHandler.cs" />
+    <Compile Include="Jql\Operand\EmptyWasClauseOperandHandler.cs" />
+    <Compile Include="Jql\Operand\JqlOperandResolver.cs" />
+    <Compile Include="Jql\Parser\Antlr\AntlrPosition.cs" />
+    <Compile Include="Jql\Parser\Antlr\LexerErrorHelper.cs" />
+    <Compile Include="Jql\Parser\JqlParseErrorMessages.cs" />
+    <Compile Include="Jql\Parser\JqlQueryParser.cs" />
+    <Compile Include="Jql\Permission\CatalogClauseValueSanitizer.cs" />
+    <Compile Include="Jql\Permission\CatalogLiteralSanitizer.cs" />
+    <Compile Include="Jql\Query\AllTextClauseQueryFactory.cs" />
+    <Compile Include="Jql\Query\AssetIdCollector.cs" />
+    <Compile Include="Jql\Query\CatalogClauseQueryFactory.cs" />
+    <Compile Include="Jql\Query\ChangedClauseQueryFactory.cs" />
+    <Compile Include="Jql\Query\ClauseTooComplexSearchException.cs" />
+    <Compile Include="Jql\Query\Clause\ChangedClause.cs" />
+    <Compile Include="Jql\Query\Clause\WasClause.cs" />
+    <Compile Include="Jql\Query\HistoryPredicateQueryFactory.cs" />
+    <Compile Include="Jql\Query\History\AndHistoryPredicate.cs" />
+    <Compile Include="Jql\Query\History\TerminalHistoryPredicate.cs" />
+    <Compile Include="Jql\Query\LuceneQueryBuilder.cs" />
+    <Compile Include="Jql\Query\Lucene\Parsing\LuceneQueryParserFactory.cs" />
+    <Compile Include="Jql\Query\ManufacturerClauseQueryFactory.cs" />
+    <Compile Include="Jql\Query\QueryRegistry.cs" />
+    <Compile Include="Jql\Query\QueryVisitor.cs" />
+    <Compile Include="Jql\Query\SummaryClauseQueryFactory.cs" />
+    <Compile Include="Jql\Query\WasClauseQueryFactory.cs" />
+    <Compile Include="Jql\Resolver\AssetConstantInfoResolver.cs" />
+    <Compile Include="Jql\Resolver\CatalogIndexInfoResolver.cs" />
+    <Compile Include="Jql\Resolver\CatalogResolver.cs" />
+    <Compile Include="Jql\Resolver\ManufacturerResolver.cs" />
+    <Compile Include="Jql\Util\FieldReference.cs" />
+    <Compile Include="Jql\Util\JqlAssetIdSupport.cs" />
+    <Compile Include="Jql\Util\JqlAssetSupport.cs" />
+    <Compile Include="Jql\Util\JqlDateSupport.cs" />
+    <Compile Include="Jql\Util\JqlStringSupport.cs" />
+    <Compile Include="Jql\Util\ToJqlStringVisitor.cs" />
+    <Compile Include="Jql\Validator\AllTextValidator.cs" />
+    <Compile Include="Jql\Validator\CatalogValidator.cs" />
+    <Compile Include="Jql\Validator\CatalogValuesExistValidator.cs" />
+    <Compile Include="Jql\Validator\ChangedClauseValidator.cs" />
+    <Compile Include="Jql\Validator\ClauseValidator.cs" />
+    <Compile Include="Jql\Validator\CommentValidator.cs" />
+    <Compile Include="Jql\Validator\IValidatorRegistry.cs" />
+    <Compile Include="Jql\Validator\ManufacturerValidator.cs" />
+    <Compile Include="Jql\Validator\OperatorUsageValidator.cs" />
+    <Compile Include="Jql\Validator\RawValuesExistValidator.cs" />
+    <Compile Include="Jql\Validator\SavedFilterClauseValidator.cs" />
+    <Compile Include="Jql\Validator\SummaryValidator.cs" />
+    <Compile Include="Jql\Validator\ValidatorRegistry.cs" />
+    <Compile Include="Jql\Validator\ValidatorVisitor.cs" />
+    <Compile Include="Jql\Validator\ValuesExistValidator.cs" />
+    <Compile Include="Jql\Validator\WasClauseValidator.cs" />
+    <Compile Include="Jql\ValuesGeneratingClauseHandler.cs" />
+    <Compile Include="Jql\Values\CatalogClauseValuesGenerator.cs" />
+    <Compile Include="Jql\Values\ManufacturerClauseValuesGenerator.cs" />
     <Compile Include="Lucene\Index\AccumulatingResultBuilder.cs" />
     <Compile Include="Lucene\Index\DelayCloseSearcher.cs" />
     <Compile Include="Lucene\Index\DelegateSearcher.cs" />
@@ -93,8 +207,46 @@
     <Compile Include="Lucene\Index\IWriter.cs" />
     <Compile Include="Lucene\Index\WriterWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AssetSearchService.cs" />
+    <Compile Include="Services\AssetService.cs" />
+    <Compile Include="Services\AssetVarService.cs" />
+    <Compile Include="Services\CatalogImportService.cs" />
+    <Compile Include="Services\CatalogImportSummaryRecordsService.cs" />
+    <Compile Include="Services\CatalogService.cs" />
+    <Compile Include="Services\CloudBlobClientWrapper.cs" />
+    <Compile Include="Services\CloudBlobContainerWrapper.cs" />
+    <Compile Include="Services\CloudBlobFileStorageService.cs" />
+    <Compile Include="Services\CloudBlobWrapper.cs" />
+    <Compile Include="Services\CloudFileReference.cs" />
+    <Compile Include="Services\ContactService.cs" />
+    <Compile Include="Services\ContentService.cs" />
+    <Compile Include="Services\CryptographyService.cs" />
+    <Compile Include="Services\FileSystemFileStorageService.cs" />
+    <Compile Include="Services\FileSystemService.cs" />
+    <Compile Include="Services\FormsAuthenticationService.cs" />
+    <Compile Include="Services\HttpContextCacheService.cs" />
+    <Compile Include="Services\LocalFileReference.cs" />
+    <Compile Include="Services\LuceneIndexingService.cs" />
+    <Compile Include="Services\LuceneSearchService.cs" />
+    <Compile Include="Services\ManufacturerLogoService.cs" />
+    <Compile Include="Services\ManufacturerService.cs" />
+    <Compile Include="Services\MessageService.cs" />
+    <Compile Include="Services\OrganizationService.cs" />
+    <Compile Include="Services\QuoteService.cs" />
+    <Compile Include="Services\SearchService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Util\ListOrderedMessageSet.cs" />
+    <Compile Include="Util\LuceneUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Jql\Parser\Antlr\Jql.g">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>QuoteFlow.Models.Search.Jql</CustomToolNamespace>
+    </Content>
+    <Content Include="Jql\AntlrGen\Jql.tokens">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>QuoteFlow.Models.Search.Jql.AntlrGen</CustomToolNamespace>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -103,7 +255,11 @@
       <Name>QuoteFlow.Api</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Infrastructure\Extensions\" />
+    <Folder Include="Jql\Query\Operand\" />
+    <Folder Include="Jql\Query\Operator\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

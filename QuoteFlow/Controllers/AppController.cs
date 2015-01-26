@@ -10,12 +10,13 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Microsoft.Owin;
 using Ninject;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
+using QuoteFlow.Core;
 using QuoteFlow.Core.Configuration;
+using QuoteFlow.Core.Services;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models;
-using QuoteFlow.Services;
-using QuoteFlow.Services.Interfaces;
 using StackExchange.Profiling;
 
 namespace QuoteFlow.Controllers

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QuoteFlow.Api.Models;
 using QuoteFlow.Infrastructure.Helpers;
 
 namespace QuoteFlow.Models.ViewModels.Assets

@@ -78,9 +78,10 @@ namespace QuoteFlow.Core.Lucene.Index
             Dispose();
             try
             {
-                IndexWriterConfig luceneConfig = new IndexWriterConfig(LuceneVersion.Get(), _configuration.Analyzer);
-                luceneConfig.OpenMode = IndexWriterConfig.OpenMode.CREATE;
-                new IndexWriter(_configuration.Directory, luceneConfig).Dispose();
+                // todo: uncomment until lucene 4.8
+//                IndexWriterConfig luceneConfig = new IndexWriterConfig(LuceneVersion.Get(), _configuration.Analyzer);
+//                luceneConfig.OpenMode = IndexWriterConfig.OpenMode.CREATE;
+//                new IndexWriter(_configuration.Directory, luceneConfig).Dispose();
             }
             catch (Exception ex)
             {

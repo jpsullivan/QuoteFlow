@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Web.Http;
-using QuoteFlow.Models;
-using QuoteFlow.Services.Interfaces;
+using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
 
 namespace QuoteFlow.Controllers.Api
 {

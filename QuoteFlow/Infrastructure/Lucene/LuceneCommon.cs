@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Web.Hosting;
 using Lucene.Net.Store;
+using QuoteFlow.Api.Configuration;
 using QuoteFlow.Core.Configuration;
 using Directory = Lucene.Net.Store.Directory;
 using Version = Lucene.Net.Util.Version;

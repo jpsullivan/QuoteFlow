@@ -1,4 +1,6 @@
-﻿namespace QuoteFlow.Models.ViewModels.Quotes
+﻿using QuoteFlow.Api.Models;
+
+namespace QuoteFlow.Models.ViewModels.Quotes
 {
     public class QuoteShowModel
     {

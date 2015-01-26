@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using QuoteFlow.Api.Models;
 using QuoteFlow.Core.Configuration;
 using QuoteFlow.Controllers;
 using QuoteFlow.Models;

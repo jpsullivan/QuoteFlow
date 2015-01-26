@@ -43,10 +43,10 @@ namespace QuoteFlow.Core.Lucene.Index
             base.GatherSubReaders(allSubReaders, reader);
         }
 
-        public override IndexReader[] SubReaders
-        {
-            get { return _searcher.SubReaders; }
-        }
+//        public override IndexReader[] SubReaders
+//        {
+//            get { return _searcher.SubReaders; }
+//        }
 
         public override TopFieldDocs Search(Weight weight, Filter filter, int nDocs, Sort sort, bool fillFields)
         {
@@ -114,10 +114,11 @@ namespace QuoteFlow.Core.Lucene.Index
             _searcher.Search(query, filter, results);
         }
 
-        public override TopFieldDocs Search(Query query, int i, Sort sort)
-        {
-            return _searcher.Search(query, i, sort);
-        }
+        // todo: uncomment until lucene 4.8
+//        public override TopFieldDocs Search(Query query, int i, Sort sort)
+//        {
+//            return _searcher.Search(query, i, sort);
+//        }
 
         public override TopFieldDocs Search(Query query, Filter filter, int i, Sort sort)
         {
