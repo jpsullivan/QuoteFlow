@@ -2,11 +2,10 @@
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Web.Configuration;
-using QuoteFlow.Core;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Data;
 
-namespace QuoteFlow.Infrastructure.DB
+namespace QuoteFlow.Core.Infrastructure.DB
 {
     public static class DbConnectionFactory
     {

@@ -361,6 +361,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HttpCurrent.cs" />
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadExtensions.cs" />
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadModule.cs" />
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadProgress.cs" />
@@ -371,7 +372,6 @@
     <Compile Include="Infrastructure\Attributes\RoutePrefixAttribute.cs" />
     <Compile Include="Infrastructure\Azure\AzureEntityList.cs" />
     <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
-    <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
     <Compile Include="Infrastructure\Enumerables\ListWithDuplicates.cs" />
     <Compile Include="Infrastructure\Enumerables\SingletonList.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />

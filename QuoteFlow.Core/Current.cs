@@ -7,6 +7,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Web;
 using QuoteFlow.Api.Infrastructure.Elmah;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Core.Infrastructure.DB;
 using StackExchange.Profiling;
 
 namespace QuoteFlow.Core
@@ -77,15 +78,6 @@ namespace QuoteFlow.Core
         public static HttpRequest Request
         {
             get { return Context.Request; }
-        }
-
-        /// <summary>
-        /// Gets the controller for the current request; should be set during init of current request's controller.
-        /// </summary>
-        public AppController Controller
-        {
-            get { return Context.Items["Controller"] as AppController; }
-            set { Context.Items["Controller"] = value; }
         }
 
         /// <summary>

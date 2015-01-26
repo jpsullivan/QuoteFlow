@@ -235,6 +235,7 @@
     <Compile Include="Index\AssetIndexHelper.cs" />
     <Compile Include="Infrastructure\Auth\CredentialBuilder.cs" />
     <Compile Include="Infrastructure\Auth\QuoteFlowIdentity.cs" />
+    <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
     <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
     <Compile Include="Infrastructure\Helpers\DisposableAction.cs" />
     <Compile Include="Jql\AntlrGen\JqlLexer.cs" />
