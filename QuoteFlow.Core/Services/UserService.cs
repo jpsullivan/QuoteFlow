@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Auditing;
+using QuoteFlow.Core.Infrastructure.Exceptions;
+using StackExchange.Profiling.Helpers.Dapper;
 using Crypto = QuoteFlow.Core.Services.CryptographyService;
 
 namespace QuoteFlow.Core.Services
@@ -509,7 +514,7 @@ namespace QuoteFlow.Core.Services
         /// <param name="user">The <see cref="User"/>.</param>
         /// <param name="asset">The <see cref="QuoteFlow.Core.Asset"/>.</param>
         /// <returns></returns>
-        public bool CanViewAsset(User user, Asset asset)
+        public bool CanViewAsset(User user, Api.Models.Asset asset)
         {
 //            var hasAccess = false;
 //            foreach (var org in user.Organizations.Where(org => org.Id == asset.OrganizationId)) {

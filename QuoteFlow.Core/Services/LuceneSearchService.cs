@@ -454,8 +454,8 @@ namespace QuoteFlow.Core.Services
 //                        }
 //                    }
 
-                    // Lets figure out what field this searchSort is referring to. The {@link SearchSort#getField} method
-                    //actually a JQL name.
+                    // Lets figure out what field this searchSort is referring to. 
+                    // The {@link SearchSort#getField} method actually a JQL name.
                     var fieldIds = new List<string>(searchHandlerManager.GetFieldIds(searcher, searchSort.Field));
                     // sort to get consistent ordering of fields for clauses with multiple fields
                     fieldIds.Sort();

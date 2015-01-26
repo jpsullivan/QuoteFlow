@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Models.ViewModels.Quotes;
 
 namespace QuoteFlow.Api.Services
 {

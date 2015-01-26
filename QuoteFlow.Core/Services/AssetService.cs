@@ -7,6 +7,7 @@ using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Asset;
 
 namespace QuoteFlow.Core.Services
 {

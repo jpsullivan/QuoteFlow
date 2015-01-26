@@ -20,6 +20,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using QuoteFlow.Api.Models.ViewModels;
 using T4MVC;
 namespace QuoteFlow.Controllers
 {
@@ -296,10 +297,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void CreateCatalogOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, QuoteFlow.Models.ViewModels.NewCatalogModel model);
+        partial void CreateCatalogOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, NewCatalogModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult CreateCatalog(QuoteFlow.Models.ViewModels.NewCatalogModel model)
+        public override System.Web.Mvc.ActionResult CreateCatalog(NewCatalogModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateCatalog);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -422,10 +423,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void SetImportCatalogDetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, QuoteFlow.Models.ViewModels.NewCatalogModel catalogDetails);
+        partial void SetImportCatalogDetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, NewCatalogModel catalogDetails);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> SetImportCatalogDetails(QuoteFlow.Models.ViewModels.NewCatalogModel catalogDetails)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> SetImportCatalogDetails(NewCatalogModel catalogDetails)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SetImportCatalogDetails);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "catalogDetails", catalogDetails);
@@ -445,10 +446,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void VerifyImportOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, QuoteFlow.Models.ViewModels.VerifyCatalogImportViewModel formData);
+        partial void VerifyImportOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VerifyCatalogImportViewModel formData);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> VerifyImport(QuoteFlow.Models.ViewModels.VerifyCatalogImportViewModel formData)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> VerifyImport(VerifyCatalogImportViewModel formData)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.VerifyImport);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "formData", formData);

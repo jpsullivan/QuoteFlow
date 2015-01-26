@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using QuoteFlow.Api.Infrastructure.Extensions;
+using QuoteFlow.Api.Models.ViewModels.Assets;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models.ViewModels.Assets;
 
 namespace QuoteFlow.Infrastructure.ModelBinders.Asset
 {

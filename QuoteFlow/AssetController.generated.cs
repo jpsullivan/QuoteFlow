@@ -20,6 +20,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using QuoteFlow.Api.Models.ViewModels.Assets;
 using T4MVC;
 namespace QuoteFlow.Controllers
 {
@@ -206,10 +207,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int assetId, string assetName, QuoteFlow.Models.ViewModels.Assets.EditAssetRequest form, string returnUrl);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int assetId, string assetName, EditAssetRequest form, string returnUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(int assetId, string assetName, QuoteFlow.Models.ViewModels.Assets.EditAssetRequest form, string returnUrl)
+        public override System.Web.Mvc.ActionResult Edit(int assetId, string assetName, EditAssetRequest form, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "assetId", assetId);
@@ -232,10 +233,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void CreateAssetOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int catalogId, string catalogName, QuoteFlow.Models.ViewModels.NewAssetModel model);
+        partial void CreateAssetOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int catalogId, string catalogName, NewAssetModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult CreateAsset(int catalogId, string catalogName, QuoteFlow.Models.ViewModels.NewAssetModel model)
+        public override System.Web.Mvc.ActionResult CreateAsset(int catalogId, string catalogName, NewAssetModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateAsset);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "catalogId", catalogId);
@@ -246,10 +247,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void AddCommentOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, QuoteFlow.Models.ViewModels.Assets.NewAssetCommentViewModel model, int assetId, string assetName);
+        partial void AddCommentOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, NewAssetCommentViewModel model, int assetId, string assetName);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult AddComment(QuoteFlow.Models.ViewModels.Assets.NewAssetCommentViewModel model, int assetId, string assetName)
+        public override System.Web.Mvc.ActionResult AddComment(NewAssetCommentViewModel model, int assetId, string assetName)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddComment);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

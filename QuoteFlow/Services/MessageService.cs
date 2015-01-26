@@ -7,7 +7,7 @@ using Elmah;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
-using QuoteFlow.Authentication;
+using QuoteFlow.Core.Authentication;
 using QuoteFlow.Infrastructure.Extensions;
 
 namespace QuoteFlow.Services

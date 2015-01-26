@@ -20,6 +20,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using QuoteFlow.Api.Models.ViewModels;
 using T4MVC;
 namespace QuoteFlow.Controllers
 {
@@ -163,10 +164,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void CreateContactOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, QuoteFlow.Models.ViewModels.NewContactModel model);
+        partial void CreateContactOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, NewContactModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult CreateContact(QuoteFlow.Models.ViewModels.NewContactModel model)
+        public override System.Web.Mvc.ActionResult CreateContact(NewContactModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateContact);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

@@ -5,14 +5,16 @@ using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Models.ViewModels;
 using QuoteFlow.Api.Services;
-using QuoteFlow.Authentication;
+using QuoteFlow.Core.Authentication;
+using QuoteFlow.Core.Infrastructure.Auth;
+using QuoteFlow.Core.Infrastructure.Exceptions;
 using QuoteFlow.Infrastructure.Attributes;
-using QuoteFlow.Infrastructure.Auth;
 using QuoteFlow.Infrastructure.Exceptions;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models.ViewModels;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers

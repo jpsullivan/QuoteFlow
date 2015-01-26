@@ -6,6 +6,7 @@ using AnglicanGeek.MarkdownMailer;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Authentication;
 
 namespace QuoteFlow.Core.Services
 {

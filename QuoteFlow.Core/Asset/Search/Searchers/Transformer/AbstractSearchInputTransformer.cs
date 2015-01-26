@@ -8,6 +8,7 @@ using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Transport;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;

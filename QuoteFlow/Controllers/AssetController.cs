@@ -4,11 +4,10 @@ using System.Web.Mvc;
 using Dapper;
 using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Models.ViewModels.Assets;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models.ViewModels;
-using QuoteFlow.Models.ViewModels.Assets;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers

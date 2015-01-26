@@ -25,6 +25,5 @@ namespace QuoteFlow.Api.Asset.CustomFields.Searchers
             OperandResolver = operandResolver;
             //this.customFieldInputHelper = customFieldInputHelper;
         }
-
     }
 }

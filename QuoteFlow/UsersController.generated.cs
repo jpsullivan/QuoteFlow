@@ -20,6 +20,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using QuoteFlow.Api.Models.ViewModels;
 using T4MVC;
 namespace QuoteFlow.Controllers
 {
@@ -327,10 +328,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void ForgotPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, QuoteFlow.Models.ViewModels.ForgotPasswordViewModel model);
+        partial void ForgotPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, ForgotPasswordViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ForgotPassword(QuoteFlow.Models.ViewModels.ForgotPasswordViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ForgotPassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -362,10 +363,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void ResetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string username, string token, QuoteFlow.Models.ViewModels.PasswordResetViewModel model, bool forgot);
+        partial void ResetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string username, string token, PasswordResetViewModel model, bool forgot);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ResetPassword(string username, string token, QuoteFlow.Models.ViewModels.PasswordResetViewModel model, bool forgot)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ResetPassword(string username, string token, PasswordResetViewModel model, bool forgot)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "username", username);
@@ -402,10 +403,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void ChangeEmailOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, QuoteFlow.Models.ViewModels.AccountViewModel model);
+        partial void ChangeEmailOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, AccountViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ChangeEmail(QuoteFlow.Models.ViewModels.AccountViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ChangeEmail(AccountViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangeEmail);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -414,10 +415,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, QuoteFlow.Models.ViewModels.AccountViewModel model);
+        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, AccountViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ChangePassword(QuoteFlow.Models.ViewModels.AccountViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ChangePassword(AccountViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

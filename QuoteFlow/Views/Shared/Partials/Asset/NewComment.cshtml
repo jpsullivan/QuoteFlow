@@ -1,5 +1,5 @@
 ﻿@using QuoteFlow.Infrastructure.Extensions
-@model QuoteFlow.Models.ViewModels.Assets.NewAssetCommentViewModel
+@model QuoteFlow.Api.Models.ViewModels.Assets.NewAssetCommentViewModel
 @using (Html.BeginForm("AddComment", "Asset", new { assetId = Model.AssetId, assetName = Model.AssetName.UrlFriendly() }, FormMethod.Post, new { @class = "aui top-label ajs-dirty-warning-exempt" }))
 {
     <div class="form-body">

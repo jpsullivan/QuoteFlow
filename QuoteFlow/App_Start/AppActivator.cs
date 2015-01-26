@@ -10,9 +10,9 @@ using Elmah.Contrib.WebApi;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject.Web.Common;
 using QuoteFlow;
+using QuoteFlow.Api.Models.ViewModels.Assets;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.ModelBinders.Asset;
-using QuoteFlow.Models.ViewModels.Assets;
 using WebActivatorEx;
 using RouteAttribute = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 

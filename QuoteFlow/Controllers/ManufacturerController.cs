@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Dapper;
+using QuoteFlow.Api.Models.ViewModels.Manufacturers;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models.ViewModels.Manufacturers;
 using QuoteFlow.Services;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 

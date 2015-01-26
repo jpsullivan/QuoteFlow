@@ -2,7 +2,6 @@
 using System.Web.Hosting;
 using Lucene.Net.Store;
 using QuoteFlow.Api.Configuration;
-using QuoteFlow.Core.Configuration;
 using Directory = Lucene.Net.Store.Directory;
 using Version = Lucene.Net.Util.Version;
 
@@ -53,7 +52,7 @@ namespace QuoteFlow.Infrastructure.Lucene
             switch (location)
             {
                 case LuceneIndexLocation.Temp:
-                    return Path.Combine(Path.GetTempPath(), "NuGetGallery", "Lucene");
+                    return Path.Combine(Path.GetTempPath(), "QuoteFlow", "Lucene");
                 default:
                     return HostingEnvironment.MapPath("~/App_Data/Lucene");
             }

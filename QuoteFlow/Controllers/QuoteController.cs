@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models.ViewModels;
-using QuoteFlow.Models.ViewModels.Quotes;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers

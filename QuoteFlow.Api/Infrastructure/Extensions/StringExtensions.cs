@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Web.Mvc;
 
-namespace QuoteFlow.Infrastructure.Extensions
+namespace QuoteFlow.Api.Infrastructure.Extensions
 {
     public static class StringExtensions
     {

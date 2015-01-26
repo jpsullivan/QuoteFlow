@@ -321,32 +321,19 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
+    <Compile Include="App_Start\AuthNinjectModule.cs" />
     <Compile Include="App_Start\Container.cs" />
     <Compile Include="App_Start\ContainerBindings.cs" />
+    <Compile Include="App_Start\DiagnosticsNinjectModule.cs" />
     <Compile Include="App_Start\MiniProfiler.cs" />
     <Compile Include="App_Start\Startup.Ninject.cs" />
     <Compile Include="App_Start\Startup.WebApi.cs" />
     <Compile Include="AssetController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Auditing\AuditActor.cs" />
-    <Compile Include="Auditing\AuditEntry.cs" />
-    <Compile Include="Auditing\AuditingService.cs" />
-    <Compile Include="Auditing\AuditRecord.cs" />
-    <Compile Include="Auditing\CloudAuditingService.cs" />
-    <Compile Include="Auditing\UserAuditRecord.cs" />
     <Compile Include="AuthenticationController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Authentication\AuthenticatedUser.cs" />
-    <Compile Include="Authentication\AuthenticationService.cs" />
-    <Compile Include="Authentication\AuthenticationTypes.cs" />
-    <Compile Include="Authentication\AuthNinjectModule.cs" />
-    <Compile Include="Authentication\ForceSslWhenAuthenticatedMiddleware.cs" />
-    <Compile Include="Authentication\Providers\Authenticator.cs" />
-    <Compile Include="Authentication\Providers\AuthenticatorConfiguration.cs" />
-    <Compile Include="Authentication\Providers\AuthenticatorUI.cs" />
-    <Compile Include="Authentication\Providers\LocalUser\LocalUserAuthenticator.cs" />
     <Compile Include="CatalogController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -371,16 +358,6 @@
     <Compile Include="DashboardController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Diagnostics\AuthenticationGlimpseTab.cs" />
-    <Compile Include="Diagnostics\ConcurrentInMemoryPersistenceStore.cs" />
-    <Compile Include="Diagnostics\DiagnosticsNinjectModule.cs" />
-    <Compile Include="Diagnostics\DiagnosticsService.cs" />
-    <Compile Include="Diagnostics\GlimpseRuntimePolicy.cs" />
-    <Compile Include="Diagnostics\IDiagnosticsService.cs" />
-    <Compile Include="Diagnostics\IDiagnosticsSource.cs" />
-    <Compile Include="Diagnostics\NinjectGlimpseServiceLocator.cs" />
-    <Compile Include="Diagnostics\NullDiagnosticsSource.cs" />
-    <Compile Include="Diagnostics\TraceDiagnosticsSource.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -393,27 +370,17 @@
     <Compile Include="Infrastructure\Attributes\ReadOnlyModeErrorFilter.cs" />
     <Compile Include="Infrastructure\Attributes\RequireSslAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\RoutePrefixAttribute.cs" />
-    <Compile Include="Infrastructure\Auth\CredentialBuilder.cs" />
-    <Compile Include="Infrastructure\Auth\QuoteFlowIdentity.cs" />
     <Compile Include="Infrastructure\Azure\AzureEntityList.cs" />
     <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
     <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
     <Compile Include="Infrastructure\Elmah\QuietLog.cs" />
     <Compile Include="Infrastructure\Enumerables\ListWithDuplicates.cs" />
     <Compile Include="Infrastructure\Enumerables\SingletonList.cs" />
-    <Compile Include="Infrastructure\Exceptions\Antlr\RuntimeRecognitionException.cs" />
-    <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Helpers\DateHelpers.cs" />
     <Compile Include="Infrastructure\JsonContentNegotiator.cs" />
-    <Compile Include="Infrastructure\Lucene\ConstantScorePrefixQuery.cs" />
-    <Compile Include="Infrastructure\Lucene\ITotalHitsAwareCollector.cs" />
-    <Compile Include="Infrastructure\Lucene\KeywordAttribute.cs" />
     <Compile Include="Infrastructure\Lucene\LuceneIndexingJob.cs" />
-    <Compile Include="Infrastructure\Lucene\LuceneQueryBucket.cs" />
-    <Compile Include="Infrastructure\Lucene\LuceneQueryModifier.cs" />
     <Compile Include="Infrastructure\Lucene\PerFieldAnalyzer.cs" />
-    <Compile Include="Infrastructure\Lucene\TotalHitCountCollector.cs" />
     <Compile Include="Infrastructure\QuoteFlowControllerFactory.cs" />
     <Compile Include="Infrastructure\QueryStringUniqueValueProviderFactory.cs" />
     <Compile Include="Infrastructure\Exceptions\ReadOnlyModeException.cs" />
@@ -427,12 +394,8 @@
     <Compile Include="Infrastructure\Extensions\UrlExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\UserExtensions.cs" />
     <Compile Include="Infrastructure\Handlers\ManufacturerLogoRouteHandler.cs" />
-    <Compile Include="Infrastructure\Helpers\DisposableAction.cs" />
     <Compile Include="Infrastructure\Attributes\RouteAttribute.cs" />
     <Compile Include="Infrastructure\Helpers\EnumHelpers.cs" />
-    <Compile Include="Infrastructure\Helpers\PagedList.cs" />
-    <Compile Include="Infrastructure\Helpers\PageNumber.cs" />
-    <Compile Include="Infrastructure\Helpers\PageSizer.cs" />
     <Compile Include="Infrastructure\Helpers\UIHelpers.cs" />
     <Compile Include="Infrastructure\Helpers\UrlHelpers.cs" />
     <Compile Include="Infrastructure\HttpStatusCodeWithBodyResult.cs" />
@@ -473,30 +436,6 @@
     <Compile Include="Migrations\M025_CreateManufacturerLogos.cs" />
     <Compile Include="Migrations\M026_AddTokenToManufacturerLogos.cs" />
     <Compile Include="Infrastructure\ModelBinders\Asset\EditAssetModelBinder.cs" />
-    <Compile Include="Models\RequestModels\AssetCriteriaQuery.cs" />
-    <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
-    <Compile Include="Models\ViewModels\AccountViewModel.cs" />
-    <Compile Include="Models\ViewModels\Assets\AssetVarEditRequest.cs" />
-    <Compile Include="Models\ViewModels\Assets\EditAssetRequest.cs" />
-    <Compile Include="Models\ViewModels\Assets\InteractiveAssetNavigatorViewModel.cs" />
-    <Compile Include="Models\ViewModels\Assets\NewAssetCommentViewModel.cs" />
-    <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
-    <Compile Include="Models\ViewModels\ContactModels.cs" />
-    <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
-    <Compile Include="Models\ViewModels\ForgotPasswordViewModel.cs" />
-    <Compile Include="Models\ViewModels\LogOnViewModel.cs" />
-    <Compile Include="Models\ViewModels\Manufacturers\EditManufacturerRequest.cs" />
-    <Compile Include="Models\ViewModels\Manufacturers\ManufacturerShowModel.cs" />
-    <Compile Include="Models\ViewModels\NavigationMenuViewModel.cs" />
-    <Compile Include="Models\ViewModels\CatalogModels.cs" />
-    <Compile Include="Models\ViewModels\NewAssetModel.cs" />
-    <Compile Include="Models\ViewModels\PasswordResetViewModel.cs" />
-    <Compile Include="Models\ViewModels\Quotes\NewQuoteModel.cs" />
-    <Compile Include="Models\ViewModels\Quotes\QuoteShowModel.cs" />
-    <Compile Include="Models\ViewModels\SubHeader.cs" />
-    <Compile Include="Models\ViewModels\SubHeaderViewData.cs" />
-    <Compile Include="Models\ViewModels\UserProfileModel.cs" />
-    <Compile Include="Models\ViewModels\VerifyCatalogImportViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -970,8 +909,10 @@
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
     <Folder Include="Content\fonts\" />
+    <Folder Include="Infrastructure\Exceptions\Antlr\" />
     <Folder Include="Infrastructure\Exceptions\Search\" />
     <Folder Include="Models\Search\Jql\" />
+    <Folder Include="Models\ViewModels\Assets\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

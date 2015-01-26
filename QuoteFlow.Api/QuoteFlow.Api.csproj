@@ -48,6 +48,13 @@
     <Reference Include="Lucene.Net.Contrib.Snowball">
       <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Snowball.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="PowerCollections">
       <HintPath>..\packages\XAct.Wintellect.PowerCollections.0.0.1\lib\net20\PowerCollections.dll</HintPath>
     </Reference>
@@ -57,6 +64,31 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,12 +106,6 @@
     <Compile Include="Asset\CustomFields\Searchers\Transformer\CustomFieldInputHelper.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Transformer\ICustomFieldInputHelper.cs" />
     <Compile Include="Asset\CustomFields\Searchers\UserPickerSearcher.cs" />
-    <Compile Include="Asset\DocumentAsset.cs" />
-    <Compile Include="Asset\Fields\AbstractField.cs" />
-    <Compile Include="Asset\Fields\AbstractOrderableField.cs" />
-    <Compile Include="Asset\Fields\AbstractOrderableNavigableField.cs" />
-    <Compile Include="Asset\Fields\AbstractTextSystemField.cs" />
-    <Compile Include="Asset\Fields\CatalogSystemField.cs" />
     <Compile Include="Asset\Fields\FieldManager.cs" />
     <Compile Include="Asset\Fields\ICatalogField.cs" />
     <Compile Include="Asset\Fields\IConfigurableField .cs" />
@@ -91,9 +117,7 @@
     <Compile Include="Asset\Fields\IOrderableField.cs" />
     <Compile Include="Asset\Fields\ISearchableField.cs" />
     <Compile Include="Asset\Fields\ISummaryField.cs" />
-    <Compile Include="Asset\Fields\ManufacturerSystemField.cs" />
     <Compile Include="Asset\Fields\NavigableFieldOrder.cs" />
-    <Compile Include="Asset\Fields\SummarySystemField.cs" />
     <Compile Include="Asset\IAssetConstant.cs" />
     <Compile Include="Asset\Index\Analyzer\EnglishAnalyzer.cs" />
     <Compile Include="Asset\Index\Analyzer\SubtokenFilter.cs" />
@@ -145,16 +169,11 @@
     <Compile Include="Asset\Search\QueryCacheClauseHandlerKey.cs" />
     <Compile Include="Asset\Search\QueryCacheKey.cs" />
     <Compile Include="Asset\Search\QueryCacheLiteralsKey.cs" />
-    <Compile Include="Asset\Search\Searchers\AbstractInitializationSearcher.cs" />
-    <Compile Include="Asset\Search\Searchers\CreatorSearcher.cs" />
     <Compile Include="Asset\Search\Searchers\IAssetSearcher.cs" />
     <Compile Include="Asset\Search\Searchers\Information\GenericSearcherInformation.cs" />
     <Compile Include="Asset\Search\Searchers\Information\ISearcherInformation.cs" />
     <Compile Include="Asset\Search\Searchers\SearcherGroup.cs" />
     <Compile Include="Asset\Search\Searchers\SearcherGroupType.cs" />
-    <Compile Include="Asset\Search\Searchers\SummaryQuerySearcher.cs" />
-    <Compile Include="Asset\Search\Searchers\TextQuerySearcher.cs" />
-    <Compile Include="Asset\Search\Searchers\Transformer\AbstractSearchInputTransformer.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\AssetConstantSearchInputTransformer.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\DateSearchInputTransformer.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\EnhancedUserSearchInputTransformer.cs" />
@@ -195,6 +214,7 @@
     <Compile Include="Asset\Transport\IFieldTransportParams.cs" />
     <Compile Include="Asset\Transport\IFieldValuesHolder.cs" />
     <Compile Include="Authentication\CredentialTypes.cs" />
+    <Compile Include="Authentication\Providers\AuthenticatorUI.cs" />
     <Compile Include="Configuration\IAppConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationSource.cs" />
     <Compile Include="Configuration\LuceneIndexLocation.cs" />
@@ -205,6 +225,10 @@
     <Compile Include="Infrastructure\Concurrency\AtomicReference.cs" />
     <Compile Include="Infrastructure\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
+    <Compile Include="Infrastructure\Helpers\PagedList.cs" />
+    <Compile Include="Infrastructure\Helpers\PageNumber.cs" />
+    <Compile Include="Infrastructure\Helpers\PageSizer.cs" />
     <Compile Include="Infrastructure\Lucene\IIndexLifecycleManager.cs" />
     <Compile Include="Infrastructure\Lucene\IKeywordAttribute.cs" />
     <Compile Include="Infrastructure\Lucene\ILuceneQueryModifier.cs" />
@@ -236,8 +260,6 @@
     <Compile Include="Jql\Function\MembersOfFunction.cs" />
     <Compile Include="Jql\IClauseHandler.cs" />
     <Compile Include="Jql\IClauseInformation.cs" />
-    <Compile Include="Jql\JqlLexerTester.cs" />
-    <Compile Include="Jql\JqlParserTester.cs" />
     <Compile Include="Jql\Operand\IJqlOperandResolver.cs" />
     <Compile Include="Jql\Operand\QueryLiteral.cs" />
     <Compile Include="Jql\Operator\OperatorClasses.cs" />
@@ -248,7 +270,6 @@
     <Compile Include="Jql\Permission\AbstractLiteralSanitizingVisitor.cs" />
     <Compile Include="Jql\Permission\ClausePermissionHandler.cs" />
     <Compile Include="Jql\Permission\DefaultOperandSanitizingVisitor.cs" />
-    <Compile Include="Jql\Permission\FieldClausePermissionChecker.cs" />
     <Compile Include="Jql\Permission\IClausePermissionChecker.cs" />
     <Compile Include="Jql\Permission\IClausePermissionHandler.cs" />
     <Compile Include="Jql\Permission\IClauseSanitizer.cs" />
@@ -368,6 +389,21 @@
     <Compile Include="Models\IAsset.cs" />
     <Compile Include="Models\Manufacturer.cs" />
     <Compile Include="Models\ManufacturerLogo.cs" />
+    <Compile Include="Models\RequestModels\AssetCriteriaQuery.cs" />
+    <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
+    <Compile Include="Models\ViewModels\AccountViewModel.cs" />
+    <Compile Include="Models\ViewModels\Assets\AssetVarEditRequest.cs" />
+    <Compile Include="Models\ViewModels\Assets\EditAssetRequest.cs" />
+    <Compile Include="Models\ViewModels\Assets\InteractiveAssetNavigatorViewModel.cs" />
+    <Compile Include="Models\ViewModels\Assets\NewAssetCommentViewModel.cs" />
+    <Compile Include="Models\ViewModels\CatalogModels.cs" />
+    <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
+    <Compile Include="Models\ViewModels\ContactModels.cs" />
+    <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
+    <Compile Include="Models\ViewModels\ForgotPasswordViewModel.cs" />
+    <Compile Include="Models\ViewModels\LogOnViewModel.cs" />
+    <Compile Include="Models\ViewModels\Manufacturers\EditManufacturerRequest.cs" />
+    <Compile Include="Models\ViewModels\Manufacturers\ManufacturerShowModel.cs" />
     <Compile Include="Models\OptionalImportField.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\OrganizationUser.cs" />
@@ -376,6 +412,16 @@
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserActivity.cs" />
+    <Compile Include="Models\ViewModels\Assets\AssetDetailsModel.cs" />
+    <Compile Include="Models\ViewModels\Assets\NewAssetModel.cs" />
+    <Compile Include="Models\ViewModels\NavigationMenuViewModel.cs" />
+    <Compile Include="Models\ViewModels\PasswordResetViewModel.cs" />
+    <Compile Include="Models\ViewModels\Quotes\NewQuoteModel.cs" />
+    <Compile Include="Models\ViewModels\Quotes\QuoteShowModel.cs" />
+    <Compile Include="Models\ViewModels\SubHeader.cs" />
+    <Compile Include="Models\ViewModels\SubHeaderViewData.cs" />
+    <Compile Include="Models\ViewModels\UserProfileModel.cs" />
+    <Compile Include="Models\ViewModels\VerifyCatalogImportViewModel.cs" />
     <Compile Include="Models\_Database.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuoteFlowDataType.cs" />
@@ -390,7 +436,6 @@
     <Compile Include="Services\ICatalogImportSummaryRecordsService.cs" />
     <Compile Include="Services\ICatalogService.cs" />
     <Compile Include="Services\ICloudBlobClient.cs" />
-    <Compile Include="Services\ICloudBlobContainer.cs" />
     <Compile Include="Services\IContactService.cs" />
     <Compile Include="Services\IContentService.cs" />
     <Compile Include="Services\IFileReference.cs" />
@@ -419,7 +464,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\CustomFields\Converters\" />
-    <Folder Include="Models\ViewModels\Assets\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

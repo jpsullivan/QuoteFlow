@@ -3,9 +3,9 @@ using System.Linq;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using QuoteFlow.Authentication;
-using QuoteFlow.Authentication.Providers;
-using QuoteFlow.Authentication.Providers.LocalUser;
+using QuoteFlow.Core.Authentication;
+using QuoteFlow.Core.Authentication.Providers;
+using QuoteFlow.Core.Authentication.Providers.LocalUser;
 using QuoteFlow.Core.Configuration;
 
 namespace QuoteFlow

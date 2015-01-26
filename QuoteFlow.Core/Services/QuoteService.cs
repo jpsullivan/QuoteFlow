@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
 
 namespace QuoteFlow.Core.Services

@@ -4,9 +4,9 @@ using System.Web.Http;
 using Microsoft.Ajax.Utilities;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Models.RequestModels;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure.Enumerables;
-using QuoteFlow.Models.RequestModels;
 using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Controllers.Api

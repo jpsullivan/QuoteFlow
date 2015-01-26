@@ -2,7 +2,7 @@
 using Microsoft.Owin.Logging;
 using Ninject;
 using Owin;
-using QuoteFlow.Authentication;
+using QuoteFlow.Core.Authentication;
 using QuoteFlow.Core.Configuration;
 
 [assembly: OwinStartup(typeof(QuoteFlow.Startup))]

@@ -11,6 +11,7 @@ using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Validator;
 using QuoteFlow.Api.Jql.Values;
 using QuoteFlow.Core.Jql;
+using QuoteFlow.Core.Jql.Permission;
 
 namespace QuoteFlow.Core.Asset.Search.Handlers
 {

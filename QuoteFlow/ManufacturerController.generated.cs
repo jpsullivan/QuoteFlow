@@ -20,6 +20,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using QuoteFlow.Api.Models.ViewModels.Manufacturers;
 using T4MVC;
 namespace QuoteFlow.Controllers
 {
@@ -164,10 +165,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, string manufacturerName, QuoteFlow.Models.ViewModels.Manufacturers.EditManufacturerRequest form, string returnUrl);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, string manufacturerName, EditManufacturerRequest form, string returnUrl);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Edit(int id, string manufacturerName, QuoteFlow.Models.ViewModels.Manufacturers.EditManufacturerRequest form, string returnUrl)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Edit(int id, string manufacturerName, EditManufacturerRequest form, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);

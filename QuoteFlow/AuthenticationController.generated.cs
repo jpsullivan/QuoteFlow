@@ -20,6 +20,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using QuoteFlow.Api.Models.ViewModels;
 using T4MVC;
 namespace QuoteFlow.Controllers
 {
@@ -236,10 +237,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void SignInOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, QuoteFlow.Models.ViewModels.LogOnViewModel model, string returnUrl, bool linkingAccount);
+        partial void SignInOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, LogOnViewModel model, string returnUrl, bool linkingAccount);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> SignIn(QuoteFlow.Models.ViewModels.LogOnViewModel model, string returnUrl, bool linkingAccount)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> SignIn(LogOnViewModel model, string returnUrl, bool linkingAccount)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SignIn);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -262,10 +263,10 @@ namespace QuoteFlow.Controllers
         }
 
         [NonAction]
-        partial void RegisterUserOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, QuoteFlow.Models.ViewModels.LogOnViewModel model, string returnUrl, bool linkingAccount);
+        partial void RegisterUserOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, LogOnViewModel model, string returnUrl, bool linkingAccount);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> RegisterUser(QuoteFlow.Models.ViewModels.LogOnViewModel model, string returnUrl, bool linkingAccount)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> RegisterUser(LogOnViewModel model, string returnUrl, bool linkingAccount)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RegisterUser);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

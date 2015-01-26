@@ -42,8 +42,20 @@
     <Reference Include="Dapper.Rainbow">
       <HintPath>..\lib\Dapper.Rainbow.dll</HintPath>
     </Reference>
+    <Reference Include="Glimpse.AspNet">
+      <HintPath>..\packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\packages\Glimpse.1.8.2\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc5">
+      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Jil">
+      <HintPath>..\packages\Jil.2.7.0\lib\net45\Jil.dll</HintPath>
     </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
@@ -51,12 +63,39 @@
     <Reference Include="MarkdownSharp">
       <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="MiniProfiler">
+      <HintPath>..\packages\MiniProfiler.3.1.1.140\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="PowerCollections">
       <HintPath>..\packages\XAct.Wintellect.PowerCollections.0.0.1\lib\net20\PowerCollections.dll</HintPath>
+    </Reference>
+    <Reference Include="Sigil">
+      <HintPath>..\packages\Sigil.4.3.1\lib\net45\Sigil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable">
@@ -78,7 +117,32 @@
     <Reference Include="System.Reactive.PlatformServices">
       <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -87,25 +151,51 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asset\CustomFields\Searchers\Transformer\CatalogSearchHandlerFactory.cs" />
+    <Compile Include="Asset\DocumentAsset.cs" />
+    <Compile Include="Asset\Fields\AbstractField.cs" />
+    <Compile Include="Asset\Fields\AbstractOrderableField.cs" />
+    <Compile Include="Asset\Fields\AbstractOrderableNavigableField.cs" />
+    <Compile Include="Asset\Fields\AbstractTextSystemField.cs" />
+    <Compile Include="Asset\Fields\CatalogSystemField.cs" />
+    <Compile Include="Asset\Fields\ManufacturerSystemField.cs" />
+    <Compile Include="Asset\Fields\SummarySystemField.cs" />
     <Compile Include="Asset\Index\IAssetDocumentFactory.cs" />
     <Compile Include="Asset\Search\Handlers\ManufacturerSearchHandlerFactory.cs" />
     <Compile Include="Asset\Search\Handlers\SimpleSearchHandlerFactory.cs" />
     <Compile Include="Asset\Search\Handlers\SummarySearchHandlerFactory.cs" />
     <Compile Include="Asset\Search\Handlers\TextQuerySearchHandlerFactory.cs" />
     <Compile Include="Asset\Search\IQueryCache.cs" />
+    <Compile Include="Asset\Search\ITotalHitsAwareCollector.cs" />
     <Compile Include="Asset\Search\Managers\AssetSearcherManager.cs" />
     <Compile Include="Asset\Search\Managers\SearchHandlerManager.cs" />
     <Compile Include="Asset\Search\QueryCache.cs" />
     <Compile Include="Asset\Search\QueryContextConverter.cs" />
     <Compile Include="Asset\Search\SearchContext.cs" />
     <Compile Include="Asset\Search\Searchers\AbstractDateSearcher.cs" />
+    <Compile Include="Asset\Search\Searchers\AbstractInitializationSearcher.cs" />
     <Compile Include="Asset\Search\Searchers\CatalogSearcher.cs" />
+    <Compile Include="Asset\Search\Searchers\CreatorSearcher.cs" />
     <Compile Include="Asset\Search\Searchers\ManufacturerSearcher.cs" />
     <Compile Include="Asset\Search\Searchers\SearcherComparatorFactory.cs" />
+    <Compile Include="Asset\Search\Searchers\SummaryQuerySearcher.cs" />
     <Compile Include="Asset\Search\Searchers\TextQuerySearcher.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\AbstractSearchInputTransformer.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\CatalogSearchInputTransformer.cs" />
     <Compile Include="Asset\Search\SearchProviderFactory.cs" />
+    <Compile Include="Asset\Search\Util\LuceneQueryBucket.cs" />
+    <Compile Include="Auditing\AuditActor.cs" />
+    <Compile Include="Auditing\AuditEntry.cs" />
+    <Compile Include="Auditing\AuditingService.cs" />
+    <Compile Include="Auditing\AuditRecord.cs" />
+    <Compile Include="Auditing\CloudAuditingService.cs" />
+    <Compile Include="Auditing\UserAuditRecord.cs" />
+    <Compile Include="Authentication\AuthenticatedUser.cs" />
+    <Compile Include="Authentication\AuthenticationService.cs" />
+    <Compile Include="Authentication\AuthenticationTypes.cs" />
+    <Compile Include="Authentication\ForceSslWhenAuthenticatedMiddleware.cs" />
+    <Compile Include="Authentication\Providers\Authenticator.cs" />
+    <Compile Include="Authentication\Providers\AuthenticatorConfiguration.cs" />
+    <Compile Include="Authentication\Providers\LocalUser\LocalUserAuthenticator.cs" />
     <Compile Include="Configuration\AppConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\IndexConfiguration.cs" />
@@ -116,6 +206,19 @@
     <Compile Include="Configuration\SmtpUri.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Current.cs" />
+    <Compile Include="Diagnostics\AuthenticationGlimpseTab.cs" />
+    <Compile Include="Diagnostics\ConcurrentInMemoryPersistenceStore.cs" />
+    <Compile Include="Diagnostics\DiagnosticsService.cs" />
+    <Compile Include="Diagnostics\GlimpseRuntimePolicy.cs" />
+    <Compile Include="Diagnostics\IDiagnosticsService.cs" />
+    <Compile Include="Diagnostics\IDiagnosticsSource.cs" />
+    <Compile Include="Diagnostics\NinjectGlimpseServiceLocator.cs" />
+    <Compile Include="Diagnostics\NullDiagnosticsSource.cs" />
+    <Compile Include="Diagnostics\TraceDiagnosticsSource.cs" />
+    <Compile Include="Infrastructure\Auth\CredentialBuilder.cs" />
+    <Compile Include="Infrastructure\Auth\QuoteFlowIdentity.cs" />
+    <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
+    <Compile Include="Infrastructure\Helpers\DisposableAction.cs" />
     <Compile Include="Jql\AntlrGen\JqlLexer.cs" />
     <Compile Include="Jql\AntlrGen\JqlParser.cs" />
     <Compile Include="Jql\Antlr\RuntimeRecognitionException.cs" />
@@ -142,6 +245,7 @@
     <Compile Include="Jql\Parser\JqlQueryParser.cs" />
     <Compile Include="Jql\Permission\CatalogClauseValueSanitizer.cs" />
     <Compile Include="Jql\Permission\CatalogLiteralSanitizer.cs" />
+    <Compile Include="Jql\Permission\FieldClausePermissionChecker.cs" />
     <Compile Include="Jql\Query\AllTextClauseQueryFactory.cs" />
     <Compile Include="Jql\Query\AssetIdCollector.cs" />
     <Compile Include="Jql\Query\CatalogClauseQueryFactory.cs" />
@@ -213,10 +317,6 @@
     <Compile Include="Services\CatalogImportService.cs" />
     <Compile Include="Services\CatalogImportSummaryRecordsService.cs" />
     <Compile Include="Services\CatalogService.cs" />
-    <Compile Include="Services\CloudBlobClientWrapper.cs" />
-    <Compile Include="Services\CloudBlobContainerWrapper.cs" />
-    <Compile Include="Services\CloudBlobFileStorageService.cs" />
-    <Compile Include="Services\CloudBlobWrapper.cs" />
     <Compile Include="Services\CloudFileReference.cs" />
     <Compile Include="Services\ContactService.cs" />
     <Compile Include="Services\ContentService.cs" />
@@ -235,6 +335,13 @@
     <Compile Include="Services\QuoteService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Asset\Search\Util\LuceneQueryModifier.cs" />
+    <Compile Include="Strings.Designer.cs">
+      <DependentUpon>Strings.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Util\Lucene\ConstantScorePrefixQuery.cs" />
     <Compile Include="Util\ListOrderedMessageSet.cs" />
     <Compile Include="Util\LuceneUtils.cs" />
   </ItemGroup>
@@ -247,6 +354,7 @@
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>QuoteFlow.Models.Search.Jql.AntlrGen</CustomToolNamespace>
     </Content>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -256,9 +364,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Infrastructure\Extensions\" />
     <Folder Include="Jql\Query\Operand\" />
     <Folder Include="Jql\Query\Operator\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
