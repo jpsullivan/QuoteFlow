@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using QuoteFlow.Api.Configuration;
+using WebBackgrounder;
 
 namespace QuoteFlow.Api.Services
 {

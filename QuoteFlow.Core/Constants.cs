@@ -2,7 +2,6 @@
 {
     public class Constants
     {
-        public const string CurrentUserOwinEnvironmentKey = "quoteflow.user";
         public const int DefaultPasswordResetTokenExpirationHours = 24;
 
         public const string Sha1HashAlgorithmId = "SHA1";

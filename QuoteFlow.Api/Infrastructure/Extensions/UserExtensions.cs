@@ -1,8 +1,7 @@
 ﻿using System.Net.Mail;
 using QuoteFlow.Api.Models;
-using QuoteFlow.Models;
 
-namespace QuoteFlow.Infrastructure.Extensions
+namespace QuoteFlow.Api.Infrastructure.Extensions
 {
     public static class UserExtensions
     {

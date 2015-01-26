@@ -1,13 +1,13 @@
-﻿using Lucene.Net.Analysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Tokenattributes;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Diagnostics;
 
-namespace QuoteFlow.Infrastructure.Lucene
+namespace QuoteFlow.Core.Lucene
 {
     internal class AnalysisHelper
     {

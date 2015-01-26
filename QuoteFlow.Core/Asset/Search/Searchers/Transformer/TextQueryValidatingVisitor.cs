@@ -1,10 +1,11 @@
 ﻿using System;
+using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Models;
 
-namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
+namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
     /// <summary>
     /// Checks that the query fits the expectations of the Search UI

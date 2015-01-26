@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using QuoteFlow.Api.Infrastructure.Collect;
 using QuoteFlow.Api.Util;
+using WebBackgrounder;
 
 namespace QuoteFlow.Api.Infrastructure.Lucene
 {

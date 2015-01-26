@@ -8,8 +8,6 @@ using Microsoft.Owin;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Core.Services;
-using QuoteFlow.Models;
-using QuoteFlow.Services;
 
 namespace QuoteFlow.Infrastructure.Extensions
 {

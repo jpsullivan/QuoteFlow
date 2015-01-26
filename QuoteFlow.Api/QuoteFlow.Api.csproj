@@ -39,6 +39,12 @@
     <Reference Include="Dapper.Rainbow">
       <HintPath>..\lib\Dapper.Rainbow.dll</HintPath>
     </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Contrib.Mvc">
+      <HintPath>..\packages\Elmah.Contrib.Mvc.2.1\lib\net45\Elmah.Contrib.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -94,6 +100,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebBackgrounder">
+      <HintPath>..\packages\WebBackgrounder.0.2.0\lib\net40\WebBackgrounder.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asset\AbstractAsset.cs" />
@@ -106,7 +115,6 @@
     <Compile Include="Asset\CustomFields\Searchers\Transformer\CustomFieldInputHelper.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Transformer\ICustomFieldInputHelper.cs" />
     <Compile Include="Asset\CustomFields\Searchers\UserPickerSearcher.cs" />
-    <Compile Include="Asset\Fields\FieldManager.cs" />
     <Compile Include="Asset\Fields\ICatalogField.cs" />
     <Compile Include="Asset\Fields\IConfigurableField .cs" />
     <Compile Include="Asset\Fields\ICustomField.cs" />
@@ -123,23 +131,12 @@
     <Compile Include="Asset\Index\Analyzer\SubtokenFilter.cs" />
     <Compile Include="Asset\Index\Analyzer\TextAnalyzer.cs" />
     <Compile Include="Asset\Index\Analyzer\TokenFilters.cs" />
-    <Compile Include="Asset\Index\AssetIndexer.cs" />
-    <Compile Include="Asset\Index\AssetIndexHelper.cs" />
     <Compile Include="Asset\Index\AssetIndexManager.cs" />
     <Compile Include="Asset\Index\DocumentConstants.cs" />
-    <Compile Include="Asset\Index\IAssetIndexer.cs" />
     <Compile Include="Asset\Index\IAssetIndexManager.cs" />
-    <Compile Include="Asset\Index\Indexers\AssetNameIndexer.cs" />
-    <Compile Include="Asset\Index\Indexers\BaseFieldIndexer.cs" />
-    <Compile Include="Asset\Index\Indexers\CatalogIdIndexer.cs" />
-    <Compile Include="Asset\Index\Indexers\CreatorIndexer.cs" />
-    <Compile Include="Asset\Index\Indexers\DescriptionIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\FieldIndexerUtil.cs" />
     <Compile Include="Asset\Index\Indexers\IFieldIndexer.cs" />
-    <Compile Include="Asset\Index\Indexers\ManufacturerIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\Phrase\PhraseQuerySupportField.cs" />
-    <Compile Include="Asset\Index\Indexers\SummaryIndexer.cs" />
-    <Compile Include="Asset\Index\Indexers\UserFieldIndexer.cs" />
     <Compile Include="Asset\Index\QuoteFlowAnalyzer.cs" />
     <Compile Include="Asset\Search\ClauseNames.cs" />
     <Compile Include="Asset\Search\Constants\AllTextSearchConstants.cs" />
@@ -184,8 +181,6 @@
     <Compile Include="Asset\Search\Searchers\Transformer\ManufacturerSearchInputTransformer.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\NamedTerminalClauseCollectingVisitor.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\SimpleNavigatorCollectorVisitor.cs" />
-    <Compile Include="Asset\Search\Searchers\Transformer\TextQuerySearchInputTransformer.cs" />
-    <Compile Include="Asset\Search\Searchers\Transformer\TextQueryValidatingVisitor.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\TextQueryValidator.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\UserSearchInput.cs" />
     <Compile Include="Asset\Search\Searchers\UserSearchInputTransformer.cs" />
@@ -221,11 +216,15 @@
     <Compile Include="Configuration\StorageType.cs" />
     <Compile Include="Index\IEntitySearchExtractor.cs" />
     <Compile Include="Index\ISearcherFunction.cs" />
+    <Compile Include="Infrastructure\Attributes\HintAttribute.cs" />
     <Compile Include="Infrastructure\Collect\ISized.cs" />
     <Compile Include="Infrastructure\Concurrency\AtomicReference.cs" />
+    <Compile Include="Infrastructure\Elmah\QuietLog.cs" />
+    <Compile Include="Infrastructure\Extensions\DateExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\UserExtensions.cs" />
     <Compile Include="Infrastructure\Helpers\PagedList.cs" />
     <Compile Include="Infrastructure\Helpers\PageNumber.cs" />
     <Compile Include="Infrastructure\Helpers\PageSizer.cs" />
@@ -435,13 +434,11 @@
     <Compile Include="Services\ICatalogImportService.cs" />
     <Compile Include="Services\ICatalogImportSummaryRecordsService.cs" />
     <Compile Include="Services\ICatalogService.cs" />
-    <Compile Include="Services\ICloudBlobClient.cs" />
     <Compile Include="Services\IContactService.cs" />
     <Compile Include="Services\IContentService.cs" />
     <Compile Include="Services\IFileReference.cs" />
     <Compile Include="Services\IFileStorageService.cs" />
     <Compile Include="Services\IFileSystemService.cs" />
-    <Compile Include="Services\IFormsAuthenticationService.cs" />
     <Compile Include="Services\IIndexingService.cs" />
     <Compile Include="Services\IManufacturerLogoService.cs" />
     <Compile Include="Services\IManufacturerService.cs" />
@@ -450,7 +447,6 @@
     <Compile Include="Services\IQuoteService.cs" />
     <Compile Include="Services\ISearchProvider.cs" />
     <Compile Include="Services\ISearchService.cs" />
-    <Compile Include="Services\ISimpleCloudBlob.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Util\AbstractMessageSet.cs" />
     <Compile Include="Util\IMessageSet.cs" />
@@ -460,10 +456,14 @@
     <Compile Include="Util\ParameterUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\CustomFields\Converters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Readme\Elmah.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

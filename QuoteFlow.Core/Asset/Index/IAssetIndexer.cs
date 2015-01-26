@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using Lucene.Net.Search;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Api.Models;
+using WebBackgrounder;
 
-namespace QuoteFlow.Api.Asset.Index
+namespace QuoteFlow.Core.Asset.Index
 {
     public interface IAssetIndexer
     {

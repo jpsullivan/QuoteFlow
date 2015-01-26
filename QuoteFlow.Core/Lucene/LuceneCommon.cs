@@ -5,7 +5,7 @@ using QuoteFlow.Api.Configuration;
 using Directory = Lucene.Net.Store.Directory;
 using Version = Lucene.Net.Util.Version;
 
-namespace QuoteFlow.Infrastructure.Lucene
+namespace QuoteFlow.Core.Lucene
 {
     internal static class LuceneCommon
     {

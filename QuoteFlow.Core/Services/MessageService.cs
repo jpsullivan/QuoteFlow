@@ -4,6 +4,8 @@ using System.Net.Mail;
 using System.Web;
 using AnglicanGeek.MarkdownMailer;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Api.Infrastructure.Elmah;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Authentication;
@@ -191,7 +193,7 @@ The QuoteFlow Team";
             catch (SmtpException ex)
             {
                 // Log but swallow the exception
-                ErrorSignal.FromCurrentContext().Raise(ex);
+                QuietLog.LogHandledException(ex);
             }
         }
     }

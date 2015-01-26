@@ -1,7 +1,7 @@
 ﻿using Lucene.Net.Documents;
 using QuoteFlow.Api.Asset.Search.Constants;
 
-namespace QuoteFlow.Api.Asset.Index.Indexers
+namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     /// <summary>
     /// Class used for indexing the CreatorSystemField.
@@ -18,7 +18,7 @@ namespace QuoteFlow.Api.Asset.Index.Indexers
             get { return SystemSearchConstants.ForCreator().IndexField; }
         }
 
-        public override void AddIndex(Document doc, Models.Asset asset)
+        public override void AddIndex(Document doc, Api.Models.Asset asset)
         {
             IndexUserkeyWithDefault(doc, DocumentFieldId, asset.CreatorId.ToString(), SystemSearchConstants.ForCreator().EmptyIndexValue, asset);
         }

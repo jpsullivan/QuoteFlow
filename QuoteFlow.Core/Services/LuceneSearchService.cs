@@ -13,6 +13,7 @@ using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Search;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Asset.Fields;
 using QuoteFlow.Core.Jql.Query;
 using Query = Lucene.Net.Search.Query;
 

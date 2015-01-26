@@ -1,6 +1,6 @@
 ﻿using Lucene.Net.Documents;
 
-namespace QuoteFlow.Api.Asset.Index.Indexers
+namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     /// <summary>
     /// Abstract FieldIndexer that has helper methods to index usernames in a case-insensitive manner.
@@ -11,7 +11,7 @@ namespace QuoteFlow.Api.Asset.Index.Indexers
         {
         }
 
-        protected internal virtual void IndexUserKey(Document doc, string indexField, string userkey, Models.Asset asset)
+        protected internal virtual void IndexUserKey(Document doc, string indexField, string userkey, Api.Models.Asset asset)
         {
             IndexKeyword(doc, indexField, userkey, asset);
         }
@@ -19,7 +19,7 @@ namespace QuoteFlow.Api.Asset.Index.Indexers
         /// <summary>
         /// Index a single userkey field (case intact), with a default if the field is not set 
         /// </summary>
-        protected internal virtual void IndexUserkeyWithDefault(Document doc, string indexField, string userkey, string defaultValue, Models.Asset asset)
+        protected internal virtual void IndexUserkeyWithDefault(Document doc, string indexField, string userkey, string defaultValue, Api.Models.Asset asset)
         {
             IndexKeywordWithDefault(doc, indexField, userkey, defaultValue, asset);
         }

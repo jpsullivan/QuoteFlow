@@ -50,7 +50,6 @@ using QuoteFlow.Core.Jql.Util;
 using QuoteFlow.Core.Jql.Validator;
 using QuoteFlow.Core.Services;
 using QuoteFlow.Infrastructure;
-using QuoteFlow.Infrastructure.Lucene;
 using QuoteFlow.Services;
 using MessageService = QuoteFlow.Services.MessageService;
 

@@ -10,6 +10,7 @@ using QuoteFlow.Api.Authentication;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Models.ViewModels;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Auditing;
 using QuoteFlow.Core.Authentication.Providers;

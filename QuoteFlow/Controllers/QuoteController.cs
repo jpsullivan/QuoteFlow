@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using QuoteFlow.Api.Models.ViewModels.Assets;
 using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure.Attributes;

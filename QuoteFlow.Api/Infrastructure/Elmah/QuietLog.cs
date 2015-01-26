@@ -1,9 +1,9 @@
 ﻿using System;
 using Elmah;
 
-namespace QuoteFlow.Infrastructure.Elmah
+namespace QuoteFlow.Api.Infrastructure.Elmah
 {
-    internal static class QuietLog
+    public static class QuietLog
     {
         public static void LogHandledException(Exception e)
         {

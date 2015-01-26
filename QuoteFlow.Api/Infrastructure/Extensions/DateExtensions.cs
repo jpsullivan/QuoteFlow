@@ -1,8 +1,6 @@
 ﻿using System;
-using Microsoft.Ajax.Utilities;
-using QuoteFlow.Api.Infrastructure.Extensions;
 
-namespace QuoteFlow.Infrastructure.Extensions
+namespace QuoteFlow.Api.Infrastructure.Extensions
 {
     public static class DateExtensions
     {

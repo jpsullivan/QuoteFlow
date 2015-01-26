@@ -4,7 +4,7 @@ using System.IO;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 
-namespace QuoteFlow.Infrastructure.Lucene
+namespace QuoteFlow.Core.Lucene
 {
     public class PerFieldAnalyzer : PerFieldAnalyzerWrapper
     {

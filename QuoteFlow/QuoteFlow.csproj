@@ -365,7 +365,6 @@
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadModule.cs" />
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadProgress.cs" />
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadRequestParser.cs" />
-    <Compile Include="Infrastructure\Attributes\HintAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\LayoutInjectorAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\ReadOnlyModeErrorFilter.cs" />
     <Compile Include="Infrastructure\Attributes\RequireSslAttribute.cs" />
@@ -373,26 +372,21 @@
     <Compile Include="Infrastructure\Azure\AzureEntityList.cs" />
     <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
     <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
-    <Compile Include="Infrastructure\Elmah\QuietLog.cs" />
     <Compile Include="Infrastructure\Enumerables\ListWithDuplicates.cs" />
     <Compile Include="Infrastructure\Enumerables\SingletonList.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Helpers\DateHelpers.cs" />
     <Compile Include="Infrastructure\JsonContentNegotiator.cs" />
-    <Compile Include="Infrastructure\Lucene\LuceneIndexingJob.cs" />
-    <Compile Include="Infrastructure\Lucene\PerFieldAnalyzer.cs" />
     <Compile Include="Infrastructure\QuoteFlowControllerFactory.cs" />
     <Compile Include="Infrastructure\QueryStringUniqueValueProviderFactory.cs" />
     <Compile Include="Infrastructure\Exceptions\ReadOnlyModeException.cs" />
     <Compile Include="Infrastructure\Exceptions\TestableStorageClientException.cs" />
     <Compile Include="Infrastructure\Extensions\AuthExtensions.cs" />
-    <Compile Include="Infrastructure\Extensions\DateExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\DictionaryExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\FluentMigratorExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\HtmlExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\HttpContextExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\UrlExtensions.cs" />
-    <Compile Include="Infrastructure\Extensions\UserExtensions.cs" />
     <Compile Include="Infrastructure\Handlers\ManufacturerLogoRouteHandler.cs" />
     <Compile Include="Infrastructure\Attributes\RouteAttribute.cs" />
     <Compile Include="Infrastructure\Helpers\EnumHelpers.cs" />
@@ -400,8 +394,6 @@
     <Compile Include="Infrastructure\Helpers\UrlHelpers.cs" />
     <Compile Include="Infrastructure\HttpStatusCodeWithBodyResult.cs" />
     <Compile Include="Infrastructure\IoC\NinjectDependencyResolver.cs" />
-    <Compile Include="Infrastructure\Lucene\AnalysisHelper.cs" />
-    <Compile Include="Infrastructure\Lucene\LuceneCommon.cs" />
     <Compile Include="Infrastructure\Optimization\Bundler.cs" />
     <Compile Include="Infrastructure\RouteName.cs" />
     <Compile Include="Infrastructure\SafeRedirectResult.cs" />
@@ -911,8 +903,7 @@
     <Folder Include="Content\fonts\" />
     <Folder Include="Infrastructure\Exceptions\Antlr\" />
     <Folder Include="Infrastructure\Exceptions\Search\" />
-    <Folder Include="Models\Search\Jql\" />
-    <Folder Include="Models\ViewModels\Assets\" />
+    <Folder Include="Infrastructure\Lucene\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

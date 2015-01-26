@@ -27,6 +27,7 @@ using Antlr.Runtime;
 using System.Collections.Generic;
 using Antlr.Runtime;
 using Antlr.Runtime.Misc;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;

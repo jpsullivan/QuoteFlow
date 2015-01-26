@@ -2,11 +2,11 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using QuoteFlow.Api.Infrastructure.Elmah;
 using QuoteFlow.Core.Services;
-using QuoteFlow.Infrastructure.Elmah;
 using WebBackgrounder;
 
-namespace QuoteFlow.Infrastructure.Lucene
+namespace QuoteFlow.Core.Lucene
 {
     public class LuceneIndexingJob : Job
     {

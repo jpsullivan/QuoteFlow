@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Models;
 
-namespace QuoteFlow.Api.Asset.Fields
+namespace QuoteFlow.Core.Asset.Fields
 {
     public class FieldManager : IFieldManager
     {
@@ -92,7 +93,7 @@ namespace QuoteFlow.Api.Asset.Fields
             throw new NotImplementedException();
         }
 
-        public ISet<ICustomField> GetAvailableCustomFields(User remoteUser, Models.Asset asset)
+        public ISet<ICustomField> GetAvailableCustomFields(User remoteUser, Api.Models.Asset asset)
         {
             throw new NotImplementedException();
         }

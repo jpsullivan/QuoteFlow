@@ -6,6 +6,7 @@ using QuoteFlow.Api.Infrastructure.Collect;
 using QuoteFlow.Api.Infrastructure.Lucene;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Util;
+using WebBackgrounder;
 
 namespace QuoteFlow.Api.Asset.Index
 {

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using Lucene.Net.Index;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Diagnostics;
+using QuoteFlow.Core.Lucene;
+using WebBackgrounder;
 using Directory = Lucene.Net.Store.Directory;
 
 namespace QuoteFlow.Core.Services

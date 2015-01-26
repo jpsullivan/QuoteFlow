@@ -9,6 +9,7 @@ using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Search.Searchers.Util;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Util;
+using QuoteFlow.Core.Asset.Index.Indexers;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers
 {

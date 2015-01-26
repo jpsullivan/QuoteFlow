@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 
-namespace QuoteFlow.Infrastructure.Attributes
+namespace QuoteFlow.Api.Infrastructure.Attributes
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public sealed class HintAttribute : Attribute, IMetadataAware

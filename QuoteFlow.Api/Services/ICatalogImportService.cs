@@ -1,4 +1,6 @@
-﻿namespace QuoteFlow.Api.Services
+﻿using QuoteFlow.Api.Models.ViewModels;
+
+namespace QuoteFlow.Api.Services
 {
     public interface ICatalogImportService
     {

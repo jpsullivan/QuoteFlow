@@ -8,6 +8,7 @@ using QuoteFlow.Api.Asset.Search.Filters;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Core.Util.Lucene;
 
 namespace QuoteFlow.Core.Jql.Query
 {

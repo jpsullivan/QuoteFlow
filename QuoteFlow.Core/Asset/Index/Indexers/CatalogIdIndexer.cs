@@ -1,8 +1,9 @@
 ﻿using System;
 using Lucene.Net.Documents;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Asset.Search.Constants;
 
-namespace QuoteFlow.Api.Asset.Index.Indexers
+namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public class CatalogIdIndexer : BaseFieldIndexer
     {
@@ -16,12 +17,12 @@ namespace QuoteFlow.Api.Asset.Index.Indexers
 			get { return SystemSearchConstants.ForCatalog().IndexField; }
 		}
 
-		public override bool IsFieldVisibleAndInScope(Models.Asset asset)
+		public override bool IsFieldVisibleAndInScope(Api.Models.Asset asset)
 		{
 			return true;
 		}
 
-		public override void AddIndex(Document doc, Models.Asset asset)
+		public override void AddIndex(Document doc, Api.Models.Asset asset)
 		{
             IndexKeyword(doc, DocumentFieldId, Convert.ToString(asset.Id), asset);
             // For sorting

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Web.Mvc;
+using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Transport;
 using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Operand;
@@ -7,7 +9,7 @@ using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Util;
 
-namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
+namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
     /// <summary>
     /// A transformer that handles the 2012 Issue Search interface.
@@ -30,7 +32,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
 
                 var visitor = new TextQueryValidatingVisitor(clauseNames.PrimaryName);
 
-                whereClause.Accept(visitor);
+                whereClause.Accept<object>(visitor);
                 if (visitor.Valid)
                 {
                     string textQuery = visitor.GetTextTerminalValue(operandResolver, user);
@@ -57,7 +59,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
             var whereClause = query.WhereClause;
             var visitor = new TextQueryValidatingVisitor(clauseNames.PrimaryName);
 
-            whereClause.Accept(visitor);
+            whereClause.Accept<object>(visitor);
             if (!visitor.Valid) return;
 
             string textQuery = visitor.GetTextTerminalValue(operandResolver, user);

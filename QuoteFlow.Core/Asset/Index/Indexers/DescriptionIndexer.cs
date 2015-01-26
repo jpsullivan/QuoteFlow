@@ -1,8 +1,9 @@
 ﻿using Lucene.Net.Documents;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Asset.Index.Indexers.Phrase;
 using QuoteFlow.Api.Asset.Search.Constants;
 
-namespace QuoteFlow.Api.Asset.Index.Indexers
+namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public class DescriptionIndexer : BaseFieldIndexer
     {
@@ -16,7 +17,7 @@ namespace QuoteFlow.Api.Asset.Index.Indexers
             get { return SystemSearchConstants.ForDescription().IndexField; }
         }
 
-        public override void AddIndex(Document doc, Models.Asset issue)
+        public override void AddIndex(Document doc, Api.Models.Asset issue)
         {
             string descValue = issue.Description;
             IndexText(doc, DocumentFieldId, descValue, issue);

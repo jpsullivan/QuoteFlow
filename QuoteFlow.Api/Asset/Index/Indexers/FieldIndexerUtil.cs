@@ -1,5 +1,6 @@
 ﻿using System;
 using Lucene.Net.Documents;
+using QuoteFlow.Api.Infrastructure.Extensions;
 
 namespace QuoteFlow.Api.Asset.Index.Indexers
 {

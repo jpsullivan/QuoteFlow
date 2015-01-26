@@ -2,10 +2,12 @@
 using System.IO;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Index;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Asset.Index;
 
-namespace QuoteFlow.Api.Asset.Index
+namespace QuoteFlow.Core.Index
 {
     public class AssetIndexHelper
     {

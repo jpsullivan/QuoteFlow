@@ -1,9 +1,10 @@
 ﻿using Lucene.Net.Documents;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Asset.Index.Indexers.Phrase;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Models;
 
-namespace QuoteFlow.Api.Asset.Index.Indexers
+namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     /// <summary>
     /// Responsible for populating a <seealso cref="Document lucene document"/> with the information held in
@@ -21,12 +22,12 @@ namespace QuoteFlow.Api.Asset.Index.Indexers
             get { return SystemSearchConstants.ForSummary().IndexField; }
         }
 
-        public bool IsFieldVisibleAndInScope(Models.Asset issue)
+        public bool IsFieldVisibleAndInScope(Api.Models.Asset issue)
         {
             return true;
         }
 
-        public override void AddIndex(Document doc, Models.Asset asset)
+        public override void AddIndex(Document doc, Api.Models.Asset asset)
         {
             IndexText(doc, DocumentFieldId, asset.Name, asset);
             IndexText(doc, PhraseQuerySupportField.ForIndexField(DocumentFieldId), asset.Name, asset);

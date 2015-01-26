@@ -5,7 +5,9 @@ using System.Data;
 using System.Data.Common;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
+using QuoteFlow.Api.Infrastructure.Elmah;
 using QuoteFlow.Api.Models;
+using StackExchange.Profiling;
 
 namespace QuoteFlow.Core
 {

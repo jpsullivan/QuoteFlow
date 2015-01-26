@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using QuoteFlow.Api.Asset.CustomFields.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Search.Searchers.Util;
 using QuoteFlow.Api.Asset.Transport;
+using QuoteFlow.Api.Infrastructure.Elmah;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Query;
@@ -209,7 +210,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
 
         private IClause ParsePeriodClause(string period, Operator @operator, string clauseName)
         {
-            if (period.IsNullOrWhiteSpace())
+            if (period.IsNullOrEmpty())
             {
                 return null;
             }

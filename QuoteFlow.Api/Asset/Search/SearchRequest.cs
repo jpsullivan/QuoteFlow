@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Ninject;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Order;

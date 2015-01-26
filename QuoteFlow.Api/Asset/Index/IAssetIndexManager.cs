@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using Lucene.Net.Search;
-using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Infrastructure.Lucene;
 using QuoteFlow.Api.Models;
+using WebBackgrounder;
 
 namespace QuoteFlow.Api.Asset.Index
 {

@@ -2,7 +2,7 @@
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Models;
 
-namespace QuoteFlow.Api.Asset.Index.Indexers
+namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public class ManufacturerIndexer: BaseFieldIndexer
 	{
@@ -16,12 +16,12 @@ namespace QuoteFlow.Api.Asset.Index.Indexers
 			get { return SystemSearchConstants.ForManufacturer().IndexField; }
 		}
 
-        public override bool IsFieldVisibleAndInScope(Models.Asset asset)
+        public override bool IsFieldVisibleAndInScope(Api.Models.Asset asset)
         {
             return true;
         }
 
-		public override void AddIndex(Document doc, Models.Asset asset)
+		public override void AddIndex(Document doc, Api.Models.Asset asset)
 		{
 			Manufacturer manufacturer = asset.Manufacturer;
 			if (manufacturer != null) // this should only be null in tests

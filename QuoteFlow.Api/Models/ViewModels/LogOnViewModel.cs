@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using QuoteFlow.Api.Authentication.Providers;
+using QuoteFlow.Api.Infrastructure.Attributes;
 
 namespace QuoteFlow.Api.Models.ViewModels
 {

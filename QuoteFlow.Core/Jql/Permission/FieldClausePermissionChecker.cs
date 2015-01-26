@@ -1,6 +1,7 @@
 ﻿using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Jql.Permission;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Core.Asset.Fields;
 
 namespace QuoteFlow.Core.Jql.Permission
 {

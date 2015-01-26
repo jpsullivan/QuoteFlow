@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.CatalogImport;
+using QuoteFlow.Api.Models.ViewModels;
 using QuoteFlow.Api.Services;
 
 namespace QuoteFlow.Core.Services
@@ -54,7 +55,7 @@ namespace QuoteFlow.Core.Services
             for (int i = 0; i < model.Rows.Count() - 1; i++)
             {
                 var row = model.Rows.ElementAt(i);
-                Asset asset;
+                Api.Models.Asset asset;
 
                 // get the manufacturer if they exist, otherwise create it
                 // also, to prevent duplicate queries, check existance from 

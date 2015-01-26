@@ -23,6 +23,16 @@ namespace QuoteFlow.Api.Infrastructure.Extensions
         }
 
         /// <summary>
+        /// True if the string is either null or whitespace.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static bool IsNullOrWhiteSpace(this string s)
+        {
+            return string.IsNullOrWhiteSpace(s);
+        }
+
+        /// <summary>
         /// Safely converts an object to a string. If fails, returns an empty string.
         /// </summary>
         /// <param name="obj">The object which should be converted to a string.</param>

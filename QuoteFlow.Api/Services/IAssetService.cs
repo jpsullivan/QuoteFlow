@@ -2,6 +2,7 @@
 using Dapper;
 using Lucene.Net.Documents;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Models.ViewModels.Assets;
 
 namespace QuoteFlow.Api.Services
 {
@@ -15,7 +16,7 @@ namespace QuoteFlow.Api.Services
         Api.Models.Asset GetAsset(int assetId);
 
         /// <summary>
-        /// Creates an <see cref="QuoteFlow.Core.Asset"/> object for an asset represented by the Lucene document.
+        /// Creates an <see cref="Asset"/> object for an asset represented by the Lucene document.
         /// </summary>
         /// <param name="assetDocument">The Lucene document representing an asset.</param>
         /// <returns></returns>
@@ -36,7 +37,7 @@ namespace QuoteFlow.Api.Services
         IEnumerable<Api.Models.Asset> GetAssets(Catalog catalog);
 
         /// <summary>
-        /// Creates an <see cref="QuoteFlow.Core.Asset"/>.
+        /// Creates an <see cref="Asset"/>.
         /// </summary>
         /// <param name="model"></param>
         /// <param name="catalogId"></param>
@@ -45,9 +46,9 @@ namespace QuoteFlow.Api.Services
         Api.Models.Asset CreateAsset(NewAssetModel model, int catalogId, int userId);
 
         /// <summary>
-        /// Creates an <see cref="QuoteFlow.Core.Asset"/>.
+        /// Creates an <see cref="Asset"/>.
         /// </summary>
-        /// <param name="asset">A pre-built <see cref="QuoteFlow.Core.Asset"/>.</param>
+        /// <param name="asset">A pre-built <see cref="Asset"/>.</param>
         /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
         /// <returns></returns>
         Api.Models.Asset CreateAsset(Api.Models.Asset asset, int userId);

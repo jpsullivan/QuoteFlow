@@ -7,6 +7,8 @@ using QuoteFlow.Api.Asset.Search.Searchers.Information;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Infrastructure.Concurrency;
 using QuoteFlow.Api.Jql.Operand;
+using QuoteFlow.Core.Asset.Index.Indexers;
+using QuoteFlow.Core.Asset.Search.Searchers.Transformer;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers
 {
