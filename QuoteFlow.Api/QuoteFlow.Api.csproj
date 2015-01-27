@@ -322,7 +322,6 @@
     <Compile Include="Jql\Query\Operand\PredicateOperandHandlerRegistry.cs" />
     <Compile Include="Jql\Query\Operand\PredicateOperandResolver.cs" />
     <Compile Include="Jql\Query\Operand\Registry\IJqlFunctionHandlerRegistry.cs" />
-    <Compile Include="Jql\Query\Operand\Registry\LazyResettableJqlFunctionHandlerRegistry.cs" />
     <Compile Include="Jql\Query\Operand\SingleValueOperand.cs" />
     <Compile Include="Jql\Query\Operand\SingleValueOperandHandler.cs" />
     <Compile Include="Jql\Query\Operator.cs" />

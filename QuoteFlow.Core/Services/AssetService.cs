@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using Lucene.Net.Documents;
-using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Asset.Fields;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Models.ViewModels.Assets;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset;
+using StackExchange.Profiling.Helpers.Dapper;
+using DynamicParameters = Dapper.DynamicParameters;
 
 namespace QuoteFlow.Core.Services
 {

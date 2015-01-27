@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuoteFlow.Api.Jql.Query.Operand;
+using QuoteFlow.Api.Jql.Query.Operand.Registry;
 
-namespace QuoteFlow.Api.Jql.Query.Operand.Registry
+namespace QuoteFlow.Core.Jql.Operand.Registry
 {
     /// <summary>
     /// Keeps a cache of function names against the operand handlers for those functions.
     /// </summary>
-    internal class LazyResettableJqlFunctionHandlerRegistry : IJqlFunctionHandlerRegistry
+    public class LazyResettableJqlFunctionHandlerRegistry : IJqlFunctionHandlerRegistry
     {
 //        private readonly PluginAccessor pluginAccesor;
 //        private readonly ModuleDescriptors.Orderings moduleDescriptorOrderings;
@@ -100,12 +102,16 @@ namespace QuoteFlow.Api.Jql.Query.Operand.Registry
 //                return functionNames;
 //            }
 //        }
+
         public FunctionOperandHandler GetOperandHandler(FunctionOperand operand)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<string> AllFunctionNames { get; private set; }
+        public IEnumerable<string> AllFunctionNames
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 
 }

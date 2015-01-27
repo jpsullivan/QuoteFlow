@@ -5,8 +5,6 @@ using System.Web;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Common;
-using QuoteFlow.Core.Authentication;
-using QuoteFlow.Core.Diagnostics;
 
 namespace QuoteFlow
 {

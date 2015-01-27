@@ -32,6 +32,7 @@ using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Api.Jql.Validator;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Asset.CustomFields.Searchers.Transformer;
 using QuoteFlow.Core.Asset.Fields;
 using QuoteFlow.Core.Asset.Search;
 using QuoteFlow.Core.Asset.Search.Handlers;
@@ -42,12 +43,14 @@ using QuoteFlow.Core.Auditing;
 using QuoteFlow.Core.Configuration;
 using QuoteFlow.Core.Jql.Context;
 using QuoteFlow.Core.Jql.Operand;
+using QuoteFlow.Core.Jql.Operand.Registry;
 using QuoteFlow.Core.Jql.Parser;
 using QuoteFlow.Core.Jql.Permission;
 using QuoteFlow.Core.Jql.Query;
 using QuoteFlow.Core.Jql.Resolver;
 using QuoteFlow.Core.Jql.Util;
 using QuoteFlow.Core.Jql.Validator;
+using QuoteFlow.Core.Lucene;
 using QuoteFlow.Core.Services;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Services;
@@ -145,10 +148,6 @@ namespace QuoteFlow
             Bind<IUserService>()
                 .To<UserService>()
                 .InRequestScope();
-
-            Bind<IFormsAuthenticationService>()
-                .To<FormsAuthenticationService>()
-                .InSingletonScope();
 
             Bind<IControllerFactory>()
                 .To<QuoteFlowControllerFactory>()
@@ -335,22 +334,6 @@ namespace QuoteFlow
 
         private void ConfigureForAzureStorage(ConfigurationService configuration)
         {
-            Bind<ICloudBlobClient>()
-                .ToMethod(
-                    _ => new CloudBlobClientWrapper(configuration.Current.AzureStorageConnectionString))
-                .InSingletonScope();
-            Bind<IFileStorageService>()
-                .To<CloudBlobFileStorageService>()
-                .InSingletonScope();
-
-            // when running on Windows Azure, pull the statistics from the warehouse via storage
-//            Bind<IReportService>()
-//                .ToMethod(context => new CloudReportService(configuration.Current.AzureStorageConnectionString))
-//                .InSingletonScope();
-//            Bind<IStatisticsService>()
-//                .To<JsonStatisticsService>()
-//                .InSingletonScope();
-
             string instanceId;
             try
             {

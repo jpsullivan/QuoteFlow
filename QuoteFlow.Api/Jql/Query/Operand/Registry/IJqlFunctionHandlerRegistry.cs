@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QuoteFlow.Api.Jql.Function;
 
 namespace QuoteFlow.Api.Jql.Query.Operand.Registry
 {

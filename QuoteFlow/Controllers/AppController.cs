@@ -34,7 +34,7 @@ namespace QuoteFlow.Controllers
             QuoteFlowContext = new QuoteFlowContext(this);
         }
 
-        private readonly Current _current = new Current();
+        private readonly HttpCurrent _current = new HttpCurrent();
 
         private IDisposable _betweenInitializeAndActionExecuting,
                             _betweenActionExecutingAndExecuted,

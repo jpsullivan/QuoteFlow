@@ -7,9 +7,9 @@ using Version = Lucene.Net.Util.Version;
 
 namespace QuoteFlow.Core.Lucene
 {
-    internal static class LuceneCommon
+    public static class LuceneCommon
     {
-        internal static readonly Version LuceneVersion = Version.LUCENE_30;
+        public static readonly Version LuceneVersion = Version.LUCENE_30;
 
         private static SingleInstanceLockFactory LuceneLock = new SingleInstanceLockFactory();
 
@@ -30,7 +30,7 @@ namespace QuoteFlow.Core.Lucene
             return Path.Combine(root, "index.metadata");
         }
 
-        internal static Directory GetDirectory(LuceneIndexLocation location)
+        public static Directory GetDirectory(LuceneIndexLocation location)
         {
             if (_directorySingleton == null)
             {
