@@ -8,6 +8,7 @@ using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Asset.CustomFields.Searchers.Information;
 using QuoteFlow.Core.Asset.Fields;
 using QuoteFlow.Core.Asset.Index.Indexers;
 using QuoteFlow.Core.Jql.Resolver;

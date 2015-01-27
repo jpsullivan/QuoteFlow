@@ -54,7 +54,7 @@ using QuoteFlow.Core.Lucene;
 using QuoteFlow.Core.Services;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Services;
-using MessageService = QuoteFlow.Services.MessageService;
+using MessageService = QuoteFlow.Core.Services.MessageService;
 
 namespace QuoteFlow
 {

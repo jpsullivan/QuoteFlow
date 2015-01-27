@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Index.Indexers;
+using QuoteFlow.Api.Asset.Search.Searchers;
+using QuoteFlow.Api.Asset.Search.Searchers.Information;
 using QuoteFlow.Api.Infrastructure.Concurrency;
 
-namespace QuoteFlow.Api.Asset.Search.Searchers.Information
+namespace QuoteFlow.Core.Asset.CustomFields.Searchers.Information
 {
     public class GenericSearcherInformation<T> : ISearcherInformation<T> where T : class, ISearchableField
     {

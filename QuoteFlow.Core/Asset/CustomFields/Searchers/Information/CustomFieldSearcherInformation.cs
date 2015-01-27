@@ -5,7 +5,7 @@ using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Asset.Search.Searchers.Information;
 using QuoteFlow.Api.Infrastructure.Concurrency;
 
-namespace QuoteFlow.Api.Asset.CustomFields.Searchers.Information
+namespace QuoteFlow.Core.Asset.CustomFields.Searchers.Information
 {
     public class CustomFieldSearcherInformation : GenericSearcherInformation<ICustomField>
     {

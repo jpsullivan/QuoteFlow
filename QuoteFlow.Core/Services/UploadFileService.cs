@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Api.Upload;
 
 namespace QuoteFlow.Services
 {
@@ -99,15 +100,5 @@ namespace QuoteFlow.Services
             var uploadFileName = BuildFileName(userId);
             return await _fileStorageService.GetFileAsync(Constants.UploadsFolderName, uploadFileName);
         }
-    }
-
-    /// <summary>
-    /// The different types of files that can be uploaded throughout QuoteFlow.
-    /// </summary>
-    public enum UploadType
-    {
-        AssetImage,
-        Catalog,
-        ManufacturerLogo
     }
 }

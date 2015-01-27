@@ -1,9 +1,10 @@
-﻿using QuoteFlow.Api.Asset.CustomFields.Searchers.Information;
+﻿using QuoteFlow.Api.Asset.CustomFields.Searchers;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Asset.CustomFields.Searchers.Information;
 
-namespace QuoteFlow.Api.Asset.CustomFields.Searchers
+namespace QuoteFlow.Core.Asset.CustomFields.Searchers
 {
     public class UserPickerSearcher
     {

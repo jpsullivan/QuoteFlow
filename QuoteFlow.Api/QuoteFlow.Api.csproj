@@ -111,10 +111,8 @@
     <Compile Include="Asset\Context\AssetContext.cs" />
     <Compile Include="Asset\Context\IAssetContext.cs" />
     <Compile Include="Asset\CustomFields\Searchers\ICustomFieldSearcherClauseHandler.cs" />
-    <Compile Include="Asset\CustomFields\Searchers\Information\CustomFieldSearcherInformation.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Transformer\CustomFieldInputHelper.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Transformer\ICustomFieldInputHelper.cs" />
-    <Compile Include="Asset\CustomFields\Searchers\UserPickerSearcher.cs" />
     <Compile Include="Asset\Fields\ICatalogField.cs" />
     <Compile Include="Asset\Fields\IConfigurableField .cs" />
     <Compile Include="Asset\Fields\ICustomField.cs" />
@@ -167,7 +165,6 @@
     <Compile Include="Asset\Search\QueryCacheKey.cs" />
     <Compile Include="Asset\Search\QueryCacheLiteralsKey.cs" />
     <Compile Include="Asset\Search\Searchers\IAssetSearcher.cs" />
-    <Compile Include="Asset\Search\Searchers\Information\GenericSearcherInformation.cs" />
     <Compile Include="Asset\Search\Searchers\Information\ISearcherInformation.cs" />
     <Compile Include="Asset\Search\Searchers\SearcherGroup.cs" />
     <Compile Include="Asset\Search\Searchers\SearcherGroupType.cs" />
@@ -214,6 +211,7 @@
     <Compile Include="Configuration\IConfigurationSource.cs" />
     <Compile Include="Configuration\LuceneIndexLocation.cs" />
     <Compile Include="Configuration\StorageType.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Index\IEntitySearchExtractor.cs" />
     <Compile Include="Index\ISearcherFunction.cs" />
     <Compile Include="Infrastructure\Attributes\HintAttribute.cs" />
@@ -228,6 +226,7 @@
     <Compile Include="Infrastructure\Helpers\PagedList.cs" />
     <Compile Include="Infrastructure\Helpers\PageNumber.cs" />
     <Compile Include="Infrastructure\Helpers\PageSizer.cs" />
+    <Compile Include="Infrastructure\IoC\ComponentAccessor.cs" />
     <Compile Include="Infrastructure\Lucene\IIndexLifecycleManager.cs" />
     <Compile Include="Infrastructure\Lucene\IKeywordAttribute.cs" />
     <Compile Include="Infrastructure\Lucene\ILuceneQueryModifier.cs" />
@@ -446,7 +445,9 @@
     <Compile Include="Services\IQuoteService.cs" />
     <Compile Include="Services\ISearchProvider.cs" />
     <Compile Include="Services\ISearchService.cs" />
+    <Compile Include="Services\IUploadFileService.cs" />
     <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Upload\UploadType.cs" />
     <Compile Include="Util\AbstractMessageSet.cs" />
     <Compile Include="Util\IMessageSet.cs" />
     <Compile Include="Util\IShutdown.cs" />
@@ -460,9 +461,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\CustomFields\Converters\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_Readme\Elmah.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

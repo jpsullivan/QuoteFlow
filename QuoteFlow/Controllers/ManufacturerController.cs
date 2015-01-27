@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Dapper;
 using QuoteFlow.Api.Models.ViewModels.Manufacturers;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Api.Upload;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
 using QuoteFlow.Services;

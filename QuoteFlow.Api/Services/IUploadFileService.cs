@@ -1,7 +1,8 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using QuoteFlow.Api.Upload;
 
-namespace QuoteFlow.Services
+namespace QuoteFlow.Api.Services
 {
     public interface IUploadFileService
     {

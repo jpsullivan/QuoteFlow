@@ -437,9 +437,6 @@
     <Compile Include="QuoteController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Services\IUploadFileService.cs" />
-    <Compile Include="Services\MessageService.cs" />
-    <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -904,6 +901,7 @@
     <Folder Include="Infrastructure\Exceptions\Antlr\" />
     <Folder Include="Infrastructure\Exceptions\Search\" />
     <Folder Include="Infrastructure\Lucene\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

@@ -7,6 +7,7 @@ using QuoteFlow.Api.Asset.Search.Searchers.Information;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Asset.CustomFields.Searchers.Information;
 using QuoteFlow.Core.Asset.Index.Indexers;
 using QuoteFlow.Core.Jql.Resolver;
 using CatalogSearchInputTransformer = QuoteFlow.Core.Asset.Search.Searchers.Transformer.CatalogSearchInputTransformer;
