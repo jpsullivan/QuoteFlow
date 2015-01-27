@@ -370,7 +370,6 @@
     <Compile Include="Infrastructure\Attributes\ReadOnlyModeErrorFilter.cs" />
     <Compile Include="Infrastructure\Attributes\RequireSslAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\RoutePrefixAttribute.cs" />
-    <Compile Include="Infrastructure\Azure\AzureEntityList.cs" />
     <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
     <Compile Include="Infrastructure\Enumerables\ListWithDuplicates.cs" />
     <Compile Include="Infrastructure\Enumerables\SingletonList.cs" />
