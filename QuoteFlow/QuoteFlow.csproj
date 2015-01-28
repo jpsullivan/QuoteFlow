@@ -321,10 +321,6 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
-    <Compile Include="App_Start\AuthNinjectModule.cs" />
-    <Compile Include="App_Start\Container.cs" />
-    <Compile Include="App_Start\ContainerBindings.cs" />
-    <Compile Include="App_Start\DiagnosticsNinjectModule.cs" />
     <Compile Include="App_Start\MiniProfiler.cs" />
     <Compile Include="App_Start\Startup.Ninject.cs" />
     <Compile Include="App_Start\Startup.WebApi.cs" />
@@ -376,7 +372,6 @@
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Helpers\DateHelpers.cs" />
     <Compile Include="Infrastructure\JsonContentNegotiator.cs" />
-    <Compile Include="Infrastructure\QuoteFlowControllerFactory.cs" />
     <Compile Include="Infrastructure\QueryStringUniqueValueProviderFactory.cs" />
     <Compile Include="Infrastructure\Exceptions\ReadOnlyModeException.cs" />
     <Compile Include="Infrastructure\Exceptions\TestableStorageClientException.cs" />
@@ -396,7 +391,6 @@
     <Compile Include="Infrastructure\Optimization\Bundler.cs" />
     <Compile Include="Infrastructure\RouteName.cs" />
     <Compile Include="Infrastructure\SafeRedirectResult.cs" />
-    <Compile Include="Infrastructure\TableErrorLog.cs" />
     <Compile Include="ManufacturerController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

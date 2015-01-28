@@ -1,7 +1,7 @@
 ﻿using Ninject.Modules;
 using QuoteFlow.Core.Authentication.Providers;
 
-namespace QuoteFlow
+namespace QuoteFlow.Core.DependencyResolution
 {
     public class AuthNinjectModule : NinjectModule
     {
@@ -9,7 +9,7 @@ namespace QuoteFlow
         {
             foreach (var instance in Authenticator.GetAllAvailable())
             {
-                Bind(typeof(Authenticator)).ToConstant(instance).InSingletonScope();
+                Bind(typeof (Authenticator)).ToConstant(instance).InSingletonScope();
             }
         }
     }

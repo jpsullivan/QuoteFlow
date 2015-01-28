@@ -1,5 +1,6 @@
 ﻿using Ninject.Web.Common.OwinHost;
 using Owin;
+using QuoteFlow.Core.DependencyResolution;
 
 namespace QuoteFlow
 {

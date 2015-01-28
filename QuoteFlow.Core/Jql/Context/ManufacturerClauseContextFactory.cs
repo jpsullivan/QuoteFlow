@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
+using Ninject;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Operator;
@@ -9,6 +9,7 @@ using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.DependencyResolution;
 using QuoteFlow.Core.Jql.Resolver;
 using QuoteFlow.Core.Services;
 

@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Mvc;
 using Ninject;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Core.DependencyResolution;
 
 namespace QuoteFlow.Infrastructure.Attributes
 {

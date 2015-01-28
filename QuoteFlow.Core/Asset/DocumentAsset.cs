@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Lucene.Net.Documents;
+using Ninject;
 using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using Container = QuoteFlow.Core.DependencyResolution.Container;
 
 namespace QuoteFlow.Core.Asset
 {

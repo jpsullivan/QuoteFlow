@@ -6,7 +6,7 @@ using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Common;
 
-namespace QuoteFlow
+namespace QuoteFlow.Core.DependencyResolution
 {
     public static class Container
     {
@@ -31,7 +31,6 @@ namespace QuoteFlow
             yield return new ContainerBindings();
             yield return new DiagnosticsNinjectModule();
             yield return new AuthNinjectModule();
-            //yield return new GetNinjectInstanceForGlimpseModule();
         }
     }
 }

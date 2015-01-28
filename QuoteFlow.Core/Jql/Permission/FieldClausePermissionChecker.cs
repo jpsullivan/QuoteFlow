@@ -1,7 +1,9 @@
-﻿using QuoteFlow.Api.Asset.Fields;
+﻿using Ninject;
+using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Jql.Permission;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Core.Asset.Fields;
+using QuoteFlow.Core.DependencyResolution;
 
 namespace QuoteFlow.Core.Jql.Permission
 {

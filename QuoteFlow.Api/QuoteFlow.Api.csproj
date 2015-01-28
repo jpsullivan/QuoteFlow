@@ -219,6 +219,7 @@
     <Compile Include="Infrastructure\Concurrency\AtomicReference.cs" />
     <Compile Include="Infrastructure\Elmah\QuietLog.cs" />
     <Compile Include="Infrastructure\Extensions\DateExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\DictionaryExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
@@ -240,7 +241,6 @@
     <Compile Include="Jql\Context\AllCatalogsContext.cs" />
     <Compile Include="Jql\Context\AllManufacturersContext.cs" />
     <Compile Include="Jql\Context\CatalogManufacturerContext.cs" />
-    <Compile Include="Jql\Context\ClauseContext.cs" />
     <Compile Include="Jql\Context\ContextCatalogMap.cs" />
     <Compile Include="Jql\Context\ContextSetUtil.cs" />
     <Compile Include="Jql\Context\ICatalogContext.cs" />
@@ -293,7 +293,6 @@
     <Compile Include="Jql\Query\Clause\TerminalClause.cs" />
     <Compile Include="Jql\Query\EqualityQueryFactory.cs" />
     <Compile Include="Jql\Query\FilteredSearcherGroup.cs" />
-    <Compile Include="Jql\Query\FreeTextClauseQueryFactory.cs" />
     <Compile Include="Jql\Query\GenericClauseQueryFactory.cs" />
     <Compile Include="Jql\Query\History\IHistoryPredicate.cs" />
     <Compile Include="Jql\Query\History\IPredicateVisitor.cs" />
@@ -303,7 +302,6 @@
     <Compile Include="Jql\Query\IQuery.cs" />
     <Compile Include="Jql\Query\IQueryCreationContext.cs" />
     <Compile Include="Jql\Query\IQueryRegistry.cs" />
-    <Compile Include="Jql\Query\LikeQueryFactory.cs" />
     <Compile Include="Jql\Query\Lucene\Parsing\ExtendedQueryParser.cs" />
     <Compile Include="Jql\Query\Lucene\Parsing\ILuceneQueryParserFactory.cs" />
     <Compile Include="Jql\Query\Lucene\Parsing\LuceneQueryParser.cs" />
@@ -347,7 +345,6 @@
     <Compile Include="Jql\Util\DateRange.cs" />
     <Compile Include="Jql\Util\IJqlStringSupport.cs" />
     <Compile Include="Jql\Util\JqlCustomFieldId.cs" />
-    <Compile Include="Jql\Validator\FreeTextFieldValidator.cs" />
     <Compile Include="Jql\Validator\IClauseValidator.cs" />
     <Compile Include="Jql\Validator\IOperatorUsageValidator.cs" />
     <Compile Include="Jql\Validator\NumberOfArgumentsValidator.cs" />

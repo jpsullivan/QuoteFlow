@@ -3,6 +3,7 @@ using System.IO;
 using System.Web;
 using System.Web.Routing;
 using Ninject;
+using QuoteFlow.Core.DependencyResolution;
 using QuoteFlow.Core.Services;
 
 namespace QuoteFlow.Infrastructure.Handlers

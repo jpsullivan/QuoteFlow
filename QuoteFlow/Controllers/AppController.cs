@@ -14,6 +14,7 @@ using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core;
 using QuoteFlow.Core.Configuration;
+using QuoteFlow.Core.DependencyResolution;
 using QuoteFlow.Core.Services;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Extensions;

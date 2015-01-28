@@ -24,7 +24,6 @@ using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Infrastructure.Lucene;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Parser;
-using QuoteFlow.Api.Jql.Permission;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Operand.Registry;
 using QuoteFlow.Api.Jql.Resolver;
@@ -41,6 +40,7 @@ using QuoteFlow.Core.Asset.Search.Searchers;
 using QuoteFlow.Core.Asset.Search.Util;
 using QuoteFlow.Core.Auditing;
 using QuoteFlow.Core.Configuration;
+using QuoteFlow.Core.Infrastructure.Mvc;
 using QuoteFlow.Core.Jql.Context;
 using QuoteFlow.Core.Jql.Operand;
 using QuoteFlow.Core.Jql.Operand.Registry;
@@ -52,11 +52,9 @@ using QuoteFlow.Core.Jql.Util;
 using QuoteFlow.Core.Jql.Validator;
 using QuoteFlow.Core.Lucene;
 using QuoteFlow.Core.Services;
-using QuoteFlow.Infrastructure;
 using QuoteFlow.Services;
-using MessageService = QuoteFlow.Core.Services.MessageService;
 
-namespace QuoteFlow
+namespace QuoteFlow.Core.DependencyResolution
 {
     public class ContainerBindings : NinjectModule
     {
@@ -74,18 +72,9 @@ namespace QuoteFlow
 
             ConfigureSearch();
 
-            if (!String.IsNullOrEmpty(configuration.Current.AzureStorageConnectionString))
-            {
-                Bind<ErrorLog>()
-                    .ToMethod(_ => new TableErrorLog(configuration.Current.AzureStorageConnectionString))
-                    .InSingletonScope();
-            }
-            else
-            {
-                Bind<ErrorLog>()
-                    .ToMethod(_ => new SqlErrorLog(configuration.Current.SqlConnectionString))
-                    .InSingletonScope();
-            }
+            Bind<ErrorLog>()
+                .ToMethod(_ => new SqlErrorLog(configuration.Current.SqlConnectionString))
+                .InSingletonScope();
 
             Bind<ICacheService>()
                 .To<HttpContextCacheService>()

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using Ninject;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Handlers;
@@ -16,6 +17,7 @@ using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.Search.Handlers;
 using QuoteFlow.Core.Asset.Search.Searchers;
 using Wintellect.PowerCollections;
+using Container = QuoteFlow.Core.DependencyResolution.Container;
 
 namespace QuoteFlow.Core.Asset.Search.Managers
 {

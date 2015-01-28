@@ -11,6 +11,7 @@ using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject.Web.Common;
 using QuoteFlow;
 using QuoteFlow.Api.Models.ViewModels.Assets;
+using QuoteFlow.Core.DependencyResolution;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.ModelBinders.Asset;
 using WebActivatorEx;

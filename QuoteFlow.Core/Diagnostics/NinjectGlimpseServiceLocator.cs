@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Glimpse.Core.Framework;
+using Ninject;
+using QuoteFlow.Core.DependencyResolution;
 
 namespace QuoteFlow.Core.Diagnostics
 {

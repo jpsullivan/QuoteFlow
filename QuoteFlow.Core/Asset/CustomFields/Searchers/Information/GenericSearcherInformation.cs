@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
+using Ninject;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Index.Indexers;
 using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Asset.Search.Searchers.Information;
 using QuoteFlow.Api.Infrastructure.Concurrency;
+using QuoteFlow.Core.DependencyResolution;
 
 namespace QuoteFlow.Core.Asset.CustomFields.Searchers.Information
 {
@@ -57,7 +58,7 @@ namespace QuoteFlow.Core.Asset.CustomFields.Searchers.Information
             try
             {
                 var type = clazz.GetType();
-                return (IFieldIndexer) Container.Kernel.Get(type);
+                return (IFieldIndexer) Container.Kernel.TryGet(type);
             }
             catch (Exception e)
             {

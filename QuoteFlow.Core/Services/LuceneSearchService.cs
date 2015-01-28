@@ -15,6 +15,7 @@ using QuoteFlow.Api.Search;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.Fields;
 using QuoteFlow.Core.Jql.Query;
+using Container = QuoteFlow.Core.DependencyResolution.Container;
 using Query = Lucene.Net.Search.Query;
 
 namespace QuoteFlow.Core.Services

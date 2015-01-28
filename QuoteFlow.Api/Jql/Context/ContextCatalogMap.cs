@@ -16,15 +16,15 @@ namespace QuoteFlow.Api.Jql.Context
 			Union
 		}
 
-		internal readonly IDictionary<ICatalogContext, ISet<IManufacturerContext>> AssetTypeContextsPerCatalog = new HashMap<ICatalogContext, ISet<IManufacturerContext>>();
-		internal readonly ISet<IManufacturerContext> AssetTypeContextsContainedInGlobalCatalogContexts = new HashSet<IManufacturerContext>();
-		internal readonly ISet<ICatalogContext> CatalogsWithAllAssetTypes = new HashSet<ICatalogContext>();
-		internal readonly bool ContainsGlobalContext;
+        private readonly IDictionary<ICatalogContext, ISet<IManufacturerContext>> _assetTypeContextsPerCatalog = new HashMap<ICatalogContext, ISet<IManufacturerContext>>();
+        private readonly ISet<IManufacturerContext> _assetTypeContextsContainedInGlobalCatalogContexts = new HashSet<IManufacturerContext>();
+        private readonly ISet<ICatalogContext> _catalogsWithAllAssetTypes = new HashSet<ICatalogContext>();
+        private readonly bool _containsGlobalContext;
 
 		public ContextCatalogMap(IClauseContext context)
 		{
             ISet<ICatalogManufacturerContext> catalogAssetTypeContexts = context.Contexts;
-			ContainsGlobalContext = context.ContainsGlobalContext();
+			_containsGlobalContext = context.ContainsGlobalContext();
 			if (catalogAssetTypeContexts != null)
 			{
 				foreach (ICatalogManufacturerContext catalogAssetTypeContext in catalogAssetTypeContexts)
@@ -35,24 +35,25 @@ namespace QuoteFlow.Api.Jql.Context
 					{
 						if (!issueTypeContext.All)
 						{
-							AssetTypeContextsContainedInGlobalCatalogContexts.Add(issueTypeContext);
+							_assetTypeContextsContainedInGlobalCatalogContexts.Add(issueTypeContext);
 						}
 					}
 					else
 					{
 						if (issueTypeContext.All)
 						{
-							CatalogsWithAllAssetTypes.Add(catalogContext);
+							_catalogsWithAllAssetTypes.Add(catalogContext);
 						}
 					}
-					if (AssetTypeContextsPerCatalog.ContainsKey(catalogContext))
+				    ISet<IManufacturerContext> value;
+				    if (_assetTypeContextsPerCatalog.TryGetValue(catalogContext, out value))
 					{
-						AssetTypeContextsPerCatalog[catalogContext].Add(issueTypeContext);
+						value.Add(issueTypeContext);
 					}
 					else
 					{
                         ISet<IManufacturerContext> issueTypeContexts = new HashSet<IManufacturerContext> { issueTypeContext };
-						AssetTypeContextsPerCatalog[catalogContext] = issueTypeContexts;
+						_assetTypeContextsPerCatalog[catalogContext] = issueTypeContexts;
 					}
 				}
 			}
@@ -60,7 +61,7 @@ namespace QuoteFlow.Api.Jql.Context
 
 		public virtual IClauseContext Intersect(ContextCatalogMap contextProjectMap)
 		{
-			ISet<ICatalogManufacturerContext> intersection = ToCatalogManufacturerContextSet(CombineContextMaps(AssetTypeContextsPerCatalog, contextProjectMap.AssetTypeContextsPerCatalog, CombineType.Intersect));
+			ISet<ICatalogManufacturerContext> intersection = ToCatalogManufacturerContextSet(CombineContextMaps(_assetTypeContextsPerCatalog, contextProjectMap._assetTypeContextsPerCatalog, CombineType.Intersect));
 			IEnumerable<ICatalogManufacturerContext> explicitCatalogAssetTypeContexts = HandleGlobals(contextProjectMap);
 		    foreach (var explicitCatalogAssetTypeContext in explicitCatalogAssetTypeContexts)
 		    {
@@ -71,7 +72,7 @@ namespace QuoteFlow.Api.Jql.Context
 
 		public virtual IClauseContext Union(ContextCatalogMap contextProjectMap)
 		{
-			ISet<ICatalogManufacturerContext> union = ToCatalogManufacturerContextSet(CombineContextMaps(AssetTypeContextsPerCatalog, contextProjectMap.AssetTypeContextsPerCatalog, CombineType.Union));
+			ISet<ICatalogManufacturerContext> union = ToCatalogManufacturerContextSet(CombineContextMaps(_assetTypeContextsPerCatalog, contextProjectMap._assetTypeContextsPerCatalog, CombineType.Union));
 			return new ClauseContext(union);
 		}
 
@@ -102,7 +103,8 @@ namespace QuoteFlow.Api.Jql.Context
 			return results;
 		}
 
-		/// <param name="contextProjectMap">The map containing sets of <seealso cref="ICatalogManufacturerContext"/>  keyed by <seealso cref="ICatalogContext"/></param>
+		/// <param name="contextProjectMap">The map containing sets of <seealso cref="ICatalogManufacturerContext"/> 
+		/// keyed by <seealso cref="ICatalogContext"/></param>
 		/// <returns>A set that represents IMPLICIT type contexts that have been replaced by EXPLICIT type contexts.
 		/// 
 		/// The rules are as follows
@@ -117,37 +119,37 @@ namespace QuoteFlow.Api.Jql.Context
 		private IEnumerable<ICatalogManufacturerContext> HandleGlobals(ContextCatalogMap contextProjectMap)
 		{
             var catalogAssetTypeContexts = new HashSet<ICatalogManufacturerContext>();
-			if (ContainsGlobalContext)
+			if (_containsGlobalContext)
 			{
-                foreach (var catalogAssetTypeContext in ToCatalogManufacturerContextSet(contextProjectMap.AssetTypeContextsPerCatalog))
+                foreach (var catalogAssetTypeContext in ToCatalogManufacturerContextSet(contextProjectMap._assetTypeContextsPerCatalog))
                 {
                     catalogAssetTypeContexts.Add(catalogAssetTypeContext);
                 }
 			}
-			if (contextProjectMap.ContainsGlobalContext)
+			if (contextProjectMap._containsGlobalContext)
 			{
-                foreach (var catalogAssetTypeContext in ToCatalogManufacturerContextSet(AssetTypeContextsPerCatalog))
+                foreach (var catalogAssetTypeContext in ToCatalogManufacturerContextSet(_assetTypeContextsPerCatalog))
                 {
                     catalogAssetTypeContexts.Add(catalogAssetTypeContext);
                 }
 			}
 
-            foreach (var globalContext in GetCatalogAssetTypeContextsForCatalogGlobals(CatalogsWithAllAssetTypes, contextProjectMap.AssetTypeContextsPerCatalog))
+            foreach (var globalContext in GetCatalogAssetTypeContextsForCatalogGlobals(_catalogsWithAllAssetTypes, contextProjectMap._assetTypeContextsPerCatalog))
             {
                 catalogAssetTypeContexts.Add(globalContext);
             }
 
-            foreach (var globalContext in GetCatalogAssetTypeContextsForCatalogGlobals(contextProjectMap.CatalogsWithAllAssetTypes, AssetTypeContextsPerCatalog))
+            foreach (var globalContext in GetCatalogAssetTypeContextsForCatalogGlobals(contextProjectMap._catalogsWithAllAssetTypes, _assetTypeContextsPerCatalog))
             {
                 catalogAssetTypeContexts.Add(globalContext);
             }
 
-            foreach (var context in GetCatalogAssetTypeContextsForAllAssetTypes(AssetTypeContextsContainedInGlobalCatalogContexts, contextProjectMap.AssetTypeContextsPerCatalog))
+            foreach (var context in GetCatalogAssetTypeContextsForAllAssetTypes(_assetTypeContextsContainedInGlobalCatalogContexts, contextProjectMap._assetTypeContextsPerCatalog))
             {
                 catalogAssetTypeContexts.Add(context);
             }
 
-            foreach (var context in GetCatalogAssetTypeContextsForAllAssetTypes(contextProjectMap.AssetTypeContextsContainedInGlobalCatalogContexts, AssetTypeContextsPerCatalog))
+            foreach (var context in GetCatalogAssetTypeContextsForAllAssetTypes(contextProjectMap._assetTypeContextsContainedInGlobalCatalogContexts, _assetTypeContextsPerCatalog))
             {
                 catalogAssetTypeContexts.Add(context);
             }
@@ -161,7 +163,7 @@ namespace QuoteFlow.Api.Jql.Context
 			foreach (ICatalogContext projectContext in catalogsWithAllAssetTypes)
 			{
 				var assetTypeContexts = assetTypeContextsMap[projectContext];
-				var assetTypeContextsInAllCatalogContexts = assetTypeContextsMap[AllCatalogsContext.INSTANCE];
+				var assetTypeContextsInAllCatalogContexts = assetTypeContextsMap[AllCatalogsContext.Instance];
 				if (assetTypeContexts != null)
 				{
                     foreach (var catalogAssetTypeContext in ToCatalogManufacturerContextSet(projectContext, assetTypeContexts))
@@ -200,7 +202,7 @@ namespace QuoteFlow.Api.Jql.Context
 			{
 				foreach (ICatalogContext projectContext in issueTypeContextsMap.Keys)
 				{
-					if (projectContext != AllCatalogsContext.INSTANCE)
+					if (projectContext != AllCatalogsContext.Instance)
 					{
 						var issueTypeContexts = issueTypeContextsMap[projectContext];
 						if (issueTypeContexts != null)

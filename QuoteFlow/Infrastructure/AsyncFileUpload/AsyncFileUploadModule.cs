@@ -6,6 +6,7 @@ using System.Threading;
 using System.Web;
 using Ninject;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.DependencyResolution;
 
 namespace QuoteFlow.Infrastructure.AsyncFileUpload
 {

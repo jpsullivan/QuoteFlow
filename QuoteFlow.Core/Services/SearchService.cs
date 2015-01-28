@@ -114,7 +114,7 @@ namespace QuoteFlow.Core.Services
             throw new NotImplementedException();
         }
 
-        public SearchContext GetSearchContext(User searcher, IQuery query)
+        public ISearchContext GetSearchContext(User searcher, IQuery query)
         {
             if (query != null)
             {

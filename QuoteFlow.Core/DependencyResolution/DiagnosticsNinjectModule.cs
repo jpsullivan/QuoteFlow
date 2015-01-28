@@ -6,7 +6,7 @@ using Glimpse.Core.Policy;
 using Ninject.Modules;
 using QuoteFlow.Core.Diagnostics;
 
-namespace QuoteFlow
+namespace QuoteFlow.Core.DependencyResolution
 {
     public class DiagnosticsNinjectModule : NinjectModule
     {

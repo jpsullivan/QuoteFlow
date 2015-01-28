@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Web.Mvc;
 using Lucene.Net.QueryParsers;
+using Ninject;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
@@ -12,9 +12,10 @@ using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
+using QuoteFlow.Api.Jql.Query.Lucene.Parsing;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Util;
-using QuoteFlow.Core.Jql.Query.Lucene.Parsing;
+using QuoteFlow.Core.DependencyResolution;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
@@ -119,7 +120,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         {
             // We pass in the summary index field here, because we dont actually care about the lhs of the query, only that
             // user input can be parsed.
-            return Container.Kernel.TryGet<LuceneQueryParserFactory>().CreateParserFor(SystemSearchConstants.ForSummary().IndexField);
+            return Container.Kernel.TryGet<ILuceneQueryParserFactory>().CreateParserFor(SystemSearchConstants.ForSummary().IndexField);
         }
 
         public abstract void PopulateFromParams(User searcher, IFieldValuesHolder fieldValuesHolder, IActionParams actionParams);

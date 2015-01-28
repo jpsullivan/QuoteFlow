@@ -14,17 +14,20 @@ namespace QuoteFlow.Core.Asset.Search
         #region IoC
 
         protected ICatalogService CatalogService { get; set; }
+        protected IManufacturerService ManufacturerService { get; set; }
 
         public SearchContext() { }
 
-        public SearchContext(ICatalogService catalogService)
+        public SearchContext(ICatalogService catalogService, IManufacturerService manufacturerService)
         {
             CatalogService = catalogService;
+            ManufacturerService = manufacturerService;
         }
 
         #endregion
 
-        private static readonly List<int> AllCatalogs = new List<int>(); 
+        private static readonly List<int> AllCatalogs = new List<int>();
+        private static readonly List<int> AllManufacturers = new List<int>(); 
 
         /// <summary>
         /// Returns whether the context is <em>global</em> or not. A context is global when there 
@@ -33,6 +36,15 @@ namespace QuoteFlow.Core.Asset.Search
         public bool IsForAnyCatalogs()
         {
             return CatalogIds.AnySafe();
+        }
+
+        /// <summary>
+        /// Returns true if no specific manufacturers have been selected.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsForAnyManufacturers()
+        {
+            return (manufacturerIds)
         }
 
         /// <summary>
@@ -62,11 +74,23 @@ namespace QuoteFlow.Core.Asset.Search
         public List<int> CatalogIds
         {
             get { return _catalogIds; }
-            set { 
+            set 
+            { 
                 _catalogIds = value;
                 Catalogs = null;
             }
         }
+
+        private List<int> _manufacturerIds;
+        public List<int> ManufacturerIds
+        {
+            get { return _manufacturerIds; }
+            set
+            {
+                _manufacturerIds = value;
+                Manufacturers = null;
+            }
+        } 
 
         public IEnumerable<IAssetContext> AsAssetContexts
         {
@@ -79,20 +103,39 @@ namespace QuoteFlow.Core.Asset.Search
 
         public void Verify()
         {
-            if (CatalogIds.AnySafe())
+            if (!CatalogIds.AnySafe()) return;
+            
+            foreach (var catalogId in CatalogIds)
             {
-                foreach (var catalogId in CatalogIds)
+                if (CatalogService.GetCatalog(catalogId) == null)
                 {
-                    if (CatalogService.GetCatalog(catalogId) == null)
-                    {
-                        // catalog no longer exists, remove it from the search context
-                        CatalogIds.Remove(catalogId);
-                    }
+                    // catalog no longer exists, remove it from the search context
+                    CatalogIds.Remove(catalogId);
                 }
             }
         }
 
-        public IEnumerable<Catalog> Catalogs { get; set; }
+        private IEnumerable<Catalog> _catalogs; 
+        public IEnumerable<Catalog> Catalogs
+        {
+            get
+            {
+                if (CatalogIds == null) return null;
+                return _catalogs ?? (_catalogs = CatalogIds.Select(id => CatalogService.GetCatalog(id)));
+            }
+            set { _catalogs = value; }
+        }
+
+        private IEnumerable<Manufacturer> _manufacturers;
+        public IEnumerable<Manufacturer> Manufacturers
+        {
+            get
+            {
+                if (ManufacturerIds == null) return null;
+                return _manufacturers ?? (_manufacturers = ManufacturerIds.Select(id => ManufacturerService.GetManufacturer(id)));
+            }
+            set { _manufacturers = value; }
+        }
 
         public override string ToString()
         {

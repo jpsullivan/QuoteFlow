@@ -1,16 +1,20 @@
 ﻿using System;
-using System.ComponentModel;
 using Lucene.Net.QueryParsers;
+using Ninject;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Operator;
+using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Operand;
+using QuoteFlow.Api.Jql.Validator;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Util;
+using QuoteFlow.Core.DependencyResolution;
+using QuoteFlow.Core.Jql.Query.Lucene.Parsing;
 
-namespace QuoteFlow.Api.Jql.Validator
+namespace QuoteFlow.Core.Jql.Validator
 {
     /// <summary>
     /// A generic validator for text fields
@@ -41,11 +45,11 @@ namespace QuoteFlow.Api.Jql.Validator
         public virtual IMessageSet Validate(User searcher, ITerminalClause terminalClause)
         {
             var messageSet = new MessageSet();
-            Query.Operator @operator = terminalClause.Operator;
+            Operator @operator = terminalClause.Operator;
             string fieldName = terminalClause.Name;
             if (!HandlesOperator(@operator))
             {
-                messageSet.AddErrorMessage(string.Format("jira.jql.clause.does.not.support.operator: {0}, {1}, {2}", @operator.GetDisplayAttributeFrom(typeof(Query.Operator)), fieldName));
+                messageSet.AddErrorMessage(string.Format("jira.jql.clause.does.not.support.operator: {0}, {1}, {2}", @operator.GetDisplayAttributeFrom(typeof(Operator)), fieldName));
                 return messageSet;
             }
 
@@ -83,7 +87,7 @@ namespace QuoteFlow.Api.Jql.Validator
             return messageSet;
         }
 
-        private static bool HandlesOperator(Query.Operator @operator)
+        private static bool HandlesOperator(Operator @operator)
         {
             return OperatorClasses.TextOperators.Contains(@operator);
         }

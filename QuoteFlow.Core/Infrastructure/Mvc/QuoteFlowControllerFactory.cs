@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace QuoteFlow.Infrastructure
+namespace QuoteFlow.Core.Infrastructure.Mvc
 {
     public class QuoteFlowControllerFactory : DefaultControllerFactory
     {

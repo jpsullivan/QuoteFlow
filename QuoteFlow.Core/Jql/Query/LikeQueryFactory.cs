@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
+using Ninject;
 using QuoteFlow.Api.Asset.Search.Searchers.Util;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Operator;
+using QuoteFlow.Api.Jql.Query;
+using QuoteFlow.Api.Jql.Query.Lucene.Parsing;
+using QuoteFlow.Core.DependencyResolution;
 
-namespace QuoteFlow.Api.Jql.Query
+namespace QuoteFlow.Core.Jql.Query
 {
     /// <summary>
     /// A factory for creating a Query for the <see cref="Operator.LIKE"/> equals operator.
@@ -143,7 +146,7 @@ namespace QuoteFlow.Api.Jql.Query
 
         protected virtual QueryParser GetQueryParser(string fieldName)
         {
-            return Container.Kernel.TryGet<LuceneQueryParserFactory>().CreateParserFor(fieldName);
+            return Container.Kernel.TryGet<ILuceneQueryParserFactory>().CreateParserFor(fieldName);
         }
 
         public QueryFactoryResult CreateQueryForMultipleValues(string fieldName, Operator @operator, List<QueryLiteral> rawValues)

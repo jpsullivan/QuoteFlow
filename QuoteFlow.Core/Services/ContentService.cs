@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Web;
 using MarkdownSharp;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Diagnostics;
 

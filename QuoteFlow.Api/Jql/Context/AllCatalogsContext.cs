@@ -5,7 +5,7 @@
     /// </summary>
     public class AllCatalogsContext : ICatalogContext
     {
-        public static readonly AllCatalogsContext INSTANCE = new AllCatalogsContext();
+        private static readonly AllCatalogsContext INSTANCE = new AllCatalogsContext();
 
         public static AllCatalogsContext Instance
         {

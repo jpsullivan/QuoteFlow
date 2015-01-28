@@ -17,6 +17,11 @@ namespace QuoteFlow.Api.Asset.Search
         bool IsForAnyCatalogs();
 
         /// <summary>
+        /// Returns true if no specific manufacturers have been selected.
+        /// </summary>
+        bool IsForAnyManufacturers();
+
+        /// <summary>
         /// Returns true if there is exactly one Catalog in this SearchContext.
         /// </summary>
         bool IsSingleCatalogContext();

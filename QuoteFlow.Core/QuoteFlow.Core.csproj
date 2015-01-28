@@ -42,6 +42,9 @@
     <Reference Include="Dapper.Rainbow">
       <HintPath>..\lib\Dapper.Rainbow.dll</HintPath>
     </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="Glimpse.AspNet">
       <HintPath>..\packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
     </Reference>
@@ -87,6 +90,15 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc">
+      <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -148,12 +160,16 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebBackgrounder">
       <HintPath>..\packages\WebBackgrounder.0.2.0\lib\net40\WebBackgrounder.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Information\CustomFieldSearcherInformation.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Information\GenericSearcherInformation.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Transformer\CatalogSearchHandlerFactory.cs" />
@@ -226,6 +242,10 @@
     <Compile Include="Configuration\SmtpUri.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Current.cs" />
+    <Compile Include="DependencyResolution\AuthNinjectModule.cs" />
+    <Compile Include="DependencyResolution\Container.cs" />
+    <Compile Include="DependencyResolution\ContainerBindings.cs" />
+    <Compile Include="DependencyResolution\DiagnosticsNinjectModule.cs" />
     <Compile Include="Diagnostics\AuthenticationGlimpseTab.cs" />
     <Compile Include="Diagnostics\ConcurrentInMemoryPersistenceStore.cs" />
     <Compile Include="Diagnostics\DiagnosticsService.cs" />
@@ -241,6 +261,7 @@
     <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
     <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
     <Compile Include="Infrastructure\Helpers\DisposableAction.cs" />
+    <Compile Include="Infrastructure\Mvc\QuoteFlowControllerFactory.cs" />
     <Compile Include="Jql\AntlrGen\JqlLexer.cs" />
     <Compile Include="Jql\AntlrGen\JqlParser.cs" />
     <Compile Include="Jql\Antlr\RuntimeRecognitionException.cs" />
@@ -276,9 +297,11 @@
     <Compile Include="Jql\Query\ClauseTooComplexSearchException.cs" />
     <Compile Include="Jql\Query\Clause\ChangedClause.cs" />
     <Compile Include="Jql\Query\Clause\WasClause.cs" />
+    <Compile Include="Jql\Query\FreeTextClauseQueryFactory.cs" />
     <Compile Include="Jql\Query\HistoryPredicateQueryFactory.cs" />
     <Compile Include="Jql\Query\History\AndHistoryPredicate.cs" />
     <Compile Include="Jql\Query\History\TerminalHistoryPredicate.cs" />
+    <Compile Include="Jql\Query\LikeQueryFactory.cs" />
     <Compile Include="Jql\Query\LuceneQueryBuilder.cs" />
     <Compile Include="Jql\Query\Lucene\Parsing\LuceneQueryParserFactory.cs" />
     <Compile Include="Jql\Query\ManufacturerClauseQueryFactory.cs" />
@@ -302,6 +325,7 @@
     <Compile Include="Jql\Validator\ChangedClauseValidator.cs" />
     <Compile Include="Jql\Validator\ClauseValidator.cs" />
     <Compile Include="Jql\Validator\CommentValidator.cs" />
+    <Compile Include="Jql\Validator\FreeTextFieldValidator.cs" />
     <Compile Include="Jql\Validator\IValidatorRegistry.cs" />
     <Compile Include="Jql\Validator\ManufacturerValidator.cs" />
     <Compile Include="Jql\Validator\OperatorUsageValidator.cs" />
@@ -372,6 +396,7 @@
     <Compile Include="Util\LuceneUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Jql\Parser\Antlr\Jql.g">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>QuoteFlow.Models.Search.Jql</CustomToolNamespace>

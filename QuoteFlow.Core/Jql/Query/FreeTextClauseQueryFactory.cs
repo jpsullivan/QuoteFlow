@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using QuoteFlow.Api.Jql.Operand;
+using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 
-namespace QuoteFlow.Api.Jql.Query
+namespace QuoteFlow.Core.Jql.Query
 {
     /// <summary>
     /// A query factory that generates lucene queries for the text fields.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Ninject;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Handlers;
@@ -12,6 +13,7 @@ using QuoteFlow.Api.Jql.Validator;
 using QuoteFlow.Api.Jql.Values;
 using QuoteFlow.Core.Jql;
 using QuoteFlow.Core.Jql.Permission;
+using Container = QuoteFlow.Core.DependencyResolution.Container;
 
 namespace QuoteFlow.Core.Asset.Search.Handlers
 {

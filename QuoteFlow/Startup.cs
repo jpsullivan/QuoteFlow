@@ -4,6 +4,7 @@ using Ninject;
 using Owin;
 using QuoteFlow.Core.Authentication;
 using QuoteFlow.Core.Configuration;
+using QuoteFlow.Core.DependencyResolution;
 
 [assembly: OwinStartup(typeof(QuoteFlow.Startup))]
 namespace QuoteFlow

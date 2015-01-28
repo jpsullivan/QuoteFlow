@@ -44,7 +44,7 @@ namespace QuoteFlow.Api.Jql.Query
         /// A new <see cref="QueryFactoryResult"/> that combines the visibility query with
         /// the input result, and that always has mustNotOccur() == false
         /// </returns>
-        internal static QueryFactoryResult WrapWithVisibilityQuery(string fieldName, QueryFactoryResult result)
+        public static QueryFactoryResult WrapWithVisibilityQuery(string fieldName, QueryFactoryResult result)
         {
             // don't bother wrapping a false result because it will return nothing anyway
             if (FalseResult.Equals(result))
