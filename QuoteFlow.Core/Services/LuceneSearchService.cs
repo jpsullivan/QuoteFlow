@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Lucene.Net.Documents;
 using Lucene.Net.Search;
+using Ninject;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Managers;
@@ -14,6 +15,7 @@ using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Search;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.Fields;
+using QuoteFlow.Core.Asset.Search;
 using QuoteFlow.Core.Jql.Query;
 using Container = QuoteFlow.Core.DependencyResolution.Container;
 using Query = Lucene.Net.Search.Query;
@@ -113,9 +115,12 @@ namespace QuoteFlow.Core.Services
             {
                 var permissionsFilter = GetPermissionsFilter(overrideSecurity, searchUser);
                 var finalQuery = CreateLuceneQuery(searchQuery, andQuery, searchUser, overrideSecurity);
-                var hitCountCollector = new TotalHitCountCollector();
-                issueSearcher.Search(finalQuery, permissionsFilter, hitCountCollector);
-                return hitCountCollector.TotalHits;
+
+                // todo: uncomment
+//                var hitCountCollector = new TotalHitCountCollector();
+//                issueSearcher.Search(finalQuery, permissionsFilter, hitCountCollector);
+//                return hitCountCollector.TotalHits;
+                return 0;
             }
             catch (Exception e)
             {

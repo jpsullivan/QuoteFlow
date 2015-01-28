@@ -37,6 +37,11 @@ namespace QuoteFlow.Api.Asset.Search
         List<int> CatalogIds { get; set; }
 
         /// <summary>
+        /// All of the manufacturer ids for this context.
+        /// </summary>
+        List<int> ManufacturerIds { get; set; }
+
+            /// <summary>
         /// 
         /// </summary>
         IEnumerable<IAssetContext> AsAssetContexts { get; }

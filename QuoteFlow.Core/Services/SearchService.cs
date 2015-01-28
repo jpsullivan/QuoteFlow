@@ -27,10 +27,14 @@ namespace QuoteFlow.Core.Services
         public ValidatorVisitor.ValidatorVisitorFactory ValidatorVisitorFactory { get; protected set; }
         public ISearchHandlerManager SearchHandlerManager { get; protected set; }
         public QueryContextVisitor.QueryContextVisitorFactory QueryContextVisitorFactory { get; protected set; }
+        protected QueryContextConverter QueryContextConverter { get; set; }
         public IQueryCache QueryCache { get; protected set; } // request-level cache, not persistent
         public ISearchProvider SearchProvider { get; protected set; }
 
-        public SearchService(IJqlQueryParser jqlQueryParser, IJqlStringSupport jqlStringSupport, IJqlOperandResolver jqlOperandResolver, ValidatorVisitor.ValidatorVisitorFactory validatorVisitorFactory, ISearchHandlerManager searchHandlerManager, QueryContextVisitor.QueryContextVisitorFactory queryContextVisitorFactory, IQueryCache queryCache, ISearchProvider searchProvider)
+        public SearchService(IJqlQueryParser jqlQueryParser, IJqlStringSupport jqlStringSupport, 
+            IJqlOperandResolver jqlOperandResolver, ValidatorVisitor.ValidatorVisitorFactory validatorVisitorFactory, 
+            ISearchHandlerManager searchHandlerManager, QueryContextVisitor.QueryContextVisitorFactory queryContextVisitorFactory,
+            QueryContextConverter queryContextConverter, IQueryCache queryCache, ISearchProvider searchProvider)
         {
             JqlQueryParser = jqlQueryParser;
             JqlStringSupport = jqlStringSupport;
@@ -121,7 +125,7 @@ namespace QuoteFlow.Core.Services
                 var queryContext = GetSimpleQueryContext(searcher, query);
                 if (queryContext != null)
                 {
-                    var searchContext = QueryContextCon
+                    var searchContext = QueryContextConverter.GetQueryContext(queryContext);
                 }
             }
         }

@@ -2,7 +2,9 @@
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Query;
+using QuoteFlow.Api.Models;
 using QuoteFlow.Core.Jql.Context;
+using QuoteFlow.Core.Services;
 
 namespace QuoteFlow.Core.Asset.Search
 {
@@ -33,7 +35,7 @@ namespace QuoteFlow.Core.Asset.Search
             
             if (searchContext.IsForAnyCatalogs())
             {
-                foreach (int manufacturerId in searchContext.IssueTypeIds)
+                foreach (int manufacturerId in searchContext.ManufacturerIds)
                 {
                     contexts.Add(new CatalogManufacturerContext(AllCatalogsContext.Instance, new ManufacturerContext(manufacturerId)));
                 }
@@ -49,7 +51,7 @@ namespace QuoteFlow.Core.Asset.Search
             {
                 foreach (int catalogId in searchContext.CatalogIds)
                 {
-                    foreach (int manufacturerId in searchContext.IssueTypeIds)
+                    foreach (int manufacturerId in searchContext.ManufacturerIds)
                     {
                         contexts.Add(new CatalogManufacturerContext(new CatalogContext(catalogId), new ManufacturerContext(manufacturerId)));
                     }
@@ -57,6 +59,40 @@ namespace QuoteFlow.Core.Asset.Search
             }
             
             return new QueryContext(new ClauseContext(contexts));
+        }
+
+        /// <summary>
+        /// Converts a <seealso cref="IQueryContext"/> into a <seealso cref="ISearchContext"/>.
+        /// If the conversion does not make sense, null is returned.
+        /// 
+        /// If you would like to know if this method will correctly generate a SearchContext you should call
+        /// <seealso cref="SearchService.DoesQueryFitFilterForm(User, IQuery)"/>.
+        /// </summary>
+        /// <param name="queryContext">The QueryContext to convert into a SearchContext, if null then a null SearchContext is returned.</param>
+        /// <returns>The SearchContext generated from the QueryContext, this will be null if we are unable to correctly generate a SearchContext.</returns>
+        public virtual ISearchContext GetSearchContext(IQueryContext queryContext)
+        {
+            List<int> catalogs = null;
+            List<int> manufacturers = null;
+
+            if (queryContext != null)
+            {
+                // If we are unable to generate a list of catalog ids from a queryContext then we should not create a search context
+                catalogs = GetSearchContextCatalogs(queryContext);
+                if (catalogs != null)
+                {
+                    // If we are unable to generate a list of manufacturers from a queryContext then we should not create a search context
+                    manufacturers = GetSearchContextManufacturers(queryContext);
+                }
+            }
+
+            if (catalogs != null && manufacturers != null)
+            {
+                return CreateSearchContext(catalogs, manufacturers);
+            }
+            
+            // If we couldnt generate a valid SearchContext return  null
+            return null;
         }
     }
 }

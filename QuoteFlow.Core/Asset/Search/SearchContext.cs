@@ -44,7 +44,7 @@ namespace QuoteFlow.Core.Asset.Search
         /// <returns></returns>
         public bool IsForAnyManufacturers()
         {
-            return (manufacturerIds)
+            return (ManufacturerIds.AnySafe());
         }
 
         /// <summary>

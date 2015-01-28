@@ -241,6 +241,7 @@
     <Compile Include="Jql\Context\AllCatalogsContext.cs" />
     <Compile Include="Jql\Context\AllManufacturersContext.cs" />
     <Compile Include="Jql\Context\CatalogManufacturerContext.cs" />
+    <Compile Include="Jql\Context\ClauseContext.cs" />
     <Compile Include="Jql\Context\ContextCatalogMap.cs" />
     <Compile Include="Jql\Context\ContextSetUtil.cs" />
     <Compile Include="Jql\Context\ICatalogContext.cs" />

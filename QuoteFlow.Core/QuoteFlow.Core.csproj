@@ -270,7 +270,6 @@
     <Compile Include="Jql\Context\AllTextClauseContextFactory.cs" />
     <Compile Include="Jql\Context\CatalogClauseContextFactory.cs" />
     <Compile Include="Jql\Context\CatalogContext.cs" />
-    <Compile Include="Jql\Context\ClauseContext.cs" />
     <Compile Include="Jql\Context\ManufacturerClauseContextFactory.cs" />
     <Compile Include="Jql\Context\ManufacturerContext.cs" />
     <Compile Include="Jql\Context\QueryContext.cs" />
