@@ -72,7 +72,6 @@ namespace QuoteFlow.Core.Jql.Util
 			this.parser = parser;
 		}
 
-
         public string EncodeStringValue(string value)
         {
             throw new NotImplementedException();
@@ -90,7 +89,12 @@ namespace QuoteFlow.Core.Jql.Util
 
         public string EncodeFieldName(string fieldName)
         {
-            throw new NotImplementedException();
+            if (!parser.IsValidFieldName(fieldName))
+            {
+                return EncodeAsQuotedString(fieldName, true);
+            }
+
+            return fieldName;
         }
 
         public string GenerateJqlString(IQuery query)

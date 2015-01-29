@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Lucene.Net.Support;
@@ -12,10 +13,12 @@ using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
+using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Search;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Asset.Search;
 using Wintellect.PowerCollections;
-using Query = Lucene.Net.Search.Query;
 
 namespace QuoteFlow.Core.Services
 {
@@ -23,15 +26,17 @@ namespace QuoteFlow.Core.Services
     {
         #region IoC
 
-        protected ISearchService SearchService { get; set; }
+        public IJqlStringSupport JqlStringSupport { get; protected set; }
+        public ISearchService SearchService { get; protected set; }
         public IAssetSearcherManager AssetSearcherManager { get; protected set; }
 
         public AssetSearchService() { }
 
-        public AssetSearchService(IAssetSearcherManager assetSearcherManager, ISearchService searchService)
+        public AssetSearchService(IJqlStringSupport jqlStringSupport, ISearchService searchService, IAssetSearcherManager assetSearcherManager)
         {
-            AssetSearcherManager = assetSearcherManager;
+            JqlStringSupport = jqlStringSupport;
             SearchService = searchService;
+            AssetSearcherManager = assetSearcherManager;
         }
 
         #endregion
@@ -39,10 +44,12 @@ namespace QuoteFlow.Core.Services
         public QuerySearchResults Search(User user, MultiDictionary<string, string[]> paramMap, long filterId)
         {
             var searchers = AssetSearcherManager.GetAllSearchers();
-            var clausesOutcome = GenerateQuery(paramMap, user, searchers);
-            var query = BuildQuery(clausesOutcome);
+            
+            var clauses = GenerateQuery(paramMap, user, searchers);
+            var query = BuildQuery(clauses);
 
             var searchContext = SearchService.GetSearchContext(user, query);
+            var searchResults = GetSearchResults(true, user, searchers, clauses, query, searchContext);
             
             throw new NotImplementedException();
         }
@@ -50,6 +57,12 @@ namespace QuoteFlow.Core.Services
         public QuerySearchResults SearchWithJql(User user, string paramString, long filterId)
         {
             throw new NotImplementedException();
+        }
+
+        private QuerySearchResults GetSearchResults(bool includePrimes, User user, ICollection<IAssetSearcher<ISearchableField>> searchers, IDictionary<string, SearchRendererHolder> clauses, IQuery query, ISearchContext searchContext)
+        {
+            SearchRendererValueResults results = GetValueResults(includePrimes, user, searchers, clauses, query, searchContext);
+            return new QuerySearchResults(null, results);
         }
 
         private IDictionary<string, SearchRendererHolder> GenerateQuery<T>(ISearchContext searchContext, User user, IQuery query, IEnumerable<T> searchers)
@@ -83,9 +96,10 @@ namespace QuoteFlow.Core.Services
             {
                 string id = assetSearcher.SearchInformation.Id;
                 ISearchInputTransformer searchInputTransformer = assetSearcher.SearchInputTransformer;
-                if (jqlParams.ContainsKey(id))
+                string[] value;
+                if (jqlParams.TryGetValue(id, out value))
                 {
-                    ParseResult parseResult = SearchService.ParseQuery(user, jqlParams[id][0]);
+                    ParseResult parseResult = SearchService.ParseQuery(user, value[0]);
                     if (parseResult.IsValid())
                     {
                         IClause clause = parseResult.Query.WhereClause;
@@ -118,7 +132,7 @@ namespace QuoteFlow.Core.Services
         {
             var actualClauses = clauses.Values.Select(c => c.Clause).ToList();
             IClause jqlClause = clauses.Any() ? new AndClause(actualClauses) : null;
-            return new Api.Jql.Query.Query(jqlClause);
+            return new Query(jqlClause);
         }
 
         private IActionParams GetActionParameters(IEnumerable<KeyValuePair<string, ICollection<string[]>>> paramMap)
@@ -144,5 +158,72 @@ namespace QuoteFlow.Core.Services
 
             return jqlParams;
         }
+
+        private SearchRendererValueResults GetValueResults(bool includePrimes, User user, ICollection<IAssetSearcher<ISearchableField>> searchers, IDictionary<string, SearchRendererHolder> clauses, IQuery query, ISearchContext searchContext)
+        {
+            var results = new SearchRendererValueResults();
+            foreach (var assetSearcher in searchers)
+            {
+                string id = assetSearcher.SearchInformation.Id;
+                SearchRendererHolder clause;
+                var hasValue = clauses.TryGetValue(id, out clause);
+                if (hasValue)
+                {
+                    if (includePrimes)
+                    {
+                    }
+
+                    string jql = clause != null ? JqlStringSupport.GenerateJqlString(clause.Clause) : null;
+                    results.Add(id, new SearchRendererValue(assetSearcher.SearchInformation.NameKey, jql, null, null, true, true));
+                }
+            }
+
+            return results;
+        }
+
+//        private Searchers GetSearchers(ISearchContext searchContext, User user)
+//        {
+//            var searcherGroups = new Dictionary<string, FilteredSearcherGroup>();
+//            foreach (var assetSearcher in AssetSearcherManager.GetAllSearchers())
+//            {
+//                
+//            }
+//
+//		        foreach (IssueSearcher<?> searcher in this.searchHandlerManager.AllSearchers)
+//		        {
+//			        IssueSearcherPanelMap.Panel panel = IssueSearcherPanelMap.getPanel(searcher.GetType());
+//			        FilteredSearcherGroup group = (FilteredSearcherGroup) searcherGroups[panel.name()];
+//			        if (group == null)
+//			        {
+//				        group = new FilteredSearcherGroup(panel.name());
+//				        if (panel.TitleKey != null)
+//				        {
+//					        group.Title = i18nHelper.getText(panel.TitleKey);
+//				        }
+//				        searcherGroups[panel.name()] = group;
+//			        }
+//        //JAVA TO C# CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
+//        //ORIGINAL LINE: SearcherInformation<?> searcherInfo = searcher.getSearchInformation();
+//			        SearcherInformation<?> searcherInfo = searcher.SearchInformation;
+//			        SearchableField field = searcherInfo.Field;
+//			        string fieldKey = "text";
+//			        if (field != null)
+//			        {
+//				        if ((field is CustomField))
+//				        {
+//					        fieldKey = ((CustomField) field).CustomFieldType.Key;
+//				        }
+//				        else
+//				        {
+//					        fieldKey = field.NameKey;
+//				        }
+//			        }
+//			        string searcherId = searcherInfo.Id;
+//			        group.addSearcher(new Searcher(searcherId, i18nHelper.getText(searcherInfo.NameKey), fieldKey, Convert.ToBoolean(searcher.SearchRenderer.isShown(user, searchContext)), (long?) recentSearchers[searcherId]));
+//		        }
+//		        Searchers searchers = new Searchers();
+//		        searchers.addGroups(searcherGroups.Values);
+//		        return searchers;
+//        }
     }
 }

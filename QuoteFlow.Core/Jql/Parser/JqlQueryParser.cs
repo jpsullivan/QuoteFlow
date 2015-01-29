@@ -129,7 +129,7 @@ namespace QuoteFlow.Core.Jql.Parser
         private JqlParser CreateJqlParser(string clauseString)
         {
             var lexer = new JqlLexer(new ANTLRStringStream(clauseString));
-            return new JqlParser(new CommonTokenStream(lexer));
+            return new JqlParser(new global::Antlr.Runtime.CommonTokenStream(lexer));
         }
 
         private bool IsInt(string intString)
