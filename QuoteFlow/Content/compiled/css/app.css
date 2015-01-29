@@ -1446,7 +1446,7 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
   text-transform: none;
   font-size: 12px;
   padding: 4px;
-  margin: 0px 3px;
+  margin: 0 3px;
 }
 a.user-hover.user-avatar {
   background-repeat: no-repeat;

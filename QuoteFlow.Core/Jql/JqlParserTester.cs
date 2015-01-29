@@ -4,8 +4,8 @@
 using System;
 using Antlr.Runtime;
 using QuoteFlow.Api.Jql.Parser;
-using QuoteFlow.Core.Jql.Antlr;
 using QuoteFlow.Core.Jql.Parser;
+using QuoteFlow.Core.Jql.Parser.Antlr;
 
 namespace QuoteFlow.Core.Jql
 {

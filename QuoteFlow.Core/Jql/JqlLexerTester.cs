@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Antlr.Runtime;
-using QuoteFlow.Core.Jql.Antlr;
 using QuoteFlow.Core.Jql.Parser;
 using QuoteFlow.Core.Jql.Parser.Antlr;
 using QuoteFlow.Core.Jql.Util;

@@ -5,7 +5,7 @@ using Antlr.Runtime;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Core.Jql.Util;
-using QuoteFlow.Models.Search.Jql.AntlrGen;
+using QuoteFlow.Models.Jql.AntlrGen;
 
 namespace QuoteFlow.Core.Jql.Parser
 {

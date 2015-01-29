@@ -2,24 +2,28 @@ grammar Jql;
 
 options { language=CSharp3; }
 
-@parser::namespace { QuoteFlow.Models.Search.Jql.AntlrGen }
-@lexer::namespace { QuoteFlow.Models.Search.Jql.AntlrGen }
+@parser::namespace { QuoteFlow.Core.Jql.AntlrGen }
+@lexer::namespace { QuoteFlow.Models.Jql.AntlrGen }
 
 @parser::header {
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Antlr.Runtime;
-using QuoteFlow.Infrastructure.Exceptions;
-using QuoteFlow.Infrastructure.Exceptions.Antlr;
-using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Models.Search.Jql.Parser;
-using QuoteFlow.Models.Search.Jql.Query;
-using QuoteFlow.Models.Search.Jql.Query.Clause;
-using QuoteFlow.Models.Search.Jql.Query.History;
-using QuoteFlow.Models.Search.Jql.Query.Operand;
-using QuoteFlow.Models.Search.Jql.Query.Order;
-using QuoteFlow.Models.Search.Jql.Util;
+using Antlr.Runtime.Misc;
+using QuoteFlow.Api.Infrastructure.Extensions;
+using QuoteFlow.Api.Jql.Parser;
+using QuoteFlow.Api.Jql.Query;
+using QuoteFlow.Api.Jql.Query.Clause;
+using QuoteFlow.Api.Jql.Query.History;
+using QuoteFlow.Api.Jql.Query.Operand;
+using QuoteFlow.Api.Jql.Query.Order;
+using QuoteFlow.Api.Jql.Util;
+using QuoteFlow.Core.Jql.Parser;
+using QuoteFlow.Core.Jql.Parser.Antlr;
+using QuoteFlow.Core.Jql.Query.Clause;
+using QuoteFlow.Core.Jql.Query.History;
+using QuoteFlow.Core.Jql.Util;
 }
 
 /* START HACK
@@ -103,10 +107,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Antlr.Runtime;
-using QuoteFlow.Infrastructure.Exceptions.Antlr;
-using QuoteFlow.Infrastructure.Helpers;
-using QuoteFlow.Models.Search.Jql.Parser;
-using QuoteFlow.Models.Search.Jql.Util;
+using QuoteFlow.Core.Jql.Parser;
+using QuoteFlow.Core.Jql.Parser.Antlr;
+using QuoteFlow.Core.Jql.Util;
 }
 
 @lexer::members {

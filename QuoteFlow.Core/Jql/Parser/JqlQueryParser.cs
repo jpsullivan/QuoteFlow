@@ -4,9 +4,9 @@ using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Api.Jql.Util;
-using QuoteFlow.Core.Jql.Antlr;
-using QuoteFlow.Core.Jql.Util;
-using QuoteFlow.Models.Search.Jql.AntlrGen;
+using QuoteFlow.Core.Jql.AntlrGen;
+using QuoteFlow.Core.Jql.Parser.Antlr;
+using QuoteFlow.Models.Jql.AntlrGen;
 
 namespace QuoteFlow.Core.Jql.Parser
 {
@@ -41,6 +41,9 @@ namespace QuoteFlow.Core.Jql.Parser
                 {
                     return true;
                 }
+
+                var parser = CreateJqlParser(fieldName);
+                var fieldCheck = parser.fieldCheck();
                 return fieldName == CreateJqlParser(fieldName).fieldCheck().Name;
             }
             catch (RecognitionException e)
@@ -129,7 +132,7 @@ namespace QuoteFlow.Core.Jql.Parser
         private JqlParser CreateJqlParser(string clauseString)
         {
             var lexer = new JqlLexer(new ANTLRStringStream(clauseString));
-            return new JqlParser(new global::Antlr.Runtime.CommonTokenStream(lexer));
+            return new JqlParser(new CommonTokenStream(lexer));
         }
 
         private bool IsInt(string intString)

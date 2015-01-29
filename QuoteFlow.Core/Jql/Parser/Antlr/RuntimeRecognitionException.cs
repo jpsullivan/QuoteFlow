@@ -2,7 +2,7 @@
 using Antlr.Runtime;
 using QuoteFlow.Api.Jql.Parser;
 
-namespace QuoteFlow.Core.Jql.Antlr
+namespace QuoteFlow.Core.Jql.Parser.Antlr
 {
     public class RuntimeRecognitionException : RecognitionException
     {

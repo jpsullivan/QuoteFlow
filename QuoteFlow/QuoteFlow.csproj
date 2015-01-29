@@ -943,9 +943,10 @@
     <PropertyGroup>
       <GulpCmdPath>$(SolutionDir)</GulpCmdPath>
       <GulpCommand>gulp</GulpCommand>
+      <QuoteFlowCoreDir>$(SolutionDir)QuoteFlow.Core</QuoteFlowCoreDir>
       <AntlrPath>$(SolutionDir)\tools\antlr</AntlrPath>
-      <AntlrGrammerPath>$(ProjectDir)Models\Search\Jql\Jql.g</AntlrGrammerPath>
-      <AntlrOutPath>$(ProjectDir)Models\Search\Jql\AntlrGen</AntlrOutPath>
+      <AntlrGrammerPath>$(QuoteFlowCoreDir)\Jql\Parser\Antlr\Jql.g</AntlrGrammerPath>
+      <AntlrOutPath>$(QuoteFlowCoreDir)\Jql\AntlrGen</AntlrOutPath>
       <AntlrCommand>.\Antlr3.exe $(AntlrGrammerPath) -o $(AntlrOutPath)</AntlrCommand>
     </PropertyGroup>
     <Message Text="Bundling assets ... " Importance="high" />

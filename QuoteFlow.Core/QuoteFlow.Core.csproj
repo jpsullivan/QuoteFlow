@@ -255,7 +255,7 @@
     <Compile Include="Infrastructure\Mvc\QuoteFlowControllerFactory.cs" />
     <Compile Include="Jql\AntlrGen\JqlLexer.cs" />
     <Compile Include="Jql\AntlrGen\JqlParser.cs" />
-    <Compile Include="Jql\Antlr\RuntimeRecognitionException.cs" />
+    <Compile Include="Jql\Parser\Antlr\RuntimeRecognitionException.cs" />
     <Compile Include="Jql\ClauseHandler.cs" />
     <Compile Include="Jql\Clause\DeMorgansVisitor.cs" />
     <Compile Include="Jql\Context\AllTextClauseContextFactory.cs" />
