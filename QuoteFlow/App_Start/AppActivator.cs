@@ -52,7 +52,7 @@ namespace QuoteFlow
 
         private static void GlimpsePreStart()
         {
-            DynamicModuleUtility.RegisterModule(typeof(Glimpse.AspNet.HttpModule));
+            //DynamicModuleUtility.RegisterModule(typeof(Glimpse.AspNet.HttpModule));
         }
 
         private static void ElmahPreStart()

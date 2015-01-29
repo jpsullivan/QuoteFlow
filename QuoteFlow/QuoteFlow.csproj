@@ -75,21 +75,6 @@
     <Reference Include="FluentMigrator">
       <HintPath>..\packages\FluentMigrator.1.2.1.0\lib\40\FluentMigrator.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.Ado">
-      <HintPath>..\packages\Glimpse.Ado.1.7.0\lib\net45\Glimpse.Ado.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.AspNet">
-      <HintPath>..\packages\Glimpse.AspNet.1.8.1\lib\net45\Glimpse.AspNet.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.Core">
-      <HintPath>..\packages\Glimpse.1.8.2\lib\net45\Glimpse.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.Mvc5">
-      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.Ninject">
-      <HintPath>..\packages\Glimpse.Ninject.0.9.0\lib\net4\Glimpse.Ninject.dll</HintPath>
-    </Reference>
     <Reference Include="GravatarHelper">
       <HintPath>..\packages\GravatarHelper.3.2.3\lib\Net40\GravatarHelper.dll</HintPath>
     </Reference>
@@ -310,10 +295,6 @@
     </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
-    </Reference>
-    <Reference Include="Yahoo.Yui.Compressor, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\YUICompressor.NET.2.5.0.0\lib\NET20\Yahoo.Yui.Compressor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
