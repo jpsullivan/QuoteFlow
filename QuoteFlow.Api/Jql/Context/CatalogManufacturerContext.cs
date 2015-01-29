@@ -12,7 +12,7 @@
         public CatalogManufacturerContext(ICatalogContext catalogContext, IManufacturerContext manufacturerContext)
 		{
             CatalogContext = catalogContext;
-            ManufacturerContext = ManufacturerContext;
+            ManufacturerContext = manufacturerContext;
 		}
 
 		public virtual ICatalogContext CatalogContext { get; private set; }

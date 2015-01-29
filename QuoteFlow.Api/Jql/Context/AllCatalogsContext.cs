@@ -29,7 +29,7 @@
 
         public override string ToString()
         {
-            return "All Projects Context";
+            return "All Catalogs Context";
         }
     }
 }

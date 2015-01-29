@@ -9,7 +9,7 @@ namespace QuoteFlow.Api.Jql.Context
 		private readonly ISet<ICatalogManufacturerContext> _contexts;
 
 		/// <returns> a <seealso cref="ClauseContext"/> containing a single
-		/// <seealso cref="CatalogManufacturerContext"/> which represents the All Catalogs/All Asset Types context.</returns>
+		/// <seealso cref="CatalogManufacturerContext"/> which represents the All Catalogs/All Manufacturers context.</returns>
 		public static IClauseContext CreateGlobalClauseContext()
 		{
 			return GlobalContext;

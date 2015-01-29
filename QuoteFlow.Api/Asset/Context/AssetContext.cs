@@ -6,7 +6,7 @@ namespace QuoteFlow.Api.Asset.Context
     public class AssetContext : IAssetContext, IComparable
     {
         /// <summary>
-        /// Gets the <see cref="Catalog"/> for this context.  A null return value is used to
+        /// Gets the <see cref="Catalog"/> for this context. A null return value is used to
         /// represent that this context applies to all catalogs.
         /// </summary>
         public Catalog CatalogObject { get; private set; }
@@ -16,6 +16,14 @@ namespace QuoteFlow.Api.Asset.Context
         /// represent that this context applies to all catalogs.
         /// </summary>
         public int? CatalogId { get; private set; }
+
+        public int ManufacturerId { get; private set; }
+
+        public AssetContext(int? catalogId, int manufacturerId)
+        {
+            CatalogId = catalogId;
+            ManufacturerId = manufacturerId;
+        }
 
         public AssetContext(Catalog catalogObject, int? catalogId)
         {
@@ -28,7 +36,7 @@ namespace QuoteFlow.Api.Asset.Context
             CatalogId = catalog != null ? catalog.Id : (int?) null;
         }
 
-        public AssetContext(int catalogId)
+        public AssetContext(int? catalogId)
         {
             CatalogId = catalogId;
         }

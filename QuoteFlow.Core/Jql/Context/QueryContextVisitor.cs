@@ -43,8 +43,8 @@ namespace QuoteFlow.Core.Jql.Context
 
         private static ContextResult ReplaceEmptyContextsWithGlobal(ContextResult result)
         {
-            IClauseContext fullContext = !result.FullContext.Contexts.Any() ? Api.Jql.Context.ClauseContext.CreateGlobalClauseContext() : result.FullContext;
-            IClauseContext simpleContext = !result.SimpleContext.Contexts.Any() ? Api.Jql.Context.ClauseContext.CreateGlobalClauseContext() : result.SimpleContext;
+            IClauseContext fullContext = !result.FullContext.Contexts.Any() ? ClauseContext.CreateGlobalClauseContext() : result.FullContext;
+            IClauseContext simpleContext = !result.SimpleContext.Contexts.Any() ? ClauseContext.CreateGlobalClauseContext() : result.SimpleContext;
             return new ContextResult(fullContext, simpleContext);
         }
 
@@ -127,7 +127,7 @@ namespace QuoteFlow.Core.Jql.Context
                     }
                     else
                     {
-                        simpleClauseContexts.Add(Api.Jql.Context.ClauseContext.CreateGlobalClauseContext());
+                        simpleClauseContexts.Add(ClauseContext.CreateGlobalClauseContext());
                     }
                 }
             }
@@ -138,13 +138,13 @@ namespace QuoteFlow.Core.Jql.Context
         ContextResult IClauseVisitor<ContextResult>.Visit(IWasClause clause)
         {
             //for now simply return the ALL-ALL context
-            return new ContextResult(Api.Jql.Context.ClauseContext.CreateGlobalClauseContext(), Api.Jql.Context.ClauseContext.CreateGlobalClauseContext());
+            return new ContextResult(ClauseContext.CreateGlobalClauseContext(), ClauseContext.CreateGlobalClauseContext());
         }
 
         ContextResult IClauseVisitor<ContextResult>.Visit(IChangedClause clause)
         {
             //for now simply return the ALL-ALL context
-            return new ContextResult(Api.Jql.Context.ClauseContext.CreateGlobalClauseContext(), Api.Jql.Context.ClauseContext.CreateGlobalClauseContext());
+            return new ContextResult(ClauseContext.CreateGlobalClauseContext(), ClauseContext.CreateGlobalClauseContext());
         }
 
         private static bool IsExplict(ITerminalClause clause)
@@ -174,42 +174,44 @@ namespace QuoteFlow.Core.Jql.Context
         {
             if (contexts == null || !contexts.Any())
             {
-                return Api.Jql.Context.ClauseContext.CreateGlobalClauseContext();
+                return ClauseContext.CreateGlobalClauseContext();
             }
 
             IClauseContext returnContext;
             if (contexts.Count() == 1)
             {
-                contexts.GetEnumerator().MoveNext();
-                returnContext = contexts.GetEnumerator().Current;
+//                contexts.GetEnumerator().MoveNext();
+//                returnContext = contexts.GetEnumerator().Current;
+                returnContext = contexts.First();
             }
             else
             {
                 returnContext = contexts.Union();
             }
 
-            return (!returnContext.Contexts.Any()) ? Api.Jql.Context.ClauseContext.CreateGlobalClauseContext() : returnContext;
+            return (!returnContext.Contexts.Any()) ? ClauseContext.CreateGlobalClauseContext() : returnContext;
         }
 
         private static IClauseContext SafeIntersection<T>(ISet<T> contexts) where T : IClauseContext
         {
             if (contexts == null || !contexts.Any())
             {
-                return Api.Jql.Context.ClauseContext.CreateGlobalClauseContext();
+                return ClauseContext.CreateGlobalClauseContext();
             }
 
             IClauseContext returnContext;
             if (contexts.Count() == 1)
             {
-                contexts.GetEnumerator().MoveNext();
-                returnContext = contexts.GetEnumerator().Current;
+//                contexts.GetEnumerator().MoveNext();
+//                returnContext = contexts.GetEnumerator().Current;
+                returnContext = contexts.First();
             }
             else
             {
                 returnContext = contexts.Intersect();
             }
 
-            return (!returnContext.Contexts.Any()) ? Api.Jql.Context.ClauseContext.CreateGlobalClauseContext() : returnContext;
+            return (!returnContext.Contexts.Any()) ? ClauseContext.CreateGlobalClauseContext() : returnContext;
         }
 
         /// <summary>

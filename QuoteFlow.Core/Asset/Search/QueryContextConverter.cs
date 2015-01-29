@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using QuoteFlow.Api.Asset.Search;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Core.Jql.Context;
 using QuoteFlow.Core.Services;
+using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Core.Asset.Search
 {
@@ -72,7 +75,7 @@ namespace QuoteFlow.Core.Asset.Search
         /// <returns>The SearchContext generated from the QueryContext, this will be null if we are unable to correctly generate a SearchContext.</returns>
         public virtual ISearchContext GetSearchContext(IQueryContext queryContext)
         {
-            List<int> catalogs = null;
+            List<int?> catalogs = null;
             List<int> manufacturers = null;
 
             if (queryContext != null)
@@ -91,8 +94,88 @@ namespace QuoteFlow.Core.Asset.Search
                 return CreateSearchContext(catalogs, manufacturers);
             }
             
-            // If we couldnt generate a valid SearchContext return  null
+            // If we couldnt generate a valid SearchContext return null
             return null;
+        }
+
+        private List<int> GetSearchContextManufacturers(IQueryContext queryContext)
+        {
+            var manufacturersPerCatalog = new HashSet<Set<int>>();
+
+            IEnumerable<QueryContextCatalogManufacturerContexts> contexts = queryContext.CatalogManufacturerContexts;
+
+            // assume "All" manufacturer contexts return null for ids.
+            foreach (QueryContextCatalogManufacturerContexts context in contexts)
+            {
+                var manufacturerContexts = context.ManufacturerContexts;
+                Set<int> manufacturersForCatalog = new Set<int>();
+                foreach (var manufacturerContext in manufacturerContexts)
+                {
+                    manufacturersForCatalog.Add(manufacturerContext.ManufacturerId);
+                }
+
+                manufacturersPerCatalog.Add(manufacturersForCatalog);
+            }
+
+            // all catalogs must have the same set of manufacturers 
+            if (manufacturersPerCatalog.Count != 1)
+            {
+                return null;
+            }
+
+//            manufacturersPerCatalog.GetEnumerator().MoveNext();
+//            Set<int> types = manufacturersPerCatalog.GetEnumerator().Current;
+            Set<int> types = manufacturersPerCatalog.First();
+
+            // If there is an "All" manufacturer context, then there can be no specific manufacturer context
+            if (types.Count != 1)
+            {
+                return null;
+            }
+
+//            if (types.Contains(null) && types.size() != 1)
+//            {
+//                return null;
+//            }
+//            if (types.contains(null))
+//            {
+//                return Collections.emptyList();
+//            }
+
+            return new List<int>(types);
+        }
+
+        private List<int?> GetSearchContextCatalogs(IQueryContext queryContext)
+        {
+            var catalogs = new HashSet<int?>();
+
+            var contexts = queryContext.CatalogManufacturerContexts;
+
+            // assume "All" type contexts return null for ids.
+            foreach (QueryContextCatalogManufacturerContexts context in contexts)
+            {
+                int? catalogId = context.CatalogContext.CatalogId;
+                catalogs.Add(catalogId);
+            }
+
+            // If there is an "All" catalog context, then there can be no specific catalog context
+            if (catalogs.Contains(null) && catalogs.Count != 1)
+            {
+                return null;
+            }
+
+            if (catalogs.Contains(null))
+            {
+                return new List<int?>();
+            }
+
+            return new List<int?>(catalogs);
+        }
+
+        // We use this for testing since building a SearchContext brings up the entire world :)
+        protected virtual SearchContext CreateSearchContext(List<int?> catalogs, List<int> manufacturers)
+        {
+            return new SearchContext(catalogs, manufacturers);
         }
     }
 }

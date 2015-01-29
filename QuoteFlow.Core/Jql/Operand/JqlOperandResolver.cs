@@ -260,7 +260,7 @@ namespace QuoteFlow.Core.Jql.Operand
         {
             if (values != null)
             {
-                queryCache.SetValues(ctx, operand, jqlClause, values);
+                queryCache.SetValues(ctx, operand, jqlClause, values.ToList());
             }
         }
     }

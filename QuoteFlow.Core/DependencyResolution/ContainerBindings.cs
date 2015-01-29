@@ -228,6 +228,7 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IQueryRegistry>().To<QueryRegistry>().InRequestScope();
             Bind<ISystemClauseHandlerFactory>().To<SystemClauseHandlerFactory>().InRequestScope();
             Bind<IValidatorRegistry>().To<ValidatorRegistry>().InRequestScope();
+            Bind<QueryContextConverter>().ToSelf().InRequestScope();
             Bind<ValidatorVisitor.ValidatorVisitorFactory>().ToSelf().InRequestScope();
 
             #endregion

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Managers;
@@ -41,6 +42,7 @@ namespace QuoteFlow.Core.Services
             JqlOperandResolver = jqlOperandResolver;
             ValidatorVisitorFactory = validatorVisitorFactory;
             SearchHandlerManager = searchHandlerManager;
+            QueryContextConverter = queryContextConverter;
             QueryContextVisitorFactory = queryContextVisitorFactory;
             QueryCache = queryCache;
             SearchProvider = searchProvider;
@@ -115,7 +117,33 @@ namespace QuoteFlow.Core.Services
 
         public IQueryContext GetSimpleQueryContext(User searcher, IQuery query)
         {
-            throw new NotImplementedException();
+            if (query == null)
+            {
+                throw new ArgumentNullException("query");
+            }
+
+            // We know that the read and put are non-atomic but we will always generate 
+            // the same result and it does not matter if two threads over-write the result into the cache.
+            IClause clause = query.WhereClause;
+            if (clause == null)
+            {
+                // return the ALL-ALL context for the all query
+                return new QueryContext(ClauseContext.CreateGlobalClauseContext());
+            }
+            
+            IQueryContext simpleQueryContext = QueryCache.GetSimpleQueryContextCache(searcher, query);
+            
+            if (simpleQueryContext != null) return simpleQueryContext;
+
+            // calculate both the full and simple contexts and cache them again
+            QueryContextVisitor visitor = QueryContextVisitorFactory.CreateVisitor(searcher);
+            QueryContextVisitor.ContextResult result = clause.Accept(visitor);
+            simpleQueryContext = new QueryContext(result.SimpleContext);
+            QueryContext fullQueryContext = new QueryContext(result.FullContext);
+            QueryCache.SetQueryContextCache(searcher, query, fullQueryContext);
+            QueryCache.SetSimpleQueryContextCache(searcher, query, simpleQueryContext);
+
+            return simpleQueryContext;
         }
 
         public ISearchContext GetSearchContext(User searcher, IQuery query)
@@ -125,9 +153,16 @@ namespace QuoteFlow.Core.Services
                 var queryContext = GetSimpleQueryContext(searcher, query);
                 if (queryContext != null)
                 {
-                    var searchContext = QueryContextConverter.GetQueryContext(queryContext);
+                    var searchContext = QueryContextConverter.GetSearchContext(queryContext);
+                    if (searchContext != null)
+                    {
+                        return searchContext;
+                    }
                 }
             }
+
+            // Could not generate one so lets return an empty one
+            return CreateSearchContext(new List<int?>(), new List<int>());
         }
 
         public string GetJqlString(IQuery query)
@@ -138,6 +173,11 @@ namespace QuoteFlow.Core.Services
         public string GetGeneratedJqlString(IQuery query)
         {
             throw new NotImplementedException();
+        }
+
+        public ISearchContext CreateSearchContext(List<int?> catalogs, List<int> manufacturers)
+        {
+            return new SearchContext(catalogs, manufacturers);
         }
     }
 }

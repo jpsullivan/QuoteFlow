@@ -24,9 +24,15 @@ namespace QuoteFlow.Core.Asset.Search
             ManufacturerService = manufacturerService;
         }
 
+        public SearchContext(List<int?> catalogIds, List<int> manufacturerIds)
+        {
+            CatalogIds = catalogIds;
+            ManufacturerIds = manufacturerIds;
+        }
+
         #endregion
 
-        private static readonly List<int> AllCatalogs = new List<int>();
+        private static readonly List<int?> AllCatalogs = new List<int?>();
         private static readonly List<int> AllManufacturers = new List<int>(); 
 
         /// <summary>
@@ -58,20 +64,21 @@ namespace QuoteFlow.Core.Asset.Search
         /// <summary>
         /// Returns the single <see cref="Catalog"/> for this SearchContext.
         /// </summary>
-        public Catalog SingleCatalog {
+        public Catalog SingleCatalog 
+        {
             get
             {
                 if (IsSingleCatalogContext())
                 {
-                    return CatalogService.GetCatalog(CatalogIds.First());
+                    return CatalogService.GetCatalog((int) CatalogIds.First());
                 }
 
                 throw new InvalidOperationException("This is not a single catalog context.");
             } 
         }
 
-        private List<int> _catalogIds; 
-        public List<int> CatalogIds
+        private List<int?> _catalogIds; 
+        public List<int?> CatalogIds
         {
             get { return _catalogIds; }
             set 
@@ -96,7 +103,17 @@ namespace QuoteFlow.Core.Asset.Search
         {
             get
             {
+                var contexts = new List<IAssetContext>();
                 var catalogIds = (CatalogIds.AnySafe() ? CatalogIds : AllCatalogs);
+                foreach (var catalogId in catalogIds)
+                {
+                    var manufacturerIds = (ManufacturerIds.AnySafe() ? ManufacturerIds : AllManufacturers);
+                    foreach (var manufacturerId in manufacturerIds)
+                    {
+                        contexts.Add(new AssetContext(catalogId, manufacturerId));
+                    }
+                }
+
                 return catalogIds.Select(catalogId => new AssetContext(catalogId));
             }
         } 
@@ -107,7 +124,7 @@ namespace QuoteFlow.Core.Asset.Search
             
             foreach (var catalogId in CatalogIds)
             {
-                if (CatalogService.GetCatalog(catalogId) == null)
+                if (CatalogService.GetCatalog((int) catalogId) == null)
                 {
                     // catalog no longer exists, remove it from the search context
                     CatalogIds.Remove(catalogId);
@@ -121,7 +138,7 @@ namespace QuoteFlow.Core.Asset.Search
             get
             {
                 if (CatalogIds == null) return null;
-                return _catalogs ?? (_catalogs = CatalogIds.Select(id => CatalogService.GetCatalog(id)));
+                return _catalogs ?? (_catalogs = CatalogIds.Select(id => CatalogService.GetCatalog((int) id)));
             }
             set { _catalogs = value; }
         }

@@ -90,7 +90,7 @@ namespace QuoteFlow.Core.Asset.Search
         /// <param name="jqlClauseName"> the jQLClauseName for which to find the result for; cannot be null. </param>
         /// <returns> the collection of <seealso cref="IClauseHandler"/>s registered
         /// for the <seealso cref="User"/> jqlClauseName pair. </returns>
-        ICollection<IClauseHandler> GetClauseHandlers(User searcher, string jqlClauseName);
+        List<IClauseHandler> GetClauseHandlers(User searcher, string jqlClauseName);
 
         /// <summary>
         /// Set the cached result of a getSimpleQueryContext operation on the
@@ -124,6 +124,6 @@ namespace QuoteFlow.Core.Asset.Search
         /// <param name="operand">The Operand which cannot be null </param>
         /// <param name="jqlClause">The jQLClause for which to store the result under; cannot be null. </param>
         /// <param name="values">The collection of <seealso cref="QueryLiteral"/>s </param>
-        void SetValues(IQueryCreationContext context, IOperand operand, ITerminalClause jqlClause, IEnumerable<QueryLiteral> values);
+        void SetValues(IQueryCreationContext context, IOperand operand, ITerminalClause jqlClause, List<QueryLiteral> values);
     }
 }

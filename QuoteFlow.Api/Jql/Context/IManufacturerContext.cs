@@ -1,4 +1,6 @@
-﻿namespace QuoteFlow.Api.Jql.Context
+﻿using QuoteFlow.Api.Models;
+
+namespace QuoteFlow.Api.Jql.Context
 {
     /// <summary>
     /// Represents a <see cref="Manufacturer"/> that is part of a search context.

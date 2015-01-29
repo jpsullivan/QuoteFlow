@@ -169,7 +169,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Information\CustomFieldSearcherInformation.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Information\GenericSearcherInformation.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Transformer\CatalogSearchHandlerFactory.cs" />
@@ -258,6 +257,7 @@
     <Compile Include="Index\AssetIndexHelper.cs" />
     <Compile Include="Infrastructure\Auth\CredentialBuilder.cs" />
     <Compile Include="Infrastructure\Auth\QuoteFlowIdentity.cs" />
+    <Compile Include="Infrastructure\Caching\RequestCacheKeys.cs" />
     <Compile Include="Infrastructure\DB\DbConnectionFactory.cs" />
     <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
     <Compile Include="Infrastructure\Helpers\DisposableAction.cs" />
@@ -395,7 +395,6 @@
     <Compile Include="Util\LuceneUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Jql\Parser\Antlr\Jql.g">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>QuoteFlow.Models.Search.Jql</CustomToolNamespace>
