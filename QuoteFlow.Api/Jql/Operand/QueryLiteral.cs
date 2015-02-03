@@ -27,7 +27,7 @@ namespace QuoteFlow.Api.Jql.Operand
     {
         public QueryLiteral()
         {
-            SourceOperand = EmptyOperand.EMPTY;
+            SourceOperand = EmptyOperand.Empty;
             StringValue = null;
             IntValue = null;
         }

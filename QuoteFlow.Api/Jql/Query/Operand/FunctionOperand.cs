@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace QuoteFlow.Api.Jql.Query.Operand
@@ -83,7 +84,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
             var that = (FunctionOperand) obj;
 
-            if (!Args.Equals(that.Args))
+            if (!Args.SequenceEqual(that.Args))
             {
                 return false;
             }

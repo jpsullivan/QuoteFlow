@@ -68,18 +68,18 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
         public string StringValue { get { return _stringValue; } }
 
-        public override bool Equals(object o)
+        public override bool Equals(object obj)
         {
-            if (this == o)
+            if (this == obj)
             {
                 return true;
             }
-            if (o == null || GetType() != o.GetType())
+            if (obj == null || GetType() != obj.GetType())
             {
                 return false;
             }
 
-            var that = (SingleValueOperand)o;
+            var that = (SingleValueOperand) obj;
 
             if (_intValue != null ? !_intValue.Equals(that._intValue) : that._intValue != null)
             {

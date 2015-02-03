@@ -29,7 +29,7 @@ namespace QuoteFlow.Core.Jql.Util
 
 		public string Visit(EmptyOperand empty)
 		{
-			return EmptyOperand.OPERAND_NAME;
+			return EmptyOperand.OperandName;
 		}
 
 		public string Visit(FunctionOperand function)

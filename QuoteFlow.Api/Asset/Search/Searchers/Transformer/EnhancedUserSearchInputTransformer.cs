@@ -161,7 +161,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
                     }
                     else if (value.Empty)
                     {
-                        operands.Add(EmptyOperand.EMPTY);
+                        operands.Add(EmptyOperand.Empty);
                     }
                     else if (value.Group)
                     {

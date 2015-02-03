@@ -47,6 +47,10 @@ namespace QuoteFlow.Api.Jql.Query.Operand
         {
         }
 
+        public MultiValueOperand(params IOperand[] operands) : this(operands.ToList())
+        {
+        }
+
 
 		public MultiValueOperand(params QueryLiteral[] literals)
 		{
@@ -55,7 +59,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 			{
 				if (literal.IsEmpty)
 				{
-					tmpValues.Add(EmptyOperand.EMPTY);
+					tmpValues.Add(EmptyOperand.Empty);
 				}
 				else
 				{
@@ -78,7 +82,6 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 			Values = values;
 			hashcode = CalculateHashCode(Values);
 		}
-
 
         private static int CalculateHashCode(IEnumerable<IOperand> values)
         {
@@ -123,6 +126,33 @@ namespace QuoteFlow.Api.Jql.Query.Operand
         public T Accept<T>(IOperandVisitor<T> visitor)
         {
             return visitor.Visit(this);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+            if (obj == null || this.GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            MultiValueOperand that = (MultiValueOperand) obj;
+
+            if (Values != null ? !Values.SequenceEqual(that.Values) : that.Values != null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            // Since the enclosed list is immutable, we can pre-calculate the hashCode.
+            return hashcode;
         }
     }
 }

@@ -3,7 +3,7 @@ grammar Jql;
 options { language=CSharp3; }
 
 @parser::namespace { QuoteFlow.Core.Jql.AntlrGen }
-@lexer::namespace { QuoteFlow.Models.Jql.AntlrGen }
+@lexer::namespace { QuoteFlow.Core.Jql.AntlrGen }
 
 @parser::header {
 using System;

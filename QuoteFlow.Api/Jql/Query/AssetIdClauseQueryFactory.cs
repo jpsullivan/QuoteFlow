@@ -47,7 +47,7 @@ namespace QuoteFlow.Api.Jql.Query
             var operand = terminalClause.Operand;
             Operator @operator = terminalClause.Operator;
 
-            if (OperatorClasses.EmptyOnlyOperators.Contains(@operator) && !operand.Equals(EmptyOperand.EMPTY))
+            if (OperatorClasses.EmptyOnlyOperators.Contains(@operator) && !operand.Equals(EmptyOperand.Empty))
             {
                 return QueryFactoryResult.CreateFalseResult();
             }
