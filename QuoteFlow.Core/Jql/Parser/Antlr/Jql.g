@@ -113,7 +113,7 @@ using QuoteFlow.Core.Jql.Util;
 }
 
 @lexer::members {
-	private LinkedList<AntlrPosition> Stack { get; set; }
+	private LinkedList<AntlrPosition> Stack = new LinkedList<AntlrPosition>();
 
     private void StripAndSet()
     {

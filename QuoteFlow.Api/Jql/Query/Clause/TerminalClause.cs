@@ -113,5 +113,47 @@ namespace QuoteFlow.Api.Jql.Query.Clause
 		{
 			return visitor.Visit(this);
 		}
+
+        public override bool Equals(object obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+            if (obj == null || this.GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            TerminalClause that = (TerminalClause) obj;
+
+            if (!Name.Equals(that.Name))
+            {
+                return false;
+            }
+            if (!Operand.Equals(that.Operand))
+            {
+                return false;
+            }
+            if (Operator != that.Operator)
+            {
+                return false;
+            }
+//            if (!Property.Equals(that.Property))
+//            {
+//                return false;
+//            }
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            int result = Operand.GetHashCode();
+            result = 31 * result + Operator.GetHashCode();
+            result = 31 * result + Name.GetHashCode();
+            //result = 31 * result + Property.GetHashCode();
+            return result;
+        }
     }
 }

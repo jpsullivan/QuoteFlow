@@ -186,12 +186,15 @@ namespace QuoteFlow.Core.Jql.Util
 		{
 			var builder = new StringBuilder(Support.EncodeFieldName(clause.Name));
 
-		    foreach (var property in clause.Property)
+		    if (clause.Property != null)
 		    {
-                builder.Append("[")
-                        .Append(Support.EncodeFieldName(property.KeysAsString()))
-                        .Append("].")
-                        .Append(Support.EncodeFieldName(property.ObjectReferencesAsString()));
+                foreach (var property in clause.Property)
+                {
+                    builder.Append("[")
+                            .Append(Support.EncodeFieldName(property.KeysAsString()))
+                            .Append("].")
+                            .Append(Support.EncodeFieldName(property.ObjectReferencesAsString()));
+                }
 		    }
 
 			builder.Append(" ").Append(clause.Operator.GetDisplayAttributeFrom(typeof(Operator)));

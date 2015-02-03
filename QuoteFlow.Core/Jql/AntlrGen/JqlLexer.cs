@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.5.0.2 ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g 2015-01-29 18:03:28
+// $ANTLR 3.5.0.2 C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g 2015-02-02 17:56:45
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -101,7 +101,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 	public const int WAS=62;
 	public const int WS=63;
 
-		private LinkedList<AntlrPosition> Stack { get; set; }
+		private LinkedList<AntlrPosition> Stack = new LinkedList<AntlrPosition>();
 
 	    private void StripAndSet()
 	    {
@@ -189,7 +189,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 
 		OnCreated();
 	}
-	public override string GrammarFileName { get { return "../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g"; } }
+	public override string GrammarFileName { get { return "C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g"; } }
 
 
 	partial void OnCreated();
@@ -210,9 +210,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LPAREN;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:896:13: ( '(' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:896:13: ( '(' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:896:16: '('
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:896:16: '('
 			{
 			DebugLocation(896, 16);
 			Match('('); 
@@ -245,9 +245,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = RPAREN;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:894:9: ( ')' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:894:9: ( ')' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:894:11: ')'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:894:11: ')'
 			{
 			DebugLocation(894, 11);
 			Match(')'); 
@@ -280,9 +280,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = COMMA;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:895:8: ( ',' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:895:8: ( ',' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:895:11: ','
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:895:11: ','
 			{
 			DebugLocation(895, 11);
 			Match(','); 
@@ -315,9 +315,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LBRACKET;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:896:10: ( '[' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:896:10: ( '[' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:896:12: '['
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:896:12: '['
 			{
 			DebugLocation(896, 12);
 			Match('['); 
@@ -350,9 +350,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = RBRACKET;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:897:11: ( ']' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:897:11: ( ']' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:897:14: ']'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:897:14: ']'
 			{
 			DebugLocation(897, 14);
 			Match(']'); 
@@ -383,9 +383,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("MINUS", 6);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:899:15: ( '-' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:899:15: ( '-' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:899:18: '-'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:899:18: '-'
 			{
 			DebugLocation(899, 18);
 			Match('-'); 
@@ -416,9 +416,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BANG;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:909:7: ( '!' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:909:7: ( '!' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:909:9: '!'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:909:9: '!'
 			{
 			DebugLocation(909, 9);
 			Match('!'); 
@@ -451,9 +451,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LT;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:906:5: ( '<' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:906:5: ( '<' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:906:7: '<'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:906:7: '<'
 			{
 			DebugLocation(906, 7);
 			Match('<'); 
@@ -486,9 +486,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = GT;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:907:5: ( '>' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:907:5: ( '>' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:907:7: '>'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:907:7: '>'
 			{
 			DebugLocation(907, 7);
 			Match('>'); 
@@ -521,9 +521,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = GTEQ;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:908:7: ( '>=' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:908:7: ( '>=' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:908:9: '>='
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:908:9: '>='
 			{
 			DebugLocation(908, 9);
 			Match(">="); 
@@ -557,9 +557,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LTEQ;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:909:8: ( '<=' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:909:8: ( '<=' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:909:10: '<='
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:909:10: '<='
 			{
 			DebugLocation(909, 10);
 			Match("<="); 
@@ -593,9 +593,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EQUALS;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:910:9: ( '=' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:910:9: ( '=' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:910:11: '='
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:910:11: '='
 			{
 			DebugLocation(910, 11);
 			Match('='); 
@@ -628,9 +628,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NOT_EQUALS;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:911:12: ( '!=' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:911:12: ( '!=' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:911:14: '!='
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:911:14: '!='
 			{
 			DebugLocation(911, 14);
 			Match("!="); 
@@ -664,9 +664,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LIKE;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:912:7: ( '~' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:912:7: ( '~' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:912:9: '~'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:912:9: '~'
 			{
 			DebugLocation(912, 9);
 			Match('~'); 
@@ -699,9 +699,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NOT_LIKE;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:913:10: ( '!~' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:913:10: ( '!~' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:913:12: '!~'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:913:12: '!~'
 			{
 			DebugLocation(913, 12);
 			Match("!~"); 
@@ -735,9 +735,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = IN;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:914:5: ( ( 'I' | 'i' ) ( 'N' | 'n' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:914:5: ( ( 'I' | 'i' ) ( 'N' | 'n' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:914:7: ( 'I' | 'i' ) ( 'N' | 'n' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:914:7: ( 'I' | 'i' ) ( 'N' | 'n' )
 			{
 			DebugLocation(914, 7);
 			if (input.LA(1)=='I'||input.LA(1)=='i')
@@ -794,9 +794,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = IS;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:915:5: ( ( 'I' | 'i' ) ( 'S' | 's' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:915:5: ( ( 'I' | 'i' ) ( 'S' | 's' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:915:7: ( 'I' | 'i' ) ( 'S' | 's' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:915:7: ( 'I' | 'i' ) ( 'S' | 's' )
 			{
 			DebugLocation(915, 7);
 			if (input.LA(1)=='I'||input.LA(1)=='i')
@@ -853,7 +853,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = AND;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:916:7: ( ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' ) | AMPER | AMPER_AMPER )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:916:7: ( ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' ) | AMPER | AMPER_AMPER )
 			int alt1=3;
 			try { DebugEnterDecision(1, false);
 			int LA1_1 = input.LA(1);
@@ -886,7 +886,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:916:9: ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' )
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:916:9: ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'D' | 'd' )
 				{
 				DebugLocation(916, 9);
 				input.Consume();
@@ -902,7 +902,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:916:39: AMPER
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:916:39: AMPER
 				{
 				DebugLocation(916, 39);
 				mAMPER(); 
@@ -911,7 +911,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:916:47: AMPER_AMPER
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:916:47: AMPER_AMPER
 				{
 				DebugLocation(916, 47);
 				mAMPER_AMPER(); 
@@ -946,7 +946,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = OR;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:917:5: ( ( 'O' | 'o' ) ( 'R' | 'r' ) | PIPE | PIPE_PIPE )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:917:5: ( ( 'O' | 'o' ) ( 'R' | 'r' ) | PIPE | PIPE_PIPE )
 			int alt2=3;
 			try { DebugEnterDecision(2, false);
 			int LA2_1 = input.LA(1);
@@ -979,7 +979,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:917:7: ( 'O' | 'o' ) ( 'R' | 'r' )
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:917:7: ( 'O' | 'o' ) ( 'R' | 'r' )
 				{
 				DebugLocation(917, 7);
 				input.Consume();
@@ -992,7 +992,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:917:28: PIPE
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:917:28: PIPE
 				{
 				DebugLocation(917, 28);
 				mPIPE(); 
@@ -1001,7 +1001,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:917:35: PIPE_PIPE
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:917:35: PIPE_PIPE
 				{
 				DebugLocation(917, 35);
 				mPIPE_PIPE(); 
@@ -1036,9 +1036,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NOT;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:918:6: ( ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'T' | 't' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:918:6: ( ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'T' | 't' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:918:8: ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'T' | 't' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:918:8: ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'T' | 't' )
 			{
 			DebugLocation(918, 8);
 			if (input.LA(1)=='N'||input.LA(1)=='n')
@@ -1108,7 +1108,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EMPTY;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:919:8: ( ( 'E' | 'e' ) ( 'M' | 'm' ) ( 'P' | 'p' ) ( 'T' | 't' ) ( 'Y' | 'y' ) | ( 'N' | 'n' ) ( 'U' | 'u' ) ( 'L' | 'l' ) ( 'L' | 'l' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:919:8: ( ( 'E' | 'e' ) ( 'M' | 'm' ) ( 'P' | 'p' ) ( 'T' | 't' ) ( 'Y' | 'y' ) | ( 'N' | 'n' ) ( 'U' | 'u' ) ( 'L' | 'l' ) ( 'L' | 'l' ) )
 			int alt3=2;
 			try { DebugEnterDecision(3, false);
 			int LA3_1 = input.LA(1);
@@ -1132,7 +1132,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:919:10: ( 'E' | 'e' ) ( 'M' | 'm' ) ( 'P' | 'p' ) ( 'T' | 't' ) ( 'Y' | 'y' )
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:919:10: ( 'E' | 'e' ) ( 'M' | 'm' ) ( 'P' | 'p' ) ( 'T' | 't' ) ( 'Y' | 'y' )
 				{
 				DebugLocation(919, 10);
 				input.Consume();
@@ -1154,7 +1154,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:919:58: ( 'N' | 'n' ) ( 'U' | 'u' ) ( 'L' | 'l' ) ( 'L' | 'l' )
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:919:58: ( 'N' | 'n' ) ( 'U' | 'u' ) ( 'L' | 'l' ) ( 'L' | 'l' )
 				{
 				DebugLocation(919, 58);
 				input.Consume();
@@ -1199,9 +1199,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = WAS;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:921:6: ( ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'S' | 's' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:921:6: ( ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'S' | 's' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:921:8: ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'S' | 's' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:921:8: ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'S' | 's' )
 			{
 			DebugLocation(921, 8);
 			if (input.LA(1)=='W'||input.LA(1)=='w')
@@ -1271,9 +1271,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = CHANGED;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:922:10: ( ( 'C' | 'c' ) ( 'H' | 'h' ) ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'D' | 'd' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:922:10: ( ( 'C' | 'c' ) ( 'H' | 'h' ) ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'D' | 'd' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:922:12: ( 'C' | 'c' ) ( 'H' | 'h' ) ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'D' | 'd' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:922:12: ( 'C' | 'c' ) ( 'H' | 'h' ) ( 'A' | 'a' ) ( 'N' | 'n' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'D' | 'd' )
 			{
 			DebugLocation(922, 12);
 			if (input.LA(1)=='C'||input.LA(1)=='c')
@@ -1395,9 +1395,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BEFORE;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:924:9: ( ( 'B' | 'b' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'O' | 'o' ) ( 'R' | 'r' ) ( 'E' | 'e' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:924:9: ( ( 'B' | 'b' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'O' | 'o' ) ( 'R' | 'r' ) ( 'E' | 'e' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:924:11: ( 'B' | 'b' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'O' | 'o' ) ( 'R' | 'r' ) ( 'E' | 'e' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:924:11: ( 'B' | 'b' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'O' | 'o' ) ( 'R' | 'r' ) ( 'E' | 'e' )
 			{
 			DebugLocation(924, 11);
 			if (input.LA(1)=='B'||input.LA(1)=='b')
@@ -1506,9 +1506,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = AFTER;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:925:8: ( ( 'A' | 'a' ) ( 'F' | 'f' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:925:8: ( ( 'A' | 'a' ) ( 'F' | 'f' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:925:10: ( 'A' | 'a' ) ( 'F' | 'f' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:925:10: ( 'A' | 'a' ) ( 'F' | 'f' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' )
 			{
 			DebugLocation(925, 10);
 			if (input.LA(1)=='A'||input.LA(1)=='a')
@@ -1604,9 +1604,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = FROM;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:926:7: ( ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:926:7: ( ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:926:9: ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:926:9: ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' )
 			{
 			DebugLocation(926, 9);
 			if (input.LA(1)=='F'||input.LA(1)=='f')
@@ -1689,9 +1689,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = TO;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:927:5: ( ( 'T' | 't' ) ( 'O' | 'o' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:927:5: ( ( 'T' | 't' ) ( 'O' | 'o' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:927:7: ( 'T' | 't' ) ( 'O' | 'o' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:927:7: ( 'T' | 't' ) ( 'O' | 'o' )
 			{
 			DebugLocation(927, 7);
 			if (input.LA(1)=='T'||input.LA(1)=='t')
@@ -1748,9 +1748,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ON;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:930:5: ( ( 'O' | 'o' ) ( 'N' | 'n' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:930:5: ( ( 'O' | 'o' ) ( 'N' | 'n' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:930:7: ( 'O' | 'o' ) ( 'N' | 'n' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:930:7: ( 'O' | 'o' ) ( 'N' | 'n' )
 			{
 			DebugLocation(930, 7);
 			if (input.LA(1)=='O'||input.LA(1)=='o')
@@ -1807,9 +1807,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = DURING;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:931:9: ( ( 'D' | 'd' ) ( 'U' | 'u' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'G' | 'g' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:931:9: ( ( 'D' | 'd' ) ( 'U' | 'u' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'G' | 'g' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:931:11: ( 'D' | 'd' ) ( 'U' | 'u' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'G' | 'g' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:931:11: ( 'D' | 'd' ) ( 'U' | 'u' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'G' | 'g' )
 			{
 			DebugLocation(931, 11);
 			if (input.LA(1)=='D'||input.LA(1)=='d')
@@ -1918,9 +1918,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ORDER;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:940:7: ( ( 'o' | 'O' ) ( 'r' | 'R' ) ( 'd' | 'D' ) ( 'e' | 'E' ) ( 'r' | 'R' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:940:7: ( ( 'o' | 'O' ) ( 'r' | 'R' ) ( 'd' | 'D' ) ( 'e' | 'E' ) ( 'r' | 'R' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:940:9: ( 'o' | 'O' ) ( 'r' | 'R' ) ( 'd' | 'D' ) ( 'e' | 'E' ) ( 'r' | 'R' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:940:9: ( 'o' | 'O' ) ( 'r' | 'R' ) ( 'd' | 'D' ) ( 'e' | 'E' ) ( 'r' | 'R' )
 			{
 			DebugLocation(940, 9);
 			if (input.LA(1)=='O'||input.LA(1)=='o')
@@ -2016,9 +2016,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = BY;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:938:4: ( ( 'b' | 'B' ) ( 'y' | 'Y' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:938:4: ( ( 'b' | 'B' ) ( 'y' | 'Y' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:938:6: ( 'b' | 'B' ) ( 'y' | 'Y' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:938:6: ( 'b' | 'B' ) ( 'y' | 'Y' )
 			{
 			DebugLocation(938, 6);
 			if (input.LA(1)=='B'||input.LA(1)=='b')
@@ -2075,9 +2075,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = ASC;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:939:5: ( ( 'a' | 'A' ) ( 's' | 'S' ) ( 'c' | 'C' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:939:5: ( ( 'a' | 'A' ) ( 's' | 'S' ) ( 'c' | 'C' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:939:7: ( 'a' | 'A' ) ( 's' | 'S' ) ( 'c' | 'C' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:939:7: ( 'a' | 'A' ) ( 's' | 'S' ) ( 'c' | 'C' )
 			{
 			DebugLocation(939, 7);
 			if (input.LA(1)=='A'||input.LA(1)=='a')
@@ -2147,9 +2147,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = DESC;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:940:5: ( ( 'd' | 'D' ) ( 'e' | 'E' ) ( 's' | 'S' ) ( 'c' | 'C' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:940:5: ( ( 'd' | 'D' ) ( 'e' | 'E' ) ( 's' | 'S' ) ( 'c' | 'C' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:940:7: ( 'd' | 'D' ) ( 'e' | 'E' ) ( 's' | 'S' ) ( 'c' | 'C' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:940:7: ( 'd' | 'D' ) ( 'e' | 'E' ) ( 's' | 'S' ) ( 'c' | 'C' )
 			{
 			DebugLocation(940, 7);
 			if (input.LA(1)=='D'||input.LA(1)=='d')
@@ -2232,12 +2232,12 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = POSNUMBER;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:946:2: ( ( DIGIT )+ )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:946:2: ( ( DIGIT )+ )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:946:4: ( DIGIT )+
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:946:4: ( DIGIT )+
 			{
 			DebugLocation(946, 4);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:946:4: ( DIGIT )+
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:946:4: ( DIGIT )+
 			int cnt4=0;
 			try { DebugEnterSubRule(4);
 			while (true)
@@ -2257,7 +2257,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:
 					{
 					DebugLocation(946, 4);
 					input.Consume();
@@ -2310,14 +2310,14 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NEGNUMBER;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:949:2: ( MINUS ( DIGIT )+ )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:949:2: ( MINUS ( DIGIT )+ )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:949:4: MINUS ( DIGIT )+
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:949:4: MINUS ( DIGIT )+
 			{
 			DebugLocation(949, 4);
 			mMINUS(); 
 			DebugLocation(949, 10);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:949:10: ( DIGIT )+
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:949:10: ( DIGIT )+
 			int cnt5=0;
 			try { DebugEnterSubRule(5);
 			while (true)
@@ -2337,7 +2337,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:
 					{
 					DebugLocation(949, 10);
 					input.Consume();
@@ -2390,9 +2390,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = CUSTOMFIELD;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:958:2: ( ( 'c' | 'C' ) ( 'f' | 'F' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:958:2: ( ( 'c' | 'C' ) ( 'f' | 'F' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:958:4: ( 'c' | 'C' ) ( 'f' | 'F' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:958:4: ( 'c' | 'C' ) ( 'f' | 'F' )
 			{
 			DebugLocation(958, 4);
 			if (input.LA(1)=='C'||input.LA(1)=='c')
@@ -2450,12 +2450,12 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			int _type = STRING;
 			int _channel = DefaultTokenChannel;
 			 PushPosition(STRING); 
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:968:2: ( ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+ )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:968:2: ( ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+ )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:968:4: ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:968:4: ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+
 			{
 			DebugLocation(968, 4);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:968:4: ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:968:4: ( ESCAPE |~ ( BSLASH | WS | STRINGSTOP ) )+
 			int cnt6=0;
 			try { DebugEnterSubRule(6);
 			while (true)
@@ -2479,7 +2479,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:968:5: ESCAPE
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:968:5: ESCAPE
 					{
 					DebugLocation(968, 5);
 					mESCAPE(); 
@@ -2488,7 +2488,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:968:14: ~ ( BSLASH | WS | STRINGSTOP )
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:968:14: ~ ( BSLASH | WS | STRINGSTOP )
 					{
 					DebugLocation(968, 14);
 					input.Consume();
@@ -2549,19 +2549,19 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			int _type = QUOTE_STRING;
 			int _channel = DefaultTokenChannel;
 			 PushPosition(QUOTE_STRING); 
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:975:2: ( ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:975:2: ( ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:975:4: ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:975:4: ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE )
 			{
 			DebugLocation(975, 4);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:975:4: ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:975:4: ( QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:975:5: QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:975:5: QUOTE ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )* QUOTE
 			{
 			DebugLocation(975, 5);
 			mQUOTE(); 
 			DebugLocation(975, 11);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:975:11: ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )*
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:975:11: ( ESCAPE |~ ( BSLASH | QUOTE | CONTROLCHARS ) )*
 			try { DebugEnterSubRule(7);
 			while (true)
 			{
@@ -2584,7 +2584,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:975:12: ESCAPE
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:975:12: ESCAPE
 					{
 					DebugLocation(975, 12);
 					mESCAPE(); 
@@ -2593,7 +2593,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:975:21: ~ ( BSLASH | QUOTE | CONTROLCHARS )
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:975:21: ~ ( BSLASH | QUOTE | CONTROLCHARS )
 					{
 					DebugLocation(975, 21);
 					input.Consume();
@@ -2654,19 +2654,19 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			int _type = SQUOTE_STRING;
 			int _channel = DefaultTokenChannel;
 			 PushPosition(SQUOTE_STRING); 
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:985:2: ( ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:985:2: ( ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:985:4: ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:985:4: ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE )
 			{
 			DebugLocation(985, 4);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:985:4: ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:985:4: ( SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:985:5: SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:985:5: SQUOTE ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )* SQUOTE
 			{
 			DebugLocation(985, 5);
 			mSQUOTE(); 
 			DebugLocation(985, 12);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:985:12: ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )*
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:985:12: ( ESCAPE |~ ( BSLASH | SQUOTE | CONTROLCHARS ) )*
 			try { DebugEnterSubRule(8);
 			while (true)
 			{
@@ -2689,7 +2689,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:985:13: ESCAPE
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:985:13: ESCAPE
 					{
 					DebugLocation(985, 13);
 					mESCAPE(); 
@@ -2698,7 +2698,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:985:22: ~ ( BSLASH | SQUOTE | CONTROLCHARS )
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:985:22: ~ ( BSLASH | SQUOTE | CONTROLCHARS )
 					{
 					DebugLocation(985, 22);
 					input.Consume();
@@ -2758,12 +2758,12 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 			int _type = MATCHWS;
 			int _channel = DefaultTokenChannel;
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:998:12: ( ( WS )+ )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:998:12: ( ( WS )+ )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:998:16: ( WS )+
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:998:16: ( WS )+
 			{
 			DebugLocation(998, 16);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:998:16: ( WS )+
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:998:16: ( WS )+
 			int cnt9=0;
 			try { DebugEnterSubRule(9);
 			while (true)
@@ -2783,7 +2783,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:
+					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:
 					{
 					DebugLocation(998, 16);
 					input.Consume();
@@ -2836,9 +2836,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("RESERVED_CHARS", 41);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1006:2: ( '{' | '}' | '*' | '/' | '%' | '+' | '^' | '$' | '#' | '@' | '?' | ';' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1006:2: ( '{' | '}' | '*' | '/' | '%' | '+' | '^' | '$' | '#' | '@' | '?' | ';' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:
 			{
 			DebugLocation(1006, 2);
 			if ((input.LA(1)>='#' && input.LA(1)<='%')||(input.LA(1)>='*' && input.LA(1)<='+')||input.LA(1)=='/'||input.LA(1)==';'||(input.LA(1)>='?' && input.LA(1)<='@')||input.LA(1)=='^'||input.LA(1)=='{'||input.LA(1)=='}')
@@ -2884,9 +2884,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			        PushPosition(ERROR_RESERVED);
 			        Recover();
 			    
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1023:5: ( RESERVED_CHARS )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1023:5: ( RESERVED_CHARS )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:
 			{
 			DebugLocation(1023, 5);
 			if ((input.LA(1)>='#' && input.LA(1)<='%')||(input.LA(1)>='*' && input.LA(1)<='+')||input.LA(1)=='/'||input.LA(1)==';'||(input.LA(1)>='?' && input.LA(1)<='@')||input.LA(1)=='^'||input.LA(1)=='{'||input.LA(1)=='}')
@@ -2935,9 +2935,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			        PushPosition(ERRORCHAR);
 			        Recover();
 			    
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1038:5: ( . )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1038:5: ( . )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1038:7: .
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1038:7: .
 			{
 			DebugLocation(1038, 7);
 			MatchAny(); 
@@ -2969,9 +2969,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("QUOTE", 44);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1037:17: ( '\"' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1037:17: ( '\"' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1037:19: '\"'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1037:19: '\"'
 			{
 			DebugLocation(1037, 19);
 			Match('\"'); 
@@ -3000,9 +3000,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("SQUOTE", 45);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1038:18: ( '\\'' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1038:18: ( '\\'' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1038:20: '\\''
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1038:20: '\\''
 			{
 			DebugLocation(1038, 20);
 			Match('\''); 
@@ -3031,9 +3031,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("BSLASH", 46);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1039:18: ( '\\\\' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1039:18: ( '\\\\' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1039:20: '\\\\'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1039:20: '\\\\'
 			{
 			DebugLocation(1039, 20);
 			Match('\\'); 
@@ -3062,9 +3062,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("NL", 47);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1040:14: ( '\\r' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1040:14: ( '\\r' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1040:16: '\\r'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1040:16: '\\r'
 			{
 			DebugLocation(1040, 16);
 			Match('\r'); 
@@ -3093,9 +3093,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("CR", 48);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1041:14: ( '\\n' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1041:14: ( '\\n' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1041:16: '\\n'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1041:16: '\\n'
 			{
 			DebugLocation(1041, 16);
 			Match('\n'); 
@@ -3124,9 +3124,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("SPACE", 49);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1042:17: ( ' ' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1042:17: ( ' ' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1042:19: ' '
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1042:19: ' '
 			{
 			DebugLocation(1042, 19);
 			Match(' '); 
@@ -3155,9 +3155,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("AMPER", 50);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1043:16: ( '&' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1043:16: ( '&' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1043:18: '&'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1043:18: '&'
 			{
 			DebugLocation(1043, 18);
 			Match('&'); 
@@ -3186,9 +3186,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("AMPER_AMPER", 51);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1044:21: ( '&&' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1044:21: ( '&&' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1044:24: '&&'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1044:24: '&&'
 			{
 			DebugLocation(1044, 24);
 			Match("&&"); 
@@ -3218,9 +3218,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("PIPE", 52);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1045:15: ( '|' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1045:15: ( '|' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1045:17: '|'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1045:17: '|'
 			{
 			DebugLocation(1045, 17);
 			Match('|'); 
@@ -3249,9 +3249,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("PIPE_PIPE", 53);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1046:20: ( '||' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1046:20: ( '||' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1046:22: '||'
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1046:22: '||'
 			{
 			DebugLocation(1046, 22);
 			Match("||"); 
@@ -3282,14 +3282,14 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		try
 		{
 			 PushPosition(ESCAPE); 
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1054:2: ( BSLASH ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1054:2: ( BSLASH ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1054:6: BSLASH ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1054:6: BSLASH ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT )
 			{
 			DebugLocation(1054, 6);
 			mBSLASH(); 
 			DebugLocation(1055, 2);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1055:2: ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1055:2: ( 't' | 'n' | 'r' | QUOTE | SQUOTE | BSLASH | SPACE | 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT )
 			int alt10=8;
 			try { DebugEnterSubRule(10);
 			try { DebugEnterDecision(10, false);
@@ -3348,7 +3348,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1056:15: 't'
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1056:15: 't'
 				{
 				DebugLocation(1056, 15);
 				Match('t'); 
@@ -3357,7 +3357,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1057:17: 'n'
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1057:17: 'n'
 				{
 				DebugLocation(1057, 17);
 				Match('n'); 
@@ -3366,7 +3366,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1058:17: 'r'
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1058:17: 'r'
 				{
 				DebugLocation(1058, 17);
 				Match('r'); 
@@ -3375,7 +3375,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1059:17: QUOTE
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1059:17: QUOTE
 				{
 				DebugLocation(1059, 17);
 				mQUOTE(); 
@@ -3384,7 +3384,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1060:17: SQUOTE
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1060:17: SQUOTE
 				{
 				DebugLocation(1060, 17);
 				mSQUOTE(); 
@@ -3393,7 +3393,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1061:17: BSLASH
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1061:17: BSLASH
 				{
 				DebugLocation(1061, 17);
 				mBSLASH(); 
@@ -3402,7 +3402,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1062:17: SPACE
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1062:17: SPACE
 				{
 				DebugLocation(1062, 17);
 				mSPACE(); 
@@ -3411,7 +3411,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1063:16: 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT
+				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1063:16: 'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT
 				{
 				DebugLocation(1063, 16);
 				Match('u'); 
@@ -3457,9 +3457,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("STRINGSTOP", 55);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1074:2: ( CONTROLCHARS | QUOTE | SQUOTE | EQUALS | BANG | LT | GT | LPAREN | RPAREN | LIKE | COMMA | LBRACKET | RBRACKET | PIPE | AMPER | RESERVED_CHARS | NEWLINE )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1074:2: ( CONTROLCHARS | QUOTE | SQUOTE | EQUALS | BANG | LT | GT | LPAREN | RPAREN | LIKE | COMMA | LBRACKET | RBRACKET | PIPE | AMPER | RESERVED_CHARS | NEWLINE )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:
 			{
 			DebugLocation(1074, 2);
 			if ((input.LA(1)>='\u0000' && input.LA(1)<='\u001F')||(input.LA(1)>='!' && input.LA(1)<=',')||input.LA(1)=='/'||(input.LA(1)>=';' && input.LA(1)<='@')||input.LA(1)=='['||(input.LA(1)>=']' && input.LA(1)<='^')||(input.LA(1)>='{' && input.LA(1)<='\u009F')||(input.LA(1)>='\uFDD0' && input.LA(1)<='\uFDEF')||(input.LA(1)>='\uFFFE' && input.LA(1)<='\uFFFF'))
@@ -3499,9 +3499,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("CONTROLCHARS", 56);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1092:2: ( '\\u0000' .. '\\u0009' | '\\u000b' .. '\\u000c' | '\\u000e' .. '\\u001f' | '\\u007f' .. '\\u009f' | '\\ufdd0' .. '\\ufdef' | '\\ufffe' .. '\\uffff' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1092:2: ( '\\u0000' .. '\\u0009' | '\\u000b' .. '\\u000c' | '\\u000e' .. '\\u001f' | '\\u007f' .. '\\u009f' | '\\ufdd0' .. '\\ufdef' | '\\ufffe' .. '\\uffff' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:
 			{
 			DebugLocation(1092, 2);
 			if ((input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\u001F')||(input.LA(1)>='\u007F' && input.LA(1)<='\u009F')||(input.LA(1)>='\uFDD0' && input.LA(1)<='\uFDEF')||(input.LA(1)>='\uFFFE' && input.LA(1)<='\uFFFF'))
@@ -3541,9 +3541,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("NEWLINE", 57);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1107:5: ( NL | CR )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1107:5: ( NL | CR )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:
 			{
 			DebugLocation(1107, 5);
 			if (input.LA(1)=='\n'||input.LA(1)=='\r')
@@ -3583,9 +3583,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("HEXDIGIT", 58);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1110:2: ( DIGIT | ( 'A' | 'a' ) | ( 'B' | 'b' ) | ( 'C' | 'c' ) | ( 'D' | 'd' ) | ( 'E' | 'e' ) | ( 'F' | 'f' ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1110:2: ( DIGIT | ( 'A' | 'a' ) | ( 'B' | 'b' ) | ( 'C' | 'c' ) | ( 'D' | 'd' ) | ( 'E' | 'e' ) | ( 'F' | 'f' ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:
 			{
 			DebugLocation(1110, 2);
 			if ((input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='F')||(input.LA(1)>='a' && input.LA(1)<='f'))
@@ -3625,9 +3625,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("DIGIT", 59);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1114:2: ( '0' .. '9' )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1114:2: ( '0' .. '9' )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:
 			{
 			DebugLocation(1114, 2);
 			if ((input.LA(1)>='0' && input.LA(1)<='9'))
@@ -3667,9 +3667,9 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		TraceIn("WS", 60);
 		try
 		{
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1118:2: ( ( SPACE | '\\t' | NEWLINE ) )
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1118:2: ( ( SPACE | '\\t' | NEWLINE ) )
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:
 			{
 			DebugLocation(1118, 2);
 			if ((input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ')
@@ -3699,7 +3699,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 
 	public override void mTokens()
 	{
-		// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:8: ( LPAREN | RPAREN | COMMA | LBRACKET | RBRACKET | BANG | LT | GT | GTEQ | LTEQ | EQUALS | NOT_EQUALS | LIKE | NOT_LIKE | IN | IS | AND | OR | NOT | EMPTY | WAS | CHANGED | BEFORE | AFTER | FROM | TO | ON | DURING | ORDER | BY | ASC | DESC | POSNUMBER | NEGNUMBER | CUSTOMFIELD | STRING | QUOTE_STRING | SQUOTE_STRING | MATCHWS | ERROR_RESERVED | ERRORCHAR )
+		// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:8: ( LPAREN | RPAREN | COMMA | LBRACKET | RBRACKET | BANG | LT | GT | GTEQ | LTEQ | EQUALS | NOT_EQUALS | LIKE | NOT_LIKE | IN | IS | AND | OR | NOT | EMPTY | WAS | CHANGED | BEFORE | AFTER | FROM | TO | ON | DURING | ORDER | BY | ASC | DESC | POSNUMBER | NEGNUMBER | CUSTOMFIELD | STRING | QUOTE_STRING | SQUOTE_STRING | MATCHWS | ERROR_RESERVED | ERRORCHAR )
 		int alt11=41;
 		try { DebugEnterDecision(11, false);
 		try
@@ -3716,7 +3716,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 		{
 		case 1:
 			DebugEnterAlt(1);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:10: LPAREN
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:10: LPAREN
 			{
 			DebugLocation(1, 10);
 			mLPAREN(); 
@@ -3725,7 +3725,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 2:
 			DebugEnterAlt(2);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:17: RPAREN
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:17: RPAREN
 			{
 			DebugLocation(1, 17);
 			mRPAREN(); 
@@ -3734,7 +3734,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 3:
 			DebugEnterAlt(3);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:24: COMMA
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:24: COMMA
 			{
 			DebugLocation(1, 24);
 			mCOMMA(); 
@@ -3743,7 +3743,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 4:
 			DebugEnterAlt(4);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:30: LBRACKET
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:30: LBRACKET
 			{
 			DebugLocation(1, 30);
 			mLBRACKET(); 
@@ -3752,7 +3752,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 5:
 			DebugEnterAlt(5);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:39: RBRACKET
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:39: RBRACKET
 			{
 			DebugLocation(1, 39);
 			mRBRACKET(); 
@@ -3761,7 +3761,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 6:
 			DebugEnterAlt(6);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:48: BANG
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:48: BANG
 			{
 			DebugLocation(1, 48);
 			mBANG(); 
@@ -3770,7 +3770,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 7:
 			DebugEnterAlt(7);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:53: LT
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:53: LT
 			{
 			DebugLocation(1, 53);
 			mLT(); 
@@ -3779,7 +3779,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 8:
 			DebugEnterAlt(8);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:56: GT
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:56: GT
 			{
 			DebugLocation(1, 56);
 			mGT(); 
@@ -3788,7 +3788,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 9:
 			DebugEnterAlt(9);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:59: GTEQ
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:59: GTEQ
 			{
 			DebugLocation(1, 59);
 			mGTEQ(); 
@@ -3797,7 +3797,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 10:
 			DebugEnterAlt(10);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:64: LTEQ
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:64: LTEQ
 			{
 			DebugLocation(1, 64);
 			mLTEQ(); 
@@ -3806,7 +3806,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 11:
 			DebugEnterAlt(11);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:69: EQUALS
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:69: EQUALS
 			{
 			DebugLocation(1, 69);
 			mEQUALS(); 
@@ -3815,7 +3815,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 12:
 			DebugEnterAlt(12);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:76: NOT_EQUALS
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:76: NOT_EQUALS
 			{
 			DebugLocation(1, 76);
 			mNOT_EQUALS(); 
@@ -3824,7 +3824,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 13:
 			DebugEnterAlt(13);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:87: LIKE
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:87: LIKE
 			{
 			DebugLocation(1, 87);
 			mLIKE(); 
@@ -3833,7 +3833,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 14:
 			DebugEnterAlt(14);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:92: NOT_LIKE
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:92: NOT_LIKE
 			{
 			DebugLocation(1, 92);
 			mNOT_LIKE(); 
@@ -3842,7 +3842,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 15:
 			DebugEnterAlt(15);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:101: IN
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:101: IN
 			{
 			DebugLocation(1, 101);
 			mIN(); 
@@ -3851,7 +3851,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 16:
 			DebugEnterAlt(16);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:104: IS
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:104: IS
 			{
 			DebugLocation(1, 104);
 			mIS(); 
@@ -3860,7 +3860,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 17:
 			DebugEnterAlt(17);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:107: AND
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:107: AND
 			{
 			DebugLocation(1, 107);
 			mAND(); 
@@ -3869,7 +3869,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 18:
 			DebugEnterAlt(18);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:111: OR
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:111: OR
 			{
 			DebugLocation(1, 111);
 			mOR(); 
@@ -3878,7 +3878,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 19:
 			DebugEnterAlt(19);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:114: NOT
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:114: NOT
 			{
 			DebugLocation(1, 114);
 			mNOT(); 
@@ -3887,7 +3887,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 20:
 			DebugEnterAlt(20);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:118: EMPTY
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:118: EMPTY
 			{
 			DebugLocation(1, 118);
 			mEMPTY(); 
@@ -3896,7 +3896,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 21:
 			DebugEnterAlt(21);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:124: WAS
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:124: WAS
 			{
 			DebugLocation(1, 124);
 			mWAS(); 
@@ -3905,7 +3905,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 22:
 			DebugEnterAlt(22);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:128: CHANGED
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:128: CHANGED
 			{
 			DebugLocation(1, 128);
 			mCHANGED(); 
@@ -3914,7 +3914,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 23:
 			DebugEnterAlt(23);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:136: BEFORE
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:136: BEFORE
 			{
 			DebugLocation(1, 136);
 			mBEFORE(); 
@@ -3923,7 +3923,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 24:
 			DebugEnterAlt(24);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:143: AFTER
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:143: AFTER
 			{
 			DebugLocation(1, 143);
 			mAFTER(); 
@@ -3932,7 +3932,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 25:
 			DebugEnterAlt(25);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:149: FROM
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:149: FROM
 			{
 			DebugLocation(1, 149);
 			mFROM(); 
@@ -3941,7 +3941,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 26:
 			DebugEnterAlt(26);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:154: TO
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:154: TO
 			{
 			DebugLocation(1, 154);
 			mTO(); 
@@ -3950,7 +3950,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 27:
 			DebugEnterAlt(27);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:157: ON
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:157: ON
 			{
 			DebugLocation(1, 157);
 			mON(); 
@@ -3959,7 +3959,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 28:
 			DebugEnterAlt(28);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:160: DURING
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:160: DURING
 			{
 			DebugLocation(1, 160);
 			mDURING(); 
@@ -3968,7 +3968,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 29:
 			DebugEnterAlt(29);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:167: ORDER
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:167: ORDER
 			{
 			DebugLocation(1, 167);
 			mORDER(); 
@@ -3977,7 +3977,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 30:
 			DebugEnterAlt(30);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:173: BY
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:173: BY
 			{
 			DebugLocation(1, 173);
 			mBY(); 
@@ -3986,7 +3986,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 31:
 			DebugEnterAlt(31);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:176: ASC
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:176: ASC
 			{
 			DebugLocation(1, 176);
 			mASC(); 
@@ -3995,7 +3995,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 32:
 			DebugEnterAlt(32);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:180: DESC
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:180: DESC
 			{
 			DebugLocation(1, 180);
 			mDESC(); 
@@ -4004,7 +4004,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 33:
 			DebugEnterAlt(33);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:185: POSNUMBER
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:185: POSNUMBER
 			{
 			DebugLocation(1, 185);
 			mPOSNUMBER(); 
@@ -4013,7 +4013,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 34:
 			DebugEnterAlt(34);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:195: NEGNUMBER
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:195: NEGNUMBER
 			{
 			DebugLocation(1, 195);
 			mNEGNUMBER(); 
@@ -4022,7 +4022,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 35:
 			DebugEnterAlt(35);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:205: CUSTOMFIELD
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:205: CUSTOMFIELD
 			{
 			DebugLocation(1, 205);
 			mCUSTOMFIELD(); 
@@ -4031,7 +4031,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 36:
 			DebugEnterAlt(36);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:217: STRING
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:217: STRING
 			{
 			DebugLocation(1, 217);
 			mSTRING(); 
@@ -4040,7 +4040,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 37:
 			DebugEnterAlt(37);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:224: QUOTE_STRING
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:224: QUOTE_STRING
 			{
 			DebugLocation(1, 224);
 			mQUOTE_STRING(); 
@@ -4049,7 +4049,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 38:
 			DebugEnterAlt(38);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:237: SQUOTE_STRING
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:237: SQUOTE_STRING
 			{
 			DebugLocation(1, 237);
 			mSQUOTE_STRING(); 
@@ -4058,7 +4058,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 39:
 			DebugEnterAlt(39);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:251: MATCHWS
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:251: MATCHWS
 			{
 			DebugLocation(1, 251);
 			mMATCHWS(); 
@@ -4067,7 +4067,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 40:
 			DebugEnterAlt(40);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:259: ERROR_RESERVED
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:259: ERROR_RESERVED
 			{
 			DebugLocation(1, 259);
 			mERROR_RESERVED(); 
@@ -4076,7 +4076,7 @@ public partial class JqlLexer : Antlr.Runtime.Lexer
 			break;
 		case 41:
 			DebugEnterAlt(41);
-			// ../../QuoteFlow.Core/Jql/Parser/Antlr/Jql.g:1:274: ERRORCHAR
+			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:1:274: ERRORCHAR
 			{
 			DebugLocation(1, 274);
 			mERRORCHAR(); 

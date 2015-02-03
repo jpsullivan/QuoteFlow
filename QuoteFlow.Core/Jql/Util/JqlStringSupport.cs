@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
@@ -74,17 +75,37 @@ namespace QuoteFlow.Core.Jql.Util
 
         public string EncodeStringValue(string value)
         {
-            throw new NotImplementedException();
+            if (value.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            if (!parser.IsValidValue(value))
+            {
+                return EncodeAsQuotedString(value);
+            }
+
+            return value;
         }
 
         public string EncodeFunctionArgument(string argument)
         {
-            throw new NotImplementedException();
+            if (!parser.IsValidFunctionArgument(argument))
+            {
+                return EncodeAsQuotedString(argument, true);
+            }
+
+            return argument;
         }
 
         public string EncodeFunctionName(string functionName)
         {
-            throw new NotImplementedException();
+            if (!parser.IsValidFunctionName(functionName))
+            {
+                return EncodeAsQuotedString(functionName, true);
+            }
+
+            return functionName;
         }
 
         public string EncodeFieldName(string fieldName)
