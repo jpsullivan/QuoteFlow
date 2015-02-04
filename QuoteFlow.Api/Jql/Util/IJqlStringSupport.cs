@@ -18,6 +18,15 @@ namespace QuoteFlow.Api.Jql.Util
         string EncodeStringValue(string value);
 
         /// <summary>
+        /// Encode the passed string value into a safe JQL value if necessary. The value will not be encoded if it is
+        /// already safe. This is different to <see cref="EncodeStringValue(string)"/> since it will not Add quotes around
+        /// long values.
+        /// </summary>
+        /// <param name="value"> the value to encode. </param>
+        /// <returns> the encoded string. </returns>
+        string EncodeValue(string value);
+
+        /// <summary>
         /// Encode the passed string into a safe JQL function argument. The value will not be encoded if it is already safe.
         /// </summary>
         /// <param name="argument">the string to encode.</param>

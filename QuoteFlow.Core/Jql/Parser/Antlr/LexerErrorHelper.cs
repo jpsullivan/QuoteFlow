@@ -1,4 +1,5 @@
-﻿using Antlr.Runtime;
+﻿using System;
+using Antlr.Runtime;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Models.Jql.AntlrGen;
 
@@ -7,18 +8,23 @@ namespace QuoteFlow.Core.Jql.Parser.Antlr
     /// <summary>
     /// Helps with Jql Lexer error handling.
     /// </summary>
-    internal class LexerErrorHelper
+    public class LexerErrorHelper
     {
         public ICharStream Stream { get; set; }
         public AntlrPosition Position { get; set; }
 
-        internal LexerErrorHelper(ICharStream stream, AntlrPosition position)
+        public LexerErrorHelper(ICharStream stream, AntlrPosition position)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
             Stream = stream;
             Position = position;
         }
 
-        internal virtual void HandleError(RecognitionException re)
+        public virtual void HandleError(RecognitionException re)
         {
             JqlParseErrorMessage message;
             if (Position == null)

@@ -14,7 +14,7 @@ namespace QuoteFlow.Api.Jql.Query.Order
         /// A list of SearchSort objects that represent the specified sorting requested for this OrderBy clause. 
         /// Cannot be null. 
         /// </returns>
-        IList<SearchSort> SearchSorts { get; }
+        List<SearchSort> SearchSorts { get; }
     }
 
 }

@@ -337,6 +337,163 @@ namespace QuoteFlow.Core.Tests.Jql.Parser
             Evaluate(jql, expectedClause);
         }
 
+        private static readonly List<TerminalClause> QuotedStrings = new List<TerminalClause>
+        {
+            new TerminalClause("priority", Operator.EQUALS, "a big string ~ != foo and priority = haha "), // 0
+            new TerminalClause("priority", Operator.EQUALS, "") // 1
+        };
+
+        [Theory]
+        [InlineData("priority = \"a big string ~ != foo and priority = haha \"", 0)]
+        [InlineData("priority = \"\"", 1)]
+        public void QuotedStrings_WithCharacters_ThatMustBeQuoted_Tests(string jql, int index)
+        {
+            var expectedClause = QuotedStrings.ElementAt(index);
+            Evaluate(jql, expectedClause);
+        }
+
+        private static readonly List<TerminalClause> Escaping = new List<TerminalClause>
+        {
+            new TerminalClause("priority", Operator.EQUALS, "a \n new \r line"), // 0
+            new TerminalClause("priority", Operator.EQUALS, "Tab:\t NewLine:\n Carrage Return:\r"), // 1
+            new TerminalClause("priority", Operator.EQUALS, "Quote:\" Single:' Back Slash:\\ Space: "), // 2
+            new TerminalClause("priority", Operator.EQUALS, "Unicode: \ufeef1 Unicode2: \u6eef"), // 3
+            new TerminalClause("priority", Operator.EQUALS, "Escape\" don't"), // 4
+            new TerminalClause("priority", Operator.EQUALS, "Escape' don\"t") // 5
+        };
+
+        [Theory]
+        [InlineData("priority = \"a \\n new \\r line\"", 0)]
+        [InlineData("priority = \"Tab:\\t NewLine:\\n Carrage Return:\\r\"", 1)]
+        [InlineData("priority = \"Quote:\\\" Single:\\' Back Slash:\\\\ Space:\\ \"", 2)]
+        //[InlineData("priority = \"Unicode: \\ufeeF1 Unicode2: \\u6EEF\"", 3)]
+        [InlineData("priority = 'Escape\" don\\'t'", 4)]
+        [InlineData("priority = \"Escape' don\\\"t\"", 5)]
+        public void Escaping_Tests(string jql, int index)
+        {
+            var expectedClause = Escaping.ElementAt(index);
+            Evaluate(jql, expectedClause);
+        }
+
+        private static readonly List<TerminalClause> FunctionClauses = new List<TerminalClause>
+        {
+            new TerminalClause("priority", Operator.EQUALS, new FunctionOperand("higherThan", new List<string>() { "Major" })), // 0
+            new TerminalClause("priority", Operator.IN, new FunctionOperand("randomName", new List<string> { "Major", "Minor", "cool", "-65784" })), // 1
+            new TerminalClause("priority", Operator.GREATER_THAN_EQUALS, new FunctionOperand("randomName", new List<string>())), // 2
+            new TerminalClause("pri", Operator.NOT_IN, new FunctionOperand("fun", "name\u0082e"))
+        };
+
+        [Theory]
+        [InlineData("priority = higherThan(Major)", 0)]
+        [InlineData("priority In     randomName(Major, Minor,      \"cool\", -65784)", 1)]
+        [InlineData("priority    >=    randomName()", 2)]
+        //[InlineData("pri not in fun(name\u0082e", 3)]
+        public void Function_Call_Tests(string jql, int index)
+        {
+            var expectedClause = FunctionClauses.ElementAt(index);
+            Evaluate(jql, expectedClause);
+        }
+
+        private static readonly List<IClause> StringBreaks = new List<IClause>
+        {
+            new AndClause(new TerminalClause("a", Operator.EQUALS, "b"), new TerminalClause("c", Operator.EQUALS, "d")), // 0
+            new AndClause(new TerminalClause("a", Operator.EQUALS, "b"), new TerminalClause("c", Operator.EQUALS, "d")), // 1
+            new OrClause(new TerminalClause("a", Operator.EQUALS, "b"), new TerminalClause("c", Operator.EQUALS, "d")), // 2
+            new OrClause(new TerminalClause("a", Operator.EQUALS, "b"), new TerminalClause("c", Operator.EQUALS, "d")), // 3
+            new TerminalClause("a", Operator.LESS_THAN, "b"), // 4
+            new TerminalClause("a", Operator.GREATER_THAN, "b"), // 5
+            new TerminalClause("a", Operator.LIKE, "b")
+        };
+
+        [Theory]
+        [InlineData("a=b&c=d", 0)]
+        [InlineData("a=b&&c=d", 1)]
+        [InlineData("a=b|c=d", 2)]
+        [InlineData("a=b||c=d", 3)]
+        [InlineData("a<b", 4)]
+        [InlineData("a>b", 5)]
+        [InlineData("a~b", 6)]
+        public void String_Break_Tests(string jql, int index)
+        {
+            var expectedClause = StringBreaks.ElementAt(index);
+            Evaluate(jql, expectedClause);
+        }
+
+        private static readonly TerminalClause _priorityEqualsMajor = new TerminalClause("priority", Operator.EQUALS, "major");
+        private static readonly TerminalClause _fooGtBarFunc = new TerminalClause("foo", Operator.GREATER_THAN, new FunctionOperand("bar"));
+        private static readonly List<IClause> AndOperator = new List<IClause>
+        {
+            new AndClause(_priorityEqualsMajor, _fooGtBarFunc), // 0
+            new AndClause(new TerminalClause("priority", Operator.EQUALS, "majorand"), _fooGtBarFunc), // 1
+            new AndClause(_priorityEqualsMajor, _fooGtBarFunc), // 2
+            new AndClause(new TerminalClause("priority", Operator.NOT_EQUALS, "major"), _fooGtBarFunc), // 3
+            new AndClause(new TerminalClause("priority", Operator.NOT_EQUALS, "major"), _fooGtBarFunc), // 4
+            new AndClause(new TerminalClause("priority", Operator.NOT_EQUALS, "andmajor"), _fooGtBarFunc), // 5
+        };
+
+        [Theory]
+        [InlineData("priority = major and foo > bar()", 0)]
+        [InlineData("priority = majorand and foo>bar()", 1)]
+        [InlineData("priority = major and foo > bar()", 2)]
+        [InlineData("priority != major    and      foo >      bar()", 3)]
+        [InlineData("priority != major    &&      foo >      bar()", 4)]
+        [InlineData("priority != andmajor    &      foo >      bar()", 5)]
+        //[InlineData("priority != andmajor    and      foo >      bar() order by priority     DESC,      foo", 6)]
+        public void And_Operator_Tests(string jql, int index)
+        {
+            var expectedClause = AndOperator.ElementAt(index);
+            Evaluate(jql, expectedClause);
+        }
+
+        private static readonly TerminalClause _priorityEqualsMinor = new TerminalClause("priority", Operator.EQUALS, "minor");
+        private static readonly List<IClause> OrOperator = new List<IClause>
+        {
+            new OrClause(_priorityEqualsMajor, _fooGtBarFunc), // 0
+            new OrClause(_priorityEqualsMajor, _fooGtBarFunc), // 1
+            new OrClause(_priorityEqualsMajor, _fooGtBarFunc, _priorityEqualsMinor), // 2
+            new OrClause(_priorityEqualsMajor, _fooGtBarFunc, _priorityEqualsMinor), // 3
+            new OrClause(_priorityEqualsMajor, _fooGtBarFunc, _priorityEqualsMinor) // 4
+        };
+
+        [Theory]
+        [InlineData("priority = major or foo > bar()", 0)]
+        [InlineData("priority = major or foo > bar()", 1)]
+        [InlineData("priority = major or foo > bar() or priority = minor", 2)]
+        [InlineData("priority = major || foo > bar() | priority = minor", 3)]
+        [InlineData("priority = major or foo > bar() || priority = minor", 4)]
+        public void Or_Operator_Tests(string jql, int index)
+        {
+            var expectedClause = OrOperator.ElementAt(index);
+            Evaluate(jql, expectedClause);
+        }
+
+        private static readonly List<IClause> NotOperator = new List<IClause>
+        {
+            new OrClause(new NotClause(_priorityEqualsMajor), _fooGtBarFunc, _priorityEqualsMinor), // 0
+            new OrClause(new NotClause(_priorityEqualsMajor), new AndClause(_fooGtBarFunc, _priorityEqualsMinor)), // 1
+            new OrClause(new NotClause(_priorityEqualsMajor), new AndClause(new NotClause(_fooGtBarFunc), _priorityEqualsMinor)), // 2
+            new AndClause(new NotClause(new OrClause(_priorityEqualsMajor, new NotClause(_fooGtBarFunc))), _priorityEqualsMinor) // 3
+        };
+
+        [Theory]
+        [InlineData("not priority = major or foo > bar() or priority = minor", 0)]
+        [InlineData("not priority = major or foo > bar() AnD priority=\"minor\"", 1)]
+        [InlineData("not priority = major or not foo > bar() AnD priority=\"minor\"", 2)]
+        [InlineData("not (priority = major or not foo > bar()) AnD priority=\"minor\"", 3)]
+        public void Not_Operator_Tests(string jql, int index)
+        {
+            var expectedClause = NotOperator.ElementAt(index);
+            Evaluate(jql, expectedClause);
+        }
+
+        [Fact]
+        public void ExclamationNOT_Operator_Negates()
+        {
+            string jql = "! (priority = major or ! foo > bar()) AnD priority=\"minor\"";
+            var expectedClause = new AndClause(new NotClause(new OrClause(_priorityEqualsMajor, new NotClause(_fooGtBarFunc))), _priorityEqualsMinor);
+            Evaluate(jql, expectedClause);
+        }
+
         private static void Evaluate(string jql, IClause expectedClause)
         {
             var parser = new JqlQueryParser();

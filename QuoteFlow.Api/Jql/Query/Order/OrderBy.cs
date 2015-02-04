@@ -7,7 +7,7 @@ namespace QuoteFlow.Api.Jql.Query.Order
 {
     public class OrderBy : IOrderBy
     {
-        public IList<SearchSort> SearchSorts { get; private set; }
+        public List<SearchSort> SearchSorts { get; private set; }
 
         public static readonly OrderBy NoOrder = new OrderBy(new List<SearchSort>());
 
@@ -17,7 +17,7 @@ namespace QuoteFlow.Api.Jql.Query.Order
 
 		public OrderBy(ICollection<SearchSort> searchSorts)
 		{
-			SearchSorts = (IList<SearchSort>) searchSorts;
+			SearchSorts = searchSorts.ToList();
 		}
 
 		public override string ToString()

@@ -7,14 +7,14 @@ namespace QuoteFlow.Core.Jql.Parser.Antlr
     /// A simple pair to hold both a position and a type (both integer). Implementing in here to keep the grammar a clean
     /// as possible (yeah right).
     /// </summary>
-    internal class AntlrPosition
+    public class AntlrPosition
     {
         public int TokenType { get; set; }
         public int Index { get; set; }
         public int CharPosition { get; set; }
         public int LinePosition { get; set; }
 
-        internal AntlrPosition(int tokenType, ICharStream stream)
+        public AntlrPosition(int tokenType, ICharStream stream)
         {
             Index = stream.Index;
             LinePosition = stream.Line;

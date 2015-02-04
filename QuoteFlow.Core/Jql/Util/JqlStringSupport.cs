@@ -43,9 +43,9 @@ namespace QuoteFlow.Core.Jql.Util
 
             //NOTE: Changing the contents of this method will change the strings that the JQL parser will parse, so think
             // about the change you are about to make.
-            // Also, see TestReservedWords.java in the func_test project if you are going to make changes.
+            // Also, see TestReservedWords.java in the func_test Catalog if you are going to make changes.
 		    var bldr = new List<string>();
-            bldr.AddRange(new List<string> { "abort", "access", "add", "after", "alias", "all", "alter", "and", "any", "as", "asc" });
+            bldr.AddRange(new List<string> { "abort", "access", "Add", "after", "alias", "all", "alter", "and", "any", "as", "asc" });
             bldr.AddRange(new List<string> { "audit", "avg", "before", "begin", "between", "boolean", "break", "by", "byte", "catch", "cf", "changed" });
             bldr.AddRange(new List<string> { "char", "character", "check", "checkpoint", "collate", "collation", "column", "commit", "connect", "continue" });
             bldr.AddRange(new List<string> { "count", "create", "current", "date", "decimal", "declare", "decrement", "default", "defaults", "define", "delete" });
@@ -74,6 +74,21 @@ namespace QuoteFlow.Core.Jql.Util
 		}
 
         public string EncodeStringValue(string value)
+        {
+            if (value.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            if (!parser.IsValidValue(value))
+            {
+                return EncodeAsQuotedString(value);
+            }
+
+            return value;
+        }
+
+        public string EncodeValue(string value)
         {
             if (value.IsNullOrWhiteSpace())
             {
@@ -342,7 +357,7 @@ namespace QuoteFlow.Core.Jql.Util
         /// NOTE: This method duplicates some logic from the grammar. If the grammar changes then this method will also need
         /// to change. We have replicated the logic for effeciency reasons.
         /// </summary>
-        /// <param name="c"> the character to check. </param>
+        /// <param name="c">The character to check.</param>
         /// <returns> true if the passed character is a JQL control character, false otherwise. </returns>
         public static bool IsJqlControl(char c)
         {

@@ -11,6 +11,10 @@ namespace QuoteFlow.Api.Jql.Query.Clause
     {
         public const string Or = "OR";
 
+        public OrClause(params IClause[] clauses) : this(clauses.ToList())
+        {
+        }
+
         public OrClause(IList<IClause> clauses) : base(clauses)
         {
             if (!clauses.Any())

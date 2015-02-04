@@ -44,21 +44,21 @@ namespace QuoteFlow.Api.Jql.Query.Clause
 			return sb.ToString();
 		}
 
-		public override bool Equals(object o)
-		{
-			if (this == o)
-			{
-				return true;
-			}
-			if (o == null || GetType() != o.GetType())
-			{
-				return false;
-			}
+        public override bool Equals(object obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
 
-			var that = (MultiClause) o;
+            var that = (MultiClause) obj;
 
-			return _clauses != null ? _clauses.Equals(that._clauses) : that._clauses == null;
-		}
+            return _clauses != null ? _clauses.SequenceEqual(that._clauses) : that._clauses == null;
+        }
 
 		public override int GetHashCode()
 		{

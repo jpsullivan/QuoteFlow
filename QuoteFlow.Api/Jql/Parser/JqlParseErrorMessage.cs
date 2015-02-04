@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace QuoteFlow.Api.Jql.Parser
 {
@@ -58,7 +59,7 @@ namespace QuoteFlow.Api.Jql.Parser
 			{
 				return false;
 			}
-			if (!Arguments.Equals(that.Arguments))
+			if (!Arguments.SequenceEqual(that.Arguments))
 			{
 				return false;
 			}
