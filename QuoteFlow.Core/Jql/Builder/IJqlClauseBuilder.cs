@@ -198,7 +198,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// issue descriptions.
         /// </summary>
         /// <returns> a reference to a IConditionBuilder for issue descriptions. </returns>
-        IConditionBuilder description();
+        IConditionBuilder Description();
 
         /// <summary>
         /// Add a condition to the query that finds the issues match the passed summary. This essentially adds the condition
@@ -379,13 +379,6 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Asset(params string[] assetIds);
 
         /// <summary>
-        /// Add a condition to the query that will find all issues currently within the user's history. This essentially adds
-        /// the JQL condition {@code key IN issueHistory()} to the query.
-        /// </summary>
-        /// <returns> a reference to the current builder. </returns>
-        IJqlClauseBuilder AssetInHistory();
-
-        /// <summary>
         /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for the asset's id or key.
         /// </summary>
         /// <returns>A reference to a IConditionBuilder for issue id or key.</returns>
@@ -419,7 +412,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="date"> the date for the condition. Must not be null. </param>
         /// <returns> a reference to the current builder. Never null. </returns>
-        IJqlClauseBuilder AddDateCondition(string clauseName, Api.Jql.Query.Operator @operator, DateTime date);
+        IJqlClauseBuilder AddDateCondition(string clauseName, Operator @operator, DateTime date);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName in (dates)} to the query being built.
@@ -436,7 +429,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="dates"> date values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
-        IJqlClauseBuilder AddDateCondition(string clauseName, Api.Jql.Query.Operator @operator, params DateTime[] dates);
+        IJqlClauseBuilder AddDateCondition(string clauseName, Operator @operator, params DateTime[] dates);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName in (dates)} to the query being built.
@@ -457,7 +450,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddDateCondition(string clauseName, Api.Jql.Query.Operator @operator, ICollection<DateTime> dates);
+        IJqlClauseBuilder AddDateCondition(string clauseName, Operator @operator, ICollection<DateTime> dates);
 
         /// <summary>
         /// Add a condition range condition to the current query for the passed dates. This essentially adds the query {@code
@@ -517,7 +510,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. Never null. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddFunctionCondition(string clauseName, Api.Jql.Query.Operator @operator, string functionName);
+        IJqlClauseBuilder AddFunctionCondition(string clauseName, Operator @operator, string functionName);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator functionName(arg1, arg2, arg3, ..., argN)} to the query being
@@ -530,7 +523,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. Never null. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddFunctionCondition(string clauseName, Api.Jql.Query.Operator @operator, string functionName, params string[] args);
+        IJqlClauseBuilder AddFunctionCondition(string clauseName, Operator @operator, string functionName, params string[] args);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator functionName(arg1, arg2, arg3, ..., argN)} to the query being
@@ -543,7 +536,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. Never null. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddFunctionCondition(string clauseName, Api.Jql.Query.Operator @operator, string functionName, ICollection<string> args);
+        IJqlClauseBuilder AddFunctionCondition(string clauseName, Operator @operator, string functionName, ICollection<string> args);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName = "clauseValue"} to the query being built.
@@ -584,7 +577,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddStringCondition(string clauseName, Api.Jql.Query.Operator @operator, string clauseValue);
+        IJqlClauseBuilder AddStringCondition(string clauseName, Operator @operator, string clauseValue);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
@@ -595,7 +588,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddStringCondition(string clauseName, Api.Jql.Query.Operator @operator, params string[] clauseValues);
+        IJqlClauseBuilder AddStringCondition(string clauseName, Operator @operator, params string[] clauseValues);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
@@ -606,7 +599,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddStringCondition(string clauseName, Api.Jql.Query.Operator @operator, ICollection<string> clauseValues);
+        IJqlClauseBuilder AddStringCondition(string clauseName, Operator @operator, ICollection<string> clauseValues);
 
         /// <summary>
         /// Add a condition range condition to the current query for the passed values. This essentially adds the query {@code
@@ -634,7 +627,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddNumberCondition(string clauseName, long? clauseValue);
+        IJqlClauseBuilder AddNumberCondition(string clauseName, int? clauseValue);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName in (clauseValues)} to the query being built.
@@ -644,7 +637,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddNumberCondition(string clauseName, params long?[] clauseValues);
+        IJqlClauseBuilder AddNumberCondition(string clauseName, params int?[] clauseValues);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName in (clauseValues)} to the query being built.
@@ -654,7 +647,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddNumberCondition(string clauseName, ICollection<long?> clauseValues);
+        IJqlClauseBuilder AddNumberCondition(string clauseName, ICollection<int?> clauseValues);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator clauseValue} to the query being built.
@@ -665,7 +658,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddNumberCondition(string clauseName, Api.Jql.Query.Operator @operator, long? clauseValue);
+        IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, int? clauseValue);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
@@ -676,7 +669,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddNumberCondition(string clauseName, Api.Jql.Query.Operator @operator, params long?[] clauseValues);
+        IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, params int?[] clauseValues);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
@@ -687,7 +680,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddNumberCondition(string clauseName, Api.Jql.Query.Operator @operator, ICollection<long?> clauseValues);
+        IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, ICollection<int?> clauseValues);
 
         /// <summary>
         /// Add a condition range condition to the current query for the passed values. This essentially adds the query {@code
@@ -698,14 +691,11 @@ namespace QuoteFlow.Core.Jql.Builder
         /// condition {@code clauseName &lt;= end}. Passing a null {@code start} and null {@code
         /// end} is illegal.
         /// </summary>
-        /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="start"> the start of the range. May be null if {@code end} is not null. </param>
-        /// <param name="end"> the end of the range. May be null if {@code start} is not null. </param>
-        /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
-        /// <exception cref="IllegalArgumentException"> if both {@code start} and {@code end} are null. </exception>
-        IJqlClauseBuilder AddNumberRangeCondition(string clauseName, long? start, long? end);
+        /// <param name="clauseName">Name of the clause in the condition. Must not be null. </param>
+        /// <param name="start">The start of the range. May be null if {@code end} is not null. </param>
+        /// <param name="end">The end of the range. May be null if {@code start} is not null. </param>
+        /// <returns>A reference to the current builder.</returns>
+        IJqlClauseBuilder AddNumberRangeCondition(string clauseName, int? start, int? end);
 
         /// <summary>
         /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for
@@ -721,8 +711,6 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
         /// <param name="operand"> defines an operand that will serve as the clause value. Must not be null. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
         IJqlClauseBuilder AddCondition(string clauseName, IOperand operand);
 
         /// <summary>
@@ -748,7 +736,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <param name="operator">One of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="operand">Defines an operand that will serve as the clause value. Must not be null. </param>
         /// <returns>A reference to the current builder.</returns>
-        IJqlClauseBuilder AddCondition(string clauseName, Api.Jql.Query.Operator @operator, IOperand operand);
+        IJqlClauseBuilder AddCondition(string clauseName, Operator @operator, IOperand operand);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (operands)} to the query being built.
@@ -757,7 +745,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="operands"> values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
-        IJqlClauseBuilder AddCondition(string clauseName, Api.Jql.Query.Operator @operator, params IOperand[] operands);
+        IJqlClauseBuilder AddCondition(string clauseName, Operator @operator, params IOperand[] operands);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (operands)} to the query being built.
@@ -766,7 +754,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="operands"> values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
-        IJqlClauseBuilder AddCondition<T>(string clauseName, Api.Jql.Query.Operator @operator, ICollection<T> operands) where T : IOperand;
+        IJqlClauseBuilder AddCondition<T>(string clauseName, Operator @operator, ICollection<T> operands) where T : IOperand;
 
         /// <summary>
         /// Add a condition range condition to the current query for the passed values. This essentially adds the query {@code

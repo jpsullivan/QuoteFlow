@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using QuoteFlow.Api.Jql.Query.Clause;
-using QuoteFlow.Core.Jql.Query.Clause;
 
 namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
-    /// An implementation of <seealso cref="SimpleClauseBuilder"/> that takes JQL prededence into account when building its associated
-    /// JQL <seealso cref="com.atlassian.query.clause.Clause"/>. For exmaple, the expression {@code
+    /// An implementation of <see cref="ISimpleClauseBuilder"/> that takes JQL prededence into account when building its associated
+    /// JQL <see cref="IClause"/>. For exmaple, the expression {@code
     /// builder.clause(clause1).or().clause(clause2).and().clause(clause3).build()} will return the Clause representation of
     /// <code>clause1 OR (clause2 AND clause3)</code>.
     /// </summary>
@@ -23,47 +22,71 @@ namespace QuoteFlow.Core.Jql.Builder
         public PrecedenceSimpleClauseBuilder()
         {
             this._stacks = new Stacks();
-            this._builderState = StartState
+            this._builderState = StartState.INSTANCE.Enter(_stacks);
+            this._defaultOperator = BuilderOperator.None;
+        }
+
+        private PrecedenceSimpleClauseBuilder(PrecedenceSimpleClauseBuilder copy)
+        {
+            this._builderState = IllegalState.INSTANCE;
+            this._stacks = new Stacks(copy._stacks);
+            this._builderState = copy._builderState.Copy(this._stacks);
+            this._defaultOperator = copy._defaultOperator;
         }
 
         public ISimpleClauseBuilder Clear()
         {
-            throw new NotImplementedException();
+            _defaultOperator = BuilderOperator.None;
+            _stacks.Clear();
+            _builderState = StartState.INSTANCE.Enter(_stacks);
+            
+            return this;
         }
 
         public ISimpleClauseBuilder And()
         {
-            throw new NotImplementedException();
+            _builderState = _builderState.And(_stacks).Enter(_stacks);
+            return this;
         }
 
         public ISimpleClauseBuilder Or()
         {
-            throw new NotImplementedException();
+            _builderState = _builderState.Or(_stacks).Enter(_stacks);
+            return this;
         }
 
         public ISimpleClauseBuilder Not()
         {
-            throw new NotImplementedException();
+            _builderState = _builderState.Not(_stacks, _defaultOperator).Enter(_stacks);
+            return this;
         }
 
         public ISimpleClauseBuilder Clause(IClause clause)
         {
-            throw new NotImplementedException();
+            if (clause == null)
+            {
+                throw new ArgumentNullException("clause");
+            }
+
+            _builderState = _builderState.Add(_stacks, new SingleMutableClause(clause), _defaultOperator).Enter(_stacks);
+            return this;
         }
 
         public ISimpleClauseBuilder Sub()
         {
-            throw new NotImplementedException();
+            _builderState = _builderState.Group(_stacks, _defaultOperator).Enter(_stacks);
+            return this;
         }
 
         public ISimpleClauseBuilder Endsub()
         {
-            throw new NotImplementedException();
+            _builderState = _builderState.Endgroup(_stacks).Enter(_stacks);
+            return this;
         }
 
         public IClause Build()
         {
-            throw new NotImplementedException();
+            return _builderState.Build(_stacks);
         }
 
         public ISimpleClauseBuilder Copy()
@@ -73,17 +96,25 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public ISimpleClauseBuilder DefaultAnd()
         {
-            throw new NotImplementedException();
+            _defaultOperator = BuilderOperator.AND;
+            return this;
         }
 
         public ISimpleClauseBuilder DefaultOr()
         {
-            throw new NotImplementedException();
+            _defaultOperator = BuilderOperator.OR;
+            return this;
         }
 
         public ISimpleClauseBuilder DefaultNone()
         {
-            throw new NotImplementedException();
+            _defaultOperator = BuilderOperator.None;
+            return this;
+        }
+
+        public override string ToString()
+        {
+            return _stacks.DisplayString;
         }
 
         /// <summary>
@@ -130,9 +161,9 @@ namespace QuoteFlow.Core.Jql.Builder
                 Level = 0;
             }
 
-            private BuilderOperator? PopOperator()
+            private BuilderOperator PopOperator()
             {
-                BuilderOperator? builderOperator = Operators.First();
+                BuilderOperator builderOperator = Operators.First();
                 Operators.Remove(0);
                 if (builderOperator == BuilderOperator.LPAREN)
                 {
@@ -141,7 +172,7 @@ namespace QuoteFlow.Core.Jql.Builder
                 return builderOperator;
             }
 
-            private BuilderOperator? PeekOperator()
+            private BuilderOperator PeekOperator()
             {
                 return Operators.ElementAt(0);
             }
@@ -151,19 +182,21 @@ namespace QuoteFlow.Core.Jql.Builder
                 return Operators.Count > 0;
             }
 
-            private void PushOperand(IMutableClause operand)
+            internal void PushOperand(IMutableClause operand)
             {
                 Operands.AddFirst(operand);
             }
 
             private IMutableClause PopClause()
             {
-                return Operands.Remove(0);
+                var op = Operands.First();
+                Operands.Remove(op);
+                return op;
             }
 
             private IMutableClause PeekClause()
             {
-                return Operands[0];
+                return Operands.ElementAt(0);
             }
 
             /// <summary>
@@ -172,17 +205,17 @@ namespace QuoteFlow.Core.Jql.Builder
             /// the only argument on the operand stack.
             /// </summary>
             /// <param name="op">The operator to add to the stack. A <code>null</code> argument means that the operator stack should be emptied.</param>
-            private void ProcessAndPush(BuilderOperator? op)
+            internal void ProcessAndPush(BuilderOperator op)
             {
                 if (op != BuilderOperator.LPAREN && HasOperator())
                 {
-                    BuilderOperator? currentTop = PeekOperator();
+                    BuilderOperator currentTop = PeekOperator();
 
                     // The NOT operator is special since it a right-associative unary operator. For right-associative
                     // operators only process when something of higher but not equal precedence appears on the stack.
                     int compare = op == BuilderOperator.NOT ? -1 : 0;
 
-                    while (currentTop != null && (op == null || op.CompareTo(currentTop) <= compare))
+                    while (currentTop != BuilderOperator.None && (op == null || op.CompareTo(currentTop) <= compare))
                     {
                         PopOperator();
 
@@ -205,114 +238,111 @@ namespace QuoteFlow.Core.Jql.Builder
                         //operator.
                         PushOperand(leftOperand.Combine(currentTop, rightOperand));
 
-                        if (HasOperator())
-                        {
-                            currentTop = PeekOperator();
-                        }
-                        else
-                        {
-                            currentTop = null;
-                        }
+                        currentTop = HasOperator() ? PeekOperator() : BuilderOperator.None;
                     }
                 }
 
-                if (op != null)
+                if (op == BuilderOperator.None) return;
+
+                if (op == BuilderOperator.RPAREN)
                 {
-                    if (op == BuilderOperator.RPAREN)
+                    if (HasOperator() && PeekOperator() == BuilderOperator.LPAREN)
                     {
-                        if (HasOperator() && PeekOperator() == BuilderOperator.LPAREN)
-                        {
-                            PopOperator();
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("The ')' does not have a matching '('.");
-                        }
+                        PopOperator();
                     }
                     else
                     {
-                        if (op == BuilderOperator.LPAREN)
-                        {
-                            Level = Level + 1;
-                        }
-
-                        Operators.AddFirst(op);
+                        throw new InvalidOperationException("The ')' does not have a matching '('.");
                     }
+                }
+                else
+                {
+                    if (op == BuilderOperator.LPAREN)
+                    {
+                        Level = Level + 1;
+                    }
+
+                    Operators.AddFirst(op);
                 }
             }
 
-//            /// <summary>
-//            /// Get the, possibly partial, JQL expression for the current stack state. Used mainly for error messages.
-//            /// </summary>
-//            /// <returns>The current JQL expression given the state of the stacks.</returns>
-//            internal string DisplayString
-//            {
-//                get
-//                {
-//                    IEnumerator<BuilderOperator> operatorIterator = new InfiniteReversedIterator<BuilderOperator>(Operators.listIterator(Operators.Count));
-//                    IEnumerator<IMutableClause> clauseIterator = new InfiniteReversedIterator<IMutableClause>(Operands.ListIterator(Operands.Count));
-//                    StringBuilder stringBuilder = new StringBuilder();
-//
-//                    bool start = true;
-//                    //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-//                    BuilderOperator op = operatorIterator.next();
-//                    while (op != null)
-//                    {
-//                        switch (op)
-//                        {
-//                            case LPAREN:
-//                                AddString(stringBuilder, "(");
-//                                //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-//                                op = operatorIterator.next();
-//                                start = true;
-//                                break;
-//                            case RPAREN:
-//                                //just append these where seen.
-//                                stringBuilder.Append(")");
-//                                //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-//                                op = operatorIterator.next();
-//                                start = false;
-//                                break;
-//                            case AND:
-//                            case OR:
-//                                //do we need to add the starting operand for this operator. We only do this for new expressions.
-//                                if (start)
-//                                {
-//                                    //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-//                                    AddString(stringBuilder, ClauseToString(clauseIterator.next(), op));
-//                                }
-//
-//                                //Fall through here on purpose.
-//                                goto case NOT;
-//                            case NOT:
-//                                AddString(stringBuilder, op.ToString());
-//
-//                                //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-//                                BuilderOperator nextOperator = operatorIterator.next();
-//                                //We don't want to print the next operand yet for these two operators.
-//                                if (nextOperator != BuilderOperator.LPAREN && nextOperator != BuilderOperator.NOT)
-//                                {
-//                                    //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-//                                    AddString(stringBuilder, ClauseToString(clauseIterator.next(), op));
-//                                }
-//                                start = false;
-//                                op = nextOperator;
-//                                break;
-//                        }
-//                    }
-//
-//                    //Loop through any remaining operands and add them. There should only ever be one.
-//                    IMutableClause clause = clauseIterator.next();
-//                    while (clause != null)
-//                    {
-//                        AddString(stringBuilder, ClauseToString(clause, null));
-//                        //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-//                        clause = clauseIterator.next();
-//                    }
-//
-//                    return stringBuilder.ToString();
-//                }
-//            }
+            /// <summary>
+            /// Get the, possibly partial, JQL expression for the current stack state. Used mainly for error messages.
+            /// </summary>
+            /// <returns>The current JQL expression given the state of the stacks.</returns>
+            internal string DisplayString
+            {
+                get
+                {
+                    var operatorIterator = Operators.Reverse().GetEnumerator();
+                    var clauseIterator = Operands.Reverse().GetEnumerator();
+//                    IEnumerator<BuilderOperator> operatorIterator = new InfiniteReversedIterator<BuilderOperator>(Operators.GetEnumerator());
+//                    IEnumerator<IMutableClause> clauseIterator = new InfiniteReversedIterator<IMutableClause>(Operands.GetEnumerator());
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    bool start = true;
+                    operatorIterator.MoveNext();
+                    BuilderOperator op = operatorIterator.Current;
+                    while (op != BuilderOperator.None)
+                    {
+                        switch (op)
+                        {
+                            case BuilderOperator.LPAREN:
+                                AddString(stringBuilder, "(");
+                                operatorIterator.MoveNext();
+                                op = operatorIterator.Current;
+                                start = true;
+                                break;
+                            case BuilderOperator.RPAREN:
+                                // just append these where seen.
+                                stringBuilder.Append(")");
+                                operatorIterator.MoveNext();
+                                op = operatorIterator.Current;
+                                start = false;
+                                break;
+                            case BuilderOperator.AND:
+                            case BuilderOperator.OR:
+                                // do we need to add the starting operand for this operator. We only do this for new expressions.
+                                if (start)
+                                {
+                                    clauseIterator.MoveNext();
+                                    AddString(stringBuilder, ClauseToString(clauseIterator.Current, op));
+                                }
+
+                                // Fall through here on purpose.
+                                goto case BuilderOperator.NOT;
+                            case BuilderOperator.NOT:
+                                AddString(stringBuilder, op.ToString());
+
+                                operatorIterator.MoveNext();
+                                BuilderOperator nextOperator = operatorIterator.Current;
+
+                                // We don't want to print the next operand yet for these two operators.
+                                if (nextOperator != BuilderOperator.LPAREN && nextOperator != BuilderOperator.NOT)
+                                {
+                                    clauseIterator.MoveNext();
+                                    AddString(stringBuilder, ClauseToString(clauseIterator.Current, op));
+                                }
+
+                                start = false;
+                                op = nextOperator;
+                                break;
+                        }
+                    }
+
+                    // Loop through any remaining operands and add them. There should only ever be one.
+                    operatorIterator.MoveNext();
+                    IMutableClause clause = clauseIterator.Current;
+                    while (clause != null)
+                    {
+                        AddString(stringBuilder, ClauseToString(clause, BuilderOperator.None));
+                        operatorIterator.MoveNext();
+                        clause = clauseIterator.Current;
+                    }
+
+                    return stringBuilder.ToString();
+                }
+            }
 
             private static void AddString(StringBuilder builder, string append)
             {
@@ -349,17 +379,14 @@ namespace QuoteFlow.Core.Jql.Builder
                     return "";
                 }
 
-                //We need to bracket the clause if its primary operator has lower precedence than the passed
-                //operator.
-                BuilderOperator clauseOperator = OperatorVisitor.findOperator(jqlClause);
-                if (op != null && clauseOperator != null && op.CompareTo(clauseOperator) > 0)
+                // We need to bracket the clause if its primary operator has lower precedence than the passed operator.
+                BuilderOperator clauseOperator = OperatorVisitor.FindOperator(jqlClause);
+                if (op != BuilderOperator.None && clauseOperator != BuilderOperator.None && op.CompareTo(clauseOperator) > 0)
                 {
                     return "(" + jqlClause.ToString() + ")";
                 }
-                else
-                {
-                    return jqlClause.ToString();
-                }
+
+                return jqlClause.ToString();
             }
 
             public IClause AsClause()
@@ -369,13 +396,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
             private IMutableClause AsMutableClause()
             {
-                ProcessAndPush();
+                ProcessAndPush(BuilderOperator.None);
                 return PeekClause();
-            }
-
-            public override string ToString()
-            {
-                return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
             }
         }
 
@@ -408,18 +430,16 @@ namespace QuoteFlow.Core.Jql.Builder
         /// This is the initial state for the builder. In this state the builder expects a clause, sub-clause or a NOT clause
         /// to be added. It is also possible to build in this state, however, the builder will return <code>null</code> as no
         /// condition has can be generated.
-        /// 
-        /// @since v4.0.
         /// </summary>
-        private class StartState : BuilderState
+        private class StartState : IBuilderState
         {
             internal static readonly StartState INSTANCE = new StartState();
 
-            internal StartState()
+            private StartState()
             {
             }
 
-            public virtual BuilderState enter(Stacks stacks)
+            public virtual IBuilderState Enter(Stacks stacks)
             {
                 return this;
             }
@@ -431,17 +451,17 @@ namespace QuoteFlow.Core.Jql.Builder
             /// <param name="stacks"> current stacks for the builder. </param>
             /// <param name="defaultOperator"> the default combining operator. </param>
             /// <returns> the next builder state. </returns>
-            public virtual BuilderState not(Stacks stacks, BuilderOperator defaultOperator)
+            public virtual IBuilderState Not(Stacks stacks, BuilderOperator defaultOperator)
             {
-                return NotState.INSTANCE;
+                return NotState.Instance;
             }
 
-            public virtual BuilderState and(Stacks stacks)
+            public virtual IBuilderState And(Stacks stacks)
             {
                 return this;
             }
 
-            public virtual BuilderState or(Stacks stacks)
+            public virtual IBuilderState Or(Stacks stacks)
             {
                 return this;
             }
@@ -454,9 +474,9 @@ namespace QuoteFlow.Core.Jql.Builder
             /// <param name="clause"> the clause to add to tbe builder. </param>
             /// <param name="defaultOperator"> the default combining operator. </param>
             /// <returns> the next builder state. </returns>
-            public virtual BuilderState add(Stacks stacks, MutableClause clause, BuilderOperator defaultOperator)
+            public virtual IBuilderState Add(Stacks stacks, IMutableClause clause, BuilderOperator defaultOperator)
             {
-                stacks.pushOperand(clause);
+                stacks.PushOperand(clause);
                 return OperatorState.INSTANCE;
             }
 
@@ -466,154 +486,138 @@ namespace QuoteFlow.Core.Jql.Builder
             /// <param name="stacks"> current stacks for the builder. </param>
             /// <param name="defaultOperator"> the default combining operator. </param>
             /// <returns> the next builder state. </returns>
-            public virtual BuilderState group(Stacks stacks, BuilderOperator defaultOperator)
+            public virtual IBuilderState Group(Stacks stacks, BuilderOperator defaultOperator)
             {
-                return StartGroup.INSTANCE;
+                return StartGroup.Instance;
             }
 
-            public virtual BuilderState endgroup(Stacks stacks)
+            public virtual IBuilderState Endgroup(Stacks stacks)
             {
-                throw new IllegalStateException("Tying to start JQL expression with ')'.");
+                throw new InvalidOperationException("Tying to start JQL expression with ')'.");
             }
 
-            public virtual Clause build(Stacks stacks)
+            public virtual IClause Build(Stacks stacks)
             {
                 return null;
             }
 
-            public virtual BuilderState copy(Stacks stacks)
+            public virtual IBuilderState Copy(Stacks stacks)
             {
                 return this;
-            }
-
-            public override string ToString()
-            {
-                return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
             }
         }
 
         /// <summary>
-        /// This is the state of the builder when the user is trying to enter in a negated clause. In this state it is only
-        /// possible to add a clause, start a sub-expression or negate again.
-        /// 
-        /// @since v4.0.
+        /// This is the state of the builder when the user is trying to enter in a negated clause. 
+        /// In this state it is only possible to add a clause, start a sub-expression or negate again.
         /// </summary>
-        private class NotState : BuilderState
+        private class NotState : IBuilderState
         {
-            internal static readonly NotState INSTANCE = new NotState();
+            internal static readonly NotState Instance = new NotState();
 
-            internal NotState()
+            private NotState()
             {
             }
 
             /// <summary>
             /// Upon entry into this state, we always add a not operator.
             /// </summary>
-            /// <param name="stacks"> current stacks for the builder. </param>
-            /// <returns> the next builder state. </returns>
-            public virtual BuilderState enter(Stacks stacks)
+            /// <param name="stacks">Current stacks for the builder.</param>
+            /// <returns>The next builder state.</returns>
+            public virtual IBuilderState Enter(Stacks stacks)
             {
-                stacks.processAndPush(BuilderOperator.NOT);
+                stacks.ProcessAndPush(BuilderOperator.NOT);
                 return this;
             }
 
             /// <summary>
             /// We are negating the clause again, so re-enter our state.
             /// </summary>
-            /// <param name="stacks"> current stacks for the builder. </param>
-            /// <param name="defaultOperator"> the default combining operator. </param>
-            /// <returns> the next builder state. </returns>
-            public virtual BuilderState not(Stacks stacks, BuilderOperator defaultOperator)
+            /// <param name="stacks">Current stacks for the builder.</param>
+            /// <param name="defaultOperator">The default combining operator.</param>
+            /// <returns>The next builder state.</returns>
+            public virtual IBuilderState Not(Stacks stacks, BuilderOperator defaultOperator)
             {
                 return this;
             }
 
-            public virtual BuilderState and(Stacks stacks)
+            public virtual IBuilderState And(Stacks stacks)
             {
-                throw new IllegalStateException("Trying to create the illegal JQL expression 'NOT AND'. The current JQL is '" + stacks.DisplayString + "'.");
+                throw new InvalidOperationException("Trying to create the illegal JQL expression 'NOT AND'. The current JQL is '" + stacks.DisplayString + "'.");
             }
 
-            public virtual BuilderState or(Stacks stacks)
+            public virtual IBuilderState Or(Stacks stacks)
             {
-                throw new IllegalStateException("Trying to create the illegal JQL expression 'NOT OR'. The current JQL is '" + stacks.DisplayString + "'.");
+                throw new InvalidOperationException("Trying to create the illegal JQL expression 'NOT OR'. The current JQL is '" + stacks.DisplayString + "'.");
             }
 
             /// <summary>
             /// Add the clause to the operand stack so that it may be negated.
             /// </summary>
-            /// <param name="stacks"> current stacks for the builder. </param>
-            /// <param name="clause"> the clause to add to the query. </param>
-            /// <param name="defaultOperator"> the default combining operator. </param>
-            /// <returns> the next builder state. </returns>
-            public virtual BuilderState add(Stacks stacks, MutableClause clause, BuilderOperator defaultOperator)
+            /// <param name="stacks">Current stacks for the builder.</param>
+            /// <param name="clause">The clause to add to the query.</param>
+            /// <param name="defaultOperator">The default combining operator.</param>
+            /// <returns>The next builder state.</returns>
+            public virtual IBuilderState Add(Stacks stacks, IMutableClause clause, BuilderOperator defaultOperator)
             {
-                stacks.pushOperand(clause);
+                stacks.PushOperand(clause);
                 return OperatorState.INSTANCE;
             }
 
-            public virtual BuilderState group(Stacks stacks, BuilderOperator defaultOperator)
+            public virtual IBuilderState Group(Stacks stacks, BuilderOperator defaultOperator)
             {
-                return StartGroup.INSTANCE;
+                return StartGroup.Instance;
             }
 
-            public virtual BuilderState endgroup(Stacks stacks)
+            public virtual IBuilderState Endgroup(Stacks stacks)
             {
-                throw new IllegalStateException("Tying to end JQL sub-expression without completing 'NOT' operator. The current JQL is '" + stacks.DisplayString + "'.");
+                throw new InvalidOperationException("Tying to end JQL sub-expression without completing 'NOT' operator. The current JQL is '" + stacks.DisplayString + "'.");
             }
 
-            public virtual Clause build(Stacks stacks)
+            public virtual IClause Build(Stacks stacks)
             {
-                throw new IllegalStateException("Trying to end JQL expression with the 'NOT' operator. The current JQL is '" + stacks.DisplayString + "'.");
+                throw new InvalidOperationException("Trying to end JQL expression with the 'NOT' operator. The current JQL is '" + stacks.DisplayString + "'.");
             }
 
-            public virtual BuilderState copy(Stacks stacks)
+            public virtual IBuilderState Copy(Stacks stacks)
             {
                 return this;
-            }
-
-            public override string ToString()
-            {
-                return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
             }
         }
 
         /// <summary>
-        /// This is the state of the builder once the user has enetered in a valid JQL clause. It is possible to:
-        /// <ul>
-        /// <li>Add a 'AND' operator.</li>
-        /// <li>Add a 'OR' operator.</li>
-        /// <li>Start a sub-expression.</li>
-        /// <li>End a sub-expression.</li>
-        /// <li>Build the JQL</li>
-        /// <li>Add a clause if there is a default operator</li>
-        /// </ul>
+        /// This is the state of the builder once the user has enetered in a valid JQL clause. 
+        /// It is possible to:
         /// 
+        /// - Add a 'AND' operator.
+        /// - Add a 'OR' operator.
+        /// - Start a sub-expression.
+        /// - End a sub-expression.
+        /// - Build the JQL
+        /// - Add a clause if there is a default operator
         /// </summary>
-        private class OperatorState : BuilderState
+        private class OperatorState : IBuilderState
         {
             internal static readonly OperatorState INSTANCE = new OperatorState();
 
-            internal OperatorState()
+            private OperatorState()
             {
-
             }
 
-            public virtual BuilderState enter(Stacks stacks)
+            public virtual IBuilderState Enter(Stacks stacks)
             {
                 return this;
             }
 
-            public virtual BuilderState not(Stacks stacks, BuilderOperator defaultOperator)
+            public virtual IBuilderState Not(Stacks stacks, BuilderOperator defaultOperator)
             {
                 if (defaultOperator == null)
                 {
-                    throw new IllegalStateException("Trying to combine JQL expressions using the 'NOT' operator. The current JQL is '" + stacks.DisplayString + "'.");
+                    throw new InvalidOperationException("Trying to combine JQL expressions using the 'NOT' operator. The current JQL is '" + stacks.DisplayString + "'.");
                 }
-                else
-                {
-                    stacks.processAndPush(defaultOperator);
-                    return NotState.INSTANCE;
-                }
+
+                stacks.ProcessAndPush(defaultOperator);
+                return NotState.Instance;
             }
 
             /// <summary>
@@ -621,11 +625,11 @@ namespace QuoteFlow.Core.Jql.Builder
             /// enter either a clause, sub-clause or NOT clause so we transition into the {@link
             /// PrecedenceSimpleClauseBuilder.ClauseState}.
             /// </summary>
-            /// <param name="stacks"> current stacks for the builder. </param>
-            /// <returns> the next builder state. </returns>
-            public virtual BuilderState and(Stacks stacks)
+            /// <param name="stacks">Current stacks for the builder.</param>
+            /// <returns>The next builder state.</returns>
+            public virtual IBuilderState And(Stacks stacks)
             {
-                stacks.processAndPush(BuilderOperator.AND);
+                stacks.ProcessAndPush(BuilderOperator.AND);
                 return new ClauseState(BuilderOperator.AND);
             }
 
@@ -634,89 +638,83 @@ namespace QuoteFlow.Core.Jql.Builder
             /// enter either a clause, sub-clause or NOT clause so we transition into the {@link
             /// PrecedenceSimpleClauseBuilder.ClauseState}.
             /// </summary>
-            /// <param name="stacks"> current stacks for the builder. </param>
-            /// <returns> the next builder state. </returns>
-            public virtual BuilderState or(Stacks stacks)
+            /// <param name="stacks">Current stacks for the builder.</param>
+            /// <returns>The next builder state.</returns>
+            public virtual IBuilderState Or(Stacks stacks)
             {
-                stacks.processAndPush(BuilderOperator.OR);
+                stacks.ProcessAndPush(BuilderOperator.OR);
                 return new ClauseState(BuilderOperator.OR);
             }
 
             /// <summary>
             /// In this state we are able to add a clause only if a default operator has been specified.
             /// </summary>
-            /// <param name="clause"> the clause to add to the builder. </param>
-            /// <param name="defaultOperator"> the default combining operator. </param>
-            /// <returns> the next state for the builder. </returns>
-            public virtual BuilderState add(Stacks stacks, MutableClause clause, BuilderOperator defaultOperator)
+            /// <param name="stacks">Current stacks for the builder.</param>
+            /// <param name="clause">The clause to add to the builder.</param>
+            /// <param name="defaultOperator">The default combining operator.</param>
+            /// <returns>The next state for the builder.</returns>
+            public virtual IBuilderState Add(Stacks stacks, IMutableClause clause, BuilderOperator defaultOperator)
             {
                 if (defaultOperator == null)
                 {
-                    throw new IllegalStateException("Trying to combine JQL expressions without logical operator. The current JQL is '" + stacks.DisplayString + "'.");
+                    throw new InvalidOperationException("Trying to combine JQL expressions without logical operator. The current JQL is '" + stacks.DisplayString + "'.");
                 }
 
-                stacks.processAndPush(defaultOperator);
-                stacks.pushOperand(clause);
+                stacks.ProcessAndPush(defaultOperator);
+                stacks.PushOperand(clause);
                 return this;
             }
 
-            public virtual BuilderState group(Stacks stacks, BuilderOperator defaultOperator)
+            public virtual IBuilderState Group(Stacks stacks, BuilderOperator defaultOperator)
             {
                 if (defaultOperator == null)
                 {
-                    throw new IllegalStateException("Trying to combine JQL expressions without logical operator. The current JQL is '" + stacks.DisplayString + "'.");
+                    throw new InvalidOperationException("Trying to combine JQL expressions without logical operator. The current JQL is '" + stacks.DisplayString + "'.");
                 }
-                else
-                {
-                    stacks.processAndPush(defaultOperator);
-                    return StartGroup.INSTANCE;
-                }
+                
+                stacks.ProcessAndPush(defaultOperator);
+                return StartGroup.Instance;
             }
 
             /// <summary>
             /// We are now going to try to end the current sub-expression. After this we transition back into this state
             /// awaing the next clause.
             /// </summary>
-            /// <param name="stacks"> current stacks for the builder. </param>
-            /// <returns> the next builder state. </returns>
-            public virtual BuilderState endgroup(Stacks stacks)
+            /// <param name="stacks">Current stacks for the builder.</param>
+            /// <returns>The next builder state.</returns>
+            public virtual IBuilderState Endgroup(Stacks stacks)
             {
                 //If this is true, then there is no current sub-expression.
                 if (stacks.Level == 0)
                 {
-                    throw new IllegalStateException("Tyring end JQL sub-expression that does not exist. The current JQL is '" + stacks.DisplayString + "'.");
+                    throw new InvalidOperationException("Tyring end JQL sub-expression that does not exist. The current JQL is '" + stacks.DisplayString + "'.");
                 }
-                stacks.processAndPush(BuilderOperator.RPAREN);
 
+                stacks.ProcessAndPush(BuilderOperator.RPAREN);
                 return this;
             }
 
             /// <summary>
             /// Try to build the JQL given the current state of the builder.
             /// </summary>
-            /// <param name="stacks"> current stacks for the builder. </param>
-            /// <returns> the next builder state. </returns>
-            public virtual Clause build(Stacks stacks)
+            /// <param name="stacks">Current stacks for the builder.</param>
+            /// <returns>The next builder state.</returns>
+            public virtual IClause Build(Stacks stacks)
             {
                 //If this is true, then there are unfinished sub-expressions.
                 if (stacks.Level > 0)
                 {
-                    throw new IllegalStateException("Tyring to build JQL expression that has an incomplete sub-expression. The current JQL is '" + stacks.DisplayString + "'.");
+                    throw new InvalidOperationException("Tyring to build JQL expression that has an incomplete sub-expression. The current JQL is '" + stacks.DisplayString + "'.");
                 }
 
                 //we must take a copy of the stack to ensure that build does not destruct the builder.
                 Stacks localStacks = new Stacks(stacks);
-                return localStacks.asClause();
+                return localStacks.AsClause();
             }
 
-            public virtual BuilderState copy(Stacks stacks)
+            public virtual IBuilderState Copy(Stacks stacks)
             {
                 return this;
-            }
-
-            public override string ToString()
-            {
-                return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
             }
         }
 
@@ -725,7 +723,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// different from the <seealso cref="PrecedenceSimpleClauseBuilder.StartState"/> as building is illegal and that this must
         /// happen after the bulider was in the <seealso cref="PrecedenceSimpleClauseBuilder.OperatorState"/>.
         /// </summary>
-        private class ClauseState : BuilderState
+        private class ClauseState : IBuilderState
         {
             internal readonly BuilderOperator lastOperator;
 
@@ -734,43 +732,44 @@ namespace QuoteFlow.Core.Jql.Builder
                 this.lastOperator = lastOperator;
             }
 
-            public virtual BuilderState enter(Stacks stacks)
+            public virtual IBuilderState Enter(Stacks stacks)
             {
                 return this;
             }
 
             /// <summary>
-            /// When NOT is called we transition to the <seealso cref="PrecedenceSimpleClauseBuilder.NotState"/> expecting a NOT clause
-            /// to be added.
+            /// When NOT is called we transition to the <see cref="PrecedenceSimpleClauseBuilder.NotState"/> expecting 
+            /// a NOT clause to be added.
             /// </summary>
-            /// <param name="stacks"> current stacks for the builder. </param>
-            /// <param name="defaultOperator"> the default combining operator. </param>
-            /// <returns> the next builder state. </returns>
-            public virtual BuilderState not(Stacks stacks, BuilderOperator defaultOperator)
+            /// <param name="stacks">Current stacks for the builder.</param>
+            /// <param name="defaultOperator">The default combining operator.</param>
+            /// <returns>The next builder state.</returns>
+            public virtual IBuilderState Not(Stacks stacks, BuilderOperator defaultOperator)
             {
-                return NotState.INSTANCE;
+                return NotState.Instance;
             }
 
-            public virtual BuilderState and(Stacks stacks)
+            public virtual IBuilderState And(Stacks stacks)
             {
-                throw new IllegalStateException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", lastOperator, BuilderOperator.AND, stacks.DisplayString));
+                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", lastOperator, BuilderOperator.AND, stacks.DisplayString));
             }
 
-            public virtual BuilderState or(Stacks stacks)
+            public virtual IBuilderState Or(Stacks stacks)
             {
-                throw new IllegalStateException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", lastOperator, BuilderOperator.OR, stacks.DisplayString));
+                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", lastOperator, BuilderOperator.OR, stacks.DisplayString));
             }
 
             /// <summary>
             /// When a clause is added an AND or OR operator is expected next so we transition into the {@link
             /// OperatorState}.
             /// </summary>
-            /// <param name="clause"> the clause to add to the builder. </param>
-            /// <param name="defaultOperator"> the default combining operator. </param>
-            /// <returns> the next state for the builder. </returns>
-            public virtual BuilderState add(Stacks stacks, MutableClause clause, BuilderOperator defaultOperator)
+            /// <param name="stacks">The current stacks for the builder.</param>
+            /// <param name="clause">The clause to add to the builder.</param>
+            /// <param name="defaultOperator">The default combining operator.</param>
+            /// <returns>The next state for the builder.</returns>
+            public virtual IBuilderState Add(Stacks stacks, IMutableClause clause, BuilderOperator defaultOperator)
             {
-                stacks.pushOperand(clause);
+                stacks.PushOperand(clause);
                 return OperatorState.INSTANCE;
             }
 
@@ -780,42 +779,38 @@ namespace QuoteFlow.Core.Jql.Builder
             /// <param name="stacks"> current stacks for the builder. </param>
             /// <param name="defaultOperator"> the default combining operator. </param>
             /// <returns> the next builder state. </returns>
-            public virtual BuilderState group(Stacks stacks, BuilderOperator defaultOperator)
+            public virtual IBuilderState Group(Stacks stacks, BuilderOperator defaultOperator)
             {
-                return StartGroup.INSTANCE;
+                return StartGroup.Instance;
             }
 
-            public virtual BuilderState endgroup(Stacks stacks)
+            public virtual IBuilderState Endgroup(Stacks stacks)
             {
-                throw new IllegalStateException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", lastOperator, BuilderOperator.RPAREN, stacks.DisplayString));
+                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", lastOperator, BuilderOperator.RPAREN, stacks.DisplayString));
             }
 
-            public virtual Clause build(Stacks stacks)
+            public virtual IClause Build(Stacks stacks)
             {
-                throw new IllegalStateException(string.Format("Trying end the JQL expression with operator '{0}'. Current JQL is '{1}'.", lastOperator, stacks.DisplayString));
+                throw new InvalidOperationException(string.Format("Trying end the JQL expression with operator '{0}'. Current JQL is '{1}'.", lastOperator, stacks.DisplayString));
             }
 
-            public virtual BuilderState copy(Stacks stacks)
+            public virtual IBuilderState Copy(Stacks stacks)
             {
                 return this;
-            }
-
-            public override string ToString()
-            {
-                return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
             }
         }
 
         /// <summary>
-        /// This is the state for the builder when the user is expected to enter a sub-expression. From this state it is
-        /// possible to:
-        /// <p/>
-        /// <ul> <li> Start a new sub-expression. <li> Add a new clause to the sub-expression. <li> Add a new NOT to the
-        /// sub-expression. <ul>
+        /// This is the state for the builder when the user is expected to enter a sub-expression. 
+        /// From this state it is possible to:
+        /// 
+        /// - Start a new sub-expression. 
+        /// - Add a new clause to the sub-expression. 
+        /// - Add a new NOT to the sub-expression.
         /// </summary>
-        private class StartGroup : BuilderState
+        private class StartGroup : IBuilderState
         {
-            internal static readonly StartGroup INSTANCE = new StartGroup();
+            internal static readonly StartGroup Instance = new StartGroup();
 
             internal StartGroup()
             {
@@ -826,9 +821,9 @@ namespace QuoteFlow.Core.Jql.Builder
             /// </summary>
             /// <param name="stacks"> current stacks for the builder. </param>
             /// <returns> the next builder state. </returns>
-            public virtual BuilderState enter(Stacks stacks)
+            public virtual IBuilderState Enter(Stacks stacks)
             {
-                stacks.processAndPush(BuilderOperator.LPAREN);
+                stacks.ProcessAndPush(BuilderOperator.LPAREN);
                 return this;
             }
 
@@ -838,19 +833,19 @@ namespace QuoteFlow.Core.Jql.Builder
             /// <param name="stacks"> current stacks for the builder. </param>
             /// <param name="defaultOperator"> the default combining operator. </param>
             /// <returns> the next builder state. </returns>
-            public virtual BuilderState not(Stacks stacks, BuilderOperator defaultOperator)
+            public virtual IBuilderState Not(Stacks stacks, BuilderOperator defaultOperator)
             {
-                return NotState.INSTANCE;
+                return NotState.Instance;
             }
 
-            public virtual BuilderState and(Stacks stacks)
+            public virtual IBuilderState And(Stacks stacks)
             {
-                throw new IllegalStateException("Trying to start sub-expression with 'AND'. Current JQL is '" + stacks.DisplayString + "'.");
+                throw new InvalidOperationException("Trying to start sub-expression with 'AND'. Current JQL is '" + stacks.DisplayString + "'.");
             }
 
-            public virtual BuilderState or(Stacks stacks)
+            public virtual IBuilderState Or(Stacks stacks)
             {
-                throw new IllegalStateException("Trying to start sub-expression with 'OR'. Current JQL is '" + stacks.DisplayString + "'.");
+                throw new InvalidOperationException("Trying to start sub-expression with 'OR'. Current JQL is '" + stacks.DisplayString + "'.");
             }
 
             /// <summary>
@@ -861,9 +856,9 @@ namespace QuoteFlow.Core.Jql.Builder
             /// <param name="clause"> the clause to add to tbe builder. </param>
             /// <param name="defaultOperator"> the default combining operator. </param>
             /// <returns> the next builder state. </returns>
-            public virtual BuilderState add(Stacks stacks, MutableClause clause, BuilderOperator defaultOperator)
+            public virtual IBuilderState Add(Stacks stacks, IMutableClause clause, BuilderOperator defaultOperator)
             {
-                stacks.pushOperand(clause);
+                stacks.PushOperand(clause);
                 return OperatorState.INSTANCE;
             }
 
@@ -873,152 +868,82 @@ namespace QuoteFlow.Core.Jql.Builder
             /// <param name="stacks"> current stacks for the builder. </param>
             /// <param name="defaultOperator"> the default combining operator. </param>
             /// <returns> the next builder state. </returns>
-            public virtual BuilderState group(Stacks stacks, BuilderOperator defaultOperator)
+            public virtual IBuilderState Group(Stacks stacks, BuilderOperator defaultOperator)
             {
                 return this;
             }
 
-            public virtual BuilderState endgroup(Stacks stacks)
+            public virtual IBuilderState Endgroup(Stacks stacks)
             {
-                throw new IllegalStateException("Trying to create empty sub-expression. Current JQL is '" + stacks.DisplayString + "'.");
+                throw new InvalidOperationException("Trying to create empty sub-expression. Current JQL is '" + stacks.DisplayString + "'.");
             }
 
-            public virtual Clause build(Stacks stacks)
+            public virtual IClause Build(Stacks stacks)
             {
-                throw new IllegalStateException("Tyring to build JQL expression that has an incomplete sub-expression. The current JQL is '" + stacks.DisplayString + "'.");
+                throw new InvalidOperationException("Tyring to build JQL expression that has an incomplete sub-expression. The current JQL is '" + stacks.DisplayString + "'.");
             }
 
-            public virtual BuilderState copy(Stacks stacks)
+            public virtual IBuilderState Copy(Stacks stacks)
             {
                 return this;
-            }
-
-            public override string ToString()
-            {
-                return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
             }
         }
 
-        ///CLOVER:OFF
-
         /// <summary>
         /// This is a guard state that can be used to stop calls to the builder when it is being initialised.
-        /// 
-        /// @since v4.0
         /// </summary>
-        private class IllegalState : BuilderState
+        private class IllegalState : IBuilderState
         {
             internal static readonly IllegalState INSTANCE = new IllegalState();
 
-            public virtual BuilderState enter(Stacks stacks)
+            public virtual IBuilderState Enter(Stacks stacks)
             {
                 return this;
             }
 
-            public virtual BuilderState not(Stacks stacks, BuilderOperator defaultOperator)
+            public virtual IBuilderState Not(Stacks stacks, BuilderOperator defaultOperator)
             {
-                throw new IllegalStateException("Trying to access builder in illegal state.");
+                throw new InvalidOperationException("Trying to access builder in illegal state.");
             }
 
-            public virtual BuilderState and(Stacks stacks)
+            public virtual IBuilderState And(Stacks stacks)
             {
-                throw new IllegalStateException("Trying to add 'AND' to builder before it has been initialised.");
+                throw new InvalidOperationException("Trying to add 'AND' to builder before it has been initialised.");
             }
 
-            public virtual BuilderState or(Stacks stacks)
+            public virtual IBuilderState Or(Stacks stacks)
             {
-                throw new IllegalStateException("Trying to add 'OR' to builder before it has been initialised.");
+                throw new InvalidOperationException("Trying to add 'OR' to builder before it has been initialised.");
             }
 
-            public virtual BuilderState add(Stacks stacks, MutableClause clause, BuilderOperator defaultOperator)
+            public virtual IBuilderState Add(Stacks stacks, IMutableClause clause, BuilderOperator defaultOperator)
             {
-                throw new IllegalStateException("Trying to add clause to builder before it has been initialised.");
+                throw new InvalidOperationException("Trying to add clause to builder before it has been initialised.");
             }
 
-            public virtual BuilderState group(Stacks stacks, BuilderOperator defaultOperator)
+            public virtual IBuilderState Group(Stacks stacks, BuilderOperator defaultOperator)
             {
-                throw new IllegalStateException("Trying to start sub-clause in a builder that has not been initialised.");
+                throw new InvalidOperationException("Trying to start sub-clause in a builder that has not been initialised.");
             }
 
-            public virtual BuilderState endgroup(Stacks stacks)
+            public virtual IBuilderState Endgroup(Stacks stacks)
             {
-                throw new IllegalStateException("Trying to end sub-clause in a builder that has not been initialised.");
+                throw new InvalidOperationException("Trying to end sub-clause in a builder that has not been initialised.");
             }
 
-            public virtual Clause build(Stacks stacks)
+            public virtual IClause Build(Stacks stacks)
             {
-                throw new IllegalStateException("Trying to call build before the builder is initialised.");
+                throw new InvalidOperationException("Trying to call build before the builder is initialised.");
             }
 
-            public virtual BuilderState copy(Stacks stacks)
+            public virtual IBuilderState Copy(Stacks stacks)
             {
-                throw new IllegalStateException("Trying to copy a builder that has not been initialised.");
+                throw new InvalidOperationException("Trying to copy a builder that has not been initialised.");
             }
 
             public override string ToString()
             {
                 return "Illegal State";
-            }
-        }
-
-        ///CLOVER:ON
-
-        /// <summary>
-        /// An iterator that does decorates a <seealso cref="java.util.ListIterator"/> such that it appears reversed and infinite. The
-        /// iterator will return all the values of the wrapped iterator up util it ends. Once it ends this iterator will
-        /// continue to return null.
-        /// </summary>
-        private class InfiniteReversedIterator<T> : IEnumerator<T>
-        {
-            internal IEnumerator<T> @delegate;
-
-            public InfiniteReversedIterator(IEnumerator<T> @delegate)
-            {
-                this.@delegate = @delegate;
-            }
-
-            public virtual bool hasNext()
-            {
-                return true;
-            }
-
-            public virtual T next()
-            {
-                if (@delegate.hasPrevious())
-                {
-                    return @delegate.previous();
-                }
-                return null;
-            }
-
-            public virtual void remove()
-            {
-                throw new NotSupportedException();
-            }
-
-            public void Dispose()
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool MoveNext()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Reset()
-            {
-                throw new NotImplementedException();
-            }
-
-            public T Current
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            object IEnumerator.Current
-            {
-                get { return Current; }
             }
         }
 
@@ -1051,20 +976,17 @@ namespace QuoteFlow.Core.Jql.Builder
 
             public BuilderOperator Visit(ITerminalClause clause)
             {
-                //return null;
-                throw new NotImplementedException();
+                return BuilderOperator.None;
             }
 
             public BuilderOperator Visit(IWasClause clause)
             {
-                //return null;
-                throw new NotImplementedException();
+                return BuilderOperator.None;
             }
 
             public BuilderOperator Visit(IChangedClause clause)
             {
-                //return null;
-                throw new NotImplementedException();
+                return BuilderOperator.None;
             }
         }
     }

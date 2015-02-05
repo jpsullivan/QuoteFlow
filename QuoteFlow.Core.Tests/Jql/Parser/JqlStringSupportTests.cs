@@ -303,7 +303,7 @@ namespace QuoteFlow.Core.Tests.Jql.Parser
                 mockParser.Setup(x => x.IsValidFieldName(It.IsAny<string>())).Returns(true);
 
                 var support = new JqlStringSupport(mockParser.Object);
-                var builder = JqlQueryBuilder.NewBuilder().Where().AddCondition("qwerty").eq("").or().assigneeUser("dylan");
+                var builder = JqlQueryBuilder.NewBuilder().Where().AddCondition("qwerty").Eq("").Or().AssigneeUser("dylan");
 
                 IQuery query = new Query(builder.BuildClause(), "ignore = me");
 

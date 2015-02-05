@@ -55,32 +55,31 @@ namespace QuoteFlow.Core.Jql.Builder
         /// {@code current Namecurrent Operator value}.
         /// </summary>
         /// <param name="value"> the value of the JQL condition. </param>
-        /// <returns> the bulder of the overall JQL query. </returns>
-        IJqlClauseBuilder Number(long? value);
+        /// <returns> the builder of the overall JQL query. </returns>
+        IJqlClauseBuilder Number(int? value);
 
         /// <summary>
         /// Finish the current condition such that it matches the passed values. It essentially creates the condition
         /// {@code currentName currentOperator (values)}.
         /// </summary>
-        /// <param name="values"> the values of the JQL condition. </param>
-        /// <returns> the bulder of the overall JQL query. </returns>
-        IJqlClauseBuilder Numbers(params long?[] values);
+        /// <param name="values">The values of the JQL condition.</param>
+        /// <returns>The builder of the overall JQL query.</returns>
+        IJqlClauseBuilder Numbers(params int?[] values);
 
         /// <summary>
         /// Finish the current condition such that it matches the passed values. It essentially creates the condition
         /// {@code currentName currentOperator (values)}.
         /// </summary>
-        /// <param name="values"> the values of the JQL condition. </param>
-        /// <returns> the bulder of the overall JQL query. </returns>
-        IJqlClauseBuilder Numbers(ICollection<long?> values);
+        /// <param name="values">The values of the JQL condition.</param>
+        /// <returns>The builder of the overall JQL query.</returns>
+        IJqlClauseBuilder Numbers(ICollection<int?> values);
 
         /// <summary>
         /// Finish the current condition such that it matches the passed operand. It essentially creates the condition
         /// {@code currentName currentOperator operand}.
         /// </summary>
-        /// <param name="operand"> the value of the JQL condition. </param>
-        /// <returns> the bulder of the overall JQL query. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the builder. </exception>
+        /// <param name="operand">The value of the JQL condition.</param>
+        /// <returns>The builder of the overall JQL query.</returns>
         IJqlClauseBuilder Operand(IOperand operand);
 
         /// <summary>
