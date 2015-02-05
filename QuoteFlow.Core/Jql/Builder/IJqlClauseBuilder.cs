@@ -4,7 +4,7 @@ using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Operand;
 
-namespace QuoteFlow.Api.Jql.Builder
+namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
     /// A builder used to construct the Where <seealso cref="IClause"/> portion of a JQL <seealso cref="IQuery"/> in a fluent programming
@@ -22,7 +22,7 @@ namespace QuoteFlow.Api.Jql.Builder
     /// {@code builder.defaultAnd().project("HSP").issueType("bug").buildQuery()}. Not defining the operator, such as
     /// {@code builder.project("HSP").issueType("bug").buildQuery()} will cause an illegal state exception.
     /// <p/>
-    /// Different logical operators can be specified by the programmer by using the <seealso cref="com.atlassian.jira.jql.builder.ConditionBuilder"/> returned by the field
+    /// Different logical operators can be specified by the programmer by using the <seealso cref="IConditionBuilder"/> returned by the field
     /// level methods such as <seealso cref="#project()"/>. For instance to create the terminal clause {@code component != searching} the programmer would use
     /// the builder as such {@code builder.component().notEq().string("searching")}.
     /// <p/>
@@ -168,11 +168,11 @@ namespace QuoteFlow.Api.Jql.Builder
         IJqlClauseBuilder Manufacturer(params string[] types);
 
         /// <summary>
-        /// Return a <seealso cref="ConditionBuilder"/> that can be used to build a JQL condition for
+        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for
         /// issue types.
         /// </summary>
-        /// <returns> a reference to a ConditionBuilder for issue types. </returns>
-        ConditionBuilder Manufacturer();
+        /// <returns> a reference to a IConditionBuilder for issue types. </returns>
+        IConditionBuilder Manufacturer();
 
         /// <summary>
         /// Add a condition to the query that finds the issues that match the passed description. This essentially adds the
@@ -194,11 +194,11 @@ namespace QuoteFlow.Api.Jql.Builder
         IJqlClauseBuilder DescriptionIsEmpty();
 
         /// <summary>
-        /// Return a <seealso cref="com.atlassian.jira.jql.builder.ConditionBuilder"/> that can be used to build a JQL condition for
+        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for
         /// issue descriptions.
         /// </summary>
-        /// <returns> a reference to a ConditionBuilder for issue descriptions. </returns>
-        ConditionBuilder description();
+        /// <returns> a reference to a IConditionBuilder for issue descriptions. </returns>
+        IConditionBuilder description();
 
         /// <summary>
         /// Add a condition to the query that finds the issues match the passed summary. This essentially adds the condition
@@ -211,10 +211,10 @@ namespace QuoteFlow.Api.Jql.Builder
         IJqlClauseBuilder Summary(string value);
 
         /// <summary>
-        /// Return a <see cref="ConditionBuilder"/> that can be used to build a JQL condition for asset summaries.
+        /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL condition for asset summaries.
         /// </summary>
-        /// <returns>A reference to a ConditionBuilder for issue summaries. </returns>
-        ConditionBuilder Summary();
+        /// <returns>A reference to a IConditionBuilder for issue summaries. </returns>
+        IConditionBuilder Summary();
 
         /// <summary>
         /// Add a condition to the query that finds the issues that match the passed comment. This essentially adds the
@@ -227,10 +227,10 @@ namespace QuoteFlow.Api.Jql.Builder
         IJqlClauseBuilder Comment(string value);
 
         /// <summary>
-        /// Return a <see cref="ConditionBuilder"/> that can be used to build a JQL condition for asset comments.
+        /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL condition for asset comments.
         /// </summary>
-        /// <returns>A reference to a ConditionBuilder for issue comments.</returns>
-        ConditionBuilder Comment();
+        /// <returns>A reference to a IConditionBuilder for issue comments.</returns>
+        IConditionBuilder Comment();
 
         /// <summary>
         /// Add a condition to the query that finds the assetswithin a particular catalog. This essentially adds the JQL
@@ -250,11 +250,11 @@ namespace QuoteFlow.Api.Jql.Builder
         IJqlClauseBuilder Catalog(params int?[] catalogIds);
 
         /// <summary>
-        /// Return a <see cref="ConditionBuilder"/> that can be used to build a JQL 
+        /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL 
         /// condition for an asset's catalog.
         /// </summary>
-        /// <returns>A reference to a ConditionBuilder for catalogs</returns>
-        ConditionBuilder Catalog();
+        /// <returns>A reference to a IConditionBuilder for catalogs</returns>
+        IConditionBuilder Catalog();
 
         /// <summary>
         /// Add a condition to the query that finds the issues that were created after the passed date. This essentially
@@ -296,7 +296,8 @@ namespace QuoteFlow.Api.Jql.Builder
         /// <summary>
         /// Add a condition to the query that finds the issues that where created between the passed dates. This essentially
         /// adds the query {@code created &gt;= startDateString AND created &lt;= endDateString} to the query being built.
-        /// </p> It is also possible to create an open interval by passing one of the arguments as {@code null}. Passing a
+        /// 
+        /// It is also possible to create an open interval by passing one of the arguments as {@code null}. Passing a
         /// non-null {@code startDateString} with a null {@code endDateString} will add the condition {@code created &gt;=
         /// startDateString}. Passing a non-null {@code endDateString} with a null {@code startDateString} will add the
         /// condition {@code created &lt;= endDateString}. Passing a null {@code startDateString} and null {@code
@@ -307,17 +308,14 @@ namespace QuoteFlow.Api.Jql.Builder
         /// <param name="endDateString"> the date that issues must be created on or before. Can be a date (e.g. "2008-10-23") or a
         /// period (e.g. "-3w"). May be null if {@code startDateString} is not null. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
-        /// <exception cref="IllegalArgumentException"> if both {@code startDateString} and {@code endDateString} are null. </exception>
         IJqlClauseBuilder CreatedBetween(string startDateString, string endDateString);
 
         /// <summary>
-        /// Return a <seealso cref="com.atlassian.jira.jql.builder.ConditionBuilder"/> that can be used to build a JQL condition for
+        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for
         /// issue's creation date.
         /// </summary>
-        /// <returns> a reference to a ConditionBuilder for created date. </returns>
-        ConditionBuilder Created();
+        /// <returns> a reference to a IConditionBuilder for created date. </returns>
+        IConditionBuilder Created();
 
         /// <summary>
         /// Add a condition to the query that finds the issues that were updated after the passed date. This essentially
@@ -325,8 +323,6 @@ namespace QuoteFlow.Api.Jql.Builder
         /// </summary>
         /// <param name="startDate"> the date that issues must be updated after. Cannot be null. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
         IJqlClauseBuilder UpdatedAfter(DateTime startDate);
 
         /// <summary>
@@ -336,8 +332,6 @@ namespace QuoteFlow.Api.Jql.Builder
         /// <param name="startDate"> the date that issues must be updated after. Can be a date (e.g. "2008-10-23") or a
         /// period (e.g. "-3w"). Cannot be null. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
         IJqlClauseBuilder UpdatedAfter(string startDate);
 
         /// <summary>
@@ -351,9 +345,6 @@ namespace QuoteFlow.Api.Jql.Builder
         /// <param name="startDate"> the date that issues must be updated on or after. May be null if {@code endDate} is not null. </param>
         /// <param name="endDate"> the date that issues must be updated on or before. May be null if {@code startDate} is not null. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
-        /// <exception cref="IllegalArgumentException"> if both {@code startDate} and {@code endDate} are null. </exception>
         IJqlClauseBuilder UpdatedBetween(DateTime startDate, DateTime endDate);
 
         /// <summary>
@@ -370,17 +361,14 @@ namespace QuoteFlow.Api.Jql.Builder
         /// <param name="endDateString"> the date that issues must be updated on or before. Can be a date (e.g. "2008-10-23") or a
         /// period (e.g. "-3w"). May be null if {@code startDateString} is not null. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
-        /// <exception cref="IllegalArgumentException"> if both {@code startDateString} and {@code endDateString} are null. </exception>
         IJqlClauseBuilder UpdatedBetween(string startDateString, string endDateString);
 
         /// <summary>
-        /// Return a <seealso cref="ConditionBuilder"/> that can be used to build a JQL condition for
+        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for
         /// issue's updated date.
         /// </summary>
-        /// <returns> a reference to a ConditionBuilder for updated date. </returns>
-        ConditionBuilder Updated();
+        /// <returns> a reference to a IConditionBuilder for updated date. </returns>
+        IConditionBuilder Updated();
 
         /// <summary>
         /// Add a condition to the query that will find all assets with the passed id. This essentially adds the JQL condition
@@ -395,39 +383,33 @@ namespace QuoteFlow.Api.Jql.Builder
         /// the JQL condition {@code key IN issueHistory()} to the query.
         /// </summary>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
         IJqlClauseBuilder AssetInHistory();
 
         /// <summary>
-        /// Return a <seealso cref="ConditionBuilder"/> that can be used to build a JQL condition for the asset's id or key.
+        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for the asset's id or key.
         /// </summary>
-        /// <returns>A reference to a ConditionBuilder for issue id or key.</returns>
-        ConditionBuilder Asset();
+        /// <returns>A reference to a IConditionBuilder for issue id or key.</returns>
+        IConditionBuilder Asset();
 
         /// <summary>
         /// Add a condition to the query that finds issues which contains/do not contain attachments.
         /// </summary>
         /// <param name="hasAttachment"> true if expecting issues with attachments. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
         IJqlClauseBuilder AttachmentsExists(bool hasAttachment);
 
         /// <summary>
-        /// Return a <see cref="ConditionBuilder"/> that can be used to build a JQL condition for the passed name.
+        /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL condition for the passed name.
         /// </summary>
         /// <param name="jqlName">The name of the JQL condition. Cannot be null.</param>
-        /// <returns> a reference to a ConditionBuilder for the passed name. </returns>
-        ConditionBuilder Field(string jqlName);
+        /// <returns> a reference to a IConditionBuilder for the passed name. </returns>
+        IConditionBuilder Field(string jqlName);
 
         /// <summary>
         /// Add the passed JQL condition to the query being built.
         /// </summary>
         /// <param name="clause"> the clause to add. Must not be null. </param>
         /// <returns> a reference to the current builder. Never null. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
         IJqlClauseBuilder AddClause(IClause clause);
 
         /// <summary>
@@ -437,9 +419,7 @@ namespace QuoteFlow.Api.Jql.Builder
         /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="date"> the date for the condition. Must not be null. </param>
         /// <returns> a reference to the current builder. Never null. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
-        IJqlClauseBuilder AddDateCondition(string clauseName, Query.Operator @operator, DateTime date);
+        IJqlClauseBuilder AddDateCondition(string clauseName, Api.Jql.Query.Operator @operator, DateTime date);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName in (dates)} to the query being built.
@@ -447,20 +427,16 @@ namespace QuoteFlow.Api.Jql.Builder
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
         /// <param name="dates"> dates for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
         IJqlClauseBuilder AddDateCondition(string clauseName, params DateTime[] dates);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="dates"> date values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
-        IJqlClauseBuilder AddDateCondition(string clauseName, Query.Operator @operator, params DateTime[] dates);
+        IJqlClauseBuilder AddDateCondition(string clauseName, Api.Jql.Query.Operator @operator, params DateTime[] dates);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName in (dates)} to the query being built.
@@ -476,12 +452,12 @@ namespace QuoteFlow.Api.Jql.Builder
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="dates"> date values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddDateCondition(string clauseName, Query.Operator @operator, ICollection<DateTime> dates);
+        IJqlClauseBuilder AddDateCondition(string clauseName, Api.Jql.Query.Operator @operator, ICollection<DateTime> dates);
 
         /// <summary>
         /// Add a condition range condition to the current query for the passed dates. This essentially adds the query {@code
@@ -536,38 +512,38 @@ namespace QuoteFlow.Api.Jql.Builder
         /// Add the JQL condition {@code clauseName operator functionName()} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="functionName"> name of the function to call. Must not be null. </param>
         /// <returns> a reference to the current builder. Never null. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddFunctionCondition(string clauseName, Query.Operator @operator, string functionName);
+        IJqlClauseBuilder AddFunctionCondition(string clauseName, Api.Jql.Query.Operator @operator, string functionName);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator functionName(arg1, arg2, arg3, ..., argN)} to the query being
         /// built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="functionName"> name of the function to call. Must not be null. </param>
         /// <param name="args"> the arguments to add to the function. Must not be null or contain any null values. </param>
         /// <returns> a reference to the current builder. Never null. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddFunctionCondition(string clauseName, Query.Operator @operator, string functionName, params string[] args);
+        IJqlClauseBuilder AddFunctionCondition(string clauseName, Api.Jql.Query.Operator @operator, string functionName, params string[] args);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator functionName(arg1, arg2, arg3, ..., argN)} to the query being
         /// built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="functionName"> name of the function to call. Must not be null. </param>
         /// <param name="args"> the arguments to add to the function. Must not be null or contain any null values. </param>
         /// <returns> a reference to the current builder. Never null. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddFunctionCondition(string clauseName, Query.Operator @operator, string functionName, ICollection<string> args);
+        IJqlClauseBuilder AddFunctionCondition(string clauseName, Api.Jql.Query.Operator @operator, string functionName, ICollection<string> args);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName = "clauseValue"} to the query being built.
@@ -603,34 +579,34 @@ namespace QuoteFlow.Api.Jql.Builder
         /// Add the JQL condition {@code clauseName operator "clauseValue"} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValue"> string value for the condition. Must not be null. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddStringCondition(string clauseName, Query.Operator @operator, string clauseValue);
+        IJqlClauseBuilder AddStringCondition(string clauseName, Api.Jql.Query.Operator @operator, string clauseValue);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValues"> string values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddStringCondition(string clauseName, Query.Operator @operator, params string[] clauseValues);
+        IJqlClauseBuilder AddStringCondition(string clauseName, Api.Jql.Query.Operator @operator, params string[] clauseValues);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValues"> string values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddStringCondition(string clauseName, Query.Operator @operator, ICollection<string> clauseValues);
+        IJqlClauseBuilder AddStringCondition(string clauseName, Api.Jql.Query.Operator @operator, ICollection<string> clauseValues);
 
         /// <summary>
         /// Add a condition range condition to the current query for the passed values. This essentially adds the query {@code
@@ -684,34 +660,34 @@ namespace QuoteFlow.Api.Jql.Builder
         /// Add the JQL condition {@code clauseName operator clauseValue} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValue"> long value for the condition. Must not be null. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddNumberCondition(string clauseName, Query.Operator @operator, long? clauseValue);
+        IJqlClauseBuilder AddNumberCondition(string clauseName, Api.Jql.Query.Operator @operator, long? clauseValue);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValues"> long values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddNumberCondition(string clauseName, Query.Operator @operator, params long?[] clauseValues);
+        IJqlClauseBuilder AddNumberCondition(string clauseName, Api.Jql.Query.Operator @operator, params long?[] clauseValues);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValues"> long values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
         /// builder. </exception>
-        IJqlClauseBuilder AddNumberCondition(string clauseName, Query.Operator @operator, ICollection<long?> clauseValues);
+        IJqlClauseBuilder AddNumberCondition(string clauseName, Api.Jql.Query.Operator @operator, ICollection<long?> clauseValues);
 
         /// <summary>
         /// Add a condition range condition to the current query for the passed values. This essentially adds the query {@code
@@ -732,12 +708,12 @@ namespace QuoteFlow.Api.Jql.Builder
         IJqlClauseBuilder AddNumberRangeCondition(string clauseName, long? start, long? end);
 
         /// <summary>
-        /// Return a <seealso cref="ConditionBuilder"/> that can be used to build a JQL condition for
+        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for
         /// the passed JQL name.
         /// </summary>
         /// <param name="clauseName"> the name of the JQL condition to add. </param>
         /// <returns> a reference to a condition builder for the passed condition. </returns>
-        ConditionBuilder AddCondition(string clauseName);
+        IConditionBuilder AddCondition(string clauseName);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName = operand} to the query being built.
@@ -755,8 +731,6 @@ namespace QuoteFlow.Api.Jql.Builder
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
         /// <param name="operands"> operands values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
         IJqlClauseBuilder AddCondition(string clauseName, params IOperand[] operands);
 
         /// <summary>
@@ -765,8 +739,6 @@ namespace QuoteFlow.Api.Jql.Builder
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
         /// <param name="operands"> operands values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
         IJqlClauseBuilder AddCondition<T>(string clauseName, ICollection<T> operands) where T : IOperand;
 
         /// <summary>
@@ -776,29 +748,25 @@ namespace QuoteFlow.Api.Jql.Builder
         /// <param name="operator">One of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="operand">Defines an operand that will serve as the clause value. Must not be null. </param>
         /// <returns>A reference to the current builder.</returns>
-        IJqlClauseBuilder AddCondition(string clauseName, Query.Operator @operator, IOperand operand);
+        IJqlClauseBuilder AddCondition(string clauseName, Api.Jql.Query.Operator @operator, IOperand operand);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (operands)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="operands"> values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
-        IJqlClauseBuilder AddCondition(string clauseName, Query.Operator @operator, params IOperand[] operands);
+        IJqlClauseBuilder AddCondition(string clauseName, Api.Jql.Query.Operator @operator, params IOperand[] operands);
 
         /// <summary>
         /// Add the JQL condition {@code clauseName operator (operands)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="com.atlassian.query.operator.Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
         /// <param name="operands"> values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
-        /// builder. </exception>
-        IJqlClauseBuilder AddCondition<T>(string clauseName, Query.Operator @operator, ICollection<T> operands) where T : IOperand;
+        IJqlClauseBuilder AddCondition<T>(string clauseName, Api.Jql.Query.Operator @operator, ICollection<T> operands) where T : IOperand;
 
         /// <summary>
         /// Add a condition range condition to the current query for the passed values. This essentially adds the query {@code
@@ -824,7 +792,6 @@ namespace QuoteFlow.Api.Jql.Builder
         /// </summary>
         /// <param name="clauseName"> the clause name for the new condition. Cannot be null. </param>
         /// <returns> a reference to the current builder. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the builder. </exception>
         IJqlClauseBuilder AddEmptyCondition(string clauseName);
 
         /// <summary>
@@ -832,7 +799,6 @@ namespace QuoteFlow.Api.Jql.Builder
         /// called.
         /// </summary>
         /// <returns> the clause generated by the builder. Can be null if there is no clause to generate. </returns>
-        /// <exception cref="IllegalStateException"> if it is not possible to build a valid JQL query given the state of the builder. </exception>
         IClause BuildClause();
     }
 

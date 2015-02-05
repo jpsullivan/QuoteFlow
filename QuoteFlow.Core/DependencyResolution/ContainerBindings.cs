@@ -41,6 +41,7 @@ using QuoteFlow.Core.Asset.Search.Util;
 using QuoteFlow.Core.Auditing;
 using QuoteFlow.Core.Configuration;
 using QuoteFlow.Core.Infrastructure.Mvc;
+using QuoteFlow.Core.Jql.Builder;
 using QuoteFlow.Core.Jql.Context;
 using QuoteFlow.Core.Jql.Operand;
 using QuoteFlow.Core.Jql.Operand.Registry;
@@ -218,8 +219,9 @@ namespace QuoteFlow.Core.DependencyResolution
             #region Jql Support
 
             Bind<IJqlAssetIdSupport>().To<JqlAssetIdSupport>().InRequestScope();
+            Bind<IJqlClauseBuilderFactory>().To<JqlClauseBuilderFactory>().InRequestScope();
             Bind<IJqlDateSupport>().To<JqlDateSupport>().InRequestScope();
-            RequestScopeExtensionMethod.InRequestScope<LazyResettableJqlFunctionHandlerRegistry>(Bind<IJqlFunctionHandlerRegistry>().To<LazyResettableJqlFunctionHandlerRegistry>());
+            Bind<IJqlFunctionHandlerRegistry>().To<LazyResettableJqlFunctionHandlerRegistry>().InRequestScope();
             Bind<IJqlOperandResolver>().To<JqlOperandResolver>().InRequestScope();
             Bind<IJqlQueryParser>().To<JqlQueryParser>().InRequestScope();
             Bind<IJqlStringSupport>().To<JqlStringSupport>().InRequestScope();

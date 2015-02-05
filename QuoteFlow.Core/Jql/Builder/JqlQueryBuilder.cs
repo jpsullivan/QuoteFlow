@@ -3,7 +3,7 @@ using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Order;
 
-namespace QuoteFlow.Api.Jql.Builder
+namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
     /// Used to build <seealso cref="IQuery"/>'s that can be used to perform issue searching in JIRA.
@@ -158,7 +158,7 @@ namespace QuoteFlow.Api.Jql.Builder
             // Create the query from our configured data
             IClause whereClause = jqlClauseBuilder.BuildClause();
             IOrderBy orderByClause = jqlOrderByBuilder.BuildOrderBy();
-            return new Query.Query(whereClause, orderByClause, null);
+            return new Api.Jql.Query.Query(whereClause, orderByClause, null);
         }
 
         /// <summary>

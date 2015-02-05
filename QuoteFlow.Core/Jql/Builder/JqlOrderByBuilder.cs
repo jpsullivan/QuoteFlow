@@ -6,7 +6,7 @@ using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Order;
 
-namespace QuoteFlow.Api.Jql.Builder
+namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
     /// Used to create <seealso cref="OrderBy"/> clauses to be included in {@link
@@ -78,7 +78,7 @@ namespace QuoteFlow.Api.Jql.Builder
                 // Create the query from our configured data
                 return parentBuilder.BuildQuery();
             }
-            return new Query.Query(null, BuildOrderBy(), null);
+            return new Api.Jql.Query.Query(null, BuildOrderBy(), null);
         }
 
         /// <summary>

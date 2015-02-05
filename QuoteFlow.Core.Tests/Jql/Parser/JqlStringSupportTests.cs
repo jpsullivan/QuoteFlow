@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Moq;
-using QuoteFlow.Api.Jql.Builder;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
+using QuoteFlow.Core.Jql.Builder;
 using QuoteFlow.Core.Jql.Util;
 using Xunit;
 using Xunit.Extensions;

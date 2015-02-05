@@ -238,9 +238,6 @@
     <Compile Include="Infrastructure\Paging\IPagerFilter.cs" />
     <Compile Include="Infrastructure\Paging\PagerFilter.cs" />
     <Compile Include="IQuoteFlowDataType.cs" />
-    <Compile Include="Jql\Builder\IJqlClauseBuilder.cs" />
-    <Compile Include="Jql\Builder\JqlOrderByBuilder.cs" />
-    <Compile Include="Jql\Builder\JqlQueryBuilder.cs" />
     <Compile Include="Jql\Context\AllCatalogsContext.cs" />
     <Compile Include="Jql\Context\AllManufacturersContext.cs" />
     <Compile Include="Jql\Context\CatalogManufacturerContext.cs" />
