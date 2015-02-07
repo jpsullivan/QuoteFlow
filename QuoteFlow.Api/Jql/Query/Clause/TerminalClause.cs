@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Query.Operand;
 
 namespace QuoteFlow.Api.Jql.Query.Clause
@@ -55,6 +59,8 @@ namespace QuoteFlow.Api.Jql.Query.Clause
 		/// <param name="property"> the name of the property. </param>
 		public TerminalClause(string name, Operator oprator, IOperand operand, IEnumerable<Property> property)
 		{
+		    if (name == null) throw new ArgumentNullException("name");
+
 		    Operator = oprator;
 			Operand = operand;
 			Name = name;
@@ -154,6 +160,27 @@ namespace QuoteFlow.Api.Jql.Query.Clause
             result = 31 * result + Name.GetHashCode();
             //result = 31 * result + Property.GetHashCode();
             return result;
+        }
+
+        public override string ToString()
+        {
+            //The '{' brackets in this method are designed to make this method return invalid JQL so that we know when
+            //we call this method. This method is only here for debugging and should not be used in production.
+            StringBuilder sb = (new StringBuilder("{")).Append(Name);
+
+            if (Property != null)
+            {
+                foreach (var property in Property)
+                {
+                    sb.Append(property);
+                }
+            }
+
+            sb.Append(" ");
+            sb.Append(Operator.GetDisplayAttributeFrom(typeof(Operator)));
+            sb.Append(" ");
+            sb.Append(Operand.DisplayString).Append("}");
+            return sb.ToString();
         }
     }
 }

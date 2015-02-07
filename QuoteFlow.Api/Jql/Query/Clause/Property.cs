@@ -27,7 +27,7 @@ namespace QuoteFlow.Api.Jql.Query.Clause
 
         public override string ToString()
         {
-            return String.Format("[%s].%s", Keys, ObjectReferences);
+            return String.Format("[{0}].{1}", KeysAsString(), ObjectReferencesAsString());
         }
 
         public string KeysAsString()

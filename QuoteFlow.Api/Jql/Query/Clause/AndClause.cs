@@ -16,7 +16,6 @@ namespace QuoteFlow.Api.Jql.Query.Clause
         {
         }
 
-
         public AndClause(IList<IClause> clauses) : base(clauses)
         {
             if (!clauses.Any())

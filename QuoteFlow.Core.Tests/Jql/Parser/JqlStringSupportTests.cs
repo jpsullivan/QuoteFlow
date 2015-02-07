@@ -305,7 +305,7 @@ namespace QuoteFlow.Core.Tests.Jql.Parser
                 var support = new JqlStringSupport(mockParser.Object);
                 var builder = JqlQueryBuilder.NewBuilder().Where().AddCondition("qwerty").Eq("").Or().Description("foo");
 
-                IQuery query = new Query(builder.BuildClause(), "ignore = me");
+                IQuery query = new Api.Jql.Query.Query(builder.BuildClause(), "ignore = me");
 
                 Assert.Equal("qwerty = \"\" OR description = \"foo\"", support.GenerateJqlString(query));
 

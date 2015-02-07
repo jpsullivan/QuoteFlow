@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
@@ -22,12 +23,19 @@ namespace QuoteFlow.Core.Jql.Query.Clause
 
         public string DisplayString { get { return "was";  } }
 
+        public string Name { get { return Field; } }
+        public IEnumerable<IClause> Clauses { get; private set; }
+
         public WasClause(string field, Operator @operator, IOperand operand, IHistoryPredicate predicate)
         {
+            if (field == null) throw new ArgumentNullException("field");
+
             Field = field;
             Operand = operand;
             Operator = @operator;
             Predicate = predicate;
+
+            Clauses = new List<IClause>();
         }
 
         public WasClause(IWasClause clause)
@@ -36,10 +44,9 @@ namespace QuoteFlow.Core.Jql.Query.Clause
             Operand = clause.Operand;
             Predicate = clause.Predicate;
             Operator = clause.Operator;
-        }
 
-        public string Name { get; private set; }
-        public IEnumerable<IClause> Clauses { get; private set; }
+            Clauses = new List<IClause>();
+        }
 
         public T Accept<T>(IClauseVisitor<T> visitor)
         {

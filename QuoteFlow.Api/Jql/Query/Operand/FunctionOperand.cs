@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -6,26 +7,6 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 {
     public class FunctionOperand : IOperand
     {
-        // This is calculated on the fly. I don't care about memory affects. In the most likely case this will only be calculated
-        // once, in the worst case this may be calculated multiple times (but all to the same value).
-        private string _caseInsensitiveName;
-
-        public FunctionOperand(string name)
-            : this(name, new List<string>())
-        {
-        }
-
-        public FunctionOperand(string name, params string[] args)
-            : this(name, new List<string>(args))
-        {
-        }
-
-        public FunctionOperand(string name, IEnumerable<string> args)
-        {
-            Name = name;
-            Args = args.ToList();
-        }
-
         /// <summary>
         /// The name that represents this Operand, null if the operand is unnamed.
         /// </summary>
@@ -35,6 +16,37 @@ namespace QuoteFlow.Api.Jql.Query.Operand
         /// 
         /// </summary>
         public IList<string> Args { get; set; }
+
+        /// <summary>
+        /// This is calculated on the fly. I don't care about memory affects. In the most 
+        /// likely case this will only be calculated nce, in the worst case this may be 
+        /// calculated multiple times (but all to the same value).
+        /// </summary>
+        private string _caseInsensitiveName;
+
+        public FunctionOperand(string name)
+            : this(name, new List<string>())
+        {
+        }
+
+        public FunctionOperand(string name, params string[] args)
+            : this(name, args.ToList())
+        {
+        }
+
+        public FunctionOperand(string name, IEnumerable<string> args)
+        {
+            if (name == null) throw new ArgumentNullException("name");
+            if (args == null) throw new ArgumentNullException("args");
+
+            if (args.Any(arg => arg == null))
+            {
+                throw new ArgumentException("Cannot be empty.", "args");
+            }
+
+            Name = name;
+            Args = args.ToList();
+        }
 
         public string DisplayString
         {

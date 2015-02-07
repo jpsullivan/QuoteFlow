@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace QuoteFlow.Api.Jql.Query.Clause
@@ -14,6 +15,8 @@ namespace QuoteFlow.Api.Jql.Query.Clause
 
         public NotClause(IClause subClause)
         {
+            if (subClause == null) throw new ArgumentNullException("subClause");
+
             _subClause = subClause;
         }
 

@@ -65,6 +65,16 @@
     <Compile Include="Jql\Parser\Antlr\LexerErrorHelperTests.cs" />
     <Compile Include="Jql\Parser\JqlQueryParserTests.cs" />
     <Compile Include="Jql\Parser\JqlStringSupportTests.cs" />
+    <Compile Include="Jql\Query\Clause\AndClauseTests.cs" />
+    <Compile Include="Jql\Query\Clause\ClausePrecedenceTests.cs" />
+    <Compile Include="Jql\Query\Clause\NotClauseTests.cs" />
+    <Compile Include="Jql\Query\Clause\OrClauseTests.cs" />
+    <Compile Include="Jql\Query\Clause\PropertyTests.cs" />
+    <Compile Include="Jql\Query\Clause\TerminalClauseTests.cs" />
+    <Compile Include="Jql\Query\Clause\WasClauseTests.cs" />
+    <Compile Include="Jql\Query\Operand\FunctionOperandTests.cs" />
+    <Compile Include="Jql\Query\Operand\SimpleLiteralFactory.cs" />
+    <Compile Include="Jql\Query\Operand\SingleValueOperandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
