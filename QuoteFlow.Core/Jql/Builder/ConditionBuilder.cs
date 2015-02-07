@@ -211,10 +211,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IJqlClauseBuilder NotEmpty
         {
-            get
-            {
-                return _builder.AddCondition(_clauseName, Operator.IS_NOT, EmptyOperand.Empty);
-            }
+            get { return _builder.AddCondition(_clauseName, Operator.IS_NOT, EmptyOperand.Empty); }
         }
 
         public virtual IValueBuilder Lt()

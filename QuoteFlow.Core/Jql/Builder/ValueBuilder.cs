@@ -4,6 +4,7 @@ using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Function;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Operand;
+using QuoteFlow.Core.Jql.Function;
 
 namespace QuoteFlow.Core.Jql.Builder
 {
@@ -18,7 +19,7 @@ namespace QuoteFlow.Core.Jql.Builder
         private readonly string _clauseName;
         private readonly Operator _operator;
 
-        internal DefaultValueBuilder(JqlClauseBuilder builder, string clauseName, Operator @operator)
+        internal DefaultValueBuilder(IJqlClauseBuilder builder, string clauseName, Operator @operator)
         {
             if (builder == null) throw new ArgumentNullException("builder");
             if (clauseName == null) throw new ArgumentNullException("clauseName");
