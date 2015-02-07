@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
@@ -10,8 +11,6 @@ namespace QuoteFlow.Core.Jql.Function
 {
     /// <summary>
     /// Function that produces the current date as the value.
-    /// 
-    /// @since v4.0
     /// </summary>
     public class NowFunction : AbstractDateFunction
     {
@@ -27,15 +26,15 @@ namespace QuoteFlow.Core.Jql.Function
         {
         }
 
-        public virtual MessageSet validate(User searcher, FunctionOperand operand, TerminalClause terminalClause)
+        public virtual IMessageSet Validate(User searcher, FunctionOperand operand, TerminalClause terminalClause)
         {
             // Now is always now so there is not much to validate
-            return validateNumberOfArgs(operand, 0);
+            return ValidateNumberOfArgs(operand, 0);
         }
 
-        public virtual IList<QueryLiteral> getValues(QueryCreationContext queryCreationContext, FunctionOperand operand, TerminalClause terminalClause)
+        public virtual IList<QueryLiteral> GetValues(QueryCreationContext queryCreationContext, FunctionOperand operand, TerminalClause terminalClause)
         {
-            return Collections.singletonList(new QueryLiteral(operand, clock.CurrentDate.Time));
+            return new List<QueryLiteral> { new QueryLiteral(operand, DateTime.UtcNow )};
         }
     }
 }

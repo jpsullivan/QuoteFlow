@@ -53,6 +53,14 @@ namespace QuoteFlow.Api.Jql.Operand
             IntValue = null;
         }
 
+        public QueryLiteral(IOperand sourceOperand, DateTime dateValue)
+        {
+            SourceOperand = sourceOperand;
+            DateValue = dateValue;
+            StringValue = null;
+            IntValue = null;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -62,6 +70,11 @@ namespace QuoteFlow.Api.Jql.Operand
         /// 
         /// </summary>
         public int? IntValue { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime DateValue { get; set; }
 
         /// <summary>
         /// 
