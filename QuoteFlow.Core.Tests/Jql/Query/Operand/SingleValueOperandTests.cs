@@ -55,7 +55,7 @@ namespace QuoteFlow.Core.Tests.Jql.Query.Operand
             public void GetsTheCorrectValue_FromQueryLiteral()
             {
                 var svo = new SingleValueOperand(SimpleLiteralFactory.CreateLiteral("123"));
-                Assert.Equal("\"123\"", svo.StringValue);
+                Assert.Equal("123", svo.StringValue);
                 Assert.Null(svo.IntValue);
             }
         }
