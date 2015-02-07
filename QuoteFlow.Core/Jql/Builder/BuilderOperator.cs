@@ -9,12 +9,12 @@ namespace QuoteFlow.Core.Jql.Builder
     {
         // The order of these operators is important. The BuilderOperator.compareTo method must
         // order them in precedence order.
-        None = 0,
         LPAREN,
         RPAREN,
         OR,
         AND,
-        NOT
+        NOT,
+        None = 0,
     }
 
     public static class BuilderOperatorExtensions

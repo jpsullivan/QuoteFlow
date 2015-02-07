@@ -21,12 +21,12 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public JqlClauseBuilder(JqlQueryBuilder parent, ISimpleClauseBuilder builder, IJqlDateSupport jqlDateSupport)
         {
-            if (_jqlDateSupport == null)
+            if (jqlDateSupport == null)
             {
                 throw new ArgumentNullException("jqlDateSupport");
             }
 
-            if (_builder == null)
+            if (builder == null)
             {
                 throw new ArgumentNullException("builder");
             }
@@ -122,7 +122,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IConditionBuilder Description()
         {
-            return new DefaultConditionBuilder(SystemSearchConstants.ForDescription().JqlClauseNames.PrimaryName, this);
+            return new ConditionBuilder(SystemSearchConstants.ForDescription().JqlClauseNames.PrimaryName, this);
         }
 
         public IJqlClauseBuilder Summary(string value)
@@ -132,7 +132,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IConditionBuilder Summary()
         {
-            return new DefaultConditionBuilder(SystemSearchConstants.ForSummary().JqlClauseNames.PrimaryName, this);
+            return new ConditionBuilder(SystemSearchConstants.ForSummary().JqlClauseNames.PrimaryName, this);
         }
 
         public IJqlClauseBuilder Comment(string value)
@@ -142,7 +142,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IConditionBuilder Comment()
         {
-            return new DefaultConditionBuilder(SystemSearchConstants.ForComments().JqlClauseNames.PrimaryName, this);
+            return new ConditionBuilder(SystemSearchConstants.ForComments().JqlClauseNames.PrimaryName, this);
         }
 
         public IJqlClauseBuilder Catalog(params string[] catalogs)
@@ -157,7 +157,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IConditionBuilder Catalog()
         {
-            return new DefaultConditionBuilder(SystemSearchConstants.ForCatalog().JqlClauseNames.PrimaryName, this);
+            return new ConditionBuilder(SystemSearchConstants.ForCatalog().JqlClauseNames.PrimaryName, this);
         }
 
         public IJqlClauseBuilder CreatedAfter(DateTime startDate)
@@ -182,7 +182,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IConditionBuilder Created()
         {
-            return new DefaultConditionBuilder(SystemSearchConstants.ForCreatedDate().JqlClauseNames.PrimaryName, this);
+            return new ConditionBuilder(SystemSearchConstants.ForCreatedDate().JqlClauseNames.PrimaryName, this);
         }
 
         public IJqlClauseBuilder UpdatedAfter(DateTime startDate)
@@ -207,7 +207,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IConditionBuilder Updated()
         {
-            return new DefaultConditionBuilder(SystemSearchConstants.ForUpdatedDate().JqlClauseNames.PrimaryName, this);
+            return new ConditionBuilder(SystemSearchConstants.ForUpdatedDate().JqlClauseNames.PrimaryName, this);
         }
 
         public IJqlClauseBuilder Asset(params string[] assetIds)
@@ -217,7 +217,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IConditionBuilder Asset()
         {
-            return new DefaultConditionBuilder(SystemSearchConstants.ForAssetId().JqlClauseNames.PrimaryName, this);
+            return new ConditionBuilder(SystemSearchConstants.ForAssetId().JqlClauseNames.PrimaryName, this);
         }
 
         public IJqlClauseBuilder AttachmentsExists(bool hasAttachment)
@@ -233,7 +233,7 @@ namespace QuoteFlow.Core.Jql.Builder
                 throw new ArgumentNullException("jqlName");
             }
 
-            return new DefaultConditionBuilder(jqlName, this);
+            return new ConditionBuilder(jqlName, this);
         }
 
         public IJqlClauseBuilder AddClause(IClause clause)
@@ -544,7 +544,7 @@ namespace QuoteFlow.Core.Jql.Builder
                 throw new ArgumentNullException("clauseName");
             }
 
-            return new DefaultConditionBuilder(clauseName, this);
+            return new ConditionBuilder(clauseName, this);
         }
 
         public IJqlClauseBuilder AddCondition(string clauseName, IOperand operand)
@@ -593,7 +593,7 @@ namespace QuoteFlow.Core.Jql.Builder
                 throw new ArgumentException("No nulls are allowed", "clauseValues");
             }
 
-            return AddTerminalClause(clauseName, @operator, new MultiValueOperand(operands));
+            return AddTerminalClause(clauseName, @operator, new MultiValueOperand((IEnumerable<IOperand>) operands));
         }
 
         public IJqlClauseBuilder AddRangeCondition(string clauseName, IOperand start, IOperand end)

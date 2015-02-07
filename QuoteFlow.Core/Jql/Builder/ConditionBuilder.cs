@@ -6,16 +6,14 @@ using QuoteFlow.Api.Jql.Query.Operand;
 namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
-    /// Default implementation of <seealso cref="ConditionBuilder"/>.
-    /// 
-    /// @since v4.0
+    /// Default implementation of <see cref="IConditionBuilder"/>.
     /// </summary>
-    internal class DefaultConditionBuilder : IConditionBuilder
+    internal class ConditionBuilder : IConditionBuilder
     {
         private readonly IJqlClauseBuilder _builder;
         private readonly string _clauseName;
 
-        internal DefaultConditionBuilder(string clauseName, IJqlClauseBuilder builder)
+        internal ConditionBuilder(string clauseName, IJqlClauseBuilder builder)
         {
             if (clauseName == null) throw new ArgumentNullException("clauseName");
             if (builder == null) throw new ArgumentNullException("builder");
@@ -509,7 +507,7 @@ namespace QuoteFlow.Core.Jql.Builder
             return _builder.AddNumberRangeCondition(_clauseName, start, end);
         }
 
-        public virtual IJqlClauseBuilder range(IOperand start, IOperand end)
+        public virtual IJqlClauseBuilder Range(IOperand start, IOperand end)
         {
             return _builder.AddRangeCondition(_clauseName, start, end);
         }

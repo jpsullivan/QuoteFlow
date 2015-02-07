@@ -36,7 +36,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Override any sorts that may have been setup in the builder with the provided list of sorts.
         /// </summary>
         /// <param name="newSorts"> the new sorts to include in the builder, must not be null. </param>
-        /// <returns> this builder. </returns>
+        /// <returns>This builder.</returns>
         public virtual JqlOrderByBuilder SetSorts(ICollection<SearchSort> newSorts)
         {
             if (newSorts == null)
@@ -52,13 +52,14 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Creates a builder who's state will be a mutable copy of the passed in order by.
         /// </summary>
         /// <param name="existingOrderBy"> the template which defines the state the builder will be in once this method returns. </param>
-        /// <returns> a builder who's state will be a mutable copy of the passed in order by. </returns>
-        public virtual JqlOrderByBuilder SetSorts(OrderBy existingOrderBy)
+        /// <returns>A builder who's state will be a mutable copy of the passed in order by.</returns>
+        public virtual JqlOrderByBuilder SetSorts(IOrderBy existingOrderBy)
         {
             if (existingOrderBy != null)
             {
                 this.searchSorts = existingOrderBy.SearchSorts;
             }
+
             return this;
         }
 
@@ -68,9 +69,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// equates to calling {@code EndOrderBy().BuildQuery()}. When {@code EndOrderBy()} is null, this equates to calling
         /// {@code new QueryImpl(null, BuildOrderBy(), null)}.
         /// </summary>
-        /// <exception cref="IllegalStateException"> if it is not possible to build the current query given the state of the builder. </exception>
-        /// <returns> the newly generated query.
-        ///  </returns>
+        /// <returns>The newly generated query.</returns>
         public virtual IQuery BuildQuery()
         {
             if (parentBuilder != null)

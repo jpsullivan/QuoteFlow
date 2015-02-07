@@ -189,6 +189,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
             private IMutableClause PopClause()
             {
+                if (!Operands.Any()) return null;
+
                 var op = Operands.First();
                 Operands.Remove(op);
                 return op;
@@ -215,7 +217,7 @@ namespace QuoteFlow.Core.Jql.Builder
                     // operators only process when something of higher but not equal precedence appears on the stack.
                     int compare = op == BuilderOperator.NOT ? -1 : 0;
 
-                    while (currentTop != BuilderOperator.None && (op == null || op.CompareTo(currentTop) <= compare))
+                    while (currentTop != BuilderOperator.None && (op == BuilderOperator.None || op.CompareTo(currentTop) <= compare))
                     {
                         PopOperator();
 

@@ -1,7 +1,9 @@
-﻿using QuoteFlow.Api.Infrastructure.IoC;
+﻿using Ninject;
+using QuoteFlow.Api.Infrastructure.IoC;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Order;
+using QuoteFlow.Core.DependencyResolution;
 
 namespace QuoteFlow.Core.Jql.Builder
 {
@@ -175,10 +177,11 @@ namespace QuoteFlow.Core.Jql.Builder
 
         private static IJqlClauseBuilder CreateClauseBuilder(JqlQueryBuilder parent, IClause copy)
         {
-            var jqlClauseBuilder = ComponentAccessor.getComponent(typeof(JqlClauseBuilderFactory)).newJqlClauseBuilder(parent);
+
+            var jqlClauseBuilder = Container.Kernel.TryGet<IJqlClauseBuilderFactory>().NewJqlClauseBuilder(parent);
             if (copy != null)
             {
-                jqlClauseBuilder.addClause(copy);
+                jqlClauseBuilder.AddClause(copy);
             }
             return jqlClauseBuilder;
         }
@@ -188,7 +191,7 @@ namespace QuoteFlow.Core.Jql.Builder
             JqlOrderByBuilder builder = new JqlOrderByBuilder(parent);
             if (copy != null)
             {
-                builder.Sorts = copy;
+                builder.SetSorts(copy);
             }
             return builder;
         }

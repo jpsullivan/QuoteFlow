@@ -303,13 +303,13 @@ namespace QuoteFlow.Core.Tests.Jql.Parser
                 mockParser.Setup(x => x.IsValidFieldName(It.IsAny<string>())).Returns(true);
 
                 var support = new JqlStringSupport(mockParser.Object);
-                var builder = JqlQueryBuilder.NewBuilder().Where().AddCondition("qwerty").Eq("").Or().AssigneeUser("dylan");
+                var builder = JqlQueryBuilder.NewBuilder().Where().AddCondition("qwerty").Eq("").Or().Description("foo");
 
                 IQuery query = new Query(builder.BuildClause(), "ignore = me");
 
-                assertEquals("qwerty = \"\" OR assignee = \"dylan\"", support.generateJqlString(query));
+                Assert.Equal("qwerty = \"\" OR description = \"foo\"", support.GenerateJqlString(query));
 
-                verify(mockParser);
+                mockParser.Verify();
             }
         }
     }

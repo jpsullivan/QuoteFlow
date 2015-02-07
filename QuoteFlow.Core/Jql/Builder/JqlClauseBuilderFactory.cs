@@ -1,12 +1,12 @@
-﻿using QuoteFlow.Core.Jql.Util;
+﻿using QuoteFlow.Api.Jql.Util;
 
 namespace QuoteFlow.Core.Jql.Builder
 {
     public class JqlClauseBuilderFactory : IJqlClauseBuilderFactory
     {
-        public JqlDateSupport DateSupport { get; protected set; }
+        public IJqlDateSupport DateSupport { get; protected set; }
 
-        public JqlClauseBuilderFactory(JqlDateSupport dateSupport)
+        public JqlClauseBuilderFactory(IJqlDateSupport dateSupport)
         {
             DateSupport = dateSupport;
         }

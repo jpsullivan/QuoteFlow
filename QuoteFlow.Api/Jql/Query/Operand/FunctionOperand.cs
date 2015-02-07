@@ -20,10 +20,10 @@ namespace QuoteFlow.Api.Jql.Query.Operand
         {
         }
 
-        public FunctionOperand(string name, IList<string> args)
+        public FunctionOperand(string name, IEnumerable<string> args)
         {
             Name = name;
-            Args = args;
+            Args = args.ToList();
         }
 
         /// <summary>
@@ -44,9 +44,11 @@ namespace QuoteFlow.Api.Jql.Query.Operand
                 {
                     return Name + "()";
                 }
+
                 var sb = new StringBuilder();
                 sb.Append(Name).Append("(");
                 bool first = true;
+                
                 foreach (string arg in Args)
                 {
                     if (!first)
@@ -56,6 +58,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
                     sb.Append(arg);
                     first = false;
                 }
+                
                 sb.Append(")");
                 return sb.ToString();
             }

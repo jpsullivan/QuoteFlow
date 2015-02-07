@@ -273,6 +273,7 @@
     <Compile Include="Jql\Builder\SingleMutableClause.cs" />
     <Compile Include="Jql\Builder\ValueBuilder.cs" />
     <Compile Include="Jql\Function\AbstractDateFunction.cs" />
+    <Compile Include="Jql\Function\LastLoginFunction.cs" />
     <Compile Include="Jql\Function\NowFunction.cs" />
     <Compile Include="Jql\Parser\Antlr\RuntimeRecognitionException.cs" />
     <Compile Include="Jql\ClauseHandler.cs" />

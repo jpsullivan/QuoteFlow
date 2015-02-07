@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
+using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Api.Jql.Util;
 
 namespace QuoteFlow.Core.Jql.Util
@@ -135,7 +137,53 @@ namespace QuoteFlow.Core.Jql.Util
 
         public string GenerateJqlString(IQuery query)
         {
-            throw new NotImplementedException();
+            if (query == null) throw new ArgumentNullException("query");
+
+            StringBuilder builder = new StringBuilder();
+            
+            if (query.WhereClause != null)
+            {
+                ToJqlStringVisitor jqlStringVisitor = new ToJqlStringVisitor(this);
+                builder.Append(jqlStringVisitor.ToJqlString(query.WhereClause));
+            }
+
+            if (query.OrderByClause != null && query.OrderByClause.SearchSorts.Any())
+            {
+                if (builder.Length != 0)
+                {
+                    builder.Append(" ");
+                }
+                
+                builder.Append("ORDER BY ");
+
+                var last = query.OrderByClause.SearchSorts.Last();
+                foreach (var searchSort in query.OrderByClause.SearchSorts)
+                {
+                    builder.Append(EncodeFieldName(searchSort.Field));
+
+                    foreach (var property in searchSort.Property)
+                    {
+                        builder.Append("[")
+                            .Append(EncodeFieldName(property.KeysAsString()))
+                            .Append("].")
+                            .Append(EncodeFieldName(property.ObjectReferencesAsString()));
+                    }
+
+                    if (searchSort.Order != SortOrder.None)
+                    {
+                        builder.Append(" ").Append(searchSort.Order);
+                    }
+
+                    // tack on a comma if this isn't the last iteration
+                    if (!searchSort.Equals(last))
+                    {
+                        builder.Append(", ");
+                    }
+                }
+            }
+
+            return builder.ToString();
+
         }
 
         public string GenerateJqlString(IClause clause)

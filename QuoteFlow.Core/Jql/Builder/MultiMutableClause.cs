@@ -13,7 +13,7 @@ namespace QuoteFlow.Core.Jql.Builder
 	/// </summary>
     public class MultiMutableClause<T> : IMutableClause where T : IMutableClause
     {
-        private List<IMutableClause> Clauses { get; set; }
+        private readonly List<IMutableClause> _clauses = new List<IMutableClause>();
         private BuilderOperator LogicalOperator { get; set; }
 
         public MultiMutableClause(BuilderOperator logicalOperator, params IMutableClause[] clauses) : this(logicalOperator, clauses.ToList())
@@ -38,7 +38,7 @@ namespace QuoteFlow.Core.Jql.Builder
             }
 
 			LogicalOperator = logicalOperator;
-			Clauses.AddRange(clauses);
+			_clauses.AddRange(clauses);
         }
 
         public IMutableClause Combine(BuilderOperator logicalOperator, IMutableClause otherClause)
@@ -50,7 +50,7 @@ namespace QuoteFlow.Core.Jql.Builder
 			        throw new ArgumentNullException("otherClause");
 			    }
 
-				Clauses.Add(otherClause);
+				_clauses.Add(otherClause);
 				return this;
 			}
             
@@ -59,7 +59,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IClause AsClause()
         {
-            var newClauses = Clauses.Select(mc => mc.AsClause()).Where(c => c != null).ToList();
+            var newClauses = _clauses.Select(mc => mc.AsClause()).Where(c => c != null).ToList();
 
             if (!newClauses.Any())
 			{
@@ -86,7 +86,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IMutableClause Copy()
         {
-            var copiedClauses = Clauses.Select(mutableClause => mutableClause.Copy()).ToList();
+            var copiedClauses = _clauses.Select(mutableClause => mutableClause.Copy()).ToList();
             return new MultiMutableClause<T>(LogicalOperator, copiedClauses);
         }
 
@@ -103,7 +103,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
             var that = (MultiMutableClause<T>) obj;
 
-            if (!Clauses.SequenceEqual(that.Clauses))
+            if (!_clauses.SequenceEqual(that._clauses))
             {
                 return false;
             }
@@ -117,7 +117,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
 		public override int GetHashCode()
 		{
-			int result = Clauses.GetHashCode();
+			int result = _clauses.GetHashCode();
 			result = 31 * result + LogicalOperator.GetHashCode();
 			return result;
 		}
@@ -126,7 +126,7 @@ namespace QuoteFlow.Core.Jql.Builder
 		{
 			StringBuilder builder = new StringBuilder("(");
 			bool first = true;
-			foreach (IMutableClause clause in Clauses)
+			foreach (IMutableClause clause in _clauses)
 			{
 				if (!first)
 				{

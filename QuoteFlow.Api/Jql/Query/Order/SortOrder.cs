@@ -4,6 +4,8 @@ namespace QuoteFlow.Api.Jql.Query.Order
 {
     public enum SortOrder
     {
+        None = 0,
+
         /// <summary>
         /// The ascending order.
         /// </summary>

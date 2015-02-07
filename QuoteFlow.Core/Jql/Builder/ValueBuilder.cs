@@ -108,22 +108,26 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder FunctionNow()
         {
-            return Function(NowFunction.FUNCTION_NOW);
+            //return Function(NowFunction.FUNCTION_NOW);
+            throw new NotImplementedException();
         }
 
         public virtual IJqlClauseBuilder FunctionCascadingOption(string parent)
         {
-            return Function(CascadeOptionFunction.FUNCTION_CASCADE_OPTION, parent);
+            //return Function(CascadeOptionFunction.FUNCTION_CASCADE_OPTION, parent);
+            throw new NotImplementedException();
         }
 
         public virtual IJqlClauseBuilder FunctionCascadingOption(string parent, string child)
         {
-            return Function(CascadeOptionFunction.FUNCTION_CASCADE_OPTION, parent, child);
+            //return Function(CascadeOptionFunction.FUNCTION_CASCADE_OPTION, parent, child);
+            throw new NotImplementedException();
         }
 
         public virtual IJqlClauseBuilder FunctionCascadingOptionParentOnly(string parent)
         {
-            return Function(CascadeOptionFunction.FUNCTION_CASCADE_OPTION, parent, CascadeOptionFunction.QUOTED_EMPTY_VALUE);
+            //return Function(CascadeOptionFunction.FUNCTION_CASCADE_OPTION, parent, CascadeOptionFunction.QUOTED_EMPTY_VALUE);
+            throw new NotImplementedException();
         }
 
         public virtual IJqlClauseBuilder FunctionLastLogin()
@@ -133,7 +137,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IJqlClauseBuilder FunctionCurrentLogin()
         {
-            return Function(CurrentLoginFunction.FUNCTION_CURRENT_LOGIN);
+            //return Function(CurrentLoginFunction.FUNCTION_CURRENT_LOGIN);
+            throw new NotImplementedException();
         }
 
         public virtual IJqlClauseBuilder Date(DateTime date)
