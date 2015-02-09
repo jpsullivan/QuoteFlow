@@ -67,7 +67,7 @@ namespace QuoteFlow.Core.Tests.Jql.Query.Clause
             public void TestVisit()
             {
                 var visitor = new ClauseVisitorHelper(this, false);
-                var clause = new NotClause(MockClause).Accept(visitor);
+                var clause = new OrClause(MockClause).Accept(visitor);
                 Assert.True(visitor.VisitCalled);
             }
 
