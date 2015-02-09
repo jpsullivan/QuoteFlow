@@ -35,10 +35,6 @@ namespace QuoteFlow.Core.Jql.Query
         {
             if (oprator != Operator.LIKE && oprator != Operator.NOT_LIKE)
             {
-//                if (log.DebugEnabled)
-//                {
-//                    log.debug(string.Format("Operator '{0}' is not a LIKE operator.", oprator.DisplayString));
-//                }
                 return QueryFactoryResult.CreateFalseResult();
             }
 
@@ -144,17 +140,13 @@ namespace QuoteFlow.Core.Jql.Query
             return queries;
         }
 
-        protected virtual QueryParser GetQueryParser(string fieldName)
+        public virtual QueryParser GetQueryParser(string fieldName)
         {
             return Container.Kernel.TryGet<ILuceneQueryParserFactory>().CreateParserFor(fieldName);
         }
 
         public QueryFactoryResult CreateQueryForMultipleValues(string fieldName, Operator @operator, List<QueryLiteral> rawValues)
         {
-//            if (log.DebugEnabled)
-//            {
-//                log.debug("LIKE clauses do not support multi value operands.");
-//            }
             return QueryFactoryResult.CreateFalseResult();
         }
 

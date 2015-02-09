@@ -148,7 +148,7 @@ namespace QuoteFlow.Api.Jql.Query
 
         public override string ToString()
         {
-            return string.Format("QueryFactoryResult { LuceneQuery={0}, MustNotOccur={1} }", LuceneQuery, MustNotOccur);
+            return string.Format("QueryFactoryResult ( LuceneQuery={0}, MustNotOccur={1} )", LuceneQuery, MustNotOccur);
         }
     }
 }
