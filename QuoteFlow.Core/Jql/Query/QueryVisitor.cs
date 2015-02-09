@@ -116,7 +116,8 @@ namespace QuoteFlow.Core.Jql.Query
             {
                 return new QueryFactoryResult(CreateQuery(notClause));
             }
-            throw new Exception("We have removed all the NOT clauses from the query, this should never occur.");
+
+            throw new InvalidOperationException("We have removed all the NOT clauses from the query, this should never occur.");
         }
 
         public virtual QueryFactoryResult Visit(ITerminalClause terminalClause)
@@ -137,8 +138,7 @@ namespace QuoteFlow.Core.Jql.Query
             {
                 if (clauseQueryFactory.Count == 1)
                 {
-                    clauseQueryFactory.GetEnumerator().MoveNext();
-                    IClauseQueryFactory factory = clauseQueryFactory.GetEnumerator().Current;
+                    IClauseQueryFactory factory = clauseQueryFactory.First();
                     return factory.GetQuery(_queryCreationContext, terminalClause);
                 }
                 var query = new BooleanQuery();

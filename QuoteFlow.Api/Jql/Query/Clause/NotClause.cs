@@ -13,6 +13,10 @@ namespace QuoteFlow.Api.Jql.Query.Clause
 
         private readonly IClause _subClause;
 
+        public NotClause()
+        {
+        }
+
         public NotClause(IClause subClause)
         {
             if (subClause == null) throw new ArgumentNullException("subClause");
