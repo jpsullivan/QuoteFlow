@@ -13,7 +13,7 @@ namespace QuoteFlow.Core.Jql.Query
     /// <see cref="CreateQuery"/> and not use the visitor directly as the query in a 
     /// <see cref="QueryFactoryResult"/> may not be valid.
     /// </summary>
-    internal class QueryVisitor : IClauseVisitor<QueryFactoryResult>
+    public class QueryVisitor : IClauseVisitor<QueryFactoryResult>
     {
         private readonly IQueryRegistry _queryRegistry;
         private readonly IQueryCreationContext _queryCreationContext;
@@ -22,12 +22,12 @@ namespace QuoteFlow.Core.Jql.Query
         private readonly ChangedClauseQueryFactory _changedClauseQueryFactory;
         private bool _rootClause = true;
 
-        internal QueryVisitor(IQueryRegistry queryRegistry, IQueryCreationContext queryCreationContext, WasClauseQueryFactory wasClauseQueryFactory, ChangedClauseQueryFactory changedClauseQueryFactory)
+        public QueryVisitor(IQueryRegistry queryRegistry, IQueryCreationContext queryCreationContext, WasClauseQueryFactory wasClauseQueryFactory, ChangedClauseQueryFactory changedClauseQueryFactory)
             : this(queryRegistry, queryCreationContext, new DeMorgansVisitor(), wasClauseQueryFactory, changedClauseQueryFactory)
         {
         }
 
-        private QueryVisitor(IQueryRegistry queryRegistry, IQueryCreationContext queryCreationContext, DeMorgansVisitor deMorgansVisitor, WasClauseQueryFactory wasClauseQueryFactory, ChangedClauseQueryFactory changedClauseQueryFactory)
+        public QueryVisitor(IQueryRegistry queryRegistry, IQueryCreationContext queryCreationContext, DeMorgansVisitor deMorgansVisitor, WasClauseQueryFactory wasClauseQueryFactory, ChangedClauseQueryFactory changedClauseQueryFactory)
         {
             _queryRegistry = queryRegistry;
             _queryCreationContext = queryCreationContext;

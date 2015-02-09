@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
 using Lucene.Net.Search;
+using QuoteFlow.Api.Jql.Query.Clause;
 
 namespace QuoteFlow.Api.Jql.Query
 {
     /// <summary>
-    /// Represents the result of a call to the <seealso cref="IClauseQueryFactory.GetQuery(QueryCreationContext,ITerminalClause)"/>
-    /// method. The result contains the a Lucene Query and a flag to indicate whether or not the Lucene Query should be negated.
-    /// When the flag is set to true JIRA will automatically negate the Lucene Query when it is run in Lucene.
+    /// Represents the result of a call to the <see cref="IClauseQueryFactory.GetQuery(IQueryCreationContext, ITerminalClause)"/>
+    /// method. The result contains the a Lucene Query and a flag to indicate whether or not 
+    /// the Lucene Query should be negated. When the flag is set to true QuoteFlow will automatically 
+    /// negate the Lucene Query when it is run in Lucene.
     /// </summary>
     public class QueryFactoryResult
     {
         public global::Lucene.Net.Search.Query LuceneQuery { get; set; }
         public bool MustNotOccur { get; set; }
 
-        private static readonly QueryFactoryResult FalseResult = new QueryFactoryResult(new BooleanQuery());
+        private static readonly QueryFactoryResult FalseResult = new QueryFactoryResult(new BooleanQuery(), false);
 
         /// <summary>
         /// Create the result with the passed result and flag.
@@ -110,6 +112,38 @@ namespace QuoteFlow.Api.Jql.Query
         private static void AddToBooleanWithOccur(QueryFactoryResult result, BooleanQuery booleanQuery, Occur occur)
         {
             booleanQuery.Add(result.LuceneQuery, result.MustNotOccur ? Occur.MUST_NOT : occur);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+            if (obj == null || this.GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            QueryFactoryResult that = (QueryFactoryResult) obj;
+
+            if (MustNotOccur != that.MustNotOccur)
+            {
+                return false;
+            }
+            if (!LuceneQuery.Equals(that.LuceneQuery))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            int result = LuceneQuery.GetHashCode();
+            result = 31 * result + (MustNotOccur ? 1 : 0);
+            return result;
         }
 
         public override string ToString()

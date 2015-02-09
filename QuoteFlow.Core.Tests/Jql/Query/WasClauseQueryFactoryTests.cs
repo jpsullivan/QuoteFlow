@@ -22,14 +22,14 @@ namespace QuoteFlow.Core.Tests.Jql.Query
         public Mock<IndexSearcher> MockIndexSearcher { get; set; }
         public Mock<IndexReader> MockIndexReader { get; set; }
 
-        [Fact]
-        public void TestSupportedOperator()
-        {
-            var singleValueOperand = new SingleValueOperand("testOperand");
-            var queryLiteral = new QueryLiteral(singleValueOperand, "testOperand");
-
-            MockChangeHistoryFieldIdResolver
-        }
+//        [Fact]
+//        public void TestSupportedOperator()
+//        {
+//            var singleValueOperand = new SingleValueOperand("testOperand");
+//            var queryLiteral = new QueryLiteral(singleValueOperand, "testOperand");
+//
+//            MockSearchProviderFactory.Setup(x => x.GetSearcher("changes"));
+//        }
     }
 
     public class TestableWasClauseQueryFactory : WasClauseQueryFactory
