@@ -17,10 +17,10 @@ namespace QuoteFlow.Core.Jql.Validator
     /// All free text fields ultimately validate in the same way, using <seealso cref="FreeTextFieldValidator"/>, so we only do one
     /// validation as opposed to going through each field and validating.
     /// </summary>
-    public class AllTextValidator : IClauseValidator
+    public sealed class AllTextValidator : IClauseValidator
     {
-        private readonly CommentValidator @delegate;
-        private readonly SupportedOperatorsValidator supportedOperatorsValidator;
+        private readonly CommentValidator _delegate;
+        private readonly SupportedOperatorsValidator _supportedOperatorsValidator;
 
         public AllTextValidator(CommentValidator @delegate)
         {
@@ -28,26 +28,26 @@ namespace QuoteFlow.Core.Jql.Validator
             {
                 throw new ArgumentNullException("@delegate");
             }
-            this.@delegate = @delegate;
-            supportedOperatorsValidator = SupportedOperatorsValidator;
+            
+            _delegate = @delegate;
+            _supportedOperatorsValidator = SupportedOperatorsValidator;
         }
 
-        public virtual IMessageSet Validate(User searcher, ITerminalClause terminalClause)
+        public AllTextValidator(CommentValidator @delegate, SupportedOperatorsValidator supportedOperatorsValidator)
         {
-            var messageSet = supportedOperatorsValidator.Validate(searcher, terminalClause);
-            if (messageSet.HasAnyErrors())
-            {
-                return messageSet;
-            }
-            return @delegate.Validate(searcher, terminalClause);
+            _delegate = @delegate;
+            _supportedOperatorsValidator = supportedOperatorsValidator;
         }
 
-        internal virtual SupportedOperatorsValidator SupportedOperatorsValidator
+        public IMessageSet Validate(User searcher, ITerminalClause terminalClause)
         {
-            get
-            {
-                return new SupportedOperatorsValidator(new[] { Operator.LIKE });
-            }
+            var messageSet = _supportedOperatorsValidator.Validate(searcher, terminalClause);
+            return messageSet.HasAnyErrors() ? messageSet : _delegate.Validate(searcher, terminalClause);
+        }
+
+        private SupportedOperatorsValidator SupportedOperatorsValidator
+        {
+            get { return new SupportedOperatorsValidator(new[] {Operator.LIKE}); }
         }
     }
 
