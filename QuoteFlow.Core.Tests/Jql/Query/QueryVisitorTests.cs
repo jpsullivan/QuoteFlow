@@ -54,7 +54,7 @@ namespace QuoteFlow.Core.Tests.Jql.Query
             mockClause.Setup(x => x.Accept(queryVisitor)).Returns(new QueryFactoryResult(new BooleanQuery(), true));
 
             var mockClause2 = new Mock<IClause>(MockBehavior.Strict);
-            mockClause2.Setup(x => x.Accept(deMorgansVisitor)).Returns(mockClause.Object);
+            mockClause2.Setup(x => x.Accept(deMorgansVisitor)).Returns(mockClause2.Object);
             mockClause2.Setup(x => x.Accept(queryVisitor)).Returns(QueryFactoryResult.CreateFalseResult);
 
             var andClause = new AndClause(mockClause.Object, mockClause2.Object);
