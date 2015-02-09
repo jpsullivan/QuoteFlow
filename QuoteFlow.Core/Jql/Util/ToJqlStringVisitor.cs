@@ -6,6 +6,7 @@ using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.History;
 using QuoteFlow.Api.Jql.Query.Operand;
+using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Core.Jql.Query.History;
 
 namespace QuoteFlow.Core.Jql.Util
@@ -13,16 +14,16 @@ namespace QuoteFlow.Core.Jql.Util
 	/// <summary>
 	/// Turns a JQL search into a valid JQL string. Will perform escaping as necessary during the process.
 	/// </summary>
-	internal sealed class ToJqlStringVisitor : IOperandVisitor<string>, IClauseVisitor<ToJqlStringVisitor.Result>, IPredicateVisitor<string>
+	public sealed class ToJqlStringVisitor : IOperandVisitor<string>, IClauseVisitor<ToJqlStringVisitor.Result>, IPredicateVisitor<string>
 	{
-        private JqlStringSupport Support { get; set; }
+        private IJqlStringSupport Support { get; set; }
 
-		internal ToJqlStringVisitor(JqlStringSupport support)
+        public ToJqlStringVisitor(IJqlStringSupport support)
 		{
 			Support = support;
 		}
 
-		internal string ToJqlString(IClause clause)
+        public string ToJqlString(IClause clause)
 		{
 			return clause.Accept(this).Jql;
 		}

@@ -117,6 +117,7 @@
     <Compile Include="Jql\Query\QueryFactoryResultTests.cs" />
     <Compile Include="Jql\Query\QueryVisitorTests.cs" />
     <Compile Include="Jql\Query\WasClauseQueryFactoryTests.cs" />
+    <Compile Include="Jql\Util\ToJqlStringVisitorTests.cs" />
     <Compile Include="Jql\Validator\MockJqlOperandResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
