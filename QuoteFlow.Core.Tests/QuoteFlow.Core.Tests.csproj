@@ -121,6 +121,7 @@
     <Compile Include="Jql\Validator\AllTextValidatorTests.cs" />
     <Compile Include="Jql\Validator\MockJqlOperandResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SearchServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

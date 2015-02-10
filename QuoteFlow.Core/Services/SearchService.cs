@@ -32,6 +32,10 @@ namespace QuoteFlow.Core.Services
         public IQueryCache QueryCache { get; protected set; } // request-level cache, not persistent
         public ISearchProvider SearchProvider { get; protected set; }
 
+        protected SearchService()
+        {
+        }
+
         public SearchService(IJqlQueryParser jqlQueryParser, IJqlStringSupport jqlStringSupport, 
             IJqlOperandResolver jqlOperandResolver, ValidatorVisitor.ValidatorVisitorFactory validatorVisitorFactory, 
             ISearchHandlerManager searchHandlerManager, QueryContextVisitor.QueryContextVisitorFactory queryContextVisitorFactory,
