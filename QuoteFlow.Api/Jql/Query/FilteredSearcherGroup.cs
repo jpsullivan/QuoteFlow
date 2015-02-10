@@ -17,7 +17,7 @@ namespace QuoteFlow.Api.Jql.Query
         /// <summary>
         /// 
         /// </summary>
-        private string Title { get; set; }
+        public string Title { get; set; }
 
         public FilteredSearcherGroup() { }
 

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using Ninject;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Search;
-using QuoteFlow.Api.Asset.Search.Handlers;
 using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Infrastructure.Extensions;
@@ -16,8 +14,8 @@ using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.Search.Handlers;
 using QuoteFlow.Core.Asset.Search.Searchers;
+using QuoteFlow.Core.DependencyResolution;
 using Wintellect.PowerCollections;
-using Container = QuoteFlow.Core.DependencyResolution.Container;
 
 namespace QuoteFlow.Core.Asset.Search.Managers
 {
@@ -206,32 +204,32 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         /// <summary>
 		/// The delegate used by the manager to implement its functionality in a thread safe way.
 		/// </summary>
-		internal class Helper
+        private class Helper
 		{
 			/// <summary>
 			/// ClauseName -> ClauseHandler.
 			/// </summary>
-			internal static IDictionary<string, IList<IClauseHandler>> handlerIndex;
+			private static IDictionary<string, IList<IClauseHandler>> handlerIndex;
 
 			/// <summary>
 			/// SearcherId -> AssetSearcher.
 			/// </summary>
-			internal readonly IDictionary<string, IAssetSearcher<ISearchableField>> searcherIndex;
+			private readonly IDictionary<string, IAssetSearcher<ISearchableField>> searcherIndex;
 
 			/// <summary>
 			/// ClauseName -> SearcherRegistration.
 			/// </summary>
-			internal readonly IDictionary<string, IList<SearchHandler.SearcherRegistration>> searcherClauseNameIndex;
+			private readonly IDictionary<string, IList<SearchHandler.SearcherRegistration>> searcherClauseNameIndex;
 
 			/// <summary>
 			/// FieldId -> ClauseName.
 			/// </summary>
-			internal static IDictionary<string, IList<ClauseNames>> fieldIdToClauseNames;
+			private static IDictionary<string, IList<ClauseNames>> fieldIdToClauseNames;
 
 			/// <summary>
-			/// All JIRA's searcher groups.
+			/// All QuoteFlow's searcher groups.
 			/// </summary>
-			internal readonly IList<SearcherGroup> searcherGroup;
+			private readonly IList<SearcherGroup> searcherGroup;
 
 			public Helper(SearchHandlerIndexer indexer)
 			{
@@ -296,13 +294,13 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         /// <summary>
 		/// Class that is used by the manager to build its state from <seealso cref="SearchHandler"/>s.
 		/// </summary>
-        internal class SearchHandlerIndexer
+        private class SearchHandlerIndexer
 		{
-			internal readonly Set<string> systemClauses = new Set<string>();
-			internal readonly IDictionary<string, Set<IClauseHandler>> handlerIndex = new Dictionary<string, Set<IClauseHandler>>();
-			internal readonly IDictionary<string, Set<SearchHandler.SearcherRegistration>> searcherClauseNameIndex = new Dictionary<string, Set<SearchHandler.SearcherRegistration>>();
-			internal readonly IDictionary<string, IAssetSearcher<ISearchableField>> searcherIdIndex = new Dictionary<string, IAssetSearcher<ISearchableField>>();
-			internal readonly IDictionary<SearcherGroupType, Set<IAssetSearcher<ISearchableField>>> groupIndex = new Dictionary<SearcherGroupType, Set<IAssetSearcher<ISearchableField>>>();
+            private readonly Set<string> systemClauses = new Set<string>();
+            private readonly IDictionary<string, Set<IClauseHandler>> handlerIndex = new Dictionary<string, Set<IClauseHandler>>();
+            private readonly IDictionary<string, Set<SearchHandler.SearcherRegistration>> searcherClauseNameIndex = new Dictionary<string, Set<SearchHandler.SearcherRegistration>>();
+            private readonly IDictionary<string, IAssetSearcher<ISearchableField>> searcherIdIndex = new Dictionary<string, IAssetSearcher<ISearchableField>>();
+            private readonly IDictionary<SearcherGroupType, Set<IAssetSearcher<ISearchableField>>> groupIndex = new Dictionary<SearcherGroupType, Set<IAssetSearcher<ISearchableField>>>();
 
 			internal SearchHandlerIndexer()
 			{
@@ -406,7 +404,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 				}
 			}
 
-			internal virtual void IndexSearchableField(ISearchableField field, bool system)
+            protected virtual void IndexSearchableField(ISearchableField field, bool system)
 			{
 				SearchHandler searchHandler = field.CreateAssociatedSearchHandler();
 				if (searchHandler != null)
@@ -436,7 +434,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 				indexClauseHandlers(field, handler.ClauseRegistrations, system);
 			}
 
-			internal virtual void indexClauseHandlers<T>(ISearchableField field, IEnumerable<T> clauseHandlers, bool system) where T : SearchHandler.ClauseRegistration
+            protected virtual void indexClauseHandlers<T>(ISearchableField field, IEnumerable<T> clauseHandlers, bool system) where T : SearchHandler.ClauseRegistration
 			{
 				foreach (var clauseHandler in clauseHandlers)
 				{
@@ -444,7 +442,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 				}
 			}
 
-			internal virtual void indexClauseHandlerByJqlName(IField field, SearchHandler.ClauseRegistration registration, bool system)
+            protected virtual void indexClauseHandlerByJqlName(IField field, SearchHandler.ClauseRegistration registration, bool system)
 			{
 				Set<string> names = GetClauseNames.Invoke(registration.Handler).JqlFieldNames;
 				foreach (string name in names)
@@ -480,7 +478,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 
 			// NOTE: this method must be invoked after {@link IndexClauseHandlerByJqlName } has been called since the method
 			// is responsible for populating the systemClauses set.
-			internal virtual void IndexSearcherByJqlName(ISearchableField field, SearchHandler.SearcherRegistration searcherRegistration, bool system)
+            protected virtual void IndexSearcherByJqlName(ISearchableField field, SearchHandler.SearcherRegistration searcherRegistration, bool system)
 			{
 				foreach (SearchHandler.ClauseRegistration clauseRegistration in searcherRegistration.ClauseHandlers)
 				{
@@ -503,7 +501,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 				}
 			}
 
-			internal virtual void Register(string name, SearchHandler.ClauseRegistration registration)
+            protected virtual void Register(string name, SearchHandler.ClauseRegistration registration)
 			{
                 Set<IClauseHandler> currentHandlers;
 				handlerIndex.TryGetValue(name, out currentHandlers);
@@ -518,7 +516,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 				}
 			}
 
-			internal virtual void Register(string name, SearchHandler.SearcherRegistration searcherRegistration)
+            protected virtual void Register(string name, SearchHandler.SearcherRegistration searcherRegistration)
 			{
 			    Set<SearchHandler.SearcherRegistration> currentSearcherRegistrations;
 				 searcherClauseNameIndex.TryGetValue(name, out currentSearcherRegistrations);
@@ -533,7 +531,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 				}
 			}
 
-			internal virtual void IndexSearcherById(ISearchableField field, IAssetSearcher<ISearchableField> newSearcher, bool system)
+            protected virtual void IndexSearcherById(ISearchableField field, IAssetSearcher<ISearchableField> newSearcher, bool system)
 			{
 				if (newSearcher == null)
 				{

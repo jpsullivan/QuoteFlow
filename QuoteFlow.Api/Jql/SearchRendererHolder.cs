@@ -5,13 +5,13 @@ namespace QuoteFlow.Api.Jql
 {
     public class SearchRendererHolder
     {
-        public bool ValidRenamed { get; set; }
+        public bool IsValid { get; set; }
         public IClause Clause { get; set; }
         public IFieldValuesHolder FieldParams { get; set; }
 
         public SearchRendererHolder(bool valid, IClause clause, IFieldValuesHolder fieldParams)
         {
-            ValidRenamed = valid;
+            IsValid = valid;
             Clause = clause;
             FieldParams = fieldParams;
         }
