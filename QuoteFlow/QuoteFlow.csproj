@@ -529,6 +529,7 @@
     <Content Include="Content\js\app\collections\asset_vars.js" />
     <Content Include="Content\js\app\components\query.js" />
     <Content Include="Content\js\app\components\routes.js" />
+    <Content Include="Content\js\app\components\search\search.js" />
     <Content Include="Content\js\app\components\utilities.js" />
     <Content Include="Content\js\app\extensions\string_extensions.js" />
     <Content Include="Content\js\app\helpers\application_helpers.js" />
