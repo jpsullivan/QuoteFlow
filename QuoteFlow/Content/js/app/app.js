@@ -5,6 +5,7 @@ window.jQuery = $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var BackboneBrace = require('backbone-brace');
+var Marionette = require('backbone.marionette');
 Backbone.$ = $;
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)
@@ -146,5 +147,77 @@ var Application = {
 };
 
 Application.initialize(window.rootUrl, window.applicationPath, window.currentOrganization, window.currentUser);
+
+
+/// MARIONETTE
+
+var App = new Marionette.Application.extend({
+    initialize: function (options) {
+        var parsedOrgId = parseInt(options.currentOrgId, 10);
+        var parsedUserId;
+
+        if (_.isUndefined(options.currentUser) || _.isNull(options.currentUser)) {
+            parsedUserId = 0;
+        } else {
+            parsedUserId = parseInt(options.currentUser.Id, 10);
+        }
+
+        _rootUrl = this.buildRootUrl(options.rootUrl);
+        _applicationPath = options.applicationPath;
+        _currentOrganizationId = parsedOrgId;
+        _currentUserId = parsedUserId;
+
+        // register all the handlebars helpers
+        ApplicationHelpers.initialize();
+    },
+
+    /**
+     * 
+     */
+    mapProperties: function () {
+        Object.defineProperty(QuoteFlow, 'RootUrl', {
+            get: function () {
+                return _rootUrl;
+            },
+            set: function (value) {
+                _rootUrl = value;
+            }
+        });
+
+        Object.defineProperty(QuoteFlow, 'ApplicationPath', {
+            get: function () {
+                return _applicationPath;
+            },
+            set: function (value) {
+                _applicationPath = value;
+            }
+        });
+
+        Object.defineProperty(QuoteFlow, 'CurrentOrganizationId', {
+            get: function () {
+                return _currentOrganizationId;
+            },
+            set: function (value) {
+                _currentOrganizationId = value;
+            }
+        });
+
+        Object.defineProperty(QuoteFlow, 'CurrentUserId', {
+            get: function () {
+                return _currentUserId;
+            },
+            set: function (value) {
+                _currentUserId = value;
+            }
+        });
+    }
+});
+
+App.on("start", function (options) {
+    if (Backbone.history) {
+        Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
+    }
+});
+
 
 module.exports = Application;
