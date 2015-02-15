@@ -30,31 +30,31 @@ var AssetTable = Marionette.Controller.extend({
                 this.latestResults = {
                     table: table,
                     sortOptions: searchResults.getSortBy(),
-                    totalDisplayableIssues: searchResults.getDisplayableTotal(),
+                    totalDisplayableAssets: searchResults.getDisplayableTotal(),
                     startIndex: searchResults.getStartIndex(),
                     pageSize: searchResults.getPageSize(),
                     pageNumber: searchResults.getPageNumber(),
                     numberOfPages: searchResults.getNumberOfPages(),
-                    totalIssues: searchResults.getTotal(),
+                    totalAssets: searchResults.getTotal(),
                     currentSearch: JIRA.Issues.Application.request("issueNav:currentSearchRequest"),
-                    jiraHasIssues: searchResults.getJiraHasIssues(),
-                    hasIssues: searchResults.hasIssues()
+                    quoteflowHasAssets: searchResults.getQuoteflowHasAssets(),
+                    hasIssues: searchResults.hasAssets()
                 };
                 this.show();
-                this.highlightIssue(searchResults.getHighlightedIssue().id, false);
+                this.highlightAsset(searchResults.getHighlightedAsset().id, false);
             },
             "error:search": function () {
                 this.assetTableController.showErrorMessage();
             },
-            "issueUpdated": function (issueId, entity) {
-                this.assetTableController.updateIssue(issueId, entity.table);
+            "assetUpdated": function (assetId, entity) {
+                this.assetTableController.updateAsset(assetId, entity.table);
             },
-            "issueHighlighted": function (issueId) {
-                this.assetTableController.highlightIssue(issueId);
+            "assetHighlighted": function (assetId) {
+                this.assetTableController.highlightAsset(assetId);
             },
-            "selectedIssueChanged": function (selectedIssue, highlightedIssue) {
-                if (!selectedIssue.hasIssue()) {
-                    this.assetTableController.highlightIssue(highlightedIssue.id);
+            "selectedAssetChanged": function (selectedAsset, highlightedAsset) {
+                if (!selectedAsset.hasAsset()) {
+                    this.assetTableController.highlightAsset(highlightedAsset.id);
                 }
             }
 
@@ -76,8 +76,8 @@ var AssetTable = Marionette.Controller.extend({
             "columnsChanged": function (cols) {
                 columnConfig.saveColumns(cols);
             },
-            "highlightAsset": function (issueId) {
-                this.trigger("highlightAsset", issueId);
+            "highlightAsset": function (assetId) {
+                this.trigger("highlightAsset", assetId);
             },
             "sort": function (fieldId) {
                 this.searchService.sort(fieldId);
@@ -126,7 +126,7 @@ var AssetTable = Marionette.Controller.extend({
      * @param {number} assetId The ID of the asset to highlight.
      * @param {boolean} [focus=true] Whether the highlighted asset should have the focus
      */
-    highlightIssue: function (assetId, focus) {
+    highlightAsset: function (assetId, focus) {
         this.assetTableController.highlightAsset(assetId, focus);
     },
 
