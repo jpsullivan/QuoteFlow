@@ -1,4 +1,14 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./QuoteFlow/Content/js/app/app.js":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./QuoteFlow/Content/js/app/init.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+var App = require('./app');
+
+$(document).ready(function () {
+    App.start();
+    console.log('Started');
+});
+},{"./app":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\app.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\app.js":[function(require,module,exports){
 "use strict";
 
 var $;
@@ -9,6 +19,8 @@ var BackboneBrace = require('backbone-brace');
 Backbone.$ = $;
 
 var Marionette = require('backbone.marionette');
+
+var CatalogModule = require('./modules/catalog/module');
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)
 var QuoteFlow = {
@@ -56,37 +68,33 @@ var ApplicationHelpers = require('./helpers/application_helpers');
 
 var _rootUrl, _applicationPath, _currentOrganizationId, _currentUserId;
 
-var Application = {
+var Application = Marionette.Application.extend({
 
     /**
      * 
      */
-    initialize: function(rootUrl, applicationPath, currentOrgId, currentUser) {
-        this.mapProperties();
-
-        var parsedOrgId = parseInt(currentOrgId, 10);
+    initialize: function (options) {
+        var parsedOrgId = parseInt(options.currentOrgId, 10);
         var parsedUserId;
 
-        if (currentUser === undefined || currentUser === null) {
+        if (_.isUndefined(options.currentUser) || _.isNull(options.currentUser)) {
             parsedUserId = 0;
         } else {
-            parsedUserId = parseInt(currentUser.Id, 10);
+            parsedUserId = parseInt(options.currentUser.Id, 10);
         }
 
-        _rootUrl = this.buildRootUrl(rootUrl);
-        _applicationPath = applicationPath;
+        _rootUrl = this.buildRootUrl(options.rootUrl);
+        _applicationPath = options.applicationPath;
         _currentOrganizationId = parsedOrgId;
         _currentUserId = parsedUserId;
 
-        // register all the handlebars helpers
-        ApplicationHelpers.initialize();
-        this.initRouter();
+        this.mapProperties();
     },
 
     /**
      * 
      */
-    buildRootUrl: function(context) {
+    buildRootUrl: function (context) {
         if (context === "/") {
             return context;
         } else {
@@ -101,58 +109,66 @@ var Application = {
     /**
      * 
      */
-    mapProperties: function() {
+    mapProperties: function () {
         Object.defineProperty(QuoteFlow, 'RootUrl', {
-            get: function() {
+            get: function () {
                 return _rootUrl;
             },
-            set: function(value) {
+            set: function (value) {
                 _rootUrl = value;
             }
         });
 
         Object.defineProperty(QuoteFlow, 'ApplicationPath', {
-            get: function() {
+            get: function () {
                 return _applicationPath;
             },
-            set: function(value) {
+            set: function (value) {
                 _applicationPath = value;
             }
         });
 
         Object.defineProperty(QuoteFlow, 'CurrentOrganizationId', {
-            get: function() {
+            get: function () {
                 return _currentOrganizationId;
             },
-            set: function(value) {
+            set: function (value) {
                 _currentOrganizationId = value;
             }
         });
 
         Object.defineProperty(QuoteFlow, 'CurrentUserId', {
-            get: function() {
+            get: function () {
                 return _currentUserId;
             },
-            set: function(value) {
+            set: function (value) {
                 _currentUserId = value;
             }
         });
-    },
+    }
+});
 
-    /**
-     * News up a fresh router.
-     */
-    initRouter: function() {
-        QuoteFlow.Router = new Router();
+var qfApp = new Application({
+    rootUrl: window.rootUrl,
+    applicationPath: window.applicationPath,
+    currentOrganization: window.currentOrganization,
+    currentUser: window.currentUser
+});
+
+qfApp.on("start", function (options) {
+    if (Backbone.history) {
         Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
     }
-};
 
-Application.initialize(window.rootUrl, window.applicationPath, window.currentOrganization, window.currentUser);
+    // register all the handlebars helpers
+    ApplicationHelpers.initialize();
+});
 
-module.exports = Application;
+qfApp.module("catalog", CatalogModule);
 
-},{"./helpers/application_helpers":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\helpers\\application_helpers.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\router.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","jquery.browser":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery.browser\\dist\\jquery.browser.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js":[function(require,module,exports){
+module.exports = qfApp;
+
+},{"./helpers/application_helpers":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\helpers\\application_helpers.js","./modules/catalog/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\module.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\router.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","jquery.browser":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery.browser\\dist\\jquery.browser.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -2287,7 +2303,85 @@ var AssetQueryModule = Brace.Evented.extend({
 });
 
 module.exports = AssetQueryModule;
-},{"./basic_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\basic_query.js","./jql_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\jql_query.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\pages\\asset.js":[function(require,module,exports){
+},{"./basic_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\basic_query.js","./jql_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\jql_query.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+/**
+ * Contains callbacks for the catalog module router.
+ */
+var CatalogController = Marionette.Controller.extend({
+
+    create: function () {
+        debugger;
+        AJS.$(document).ready(function () {
+            AJS.$('#catalog_expiration_date').datePicker({ 'overrideBrowserDefault': true });
+        });
+    },
+
+    show: function() {
+        debugger;
+    },
+
+    showAssets: function() {
+        debugger;
+    },
+
+    showAssetsInteractive: function() {
+        debugger;
+    }
+});
+
+module.exports = CatalogController;
+
+
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\module.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+var CatalogController = require('./controller');
+var CatalogRouter = require('./router');
+
+/**
+ * 
+ */
+var CatalogModule = Marionette.Module.extend({
+
+    onStart: function (options) {
+        return this.startMediator();
+    },
+
+    startMediator: function() {
+        this.controller = new CatalogController();
+
+        return new CatalogRouter({ controller: this.controller });
+    }
+});
+
+module.exports = CatalogModule;
+},{"./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\router.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\router.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+var CatalogController = require('./controller');
+
+/**
+ * 
+ */
+var CatalogRouter = new Marionette.AppRouter({
+    appRoutes: {
+        "catalog/new": "create",
+        "catalog/:catalogId/:catalogName": "show",
+        "catalog/:catalogId/:catalogName/assets": "showAssets",
+        ":catalogId/:catalogName/assets/iv": "showAssetsInteractive"
+    }
+});
+
+module.exports = CatalogRouter;
+
+},{"./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\pages\\asset.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -2435,8 +2529,8 @@ var CatalogPage = require('./pages/catalog');
 
 var Router = Backbone.Router.extend({
     routes: {
-        "asset/*subroute": "asset",
-        "catalog/*subroute": "catalog"
+        "asset/*subroute": "asset"
+        //"catalog/*subroute": "catalog"
     },
 
     asset: function() {
@@ -2446,10 +2540,6 @@ var Router = Backbone.Router.extend({
     },
 
     catalog: function(subroute) {
-//        this.renderPage(function() {
-//            return new CatalogPage();
-//        });
-
         return new CatalogPage.Router("catalog", { createTrailingSlashRoutes: false });
     },
 
@@ -43371,4 +43461,4 @@ module.exports = function parseuri(str) {
 
 },{}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js":[function(require,module,exports){
 arguments[4]["C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\node_modules\\underscore\\underscore.js"][0].apply(exports,arguments)
-},{}]},{},["./QuoteFlow/Content/js/app/app.js"]);
+},{}]},{},["./QuoteFlow/Content/js/app/init.js"]);

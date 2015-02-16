@@ -23,8 +23,8 @@ var notify        = require("gulp-notify");
 var cache = {};
 var pkgCache = {};
 
-var entryPoint = '../../QuoteFlow/Content/js/app/app.js';
-var watchifyEntryPoint = './QuoteFlow/Content/js/app/app.js';
+var entryPoint = '../../QuoteFlow/Content/js/app/init.js';
+var watchifyEntryPoint = './QuoteFlow/Content/js/app/init.js';
 
 gulp.task('browserify', function() {
   var isProduction = gutil.env.type === 'production';

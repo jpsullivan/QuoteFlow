@@ -546,6 +546,7 @@
     <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\components\jqui-widget_sidebar.js" />
     <Content Include="Content\js\app\helpers\underscore_helpers.js" />
+    <Content Include="Content\js\app\init.js" />
     <Content Include="Content\js\app\models\asset\criteria.js" />
     <Content Include="Content\js\app\models\asset\details.js" />
     <Content Include="Content\js\app\models\asset\navigator.js" />
@@ -555,6 +556,9 @@
     <Content Include="Content\js\app\modules\asset\basic_query.js" />
     <Content Include="Content\js\app\modules\asset\query.js" />
     <Content Include="Content\js\app\modules\asset\jql_query.js" />
+    <Content Include="Content\js\app\modules\catalog\controller.js" />
+    <Content Include="Content\js\app\modules\catalog\module.js" />
+    <Content Include="Content\js\app\modules\catalog\router.js" />
     <Content Include="Content\js\app\pages\asset.js" />
     <Content Include="Content\js\app\pages\catalog.js" />
     <Content Include="Content\js\app\router.js" />
@@ -581,6 +585,7 @@
     <Content Include="Content\js\app\view.js" />
     <Content Include="Content\js\lib\ajs-keyboard-shortcuts.js" />
     <Content Include="Content\js\lib\aui\aui-all.js" />
+    <Content Include="Content\js\lib\aui\aui-datepicker.js" />
     <Content Include="Content\js\lib\aui\aui-dependencies.js" />
     <Content Include="Content\js\lib\aui\aui-experimental.js" />
     <Content Include="Content\js\lib\aui\aui-ie.js" />

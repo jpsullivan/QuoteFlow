@@ -10,8 +10,8 @@ var CatalogPage = require('./pages/catalog');
 
 var Router = Backbone.Router.extend({
     routes: {
-        "asset/*subroute": "asset",
-        "catalog/*subroute": "catalog"
+        "asset/*subroute": "asset"
+        //"catalog/*subroute": "catalog"
     },
 
     asset: function() {
@@ -21,10 +21,6 @@ var Router = Backbone.Router.extend({
     },
 
     catalog: function(subroute) {
-//        this.renderPage(function() {
-//            return new CatalogPage();
-//        });
-
         return new CatalogPage.Router("catalog", { createTrailingSlashRoutes: false });
     },
 

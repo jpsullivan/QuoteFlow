@@ -9,6 +9,8 @@ Backbone.$ = $;
 
 var Marionette = require('backbone.marionette');
 
+var CatalogModule = require('./modules/catalog/module');
+
 // QuoteFlow Namespace (hold-over from non CommonJS method)
 var QuoteFlow = {
     Backbone: {},
@@ -55,37 +57,33 @@ var ApplicationHelpers = require('./helpers/application_helpers');
 
 var _rootUrl, _applicationPath, _currentOrganizationId, _currentUserId;
 
-var Application = {
+var Application = Marionette.Application.extend({
 
     /**
      * 
      */
-    initialize: function(rootUrl, applicationPath, currentOrgId, currentUser) {
-        this.mapProperties();
-
-        var parsedOrgId = parseInt(currentOrgId, 10);
+    initialize: function (options) {
+        var parsedOrgId = parseInt(options.currentOrgId, 10);
         var parsedUserId;
 
-        if (currentUser === undefined || currentUser === null) {
+        if (_.isUndefined(options.currentUser) || _.isNull(options.currentUser)) {
             parsedUserId = 0;
         } else {
-            parsedUserId = parseInt(currentUser.Id, 10);
+            parsedUserId = parseInt(options.currentUser.Id, 10);
         }
 
-        _rootUrl = this.buildRootUrl(rootUrl);
-        _applicationPath = applicationPath;
+        _rootUrl = this.buildRootUrl(options.rootUrl);
+        _applicationPath = options.applicationPath;
         _currentOrganizationId = parsedOrgId;
         _currentUserId = parsedUserId;
 
-        // register all the handlebars helpers
-        ApplicationHelpers.initialize();
-        this.initRouter();
+        this.mapProperties();
     },
 
     /**
      * 
      */
-    buildRootUrl: function(context) {
+    buildRootUrl: function (context) {
         if (context === "/") {
             return context;
         } else {
@@ -100,53 +98,61 @@ var Application = {
     /**
      * 
      */
-    mapProperties: function() {
+    mapProperties: function () {
         Object.defineProperty(QuoteFlow, 'RootUrl', {
-            get: function() {
+            get: function () {
                 return _rootUrl;
             },
-            set: function(value) {
+            set: function (value) {
                 _rootUrl = value;
             }
         });
 
         Object.defineProperty(QuoteFlow, 'ApplicationPath', {
-            get: function() {
+            get: function () {
                 return _applicationPath;
             },
-            set: function(value) {
+            set: function (value) {
                 _applicationPath = value;
             }
         });
 
         Object.defineProperty(QuoteFlow, 'CurrentOrganizationId', {
-            get: function() {
+            get: function () {
                 return _currentOrganizationId;
             },
-            set: function(value) {
+            set: function (value) {
                 _currentOrganizationId = value;
             }
         });
 
         Object.defineProperty(QuoteFlow, 'CurrentUserId', {
-            get: function() {
+            get: function () {
                 return _currentUserId;
             },
-            set: function(value) {
+            set: function (value) {
                 _currentUserId = value;
             }
         });
-    },
+    }
+});
 
-    /**
-     * News up a fresh router.
-     */
-    initRouter: function() {
-        QuoteFlow.Router = new Router();
+var qfApp = new Application({
+    rootUrl: window.rootUrl,
+    applicationPath: window.applicationPath,
+    currentOrganization: window.currentOrganization,
+    currentUser: window.currentUser
+});
+
+qfApp.on("start", function (options) {
+    if (Backbone.history) {
         Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
     }
-};
 
-Application.initialize(window.rootUrl, window.applicationPath, window.currentOrganization, window.currentUser);
+    // register all the handlebars helpers
+    ApplicationHelpers.initialize();
+});
 
-module.exports = Application;
+qfApp.module("catalog", CatalogModule);
+
+module.exports = qfApp;
