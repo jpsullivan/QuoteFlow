@@ -52,6 +52,37 @@ var AssetNavigator = BaseView.extend({
         this.assetList = new AssetList();
         this.assetDetails = new AssetDetails();
 
+        /**
+         * Read all the initial data in the DOM
+         *
+         * If the ColumnConfigState has been sent from the server we want to take the HTML from the table
+         * and pop it onto its table property.
+         *
+         * This prevents us from having to populate the HTML twice in the dom. Once in the HTML and another time in the
+         * JSON. It also prevents us needing to ensure there are no XSS vulnerabilities in the JSON HTML string.
+         */
+        var initialAssetTableState = this.$el.data("asset-table-model-state");
+        if (initialAssetTableState && !initialAssetTableState.table) {
+            var wrapper = AJS.$("<div></div>").append(this.$el.children().clone());
+            initialAssetTableState.assetTable.table = wrapper.html();
+        }
+
+        var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
+        var selectedIssue = this.$el.data("selected-asset");
+
+        // jQuery.parseJSON gracefully returns null given an empty string.
+        // Would be even nicer if the json was placed in a data- attribute, which jQuery will automatically parse with .data().
+        var initialSearcherCollectionState = jQuery.parseJSON(jQuery("#criteriaJson").text());
+        var initialSessionSearchState = this.$el.data("session-search-state");
+        var systemFilters = jQuery.parseJSON(jQuery("#systemFiltersJson").text());
+
+        JIRA.Issues.Application.start({
+            showReturnToSearchOnError: function () {
+                return JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey() !== "split-view";
+            },
+            useLog: AJS.Meta.get("dev-mode") === true
+        });
+
         this.initializeAssetListSidebar();
         this.adjustHeight();
     },

@@ -150,100 +150,6 @@ var Application = {
 
 Application.initialize(window.rootUrl, window.applicationPath, window.currentOrganization, window.currentUser);
 
-
-/// MARIONETTE
-
-var App = Marionette.Application.extend({
-    initialize: function (options) {
-        var parsedOrgId = parseInt(options.currentOrgId, 10);
-        var parsedUserId;
-
-        if (_.isUndefined(options.currentUser) || _.isNull(options.currentUser)) {
-            parsedUserId = 0;
-        } else {
-            parsedUserId = parseInt(options.currentUser.Id, 10);
-        }
-
-        _rootUrl = this.buildRootUrl(options.rootUrl);
-        _applicationPath = options.applicationPath;
-        _currentOrganizationId = parsedOrgId;
-        _currentUserId = parsedUserId;
-
-        // register all the handlebars helpers
-        ApplicationHelpers.initialize();
-    },
-
-    /**
-     * 
-     */
-    buildRootUrl: function (context) {
-        if (context === "/") {
-            return context;
-        } else {
-            if (context.charAt(context.length - 1) === "/") {
-                return context;
-            } else {
-                return context + "/";
-            }
-        }
-    },
-
-    /**
-     * 
-     */
-    mapProperties: function () {
-        Object.defineProperty(QuoteFlow, 'RootUrl', {
-            get: function () {
-                return _rootUrl;
-            },
-            set: function (value) {
-                _rootUrl = value;
-            }
-        });
-
-        Object.defineProperty(QuoteFlow, 'ApplicationPath', {
-            get: function () {
-                return _applicationPath;
-            },
-            set: function (value) {
-                _applicationPath = value;
-            }
-        });
-
-        Object.defineProperty(QuoteFlow, 'CurrentOrganizationId', {
-            get: function () {
-                return _currentOrganizationId;
-            },
-            set: function (value) {
-                _currentOrganizationId = value;
-            }
-        });
-
-        Object.defineProperty(QuoteFlow, 'CurrentUserId', {
-            get: function () {
-                return _currentUserId;
-            },
-            set: function (value) {
-                _currentUserId = value;
-            }
-        });
-    }
-});
-
-var qfApp = new App({
-    rootUrl: window.rootUrl,
-    applicationPath: window.applicationPath,
-    currentOrganization: window.currentOrganization,
-    currentUser: window.currentUser
-});
-
-qfApp.on("start", function (options) {
-    if (Backbone.history) {
-        Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
-    }
-});
-
-
 module.exports = Application;
 
 },{"./helpers/application_helpers":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\helpers\\application_helpers.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\router.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","jquery.browser":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery.browser\\dist\\jquery.browser.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js":[function(require,module,exports){
@@ -2616,6 +2522,37 @@ var AssetNavigator = BaseView.extend({
         this.toolbar = new Toolbar();
         this.assetList = new AssetList();
         this.assetDetails = new AssetDetails();
+
+        /**
+         * Read all the initial data in the DOM
+         *
+         * If the ColumnConfigState has been sent from the server we want to take the HTML from the table
+         * and pop it onto its table property.
+         *
+         * This prevents us from having to populate the HTML twice in the dom. Once in the HTML and another time in the
+         * JSON. It also prevents us needing to ensure there are no XSS vulnerabilities in the JSON HTML string.
+         */
+        var initialAssetTableState = this.$el.data("asset-table-model-state");
+        if (initialAssetTableState && !initialAssetTableState.table) {
+            var wrapper = AJS.$("<div></div>").append(this.$el.children().clone());
+            initialAssetTableState.assetTable.table = wrapper.html();
+        }
+
+        var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
+        var selectedIssue = this.$el.data("selected-asset");
+
+        // jQuery.parseJSON gracefully returns null given an empty string.
+        // Would be even nicer if the json was placed in a data- attribute, which jQuery will automatically parse with .data().
+        var initialSearcherCollectionState = jQuery.parseJSON(jQuery("#criteriaJson").text());
+        var initialSessionSearchState = this.$el.data("session-search-state");
+        var systemFilters = jQuery.parseJSON(jQuery("#systemFiltersJson").text());
+
+        JIRA.Issues.Application.start({
+            showReturnToSearchOnError: function () {
+                return JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey() !== "split-view";
+            },
+            useLog: AJS.Meta.get("dev-mode") === true
+        });
 
         this.initializeAssetListSidebar();
         this.adjustHeight();
