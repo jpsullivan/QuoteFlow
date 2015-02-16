@@ -5,8 +5,9 @@ window.jQuery = $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var BackboneBrace = require('backbone-brace');
-var Marionette = require('backbone.marionette');
 Backbone.$ = $;
+
+var Marionette = require('backbone.marionette');
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)
 var QuoteFlow = {
@@ -151,7 +152,7 @@ Application.initialize(window.rootUrl, window.applicationPath, window.currentOrg
 
 /// MARIONETTE
 
-var App = new Marionette.Application.extend({
+var App = Marionette.Application.extend({
     initialize: function (options) {
         var parsedOrgId = parseInt(options.currentOrgId, 10);
         var parsedUserId;
@@ -169,6 +170,21 @@ var App = new Marionette.Application.extend({
 
         // register all the handlebars helpers
         ApplicationHelpers.initialize();
+    },
+
+    /**
+     * 
+     */
+    buildRootUrl: function (context) {
+        if (context === "/") {
+            return context;
+        } else {
+            if (context.charAt(context.length - 1) === "/") {
+                return context;
+            } else {
+                return context + "/";
+            }
+        }
     },
 
     /**
@@ -213,7 +229,14 @@ var App = new Marionette.Application.extend({
     }
 });
 
-App.on("start", function (options) {
+var qfApp = new App({
+    rootUrl: window.rootUrl,
+    applicationPath: window.applicationPath,
+    currentOrganization: window.currentOrganization,
+    currentUser: window.currentUser
+});
+
+qfApp.on("start", function (options) {
     if (Backbone.history) {
         Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
     }
