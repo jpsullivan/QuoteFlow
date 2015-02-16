@@ -61,9 +61,9 @@ var AjsKeyboardShortcuts = function () {
     KeyboardShortcut.prototype._addShortcutTitle = function (selector) {
         var elem = jQuery(selector);
         var title = elem.attr("title") || "";
-        var typeStr = AJS.I18n.getText("keyboard.shortcuts.type");
-        var thenStr = AJS.I18n.getText("keyboard.shortcuts.then");
-        var orStr = AJS.I18n.getText("keyboard.shortcuts.or");
+        var typeStr = "keyboard.shortcuts.type";
+        var thenStr = "keyboard.shortcuts.then";
+        var orStr = "keyboard.shortcuts.or";
         var shortcuts = jQuery.map(this.shortcuts, function (shortcut) {
             return " '" + shortcut.split("").join("' " + thenStr + " '") + "'";
         });

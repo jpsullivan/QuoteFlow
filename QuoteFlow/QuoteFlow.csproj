@@ -579,6 +579,7 @@
     <Content Include="Content\js\app\ui\common\panel-table.js" />
     <Content Include="Content\js\app\util\url-serializer.js" />
     <Content Include="Content\js\app\view.js" />
+    <Content Include="Content\js\lib\ajs-keyboard-shortcuts.js" />
     <Content Include="Content\js\lib\aui\aui-all.js" />
     <Content Include="Content\js\lib\aui\aui-dependencies.js" />
     <Content Include="Content\js\lib\aui\aui-experimental.js" />
