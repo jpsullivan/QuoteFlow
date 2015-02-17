@@ -1,24 +1,21 @@
 ﻿"use strict";
 
-var $ = require('jquery');
 var _ = require('underscore');
-var moment = require('moment');
-var Backbone = require('backbone');
-Backbone.$ = $;
 
-var BaseView = require('../../view');
+var Brace = require('backbone-brace');
+var Marionette = require('backbone.marionette');
 
-var AssetVarCollection = require('../../collections/asset_vars');
-var AssetVarModel = require('../../models/asset_var');
+var AssetVarCollection = require('../../../collections/asset_vars');
+var AssetVarModel = require('../../../models/asset_var');
 
 var ImportAssetVarRow = require('./import_asset_var_row');
-var PanelTable = require('../common/panel-table');
-var SelectAssetVarModal = require('../catalog/select_asset_var_modal');
+var PanelTable = require('../../../ui/common/panel-table');
+var SelectAssetVarModal = require('./select_asset_var_modal');
 
 /**
  *
  */
-var ImportSetOptionalFields = BaseView.extend({
+var ImportSetOptionalFields = Marionette.ItemView.extend({
     el: '.aui-page-panel-content',
 
     options: {
@@ -41,12 +38,10 @@ var ImportSetOptionalFields = BaseView.extend({
 
         _.bindAll(this, 'addAssetVarRow');
 
-        this.rows = new Backbone.Collection().reset(options.rawRows);
+        this.rows = new Brace.Collection().reset(options.rawRows);
 
         this.assetVarFieldsList = this.$('table#asset_var_fields tbody');
         this.assetVarSelectionModalContainer = this.$('#asset_var_selection_container');
-
-        this.renderSubviews(); // manually call since this view technically isn't ever rendered
 
         AJS.$(".tooltip").tooltip();
         AJS.$('select').auiSelect2();
@@ -78,15 +73,11 @@ var ImportSetOptionalFields = BaseView.extend({
     },
 
     /**
-     * Determines if a random sample of the CSV rows
-     * passes the value type check. This is of course
-     * a dirty check that doesn't guarantee 100% exact
-     * results, but assuming that the input data isn't 
-     * total garbage, should yield correct estimations.
+     * Determines if a random sample of the CSV rows passes the value type check. 
+     * This is of course a dirty check that doesn't guarantee 100% exact results, 
+     * but assuming that the input data isn't total garbage, should yield correct estimations.
      */
-    validateHeaderSelection: function(index, valueType) {
-
-    },
+    validateHeaderSelection: function(index, valueType) {},
 
     /**
      * Gathers a random collection of data from the selected

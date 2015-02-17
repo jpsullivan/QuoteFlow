@@ -140,7 +140,7 @@ var Application = Marionette.Application.extend({
 var qfApp = new Application({
     rootUrl: window.rootUrl,
     applicationPath: window.applicationPath,
-    currentOrganization: window.currentOrganization,
+    currentOrgId: window.currentOrganization,
     currentUser: window.currentUser
 });
 

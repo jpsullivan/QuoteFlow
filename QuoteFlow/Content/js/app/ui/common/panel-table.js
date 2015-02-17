@@ -1,19 +1,23 @@
 ﻿"use strict";
 
-var $ = require('jquery');
 var _ = require('underscore');
-var Backbone = require('backbone');
-Backbone.$ = $;
-
-var BaseView = require('../../view');
+var Marionette = require('backbone.marionette');
 
 /**
  *
  */
-var PanelTable = BaseView.extend({
+var PanelTable = Marionette.ItemView.extend({
     className: "panel",
 
-    templateName: 'common/panel-table',
+    template: JST['common/panel-table'],
+
+    templateHelpers: function () {
+        return {
+            leftHeader: this.options.leftHeader,
+            rightHeader: this.options.rightHeader,
+            bodyRows: this.bodyRows
+        };
+    },
 
     options: {
         leftHeader: "",
@@ -23,14 +27,6 @@ var PanelTable = BaseView.extend({
     },
 
     events: {},
-
-    presenter: function() {
-        return _.extend(this.defaultPresenter(), {
-            leftHeader: this.options.leftHeader,
-            rightHeader: this.options.rightHeader,
-            bodyRows: this.bodyRows
-        });
-    },
 
     initialize: function(options) {
         this.bodyRows = this.buildTableRows();

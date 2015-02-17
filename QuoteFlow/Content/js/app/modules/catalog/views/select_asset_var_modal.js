@@ -6,10 +6,10 @@ var moment = require('moment');
 var Backbone = require('backbone');
 Backbone.$ = $;
 
-var BaseView = require('../../view');
+var BaseView = require('../../../view');
 
-var AssetVarCollection = require('../../collections/asset_vars');
-var AssetVarModel = require('../../models/asset_var');
+var AssetVarCollection = require('../../../collections/asset_vars');
+var AssetVarModel = require('../../../models/asset_var');
 
 /**
  *

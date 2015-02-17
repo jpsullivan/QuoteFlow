@@ -151,7 +151,7 @@ var Application = Marionette.Application.extend({
 var qfApp = new Application({
     rootUrl: window.rootUrl,
     applicationPath: window.applicationPath,
-    currentOrganization: window.currentOrganization,
+    currentOrgId: window.currentOrganization,
     currentUser: window.currentUser
 });
 
@@ -2306,8 +2306,11 @@ module.exports = AssetQueryModule;
 },{"./basic_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\basic_query.js","./jql_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\jql_query.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js":[function(require,module,exports){
 "use strict";
 
-var AsyncFileUploadManager = require('../../../lib/async-file-upload');
 var Marionette = require('backbone.marionette');
+
+var AsyncFileUploadManager = require('../../../lib/async-file-upload');
+var CatalogImportSetFields = require('./views/import_set_fields');
+var CatalogImportSetOptionalFields = require('./views/import_set_optional_fields');
 
 /**
  * Contains callbacks for the catalog module router.
@@ -2321,10 +2324,18 @@ var CatalogController = Marionette.Controller.extend({
     },
 
     importCatalog: function() {
-        AsyncFileUploadManager.init(
-                window.asyncActionUrl,
-                'uploadForm',
-                window.asyncJqueryFallback);
+        AsyncFileUploadManager.init(window.asyncActionUrl, 'uploadForm', window.asyncJqueryFallback);
+    },
+
+    verify: function () {
+        var view = new CatalogImportSetFields({ rawRows: window.rawRows });
+    },
+
+    verifySecondary: function () {
+        var view = new CatalogImportSetOptionalFields({
+            headers: window.headers,
+            rawRows: window.rawRows
+        });
     },
 
     show: function() {
@@ -2343,7 +2354,7 @@ var CatalogController = Marionette.Controller.extend({
 module.exports = CatalogController;
 
 
-},{"../../../lib/async-file-upload":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\async-file-upload.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\module.js":[function(require,module,exports){
+},{"../../../lib/async-file-upload":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\async-file-upload.js","./views/import_set_fields":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_set_fields.js","./views/import_set_optional_fields":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_set_optional_fields.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\module.js":[function(require,module,exports){
 "use strict";
 
 var Marionette = require('backbone.marionette');
@@ -2383,6 +2394,7 @@ var CatalogRouter = Marionette.AppRouter.extend({
         "catalog/new": "create",
         "catalog/import": "importCatalog",
         "catalog/verify": "verify",
+        "catalog/verifyother": "verifySecondary",
         "catalog/:catalogId/:catalogName": "show",
         "catalog/:catalogId/:catalogName/assets": "showAssets",
         ":catalogId/:catalogName/assets/iv": "showAssetsInteractive"
@@ -2391,7 +2403,514 @@ var CatalogRouter = Marionette.AppRouter.extend({
 
 module.exports = CatalogRouter;
 
-},{"./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\pages\\asset.js":[function(require,module,exports){
+},{"./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_asset_var_row.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+var BaseView = require('../../../view');
+
+/**
+ *
+ */
+var ImportAssetVarRow = BaseView.extend({
+    tagName: 'tr',
+
+    templateName: 'catalog/import-asset-var-row',
+
+    options: {
+        headers: null,
+        rawRows: null,
+        assetVar: null
+    },
+
+    events: {},
+
+    presenter: function() {
+        return _.extend(this.defaultPresenter(), {
+            assetVar: this.options.assetVar.toJSON(),
+            catalogHeaders: this.options.headers
+        });
+    },
+
+    postRenderTemplate: function() {
+        _.defer(function() {
+            AJS.$('select').auiSelect2();
+        });
+    },
+
+    changeHeader: function(e) {
+        var el = $(e.currentTarget);
+        var index = el.prop('selectedIndex');
+
+        if (index === 0) return;
+
+        var valueType = el.parent('.field-group').data('value-type');
+
+        this.validateHeaderSelection(index, valueType);
+    },
+
+    /**
+     * Determines if a random sample of the CSV rows
+     * passes the value type check. This is of course
+     * a dirty check that doesn't guarantee 100% exact
+     * results, but assuming that the input data isn't 
+     * total garbage, should yield correct estimations.
+     */
+    validateHeaderSelection: function(index, valueType) {
+
+    },
+
+    /**
+     * Gathers a random collection of data from the selected
+     * header group and displays it in a table.
+     */
+    showPreview: function(e) {
+        var el = $(e.currentTarget);
+        var fieldGroup = el.parent();
+
+        var valueType = fieldGroup.data('value-type');
+        var index = $('select', fieldGroup).prop('selectedIndex');
+        var panelKey = $('.aui-lozenge', fieldGroup).html();
+
+        if (index === 0) {
+            //            // show an inline popup
+            //            AJS.InlineDialog(AJS.$("select", fieldGroup), "myDialog",
+            //                function(content, trigger, showPopup) {
+            //                    content.css({ "padding": "20px" }).html('<p>Please select a field header.</p>');
+            //                    showPopup();
+            //                    return false;
+            //                }
+            //            );
+            return false;
+        }
+
+        index = index - 1; // -1 to compensate for the default select opt
+
+        var panelView = new QuoteFlow.UI.Common.PanelTable({
+            leftHeader: "Asset Key",
+            rightHeader: "Sample Values",
+            rowKey: panelKey,
+            rowData: this.getSampleRowData(index)
+        });
+
+        $('.sample-data-container', fieldGroup).html(panelView.render().el);
+    },
+
+    /**
+     * 
+     */
+    getSampleRowData: function(index) {
+        return _.sample(this.rows.pluck(index), 3);
+    },
+
+    /**
+     * Removes the asset var row from the table. Disposes the view.
+     */
+    removeRow: function() {
+        this.remove();
+    }
+});
+
+module.exports = ImportAssetVarRow;
+},{"../../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_set_fields.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Brace = require('backbone-brace');
+var Marionette = require('backbone.marionette');
+
+var PanelTable = require('../../../ui/common/panel-table');
+
+/**
+ * 
+ */
+var CatalogImportSetFields = Marionette.ItemView.extend({
+    el: '.aui-page-panel-content',
+
+    options: {
+        rawRows: null
+    },
+
+    events: {
+        "change .field-group select": "changeHeader",
+        "click .tooltip": "showPreview"
+    },
+
+    initialize: function(options) {
+        this.rows = new Brace.Collection();
+        this.rows.reset(options.rawRows);
+
+        AJS.$(".tooltip").tooltip();
+        AJS.$('select').auiSelect2();
+    },
+
+    changeHeader: function(e) {
+        var el = $(e.currentTarget);
+        var index = el.prop('selectedIndex');
+
+        if (index === 0) return;
+
+        var valueType = el.parent('.field-group').data('value-type');
+
+        this.validateHeaderSelection(index, valueType);
+    },
+
+    /**
+     * Determines if a random sample of the CSV rows passes the value type check. 
+     * This is of course a dirty check that doesn't guarantee 100% exact results, 
+     * but assuming that the input data isn't total garbage, should yield correct estimations.
+     */
+    validateHeaderSelection: function(index, valueType) {
+
+    },
+
+    /**
+     * Gathers a random collection of data from the selected
+     * header group and displays it in a table.
+     */
+    showPreview: function(e) {
+        var el = $(e.currentTarget);
+        var fieldGroup = el.parent();
+
+        var valueType = fieldGroup.data('value-type');
+        var index = $('select', fieldGroup).prop('selectedIndex');
+        var panelKey = $('.aui-lozenge', fieldGroup).html();
+
+        if (index === 0) {
+//            // show an inline popup
+//            AJS.InlineDialog(AJS.$("select", fieldGroup), "myDialog",
+//                function(content, trigger, showPopup) {
+//                    content.css({ "padding": "20px" }).html('<p>Please select a field header.</p>');
+//                    showPopup();
+//                    return false;
+//                }
+//            );
+            return false;
+        }
+
+        index = index - 1; // -1 to compensate for the default select opt
+
+        var panelView = new PanelTable({
+            leftHeader: "Asset Key",
+            rightHeader: "Sample Values",
+            rowKey: panelKey,
+            rowData: this.getSampleRowData(index)
+        });
+
+        $('.sample-data-container', fieldGroup).html(panelView.render().el);
+    },
+
+    /**
+     * 
+     */
+    getSampleRowData: function(index) {
+        return _.sample(this.rows.pluck(index), 3);
+    }
+});
+
+module.exports = CatalogImportSetFields;
+},{"../../../ui/common/panel-table":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\common\\panel-table.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_set_optional_fields.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+
+var Brace = require('backbone-brace');
+var Marionette = require('backbone.marionette');
+
+var AssetVarCollection = require('../../../collections/asset_vars');
+var AssetVarModel = require('../../../models/asset_var');
+
+var ImportAssetVarRow = require('./import_asset_var_row');
+var PanelTable = require('../../../ui/common/panel-table');
+var SelectAssetVarModal = require('./select_asset_var_modal');
+
+/**
+ *
+ */
+var ImportSetOptionalFields = Marionette.ItemView.extend({
+    el: '.aui-page-panel-content',
+
+    options: {
+        headers: null,
+        rawRows: null
+    },
+
+    events: {
+        "click #new_asset_var_field": "showAssetVarFieldSelectionModal",
+        "change .field-group select": "changeHeader",
+        "click .tooltip": "showPreview"
+    },
+
+    presenter: function() {
+        return _.extend(this.defaultPresenter(), {});
+    },
+
+    initialize: function(options) {
+        this.options = options || {};
+
+        _.bindAll(this, 'addAssetVarRow');
+
+        this.rows = new Brace.Collection().reset(options.rawRows);
+
+        this.assetVarFieldsList = this.$('table#asset_var_fields tbody');
+        this.assetVarSelectionModalContainer = this.$('#asset_var_selection_container');
+
+        AJS.$(".tooltip").tooltip();
+        AJS.$('select').auiSelect2();
+    },
+
+    getAssetVarSelectionModalView: function() {
+        // todo: dispose the existing modal object if exists
+        return new SelectAssetVarModal({
+            okFunc: this.addAssetVarRow
+        });
+    },
+
+    showAssetVarFieldSelectionModal: function() {
+        // forcefull render the select asset var modal to reset form fields
+        this.assetVarSelectionModal = this.getAssetVarSelectionModalView();
+        this.$('#asset_var_selection_container').html(this.assetVarSelectionModal.render().el);
+        this.assetVarSelectionModal.showModal();
+    },
+
+    changeHeader: function(e) {
+        var el = $(e.currentTarget);
+        var index = el.prop('selectedIndex');
+
+        if (index === 0) return;
+
+        var valueType = el.parent('.field-group').data('value-type');
+
+        this.validateHeaderSelection(index, valueType);
+    },
+
+    /**
+     * Determines if a random sample of the CSV rows passes the value type check. 
+     * This is of course a dirty check that doesn't guarantee 100% exact results, 
+     * but assuming that the input data isn't total garbage, should yield correct estimations.
+     */
+    validateHeaderSelection: function(index, valueType) {},
+
+    /**
+     * Gathers a random collection of data from the selected
+     * header group and displays it in a table.
+     */
+    showPreview: function(e) {
+        var el = $(e.currentTarget);
+        var fieldGroup = el.parent();
+
+        var valueType = fieldGroup.data('value-type');
+        var index = $('select', fieldGroup).prop('selectedIndex');
+        var panelKey = $('.aui-lozenge', fieldGroup).html();
+
+        if (index === 0) {
+            //            // show an inline popup
+            //            AJS.InlineDialog(AJS.$("select", fieldGroup), "myDialog",
+            //                function(content, trigger, showPopup) {
+            //                    content.css({ "padding": "20px" }).html('<p>Please select a field header.</p>');
+            //                    showPopup();
+            //                    return false;
+            //                }
+            //            );
+            return false;
+        }
+
+        index = index - 1; // -1 to compensate for the default select opt
+
+        var panelView = new PanelTable({
+            leftHeader: "Asset Key",
+            rightHeader: "Sample Values",
+            rowKey: panelKey,
+            rowData: this.getSampleRowData(index)
+        });
+
+        $('.sample-data-container', fieldGroup).html(panelView.render().el);
+    },
+
+    /**
+     * 
+     */
+    getSampleRowData: function(index) {
+        return _.sample(this.rows.pluck(index), 3);
+    },
+
+    /**
+     * Adds an asset var row based on the select asset var modal result.
+     */
+    addAssetVarRow: function(assetVar) {
+        if (assetVar === null) {
+            // todo: throw some kind of validation failure
+        }
+
+        var view = new ImportAssetVarRow({
+            headers: this.options.headers,
+            assetVar: assetVar
+        });
+
+        this.assetVarFieldsList.append(view.render().el);
+    }
+});
+
+module.exports = ImportSetOptionalFields;
+},{"../../../collections/asset_vars":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset_vars.js","../../../models/asset_var":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var.js","../../../ui/common/panel-table":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\common\\panel-table.js","./import_asset_var_row":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_asset_var_row.js","./select_asset_var_modal":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\select_asset_var_modal.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\select_asset_var_modal.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var moment = require('moment');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+var BaseView = require('../../../view');
+
+var AssetVarCollection = require('../../../collections/asset_vars');
+var AssetVarModel = require('../../../models/asset_var');
+
+/**
+ *
+ */
+var SelectAssetVarModal = BaseView.extend({
+    templateName: "catalog/select-asset-var-modal",
+
+    options: {
+        okFunc: null
+    },
+
+    events: {},
+
+    presenter: function() {
+        return _.extend(this.defaultPresenter(), {
+            assetVars: this.assetVars.toJSON()
+        });
+    },
+
+    initialize: function(options) {
+        // so we can use options throughout each function
+        this.options = options || {};
+
+        // required sinced AJS overrides 'this'
+        _.bindAll(this, 'submitModal', 'closeModal', 'newAssetVarKeypressHandler', 'disableAssetVarsDropdown', 'createAssetVar', 'getNewAssetVarName', 'getSelectedExistingAssetVar');
+
+        this.assetVars = this.fetchAssetVars();
+    },
+
+    postRenderTemplate: function() {
+        var self = this;
+
+        _.defer(function() {
+            self.modalAJS = AJS.dialog2("#asset_var_selection_modal");
+            self.assetVarsDropdown = AJS.$('#select_asset_var').auiSelect2();
+
+            // handle event bindings here since AJS apparently overrides them...
+            AJS.$('#new_asset_var').on('keyup', self.newAssetVarKeypressHandler);
+            AJS.$('#dialog-close-button').on('click', self.closeModal);
+            AJS.$('#dialog-create').on('click', self.submitModal);
+        });
+    },
+
+    fetchAssetVars: function() {
+        var assetVars = new AssetVarCollection();
+        assetVars.fetch({
+            data: $.param({ id: QuoteFlow.CurrentOrganizationId }),
+            async: false
+        });
+
+        return assetVars;
+    },
+
+    showModal: function() {
+        var self = this;
+        _.defer(function() {
+            self.modalAJS.show();
+        });
+    },
+
+    closeModal: function() {
+        AJS.dialog2("#asset_var_selection_modal").hide();
+        this.remove();
+        AJS.dialog2("#asset_var_selection_modal").remove();
+    },
+
+    submitModal: function(e) {
+        var el = $(e.currentTarget);
+        el.attr('aria-disabled', "true");
+
+        var assetVar;
+        if (this.assetVarsDropdown.prop('disabled')) {
+            // user opted to create a new assetvar
+            this.createAssetVar(this.getNewAssetVarName());
+            this.assetVars = this.fetchAssetVars(); // re-fetch collection to get the id
+            assetVar = this.assetVars.at(this.assetVars.length - 1);
+        } else {
+            // the user has selected an existing assetvar
+            var assetVarId = this.getSelectedExistingAssetVar();
+            assetVar = this.assetVars.findWhere({ Id: parseInt(assetVarId, 10) });
+        }
+
+        this.options.okFunc(assetVar);
+
+        this.closeModal();
+    },
+
+    newAssetVarKeypressHandler: function(e) {
+        var el = $(e.currentTarget);
+
+        if (el.val() !== "") {
+            this.disableAssetVarsDropdown();
+        } else {
+            this.enableAssetVarsDropdown();
+        }
+    },
+
+    disableAssetVarsDropdown: function() {
+        this.assetVarsDropdown.select2("enable", false);
+    },
+
+    enableAssetVarsDropdown: function() {
+        this.assetVarsDropdown.select2("enable", true);
+    },
+
+    createAssetVar: function(assetVarName) {
+        if (assetVarName === "") {
+            // todo: return failed validation for empty string
+        }
+
+        // does this assetvar exist yet?
+        var existing = this.assetVars.findWhere({ Name: assetVarName });
+        if (existing != undefined) {
+            // todo: return failed validation because assetvar already exists
+        }
+
+        var assetVar = new AssetVarModel({
+            Name: assetVarName,
+            Description: null,
+            ValueType: "String",
+            OrganizationId: QuoteFlow.CurrentOrganizationId,
+            Enabled: true,
+            CreatedUtc: moment().format(),
+            CreatedBy: QuoteFlow.CurrentUserId
+        });
+
+        return this.assetVars.create(assetVar, { wait: true });
+    },
+
+    getNewAssetVarName: function() {
+        return $('#new_asset_var').val();
+    },
+
+    getSelectedExistingAssetVar: function() {
+        return this.assetVarsDropdown.val();
+    }
+});
+
+module.exports = SelectAssetVarModal;
+
+},{"../../../collections/asset_vars":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset_vars.js","../../../models/asset_var":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var.js","../../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","moment":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\moment\\moment.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\pages\\asset.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -2714,7 +3233,7 @@ var AssetVarValueModel = require('../../models/asset_var_value');
 // UI Components
 var BaseView = require('../../view');
 var AssetVarEditRow = require('./edit/asset_var_edit_row');
-var SelectAssetVarModal = require('../catalog/select_asset_var_modal');
+var SelectAssetVarModal = require('../../modules/catalog/views/select_asset_var_modal');
 
 
 /**
@@ -2804,7 +3323,7 @@ var EditAsset = BaseView.extend({
 });
 
 module.exports = EditAsset;
-},{"../../models/asset_var_value":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var_value.js","../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","../catalog/select_asset_var_modal":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\catalog\\select_asset_var_modal.js","./edit/asset_var_edit_row":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\edit\\asset_var_edit_row.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\edit\\asset_var_edit_row.js":[function(require,module,exports){
+},{"../../models/asset_var_value":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var_value.js","../../modules/catalog/views/select_asset_var_modal":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\select_asset_var_modal.js","../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","./edit/asset_var_edit_row":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\edit\\asset_var_edit_row.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\edit\\asset_var_edit_row.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -3620,160 +4139,7 @@ var ShowAsset = BaseView.extend({
 });
 
 module.exports = ShowAsset;
-},{"../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\catalog\\select_asset_var_modal.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var _ = require('underscore');
-var moment = require('moment');
-var Backbone = require('backbone');
-Backbone.$ = $;
-
-var BaseView = require('../../view');
-
-var AssetVarCollection = require('../../collections/asset_vars');
-var AssetVarModel = require('../../models/asset_var');
-
-/**
- *
- */
-var SelectAssetVarModal = BaseView.extend({
-    templateName: "catalog/select-asset-var-modal",
-
-    options: {
-        okFunc: null
-    },
-
-    events: {},
-
-    presenter: function() {
-        return _.extend(this.defaultPresenter(), {
-            assetVars: this.assetVars.toJSON()
-        });
-    },
-
-    initialize: function(options) {
-        // so we can use options throughout each function
-        this.options = options || {};
-
-        // required sinced AJS overrides 'this'
-        _.bindAll(this, 'submitModal', 'closeModal', 'newAssetVarKeypressHandler', 'disableAssetVarsDropdown', 'createAssetVar', 'getNewAssetVarName', 'getSelectedExistingAssetVar');
-
-        this.assetVars = this.fetchAssetVars();
-    },
-
-    postRenderTemplate: function() {
-        var self = this;
-
-        _.defer(function() {
-            self.modalAJS = AJS.dialog2("#asset_var_selection_modal");
-            self.assetVarsDropdown = AJS.$('#select_asset_var').auiSelect2();
-
-            // handle event bindings here since AJS apparently overrides them...
-            AJS.$('#new_asset_var').on('keyup', self.newAssetVarKeypressHandler);
-            AJS.$('#dialog-close-button').on('click', self.closeModal);
-            AJS.$('#dialog-create').on('click', self.submitModal);
-        });
-    },
-
-    fetchAssetVars: function() {
-        var assetVars = new AssetVarCollection();
-        assetVars.fetch({
-            data: $.param({ id: QuoteFlow.CurrentOrganizationId }),
-            async: false
-        });
-
-        return assetVars;
-    },
-
-    showModal: function() {
-        var self = this;
-        _.defer(function() {
-            self.modalAJS.show();
-        });
-    },
-
-    closeModal: function() {
-        AJS.dialog2("#asset_var_selection_modal").hide();
-        this.remove();
-        AJS.dialog2("#asset_var_selection_modal").remove();
-    },
-
-    submitModal: function(e) {
-        var el = $(e.currentTarget);
-        el.attr('aria-disabled', "true");
-
-        var assetVar;
-        if (this.assetVarsDropdown.prop('disabled')) {
-            // user opted to create a new assetvar
-            this.createAssetVar(this.getNewAssetVarName());
-            this.assetVars = this.fetchAssetVars(); // re-fetch collection to get the id
-            assetVar = this.assetVars.at(this.assetVars.length - 1);
-        } else {
-            // the user has selected an existing assetvar
-            var assetVarId = this.getSelectedExistingAssetVar();
-            assetVar = this.assetVars.findWhere({ Id: parseInt(assetVarId, 10) });
-        }
-
-        this.options.okFunc(assetVar);
-
-        this.closeModal();
-    },
-
-    newAssetVarKeypressHandler: function(e) {
-        var el = $(e.currentTarget);
-
-        if (el.val() !== "") {
-            this.disableAssetVarsDropdown();
-        } else {
-            this.enableAssetVarsDropdown();
-        }
-    },
-
-    disableAssetVarsDropdown: function() {
-        this.assetVarsDropdown.select2("enable", false);
-    },
-
-    enableAssetVarsDropdown: function() {
-        this.assetVarsDropdown.select2("enable", true);
-    },
-
-    createAssetVar: function(assetVarName) {
-        if (assetVarName === "") {
-            // todo: return failed validation for empty string
-        }
-
-        // does this assetvar exist yet?
-        var existing = this.assetVars.findWhere({ Name: assetVarName });
-        if (existing != undefined) {
-            // todo: return failed validation because assetvar already exists
-        }
-
-        var assetVar = new AssetVarModel({
-            Name: assetVarName,
-            Description: null,
-            ValueType: "String",
-            OrganizationId: QuoteFlow.CurrentOrganizationId,
-            Enabled: true,
-            CreatedUtc: moment().format(),
-            CreatedBy: QuoteFlow.CurrentUserId
-        });
-
-        return this.assetVars.create(assetVar, { wait: true });
-    },
-
-    getNewAssetVarName: function() {
-        return $('#new_asset_var').val();
-    },
-
-    getSelectedExistingAssetVar: function() {
-        return this.assetVarsDropdown.val();
-    }
-});
-
-module.exports = SelectAssetVarModal;
-
-},{"../../collections/asset_vars":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset_vars.js","../../models/asset_var":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var.js","../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","moment":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\moment\\moment.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\catalog\\show_interactive.js":[function(require,module,exports){
+},{"../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\catalog\\show_interactive.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -3809,7 +4175,59 @@ var ShowAssetsInteractive = BaseView.extend({
 });
 
 module.exports = ShowAssetsInteractive;
-},{"../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","../asset/asset_navigator":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\asset_navigator.js","../asset/show":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\show.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js":[function(require,module,exports){
+},{"../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","../asset/asset_navigator":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\asset_navigator.js","../asset/show":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\show.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\common\\panel-table.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+var Marionette = require('backbone.marionette');
+
+/**
+ *
+ */
+var PanelTable = Marionette.ItemView.extend({
+    className: "panel",
+
+    template: JST['common/panel-table'],
+
+    templateHelpers: function () {
+        return {
+            leftHeader: this.options.leftHeader,
+            rightHeader: this.options.rightHeader,
+            bodyRows: this.bodyRows
+        };
+    },
+
+    options: {
+        leftHeader: "",
+        rightHeader: "",
+        rowKey: "",
+        rowData: []
+    },
+
+    events: {},
+
+    initialize: function(options) {
+        this.bodyRows = this.buildTableRows();
+    },
+
+    /**
+     * Takes the unformatted row data and converts it into
+     * an iterable object that handlebars can easily consume.
+     * @return {object} The formatted body content.
+     */
+    buildTableRows: function() {
+        var rows = [], key = this.options.rowKey;
+
+        _.each(this.options.rowData, function(row) {
+            rows.push({ "rowKey": key, "rowData": row });
+        });
+
+        return rows;
+    }
+});
+
+module.exports = PanelTable;
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js":[function(require,module,exports){
 "use strict";﻿
 
 var $ = require('jquery');

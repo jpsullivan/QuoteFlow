@@ -1,5 +1,16 @@
-﻿QuoteFlow.UI.Catalog.ImportAssetVarRow = QuoteFlow.Views.Base.extend({
+﻿"use strict";
 
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+var BaseView = require('../../../view');
+
+/**
+ *
+ */
+var ImportAssetVarRow = BaseView.extend({
     tagName: 'tr',
 
     templateName: 'catalog/import-asset-var-row',
@@ -12,20 +23,20 @@
 
     events: {},
 
-    presenter: function () {
+    presenter: function() {
         return _.extend(this.defaultPresenter(), {
             assetVar: this.options.assetVar.toJSON(),
             catalogHeaders: this.options.headers
         });
     },
 
-    postRenderTemplate: function () {
+    postRenderTemplate: function() {
         _.defer(function() {
             AJS.$('select').auiSelect2();
         });
     },
 
-    changeHeader: function (e) {
+    changeHeader: function(e) {
         var el = $(e.currentTarget);
         var index = el.prop('selectedIndex');
 
@@ -43,7 +54,7 @@
      * results, but assuming that the input data isn't 
      * total garbage, should yield correct estimations.
      */
-    validateHeaderSelection: function (index, valueType) {
+    validateHeaderSelection: function(index, valueType) {
 
     },
 
@@ -51,7 +62,7 @@
      * Gathers a random collection of data from the selected
      * header group and displays it in a table.
      */
-    showPreview: function (e) {
+    showPreview: function(e) {
         var el = $(e.currentTarget);
         var fieldGroup = el.parent();
 
@@ -86,7 +97,7 @@
     /**
      * 
      */
-    getSampleRowData: function (index) {
+    getSampleRowData: function(index) {
         return _.sample(this.rows.pluck(index), 3);
     },
 
@@ -96,4 +107,6 @@
     removeRow: function() {
         this.remove();
     }
-})
+});
+
+module.exports = ImportAssetVarRow;

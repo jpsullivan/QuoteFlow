@@ -12,6 +12,7 @@ var CatalogRouter = Marionette.AppRouter.extend({
         "catalog/new": "create",
         "catalog/import": "importCatalog",
         "catalog/verify": "verify",
+        "catalog/verifyother": "verifySecondary",
         "catalog/:catalogId/:catalogName": "show",
         "catalog/:catalogId/:catalogName/assets": "showAssets",
         ":catalogId/:catalogName/assets/iv": "showAssetsInteractive"

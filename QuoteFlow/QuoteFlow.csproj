@@ -576,10 +576,10 @@
     <Content Include="Content\js\app\ui\asset\navigator\toolbar.js" />
     <Content Include="Content\js\app\ui\asset\show.js" />
     <Content Include="Content\js\app\ui\catalog\show_interactive.js" />
-    <Content Include="Content\js\app\ui\catalog\import_asset_var_row.js" />
-    <Content Include="Content\js\app\ui\catalog\import_set_fields.js" />
-    <Content Include="Content\js\app\ui\catalog\import_set_optional_fields.js" />
-    <Content Include="Content\js\app\ui\catalog\select_asset_var_modal.js" />
+    <Content Include="Content\js\app\modules\catalog\views\import_asset_var_row.js" />
+    <Content Include="Content\js\app\modules\catalog\views\import_set_fields.js" />
+    <Content Include="Content\js\app\modules\catalog\views\import_set_optional_fields.js" />
+    <Content Include="Content\js\app\modules\catalog\views\select_asset_var_modal.js" />
     <Content Include="Content\js\app\ui\common\panel-table.js" />
     <Content Include="Content\js\app\util\url-serializer.js" />
     <Content Include="Content\js\app\view.js" />

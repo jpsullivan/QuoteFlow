@@ -1,7 +1,10 @@
 ﻿"use strict";
 
-var AsyncFileUploadManager = require('../../../lib/async-file-upload');
 var Marionette = require('backbone.marionette');
+
+var AsyncFileUploadManager = require('../../../lib/async-file-upload');
+var CatalogImportSetFields = require('./views/import_set_fields');
+var CatalogImportSetOptionalFields = require('./views/import_set_optional_fields');
 
 /**
  * Contains callbacks for the catalog module router.
@@ -15,10 +18,18 @@ var CatalogController = Marionette.Controller.extend({
     },
 
     importCatalog: function() {
-        AsyncFileUploadManager.init(
-                window.asyncActionUrl,
-                'uploadForm',
-                window.asyncJqueryFallback);
+        AsyncFileUploadManager.init(window.asyncActionUrl, 'uploadForm', window.asyncJqueryFallback);
+    },
+
+    verify: function () {
+        var view = new CatalogImportSetFields({ rawRows: window.rawRows });
+    },
+
+    verifySecondary: function () {
+        var view = new CatalogImportSetOptionalFields({
+            headers: window.headers,
+            rawRows: window.rawRows
+        });
     },
 
     show: function() {
