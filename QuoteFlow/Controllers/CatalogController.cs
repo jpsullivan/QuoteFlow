@@ -490,7 +490,7 @@ namespace QuoteFlow.Controllers
             string[] rawHeaders = { };
             var rows = new List<string[]>();
 
-            using (Stream uploadFile = await UploadFileService.GetUploadFileAsync(currentUser.Id))
+            using (Stream uploadFile = await UploadFileService.GetUploadFileAsync(currentUser.Id, UploadType.Catalog.GetUploadFolder()))
             {
                 if (uploadFile == null) {
                     return null;

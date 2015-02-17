@@ -724,7 +724,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Global.asax" />
     <EmbeddedResource Include="Migrations\Elmah.SqlServer.sql" />
-    <Content Include="Scripts\async-file-upload.js" />
+    <Content Include="Content\js\lib\async-file-upload.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\less\bootstrap.less" />

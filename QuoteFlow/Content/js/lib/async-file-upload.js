@@ -1,16 +1,23 @@
-﻿var AsyncFileUploadManager = new function () {
-    var _isWebkitBrowser = $.browser.webkit;
+﻿"use strict";
+
+var $ = require('jquery');
+
+/**
+ * 
+ */
+var AsyncFileUploadManager = new function() {
+    var _isWebkitBrowser = 'WebkitAppearance' in document.documentElement.style;
     var _iframeId = '__fileUploadFrame';
     var _pollingInterval = 200;
     var _pingUrl;
     var _failureCount;
     var _isUploadInProgress;
 
-    this.init = function (pingUrl, formId, jQueryUrl) {
+    this.init = function(pingUrl, formId, jQueryUrl) {
         _pingUrl = pingUrl;
 
         // attach the sumbit event to the form
-        $('#' + formId).submit(function () {
+        $('#' + formId).submit(function() {
             submitForm(this);
             return false;
         });
@@ -32,7 +39,7 @@
 
         // count the number of file fields which have selected files
         var totalFile = 0;
-        $('input[type=file]', form).each(function (index, el) { if (el.value) totalFile++; });
+        $('input[type=file]', form).each(function(index, el) { if (el.value) totalFile++; });
 
         form.submit();
 
@@ -45,8 +52,7 @@
 
             if (_isWebkitBrowser) {
                 document.getElementById(_iframeId).contentWindow.start(_pingUrl, setProgressIndicator, onGetProgressError);
-            }
-            else {
+            } else {
                 setTimeout(getProgress, 100);
             }
         }
@@ -76,8 +82,7 @@
         setProgressIndicator(percent, result.FileName);
         if (percent < 100) {
             setTimeout(getProgress, _pollingInterval);
-        }
-        else {
+        } else {
             _isUploadInProgress = false;
         }
     }
@@ -104,7 +109,7 @@
         iframe.setAttribute('id', _iframeId);
         iframe.setAttribute('style', 'display: none; visibility: hidden;');
 
-        $(iframe).load(function () {
+        $(iframe).load(function() {
             var scriptRef = document.createElement('script');
             scriptRef.setAttribute("src", jQueryUrl);
             scriptRef.setAttribute("type", "text/javascript");
@@ -118,4 +123,6 @@
 
         document.body.appendChild(iframe);
     }
-}
+};
+
+module.exports = AsyncFileUploadManager;
