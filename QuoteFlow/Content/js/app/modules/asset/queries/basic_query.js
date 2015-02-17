@@ -6,7 +6,7 @@ var Backbone = require('backbone');
 var Brace = require('backbone-brace');
 Backbone.$ = $;
 
-var SearcherCollection = require('../../collections/asset/searcher');
+var SearcherCollection = require('../../../collections/asset/searcher');
 
 /**
  * Module for basic query mode.

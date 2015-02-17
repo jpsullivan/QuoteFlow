@@ -7,14 +7,11 @@ var CatalogController = require('./controller');
  * 
  */
 var CatalogRouter = Marionette.AppRouter.extend({
-    //controller: new CatalogController(),
     appRoutes: {
         "catalog/new": "create",
         "catalog/import": "importCatalog",
         "catalog/verify": "verify",
         "catalog/verifyother": "verifySecondary",
-        "catalog/:catalogId/:catalogName": "show",
-        "catalog/:catalogId/:catalogName/assets": "showAssets",
         ":catalogId/:catalogName/assets/iv": "showAssetsInteractive"
     }
 });

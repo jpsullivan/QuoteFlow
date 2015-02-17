@@ -9,6 +9,7 @@ Backbone.$ = $;
 
 var Marionette = require('backbone.marionette');
 
+var AssetTableModule = require('./modules/asset/module');
 var CatalogModule = require('./modules/catalog/module');
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)
@@ -153,6 +154,7 @@ qfApp.on("start", function (options) {
     ApplicationHelpers.initialize();
 });
 
+qfApp.module("asset-table", AssetTableModule);
 qfApp.module("catalog", CatalogModule);
 
 module.exports = qfApp;
