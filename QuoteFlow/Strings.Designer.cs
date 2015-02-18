@@ -453,5 +453,23 @@ namespace QuoteFlow {
                 return ResourceManager.GetString("UserNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View All Quotes.
+        /// </summary>
+        internal static string ViewAllQuotes {
+            get {
+                return ResourceManager.GetString("ViewAllQuotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View all the quotes that you created or are a member of..
+        /// </summary>
+        internal static string ViewAllQuotes_Tooltip {
+            get {
+                return ResourceManager.GetString("ViewAllQuotes_Tooltip", resourceCulture);
+            }
+        }
     }
 }
