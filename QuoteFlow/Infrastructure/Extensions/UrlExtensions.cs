@@ -155,6 +155,11 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         #region Quotes
 
+        public static string Quotes(this UrlHelper url)
+        {
+            return url.RouteUrl(RouteNames.QuoteIndex);
+        }
+
         public static string Quote(this UrlHelper url, int id, string quoteName)
         {
             return string.Format("/quote/{0}/{1}", id, quoteName.UrlFriendly());

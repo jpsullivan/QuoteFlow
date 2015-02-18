@@ -1,32 +1,89 @@
-﻿@using QuoteFlow.Api.Models
-@using QuoteFlow.Models
-@{ ViewBag.Title = "QuoteFlow - Quotes"; }
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Api.Models.ViewModels.Quotes.QuotesViewModel
 
-<div class="row">
-    <div class="content-toolbar span12">
-        <div class="clearfix">
-            <a href="/quote/new" class="btn">Create a new quote</a>
+@{
+    ViewBag.Title = "Quotes - QuoteFlow";
+}
+
+<header class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main entity-item">
+            <h1>
+                <span>Quotes</span>
+            </h1>
+            <a class="aui-button" href="@Url.NewQuote()" autocomplete="off" tabindex="0">Create a new quote</a>
         </div>
-        <h4>Contacts <span class="secondary">(1–1 of 1)</span></h4>
     </div>
-</div>
-<div class="row">
-    <div class="content-list span12">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Total Price</th>
-                    <th>Responded</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (Quote quote in Model) {
-                    @Html.Partial("Partials/Quote/ListItem", quote, new ViewDataDictionary { {"quote", quote }})
-                }
-            </tbody>
-        </table>
+</header>
+
+<div class="aui-page-panel content-body fixed-right">
+    <div class="aui-page-panel-inner">
+        <section class="aui-page-panel-content">
+            <table class="aui paged-table quote-list-table" id="list_quotes">
+                <thead>
+                    <tr>
+                        <th id="name">Name</th>
+                        <th id="total_price">Total Price</th>
+                        <th id="status">Status</th>
+                        <th id="responded">Responded</th>
+                        <th id="created">Created</th>
+                        <th id="last_updated">Last Updated</th>
+                        <th id="actions"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Quotes != null)
+                    {
+                        foreach (var quote in Model.Quotes)
+                        {
+                            <tr>
+                                <td headers="name">
+                                    <div title="@quote.Name">
+                                        <a href="@Url.Quote(quote.Id, quote.Name)">@quote.Name</a>
+                                    </div>
+                                </td>
+                                <td headers="total_price">
+                                    <div title="@quote.TotalPrice">
+                                        @quote.TotalPrice.ToString("C")
+                                    </div>
+                                </td>
+                                <td headers="technical_contact">
+                                    <div title="@quote.Status">
+                                        @quote.Status
+                                    </div>
+                                </td>
+                                <td headers="responded">
+                                    <div>
+                                        @if (quote.Responded == null || (bool) !quote.Responded)
+                                        {
+                                            <span class="aui-lozenge aui-lozenge-subtle aui-lozenge-error">Not Responded</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="aui-lozenge aui-lozenge-subtle aui-lozenge-success">Responded</span>
+                                        }
+                                    </div>
+                                </td>
+                                <td headers="created">
+                                    <div title="@quote.CreationDate.ToString("g")">
+                                        @quote.CreationDate.ToString("MM/dd/yy")
+                                    </div>
+                                </td>
+                                <td headers="created">
+                                    <div title="@quote.LastUpdated.ToString("g")">
+                                        @quote.LastUpdated.ToString("MM/dd/yy")
+                                    </div>
+                                </td>
+                                <td headers="actions">
+                                    <a href="#" class="delete-button delete-customer" title="Delete" data-for="@quote.Name">
+                                        <span class="aui-icon aui-icon-small aui-iconfont-remove"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </section>
     </div>
 </div>

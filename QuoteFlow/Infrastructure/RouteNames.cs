@@ -1,6 +1,6 @@
 ﻿namespace QuoteFlow.Infrastructure
 {
-    public static class RouteName
+    public static class RouteNames
     {
         public const string Home = "Home";
         public const string LogOn = "Login";
@@ -16,5 +16,8 @@
 
         public const string Error500 = "Error500";
         public const string Error404 = "Error404";
+
+
+        public const string QuoteIndex = "Quote-Index";
     }
 }

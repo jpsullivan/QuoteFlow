@@ -349,7 +349,7 @@
     <Compile Include="Infrastructure\HttpStatusCodeWithBodyResult.cs" />
     <Compile Include="Infrastructure\IoC\NinjectDependencyResolver.cs" />
     <Compile Include="Infrastructure\Optimization\Bundler.cs" />
-    <Compile Include="Infrastructure\RouteName.cs" />
+    <Compile Include="Infrastructure\RouteNames.cs" />
     <Compile Include="Infrastructure\SafeRedirectResult.cs" />
     <Compile Include="Migrations\M001_CreateUsers.cs" />
     <Compile Include="Migrations\M002_CreateRoles.cs" />
@@ -623,6 +623,12 @@
     <Content Include="Content\less\misc.css">
       <DependentUpon>misc.less</DependentUpon>
     </Content>
+    <Content Include="Content\less\quote-list-table.css">
+      <DependentUpon>quote-list-table.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\quote-list-table.min.css">
+      <DependentUpon>quote-list-table.css</DependentUpon>
+    </Content>
     <Content Include="Content\less\typography.css">
       <DependentUpon>typography.less</DependentUpon>
     </Content>
@@ -769,6 +775,12 @@
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Content Include="Content\views\asset\nav-search\layout-switcher.hbs" />
+    <Content Include="Content\less\quote-list-table.less" />
+    <Content Include="Content\less\static\global.less" />
+    <Content Include="Content\less\static\global-mixins.less" />
+    <Content Include="Content\less\quote-list-table.css.map">
+      <DependentUpon>quote-list-table.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -822,7 +834,6 @@
     <Content Include="Views\Quote\New.cshtml" />
     <Content Include="Views\Shared\Partials\Asset\ListItem.cshtml" />
     <Content Include="Views\Shared\Partials\Contact\ListItem.cshtml" />
-    <Content Include="Views\Shared\Partials\Quote\ListItem.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\New\Step1.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\New\Step2.cshtml" />
     <Content Include="Views\Shared\_QuoteBuilderLayout.cshtml" />

@@ -1,0 +1,24 @@
+﻿@import "static/global.less";
+
+.quote-list-table {
+    #actions {
+        width: 16px;
+    }
+
+    td {
+        white-space: nowrap;
+
+        &[headers=name] > div {
+            .text-overflow();
+            display: inline-block;
+            max-width: 240px;
+            vertical-align: middle;
+        }
+
+        &[headers=responded] > div {
+            max-width: 40px;
+            text-align: center;
+            vertical-align: middle;
+        }
+    }
+}

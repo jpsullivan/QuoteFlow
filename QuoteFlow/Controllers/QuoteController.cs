@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using QuoteFlow.Api.Models.ViewModels.Assets;
 using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
@@ -30,12 +31,12 @@ namespace QuoteFlow.Controllers
 
         #endregion
 
-        [Route("quotes")]
+        [Route("quotes", Name = RouteNames.QuoteIndex)]
         public virtual ActionResult Index()
         {
             var quotes = QuoteService.GetQuotesFromOrganization(CurrentOrganization.Id);
-
-            return View(quotes);
+            var model = new QuotesViewModel(quotes);
+            return View(model);
         }
 
         [Route("quote/new")]

@@ -116,4 +116,11 @@
 .aui-page-header ul.summary-list li.failed a:hover {
   color: #e75543;
 }
+.aui-page-header-main.entity-item h1 {
+  display: inline-block;
+}
+.aui-page-header-main.entity-item h1 + .aui-button {
+  margin-left: 10px;
+  vertical-align: bottom;
+}
 /*# sourceMappingURL=header.css.map */

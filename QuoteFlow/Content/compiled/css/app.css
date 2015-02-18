@@ -892,6 +892,13 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
 .aui-page-header ul.summary-list li.failed a:hover {
   color: #e75543;
 }
+.aui-page-header-main.entity-item h1 {
+  display: inline-block;
+}
+.aui-page-header-main.entity-item h1 + .aui-button {
+  margin-left: 10px;
+  vertical-align: bottom;
+}
 .aui-page-panel-content .summary-modules {
   margin-top: 20px;
 }
@@ -1447,6 +1454,16 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
   font-size: 12px;
   padding: 4px;
   margin: 0 3px;
+}
+h1 {
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 1.25;
+}
+h2 {
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 1.5;
 }
 a.user-hover.user-avatar {
   background-repeat: no-repeat;

@@ -441,6 +441,7 @@
     <Compile Include="Models\ViewModels\PasswordResetViewModel.cs" />
     <Compile Include="Models\ViewModels\Quotes\NewQuoteModel.cs" />
     <Compile Include="Models\ViewModels\Quotes\QuoteShowModel.cs" />
+    <Compile Include="Models\ViewModels\Quotes\QuotesViewModel.cs" />
     <Compile Include="Models\ViewModels\SubHeader.cs" />
     <Compile Include="Models\ViewModels\SubHeaderViewData.cs" />
     <Compile Include="Models\ViewModels\UserProfileModel.cs" />
