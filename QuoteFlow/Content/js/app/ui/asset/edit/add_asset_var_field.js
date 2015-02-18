@@ -7,7 +7,7 @@ Backbone.$ = $;
 
 var BaseView = require('../../../view');
 var AssetVarEditRow = require('../edit/asset_var_edit_row');
-var SelectAssetVarModal = require('../../catalog/select_asset_var_modal');
+var SelectAssetVarModal = require('../../../modules/catalog/views/select_asset_var_modal');
 
 /**
  *

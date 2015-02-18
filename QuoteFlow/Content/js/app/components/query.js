@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 
-var AssetQueryModule = require('../modules/asset/query');
+var AssetQueryModule = require('../modules/asset/queries/query');
 var AssetQueryStateModel = require('../models/asset/query');
 
 var QueryComponent = function () {
@@ -44,7 +44,7 @@ var QueryComponent = function () {
                     if (clauses[clause]) {
                         options.primaryClauses[idx] = {id: clause, name: clauses[clause]};
                     } else {
-                        console.error("JIRA.Components.Query: You have specified clause [" + clause + "]. " +
+                        console.error("QueryComponent: You have specified clause [" + clause + "]. " +
                             "But we do not have the i18n string for it, probably a custom field. Instead use {id:" + clause + ", name: '[NAME_HERE]'}");
                     }
                 }

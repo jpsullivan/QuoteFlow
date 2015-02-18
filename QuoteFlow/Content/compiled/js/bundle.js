@@ -1,4 +1,14 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./QuoteFlow/Content/js/app/app.js":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./QuoteFlow/Content/js/app/init.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+var App = require('./app');
+
+$(document).ready(function () {
+    App.start();
+    console.log('Started');
+});
+},{"./app":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\app.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\app.js":[function(require,module,exports){
 "use strict";
 
 var $;
@@ -6,8 +16,12 @@ window.jQuery = $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var BackboneBrace = require('backbone-brace');
-var Marionette = require('backbone.marionette');
 Backbone.$ = $;
+
+var Marionette = require('backbone.marionette');
+
+var AssetTableModule = require('./modules/asset/module');
+var CatalogModule = require('./modules/catalog/module');
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)
 var QuoteFlow = {
@@ -55,104 +69,11 @@ var ApplicationHelpers = require('./helpers/application_helpers');
 
 var _rootUrl, _applicationPath, _currentOrganizationId, _currentUserId;
 
-var Application = {
+var Application = Marionette.Application.extend({
 
     /**
      * 
      */
-    initialize: function(rootUrl, applicationPath, currentOrgId, currentUser) {
-        this.mapProperties();
-
-        var parsedOrgId = parseInt(currentOrgId, 10);
-        var parsedUserId;
-
-        if (currentUser === undefined || currentUser === null) {
-            parsedUserId = 0;
-        } else {
-            parsedUserId = parseInt(currentUser.Id, 10);
-        }
-
-        _rootUrl = this.buildRootUrl(rootUrl);
-        _applicationPath = applicationPath;
-        _currentOrganizationId = parsedOrgId;
-        _currentUserId = parsedUserId;
-
-        // register all the handlebars helpers
-        ApplicationHelpers.initialize();
-        this.initRouter();
-    },
-
-    /**
-     * 
-     */
-    buildRootUrl: function(context) {
-        if (context === "/") {
-            return context;
-        } else {
-            if (context.charAt(context.length - 1) === "/") {
-                return context;
-            } else {
-                return context + "/";
-            }
-        }
-    },
-
-    /**
-     * 
-     */
-    mapProperties: function() {
-        Object.defineProperty(QuoteFlow, 'RootUrl', {
-            get: function() {
-                return _rootUrl;
-            },
-            set: function(value) {
-                _rootUrl = value;
-            }
-        });
-
-        Object.defineProperty(QuoteFlow, 'ApplicationPath', {
-            get: function() {
-                return _applicationPath;
-            },
-            set: function(value) {
-                _applicationPath = value;
-            }
-        });
-
-        Object.defineProperty(QuoteFlow, 'CurrentOrganizationId', {
-            get: function() {
-                return _currentOrganizationId;
-            },
-            set: function(value) {
-                _currentOrganizationId = value;
-            }
-        });
-
-        Object.defineProperty(QuoteFlow, 'CurrentUserId', {
-            get: function() {
-                return _currentUserId;
-            },
-            set: function(value) {
-                _currentUserId = value;
-            }
-        });
-    },
-
-    /**
-     * News up a fresh router.
-     */
-    initRouter: function() {
-        QuoteFlow.Router = new Router();
-        Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
-    }
-};
-
-Application.initialize(window.rootUrl, window.applicationPath, window.currentOrganization, window.currentUser);
-
-
-/// MARIONETTE
-
-var App = new Marionette.Application.extend({
     initialize: function (options) {
         var parsedOrgId = parseInt(options.currentOrgId, 10);
         var parsedUserId;
@@ -168,8 +89,22 @@ var App = new Marionette.Application.extend({
         _currentOrganizationId = parsedOrgId;
         _currentUserId = parsedUserId;
 
-        // register all the handlebars helpers
-        ApplicationHelpers.initialize();
+        this.mapProperties();
+    },
+
+    /**
+     * 
+     */
+    buildRootUrl: function (context) {
+        if (context === "/") {
+            return context;
+        } else {
+            if (context.charAt(context.length - 1) === "/") {
+                return context;
+            } else {
+                return context + "/";
+            }
+        }
     },
 
     /**
@@ -214,16 +149,28 @@ var App = new Marionette.Application.extend({
     }
 });
 
-App.on("start", function (options) {
+var qfApp = new Application({
+    rootUrl: window.rootUrl,
+    applicationPath: window.applicationPath,
+    currentOrgId: window.currentOrganization,
+    currentUser: window.currentUser
+});
+
+qfApp.on("start", function (options) {
     if (Backbone.history) {
         Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
     }
+
+    // register all the handlebars helpers
+    ApplicationHelpers.initialize();
 });
 
+qfApp.module("asset-table", AssetTableModule);
+qfApp.module("catalog", CatalogModule);
 
-module.exports = Application;
+module.exports = qfApp;
 
-},{"./helpers/application_helpers":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\helpers\\application_helpers.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\router.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","jquery.browser":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery.browser\\dist\\jquery.browser.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js":[function(require,module,exports){
+},{"./helpers/application_helpers":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\helpers\\application_helpers.js","./modules/asset/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\module.js","./modules/catalog/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\module.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\router.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","jquery.browser":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery.browser\\dist\\jquery.browser.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -1072,7 +1019,7 @@ var _ = require('underscore');
 
 var _ = require('underscore');
 
-var AssetQueryModule = require('../modules/asset/query');
+var AssetQueryModule = require('../modules/asset/queries/query');
 var AssetQueryStateModel = require('../models/asset/query');
 
 var QueryComponent = function () {
@@ -1114,7 +1061,7 @@ var QueryComponent = function () {
                     if (clauses[clause]) {
                         options.primaryClauses[idx] = {id: clause, name: clauses[clause]};
                     } else {
-                        console.error("JIRA.Components.Query: You have specified clause [" + clause + "]. " +
+                        console.error("QueryComponent: You have specified clause [" + clause + "]. " +
                             "But we do not have the i18n string for it, probably a custom field. Instead use {id:" + clause + ", name: '[NAME_HERE]'}");
                     }
                 }
@@ -1154,7 +1101,7 @@ var QueryComponent = function () {
 };
 
 module.exports = QueryComponent;
-},{"../models/asset/query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset\\query.js","../modules/asset/query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\query.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\routes.js":[function(require,module,exports){
+},{"../models/asset/query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset\\query.js","../modules/asset/queries/query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\query.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\routes.js":[function(require,module,exports){
 "use strict";
 
 var StringExtensions = require('string-extensions');
@@ -1960,7 +1907,113 @@ var AssetVarValue = Backbone.Model.extend({
 });
 
 module.exports = AssetVarValue;
-},{"backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\basic_query.js":[function(require,module,exports){
+},{"backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\controller.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+/**
+ * Contains callbacks for the asset module router.
+ */
+var AssetController = Marionette.Controller.extend({
+
+    create: function () {
+        AJS.$(document).ready(function () {
+            AJS.$('#catalog_expiration_date').datePicker({ 'overrideBrowserDefault': true });
+        });
+    },
+
+    importCatalog: function () {
+        AsyncFileUploadManager.init(window.asyncActionUrl, 'uploadForm', window.asyncJqueryFallback);
+    },
+
+    verify: function () {
+        var view = new CatalogImportSetFields({ rawRows: window.rawRows });
+    },
+
+    verifySecondary: function () {
+        var view = new CatalogImportSetOptionalFields({
+            headers: window.headers,
+            rawRows: window.rawRows
+        });
+    },
+
+    showAssetsInteractive: function () {
+        debugger;
+    }
+});
+
+module.exports = AssetController;
+
+
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\module.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+var AssetController = require('./controller');
+var AssetRouter = require('./router');
+var LayoutSwitcher = require('./search/layout-switcher');
+var QueryComponent = require('../../components/query');
+var SearchPageModule = require('./search/search-page-module');
+var SearchHeaderModule = require('./search/search-header-module');
+
+/**
+ * 
+ */
+var AssetModule = Marionette.Module.extend({
+
+    onStart: function (options) {
+        var initializedOptions = this.init();
+        return this.startMediator(options);
+    },
+
+    /**
+     * Equivalent of IssueNavInit.js
+     */
+    init: function() {
+        
+    },
+
+    startMediator: function (options) {
+        this.searchPageModule = new SearchPageModule({}, {
+            initialAssetTableState: options.initialAssetTableState
+        });
+        this.searchPageModule.registerViewContainers({
+            assetContainer: $(".asset-container"),
+            searchContainer: $('#.navigator-container')
+        });
+
+        // init modules
+        this.searchHeaderModule = new SearchHeaderModule({ searchPageModule: this.searchPageModule });
+        var queryModule = QueryComponent.create({
+            el: $el.find("form.navigator-search"),
+            searchers: options.initialSearcherCollectionState,
+            preferredSearchMode: "basic",
+            layoutSwitcher: true,
+            autocompleteEnabled: undefined,
+            basicAutoUpdate: true
+        });
+
+//        JIRA.bind(JIRA.Events.ISSUE_TABLE_REORDER, function (e) {
+//            if (!JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+//                e.preventDefault();
+//            }
+//        });
+
+        this.layoutSwitcherView = new LayoutSwitcher({ searchPageModule: this.searchPageModule });
+        this.layoutSwitcherView.setElement($el.find("#layout-switcher-toggle")).render();
+
+        this.controller = new AssetController();
+        return new AssetRouter({
+            controller: this.controller,
+            searchPageModule: this.searchPageModule
+        });
+    }
+});
+
+module.exports = AssetModule;
+},{"../../components/query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\query.js","./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\controller.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\router.js","./search/layout-switcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\layout-switcher.js","./search/search-header-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\search-header-module.js","./search/search-page-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\search-page-module.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\basic_query.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -1969,7 +2022,7 @@ var Backbone = require('backbone');
 var Brace = require('backbone-brace');
 Backbone.$ = $;
 
-var SearcherCollection = require('../../collections/asset/searcher');
+var SearcherCollection = require('../../../collections/asset/searcher');
 
 /**
  * Module for basic query mode.
@@ -2052,7 +2105,7 @@ var AssetBasicQueryModule = Brace.Evented.extend({
 });
 
 module.exports = AssetBasicQueryModule;
-},{"../../collections/asset/searcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\jql_query.js":[function(require,module,exports){
+},{"../../../collections/asset/searcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\jql_query.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -2104,7 +2157,7 @@ var AssetJqlQueryModule = Brace.Evented.extend({
 });
 
 module.exports = AssetJqlQueryModule;
-},{"backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\query.js":[function(require,module,exports){
+},{"backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\query.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -2358,7 +2411,2055 @@ var AssetQueryModule = Brace.Evented.extend({
 });
 
 module.exports = AssetQueryModule;
-},{"./basic_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\basic_query.js","./jql_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\jql_query.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\pages\\asset.js":[function(require,module,exports){
+},{"./basic_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\basic_query.js","./jql_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\jql_query.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\router.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+var Backbone = require('backbone');
+var BackboneQueryParams = require('backbone-query-parameters');
+var Marionette = require('backbone.marionette');
+
+var CatalogController = require('./controller');
+var UrlSerializer = require('../../util/url-serializer');
+
+/**
+ * A mostly-custom router for handling routes that are used within the 
+ * asset table module.
+ */
+var AssetRouter = Marionette.AppRouter.extend({
+    
+    initialize: function (options) {
+        _.extend(this, options);
+        _.bindAll(this, "_restoreSessionSearch", "_route");
+
+        this.route(/^(.*?)([\?]{1}.*)?$/, this._route);
+        this.route(/^(assets\/)?$/, this._restoreSessionSearch);
+
+        // backbone-query-parameters supports clever decoding of values into arrays, but we don't want this.
+        delete Backbone.Router.arrayValueSplit;
+    },
+
+    /**
+     * Overwrite Marionette.AppRouter, now it fires an event each time the URL changes
+     */
+    navigate: function () {
+        this.searchPageModule.removeOpenTipsies();
+        this.trigger("navigate");
+        Marionette.AppRouter.prototype.navigate.apply(this, arguments);
+    },
+
+    /**
+     * Navigate to a new state.
+     *
+     * @param {UrlSerializer.state} state
+     */
+    pushState: function (state) {
+        this._setStatePermalink(state);
+        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false });
+    },
+
+    replaceState: function (state) {
+        this._setStatePermalink(state);
+        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false, replace: true });
+    },
+
+    _restoreSessionSearch: function () {
+        var sessionSearch = this.initialSessionSearchState,
+            url = UrlSerializer.getURLFromState(sessionSearch || this.searchPageModule.getState());
+
+        this.navigate(url, { replace: true, trigger: true });
+    },
+
+    /**
+     * The "catch-all" route that distinguishes search and issue fragments.
+     *
+     * @param {string} path The path component of the URL (relative to the root)
+     * @param {object} query The decoded querystring params
+     * @private
+     */
+    _route: function (path, query) {
+        // Re-encode back to a full fragment, since we do our own parsing in JIRA.Issues.URLSerializer
+        var fragment = this.toFragment(path, query);
+
+        if (JIRA.Issues.ignorePopState) {
+            // Workaround for Chrome bug firing a null popstate event on page load.
+            // Backbone should fix this!
+            // @see http://code.google.com/p/chromium/issues/detail?id=63040
+            // @see also JRADEV-14804
+            return;
+        }
+
+        // Remove ignored parameters (e.g. focusedCommentId).
+        var state = UrlSerializer.getStateFromURL(fragment);
+
+        if (!this._navigateToLoginIfNeeded(state)) {
+            this._navigateUsingState(state);
+        }
+    },
+
+    _navigateToLoginIfNeeded: function (state, history) {
+        if (!this.usePushState(history) && state.selectedIssueKey && !JIRA.Issues.LoginUtils.isLoggedIn()) {
+            var instance = this;
+
+            var requestParams = {};
+            if (state.filter != null) {
+                requestParams.filterId = state.filter;
+            }
+
+            jQuery.ajax({
+                url: AJS.contextPath() + "/rest/issueNav/1/issueNav/anonymousAccess/" + state.selectedIssueKey,
+                headers: { 'X-SITEMESH-OFF': true },
+                data: requestParams,
+                success: function () {
+                    instance._navigateUsingState(state);
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401) {
+                        instance._redirectToLogin(state);
+                    } else {
+                        instance._navigateUsingState(state);
+                    }
+                }
+            });
+
+            return true;
+        }
+
+        return false;
+    },
+
+    _navigateUsingState: function (state) {
+        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+            this._setStatePermalink(state);
+            this.navigate(UrlSerializer.getURLFromState(state), { replace: true, trigger: false });
+            this.searchPageModule.updateFromRouter(state);
+        }
+    },
+
+    _redirectToLogin: function (state) {
+        var url = AJS.contextPath() + "/login.jsp?permissionViolation=true&os_destination=" +
+            encodeURIComponent(UrlSerializer.getURLFromState(state));
+
+        window.location.replace(url);
+    },
+
+    /**
+     * Set the permalink for a given state into AJS.Meta to be rendered by the share plugin
+     */
+    _setStatePermalink: function (state) {
+        var viewIssueState = _.pick(state, "selectedIssueKey");
+        var baseUrl = AJS.Meta.get("jira-base-url");
+        if (!_.isEmpty(viewIssueState)) {
+            AJS.Meta.set("viewissue-permlink",
+                baseUrl + "/" + UrlSerializer.getURLFromState(viewIssueState)
+            );
+        }
+        var issueNavState = _.omit(state, "selectedIssueKey");
+        if (!_.isEmpty(issueNavState)) {
+            AJS.Meta.set("issuenav-permlink",
+                baseUrl + "/" + UrlSerializer.getURLFromState(issueNavState)
+            );
+        }
+    }
+});
+
+module.exports = AssetRouter;
+
+},{"../../util/url-serializer":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js","./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\controller.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-query-parameters":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone-query-parameters\\backbone.queryparams.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\full-screen-controller.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+/**
+ * A view containing the entire search/asset app.
+ * 
+ * Handles switching between the search and asset views.
+ */
+var FullScreenLayoutController = Marionette.Controller.extend({
+
+    /**
+     * Initialise the FullScreenLayout.
+     *
+     * @param {object} options
+     * @param {element} options.searchContainer The element into which the search is to be rendered.
+     */
+    initialize: function (options) {
+        this.searchService = new SearchService({
+            searchModule: options.search,
+            searchResults: options.search.getResults(),
+            columnConfig: options.columnConfig
+        });
+
+        this.$navigatorContent = options.searchContainer.find('.navigator-content');
+        this.issueTable = new IssueTable({
+            searchService: this.searchService,
+            el: this.$navigatorContent,
+            columnConfig: options.columnConfig
+        });
+
+        this.listenTo(this.issueTable, {
+            "highlightIssue": function (issueId) {
+                this.searchService.highlightIssue(issueId);
+            },
+            "render": function () {
+                if (!this.searchService.hasSelectedIssue()) {
+                    this.fullScreenIssue.hide();
+                }
+                this.fullScreenIssue.bindSearchService(this.searchService);
+                this.trigger("render");
+            }
+        });
+
+        this.fullScreenIssue = options.fullScreenIssue;
+
+        this.listenTo(this.fullScreenIssue, {
+            "assetHidden": function () {
+                // This is the second highlight. The first one is inside IssueTable component, but due the
+                // internals of FullScreenIssue, when the first one is fired the IssueTable is not in the DOM
+                // so the scrollIntoView() operation will not work. We need to re-highlight the same issue now
+                // that the IssueTable is present in the DOM to force the scroll behaviour
+                this.issueTable.highlightIssue(this.searchService.getHighlightedIssue());
+            }
+        });
+
+        Application.on("assetEditor:loadError", this.onLoadError, this);
+    },
+
+    onLoadError: function (issue) {
+        if (!this.fullScreenIssue.isVisible()) {
+            this.searchService.unselectIssue();
+            Messages.showErrorMsg(
+                AJS.I18n.getText('viewissue.error.message.cannotopen', issue.issueKey),
+                { closeable: true }
+            );
+        }
+    },
+
+    render: function () {
+        this.issueTable.show();
+    },
+
+    onClose: function () {
+        this.fullScreenIssue.deactivate();
+        this.issueTable.close();
+        this.searchService.close();
+
+        Application.off("issueEditor:loadError", this.onLoadError, this);
+
+        delete this.fullScreenIssue;
+        delete this.issueTable;
+        delete this.searchService;
+    },
+
+    nextIssue: function () {
+        this.searchService.selectNextIssue();
+    },
+
+    prevIssue: function () {
+        this.searchService.selectPreviousIssue();
+    },
+
+    returnToSearch: function () {
+        this.searchService.unselectIssue();
+    },
+
+    handleLeft: function () {
+        // No-op
+    },
+
+    handleRight: function () {
+        // No-op
+    },
+
+    isIssueViewActive: function () {
+        return this.fullScreenIssue.isVisible();
+    }
+});
+
+module.exports = FullScreenLayoutController;
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\layout-switcher.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+/**
+ * The layout switcher control.
+ */
+var LayoutSwitcherView = Marionette.ItemView.extend({
+    
+    template: JST["asset/nav-search/layout-switcher"],
+
+    /**
+     * @param {object} options
+     * @param {JIRA.Issues.SearchPageModule} options.searchPageModule
+     */
+    initialize: function (options) {
+        _.bindAll(this, "_onLayoutSwitchClick");
+
+        this.searchPageModule = options.searchPageModule;
+        this.searchPageModule.on("change:currentLayout", this.render, this);
+    },
+
+    /**
+     * @return {JIRA.Issues.LayoutSwitcherView} <tt>this</tt>
+     */
+    render: function () {
+        this.$el.html(this.template({
+            layouts: this.searchPageModule.getSortedLayouts(),
+            activeLayout: this.searchPageModule.getActiveLayout()
+        }));
+
+        this._addLayoutSwitcherTooltip();
+
+        // We can't use delegate events as the dropdown is appended to the body.
+        this.$el.find(".aui-list-item-link").click(this._onLayoutSwitchClick);
+        JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.$el, JIRA.CONTENT_ADDED_REASON.layoutSwitcherReady]);
+        return this;
+    },
+
+    /**
+     * @returns {JIRA.Issues.LayoutSwitcherView} <tt>this</tt>
+     */
+    enableLayoutSwitcher: function () {
+        this.$el.find("#layout-switcher-button").removeClass("disabled").removeAttr('disabled');
+        return this;
+    },
+
+    /**
+     * @returns {JIRA.Issues.LayoutSwitcherView} <tt>this</tt>
+     */
+    disableLayoutSwitcher: function () {
+        this.$el.find("#layout-switcher-button").addClass("disabled").attr('disabled', '');
+        return this;
+    },
+
+    createHelptipForSwitchingToDetailView: function (weight) {
+        var tip;
+        if (this._shouldShowIntro() && this.$el.is(":visible")) {
+            tip = new AJS.HelpTip({
+                id: "split-view-intro",
+                title: AJS.I18n.getText('issuenav.layoutswitcher.intro.title'),
+                url: AJS.Meta.get('issue-search-help-url'),
+                bodyHtml: AJS.I18n.getText('issuenav.layoutswitcher.intro.desc'),
+                anchor: ".view-selector button",
+                isSequence: true,
+                weight: weight
+            });
+        }
+        return tip;
+    },
+
+    _shouldShowIntro: function () {
+        return this.searchPageModule.search.getResults().hasIssues();
+    },
+
+    /**
+     * Adds a tooltip to the layout switcher button
+     * @private
+     */
+    _addLayoutSwitcherTooltip: function () {
+        function getTooltipMessage() {
+            // If there is no shortcut for this action, just display the regular text. (i.e. without the 'Type X' part)
+            var shortcut = AJS.KeyboardShortcut.getKeyboardShortcutKeys('switch.search.layouts');
+            if (shortcut) {
+                return AJS.I18n.getText("issuenav.layoutswitcher.button.tooltip", AJS.KeyboardShortcut.getKeyboardShortcutKeys('switch.search.layouts'));
+            } else {
+                return AJS.I18n.getText("issuenav.layoutswitcher.button.tooltip.whitout.kb.shortcut");
+            }
+        }
+
+        new JIRA.Issues.Tipsy({
+            el: this.$el.find("#layout-switcher-button"),
+            showCondition: ":not(.active)",
+            tipsy: {
+                title: getTooltipMessage,
+                gravity: 'ne'
+            }
+        });
+    },
+
+    /**
+     * Tell the <tt>SearchPageModule</tt> to change layout.
+     * <p/>
+     * Called when a layout button is clicked.
+     *
+     * @param {object} e The click event.
+     * @param {object} [options] Options used in tests.
+     *
+     * @private
+     */
+    _onLayoutSwitchClick: function (e, options) {
+        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+            // HACK: Hover intent has a strange bug that when we click the layout switcher it triggers a mouseleave event on the filters panel
+            // To get around this, we disable it whilst we are transitioning to new layout.
+            var layoutKey = AJS.$(e.target).closest("[data-layout-key]").data("layout-key");
+            e.preventDefault();
+            this.searchPageModule.changeLayout(layoutKey, options);
+        }
+    }
+})
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\search-header-module.js":[function(require,module,exports){
+"use strict";
+
+var Brace = require('backbone-brace');
+
+/**
+ * Interface to the search header.
+ */
+var SearchHeaderModule = Brace.Evented.extend({
+
+    initialize: function (options) {
+        this._searchPageModule = options.searchPageModule;
+    },
+
+    registerSearch: function (search) {
+        this._search = search;
+    }
+});
+
+module.exports = SearchHeaderModule;
+},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\search-page-module.js":[function(require,module,exports){
+"use strict";
+
+var Brace = require('backbone-brace');
+var Utilities = require('../../../components/utilities');
+
+var FullScreenLayout = require('./full-screen-controller');
+
+/**
+ * 
+ */
+var SearchPageModule = Brace.Model.extend({
+    namedEvents: ["changeFilterProps"],
+
+    properties: [
+        "currentLayout",
+        "layouts",
+        "filter",
+        "jql",
+        "searchId"
+    ],
+
+    defaults: function () {
+        return {
+            filter: null,
+            jql: null
+        };
+    },
+
+    initialize: function (attributes, options) {
+        _.extend(this, options);
+
+        this.registerColumnPicker();
+
+        // This is here instead of in defaults, because we use the defaults
+        // to reset this module's state (filter and jql) but we don't want to
+        // reset the layouts.
+        this.setLayouts({});
+
+        this.registerLayout("list-view", {
+            label: AJS.I18n.getText("issuenav.layoutswitcher.listview"),
+            iconClass: 'icon-view-list',
+            view: FullScreenLayout
+        });
+
+        this.registerLayout("split-view", {
+            label: AJS.I18n.getText("issuenav.layoutswitcher.splitview"),
+            iconClass: 'icon-view-split',
+            view: JIRA.Issues.SplitScreenLayout
+        });
+        this._onFilterChanged();
+        this.on("change:filter", this._onFilterChanged, this);
+
+        JIRA.Issues.Application.on("issueEditor:close", this.returnToSearch, this);
+
+        JIRA.Issues.Application.on("issueEditor:loadComplete", function (model, props) {
+            if (!this.standalone && !props.reason) {
+                this.searchResults.selectIssueById(model.getId(), { reason: "issueLoaded" });
+                this.searchResults.updateIssueById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() })
+
+                // Replace URL if issue updated successfully
+                if (model.getKey()) {
+                    var state = this._getUpdateState({ selectedIssueKey: model.getKey() });
+                    if (this._validateNavigate(state)) {
+                        this.issueNavRouter.replaceState(state);
+                    }
+                }
+            }
+        }, this);
+
+        JIRA.Issues.Application.on("issueEditor:saveSuccess", function (props) {
+            this.searchResults.updateIssueById({ id: props.issueId, action: "inlineEdit" }, { filter: this.getFilter() });
+        }, this);
+
+        Utilities.initializeResizeHooks();
+    },
+
+    registerColumnPicker: function () {
+        this.columnConfig = JIRA.Issues.ColumnPicker.create({ search: this });
+    },
+
+
+    getInactiveLayouts: function () {
+        var layouts = [];
+        _.each(this.getLayouts(), function (layout, key) {
+            if (key !== JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey()) {
+                layouts.push(layout);
+            }
+        }, this);
+        return layouts;
+    },
+
+    getActiveLayout: function () {
+        return this.getLayouts()[JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey()];
+    },
+
+    /**
+     * Change the page layout.
+     * <p/>
+     * No-op if the requested layout is already selected.
+     *
+     * @param {string} key The key of the layout to change to.
+     * @param {object} [options]
+     * @param {boolean} [options.ajax=true] Whether to POST the user's preferred layout to the server.
+     * @param {boolean} [options.render=true] Whether to render the new layout.
+     */
+    changeLayout: function (key, options) {
+        var layout = this.getLayout(key),
+            newLayout,
+            previousLayout = this.getCurrentLayout();
+
+        JIRA.Issues.changingLayout = true;
+
+        // JRADEV-20786 - Scroll to top of page before changing layouts.
+        jQuery("body, html").scrollTop(0);
+
+        options = _.defaults({}, options, {
+            ajax: true,
+            render: true
+        });
+
+        if (layout) {
+            // If the requested layout is already selected, do nothing.
+            if (previousLayout instanceof layout.view) {
+                return;
+            }
+
+            if (previousLayout && previousLayout.close) {
+                previousLayout.close();
+                // now unselect the selected issue. the assumption here is that we are switching to
+                // a mode that does not have an issue selected by default (i.e. list view).
+                this.searchResults.unselectIssue({ replace: true });
+            }
+
+            JIRA.Issues.LayoutPreferenceManager.setPreferredLayoutKey(key, options);
+
+            newLayout = new layout.view({
+                fullScreenIssue: this.fullScreenIssue,
+                assetContainer: this.assetContainer,
+                issueCacheManager: this.issueCacheManager,
+                search: this.search,
+                searchContainer: this.searchContainer,
+                searchHeaderModule: this.searchHeaderModule,
+                columnConfig: this.columnConfig
+            });
+
+            newLayout.on("close", function () {
+                this.searchContainer.find('.navigator-content').addClass("pending");
+            }, this);
+
+            newLayout.on("render", function () {
+                this.searchContainer.find('.navigator-content').removeClass("pending");
+                JIRA.trigger(JIRA.Events.LAYOUT_RENDERED, [key]);
+            }, this);
+
+            options.render && newLayout.render();
+            this.setCurrentLayout(newLayout);
+
+            this.standalone = false;
+        }
+    },
+
+    /**
+     * Create an instance of the user's preferred layout and set it as the current layout.
+     */
+    createLayout: function () {
+        if (!this.getCurrentLayout()) {
+            this.changeLayout(JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey(), { render: false });
+            this.fullScreenIssue.deactivate();
+        }
+    },
+
+    _onFilterChanged: function () {
+        var previousFilter = this.previous('filter');
+        if (previousFilter) {
+            previousFilter.off('change', this.triggerChangeFilterProps, this);
+        }
+
+        var currentFilter = this.getFilter();
+        if (currentFilter) {
+            currentFilter.on('change', this.triggerChangeFilterProps, this);
+        }
+    },
+
+    /**
+     * @param {string} key A layout key.
+     * @return {object|null} The layout associated with <tt>key</tt> or <tt>null</tt>.
+     */
+    getLayout: function (key) {
+        return this.getLayouts()[key] || null;
+    },
+
+    /**
+     * @return {object} an array of all registered layouts, sorted by label.
+     */
+    getSortedLayouts: function () {
+        return _.sortBy(this.getLayouts(), "label");
+    },
+
+    /**
+     * Associate a layout class with a key.
+     *
+     * @param {string} key A key used to identify the layout. If the key isn't unique, the old layout is overridden.
+     * @param {object} layout The layout class to be associated with <tt>key</tt>; its constructor, not an instance.
+     */
+    registerLayout: function (key, layout) {
+        layout.id = key;
+        this.getLayouts()[key] = layout;
+    },
+
+    /**
+     * Get jql but make sure that any requests to get jql have completed.
+     * @return {jQuery.Deferred}
+     */
+    getJqlDeferred: function () {
+        var deferred = jQuery.Deferred();
+        var instance = this;
+        // I am adding a settimeout to fix the following case and avoid similar ones in the future.
+        // I open a searcher, make some changes. Clicking the "Save" button to update the filter, I want to
+        // get the jql after the searcher have made their request to the server. Unfortunately because the click
+        // event of the "Save" button happens before the searchers make their request, we need to delay a tad.
+        _.defer(function () {
+            instance.queryModule.searchersReady().always(function () {
+                // Similar senario as the one above except in this case the request has returned but the jql hasn't been set.
+                _.defer(function () {
+                    deferred.resolve(instance.getEffectiveJql());
+                });
+            });
+        });
+        return deferred.promise();
+    },
+
+    registerIssueSearchManager: function (searchManger) {
+        this.issueSearchManager = searchManger;
+    },
+
+    registerIssueCacheManager: function (issueCacheManager) {
+        this.issueCacheManager = issueCacheManager;
+    },
+
+    registerQueryModule: function (queryModule) {
+        this.queryModule = queryModule;
+        this.queryModule.onJqlChanged(this.queryModuleSearchRequested, this);
+        this.queryModule.onJqlError(this.disableLayoutSwitcher, this);
+        this.queryModule.onJqlSuccess(this.enableLayoutSwitcher, this);
+        this.queryModule.onVerticalResize(QuoteFlow.Interactive.triggerVerticalResize);
+        this.queryModule.onQueryTooComplexSwitchToAdvanced(function () {
+            JIRA.Issues.Application.execute("analytics:trigger", "kickass.queryTooComplexSwitchToAdvanced");
+        });
+        this.queryModule.onBasicModeCriteriaCountWhenSearching(function (data) {
+            JIRA.Issues.Application.execute("analytics:trigger", "kickass.basicModeCriteriaCountWhenSearching", data);
+        });
+        this.queryModule.onChangedPreferredSearchMode(function (mode) {
+            JIRA.Issues.Application.execute("analytics:trigger", "kickass.switchto" + mode);
+        });
+        JIRA.Shifter.register(JIRA.Issues.SearchShifter({
+            isBasicMode: _.bind(this.queryModule.isBasicMode, this.queryModule),
+            isFullScreenIssue: _.bind(this.isFullScreenIssueVisible, this),
+            searcherCollection: this.queryModule.getSearcherCollection()
+        }));
+    },
+
+    disableLayoutSwitcher: function () {
+        if (this.layoutSwitcher) {
+            this.layoutSwitcher.disableLayoutSwitcher();
+        }
+    },
+
+    enableLayoutSwitcher: function () {
+        if (this.layoutSwitcher) {
+            this.layoutSwitcher.enableLayoutSwitcher();
+        }
+    },
+
+
+    registerLayoutSwitcher: function (layoutSwitcher) {
+        this.layoutSwitcher = layoutSwitcher;
+    },
+
+    registerFilterModule: function (newFilterModule) {
+        if (this.filterModule) {
+            this.filterModule.off('filterRemoved');
+            this.filterModule.off('filterSelected');
+        }
+
+        this.filterModule = newFilterModule;
+        this.filterModule.on('filterRemoved', function (props) {
+            var currentFilter = this.getFilter();
+            if (currentFilter && props.filterId === currentFilter.getId()) {
+                this.resetToBlank();
+            }
+        }, this);
+
+        this.filterModule.on('filterSelected', function (props) {
+            this.resetToFilter(props.filterId);
+        }, this);
+    },
+
+    registerSearch: function (search) {
+        this.search = search;
+        this.searchResults = this.search.getResults();
+        this.searchResults.on("change:resultsId", this._handleSearchResultsChange, this);
+        this.searchResults.onStartIndexChange(this._handleSearchResultsChange, this);
+        this.searchResults.onSelectedIssueChange(this._handleSearchResultsChange, this);
+
+        var columnConfig = this.columnConfig;
+
+        //TODO This event must be fired before searchResults.on*Change events in order to work
+        //Make sure that is a design feature and not a coincidence
+        this.on("change:filter", function () {
+            //When switch to another filter, clear the columns
+            columnConfig.clearFilterConfiguration();
+        });
+
+        this.searchResults.onColumnsChange(function (searchResults) {
+            var configName = searchResults.getColumnConfig();
+            if (configName) { //There is no columnConfig on empty search
+                columnConfig.syncColumns(configName, searchResults.getColumns());
+            }
+        });
+
+        this.searchResults.onColumnConfigChange(function (searchResults) {
+            var configName = searchResults.getColumnConfig();
+            if (configName) { //There is no columnConfig on empty search
+                columnConfig.setCurrentColumnConfig(configName);
+                //When the columnConfig changes, always set the columns
+                columnConfig.syncColumns(configName, searchResults.getColumns());
+            }
+        });
+
+        columnConfig.onColumnsSync(function (columnConfigName) {
+            search.stableUpdate({
+                columnConfig: columnConfigName
+            });
+        });
+
+        this.searchResults.onSelectedIssueChange(_.bind(function (issue) {
+            if (!issue.hasIssue()) {
+                JIRA.Issues.Application.execute("issueEditor:removeIssueMetadata");
+            }
+        }, this));
+    },
+
+    _handleSearchResultsChange: function (model, options) {
+        options = options || {};
+        options.replace ?
+                this.issueNavRouter.replaceState(this.getState()) :
+                this.issueNavRouter.pushState(this.getState());
+    },
+
+    registerSearchHeaderModule: function (searchHeaderModule) {
+        this.searchHeaderModule = searchHeaderModule;
+    },
+
+    registerFullScreenIssue: function (fullScreenIssue) {
+        this.fullScreenIssue = fullScreenIssue;
+        this.fullScreenIssue.bindIssueHidden(function () {
+            JIRA.Issues.Application.execute("issueEditor:dismiss");
+
+            this.updateWindowTitle(this.getFilter());
+            JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
+        }, this);
+    },
+
+    /**
+     * @param {element} options.issueContainer The element in which issues are to be rendered.
+     * @param {element} options.searchContainer The element in which search results are to be rendered.
+     */
+    registerViewContainers: function (options) {
+        this.assetContainer = options.assetContainer;
+        this.searchContainer = options.searchContainer;
+    },
+
+    registerIssueNavRouter: function (issueNavRouter) {
+        this.issueNavRouter = issueNavRouter;
+    },
+
+    prevIssue: function () {
+        if (this._overlayIsVisible()) {
+            return false;
+        }
+        if (JIRA.Issues.Application.request("issueEditor:canDismissComment") && !this.standalone) {
+            this.getCurrentLayout().prevIssue();
+            return true;
+        }
+
+        return false;
+    },
+
+    nextIssue: function () {
+        if (this._overlayIsVisible()) {
+            return false;
+        }
+        if (JIRA.Issues.Application.request("issueEditor:canDismissComment") && !this.standalone) {
+            this.getCurrentLayout().nextIssue();
+            return true;
+        }
+
+        return false;
+    },
+
+    /**
+     * Is there an issue currently being loaded
+     * @return Boolean
+     */
+    isCurrentlyLoadingIssue: function () {
+        return JIRA.Issues.Application.request("issueEditor:isCurrentlyLoading");
+    },
+
+    _overlayIsVisible: function () {
+        return AJS.$(".aui-blanket").filter(":visible").length > 0;
+    },
+
+    /**
+     * Retrieve the ID of the selected issue.
+     * <p/>
+     * If issue search is visible, the ID of the currently highlighted issue is
+     * returned; if we're viewing an issue, its ID is returned.
+     *
+     * @param {AJS.Dialog} [dialog] The dialog requesting this information.
+     * @return {number} The ID of the currently selected issue.
+     */
+    getEffectiveIssueId: function (dialog) {
+        return this.getEffectiveIssue().getId();
+    },
+
+    /**
+     * Update the UI in response to an issue update.
+     *
+     * @param {object} issueUpdate An issue update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @return {jQuery.Deferred} A deferred that is resolved when the refresh completes.
+     */
+    updateIssue: function (issueUpdate) {
+        var isDelete = issueUpdate.action === JIRA.Issues.Actions.DELETE,
+            isFullScreen = this.fullScreenIssue.isVisible();
+
+        if (isDelete) {
+            return this._deleteIssue(issueUpdate);
+        } else if (isFullScreen) {
+            return this.fullScreenIssue.updateIssue(issueUpdate).done(_.bind(function () {
+                // If it's not a standalone issue, then we also need to update the search results.
+                //
+                // Things break if these requests are made in parallel, so force them to be serial.
+                !this.standalone && this.searchResults.updateIssue(issueUpdate, { showMessage: false, filter: this.getFilter() });
+            }, this));
+        } else {
+            return this.searchResults.updateIssue(issueUpdate, { filter: this.getFilter() });
+        }
+    },
+
+    /**
+     * Update the UI in response to issue deletion.
+     *
+     * @param {object} issueUpdate An issue update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @return {jQuery.Deferred} A deferred that is resolved when the update completes.
+     * @private
+     */
+    _deleteIssue: function (issueUpdate) {
+        var isFullScreen = this.fullScreenIssue.isVisible(),
+            isVisibleIssue = issueUpdate.key == JIRA.Issues.Application.request("issueEditor:getIssueKey");
+
+        if (!isFullScreen) {
+            return this.searchResults.updateIssue(issueUpdate);
+        } else if (!isVisibleIssue) {
+            return this.fullScreenIssue.updateIssue(issueUpdate);
+        } else if (this.standalone) {
+            this.resetToBlank();
+            JIRA.Issues.showNotification(issueUpdate.message, issueUpdate.key);
+            return jQuery.Deferred().resolve().promise();
+        } else {
+            this.returnToSearch();
+            return this.searchResults.updateIssue(issueUpdate);
+        }
+    },
+
+    /**
+     * Retrieve the key of the selected issue.
+     * <p/>
+     * If issue search is visible, the key of the currently highlighted issue is
+     * returned; if we're viewing an issue, its key is returned.
+     *
+     * @return {number} The key of the currently selected issue.
+     */
+    getEffectiveIssueKey: function () {
+        return this.getEffectiveIssue().getKey();
+    },
+
+    getEffectiveIssue: function () {
+        var hasHighlightedIssue = this.searchResults.hasHighlightedIssue(),
+            hasSelectedIssue = this.searchResults.hasSelectedIssue(),
+            issueModuleIssue;
+
+        issueModuleIssue = new JIRA.Issues.SimpleIssue({
+            id: JIRA.Issues.Application.request("issueEditor:getIssueId"),
+            key: JIRA.Issues.Application.request("issueEditor:getIssueKey")
+        });
+
+        if (this.standalone) {
+            return issueModuleIssue;
+        } else if (hasSelectedIssue) {
+            return this.searchResults.getSelectedIssue();
+        } else if (hasHighlightedIssue) {
+            return this.searchResults.getHighlightedIssue();
+        } else {
+            return issueModuleIssue;
+        }
+    },
+
+    isHighlightedIssueAccessible: function () {
+        return this.search.getResults().isHighlightedIssueAccessible();
+    },
+
+    /**
+     * Show issue search and change the URL to match model state.
+     * <p/>
+     * If returning from a stand-alone issue, reset to a blank search.
+     */
+    returnToSearch: function () {
+        if (this.standalone) {
+            this.resetToBlank();
+            JIRA.trace("jira.returned.to.search");
+        } else if (this.fullScreenIssue.isVisible()) {
+            this.searchResults.unselectIssue();
+            JIRA.Issues.Application.execute("issueEditor:beforeHide");
+            // TODO: defensive check, incase issue-nav-components is a lower version than expected. Can remove after
+            // soaking for bit on ondemand.
+            if (this.queryModule.refreshLayout) {
+                this.queryModule.refreshLayout();
+            }
+        } else {
+            JIRA.trace("jira.returned.to.search");
+        }
+        jQuery.event.trigger("updateOffsets.popout")
+    },
+
+    toggleFilterPanel: function () {
+        return this.filterModule.toggleFilterPanel();
+    },
+
+    issueTableSortRequested: function (jql, startIndex) {
+        this.update({ jql: jql, startIndex: startIndex });
+    },
+
+    issueTableSearchError: function (response) {
+        if (response.status !== 0) {
+            // if we haven't aborted the request
+            this.filterModule.filtersComponent.markFilterHeaderAsInvalid();
+            var errors;
+            try {
+                errors = JSON.parse(response.responseText);
+            } catch (error) {
+                errors = { errorMessages: [AJS.I18n.getText("issue.nav.common.server.error")] };
+            }
+            this.queryModule.onSearchError(errors);
+        }
+    },
+
+    issueTableSearchSuccess: function (data) {
+        this.update({
+            startIndex: data.startIndex
+        });
+        this.queryModule.onSearchSuccess(data.warnings);
+    },
+
+    issueTableStableUpdate: function (startIndex) {
+        this.update({ startIndex: startIndex });
+    },
+
+    /**
+     * Prompt the user to confirm navigation if there are any dirty forms.
+     *
+     * @param {object} [options]
+     * @param {function} [options.confirm=window.confirm] Show a confirmation dialog.
+     * @param {boolean} [options.ignoreDirtiness=false] Whether to ignore dirty forms.
+     * @return {boolean} whether the user confirmed navigation.
+     */
+    confirmNavigation: function (options) {
+        options = _.defaults({}, options, {
+            // Why can't we use bind or apply, I hear you ask? IE8, that's why.
+            confirm: function (message) {
+                return window.confirm(message);
+            },
+            ignoreDirtiness: false
+        });
+
+        var message = JIRA.DirtyForm.getDirtyWarning() || JIRA.Issue.getDirtyCommentWarning();
+        return !!options.ignoreDirtiness || message === undefined || options.confirm(message);
+    },
+
+    /**
+     * @return {boolean} whether a full screen issue is visible.
+     */
+    isFullScreenIssueVisible: function () {
+        return this.fullScreenIssue && this.fullScreenIssue.isVisible();
+    },
+
+    isIssueVisible: function () {
+        var layoutKey = JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey();
+
+        if (this.isFullScreenIssueVisible()) {
+            return true;
+        } else if (layoutKey === "list-view") {
+            return this.fullScreenIssue.isVisible();
+        } else if (layoutKey === "split-view") {
+            // Issue is always visible in split view AS LONG AS there are results
+            return this.search.getResults().hasIssues();
+        }
+        return false;
+    },
+
+    queryModuleSearchRequested: function (jql) {
+        this.update({
+            jql: jql,
+            startIndex: 0,
+            selectedIssueKey: null,
+            searchId: _.uniqueId()
+        });
+    },
+
+    filterModuleSaved: function (filterModel) {
+        this.reset({ filter: filterModel.getId() });
+    },
+
+    discardFilterChanges: function () {
+        this.update({
+            jql: null,
+            selectedIssueKey: null
+        }, true);
+    },
+
+    getState: function () {
+        var filter = this.getFilter();
+
+        var state = {
+            filter: filter && filter.getId(),
+            filterJql: filter && filter.getJql(),
+            jql: this.getJql()
+        };
+
+        if (this.standalone) {
+            state.selectedIssueKey = JIRA.Issues.Application.request("issueEditor:getIssueKey")
+        } else {
+            _.extend(state, this.search.getResults().getState());
+        }
+
+        return state;
+    },
+
+    _doSearch: function (options) {
+        options = options || {};
+        var searchOptions = {};
+        var searchPromise;
+        var filter = this.getFilter();
+        searchOptions.startIndex = options.startIndex;
+        if (filter) {
+            searchOptions.filterId = filter.getId();
+        }
+
+        if (options.columnConfig) {
+            searchOptions.columnConfig = options.columnConfig;
+        }
+
+        searchOptions.jql = this.getEffectiveJql();
+        searchPromise = this.issueSearchManager.search(searchOptions);
+
+        searchPromise.done(_.bind(function (results) {
+            if (this.fullScreenIssue.isVisible() && !AJS.Meta.get('serverRenderedViewIssue')) {
+                JIRA.Issues.Application.execute("issueEditor:beforeHide");
+            }
+            this.searchResults.resetFromSearch(_.extend(options, results.issueTable));
+            this.queryModule.onSearchSuccess(results.warnings);
+            jQuery.event.trigger("updateOffsets.popout");
+        }, this)).fail(_.bind(function (xhr) {
+            if (xhr.statusText !== "abort") {
+                if (xhr.status == 400 && options.selectedIssueKey) {
+                    this.reset({ selectedIssueKey: options.selectedIssueKey }, { replace: true });
+                } else {
+                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedIssueKey"), this.searchResults.defaults));
+                    this.issueTableSearchError(xhr);
+                }
+            }
+        }, this));
+
+        return searchPromise;
+    },
+
+    updateWindowTitle: function (model) {
+        if (this.isFullScreenIssueVisible()) {
+            return;
+        }
+
+        var filter = model,
+            navigatorTitle = AJS.format('{0} - {1}', AJS.I18n.getText('navigator.title'), JIRA.Settings.ApplicationTitle.get());
+
+        if (filter && filter.getIsValid()) {
+            document.title = "[" + filter.getName() + "] " + navigatorTitle;
+        } else {
+            document.title = navigatorTitle;
+        }
+    },
+
+    _applyState: function (state, isReset, options) {
+        options = options || {};
+        var prevState = _.extend(this.toJSON(), this.search.getResults().toJSON());
+        var stateToApply = _.pick(state, this.properties);
+        this.set(stateToApply);
+        var newState = _.extend(this.toJSON(), state);
+        this.updateWindowTitle(this.getFilter());
+
+        if (isReset) {
+            var jql = (state.filter && state.jql == null) ? state.filter.getJql() : state.jql;
+            this.queryModule.resetToQuery(jql, { focusQuery: options.isNewSearch }).always(_.bind(function () {
+                // Hide the query view for invalid filters.
+                this.queryModule.setVisible(!state.filter || state.filter.getIsValid());
+            }, this))
+        }
+        if (this.shouldPerformNewSearch(prevState, newState)) {
+            var searchPromise = this._doSearch(newState);
+        } else {
+            var searchPromise = jQuery.Deferred().resolve();
+            if ("selectedIssueKey" in state) {
+                this.searchResults.selectIssueByKey(state.selectedIssueKey);
+            }
+            // If an issue is selected, its position in the results determines the page and we can ignore startIndex.
+            if ("startIndex" in state && !state.selectedIssueKey) {
+                this.searchResults.goToPage(state.startIndex);
+            }
+        }
+
+        this._showIntroDialogs(searchPromise);
+    },
+
+    /**
+     * Determines if we would need to perform a new (unstable) search if
+     * <tt>SearchPageModule</tt> was to be updated with the given attributes.
+     *
+     * @return {boolean} whether we should perform a new search.
+     */
+    shouldPerformNewSearch: function (prevState, newState) {
+        var prevFilterId = prevState.filter && prevState.filter.getId();
+        var filterId = newState.filter && newState.filter.getId();
+        var filterChanged = prevFilterId !== filterId;
+        var jqlChanged = newState.jql !== prevState.jql;
+        var searchIdChanged = newState.searchId !== prevState.searchId;
+        return filterChanged || jqlChanged || searchIdChanged;
+    },
+
+    refreshSearch: function () {
+        return this._doSearch(_.extend({}, this.getState(), {
+            selectedIssueKey: undefined
+        }));
+    },
+
+    _navigateToState: function (state, isReset, options) {
+
+        options = options || {};
+
+        if (!JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+            this.queryModule.queryChanged();
+            AJS.InlineLayer.current && AJS.InlineLayer.current.hide();
+            return null;
+        }
+
+        if (this._validateNavigate(state)) {
+            options.replace ? this.issueNavRouter.replaceState(state) : this.issueNavRouter.pushState(state);
+        }
+        if (this.search.isStandAloneIssue(state)) {
+            this.resetToStandaloneIssue(state);
+        } else {
+            return this.applyState(state, isReset, options);
+        }
+    },
+
+
+    _validateNavigate: function (newState) {
+        var urlFromState = JIRA.Issues.URLSerializer.getURLFromState;
+        return urlFromState(newState) !== urlFromState(this.getState());
+    },
+
+    _getUpdateState: function (state) {
+        return _.extend({}, this.getState(), state);
+    },
+
+    update: function (state, isReset, options) {
+        this._navigateToState(this._getUpdateState(state), isReset, options);
+    },
+
+    reset: function (state, options) {
+        var resetState = _.extend({}, this.defaults(), state);
+        resetState.searchId = _.uniqueId();
+        this._navigateToState(resetState, true, options);
+    },
+
+    _deactivateCurrentLayout: function () {
+        var currentLayout = this.getCurrentLayout();
+        if (currentLayout) {
+            currentLayout.close && currentLayout.close();
+            this.setCurrentLayout(null);
+        }
+    },
+
+    resetToStandaloneIssue: function (state) {
+        this._deactivateCurrentLayout();
+        this.set(this.defaults());
+        this.standalone = true;
+        this.fullScreenIssue.show({
+            key: state.selectedIssueKey,
+            viewIssueQuery: state.viewIssueQuery
+        });
+    },
+
+    applyState: function (state, isReset, options) {
+        var filterRequest,
+            shouldFetchFilter = state.filter && !(state.filter instanceof JIRA.Components.Filters.Models.Filter),
+            systemFiltersRequest = this.initSystemFilters();
+
+        JIRA.Issues.Application.execute("issueEditor:abortPending");
+        this.createLayout();
+
+        if (shouldFetchFilter) {
+            // Wait for the system filters request to finish as state.filter may refer to a system filter.
+            filterRequest = jQuery.Deferred();
+            systemFiltersRequest.always(_.bind(function () {
+                this.filterModule.getFilterById(state.filter).always(function (filterModel) {
+                    state.filter = filterModel;
+                    filterRequest.resolve();
+                });
+            }, this));
+        }
+
+        jQuery.when(filterRequest, systemFiltersRequest).always(_.bind(function () {
+            this._applyState(state, isReset, options);
+        }, this));
+    },
+
+    updateFromRouter: function (state) {
+        if (this.search.isStandAloneIssue(state)) {
+            this.resetToStandaloneIssue(state);
+        } else {
+            this.applyState(state, !this._isSearchStateEqual(state));
+        }
+    },
+
+    hasSelectedIssue: function () {
+        return this.search.getResults().getSelectedIssue().getKey();
+    },
+
+    /**
+     * Reset the application state to match a given filter.
+     *
+     * @param {number|JIRA.Components.Filters.Models.Filter} filter The (id of) the filter to reset to.
+     */
+    resetToFilter: function (filter) {
+        //Selecting a filter should always attempt to use the filter columns by default
+        //This will ensure request are being made with the specified behaviour above
+        //Returning issue table request will contain the actual columns being used and
+        //  the preference state will be updated accordingly
+        this.reset({
+            filter: filter,
+            searchId: _.uniqueId()
+        });
+    },
+
+    /**
+     * Reset the query to jql=
+     * A reset forces a new search to be performed even if there are no changes.
+     */
+    resetToBlank: function (options) {
+        this.reset({ jql: "" }, options);
+    },
+
+    /**
+     * @return {boolean} whether the current search is dirty (a modified filter).
+     */
+    isDirty: function () {
+        var filter = this.getFilter();
+        return !!filter && filter.getJql() !== this.getEffectiveJql();
+    },
+
+    getSearchMode: function () {
+        return this.queryModule.getSearchMode();
+    },
+
+    getActiveBasicModeSearchers: function () {
+        return this.queryModule.getActiveBasicModeSearchers();
+    },
+
+    /**
+     * Set the user's session search to a given filter.
+     *
+     * @param filterModel The filter.
+     * @private
+     */
+    setSessionSearch: function (filterModel) {
+        // We don't really care if this request fails; it just means that the
+        // URL may unnecessarily include the JQL parameter.
+        AJS.$.ajax({
+            data: {
+                filterId: filterModel.getId()
+            },
+            type: "PUT",
+            url: AJS.contextPath() + "/rest/issueNav/1/issueTable/sessionSearch/"
+        });
+    },
+
+    openFocusShifter: function () {
+        JIRA.Issues.FocusShifter.show();
+    },
+
+    /**
+     * @param {Object} issueProps. Either id or key needs to be present.
+     * @param issueProps.issueId
+     * @param issueProps.issueKey
+     */
+    setAsInaccessible: function (issueProps) {
+        this.issueTableModule.setAsInaccessible(issueProps);
+    },
+
+    /**
+     * @param {Object|null} issueProps. If null/undefined, use currently selected issue.
+     * @param issueProps.issueId
+     * @param issueProps.issueKey
+     */
+    showInlineIssueLoadError: function (issueProps) {
+        var html = JIRA.Components.IssueViewer.Templates.Body.errorsLoading();
+        JIRA.Messages.showErrorMsg(html, { closeable: true });
+    },
+
+    /**
+     * In the case of no filter selected, simply gets the jql property.
+     * When a filter is selected, will get the filter jql and any modifications.
+     *
+     * @return {string} the effective JQL.
+     */
+    getEffectiveJql: function () {
+        var filter = this.getFilter(),
+            jql = this.getJql();
+
+        if (_.isString(jql)) {
+            return jql;
+        } else if (filter) {
+            return filter.getJql() || "";
+        } else {
+            return "";
+        }
+    },
+
+    /**
+     * On standalone VI, system filters data will not be available on page load
+     * Thus make calls to make sure it is loaded properly via ajax
+     */
+    initSystemFilters: function () {
+        return this.filterModule.initSystemFilters();
+    },
+
+    addOwnerToSystemFilters: function (systemFilters) {
+        var loggedInUser = AJS.Meta.get('remote-user');
+
+        if (!loggedInUser) {
+            return systemFilters;
+        }
+
+        var ownerDisplayName = AJS.Meta.get('remote-user-fullname');
+        var avatarUrl = AJS.Meta.get('remote-user-avatar-url');
+
+        return _.map(systemFilters, function (filter) {
+            filter.ownerUserName = loggedInUser;
+            filter.ownerDisplayName = ownerDisplayName;
+            filter.avatarUrl = avatarUrl;
+            return filter;
+        });
+    },
+
+    handleLeft: function () {
+        if (this._allowLeftRightNavigation()) {
+            this.getCurrentLayout() && this.getCurrentLayout().handleLeft();
+        }
+    },
+
+    handleRight: function () {
+        if (this._allowLeftRightNavigation()) {
+            this.getCurrentLayout() && this.getCurrentLayout().handleRight();
+        }
+    },
+
+    handleUp: function () {
+        if (!this._allowUpDownNavigation()) {
+            return false;
+        }
+
+        // Allow arrow scrolling up if first issue is highlighted.
+        if (this.searchResults.isFirstIssueHighlighted()) {
+            return false;
+        }
+
+        return this.prevIssue();
+    },
+
+    handleDown: function () {
+        if (!this._allowUpDownNavigation()) {
+            return false;
+        }
+
+        return this.nextIssue();
+    },
+
+    _allowLeftRightNavigation: function () {
+        return !AJS.keyboardShortcutsDisabled;
+    },
+
+    _allowUpDownNavigation: function () {
+        if (AJS.keyboardShortcutsDisabled) {
+            return false;
+        }
+
+        // Don't allow up/down navigation if dropdowns are open.
+        if (AJS.InlineLayer.current || AJS.Dropdown.current || JIRA.Dialog.current || AJS.$(".aui-dropdown2:visible").length > 0) {
+            return false;
+        }
+
+        return this.getCurrentLayout() && !this.getCurrentLayout().isIssueViewActive();
+    },
+
+    _isSearchStateEqual: function (state) {
+        var searchParams = ["filter", "jql", "startIndex"];
+        return _.isEqual(_.pick(state, searchParams), _.pick(this.getState(), searchParams));
+    },
+
+    /**
+     * Remove all of the tipsies that are open.
+     */
+    //removeOpenTipsies: JIRA.Issues.Tipsy.revalidate,
+
+    _showIntroDialogs: function (searchPromise) {
+        var filterPanelPromise = (this.filterModule && this.filterModule.filterPanelView) ? this.filterModule.filterPanelView.panelReady : undefined;
+        if (!this._shownIntroDialog && this.layoutSwitcher) {
+            jQuery.when(searchPromise, filterPanelPromise).done(_.bind(function () {
+                this.layoutSwitcher.createHelptipForSwitchingToDetailView(1);
+                this.filterModule.createHelptipForFilterPanelDocking(2);
+                AJS.HelpTip.Manager.showSequences();
+            }, this));
+            this._shownIntroDialog = true;
+        }
+    }
+});
+},{"../../../components/utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","./full-screen-controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\full-screen-controller.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+var AsyncFileUploadManager = require('../../../lib/async-file-upload');
+var CatalogImportSetFields = require('./views/import_set_fields');
+var CatalogImportSetOptionalFields = require('./views/import_set_optional_fields');
+
+/**
+ * Contains callbacks for the catalog module router.
+ */
+var CatalogController = Marionette.Controller.extend({
+
+    create: function () {
+        AJS.$(document).ready(function () {
+            AJS.$('#catalog_expiration_date').datePicker({ 'overrideBrowserDefault': true });
+        });
+    },
+
+    importCatalog: function() {
+        AsyncFileUploadManager.init(window.asyncActionUrl, 'uploadForm', window.asyncJqueryFallback);
+    },
+
+    verify: function () {
+        var view = new CatalogImportSetFields({ rawRows: window.rawRows });
+    },
+
+    verifySecondary: function () {
+        var view = new CatalogImportSetOptionalFields({
+            headers: window.headers,
+            rawRows: window.rawRows
+        });
+    },
+
+    showAssetsInteractive: function() {
+        debugger;
+    }
+});
+
+module.exports = CatalogController;
+
+
+},{"../../../lib/async-file-upload":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\async-file-upload.js","./views/import_set_fields":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_set_fields.js","./views/import_set_optional_fields":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_set_optional_fields.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\module.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+var CatalogController = require('./controller');
+var CatalogRouter = require('./router');
+
+/**
+ * 
+ */
+var CatalogModule = Marionette.Module.extend({
+
+    onStart: function (options) {
+        return this.startMediator();
+    },
+
+    startMediator: function() {
+        this.controller = new CatalogController();
+
+        return new CatalogRouter({ controller: this.controller });
+    }
+});
+
+module.exports = CatalogModule;
+},{"./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\router.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\router.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+var CatalogController = require('./controller');
+
+/**
+ * 
+ */
+var CatalogRouter = Marionette.AppRouter.extend({
+    appRoutes: {
+        "catalog/new": "create",
+        "catalog/import": "importCatalog",
+        "catalog/verify": "verify",
+        "catalog/verifyother": "verifySecondary",
+        ":catalogId/:catalogName/assets/iv": "showAssetsInteractive"
+    }
+});
+
+module.exports = CatalogRouter;
+
+},{"./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_asset_var_row.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+var BaseView = require('../../../view');
+
+/**
+ *
+ */
+var ImportAssetVarRow = BaseView.extend({
+    tagName: 'tr',
+
+    templateName: 'catalog/import-asset-var-row',
+
+    options: {
+        headers: null,
+        rawRows: null,
+        assetVar: null
+    },
+
+    events: {},
+
+    presenter: function() {
+        return _.extend(this.defaultPresenter(), {
+            assetVar: this.options.assetVar.toJSON(),
+            catalogHeaders: this.options.headers
+        });
+    },
+
+    postRenderTemplate: function() {
+        _.defer(function() {
+            AJS.$('select').auiSelect2();
+        });
+    },
+
+    changeHeader: function(e) {
+        var el = $(e.currentTarget);
+        var index = el.prop('selectedIndex');
+
+        if (index === 0) return;
+
+        var valueType = el.parent('.field-group').data('value-type');
+
+        this.validateHeaderSelection(index, valueType);
+    },
+
+    /**
+     * Determines if a random sample of the CSV rows
+     * passes the value type check. This is of course
+     * a dirty check that doesn't guarantee 100% exact
+     * results, but assuming that the input data isn't 
+     * total garbage, should yield correct estimations.
+     */
+    validateHeaderSelection: function(index, valueType) {
+
+    },
+
+    /**
+     * Gathers a random collection of data from the selected
+     * header group and displays it in a table.
+     */
+    showPreview: function(e) {
+        var el = $(e.currentTarget);
+        var fieldGroup = el.parent();
+
+        var valueType = fieldGroup.data('value-type');
+        var index = $('select', fieldGroup).prop('selectedIndex');
+        var panelKey = $('.aui-lozenge', fieldGroup).html();
+
+        if (index === 0) {
+            //            // show an inline popup
+            //            AJS.InlineDialog(AJS.$("select", fieldGroup), "myDialog",
+            //                function(content, trigger, showPopup) {
+            //                    content.css({ "padding": "20px" }).html('<p>Please select a field header.</p>');
+            //                    showPopup();
+            //                    return false;
+            //                }
+            //            );
+            return false;
+        }
+
+        index = index - 1; // -1 to compensate for the default select opt
+
+        var panelView = new QuoteFlow.UI.Common.PanelTable({
+            leftHeader: "Asset Key",
+            rightHeader: "Sample Values",
+            rowKey: panelKey,
+            rowData: this.getSampleRowData(index)
+        });
+
+        $('.sample-data-container', fieldGroup).html(panelView.render().el);
+    },
+
+    /**
+     * 
+     */
+    getSampleRowData: function(index) {
+        return _.sample(this.rows.pluck(index), 3);
+    },
+
+    /**
+     * Removes the asset var row from the table. Disposes the view.
+     */
+    removeRow: function() {
+        this.remove();
+    }
+});
+
+module.exports = ImportAssetVarRow;
+},{"../../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_set_fields.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var Brace = require('backbone-brace');
+var Marionette = require('backbone.marionette');
+
+var PanelTable = require('../../../ui/common/panel-table');
+
+/**
+ * 
+ */
+var CatalogImportSetFields = Marionette.ItemView.extend({
+    el: '.aui-page-panel-content',
+
+    options: {
+        rawRows: null
+    },
+
+    events: {
+        "change .field-group select": "changeHeader",
+        "click .tooltip": "showPreview"
+    },
+
+    initialize: function(options) {
+        this.rows = new Brace.Collection();
+        this.rows.reset(options.rawRows);
+
+        AJS.$(".tooltip").tooltip();
+        AJS.$('select').auiSelect2();
+    },
+
+    changeHeader: function(e) {
+        var el = $(e.currentTarget);
+        var index = el.prop('selectedIndex');
+
+        if (index === 0) return;
+
+        var valueType = el.parent('.field-group').data('value-type');
+
+        this.validateHeaderSelection(index, valueType);
+    },
+
+    /**
+     * Determines if a random sample of the CSV rows passes the value type check. 
+     * This is of course a dirty check that doesn't guarantee 100% exact results, 
+     * but assuming that the input data isn't total garbage, should yield correct estimations.
+     */
+    validateHeaderSelection: function(index, valueType) {
+
+    },
+
+    /**
+     * Gathers a random collection of data from the selected
+     * header group and displays it in a table.
+     */
+    showPreview: function(e) {
+        var el = $(e.currentTarget);
+        var fieldGroup = el.parent();
+
+        var valueType = fieldGroup.data('value-type');
+        var index = $('select', fieldGroup).prop('selectedIndex');
+        var panelKey = $('.aui-lozenge', fieldGroup).html();
+
+        if (index === 0) {
+//            // show an inline popup
+//            AJS.InlineDialog(AJS.$("select", fieldGroup), "myDialog",
+//                function(content, trigger, showPopup) {
+//                    content.css({ "padding": "20px" }).html('<p>Please select a field header.</p>');
+//                    showPopup();
+//                    return false;
+//                }
+//            );
+            return false;
+        }
+
+        index = index - 1; // -1 to compensate for the default select opt
+
+        var panelView = new PanelTable({
+            leftHeader: "Asset Key",
+            rightHeader: "Sample Values",
+            rowKey: panelKey,
+            rowData: this.getSampleRowData(index)
+        });
+
+        $('.sample-data-container', fieldGroup).html(panelView.render().el);
+    },
+
+    /**
+     * 
+     */
+    getSampleRowData: function(index) {
+        return _.sample(this.rows.pluck(index), 3);
+    }
+});
+
+module.exports = CatalogImportSetFields;
+},{"../../../ui/common/panel-table":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\common\\panel-table.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_set_optional_fields.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+
+var Brace = require('backbone-brace');
+var Marionette = require('backbone.marionette');
+
+var AssetVarCollection = require('../../../collections/asset_vars');
+var AssetVarModel = require('../../../models/asset_var');
+
+var ImportAssetVarRow = require('./import_asset_var_row');
+var PanelTable = require('../../../ui/common/panel-table');
+var SelectAssetVarModal = require('./select_asset_var_modal');
+
+/**
+ *
+ */
+var ImportSetOptionalFields = Marionette.ItemView.extend({
+    el: '.aui-page-panel-content',
+
+    options: {
+        headers: null,
+        rawRows: null
+    },
+
+    events: {
+        "click #new_asset_var_field": "showAssetVarFieldSelectionModal",
+        "change .field-group select": "changeHeader",
+        "click .tooltip": "showPreview"
+    },
+
+    presenter: function() {
+        return _.extend(this.defaultPresenter(), {});
+    },
+
+    initialize: function(options) {
+        this.options = options || {};
+
+        _.bindAll(this, 'addAssetVarRow');
+
+        this.rows = new Brace.Collection().reset(options.rawRows);
+
+        this.assetVarFieldsList = this.$('table#asset_var_fields tbody');
+        this.assetVarSelectionModalContainer = this.$('#asset_var_selection_container');
+
+        AJS.$(".tooltip").tooltip();
+        AJS.$('select').auiSelect2();
+    },
+
+    getAssetVarSelectionModalView: function() {
+        // todo: dispose the existing modal object if exists
+        return new SelectAssetVarModal({
+            okFunc: this.addAssetVarRow
+        });
+    },
+
+    showAssetVarFieldSelectionModal: function() {
+        // forcefull render the select asset var modal to reset form fields
+        this.assetVarSelectionModal = this.getAssetVarSelectionModalView();
+        this.$('#asset_var_selection_container').html(this.assetVarSelectionModal.render().el);
+        this.assetVarSelectionModal.showModal();
+    },
+
+    changeHeader: function(e) {
+        var el = $(e.currentTarget);
+        var index = el.prop('selectedIndex');
+
+        if (index === 0) return;
+
+        var valueType = el.parent('.field-group').data('value-type');
+
+        this.validateHeaderSelection(index, valueType);
+    },
+
+    /**
+     * Determines if a random sample of the CSV rows passes the value type check. 
+     * This is of course a dirty check that doesn't guarantee 100% exact results, 
+     * but assuming that the input data isn't total garbage, should yield correct estimations.
+     */
+    validateHeaderSelection: function(index, valueType) {},
+
+    /**
+     * Gathers a random collection of data from the selected
+     * header group and displays it in a table.
+     */
+    showPreview: function(e) {
+        var el = $(e.currentTarget);
+        var fieldGroup = el.parent();
+
+        var valueType = fieldGroup.data('value-type');
+        var index = $('select', fieldGroup).prop('selectedIndex');
+        var panelKey = $('.aui-lozenge', fieldGroup).html();
+
+        if (index === 0) {
+            //            // show an inline popup
+            //            AJS.InlineDialog(AJS.$("select", fieldGroup), "myDialog",
+            //                function(content, trigger, showPopup) {
+            //                    content.css({ "padding": "20px" }).html('<p>Please select a field header.</p>');
+            //                    showPopup();
+            //                    return false;
+            //                }
+            //            );
+            return false;
+        }
+
+        index = index - 1; // -1 to compensate for the default select opt
+
+        var panelView = new PanelTable({
+            leftHeader: "Asset Key",
+            rightHeader: "Sample Values",
+            rowKey: panelKey,
+            rowData: this.getSampleRowData(index)
+        });
+
+        $('.sample-data-container', fieldGroup).html(panelView.render().el);
+    },
+
+    /**
+     * 
+     */
+    getSampleRowData: function(index) {
+        return _.sample(this.rows.pluck(index), 3);
+    },
+
+    /**
+     * Adds an asset var row based on the select asset var modal result.
+     */
+    addAssetVarRow: function(assetVar) {
+        if (assetVar === null) {
+            // todo: throw some kind of validation failure
+        }
+
+        var view = new ImportAssetVarRow({
+            headers: this.options.headers,
+            assetVar: assetVar
+        });
+
+        this.assetVarFieldsList.append(view.render().el);
+    }
+});
+
+module.exports = ImportSetOptionalFields;
+},{"../../../collections/asset_vars":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset_vars.js","../../../models/asset_var":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var.js","../../../ui/common/panel-table":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\common\\panel-table.js","./import_asset_var_row":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\import_asset_var_row.js","./select_asset_var_modal":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\select_asset_var_modal.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\select_asset_var_modal.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+var moment = require('moment');
+var Backbone = require('backbone');
+Backbone.$ = $;
+
+var BaseView = require('../../../view');
+
+var AssetVarCollection = require('../../../collections/asset_vars');
+var AssetVarModel = require('../../../models/asset_var');
+
+/**
+ *
+ */
+var SelectAssetVarModal = BaseView.extend({
+    templateName: "catalog/select-asset-var-modal",
+
+    options: {
+        okFunc: null
+    },
+
+    events: {},
+
+    presenter: function() {
+        return _.extend(this.defaultPresenter(), {
+            assetVars: this.assetVars.toJSON()
+        });
+    },
+
+    initialize: function(options) {
+        // so we can use options throughout each function
+        this.options = options || {};
+
+        // required sinced AJS overrides 'this'
+        _.bindAll(this, 'submitModal', 'closeModal', 'newAssetVarKeypressHandler', 'disableAssetVarsDropdown', 'createAssetVar', 'getNewAssetVarName', 'getSelectedExistingAssetVar');
+
+        this.assetVars = this.fetchAssetVars();
+    },
+
+    postRenderTemplate: function() {
+        var self = this;
+
+        _.defer(function() {
+            self.modalAJS = AJS.dialog2("#asset_var_selection_modal");
+            self.assetVarsDropdown = AJS.$('#select_asset_var').auiSelect2();
+
+            // handle event bindings here since AJS apparently overrides them...
+            AJS.$('#new_asset_var').on('keyup', self.newAssetVarKeypressHandler);
+            AJS.$('#dialog-close-button').on('click', self.closeModal);
+            AJS.$('#dialog-create').on('click', self.submitModal);
+        });
+    },
+
+    fetchAssetVars: function() {
+        var assetVars = new AssetVarCollection();
+        assetVars.fetch({
+            data: $.param({ id: QuoteFlow.CurrentOrganizationId }),
+            async: false
+        });
+
+        return assetVars;
+    },
+
+    showModal: function() {
+        var self = this;
+        _.defer(function() {
+            self.modalAJS.show();
+        });
+    },
+
+    closeModal: function() {
+        AJS.dialog2("#asset_var_selection_modal").hide();
+        this.remove();
+        AJS.dialog2("#asset_var_selection_modal").remove();
+    },
+
+    submitModal: function(e) {
+        var el = $(e.currentTarget);
+        el.attr('aria-disabled', "true");
+
+        var assetVar;
+        if (this.assetVarsDropdown.prop('disabled')) {
+            // user opted to create a new assetvar
+            this.createAssetVar(this.getNewAssetVarName());
+            this.assetVars = this.fetchAssetVars(); // re-fetch collection to get the id
+            assetVar = this.assetVars.at(this.assetVars.length - 1);
+        } else {
+            // the user has selected an existing assetvar
+            var assetVarId = this.getSelectedExistingAssetVar();
+            assetVar = this.assetVars.findWhere({ Id: parseInt(assetVarId, 10) });
+        }
+
+        this.options.okFunc(assetVar);
+
+        this.closeModal();
+    },
+
+    newAssetVarKeypressHandler: function(e) {
+        var el = $(e.currentTarget);
+
+        if (el.val() !== "") {
+            this.disableAssetVarsDropdown();
+        } else {
+            this.enableAssetVarsDropdown();
+        }
+    },
+
+    disableAssetVarsDropdown: function() {
+        this.assetVarsDropdown.select2("enable", false);
+    },
+
+    enableAssetVarsDropdown: function() {
+        this.assetVarsDropdown.select2("enable", true);
+    },
+
+    createAssetVar: function(assetVarName) {
+        if (assetVarName === "") {
+            // todo: return failed validation for empty string
+        }
+
+        // does this assetvar exist yet?
+        var existing = this.assetVars.findWhere({ Name: assetVarName });
+        if (existing != undefined) {
+            // todo: return failed validation because assetvar already exists
+        }
+
+        var assetVar = new AssetVarModel({
+            Name: assetVarName,
+            Description: null,
+            ValueType: "String",
+            OrganizationId: QuoteFlow.CurrentOrganizationId,
+            Enabled: true,
+            CreatedUtc: moment().format(),
+            CreatedBy: QuoteFlow.CurrentUserId
+        });
+
+        return this.assetVars.create(assetVar, { wait: true });
+    },
+
+    getNewAssetVarName: function() {
+        return $('#new_asset_var').val();
+    },
+
+    getSelectedExistingAssetVar: function() {
+        return this.assetVarsDropdown.val();
+    }
+});
+
+module.exports = SelectAssetVarModal;
+
+},{"../../../collections/asset_vars":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset_vars.js","../../../models/asset_var":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var.js","../../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","moment":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\moment\\moment.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\pages\\asset.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -2506,8 +4607,8 @@ var CatalogPage = require('./pages/catalog');
 
 var Router = Backbone.Router.extend({
     routes: {
-        "asset/*subroute": "asset",
-        "catalog/*subroute": "catalog"
+        "asset/*subroute": "asset"
+        //"catalog/*subroute": "catalog"
     },
 
     asset: function() {
@@ -2517,10 +4618,6 @@ var Router = Backbone.Router.extend({
     },
 
     catalog: function(subroute) {
-//        this.renderPage(function() {
-//            return new CatalogPage();
-//        });
-
         return new CatalogPage.Router("catalog", { createTrailingSlashRoutes: false });
     },
 
@@ -2594,6 +4691,37 @@ var AssetNavigator = BaseView.extend({
         this.assetList = new AssetList();
         this.assetDetails = new AssetDetails();
 
+        /**
+         * Read all the initial data in the DOM
+         *
+         * If the ColumnConfigState has been sent from the server we want to take the HTML from the table
+         * and pop it onto its table property.
+         *
+         * This prevents us from having to populate the HTML twice in the dom. Once in the HTML and another time in the
+         * JSON. It also prevents us needing to ensure there are no XSS vulnerabilities in the JSON HTML string.
+         */
+        var initialAssetTableState = this.$el.data("asset-table-model-state");
+        if (initialAssetTableState && !initialAssetTableState.table) {
+            var wrapper = AJS.$("<div></div>").append(this.$el.children().clone());
+            initialAssetTableState.assetTable.table = wrapper.html();
+        }
+
+        var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
+        var selectedIssue = this.$el.data("selected-asset");
+
+        // jQuery.parseJSON gracefully returns null given an empty string.
+        // Would be even nicer if the json was placed in a data- attribute, which jQuery will automatically parse with .data().
+        var initialSearcherCollectionState = jQuery.parseJSON(jQuery("#criteriaJson").text());
+        var initialSessionSearchState = this.$el.data("session-search-state");
+        var systemFilters = jQuery.parseJSON(jQuery("#systemFiltersJson").text());
+
+        JIRA.Issues.Application.start({
+            showReturnToSearchOnError: function () {
+                return JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey() !== "split-view";
+            },
+            useLog: AJS.Meta.get("dev-mode") === true
+        });
+
         this.initializeAssetListSidebar();
         this.adjustHeight();
     },
@@ -2654,7 +4782,7 @@ var AssetVarValueModel = require('../../models/asset_var_value');
 // UI Components
 var BaseView = require('../../view');
 var AssetVarEditRow = require('./edit/asset_var_edit_row');
-var SelectAssetVarModal = require('../catalog/select_asset_var_modal');
+var SelectAssetVarModal = require('../../modules/catalog/views/select_asset_var_modal');
 
 
 /**
@@ -2744,7 +4872,7 @@ var EditAsset = BaseView.extend({
 });
 
 module.exports = EditAsset;
-},{"../../models/asset_var_value":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var_value.js","../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","../catalog/select_asset_var_modal":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\catalog\\select_asset_var_modal.js","./edit/asset_var_edit_row":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\edit\\asset_var_edit_row.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\edit\\asset_var_edit_row.js":[function(require,module,exports){
+},{"../../models/asset_var_value":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var_value.js","../../modules/catalog/views/select_asset_var_modal":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\views\\select_asset_var_modal.js","../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","./edit/asset_var_edit_row":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\edit\\asset_var_edit_row.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\edit\\asset_var_edit_row.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -3560,160 +5688,7 @@ var ShowAsset = BaseView.extend({
 });
 
 module.exports = ShowAsset;
-},{"../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\catalog\\select_asset_var_modal.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var _ = require('underscore');
-var moment = require('moment');
-var Backbone = require('backbone');
-Backbone.$ = $;
-
-var BaseView = require('../../view');
-
-var AssetVarCollection = require('../../collections/asset_vars');
-var AssetVarModel = require('../../models/asset_var');
-
-/**
- *
- */
-var SelectAssetVarModal = BaseView.extend({
-    templateName: "catalog/select-asset-var-modal",
-
-    options: {
-        okFunc: null
-    },
-
-    events: {},
-
-    presenter: function() {
-        return _.extend(this.defaultPresenter(), {
-            assetVars: this.assetVars.toJSON()
-        });
-    },
-
-    initialize: function(options) {
-        // so we can use options throughout each function
-        this.options = options || {};
-
-        // required sinced AJS overrides 'this'
-        _.bindAll(this, 'submitModal', 'closeModal', 'newAssetVarKeypressHandler', 'disableAssetVarsDropdown', 'createAssetVar', 'getNewAssetVarName', 'getSelectedExistingAssetVar');
-
-        this.assetVars = this.fetchAssetVars();
-    },
-
-    postRenderTemplate: function() {
-        var self = this;
-
-        _.defer(function() {
-            self.modalAJS = AJS.dialog2("#asset_var_selection_modal");
-            self.assetVarsDropdown = AJS.$('#select_asset_var').auiSelect2();
-
-            // handle event bindings here since AJS apparently overrides them...
-            AJS.$('#new_asset_var').on('keyup', self.newAssetVarKeypressHandler);
-            AJS.$('#dialog-close-button').on('click', self.closeModal);
-            AJS.$('#dialog-create').on('click', self.submitModal);
-        });
-    },
-
-    fetchAssetVars: function() {
-        var assetVars = new AssetVarCollection();
-        assetVars.fetch({
-            data: $.param({ id: QuoteFlow.CurrentOrganizationId }),
-            async: false
-        });
-
-        return assetVars;
-    },
-
-    showModal: function() {
-        var self = this;
-        _.defer(function() {
-            self.modalAJS.show();
-        });
-    },
-
-    closeModal: function() {
-        AJS.dialog2("#asset_var_selection_modal").hide();
-        this.remove();
-        AJS.dialog2("#asset_var_selection_modal").remove();
-    },
-
-    submitModal: function(e) {
-        var el = $(e.currentTarget);
-        el.attr('aria-disabled', "true");
-
-        var assetVar;
-        if (this.assetVarsDropdown.prop('disabled')) {
-            // user opted to create a new assetvar
-            this.createAssetVar(this.getNewAssetVarName());
-            this.assetVars = this.fetchAssetVars(); // re-fetch collection to get the id
-            assetVar = this.assetVars.at(this.assetVars.length - 1);
-        } else {
-            // the user has selected an existing assetvar
-            var assetVarId = this.getSelectedExistingAssetVar();
-            assetVar = this.assetVars.findWhere({ Id: parseInt(assetVarId, 10) });
-        }
-
-        this.options.okFunc(assetVar);
-
-        this.closeModal();
-    },
-
-    newAssetVarKeypressHandler: function(e) {
-        var el = $(e.currentTarget);
-
-        if (el.val() !== "") {
-            this.disableAssetVarsDropdown();
-        } else {
-            this.enableAssetVarsDropdown();
-        }
-    },
-
-    disableAssetVarsDropdown: function() {
-        this.assetVarsDropdown.select2("enable", false);
-    },
-
-    enableAssetVarsDropdown: function() {
-        this.assetVarsDropdown.select2("enable", true);
-    },
-
-    createAssetVar: function(assetVarName) {
-        if (assetVarName === "") {
-            // todo: return failed validation for empty string
-        }
-
-        // does this assetvar exist yet?
-        var existing = this.assetVars.findWhere({ Name: assetVarName });
-        if (existing != undefined) {
-            // todo: return failed validation because assetvar already exists
-        }
-
-        var assetVar = new AssetVarModel({
-            Name: assetVarName,
-            Description: null,
-            ValueType: "String",
-            OrganizationId: QuoteFlow.CurrentOrganizationId,
-            Enabled: true,
-            CreatedUtc: moment().format(),
-            CreatedBy: QuoteFlow.CurrentUserId
-        });
-
-        return this.assetVars.create(assetVar, { wait: true });
-    },
-
-    getNewAssetVarName: function() {
-        return $('#new_asset_var').val();
-    },
-
-    getSelectedExistingAssetVar: function() {
-        return this.assetVarsDropdown.val();
-    }
-});
-
-module.exports = SelectAssetVarModal;
-
-},{"../../collections/asset_vars":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset_vars.js","../../models/asset_var":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var.js","../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","moment":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\moment\\moment.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\catalog\\show_interactive.js":[function(require,module,exports){
+},{"../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\catalog\\show_interactive.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -3749,7 +5724,176 @@ var ShowAssetsInteractive = BaseView.extend({
 });
 
 module.exports = ShowAssetsInteractive;
-},{"../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","../asset/asset_navigator":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\asset_navigator.js","../asset/show":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\show.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js":[function(require,module,exports){
+},{"../../view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js","../asset/asset_navigator":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\asset_navigator.js","../asset/show":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\asset\\show.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\ui\\common\\panel-table.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+var Marionette = require('backbone.marionette');
+
+/**
+ *
+ */
+var PanelTable = Marionette.ItemView.extend({
+    className: "panel",
+
+    template: JST['common/panel-table'],
+
+    templateHelpers: function () {
+        return {
+            leftHeader: this.options.leftHeader,
+            rightHeader: this.options.rightHeader,
+            bodyRows: this.bodyRows
+        };
+    },
+
+    options: {
+        leftHeader: "",
+        rightHeader: "",
+        rowKey: "",
+        rowData: []
+    },
+
+    events: {},
+
+    initialize: function(options) {
+        this.bodyRows = this.buildTableRows();
+    },
+
+    /**
+     * Takes the unformatted row data and converts it into
+     * an iterable object that handlebars can easily consume.
+     * @return {object} The formatted body content.
+     */
+    buildTableRows: function() {
+        var rows = [], key = this.options.rowKey;
+
+        _.each(this.options.rowData, function(row) {
+            rows.push({ "rowKey": key, "rowData": row });
+        });
+
+        return rows;
+    }
+});
+
+module.exports = PanelTable;
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js":[function(require,module,exports){
+"use strict";
+
+var BASE_BROWSE = "browse/",
+    BASE_ASSETS = "assets/";
+
+var returnAsIs = function(x) {
+    return x;
+};
+
+var returnAsNumber = function(x) {
+    if (typeof x === 'string') {
+        return parseInt(x, 10);
+    }
+    return x;
+};
+
+/**
+ * An object describing the state of the issue navigator.
+ *
+ * @typedef {object} UrlSerializer.state
+ * @property {string} selectedIssueKey
+ * @property {(string|null)} filterJql
+ * @property {(string|null)} filter
+ * @property {(string|null)} jql
+ * @property {number} startIndex
+ */
+var UrlSerializer = {
+
+    /**
+     * Construct a URL representation of a state object.
+     *
+     * @param {UrlSerializer.state} state The state object.
+     * @return {string} A URL representation of <tt>state</tt>.
+     */
+    getURLFromState: function(state) {
+        state = state || {};
+
+        var query = [];
+        var base;
+
+        if (state.selectedIssueKey) {
+            base = BASE_BROWSE + state.selectedIssueKey;
+        } else {
+            base = BASE_ASSETS;
+        }
+        if (state.filter != null) {
+            query.push('filter=' + state.filter);
+        }
+
+        if (state.jql != null && (state.filterJql == null || state.jql !== state.filterJql)) {
+            query.push('jql=' + encodeURIComponent(state.jql));
+        }
+        if (state.startIndex && !state.selectedIssueKey) {
+            query.push('startIndex=' + state.startIndex);
+        }
+        return base + (query.length ? '?' + query.join('&') : "");
+    },
+
+    /**
+     * Extract state from a URL.
+     *
+     * @param {string} URL The URL.
+     * @return {JIRA.Issues.URLSerializer.state} The state object.
+     */
+    getStateFromURL: function(url) {
+        var parameters = {},
+            path = url.split("?")[0],
+            queryString;
+
+        var state = {
+            filter: null,
+            jql: null,
+            selectedIssueKey: null,
+            startIndex: 0
+        };
+
+        if (url.indexOf(BASE_BROWSE) == 0) {
+            state.selectedIssueKey = path.split("/")[1];
+        }
+
+        if (url.indexOf("?") !== -1) {
+            queryString = url.substr(url.indexOf("?"));
+            parameters = JIRA.Issues.QueryStringParser.parse(queryString);
+
+            //Need to keep a record of these and pass them along down to view issue
+            //so that the correct element can be scrolled into view.
+            //These can be trashed afterward with no side effect.
+            var viewIssueQuery = _.pick(parameters, 'focusedCommentId', 'attachmentSortBy', 'attachmentOrder');
+            if (!_.isEmpty(viewIssueQuery)) {
+                state.viewIssueQuery = viewIssueQuery;
+            }
+        }
+
+        // return convert the parameters using the conversion functions before returning
+        return _.inject(this.PARAMETER_TRANSFORM, function(state, convertFn, key) {
+            var value = parameters[key];
+            if (value !== undefined) {
+                // apply conversion and override the defaults
+                state[key] = convertFn(value);
+            }
+
+            return state;
+        }, _.extend(state));
+    },
+
+    /**
+     * Parameters that are stored in the query string (with an optional conversion/transformation function).
+     */
+    PARAMETER_TRANSFORM: {
+        "filter": returnAsIs,
+        "jql": returnAsIs,
+        "startIndex": returnAsNumber
+    }
+};
+
+module.exports = UrlSerializer;
+},{}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\view.js":[function(require,module,exports){
 "use strict";﻿
 
 var $ = require('jquery');
@@ -3907,7 +6051,136 @@ Backbone.$ = $;
 
 module.exports = BaseView;
 
-},{"backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js":[function(require,module,exports){
+},{"backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\async-file-upload.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+
+/**
+ * 
+ */
+var AsyncFileUploadManager = new function() {
+    var _isWebkitBrowser = 'WebkitAppearance' in document.documentElement.style;
+    var _iframeId = '__fileUploadFrame';
+    var _pollingInterval = 200;
+    var _pingUrl;
+    var _failureCount;
+    var _isUploadInProgress;
+
+    this.init = function(pingUrl, formId, jQueryUrl) {
+        _pingUrl = pingUrl;
+
+        // attach the sumbit event to the form
+        $('#' + formId).submit(function() {
+            submitForm(this);
+            return false;
+        });
+
+        if (_isWebkitBrowser) {
+            constructIframe(jQueryUrl);
+        }
+    }
+
+    function submitForm(form) {
+        if (_isUploadInProgress) {
+            return;
+        }
+
+        if (!form.action) {
+            form.submit();
+            return;
+        }
+
+        // count the number of file fields which have selected files
+        var totalFile = 0;
+        $('input[type=file]', form).each(function(index, el) { if (el.value) totalFile++; });
+
+        form.submit();
+
+        // only show progress indicator if the form actually uploads some files
+        if (totalFile > 0) {
+            _isUploadInProgress = true;
+            _failureCount = 0;
+
+            setProgressIndicator(0, '');
+
+            if (_isWebkitBrowser) {
+                document.getElementById(_iframeId).contentWindow.start(_pingUrl, setProgressIndicator, onGetProgressError);
+            } else {
+                setTimeout(getProgress, 100);
+            }
+        }
+    }
+
+    function getProgress() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: _pingUrl,
+            success: onGetProgressSuccess,
+            error: onGetProgressError
+        });
+    }
+
+    function onGetProgressSuccess(result) {
+        if (!result) {
+            return;
+        }
+
+        var percent = result.Progress;
+
+        if (!result.FileName) {
+            return;
+        }
+
+        setProgressIndicator(percent, result.FileName);
+        if (percent < 100) {
+            setTimeout(getProgress, _pollingInterval);
+        } else {
+            _isUploadInProgress = false;
+        }
+    }
+
+    function onGetProgressError(result) {
+        if (++_failureCount < 3) {
+            setTimeout(getProgress, _pollingInterval);
+        }
+    }
+
+    function setProgressIndicator(percentComplete, fileName) {
+        percentComplete = Math.min(percentComplete, 100);
+
+        AJS.progressBars.update("file_upload_progress", percentComplete);
+    }
+
+    function constructIframe(jQueryUrl) {
+        var iframe = document.getElementById(_iframeId);
+        if (iframe) {
+            return;
+        }
+
+        iframe = document.createElement('iframe');
+        iframe.setAttribute('id', _iframeId);
+        iframe.setAttribute('style', 'display: none; visibility: hidden;');
+
+        $(iframe).load(function() {
+            var scriptRef = document.createElement('script');
+            scriptRef.setAttribute("src", jQueryUrl);
+            scriptRef.setAttribute("type", "text/javascript");
+            iframe.contentDocument.body.appendChild(scriptRef);
+
+            var scriptContent = document.createElement('script');
+            scriptContent.setAttribute("type", "text/javascript");
+            scriptContent.innerHTML = "var _callback,_error, _key, _pingUrl, _fcount;function start(b,c,e){_callback=c;_pingUrl=b;_error=e;_fcount=0;setTimeout(getProgress,200)}function getProgress(){$.ajax({type:'GET',dataType:'json',url:_pingUrl,success:onSuccess,error:_error})}function onSuccess(a){if(!a){return}var b=a.Progress;var d=a.FileName;if(!d){return}_callback(b,d);if(b<100){setTimeout(getProgress,200)}}function onError(a){if(++_fcount<3){setTimeout(getProgress,200)}}";
+            iframe.contentDocument.body.appendChild(scriptContent);
+        });
+
+        document.body.appendChild(iframe);
+    }
+};
+
+module.exports = AsyncFileUploadManager;
+},{"jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js":[function(require,module,exports){
 /*! 
  *  Backbone Brace - 2013-11-07 
  *  Copyright 2013 Atlassian Software Systems Pty Ltd
@@ -6487,7 +8760,308 @@ module.exports = charenc;
   module.exports = crypt;
 })();
 
-},{}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js":[function(require,module,exports){
+},{}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone-query-parameters\\backbone.queryparams.js":[function(require,module,exports){
+(function (root, factory) {
+   if (typeof define === "function" && define.amd) {
+      // AMD. Register as an anonymous module.
+      define(["underscore","backbone"], function(_, Backbone) {
+        // Use global variables if the locals are undefined.
+        return factory(_ || root._, Backbone || root.Backbone);
+      });
+   } else if (typeof exports === 'object') {
+     module.exports = factory(require("underscore"), require("backbone"));
+   } else {
+      // RequireJS isn't being used. Assume underscore and backbone are loaded in <script> tags
+      factory(_, Backbone);
+   }
+}(this, function(_, Backbone) {
+
+var queryStringParam = /^\?(.*)/,
+    optionalParam = /\((.*?)\)/g,
+    namedParam    = /(\(\?)?:\w+/g,
+    splatParam    = /\*\w+/g,
+    escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#\s]/g,
+    fragmentStrip = /^([^\?]*)/,
+    namesPattern = /[\:\*]([^\:\?\/]+)/g,
+    routeStripper = /^[#\/]|\s+$/g,
+    trailingSlash = /\/$/;
+Backbone.Router.arrayValueSplit = '|';
+
+_.extend(Backbone.History.prototype, {
+  getFragment: function(fragment, forcePushState) {
+    /*jshint eqnull:true */
+    if (fragment == null) {
+      if (this._hasPushState || !this._wantsHashChange || forcePushState) {
+        fragment = this.location.pathname;
+        var root = this.root.replace(trailingSlash, '');
+        var search = this.location.search;
+        if (!fragment.indexOf(root)) {
+          fragment = fragment.substr(root.length);
+        }
+        if (search && this._hasPushState) {
+          fragment += search;
+        }
+      } else {
+        fragment = this.getHash();
+      }
+    }
+    return fragment.replace(routeStripper, '');
+  },
+
+  // this will not perform custom query param serialization specific to the router
+  // but will return a map of key/value pairs (the value is a string or array)
+  getQueryParameters: function(fragment, forcePushState) {
+    fragment = this.getFragment(fragment, forcePushState);
+    // if no query string exists, this will still be the original fragment
+    var queryString = fragment.replace(fragmentStrip, '');
+    var match = queryString.match(queryStringParam);
+    if (match) {
+      queryString = match[1];
+      var rtn = {};
+      iterateQueryString(queryString, function(name, value) {
+        value = parseParams(value);
+
+        if (!rtn[name]) {
+          rtn[name] = value;
+        } else if (_.isString(rtn[name])) {
+          rtn[name] = [rtn[name], value];
+        } else {
+          rtn[name].push(value);
+        }
+      });
+      return rtn;
+    } else {
+      // no values
+      return {};
+    }
+  }
+});
+
+_.extend(Backbone.Router.prototype, {
+  initialize: function(options) {
+    this.encodedSplatParts = options && options.encodedSplatParts;
+  },
+
+  _routeToRegExp: function(route) {
+    var splatMatch = (splatParam.exec(route) || {index: -1}),
+        namedMatch = (namedParam.exec(route) || {index: -1}),
+        paramNames = route.match(namesPattern) || [];
+
+    route = route.replace(escapeRegExp, '\\$&')
+                 .replace(optionalParam, '(?:$1)?')
+                 .replace(namedParam, function(match, optional){
+                   return optional ? match : '([^\\/\\?]+)';
+                 })
+                 // `[^??]` is hacking around a regular expression bug under iOS4.
+                 // If only `[^?]` is used then paths like signin/photos will fail
+                 // while paths with `?` anywhere, like `signin/photos?`, will succeed.
+                 .replace(splatParam, '([^??]*?)');
+    route += '(\\?.*)?';
+    var rtn = new RegExp('^' + route + '$');
+
+    // use the rtn value to hold some parameter data
+    if (splatMatch.index >= 0) {
+      // there is a splat
+      if (namedMatch >= 0) {
+        // negative value will indicate there is a splat match before any named matches
+        rtn.splatMatch = splatMatch.index - namedMatch.index;
+      } else {
+        rtn.splatMatch = -1;
+      }
+    }
+	// Map and remove any trailing ')' character that has been caught up in regex matching
+    rtn.paramNames = _.map(paramNames, function(name) { return name.replace(/\)$/, '').substring(1); });
+    rtn.namedParameters = this.namedParameters;
+
+    return rtn;
+  },
+
+  /**
+   * Given a route, and a URL fragment that it matches, return the array of
+   * extracted parameters.
+   */
+  _extractParameters: function(route, fragment) {
+    var params = route.exec(fragment).slice(1),
+        namedParams = {};
+    if (params.length > 0 && !params[params.length - 1]) {
+      // remove potential invalid data from query params match
+      params.splice(params.length - 1, 1);
+    }
+
+    // do we have an additional query string?
+    var match = params.length && params[params.length-1] && params[params.length-1].match(queryStringParam);
+    if (match) {
+      var queryString = match[1];
+      var data = {};
+      if (queryString) {
+        var self = this;
+        iterateQueryString(queryString, function(name, value) {
+          self._setParamValue(name, value, data);
+        });
+      }
+      params[params.length-1] = data;
+      _.extend(namedParams, data);
+    }
+
+    // decode params
+    var length = params.length;
+    if (route.splatMatch && this.encodedSplatParts) {
+      if (route.splatMatch < 0) {
+        // splat param is first
+        return params;
+      } else {
+        length = length - 1;
+      }
+    }
+
+    for (var i=0; i<length; i++) {
+      if (_.isString(params[i])) {
+        params[i] = parseParams(params[i]);
+        if (route.paramNames && route.paramNames.length >= i-1) {
+          namedParams[route.paramNames[i]] = params[i];
+        }
+      }
+    }
+
+    return (Backbone.Router.namedParameters || route.namedParameters) ? [namedParams] : params;
+  },
+
+  /**
+   * Set the parameter value on the data hash
+   */
+  _setParamValue: function(key, value, data) {
+    // use '.' to define hash separators
+    key = key.replace('[]', '');
+    key = key.replace('%5B%5D', '');
+    var parts = key.split('.');
+    var _data = data;
+    for (var i=0; i<parts.length; i++) {
+      var part = parts[i];
+      if (i === parts.length-1) {
+        // set the value
+        _data[part] = this._decodeParamValue(value, _data[part]);
+      } else {
+        _data = _data[part] = _data[part] || {};
+      }
+    }
+  },
+
+  /**
+   * Decode an individual parameter value (or list of values)
+   * @param value the complete value
+   * @param currentValue the currently known value (or list of values)
+   */
+  _decodeParamValue: function(value, currentValue) {
+    // '|' will indicate an array.  Array with 1 value is a=|b - multiple values can be a=b|c
+    var splitChar = Backbone.Router.arrayValueSplit;
+    if (splitChar && value.indexOf(splitChar) >= 0) {
+      var values = value.split(splitChar);
+      // clean it up
+      for (var i=values.length-1; i>=0; i--) {
+        if (!values[i]) {
+          values.splice(i, 1);
+        } else {
+          values[i] = parseParams(values[i]);
+        }
+      }
+      return values;
+    }
+
+    value = parseParams(value);
+    if (!currentValue) {
+      return value;
+    } else if (_.isArray(currentValue)) {
+      currentValue.push(value);
+      return currentValue;
+    } else {
+      return [currentValue, value];
+    }
+  },
+
+  /**
+   * Return the route fragment with queryParameters serialized to query parameter string
+   */
+  toFragment: function(route, queryParameters) {
+    if (queryParameters) {
+      if (!_.isString(queryParameters)) {
+        queryParameters = toQueryString(queryParameters);
+      }
+      if(queryParameters) {
+        route += '?' + queryParameters;
+      }
+    }
+    return route;
+  }
+});
+
+
+/**
+ * Serialize the val hash to query parameters and return it.  Use the namePrefix to prefix all param names (for recursion)
+ */
+function toQueryString(val, namePrefix) {
+  /*jshint eqnull:true */
+  var splitChar = Backbone.Router.arrayValueSplit;
+  function encodeSplit(val) { return String(val).replace(splitChar, encodeURIComponent(splitChar)); }
+
+  if (!val) {
+    return '';
+  }
+
+  namePrefix = namePrefix || '';
+  var rtn = [];
+  _.each(val, function(_val, name) {
+    name = namePrefix + name;
+
+    if (_.isString(_val) || _.isNumber(_val) || _.isBoolean(_val) || _.isDate(_val)) {
+      // primitive type
+      if (_val != null) {
+        rtn.push(name + '=' + encodeSplit(encodeURIComponent(_val)));
+      }
+    } else if (_.isArray(_val)) {
+      // arrays use Backbone.Router.arrayValueSplit separator
+      var str = '';
+      for (var i = 0; i < _val.length; i++) {
+        var param = _val[i];
+        if (param != null) {
+          str += splitChar + encodeSplit(param);
+        }
+      }
+      if (str) {
+        rtn.push(name + '=' + str);
+      }
+    } else {
+      // dig into hash
+      var result = toQueryString(_val, name + '.');
+      if (result) {
+        rtn.push(result);
+      }
+    }
+  });
+
+  return rtn.join('&');
+}
+
+function parseParams(value) {
+  // decodeURIComponent doesn't touch '+'
+  try {
+    return decodeURIComponent(value.replace(/\+/g, ' '));
+  } catch (err) {
+    // Failover to whatever was passed if we get junk data
+    return value;
+  }
+}
+
+function iterateQueryString(queryString, callback) {
+  var keyValues = queryString.split('&');
+  _.each(keyValues, function(keyValue) {
+    var arr = keyValue.split('=');
+    callback(arr.shift(), arr.join('='));
+  });
+}
+
+}));
+
+},{"backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js":[function(require,module,exports){
 // MarionetteJS (Backbone.Marionette)
 // ----------------------------------
 // v2.3.2
@@ -14747,11 +17321,12 @@ var ieee754 = require('ieee754')
 var isArray = require('is-array')
 
 exports.Buffer = Buffer
-exports.SlowBuffer = Buffer
+exports.SlowBuffer = SlowBuffer
 exports.INSPECT_MAX_BYTES = 50
 Buffer.poolSize = 8192 // not used by this implementation
 
 var kMaxLength = 0x3fffffff
+var rootParent = {}
 
 /**
  * If `Buffer.TYPED_ARRAY_SUPPORT`:
@@ -14780,7 +17355,7 @@ Buffer.TYPED_ARRAY_SUPPORT = (function () {
     var buf = new ArrayBuffer(0)
     var arr = new Uint8Array(buf)
     arr.foo = function () { return 42 }
-    return 42 === arr.foo() && // typed array instances can be augmented
+    return arr.foo() === 42 && // typed array instances can be augmented
         typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
         new Uint8Array(1).subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
   } catch (e) {
@@ -14809,54 +17384,71 @@ function Buffer (subject, encoding, noZero) {
   // Find the length
   var length
   if (type === 'number')
-    length = subject > 0 ? subject >>> 0 : 0
+    length = +subject
   else if (type === 'string') {
-    if (encoding === 'base64')
-      subject = base64clean(subject)
     length = Buffer.byteLength(subject, encoding)
   } else if (type === 'object' && subject !== null) { // assume object is array-like
     if (subject.type === 'Buffer' && isArray(subject.data))
       subject = subject.data
-    length = +subject.length > 0 ? Math.floor(+subject.length) : 0
-  } else
+    length = +subject.length
+  } else {
     throw new TypeError('must start with number, buffer, array or string')
+  }
 
-  if (this.length > kMaxLength)
+  if (length > kMaxLength)
     throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
       'size: 0x' + kMaxLength.toString(16) + ' bytes')
 
-  var buf
+  if (length < 0)
+    length = 0
+  else
+    length >>>= 0 // Coerce to uint32.
+
+  var self = this
   if (Buffer.TYPED_ARRAY_SUPPORT) {
     // Preferred: Return an augmented `Uint8Array` instance for best performance
-    buf = Buffer._augment(new Uint8Array(length))
+    /*eslint-disable consistent-this */
+    self = Buffer._augment(new Uint8Array(length))
+    /*eslint-enable consistent-this */
   } else {
     // Fallback: Return THIS instance of Buffer (created by `new`)
-    buf = this
-    buf.length = length
-    buf._isBuffer = true
+    self.length = length
+    self._isBuffer = true
   }
 
   var i
   if (Buffer.TYPED_ARRAY_SUPPORT && typeof subject.byteLength === 'number') {
     // Speed optimization -- use set if we're copying from a typed array
-    buf._set(subject)
+    self._set(subject)
   } else if (isArrayish(subject)) {
     // Treat array-ish objects as a byte array
     if (Buffer.isBuffer(subject)) {
       for (i = 0; i < length; i++)
-        buf[i] = subject.readUInt8(i)
+        self[i] = subject.readUInt8(i)
     } else {
       for (i = 0; i < length; i++)
-        buf[i] = ((subject[i] % 256) + 256) % 256
+        self[i] = ((subject[i] % 256) + 256) % 256
     }
   } else if (type === 'string') {
-    buf.write(subject, 0, encoding)
+    self.write(subject, 0, encoding)
   } else if (type === 'number' && !Buffer.TYPED_ARRAY_SUPPORT && !noZero) {
     for (i = 0; i < length; i++) {
-      buf[i] = 0
+      self[i] = 0
     }
   }
 
+  if (length > 0 && length <= Buffer.poolSize)
+    self.parent = rootParent
+
+  return self
+}
+
+function SlowBuffer (subject, encoding, noZero) {
+  if (!(this instanceof SlowBuffer))
+    return new SlowBuffer(subject, encoding, noZero)
+
+  var buf = new Buffer(subject, encoding, noZero)
+  delete buf.parent
   return buf
 }
 
@@ -14867,6 +17459,8 @@ Buffer.isBuffer = function (b) {
 Buffer.compare = function (a, b) {
   if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b))
     throw new TypeError('Arguments must be Buffers')
+
+  if (a === b) return 0
 
   var x = a.length
   var y = b.length
@@ -15007,7 +17601,8 @@ Buffer.prototype.toString = function (encoding, start, end) {
 }
 
 Buffer.prototype.equals = function (b) {
-  if(!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+  if (this === b) return true
   return Buffer.compare(this, b) === 0
 }
 
@@ -15024,6 +17619,7 @@ Buffer.prototype.inspect = function () {
 
 Buffer.prototype.compare = function (b) {
   if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+  if (this === b) return 0
   return Buffer.compare(this, b)
 }
 
@@ -15067,7 +17663,7 @@ function hexWrite (buf, string, offset, length) {
 }
 
 function utf8Write (buf, string, offset, length) {
-  var charsWritten = blitBuffer(utf8ToBytes(string), buf, offset, length)
+  var charsWritten = blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
   return charsWritten
 }
 
@@ -15086,7 +17682,7 @@ function base64Write (buf, string, offset, length) {
 }
 
 function utf16leWrite (buf, string, offset, length) {
-  var charsWritten = blitBuffer(utf16leToBytes(string), buf, offset, length)
+  var charsWritten = blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length, 2)
   return charsWritten
 }
 
@@ -15106,6 +17702,10 @@ Buffer.prototype.write = function (string, offset, length, encoding) {
   }
 
   offset = Number(offset) || 0
+
+  if (length < 0 || offset < 0 || offset > this.length)
+    throw new RangeError('attempt to write outside buffer bounds')
+
   var remaining = this.length - offset
   if (!length) {
     length = remaining
@@ -15184,13 +17784,19 @@ function asciiSlice (buf, start, end) {
   end = Math.min(buf.length, end)
 
   for (var i = start; i < end; i++) {
-    ret += String.fromCharCode(buf[i])
+    ret += String.fromCharCode(buf[i] & 0x7F)
   }
   return ret
 }
 
 function binarySlice (buf, start, end) {
-  return asciiSlice(buf, start, end)
+  var ret = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; i++) {
+    ret += String.fromCharCode(buf[i])
+  }
+  return ret
 }
 
 function hexSlice (buf, start, end) {
@@ -15221,7 +17827,7 @@ Buffer.prototype.slice = function (start, end) {
   end = end === undefined ? len : ~~end
 
   if (start < 0) {
-    start += len;
+    start += len
     if (start < 0)
       start = 0
   } else if (start > len) {
@@ -15239,16 +17845,21 @@ Buffer.prototype.slice = function (start, end) {
   if (end < start)
     end = start
 
+  var newBuf
   if (Buffer.TYPED_ARRAY_SUPPORT) {
-    return Buffer._augment(this.subarray(start, end))
+    newBuf = Buffer._augment(this.subarray(start, end))
   } else {
     var sliceLen = end - start
-    var newBuf = new Buffer(sliceLen, undefined, true)
+    newBuf = new Buffer(sliceLen, undefined, true)
     for (var i = 0; i < sliceLen; i++) {
       newBuf[i] = this[i + start]
     }
-    return newBuf
   }
+
+  if (newBuf.length)
+    newBuf.parent = this.parent || this
+
+  return newBuf
 }
 
 /*
@@ -15259,6 +17870,35 @@ function checkOffset (offset, ext, length) {
     throw new RangeError('offset is not uint')
   if (offset + ext > length)
     throw new RangeError('Trying to access beyond buffer length')
+}
+
+Buffer.prototype.readUIntLE = function (offset, byteLength, noAssert) {
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert)
+    checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100))
+    val += this[offset + i] * mul
+
+  return val
+}
+
+Buffer.prototype.readUIntBE = function (offset, byteLength, noAssert) {
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert)
+    checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset + --byteLength]
+  var mul = 1
+  while (byteLength > 0 && (mul *= 0x100))
+    val += this[offset + --byteLength] * mul
+
+  return val
 }
 
 Buffer.prototype.readUInt8 = function (offset, noAssert) {
@@ -15297,6 +17937,44 @@ Buffer.prototype.readUInt32BE = function (offset, noAssert) {
       ((this[offset + 1] << 16) |
       (this[offset + 2] << 8) |
       this[offset + 3])
+}
+
+Buffer.prototype.readIntLE = function (offset, byteLength, noAssert) {
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert)
+    checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100))
+    val += this[offset + i] * mul
+  mul *= 0x80
+
+  if (val >= mul)
+    val -= Math.pow(2, 8 * byteLength)
+
+  return val
+}
+
+Buffer.prototype.readIntBE = function (offset, byteLength, noAssert) {
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert)
+    checkOffset(offset, byteLength, this.length)
+
+  var i = byteLength
+  var mul = 1
+  var val = this[offset + --i]
+  while (i > 0 && (mul *= 0x100))
+    val += this[offset + --i] * mul
+  mul *= 0x80
+
+  if (val >= mul)
+    val -= Math.pow(2, 8 * byteLength)
+
+  return val
 }
 
 Buffer.prototype.readInt8 = function (offset, noAssert) {
@@ -15367,8 +18045,40 @@ Buffer.prototype.readDoubleBE = function (offset, noAssert) {
 
 function checkInt (buf, value, offset, ext, max, min) {
   if (!Buffer.isBuffer(buf)) throw new TypeError('buffer must be a Buffer instance')
-  if (value > max || value < min) throw new TypeError('value is out of bounds')
-  if (offset + ext > buf.length) throw new TypeError('index out of range')
+  if (value > max || value < min) throw new RangeError('value is out of bounds')
+  if (offset + ext > buf.length) throw new RangeError('index out of range')
+}
+
+Buffer.prototype.writeUIntLE = function (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert)
+    checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
+
+  var mul = 1
+  var i = 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100))
+    this[offset + i] = (value / mul) >>> 0 & 0xFF
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeUIntBE = function (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  byteLength = byteLength >>> 0
+  if (!noAssert)
+    checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
+
+  var i = byteLength - 1
+  var mul = 1
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100))
+    this[offset + i] = (value / mul) >>> 0 & 0xFF
+
+  return offset + byteLength
 }
 
 Buffer.prototype.writeUInt8 = function (value, offset, noAssert) {
@@ -15448,6 +18158,50 @@ Buffer.prototype.writeUInt32BE = function (value, offset, noAssert) {
   return offset + 4
 }
 
+Buffer.prototype.writeIntLE = function (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) {
+    checkInt(this,
+             value,
+             offset,
+             byteLength,
+             Math.pow(2, 8 * byteLength - 1) - 1,
+             -Math.pow(2, 8 * byteLength - 1))
+  }
+
+  var i = 0
+  var mul = 1
+  var sub = value < 0 ? 1 : 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100))
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeIntBE = function (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset >>> 0
+  if (!noAssert) {
+    checkInt(this,
+             value,
+             offset,
+             byteLength,
+             Math.pow(2, 8 * byteLength - 1) - 1,
+             -Math.pow(2, 8 * byteLength - 1))
+  }
+
+  var i = byteLength - 1
+  var mul = 1
+  var sub = value < 0 ? 1 : 0
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100))
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+
+  return offset + byteLength
+}
+
 Buffer.prototype.writeInt8 = function (value, offset, noAssert) {
   value = +value
   offset = offset >>> 0
@@ -15513,8 +18267,9 @@ Buffer.prototype.writeInt32BE = function (value, offset, noAssert) {
 }
 
 function checkIEEE754 (buf, value, offset, ext, max, min) {
-  if (value > max || value < min) throw new TypeError('value is out of bounds')
-  if (offset + ext > buf.length) throw new TypeError('index out of range')
+  if (value > max || value < min) throw new RangeError('value is out of bounds')
+  if (offset + ext > buf.length) throw new RangeError('index out of range')
+  if (offset < 0) throw new RangeError('index out of range')
 }
 
 function writeFloat (buf, value, offset, littleEndian, noAssert) {
@@ -15549,22 +18304,23 @@ Buffer.prototype.writeDoubleBE = function (value, offset, noAssert) {
 
 // copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
 Buffer.prototype.copy = function (target, target_start, start, end) {
-  var source = this
+  var self = this // source
 
   if (!start) start = 0
   if (!end && end !== 0) end = this.length
+  if (target_start >= target.length) target_start = target.length
   if (!target_start) target_start = 0
+  if (end > 0 && end < start) end = start
 
   // Copy 0 bytes; we're done
-  if (end === start) return
-  if (target.length === 0 || source.length === 0) return
+  if (end === start) return 0
+  if (target.length === 0 || self.length === 0) return 0
 
   // Fatal error conditions
-  if (end < start) throw new TypeError('sourceEnd < sourceStart')
-  if (target_start < 0 || target_start >= target.length)
-    throw new TypeError('targetStart out of bounds')
-  if (start < 0 || start >= source.length) throw new TypeError('sourceStart out of bounds')
-  if (end < 0 || end > source.length) throw new TypeError('sourceEnd out of bounds')
+  if (target_start < 0)
+    throw new RangeError('targetStart out of bounds')
+  if (start < 0 || start >= self.length) throw new RangeError('sourceStart out of bounds')
+  if (end < 0) throw new RangeError('sourceEnd out of bounds')
 
   // Are we oob?
   if (end > this.length)
@@ -15574,13 +18330,15 @@ Buffer.prototype.copy = function (target, target_start, start, end) {
 
   var len = end - start
 
-  if (len < 100 || !Buffer.TYPED_ARRAY_SUPPORT) {
+  if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
     for (var i = 0; i < len; i++) {
       target[i + target_start] = this[i + start]
     }
   } else {
     target._set(this.subarray(start, start + len), target_start)
   }
+
+  return len
 }
 
 // fill(value, start=0, end=buffer.length)
@@ -15589,14 +18347,14 @@ Buffer.prototype.fill = function (value, start, end) {
   if (!start) start = 0
   if (!end) end = this.length
 
-  if (end < start) throw new TypeError('end < start')
+  if (end < start) throw new RangeError('end < start')
 
   // Fill 0 bytes; we're done
   if (end === start) return
   if (this.length === 0) return
 
-  if (start < 0 || start >= this.length) throw new TypeError('start out of bounds')
-  if (end < 0 || end > this.length) throw new TypeError('end out of bounds')
+  if (start < 0 || start >= this.length) throw new RangeError('start out of bounds')
+  if (end < 0 || end > this.length) throw new RangeError('end out of bounds')
 
   var i
   if (typeof value === 'number') {
@@ -15643,6 +18401,7 @@ var BP = Buffer.prototype
  * Augment a Uint8Array *instance* (not the Uint8Array class!) with Buffer methods
  */
 Buffer._augment = function (arr) {
+  arr.constructor = Buffer
   arr._isBuffer = true
 
   // save reference to original Uint8Array get/set methods before overwriting
@@ -15661,11 +18420,15 @@ Buffer._augment = function (arr) {
   arr.compare = BP.compare
   arr.copy = BP.copy
   arr.slice = BP.slice
+  arr.readUIntLE = BP.readUIntLE
+  arr.readUIntBE = BP.readUIntBE
   arr.readUInt8 = BP.readUInt8
   arr.readUInt16LE = BP.readUInt16LE
   arr.readUInt16BE = BP.readUInt16BE
   arr.readUInt32LE = BP.readUInt32LE
   arr.readUInt32BE = BP.readUInt32BE
+  arr.readIntLE = BP.readIntLE
+  arr.readIntBE = BP.readIntBE
   arr.readInt8 = BP.readInt8
   arr.readInt16LE = BP.readInt16LE
   arr.readInt16BE = BP.readInt16BE
@@ -15676,10 +18439,14 @@ Buffer._augment = function (arr) {
   arr.readDoubleLE = BP.readDoubleLE
   arr.readDoubleBE = BP.readDoubleBE
   arr.writeUInt8 = BP.writeUInt8
+  arr.writeUIntLE = BP.writeUIntLE
+  arr.writeUIntBE = BP.writeUIntBE
   arr.writeUInt16LE = BP.writeUInt16LE
   arr.writeUInt16BE = BP.writeUInt16BE
   arr.writeUInt32LE = BP.writeUInt32LE
   arr.writeUInt32BE = BP.writeUInt32BE
+  arr.writeIntLE = BP.writeIntLE
+  arr.writeIntBE = BP.writeIntBE
   arr.writeInt8 = BP.writeInt8
   arr.writeInt16LE = BP.writeInt16LE
   arr.writeInt16BE = BP.writeInt16BE
@@ -15696,11 +18463,13 @@ Buffer._augment = function (arr) {
   return arr
 }
 
-var INVALID_BASE64_RE = /[^+\/0-9A-z]/g
+var INVALID_BASE64_RE = /[^+\/0-9A-z\-]/g
 
 function base64clean (str) {
   // Node strips out invalid characters like \n and \t from the string, base64-js does not
   str = stringtrim(str).replace(INVALID_BASE64_RE, '')
+  // Node converts strings with length < 2 to ''
+  if (str.length < 2) return ''
   // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
   while (str.length % 4 !== 0) {
     str = str + '='
@@ -15724,22 +18493,85 @@ function toHex (n) {
   return n.toString(16)
 }
 
-function utf8ToBytes (str) {
-  var byteArray = []
-  for (var i = 0; i < str.length; i++) {
-    var b = str.charCodeAt(i)
-    if (b <= 0x7F) {
-      byteArray.push(b)
-    } else {
-      var start = i
-      if (b >= 0xD800 && b <= 0xDFFF) i++
-      var h = encodeURIComponent(str.slice(start, i+1)).substr(1).split('%')
-      for (var j = 0; j < h.length; j++) {
-        byteArray.push(parseInt(h[j], 16))
+function utf8ToBytes (string, units) {
+  units = units || Infinity
+  var codePoint
+  var length = string.length
+  var leadSurrogate = null
+  var bytes = []
+  var i = 0
+
+  for (; i < length; i++) {
+    codePoint = string.charCodeAt(i)
+
+    // is surrogate component
+    if (codePoint > 0xD7FF && codePoint < 0xE000) {
+      // last char was a lead
+      if (leadSurrogate) {
+        // 2 leads in a row
+        if (codePoint < 0xDC00) {
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          leadSurrogate = codePoint
+          continue
+        } else {
+          // valid surrogate pair
+          codePoint = leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00 | 0x10000
+          leadSurrogate = null
+        }
+      } else {
+        // no lead yet
+
+        if (codePoint > 0xDBFF) {
+          // unexpected trail
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        } else if (i + 1 === length) {
+          // unpaired lead
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        } else {
+          // valid lead
+          leadSurrogate = codePoint
+          continue
+        }
       }
+    } else if (leadSurrogate) {
+      // valid bmp char, but last char was a lead
+      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+      leadSurrogate = null
+    }
+
+    // encode utf8
+    if (codePoint < 0x80) {
+      if ((units -= 1) < 0) break
+      bytes.push(codePoint)
+    } else if (codePoint < 0x800) {
+      if ((units -= 2) < 0) break
+      bytes.push(
+        codePoint >> 0x6 | 0xC0,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x10000) {
+      if ((units -= 3) < 0) break
+      bytes.push(
+        codePoint >> 0xC | 0xE0,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x200000) {
+      if ((units -= 4) < 0) break
+      bytes.push(
+        codePoint >> 0x12 | 0xF0,
+        codePoint >> 0xC & 0x3F | 0x80,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else {
+      throw new Error('Invalid code point')
     }
   }
-  return byteArray
+
+  return bytes
 }
 
 function asciiToBytes (str) {
@@ -15751,10 +18583,12 @@ function asciiToBytes (str) {
   return byteArray
 }
 
-function utf16leToBytes (str) {
+function utf16leToBytes (str, units) {
   var c, hi, lo
   var byteArray = []
   for (var i = 0; i < str.length; i++) {
+    if ((units -= 2) < 0) break
+
     c = str.charCodeAt(i)
     hi = c >> 8
     lo = c % 256
@@ -15766,10 +18600,11 @@ function utf16leToBytes (str) {
 }
 
 function base64ToBytes (str) {
-  return base64.toByteArray(str)
+  return base64.toByteArray(base64clean(str))
 }
 
-function blitBuffer (src, dst, offset, length) {
+function blitBuffer (src, dst, offset, length, unitSize) {
+  if (unitSize) length -= length % unitSize
   for (var i = 0; i < length; i++) {
     if ((i + offset >= dst.length) || (i >= src.length))
       break
@@ -15801,12 +18636,16 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	var NUMBER = '0'.charCodeAt(0)
 	var LOWER  = 'a'.charCodeAt(0)
 	var UPPER  = 'A'.charCodeAt(0)
+	var PLUS_URL_SAFE = '-'.charCodeAt(0)
+	var SLASH_URL_SAFE = '_'.charCodeAt(0)
 
 	function decode (elt) {
 		var code = elt.charCodeAt(0)
-		if (code === PLUS)
+		if (code === PLUS ||
+		    code === PLUS_URL_SAFE)
 			return 62 // '+'
-		if (code === SLASH)
+		if (code === SLASH ||
+		    code === SLASH_URL_SAFE)
 			return 63 // '/'
 		if (code < NUMBER)
 			return -1 //no match
@@ -43145,5 +45984,5 @@ module.exports = function parseuri(str) {
 };
 
 },{}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js":[function(require,module,exports){
-module.exports=require("C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\node_modules\\underscore\\underscore.js")
-},{"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\node_modules\\underscore\\underscore.js":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\node_modules\\underscore\\underscore.js"}]},{},["./QuoteFlow/Content/js/app/app.js"]);
+arguments[4]["C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\node_modules\\underscore\\underscore.js"][0].apply(exports,arguments)
+},{}]},{},["./QuoteFlow/Content/js/app/init.js"]);

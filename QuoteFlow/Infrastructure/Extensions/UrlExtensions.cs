@@ -86,16 +86,6 @@ namespace QuoteFlow.Infrastructure.Extensions
             return string.Format("/catalog/{0}/{1}/assets?page={2}", catalogId, catalogName, pageNumber);
         }
 
-        public static string CatalogAssetsInteractive(this UrlHelper url, int catalogId, string catalogName)
-        {
-            return string.Format("/catalog/{0}/{1}/assets/iv", catalogId, catalogName.UrlFriendly());
-        }
-
-        public static string CatalogAssetsInteractive(this UrlHelper url, int catalogId, string catalogName, int pageNumber)
-        {
-            return string.Format("/catalog/{0}/{1}/assets/iv?page={2}", catalogId, catalogName.UrlFriendly(), pageNumber);
-        }
-
         public static string CatalogVersions(this UrlHelper url, int catalogId, string catalogName)
         {
             return string.Format("/catalog/{0}/{1}/versions", catalogId, catalogName);
@@ -232,13 +222,7 @@ namespace QuoteFlow.Infrastructure.Extensions
             {
                 returnUrl = String.Empty;
             }
-            var originalResult = MVC.Authentication.LogOff(returnUrl);
-            var result = originalResult.GetT4MVCResult();
-
-            // T4MVC doesn't set area to "", but we need it to, otherwise it thinks this is an intra-area link.
-            result.RouteValueDictionary["area"] = "";
-
-            return url.Action(originalResult);
+            return url.Action("LogOff", "Authentication", new { returnUrl, area = "" });
         }
 
         public static string Register(this UrlHelper url, string returnUrl)

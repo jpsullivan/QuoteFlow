@@ -284,9 +284,6 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="T4MVCExtensions">
-      <HintPath>..\packages\T4MVCExtensions.3.9.0\lib\net40\T4MVCExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -298,26 +295,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
     <Compile Include="App_Start\MiniProfiler.cs" />
     <Compile Include="App_Start\Startup.Ninject.cs" />
     <Compile Include="App_Start\Startup.WebApi.cs" />
-    <Compile Include="AssetController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AuthenticationController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CatalogController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Constants.cs" />
-    <Compile Include="ContactController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\AdminControllerBase.cs" />
     <Compile Include="Controllers\Api\AssetController.cs" />
@@ -332,9 +314,6 @@
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="DashboardController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -372,9 +351,6 @@
     <Compile Include="Infrastructure\Optimization\Bundler.cs" />
     <Compile Include="Infrastructure\RouteName.cs" />
     <Compile Include="Infrastructure\SafeRedirectResult.cs" />
-    <Compile Include="ManufacturerController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\M001_CreateUsers.cs" />
     <Compile Include="Migrations\M002_CreateRoles.cs" />
     <Compile Include="Migrations\M003_CreateUserRoles.cs" />
@@ -408,25 +384,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="QuoteController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
-    </Compile>
-    <Compile Include="T4MVC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UsersController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewBase.cs" />
   </ItemGroup>
@@ -528,26 +490,50 @@
     <Content Include="Content\js\app\base\controller.js" />
     <Content Include="Content\js\app\collections\asset\searcher.js" />
     <Content Include="Content\js\app\collections\asset_vars.js" />
+    <Content Include="Content\js\app\components\asset-table\asset-table.js" />
+    <Content Include="Content\js\app\components\asset-table\controllers\asset-table.js" />
+    <Content Include="Content\js\app\components\asset-table\views\asset-table-layout.js" />
+    <Content Include="Content\js\app\components\asset-table\views\asset-table.js" />
+    <Content Include="Content\js\app\components\asset-table\views\empty-results.js" />
+    <Content Include="Content\js\app\components\asset-table\views\end-of-stable-message.js" />
+    <Content Include="Content\js\app\components\asset-table\views\pagination.js" />
+    <Content Include="Content\js\app\components\asset-table\views\refresh-results.js" />
+    <Content Include="Content\js\app\components\asset-table\views\results-count.js" />
     <Content Include="Content\js\app\components\query.js" />
     <Content Include="Content\js\app\components\routes.js" />
+    <Content Include="Content\js\app\components\search\search-service-controller.js" />
+    <Content Include="Content\js\app\components\table\asset-table-view.js" />
     <Content Include="Content\js\app\components\utilities.js" />
     <Content Include="Content\js\app\extensions\string_extensions.js" />
     <Content Include="Content\js\app\helpers\application_helpers.js" />
     <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\components\jqui-widget_sidebar.js" />
     <Content Include="Content\js\app\helpers\underscore_helpers.js" />
+    <Content Include="Content\js\app\init.js" />
     <Content Include="Content\js\app\models\asset\criteria.js" />
     <Content Include="Content\js\app\models\asset\details.js" />
     <Content Include="Content\js\app\models\asset\navigator.js" />
     <Content Include="Content\js\app\models\asset\searcher.js" />
     <Content Include="Content\js\app\models\asset_var.js" />
     <Content Include="Content\js\app\models\asset_var_value.js" />
-    <Content Include="Content\js\app\modules\asset\basic_query.js" />
-    <Content Include="Content\js\app\modules\asset\query.js" />
-    <Content Include="Content\js\app\modules\asset\jql_query.js" />
+    <Content Include="Content\js\app\modules\asset\controller.js" />
+    <Content Include="Content\js\app\modules\asset\module.js" />
+    <Content Include="Content\js\app\modules\asset\queries\basic_query.js" />
+    <Content Include="Content\js\app\modules\asset\queries\query.js" />
+    <Content Include="Content\js\app\modules\asset\queries\jql_query.js" />
+    <Content Include="Content\js\app\modules\asset\router.js" />
+    <Content Include="Content\js\app\modules\asset\search\layout-switcher.js" />
+    <Content Include="Content\js\app\modules\asset\search\search-header-module.js" />
+    <Content Include="Content\js\app\modules\asset\split-view\layout.js" />
+    <Content Include="Content\js\app\modules\asset\views\asset-nav-creator.js" />
+    <Content Include="Content\js\app\modules\catalog\controller.js" />
+    <Content Include="Content\js\app\modules\catalog\module.js" />
+    <Content Include="Content\js\app\modules\catalog\router.js" />
     <Content Include="Content\js\app\pages\asset.js" />
     <Content Include="Content\js\app\pages\catalog.js" />
     <Content Include="Content\js\app\router.js" />
+    <Content Include="Content\js\app\modules\asset\search\full-screen-controller.js" />
+    <Content Include="Content\js\app\modules\asset\search\search-page-module.js" />
     <Content Include="Content\js\app\ui\asset\asset_navigator.js" />
     <Content Include="Content\js\app\ui\asset\edit.js" />
     <Content Include="Content\js\app\ui\asset\edit\add_asset_var_field.js" />
@@ -562,13 +548,16 @@
     <Content Include="Content\js\app\ui\asset\navigator\toolbar.js" />
     <Content Include="Content\js\app\ui\asset\show.js" />
     <Content Include="Content\js\app\ui\catalog\show_interactive.js" />
-    <Content Include="Content\js\app\ui\catalog\import_asset_var_row.js" />
-    <Content Include="Content\js\app\ui\catalog\import_set_fields.js" />
-    <Content Include="Content\js\app\ui\catalog\import_set_optional_fields.js" />
-    <Content Include="Content\js\app\ui\catalog\select_asset_var_modal.js" />
+    <Content Include="Content\js\app\modules\catalog\views\import_asset_var_row.js" />
+    <Content Include="Content\js\app\modules\catalog\views\import_set_fields.js" />
+    <Content Include="Content\js\app\modules\catalog\views\import_set_optional_fields.js" />
+    <Content Include="Content\js\app\modules\catalog\views\select_asset_var_modal.js" />
     <Content Include="Content\js\app\ui\common\panel-table.js" />
+    <Content Include="Content\js\app\util\url-serializer.js" />
     <Content Include="Content\js\app\view.js" />
+    <Content Include="Content\js\lib\ajs-keyboard-shortcuts.js" />
     <Content Include="Content\js\lib\aui\aui-all.js" />
+    <Content Include="Content\js\lib\aui\aui-datepicker.js" />
     <Content Include="Content\js\lib\aui\aui-dependencies.js" />
     <Content Include="Content\js\lib\aui\aui-experimental.js" />
     <Content Include="Content\js\lib\aui\aui-ie.js" />
@@ -707,7 +696,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Global.asax" />
     <EmbeddedResource Include="Migrations\Elmah.SqlServer.sql" />
-    <Content Include="Scripts\async-file-upload.js" />
+    <Content Include="Content\js\lib\async-file-upload.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\less\bootstrap.less" />
@@ -779,13 +768,13 @@
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Content Include="Content\views\asset\nav-search\layout-switcher.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -816,11 +805,6 @@
     <Content Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Views\Users\ResetPassword.cshtml" />
     <Content Include="Views\Users\Thanks.cshtml" />
-    <None Include="T4MVC.tt.hooks.t4" />
-    <None Include="T4MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </None>
     <Content Include="Views\Shared\_FocusedLayout.cshtml" />
     <Content Include="Views\Shared\_FocusedWizardLayout.cshtml" />
     <Content Include="Views\Shared\_LogOnLayout.cshtml" />
@@ -862,7 +846,6 @@
     <Content Include="Views\Manufacturer\Edit.cshtml" />
     <Content Include="Views\Quote\Show.cshtml" />
     <Content Include="Views\Shared\_InteractiveCatalogAssetsLayout.cshtml" />
-    <Content Include="Views\Catalog\ShowAssetsInteractive.cshtml" />
     <Content Include="Views\Shared\Partials\Dashboard\GettingStarted.cshtml" />
     <Content Include="Views\Dashboard\GettingStarted.cshtml" />
     <Content Include="Views\Shared\Partials\Header\Help.cshtml" />

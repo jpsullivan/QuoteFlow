@@ -17,8 +17,9 @@ namespace QuoteFlow.Api.Services
         /// 
         /// </summary>
         /// <param name="userId"></param>
+        /// <param name="folderName"></param>
         /// <returns></returns>
-        Task<Stream> GetUploadFileAsync(int userId);
+        Task<Stream> GetUploadFileAsync(int userId, string folderName = Constants.UploadsFolderName);
 
         /// <summary>
         /// 

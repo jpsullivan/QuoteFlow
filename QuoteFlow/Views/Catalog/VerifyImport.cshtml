@@ -68,8 +68,6 @@
 
 @section secondaryScripts {
     <script type="text/javascript">
-        var view = new QuoteFlow.UI.Catalog.ImportSetFields({
-            rawRows: @ViewHelpers.JsEncode(Model.Rows.Take(100))
-        });
+        window.rawRows = @ViewHelpers.JsEncode(Model.Rows.Take(100));
     </script>
 }
