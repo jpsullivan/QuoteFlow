@@ -1,0 +1,18 @@
+﻿@using QuoteFlow.Api.Models
+@using QuoteFlow.Api.Models.ViewModels
+@using QuoteFlow.Infrastructure.Extensions
+@model SidebarViewModel<Catalog>
+
+<div class="aui-page-panel-nav">
+    <nav class="aui-navgroup aui-navgroup-vertical">
+        <div class="aui-navgroup-inner">
+            <ul class="aui-nav">
+                <li class="@Model.GetMenuItemClass("overview")"><a href="@Url.Catalog(Model.Actor.Id, Model.Actor.Name.UrlFriendly())">Summary</a></li>
+                <li class="@Model.GetMenuItemClass("assets")"><a href="@Url.CatalogAssets(Model.Actor.Id, Model.Actor.Name.UrlFriendly())">Assets</a></li>
+                <li class="@Model.GetMenuItemClass("import results")"><a href="@Url.CatalogImportResults(Model.Actor.Id, Model.Actor.Name.UrlFriendly())">Import Results</a></li>
+                <li class="@Model.GetMenuItemClass("versions")"><a href="@Url.CatalogVersions(Model.Actor.Id, Model.Actor.Name.UrlFriendly())">Versions</a></li>
+                <li class="@Model.GetMenuItemClass("change log")"><a href="#">Change Log</a></li>
+            </ul>
+        </div>
+    </nav><!-- .aui-navgroup -->
+</div><!-- .aui-page-panel-nav -->
