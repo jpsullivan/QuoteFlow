@@ -1,9 +1,9 @@
 ﻿@using QuoteFlow.Api.Models
 @using QuoteFlow.Api.Models.ViewModels
 @model QuoteFlow.Api.Models.ViewModels.Quotes.QuoteShowModel
-           
+
 @{
-    ViewBag.Title = string.Format("{0} - QuoteFlow", Model.Quote.Name);
+    ViewBag.Title = string.Format("{0} Access Control - QuoteFlow", Model.Quote.Name);
 }
 
 <section id="content" role="main">
@@ -24,7 +24,7 @@
 
     <div class="aui-page-panel">
         <div class="aui-page-panel-inner">
-            @Html.Partial("Partials/Quote/ShowSidebar", new SidebarViewModel<Quote>("overview", Model.Quote))
+            @Html.Partial("Partials/Quote/ShowSidebar", new SidebarViewModel<Quote>("access control", Model.Quote))
 
             <section class="aui-page-panel-content">
                 <div class="aui-page-header">
@@ -54,7 +54,7 @@
 
             <aside class="aui-page-panel-sidebar">
                 <h3>Versions</h3>
-                
+
             </aside>
         </div><!-- .aui-page-panel-inner -->
     </div><!-- .aui-page-panel -->

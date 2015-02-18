@@ -170,6 +170,21 @@ namespace QuoteFlow.Infrastructure.Extensions
             return string.Format("/quote/new");
         }
 
+        public static string QuoteLineItems(this UrlHelper url, int id, string name)
+        {
+            return url.RouteUrl(RouteNames.QuoteLineItems, new { id, name });
+        }
+
+        public static string QuoteChangeHistory(this UrlHelper url, int id, string quoteName)
+        {
+            return url.RouteUrl(RouteNames.QuoteChangeHistory, new { id, name = quoteName });
+        }
+
+        public static string QuoteAccessControl(this UrlHelper url, int id, string quoteName)
+        {
+            return url.RouteUrl(RouteNames.QuoteAccessControl, new { id, name = quoteName });
+        }
+
         #endregion
 
         #region Users

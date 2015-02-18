@@ -611,6 +611,9 @@
     <Content Include="Content\less\header.css">
       <DependentUpon>header.less</DependentUpon>
     </Content>
+    <Content Include="Content\less\header.min.css">
+      <DependentUpon>header.css</DependentUpon>
+    </Content>
     <Content Include="Content\less\layout.css">
       <DependentUpon>layout.less</DependentUpon>
     </Content>
@@ -863,6 +866,10 @@
     <Content Include="Views\Admin\AdminIndex.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_LayoutHybrid.cshtml" />
+    <Content Include="Views\Shared\Partials\Quote\ShowSidebar.cshtml" />
+    <Content Include="Views\Quote\ChangeHistory.cshtml" />
+    <Content Include="Views\Quote\LineItems.cshtml" />
+    <Content Include="Views\Quote\AccessControl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

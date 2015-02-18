@@ -18,6 +18,10 @@
         public const string Error404 = "Error404";
 
 
+        public const string QuoteAccessControl = "Quote-AccessControl";
+        public const string QuoteChangeHistory = "Quote-ChangeHistory";
         public const string QuoteIndex = "Quote-Index";
+        public const string QuoteLineItems = "Quote-LineItems";
+        public const string QuoteShow = "Quote-Show";
     }
 }

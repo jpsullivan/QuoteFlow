@@ -72,7 +72,7 @@ namespace QuoteFlow.Controllers
             return Redirect("~/quote/" + newQuote.Id + "/" + newQuote.Name.UrlFriendly());
         }
 
-        [Route("quote/{id:INT}/{name}")]
+        [Route("quote/{id:INT}/{name}", Name = RouteNames.QuoteShow)]
         public virtual ActionResult Show(int id, string name)
         {
             var quote = QuoteService.GetQuote(id);
@@ -86,8 +86,67 @@ namespace QuoteFlow.Controllers
             var model = new QuoteShowModel
             {
                 Quote = quote,
-                QuoteCreator = creator,
-                CurrentAsset = new AssetDetailsModel(AssetService.GetAsset(1), true)
+                QuoteCreator = creator
+            };
+
+            return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
+        }
+
+        [Route("quote/{id:INT}/{name}/line-items", Name = RouteNames.QuoteLineItems)]
+        public virtual ActionResult LineItems(int id, string name)
+        {
+            var quote = QuoteService.GetQuote(id);
+            if (quote == null)
+            {
+                return PageNotFound();
+            }
+
+            var creator = UserService.GetUser(quote.CreatorId);
+
+            var model = new QuoteShowModel
+            {
+                Quote = quote,
+                QuoteCreator = creator
+            };
+
+            return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
+        }
+
+        [Route("quote/{id:INT}/{name}/change-history", Name = RouteNames.QuoteChangeHistory)]
+        public virtual ActionResult ChangeHistory(int id, string name)
+        {
+            var quote = QuoteService.GetQuote(id);
+            if (quote == null)
+            {
+                return PageNotFound();
+            }
+
+            var creator = UserService.GetUser(quote.CreatorId);
+
+            var model = new QuoteShowModel
+            {
+                Quote = quote,
+                QuoteCreator = creator
+            };
+
+            return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
+        }
+
+        [Route("quote/{id:INT}/{name}/access", Name = RouteNames.QuoteAccessControl)]
+        public virtual ActionResult AccessControl(int id, string name)
+        {
+            var quote = QuoteService.GetQuote(id);
+            if (quote == null)
+            {
+                return PageNotFound();
+            }
+
+            var creator = UserService.GetUser(quote.CreatorId);
+
+            var model = new QuoteShowModel
+            {
+                Quote = quote,
+                QuoteCreator = creator
             };
 
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);

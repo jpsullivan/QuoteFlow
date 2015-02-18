@@ -3,7 +3,7 @@ using Dapper;
 
 namespace QuoteFlow.Api.Models
 {
-    public class Quote
+    public class Quote : IQuote
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -24,6 +24,12 @@ namespace QuoteFlow.Api.Models
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdated { get; set; }
         public bool Enabled { get; set; }
+    }
+
+    public interface IQuote
+    {
+        int Id { get; set; }
+        string Name { get; set; }
     }
 
     /// <summary>

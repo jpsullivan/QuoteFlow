@@ -892,6 +892,13 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
 .aui-page-header ul.summary-list li.failed a:hover {
   color: #e75543;
 }
+.aui-page-header-main.entity-item h1 {
+  display: inline-block;
+}
+.aui-page-header-main.entity-item h1 + .aui-button {
+  margin-left: 10px;
+  vertical-align: bottom;
+}
 .aui-page-panel-content .summary-modules {
   margin-top: 20px;
 }
@@ -977,6 +984,7 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
 }
 .page-type-split .navigator-body .saved-search-selector .search-header-view h1 {
   float: left;
+  font-size: 24px;
   font-weight: normal;
   margin-right: 12px;
   max-width: 18em;
@@ -1436,6 +1444,29 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
   padding: 0;
   position: relative;
 }
+.quote-list-table #actions {
+  width: 16px;
+}
+.quote-list-table td {
+  white-space: nowrap;
+}
+.quote-list-table td[headers=name] > div {
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  max-width: 240px;
+  vertical-align: middle;
+}
+.quote-list-table td[headers=total_price] > div {
+  text-align: right;
+}
+.quote-list-table td[headers=responded] > div {
+  max-width: 40px;
+  text-align: center;
+  vertical-align: middle;
+}
 .aui-lozenge.aui-lozenge-code {
   background-color: #f5f5f5;
   border-color: #ccc;
@@ -1445,7 +1476,17 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
   text-transform: none;
   font-size: 12px;
   padding: 4px;
-  margin: 0px 3px;
+  margin: 0 3px;
+}
+h1 {
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 1.25;
+}
+h2 {
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 1.5;
 }
 a.user-hover.user-avatar {
   background-repeat: no-repeat;
