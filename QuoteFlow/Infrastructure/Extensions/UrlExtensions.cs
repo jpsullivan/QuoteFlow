@@ -222,13 +222,7 @@ namespace QuoteFlow.Infrastructure.Extensions
             {
                 returnUrl = String.Empty;
             }
-            var originalResult = MVC.Authentication.LogOff(returnUrl);
-            var result = originalResult.GetT4MVCResult();
-
-            // T4MVC doesn't set area to "", but we need it to, otherwise it thinks this is an intra-area link.
-            result.RouteValueDictionary["area"] = "";
-
-            return url.Action(originalResult);
+            return url.Action("LogOff", "Authentication", new { returnUrl, area = "" });
         }
 
         public static string Register(this UrlHelper url, string returnUrl)

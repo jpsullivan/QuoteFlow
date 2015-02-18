@@ -284,9 +284,6 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="T4MVCExtensions">
-      <HintPath>..\packages\T4MVCExtensions.3.9.0\lib\net40\T4MVCExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -298,26 +295,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\AppActivator.cs" />
     <Compile Include="App_Start\MiniProfiler.cs" />
     <Compile Include="App_Start\Startup.Ninject.cs" />
     <Compile Include="App_Start\Startup.WebApi.cs" />
-    <Compile Include="AssetController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AuthenticationController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CatalogController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Constants.cs" />
-    <Compile Include="ContactController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\AdminControllerBase.cs" />
     <Compile Include="Controllers\Api\AssetController.cs" />
@@ -332,9 +314,6 @@
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="DashboardController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -372,9 +351,6 @@
     <Compile Include="Infrastructure\Optimization\Bundler.cs" />
     <Compile Include="Infrastructure\RouteName.cs" />
     <Compile Include="Infrastructure\SafeRedirectResult.cs" />
-    <Compile Include="ManufacturerController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\M001_CreateUsers.cs" />
     <Compile Include="Migrations\M002_CreateRoles.cs" />
     <Compile Include="Migrations\M003_CreateUserRoles.cs" />
@@ -408,25 +384,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="QuoteController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
-    </Compile>
-    <Compile Include="T4MVC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UsersController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewBase.cs" />
   </ItemGroup>
@@ -813,7 +775,6 @@
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -844,11 +805,6 @@
     <Content Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Views\Users\ResetPassword.cshtml" />
     <Content Include="Views\Users\Thanks.cshtml" />
-    <None Include="T4MVC.tt.hooks.t4" />
-    <None Include="T4MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </None>
     <Content Include="Views\Shared\_FocusedLayout.cshtml" />
     <Content Include="Views\Shared\_FocusedWizardLayout.cshtml" />
     <Content Include="Views\Shared\_LogOnLayout.cshtml" />
@@ -890,7 +846,6 @@
     <Content Include="Views\Manufacturer\Edit.cshtml" />
     <Content Include="Views\Quote\Show.cshtml" />
     <Content Include="Views\Shared\_InteractiveCatalogAssetsLayout.cshtml" />
-    <Content Include="Views\Catalog\ShowAssetsInteractive.cshtml" />
     <Content Include="Views\Shared\Partials\Dashboard\GettingStarted.cshtml" />
     <Content Include="Views\Dashboard\GettingStarted.cshtml" />
     <Content Include="Views\Shared\Partials\Header\Help.cshtml" />
