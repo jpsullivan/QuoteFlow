@@ -23,6 +23,7 @@
                 <thead>
                     <tr>
                         <th id="name">Name</th>
+                        <th id="lineitems">Line Items</th>
                         <th id="total_price">Total Price</th>
                         <th id="status">Status</th>
                         <th id="responded">Responded</th>
@@ -40,6 +41,11 @@
                                 <td headers="name">
                                     <div title="@quote.Name">
                                         <a href="@Url.Quote(quote.Id, quote.Name)">@quote.Name</a>
+                                    </div>
+                                </td>
+                                <td headers="total_lineitems">
+                                    <div title="@quote.TotalLineItems">
+                                        @quote.TotalLineItems
                                     </div>
                                 </td>
                                 <td headers="total_price">
@@ -74,11 +80,7 @@
                                         @quote.LastUpdated.ToString("MM/dd/yy")
                                     </div>
                                 </td>
-                                <td headers="actions">
-                                    <a href="#" class="delete-button delete-customer" title="Delete" data-for="@quote.Name">
-                                        <span class="aui-icon aui-icon-small aui-iconfont-remove"></span>
-                                    </a>
-                                </td>
+                                <td headers="actions"></td>
                             </tr>
                         }
                     }

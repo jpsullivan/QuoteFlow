@@ -19,6 +19,7 @@ namespace QuoteFlow.Api.Models
             set { _totalPrice = value; }
         }
 
+        public int TotalLineItems { get; set; }
         public int CreatorId { get; set; }
         public int OrganizationId { get; set; }
         public DateTime CreationDate { get; set; }

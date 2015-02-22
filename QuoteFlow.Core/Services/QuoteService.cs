@@ -4,6 +4,7 @@ using System.Linq;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
+using StackExchange.Profiling.Helpers.Dapper;
 
 namespace QuoteFlow.Core.Services
 {
@@ -16,7 +17,14 @@ namespace QuoteFlow.Core.Services
         /// <returns type="Quote">A quote object</returns>
         public Quote GetQuote(int quoteId)
         {
-            return Current.DB.Quotes.Get(quoteId);
+            var quote = Current.DB.Quotes.Get(quoteId);
+
+            const string countSql = "select count(*) from QuoteLineItems where QuoteId = @id";
+            int totalLineItems = Current.DB.Query<int>(countSql, new {id = quote.Id}).First();
+
+            quote.TotalLineItems = totalLineItems;
+
+            return quote;
         }
 
         /// <summary>
@@ -42,7 +50,6 @@ namespace QuoteFlow.Core.Services
             };
 
             var insert = Current.DB.Quotes.Insert(quote);
-
             if (insert != null)
             {
                 quote.Id = insert.Value;
@@ -58,8 +65,20 @@ namespace QuoteFlow.Core.Services
         /// <returns>List of quotes from the organization</returns>
         public IEnumerable<Quote> GetQuotesFromOrganization(int organizationId)
         {
-            const string sql = "select * from Quotes where OrganizationId = @organizationId";
-            return Current.DB.Query<Quote>(sql, new { organizationId });
+            var builder = new SqlBuilder();
+            var tmpl = builder.AddTemplate(@"
+                select
+                    *,
+                    (select count(*) from QuoteLineItems where QuoteId = quotes.Id) TotalLineItems
+                from
+                (
+                    select * from Quotes /**where**/
+                ) as quotes
+            ");
+
+            builder.Where("OrganizationId = @organizationId");
+
+            return Current.DB.Query<Quote>(tmpl.RawSql, new { organizationId });
         }
 
         /// <summary>

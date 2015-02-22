@@ -110,14 +110,8 @@ namespace QuoteFlow.Core.Services
         /// <returns></returns>
         public bool CatalogNameExists(string catalogName, int organizationId)
         {
-            var catalog =
-                Current.DB.Query<Catalog>(
-                    "select * from Catalogs where Name = @catalogName AND OrganizationId = @organizationId", new
-                    {
-                        catalogName,
-                        organizationId
-                    }).FirstOrDefault();
-
+            const string sql = "select * from Catalogs where Name = @catalogName AND OrganizationId = @organizationId";
+            var catalog = Current.DB.Query<Catalog>(sql, new { catalogName, organizationId }).FirstOrDefault();
             return catalog != null;
         }
 
