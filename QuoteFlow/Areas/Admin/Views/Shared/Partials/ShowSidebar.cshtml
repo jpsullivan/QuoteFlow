@@ -1,0 +1,35 @@
+﻿@using QuoteFlow.Api.Models.ViewModels
+@using QuoteFlow.Infrastructure.Extensions
+@model SidebarViewModel<object>
+
+<div class="aui-page-panel-nav">
+    <nav class="aui-navgroup aui-navgroup-vertical">
+        <div class="aui-navgroup-inner">
+            <ul class="aui-nav">
+                <li class="@Model.GetMenuItemClass("overview")"><a href="#">Overview</a></li>
+            </ul>
+            <div class="aui-nav-heading">
+                <strong>Accounts</strong>
+            </div>
+            <ul class="aui-nav">
+                <li class="@Model.GetMenuItemClass("accounts-users")"><a href="#">Users</a></li>
+                <li class="@Model.GetMenuItemClass("accounts-groups")"><a href="#">Groups</a></li>
+                <li class="@Model.GetMenuItemClass("accounts-globalpermissions")"><a href="#">Global permissions</a></li>
+                <li class="@Model.GetMenuItemClass("accounts-authentication")"><a href="#">Authentication</a></li>
+            </ul>
+            <div class="aui-nav-heading">
+                <strong>Quote Settings</strong>
+            </div>
+            <ul class="aui-nav">
+                <li class="@Model.GetMenuItemClass("quotesettings-statuses")"><a href="@Url.AdminStatuses()">Statuses</a></li>
+            </ul>
+            <div class="aui-nav-heading">
+                <strong>Support</strong>
+            </div>
+            <ul class="aui-nav">
+                <li><a href="#">Support Tools</a></li>
+                <li><a href="#">Logging and Profiling</a></li>
+            </ul>
+        </div>
+    </nav><!-- .aui-navgroup -->
+</div><!-- .aui-page-panel-nav -->

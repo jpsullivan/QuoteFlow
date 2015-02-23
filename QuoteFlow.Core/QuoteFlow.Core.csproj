@@ -393,6 +393,7 @@
     <Compile Include="Services\OrganizationService.cs" />
     <Compile Include="Services\QuoteLineItemService.cs" />
     <Compile Include="Services\QuoteService.cs" />
+    <Compile Include="Services\QuoteStatusService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="Services\UserService.cs" />

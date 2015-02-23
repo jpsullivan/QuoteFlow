@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using QuoteFlow.Api.Infrastructure.Extensions;
-using QuoteFlow.Models;
 
 namespace QuoteFlow.Infrastructure.Extensions
 {
@@ -40,7 +39,16 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         public static string Admin(this UrlHelper url)
         {
-            return url.Action("AdminIndex", "Admin");
+            return url.Action("Index", "Home");
+        }
+
+        #endregion
+
+        #region Admin
+
+        public static string AdminStatuses(this UrlHelper url)
+        {
+            return url.Action("Index", "Status");
         }
 
         #endregion

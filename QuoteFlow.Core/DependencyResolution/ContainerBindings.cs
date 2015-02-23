@@ -77,67 +77,24 @@ namespace QuoteFlow.Core.DependencyResolution
                 .ToMethod(_ => new SqlErrorLog(configuration.Current.SqlConnectionString))
                 .InSingletonScope();
 
-            Bind<ICacheService>()
-                .To<HttpContextCacheService>()
-                .InRequestScope();
-
-            Bind<IContentService>()
-                .To<ContentService>()
-                .InSingletonScope();
-
-            Bind<IAssetService>()
-                .To<AssetService>()
-                .InRequestScope();
-
-            Bind<IAssetSearchService>()
-                .To<AssetSearchService>()
-                .InRequestScope();
-
+            Bind<ICacheService>().To<HttpContextCacheService>().InRequestScope();
+            Bind<IContentService>().To<ContentService>().InSingletonScope();
+            Bind<IAssetService>().To<AssetService>().InRequestScope();
+            Bind<IAssetSearchService>().To<AssetSearchService>().InRequestScope();
             Bind<IAssetSearcherManager>().To<AssetSearcherManager>().InRequestScope();
-
-            Bind<IAssetVarService>()
-                .To<AssetVarService>()
-                .InRequestScope();
-
+            Bind<IAssetVarService>().To<AssetVarService>().InRequestScope();
             Bind<ICatalogImportService>().To<CatalogImportService>().InRequestScope();
-
-            Bind<ICatalogImportSummaryRecordsService>()
-                .To<CatalogImportSummaryRecordsService>()
-                .InRequestScope();
-
-            Bind<ICatalogService>()
-                .To<CatalogService>()
-                .InRequestScope();
-
-            Bind<IContactService>()
-                .To<ContactService>()
-                .InRequestScope();
-
-            Bind<IManufacturerService>()
-                .To<ManufacturerService>()
-                .InRequestScope();
-
-            Bind<IManufacturerLogoService>()
-                .To<ManufacturerLogoService>()
-                .InRequestScope();
-
-            Bind<IOrganizationService>()
-                .To<OrganizationService>()
-                .InRequestScope();
-
-            Bind<IQuoteService>()
-                .To<QuoteService>()
-                .InRequestScope();
-
+            Bind<ICatalogImportSummaryRecordsService>().To<CatalogImportSummaryRecordsService>().InRequestScope();
+            Bind<ICatalogService>().To<CatalogService>().InRequestScope();
+            Bind<IContactService>().To<ContactService>().InRequestScope();
+            Bind<IManufacturerService>().To<ManufacturerService>().InRequestScope();
+            Bind<IManufacturerLogoService>().To<ManufacturerLogoService>().InRequestScope();
+            Bind<IOrganizationService>().To<OrganizationService>().InRequestScope();
+            Bind<IQuoteService>().To<QuoteService>().InRequestScope();
+            Bind<IQuoteStatusService>().To<QuoteStatusService>().InRequestScope();
             Bind<ISearchHandlerManager>().To<SearchHandlerManager>().InRequestScope();
-
-            Bind<ISearchService>()
-                .To<SearchService>()
-                .InRequestScope();
-
-            Bind<IUserService>()
-                .To<UserService>()
-                .InRequestScope();
+            Bind<ISearchService>().To<SearchService>().InRequestScope();
+            Bind<IUserService>().To<UserService>().InRequestScope();
 
             Bind<IControllerFactory>()
                 .To<QuoteFlowControllerFactory>()
@@ -200,12 +157,8 @@ namespace QuoteFlow.Core.DependencyResolution
                     break;
             }
 
-            Bind<IFileSystemService>()
-                .To<FileSystemService>()
-                .InSingletonScope();
-
-            Bind<IUploadFileService>()
-                .To<UploadFileService>();
+            Bind<IFileSystemService>().To<FileSystemService>().InSingletonScope();
+            Bind<IUploadFileService>().To<UploadFileService>();
 
             #region Asset Fields
 

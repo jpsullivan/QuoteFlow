@@ -3,9 +3,9 @@
 namespace QuoteFlow.Api.Models.ViewModels
 {
     /// <summary>
-    /// Provides a construct for getting and setting information about a 
-    /// particular sidebar. The idea here is to be able to rely on this 
-    /// when determing if a menu item on the sidebar should be selected.
+    /// Provides a construct for getting and setting information about a particular sidebar. 
+    /// The idea here is to be able to rely on this when determing if a menu item on the 
+    /// sidebar should be selected.
     /// </summary>
     public class SidebarViewModel<T>
     {
@@ -23,6 +23,11 @@ namespace QuoteFlow.Api.Models.ViewModels
             SelectedItem = selectedItem;
             SelectedItemClass = selectedItemClass;
             Actor = actor;
+        }
+
+        public SidebarViewModel(string selectedItem)
+        {
+            SelectedItem = selectedItem;
         }
     }
 

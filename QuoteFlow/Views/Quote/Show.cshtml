@@ -45,7 +45,12 @@
                             <div class="module">
                                 <!-- Product versions module -->
                                 <h3>Recent Activity</h3>
-                                <p>Lorem ipsum</p>
+                                <div class="blank-message">
+                                    <h2>No recent activities found</h2>
+                                    <p>
+                                        There have been no actions made to this quote. <a href="#">Start adding line items now.</a>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -53,8 +58,26 @@
             </section><!-- .aui-page-panel-content -->
 
             <aside class="aui-page-panel-sidebar">
-                <h3>Versions</h3>
-                
+                <ol class="aui-progress-tracker">
+                    <li class="aui-progress-tracker-step aui-progress-tracker-step-current"><span>Build</span></li>
+                    <li class="aui-progress-tracker-step"><span>Review</span></li>
+                    <li class="aui-progress-tracker-step"><span>Sold</span></li>
+                </ol>
+
+                <h3>Members</h3>
+                <dl class="meta-list">
+                    <dt>Quote Creator</dt>
+                    <dd>
+                        <a href="#" class="quoteflow-user-name quoteflow-user-avatar quoteflow-user-avatar-small">
+                            <span class="aui-avatar aui-avatar-small">
+                                <span class="aui-avatar-inner">
+                                    @Html.Gravatar(@Model.QuoteCreator.EmailAddress, 24)
+                                </span>
+                            </span>
+                            @Model.QuoteCreator.FullName
+                        </a>
+                    </dd>
+                </dl>
             </aside>
         </div><!-- .aui-page-panel-inner -->
     </div><!-- .aui-page-panel -->

@@ -8,7 +8,7 @@ namespace QuoteFlow.Api.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public QuoteStatus Status { get; set; }
+        public QuoteStatuses Status { get; set; }
         public bool? Responded { get; set; }
 
         private decimal _totalPrice;
@@ -36,7 +36,7 @@ namespace QuoteFlow.Api.Models
     /// <summary>
     /// Enum used for determining the quote status
     /// </summary>
-    public enum QuoteStatus
+    public enum QuoteStatuses
     {
         Pending = 1,
         POReceived = 2,

@@ -299,9 +299,12 @@
     <Compile Include="App_Start\MiniProfiler.cs" />
     <Compile Include="App_Start\Startup.Ninject.cs" />
     <Compile Include="App_Start\Startup.WebApi.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminControllerBase.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StatusController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\QuoteStatusViewModels.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Controllers\Admin\AdminController.cs" />
-    <Compile Include="Controllers\Admin\AdminControllerBase.cs" />
     <Compile Include="Controllers\Api\AssetController.cs" />
     <Compile Include="Controllers\Api\AssetVarController.cs" />
     <Compile Include="Controllers\Api\AssetVarValueController.cs" />
@@ -379,6 +382,7 @@
     <Compile Include="Migrations\M026_AddTokenToManufacturerLogos.cs" />
     <Compile Include="Infrastructure\ModelBinders\Asset\EditAssetModelBinder.cs" />
     <Compile Include="Migrations\M027_CreateQuoteLineItems.cs" />
+    <Compile Include="Migrations\M028_CreateQuoteStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -624,8 +628,20 @@
     <Content Include="Content\less\lists.css">
       <DependentUpon>lists.less</DependentUpon>
     </Content>
+    <Content Include="Content\less\lists.min.css">
+      <DependentUpon>lists.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\messages.css">
+      <DependentUpon>messages.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\messages.min.css">
+      <DependentUpon>messages.css</DependentUpon>
+    </Content>
     <Content Include="Content\less\misc.css">
       <DependentUpon>misc.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\misc.min.css">
+      <DependentUpon>misc.css</DependentUpon>
     </Content>
     <Content Include="Content\less\quote-list-table.css">
       <DependentUpon>quote-list-table.less</DependentUpon>
@@ -785,6 +801,16 @@
     <Content Include="Content\less\quote-list-table.css.map">
       <DependentUpon>quote-list-table.css</DependentUpon>
     </Content>
+    <Content Include="Content\less\messages.less" />
+    <Content Include="Content\less\messages.css.map">
+      <DependentUpon>messages.css</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Partials\ShowSidebar.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Status\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

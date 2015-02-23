@@ -413,6 +413,7 @@
     <Compile Include="Models\Manufacturer.cs" />
     <Compile Include="Models\ManufacturerLogo.cs" />
     <Compile Include="Models\QuoteLineItem.cs" />
+    <Compile Include="Models\QuoteStatus.cs" />
     <Compile Include="Models\RequestModels\AssetCriteriaQuery.cs" />
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
@@ -473,6 +474,7 @@
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\IQuoteLineItemService.cs" />
     <Compile Include="Services\IQuoteService.cs" />
+    <Compile Include="Services\IQuoteStatusService.cs" />
     <Compile Include="Services\ISearchProvider.cs" />
     <Compile Include="Services\ISearchService.cs" />
     <Compile Include="Services\IUploadFileService.cs" />

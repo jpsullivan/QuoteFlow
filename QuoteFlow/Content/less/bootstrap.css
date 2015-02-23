@@ -1444,6 +1444,17 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
   padding: 0;
   position: relative;
 }
+.blank-message {
+  background: #fff;
+  border: 1px solid #ccc;
+  margin: 20px auto;
+  padding: 20px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
 .quote-list-table #actions {
   width: 16px;
 }
@@ -1458,9 +1469,6 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
   display: inline-block;
   max-width: 240px;
   vertical-align: middle;
-}
-.quote-list-table td[headers=total_price] > div {
-  text-align: right;
 }
 .quote-list-table td[headers=responded] > div {
   max-width: 40px;

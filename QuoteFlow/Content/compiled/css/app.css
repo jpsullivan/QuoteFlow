@@ -1444,6 +1444,24 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
   padding: 0;
   position: relative;
 }
+dl.meta-list dt {
+  color: #707070;
+  font-size: 14px;
+}
+dl.meta-list dd {
+  margin: 5px 0 0 0;
+}
+.blank-message {
+  background: #fff;
+  border: 1px solid #ccc;
+  margin: 20px auto;
+  padding: 20px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
 .quote-list-table #actions {
   width: 16px;
 }
@@ -1513,11 +1531,20 @@ a.user-hover.user-avatar > .aui-avatar {
 .quoteflow-user-name.quoteflow-user-avatar {
   padding-left: 21px;
 }
+.quoteflow-user-name.quoteflow-user-avatar .aui-avatar {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
 .quoteflow-user-name.quoteflow-user-avatar .aui-avatar-xsmall {
   left: 0;
   margin-top: 2px;
   position: absolute;
   top: 0;
+}
+.quoteflow-user-name.quoteflow-user-avatar-small {
+  line-height: 24px;
+  padding-left: 29px;
 }
 .hidden {
   display: none !important;

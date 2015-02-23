@@ -76,4 +76,11 @@
   padding: 0;
   position: relative;
 }
+dl.meta-list dt {
+  color: #707070;
+  font-size: 14px;
+}
+dl.meta-list dd {
+  margin: 5px 0 0 0;
+}
 /*# sourceMappingURL=lists.css.map */

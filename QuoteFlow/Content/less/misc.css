@@ -15,11 +15,20 @@
 .quoteflow-user-name.quoteflow-user-avatar {
   padding-left: 21px;
 }
+.quoteflow-user-name.quoteflow-user-avatar .aui-avatar {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
 .quoteflow-user-name.quoteflow-user-avatar .aui-avatar-xsmall {
   left: 0;
   margin-top: 2px;
   position: absolute;
   top: 0;
+}
+.quoteflow-user-name.quoteflow-user-avatar-small {
+  line-height: 24px;
+  padding-left: 29px;
 }
 .hidden {
   display: none !important;

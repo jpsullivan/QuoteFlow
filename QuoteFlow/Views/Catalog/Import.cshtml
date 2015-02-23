@@ -7,9 +7,6 @@
 }
 
 <h2>Import a new catalog</h2>
-<span class="secondary-link">
-    You can also <a href="@Url.ImportCatalog()">import a catalog</a>
-</span>
 @using (Html.BeginForm("Import", "Catalog", FormMethod.Post, new { id = "request_form", enctype = "multipart/form-data", @class = "aui" }))
 {
     @Html.AntiForgeryToken()
