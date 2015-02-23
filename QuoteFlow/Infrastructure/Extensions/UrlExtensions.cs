@@ -24,7 +24,7 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         public static string Home(this UrlHelper url)
         {
-            return url.Action("Index", "Dashboard");
+            return url.RouteUrl(RouteNames.Dashboard);
         }
 
         public static string Account(this UrlHelper url)

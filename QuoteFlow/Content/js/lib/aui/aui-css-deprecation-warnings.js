@@ -1,8 +1,14 @@
 ;
-define('aui/css-deprecation-warnings',['aui/internal/deprecation'], function (deprecate) {
+(function (init) {
+    "use strict";
+    var ret = init();
+    define('aui/css-deprecation-warnings',['aui/internal/deprecation'], function () {
+        return ret;
+    });
+})(function () {
     'use strict';
 
-    var css = deprecate.css;
+    var css = AJS.deprecate.css;
 
     css('.aui-dropdown2-trigger.aui-style-dropdown2triggerlegacy1', {
         displayName: 'Dropdown2 legacy trigger'
@@ -82,4 +88,3 @@ define('aui/css-deprecation-warnings',['aui/internal/deprecation'], function (de
         displayName: 'Marketing style headings'
     });
 });
-

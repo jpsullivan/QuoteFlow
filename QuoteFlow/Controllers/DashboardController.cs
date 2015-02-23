@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using QuoteFlow.Api.Models.ViewModels;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Attributes;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
@@ -23,7 +24,7 @@ namespace QuoteFlow.Controllers
         #endregion
 
         [Authorize]
-        [Route("")]
+        [Route("", Name = RouteNames.Dashboard)]
         public virtual ActionResult Index(int? skipGettingStarted)
         {
             var model = new DashboardViewModel();
@@ -49,12 +50,9 @@ namespace QuoteFlow.Controllers
             model.Quotes = quotes;
 
             // catch-all, if the query string is forcing a skip, do so.
-            if (skipGettingStarted != null)
+            if (skipGettingStarted == 1)
             {
-                if (skipGettingStarted == 1)
-                {
-                    model.SkipGettingStarted = true;
-                }
+                model.SkipGettingStarted = true;
             }
 
             return View(model);
