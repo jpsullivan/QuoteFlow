@@ -1973,7 +1973,8 @@ window['DP_jQuery_' + dpuuid] = $;
                 calendar.datepicker(config);
 
                 // bind additional field processing events
-                $field.on('focusout', handleFieldBlur);
+                $('body').on('keydown', handleDatePickerFocus);
+                $field.on('focusout keydown', handleFieldBlur);
                 $field.on('propertychange keyup input paste', handleFieldUpdate);
 
             };
@@ -1984,18 +1985,22 @@ window['DP_jQuery_' + dpuuid] = $;
 
             handleDatePickerFocus = function (event) {
                 var $eventTarget = $(event.target);
-                if (!($eventTarget.closest(popupContents).length || $eventTarget.is($field))) {
-                    if (!$eventTarget.closest('.ui-datepicker-header').length) {
-                        datePicker.hide();
-                        return;
-                    }
+                var isTargetInput = $eventTarget.closest(popupContents).length || $eventTarget.is($field);
+                var isTargetPopup = $eventTarget.closest('.ui-datepicker-header').length;
+
+                // Hide if we're clicking anywhere else but the input or popup OR if esc is pressed.
+                if ((!isTargetInput && !isTargetPopup) || event.keyCode === AJS.keyCode.ESCAPE) {
+                    datePicker.hide();
+                    return;
                 }
+
                 if ($eventTarget[0] !== $field[0]) {
                     event.preventDefault();
                 }
             };
 
             handleFieldBlur = function (event) {
+                // Trigger blur if event is keydown and esc OR is focusout.
                 if (!(isTrackingDatePickerFocus)) {
                     $('body').on('focus blur click mousedown', '*', handleDatePickerFocus);
                     isTrackingDatePickerFocus = true;
@@ -2039,7 +2044,8 @@ window['DP_jQuery_' + dpuuid] = $;
 
                 $field.off('propertychange keyup input paste', handleFieldUpdate);
                 $field.off('focus click', handleFieldFocus);
-                $field.off('focusout', handleFieldBlur);
+                $field.off('focusout keydown', handleFieldBlur);
+                $('body').off('keydown', handleFieldBlur);
 
                 if (AJS.DatePicker.prototype.browserSupportsDateField) {
                     $field[0].type = 'date';

@@ -8,9 +8,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
 
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui-all.css")" media="all">
-    <!--[if lt IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie.css")" media="all"><![endif]-->
-    <!--[if IE 9]><link rel="stylesheet" href="@Url.Content("/Content/css/lib/aui/aui-ie9.css")" media="all"><![endif]-->
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui.min.css")" media="all">
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui-experimental.min.css")" media="all">
     @Styles.Render("~/bundles/css_app")
 </head>
 <body class="aui-layout aui-page-focused aui-page-focused-medium">
@@ -42,7 +41,6 @@
     </script>
 
     <script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Content/js/lib/aui/aui-all.js")"></script>
     @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
     @RenderSection("scripts", false)
     @RenderSection("bootstrap", false)

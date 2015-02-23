@@ -404,41 +404,16 @@
     <Content Include="Content\compiled\css\app.min.css" />
     <Content Include="Content\compiled\js\bundle.js" />
     <Content Include="Content\compiled\js\templates.min.js" />
-    <Content Include="Content\css\lib\aui\arrow.png" />
-    <Content Include="Content\css\lib\aui\atlassian-icons.svg" />
-    <Content Include="Content\css\lib\aui\aui-all.css" />
     <Content Include="Content\css\lib\aui\aui-experimental.css" />
-    <Content Include="Content\css\lib\aui\aui-icon-close.png" />
-    <Content Include="Content\css\lib\aui\aui-icon-tools.gif" />
-    <Content Include="Content\css\lib\aui\aui-ie9.css" />
-    <Content Include="Content\css\lib\aui\aui-toolbar-24px.png" />
+    <Content Include="Content\css\lib\aui\aui-experimental.min.css" />
+    <Content Include="Content\css\lib\aui\aui-iconfonts.css" />
+    <Content Include="Content\css\lib\aui\aui-iconfonts.min.css" />
     <Content Include="Content\css\lib\aui\aui.css" />
-    <Content Include="Content\css\lib\aui\bg-000-trans20.png" />
-    <Content Include="Content\css\lib\aui\bg-000-trans50.png" />
+    <Content Include="Content\css\lib\aui\aui.min.css" />
     <Content Include="Content\css\lib\aui\bg-grippy.png" />
-    <Content Include="Content\css\lib\aui\core\icon-dropdown-active-d.png" />
-    <Content Include="Content\css\lib\aui\core\icon-dropdown-active.png" />
-    <Content Include="Content\css\lib\aui\core\icon-dropdown-d.png" />
-    <Content Include="Content\css\lib\aui\core\icon-dropdown.png" />
-    <Content Include="Content\css\lib\aui\core\icon-maximize-d.png" />
-    <Content Include="Content\css\lib\aui\core\icon-maximize.png" />
-    <Content Include="Content\css\lib\aui\core\icon-minimize-d.png" />
-    <Content Include="Content\css\lib\aui\core\icon-minimize.png" />
-    <Content Include="Content\css\lib\aui\core\icon-move-d.png" />
-    <Content Include="Content\css\lib\aui\core\icon-move.png" />
-    <Content Include="Content\css\lib\aui\core\icon-search.png" />
-    <Content Include="Content\css\lib\aui\fav_off_16.png" />
-    <Content Include="Content\css\lib\aui\fav_on_16.png" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.svg" />
-    <Content Include="Content\css\lib\aui\forms\icon-date.png" />
-    <Content Include="Content\css\lib\aui\forms\icon-help.png" />
-    <Content Include="Content\css\lib\aui\forms\icon-range.png" />
-    <Content Include="Content\css\lib\aui\forms\icon-required.png" />
-    <Content Include="Content\css\lib\aui\forms\icon-users.png" />
-    <Content Include="Content\css\lib\aui\forms\icons_form.gif" />
     <Content Include="Content\css\lib\aui\icons\aui-icon-close.png" />
     <Content Include="Content\css\lib\aui\icons\aui-icon-tools.gif" />
-    <Content Include="Content\css\lib\aui\icons\aui-message-icon-sprite.png" />
     <Content Include="Content\css\lib\aui\icons\core\icon-dropdown-active-d.png" />
     <Content Include="Content\css\lib\aui\icons\core\icon-dropdown-active.png" />
     <Content Include="Content\css\lib\aui\icons\core\icon-dropdown-d.png" />
@@ -457,14 +432,11 @@
     <Content Include="Content\css\lib\aui\icons\forms\icon-users.png" />
     <Content Include="Content\css\lib\aui\icons\messages\icon-close-inverted.png" />
     <Content Include="Content\css\lib\aui\icons\messages\icon-close.png" />
-    <Content Include="Content\css\lib\aui\icons\messages\icon-error-white.png" />
-    <Content Include="Content\css\lib\aui\icons\messages\icon-error.png" />
-    <Content Include="Content\css\lib\aui\icons\messages\icon-generic.png" />
-    <Content Include="Content\css\lib\aui\icons\messages\icon-hint.png" />
-    <Content Include="Content\css\lib\aui\icons\messages\icon-info.png" />
-    <Content Include="Content\css\lib\aui\icons\messages\icon-success.png" />
-    <Content Include="Content\css\lib\aui\icons\messages\icon-warning.png" />
     <Content Include="Content\css\lib\aui\images\arrow.png" />
+    <Content Include="Content\css\lib\aui\images\atlassian-logo-grey.min.svg" />
+    <Content Include="Content\css\lib\aui\images\atlassian-logo-grey.svg" />
+    <Content Include="Content\css\lib\aui\images\atlassian-logo.min.svg" />
+    <Content Include="Content\css\lib\aui\images\atlassian-logo.svg" />
     <Content Include="Content\css\lib\aui\images\bg-000-trans20.png" />
     <Content Include="Content\css\lib\aui\images\bg-000-trans50.png" />
     <Content Include="Content\css\lib\aui\images\fav_off_16.png" />
@@ -481,13 +453,10 @@
     <Content Include="Content\css\lib\aui\images\icons\messages\icon-success.png" />
     <Content Include="Content\css\lib\aui\images\icons\messages\icon-warning.png" />
     <Content Include="Content\css\lib\aui\images\wait.gif" />
-    <Content Include="Content\css\lib\aui\messages\icon-close-inverted.png" />
-    <Content Include="Content\css\lib\aui\messages\icon-close.png" />
     <Content Include="Content\css\lib\aui\select2-spinner.gif" />
     <Content Include="Content\css\lib\aui\select2.png" />
     <Content Include="Content\css\lib\aui\select2x2.png" />
     <Content Include="Content\css\lib\aui\toolbar\aui-toolbar-24px.png" />
-    <Content Include="Content\css\lib\aui\wait.gif" />
     <Content Include="Content\images\get-started\birds-eye-view_2x.png" />
     <Content Include="Content\images\get-started\get-started_2x.png" />
     <Content Include="Content\images\quoteflow_logo.png" />
@@ -561,13 +530,16 @@
     <Content Include="Content\js\app\util\url-serializer.js" />
     <Content Include="Content\js\app\view.js" />
     <Content Include="Content\js\lib\ajs-keyboard-shortcuts.js" />
-    <Content Include="Content\js\lib\aui\aui-all.js" />
+    <Content Include="Content\js\lib\aui\aui-css-deprecation-warnings.js" />
+    <Content Include="Content\js\lib\aui\aui-css-deprecation-warnings.min.js" />
     <Content Include="Content\js\lib\aui\aui-datepicker.js" />
-    <Content Include="Content\js\lib\aui\aui-dependencies.js" />
+    <Content Include="Content\js\lib\aui\aui-datepicker.min.js" />
     <Content Include="Content\js\lib\aui\aui-experimental.js" />
-    <Content Include="Content\js\lib\aui\aui-ie.js" />
+    <Content Include="Content\js\lib\aui\aui-experimental.min.js" />
     <Content Include="Content\js\lib\aui\aui-soy.js" />
+    <Content Include="Content\js\lib\aui\aui-soy.min.js" />
     <Content Include="Content\js\lib\aui\aui.js" />
+    <Content Include="Content\js\lib\aui\aui.min.js" />
     <Content Include="Content\js\lib\backbone-brace.min.js" />
     <Content Include="Content\js\lib\backbone.min.js" />
     <Content Include="Content\js\lib\handlebars.min.js" />
@@ -582,6 +554,12 @@
     </Content>
     <Content Include="Content\less\asset.min.css">
       <DependentUpon>asset.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\aui-experimental-restfultable.css">
+      <DependentUpon>aui-experimental-restfultable.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\aui-experimental-restfultable.min.css">
+      <DependentUpon>aui-experimental-restfultable.css</DependentUpon>
     </Content>
     <Content Include="Content\less\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
@@ -648,6 +626,36 @@
     </Content>
     <Content Include="Content\less\quote-list-table.min.css">
       <DependentUpon>quote-list-table.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\aui-theme\component-variables.css">
+      <DependentUpon>component-variables.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\aui-theme\component-variables.min.css">
+      <DependentUpon>component-variables.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\aui-theme\components\restful-table.css">
+      <DependentUpon>restful-table.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\aui-theme\components\restful-table.min.css">
+      <DependentUpon>restful-table.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\aui-theme\core-variables.css">
+      <DependentUpon>core-variables.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\aui-theme\core-variables.min.css">
+      <DependentUpon>core-variables.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\aui-theme\core\colors.css">
+      <DependentUpon>colors.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\aui-theme\core\colors.min.css">
+      <DependentUpon>colors.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\global.css">
+      <DependentUpon>global.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\global.min.css">
+      <DependentUpon>global.css</DependentUpon>
     </Content>
     <Content Include="Content\less\typography.css">
       <DependentUpon>typography.less</DependentUpon>
@@ -787,12 +795,6 @@
       <DependentUpon>get-started.css</DependentUpon>
     </Content>
     <Content Include="Content\compiled\js\bundle.js.map" />
-    <Content Include="Content\css\lib\aui\atlassian-icons.eot" />
-    <Content Include="Content\css\lib\aui\atlassian-icons.ttf" />
-    <Content Include="Content\css\lib\aui\atlassian-icons.woff" />
-    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.eot" />
-    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
-    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Content Include="Content\views\asset\nav-search\layout-switcher.hbs" />
     <Content Include="Content\less\quote-list-table.less" />
@@ -811,6 +813,34 @@
     <Content Include="Areas\Admin\Views\Shared\Partials\ShowSidebar.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Status\Index.cshtml" />
+    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.eot" />
+    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
+    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
+    <Content Include="Content\less\aui-experimental-restfultable.less" />
+    <Content Include="Content\less\static\aui-theme\theme.less" />
+    <Content Include="Content\less\static\aui-theme\core-variables.less" />
+    <Content Include="Content\less\static\aui-theme\core\borders.less" />
+    <Content Include="Content\less\static\aui-theme\core\colors.less" />
+    <Content Include="Content\less\static\aui-theme\core\colors.css.map">
+      <DependentUpon>colors.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\aui-theme\core-variables.css.map">
+      <DependentUpon>core-variables.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\global.css.map">
+      <DependentUpon>global.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\aui-theme\components\restful-table.less" />
+    <Content Include="Content\less\static\aui-theme\components\restful-table.css.map">
+      <DependentUpon>restful-table.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\static\aui-theme\component-variables.less" />
+    <Content Include="Content\less\static\aui-theme\component-variables.css.map">
+      <DependentUpon>component-variables.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\aui-experimental-restfultable.css.map">
+      <DependentUpon>aui-experimental-restfultable.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -891,7 +921,6 @@
     <Content Include="Views\Dashboard\GettingStarted.cshtml" />
     <Content Include="Views\Shared\Partials\Header\Help.cshtml" />
     <Content Include="Views\Admin\AdminIndex.cshtml" />
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_LayoutHybrid.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\ShowSidebar.cshtml" />
     <Content Include="Views\Quote\ChangeHistory.cshtml" />
