@@ -1066,6 +1066,9 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
 .intro-content {
   overflow: hidden;
 }
+.intro-content.closed {
+  display: none;
+}
 .intro-content h4 {
   margin: 0;
 }

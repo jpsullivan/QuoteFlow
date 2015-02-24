@@ -820,9 +820,6 @@
     <Content Include="Areas\Admin\Views\Shared\Partials\ShowSidebar.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Status\Index.cshtml" />
-    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.eot" />
-    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
-    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
     <Content Include="Content\less\aui-experimental-restfultable.less" />
     <Content Include="Content\less\static\aui-theme\theme.less" />
     <Content Include="Content\less\static\aui-theme\core-variables.less" />
@@ -852,6 +849,9 @@
     <Content Include="Content\less\intro-message.css.map">
       <DependentUpon>intro-message.css</DependentUpon>
     </Content>
+    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.eot" />
+    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
+    <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
