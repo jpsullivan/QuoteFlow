@@ -1,6 +1,9 @@
 ﻿.intro-content {
   overflow: hidden;
 }
+.intro-content.closed {
+  display: none;
+}
 .intro-content h4 {
   margin: 0;
 }

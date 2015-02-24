@@ -11,8 +11,15 @@
                 <h4>What are quote statuses?</h4>
                 <p>
                     Quote statuses act as indicators for what stage a quote is currently in. While a quote
-                    must have distinct start and finish points, new statuses can be added to accomodate the
+                    must have distinct start and finish points, new statuses can be added to suit the
                     needs of your workflow.
+                </p>
+                <p>
+                    Each quote status can also add rules to automatically alert someone when a quote has
+                    entered (or left) a particular status.
+                </p>
+                <p>
+                    <button class="aui-button aui-button-link intro-toggle">Hide this information</button>
                 </p>
             </div>
             <div class="aui-item intro-item-how">
@@ -50,9 +57,10 @@
                 <td class="aui-restfultable-order">
                     <span class="aui-restfultable-draghandle"></span>
                 </td>
-                <td class="custom-apps-restfultable-displayname">
+                <td>
                     <input type="text" class="text" name="name" value="">
                 </td>
+                <td></td>
                 <td class="aui-restfultable-operations">
                     <input class="aui-button" type="submit" value="Add">
                 </td>
@@ -60,16 +68,24 @@
         </tbody>
         <tbody class="ui-sortable">
             <tr class="aui-restfultable-readonly aui-restfultable-row" data-id="1" data-name="Stash">
-                <td class="aui-restfultable-order"><span class="aui-restfultable-draghandle"></span></td>
-                <td class="name">
+                <td class="aui-restfultable-order">
+                    <span class="aui-restfultable-draghandle"></span>
+                </td>
+                <td>
                     <span class="custom-apps-restfultable-readonly">Stash</span>
+                </td>
+                <td>
+                    <a href="#">Edit rules</a>
                 </td>
                 <td></td>
             </tr>
             <tr class="aui-restfultable-readonly aui-restfultable-row" data-id="2" data-displayname="QuoteFlow" data-url="http://quoteflow.io" data-allowedgroups="">
                 <td class="aui-restfultable-order"><span class="aui-restfultable-draghandle"></span></td>
-                <td class="custom-apps-restfultable-displayname">
+                <td>
                     <span class="aui-restfultable-editable" data-field-name="name">QuoteFlow</span>
+                </td>
+                <td>
+                    <a href="#">Edit rules</a>
                 </td>
                 <td class="aui-restfultable-operations"><a href="#" class="aui-button aui-restfultable-delete">Delete</a></td>
             </tr>
