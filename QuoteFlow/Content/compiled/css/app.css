@@ -1063,6 +1063,34 @@ form.aui .aui-select2-container.select2-container-disabled a.select2-choice .sel
   margin-left: 10px;
   vertical-align: bottom;
 }
+.intro-content {
+  overflow: hidden;
+}
+.intro-content h4 {
+  margin: 0;
+}
+.intro-content .content-open {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+  padding: 10px 0 20px 0;
+}
+.intro-item-how {
+  width: 300px;
+}
+.intro-group-how {
+  width: 220px;
+}
+.how-image,
+.how-title,
+.how-description {
+  margin-left: 20px;
+}
+.how-image {
+  display: block;
+}
+.how-description {
+  font-size: 12px;
+}
 .aui-page-panel-content .summary-modules {
   margin-top: 20px;
 }

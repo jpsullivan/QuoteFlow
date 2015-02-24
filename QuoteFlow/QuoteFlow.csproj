@@ -459,6 +459,7 @@
     <Content Include="Content\css\lib\aui\toolbar\aui-toolbar-24px.png" />
     <Content Include="Content\images\get-started\birds-eye-view_2x.png" />
     <Content Include="Content\images\get-started\get-started_2x.png" />
+    <Content Include="Content\images\quote-status\intro-help-progress.png" />
     <Content Include="Content\images\quoteflow_logo.png" />
     <Content Include="Content\js\app\app.js" />
     <Content Include="Content\js\app\base\controller.js" />
@@ -596,6 +597,12 @@
     </Content>
     <Content Include="Content\less\header.min.css">
       <DependentUpon>header.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\intro-message.css">
+      <DependentUpon>intro-message.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\intro-message.min.css">
+      <DependentUpon>intro-message.css</DependentUpon>
     </Content>
     <Content Include="Content\less\layout.css">
       <DependentUpon>layout.less</DependentUpon>
@@ -840,6 +847,10 @@
     </Content>
     <Content Include="Content\less\aui-experimental-restfultable.css.map">
       <DependentUpon>aui-experimental-restfultable.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\intro-message.less" />
+    <Content Include="Content\less\intro-message.css.map">
+      <DependentUpon>intro-message.css</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
