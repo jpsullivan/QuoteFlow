@@ -40,7 +40,7 @@ namespace QuoteFlow.Core.Services
             {
                 Name = model.QuoteName,
                 Description = model.QuoteDescription,
-                Status = QuoteStatuses.Pending,
+                Status = 1,
                 Responded = false,
                 CreatorId = userId,
                 OrganizationId = model.Organization.Id,

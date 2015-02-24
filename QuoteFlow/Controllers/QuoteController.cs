@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using QuoteFlow.Api.Models.ViewModels.Assets;
 using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure;
@@ -10,22 +9,25 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
-    public partial class QuoteController : AppController
+    public class QuoteController : AppController
     {
-        #region IoC
+        #region DI
 
         public IAssetService AssetService { get; protected set; }
         public IQuoteService QuoteService { get; protected set; }
+        public IQuoteStatusService QuoteStatusService { get; protected set; }
         public IUserService UserService { get; protected set; }
 
         public QuoteController() { }
 
         public QuoteController(IAssetService assetService, 
             IQuoteService quoteService, 
+            IQuoteStatusService quoteStatusService,
             IUserService userService)
         {
             AssetService = assetService;
             QuoteService = quoteService;
+            QuoteStatusService = quoteStatusService;
             UserService = userService;
         }
 
@@ -82,13 +84,9 @@ namespace QuoteFlow.Controllers
             }
 
             var creator = UserService.GetUser(quote.CreatorId);
+            var statuses = QuoteStatusService.GetStatuses(CurrentOrganization.Id);
 
-            var model = new QuoteShowModel
-            {
-                Quote = quote,
-                QuoteCreator = creator
-            };
-
+            var model = new QuoteShowModel(quote, creator, statuses);
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
 
@@ -102,13 +100,7 @@ namespace QuoteFlow.Controllers
             }
 
             var creator = UserService.GetUser(quote.CreatorId);
-
-            var model = new QuoteShowModel
-            {
-                Quote = quote,
-                QuoteCreator = creator
-            };
-
+            var model = new QuoteShowModel(quote, creator);
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
 
@@ -123,12 +115,7 @@ namespace QuoteFlow.Controllers
 
             var creator = UserService.GetUser(quote.CreatorId);
 
-            var model = new QuoteShowModel
-            {
-                Quote = quote,
-                QuoteCreator = creator
-            };
-
+            var model = new QuoteShowModel(quote, creator);
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
 
@@ -143,12 +130,7 @@ namespace QuoteFlow.Controllers
 
             var creator = UserService.GetUser(quote.CreatorId);
 
-            var model = new QuoteShowModel
-            {
-                Quote = quote,
-                QuoteCreator = creator
-            };
-
+            var model = new QuoteShowModel(quote, creator);
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
     }

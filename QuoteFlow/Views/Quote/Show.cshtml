@@ -54,10 +54,14 @@
                             </div>
                             <div class="module">
                                 <ol class="aui-progress-tracker" style="width: 100%;">
-                                    <li class="aui-progress-tracker-step aui-progress-tracker-step-current"><span>Build</span></li>
-                                    <li class="aui-progress-tracker-step"><span>Review</span></li>
-                                    <li class="aui-progress-tracker-step"><span>Response</span></li>
-                                    <li class="aui-progress-tracker-step"><span>Sold</span></li>
+                                    @foreach (var status in Model.QuoteStatuses)
+                                    {
+                                        var cssClass = status.OrderNum == Model.Quote.Status
+                                            ? "aui-progress-tracker-step aui-progress-tracker-step-current"
+                                            : "aui-progress-tracker-step";
+
+                                        <li class="@cssClass"><span>@status.Name</span></li>
+                                    }
                                 </ol>
                             </div>
                             <div class="module">
