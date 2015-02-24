@@ -265,4 +265,10 @@ The {2} Team</value>
   <data name="ViewAllQuotes_Tooltip" xml:space="preserve">
     <value>View all the quotes that you created or are a member of.</value>
   </data>
+  <data name="Quote_ContinueEditing" xml:space="preserve">
+    <value>Continue Editing</value>
+  </data>
+  <data name="Quote_StartEditing" xml:space="preserve">
+    <value>Get Started</value>
+  </data>
 </root>

@@ -392,6 +392,24 @@ namespace QuoteFlow {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Continue Editing.
+        /// </summary>
+        internal static string Quote_ContinueEditing {
+            get {
+                return ResourceManager.GetString("Quote_ContinueEditing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Started.
+        /// </summary>
+        internal static string Quote_StartEditing {
+            get {
+                return ResourceManager.GetString("Quote_StartEditing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The requested resource can only be accessed via SSL..
         /// </summary>
         internal static string SSLRequired {
