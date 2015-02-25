@@ -4,6 +4,7 @@ namespace QuoteFlow.Api.Models
 {
     public class QuoteLineItem
     {
+        // for materialization
         public QuoteLineItem()
         {
         }
@@ -21,5 +22,7 @@ namespace QuoteFlow.Api.Models
         public int AssetId { get; set; }
         public int Quantity { get; set; }
         public DateTime CreatedUtc { get; set; }
+
+        public Asset Asset { get; set; }
     }
 }

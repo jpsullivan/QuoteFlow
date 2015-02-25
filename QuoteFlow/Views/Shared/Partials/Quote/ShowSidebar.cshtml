@@ -8,7 +8,7 @@
         <div class="aui-navgroup-inner">
             <ul class="aui-nav">
                 <li class="@Model.GetMenuItemClass("overview")"><a href="@Url.Quote(Model.Actor.Id, Model.Actor.Name.UrlFriendly())">Overview</a></li>
-                <li class="@Model.GetMenuItemClass("line items")"><a href="@Url.QuoteLineItems(Model.Actor.Id, Model.Actor.Name.UrlFriendly())">Line Items</a></li>
+                <li class="@Model.GetMenuItemClass("line items")"><a href="@Url.QuoteLineItems(Model.Actor.Id, Model.Actor.Name.UrlFriendly(), -1)">Line Items</a></li>
                 <li class="@Model.GetMenuItemClass("change history")"><a href="@Url.QuoteChangeHistory(Model.Actor.Id, Model.Actor.Name.UrlFriendly())">Change History</a></li>
                 <li class="@Model.GetMenuItemClass("access control")"><a href="@Url.QuoteAccessControl(Model.Actor.Id, Model.Actor.Name.UrlFriendly())">Access Control</a></li>
             </ul>

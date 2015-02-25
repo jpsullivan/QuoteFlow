@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
+using QuoteFlow.Api.Infrastructure.Helpers;
 using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure;
@@ -14,19 +16,22 @@ namespace QuoteFlow.Controllers
         #region DI
 
         public IAssetService AssetService { get; protected set; }
+        public IQuoteLineItemService QuoteLineItemService { get; protected set; }
         public IQuoteService QuoteService { get; protected set; }
         public IQuoteStatusService QuoteStatusService { get; protected set; }
         public IUserService UserService { get; protected set; }
 
         public QuoteController() { }
 
-        public QuoteController(IAssetService assetService, 
+        public QuoteController(IAssetService assetService,
+            IQuoteLineItemService quoteLineItemService,
             IQuoteService quoteService, 
             IQuoteStatusService quoteStatusService,
             IUserService userService)
         {
             AssetService = assetService;
             QuoteService = quoteService;
+            QuoteLineItemService = quoteLineItemService;
             QuoteStatusService = quoteStatusService;
             UserService = userService;
         }
@@ -91,7 +96,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Route("quote/{id:INT}/{name}/line-items", Name = RouteNames.QuoteLineItems)]
-        public virtual ActionResult LineItems(int id, string name)
+        public virtual ActionResult LineItems(int id, string name, int? page)
         {
             var quote = QuoteService.GetQuote(id);
             if (quote == null)
@@ -99,8 +104,15 @@ namespace QuoteFlow.Controllers
                 return PageNotFound();
             }
 
+            const int perPage = 50;
+            var currentPage = Math.Max(page ?? 1, 1);
+
             var creator = UserService.GetUser(quote.CreatorId);
-            var model = new QuoteShowModel(quote, creator);
+            var lineItems = QuoteLineItemService.GetLineItems(quote.Id).ToList();
+            var pagedLineItems = lineItems.ToPagedList(currentPage, perPage);
+            var paginationUrl = Url.QuoteLineItems(quote.Id, quote.Name.UrlFriendly(), -1);
+
+            var model = new QuoteLineItemsViewModel(quote, creator, pagedLineItems, currentPage, paginationUrl);
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
 

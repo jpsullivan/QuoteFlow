@@ -938,6 +938,7 @@
     <Content Include="Views\Quote\LineItems.cshtml" />
     <Content Include="Views\Quote\AccessControl.cshtml" />
     <Content Include="Views\Shared\Partials\Catalog\ShowSidebar.cshtml" />
+    <Content Include="Views\Shared\Partials\Quote\LineItems\Row.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

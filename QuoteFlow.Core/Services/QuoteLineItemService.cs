@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 
@@ -7,6 +8,17 @@ namespace QuoteFlow.Core.Services
 {
     public class QuoteLineItemService : IQuoteLineItemService
     {
+        #region DI
+
+        public IAssetService AssetService { get; protected set; }
+
+        public QuoteLineItemService(IAssetService assetService)
+        {
+            AssetService = assetService;
+        }
+
+        #endregion
+
         /// <summary>
         /// Retrieve a single <see cref="QuoteLineItem"/> record based on its ID.
         /// </summary>
@@ -14,7 +26,21 @@ namespace QuoteFlow.Core.Services
         /// <returns></returns>
         public QuoteLineItem GetLineItem(int id)
         {
-            return Current.DB.QuoteLineItems.Get(id);
+            if (id == 0)
+            {
+                throw new ArgumentException("Line item ID must be greater than zero.", "id");
+            }
+
+            const string sql = @"select * from QuoteLineItems q 
+                left join Assets a on a.Id = q.AssetId 
+                Order by q.Id";
+
+            var data = Current.DB.Query<QuoteLineItem, Api.Models.Asset, QuoteLineItem>(sql, (lineItem, asset) =>
+            {
+                lineItem.Asset = asset;
+                return lineItem;
+            });
+            return data.First();
         }
 
         /// <summary>
@@ -29,8 +55,15 @@ namespace QuoteFlow.Core.Services
                 throw new ArgumentException("Quote ID must be greater than zero.", "quoteId");
             }
 
-            const string sql = "select * from QuoteLineItems where QuoteId = @quoteId";
-            return Current.DB.Query<QuoteLineItem>(sql, new { quoteId });
+            const string sql = @"select * from QuoteLineItems q 
+                left join Assets a on a.Id = q.AssetId 
+                Order by q.Id";
+
+            return Current.DB.Query<QuoteLineItem, Api.Models.Asset, QuoteLineItem>(sql, (lineItem, asset) =>
+            {
+                lineItem.Asset = asset;
+                return lineItem;
+            });
         }
 
         public QuoteLineItem AddLineItem(QuoteLineItem lineItem)

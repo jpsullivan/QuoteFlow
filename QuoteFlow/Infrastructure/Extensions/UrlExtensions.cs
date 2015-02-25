@@ -178,9 +178,9 @@ namespace QuoteFlow.Infrastructure.Extensions
             return string.Format("/quote/new");
         }
 
-        public static string QuoteLineItems(this UrlHelper url, int id, string name)
+        public static string QuoteLineItems(this UrlHelper url, int id, string name, int pageNumber)
         {
-            return url.RouteUrl(RouteNames.QuoteLineItems, new { id, name });
+            return url.RouteUrl(RouteNames.QuoteLineItems, new { id, name, page = pageNumber });
         }
 
         public static string QuoteChangeHistory(this UrlHelper url, int id, string quoteName)

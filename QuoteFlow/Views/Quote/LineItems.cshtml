@@ -1,6 +1,7 @@
 ﻿@using QuoteFlow.Api.Models
 @using QuoteFlow.Api.Models.ViewModels
-@model QuoteFlow.Api.Models.ViewModels.Quotes.QuoteShowModel
+@using QuoteFlow.Infrastructure.Helpers
+@model QuoteFlow.Api.Models.ViewModels.Quotes.QuoteLineItemsViewModel
 
 @{
     ViewBag.Title = string.Format("{0} Line Items - QuoteFlow", Model.Quote.Name);
@@ -30,32 +31,36 @@
                 <div class="aui-page-header">
                     <div class="aui-page-header-inner">
                         <div class="aui-page-header-main">
-                            <h2>Overview</h2>
+                            <h2>Line Items</h2>
                         </div>
                     </div>
                 </div>
 
-                <div class="summary-modules">
-                    <div class="aui-group">
-                        <div class="aui-item">
-                            <div class="module">
-                                <!-- Product description module -->
-                                <p>@Model.Quote.Description</p>
-                            </div>
-                            <div class="module">
-                                <!-- Product versions module -->
-                                <h3>Recent Activity</h3>
-                                <p>Lorem ipsum</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @if (Model.LineItems.TotalCount > 0)
+                {
+                    <table class="aui aui-table-interactive line-items">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Part Number</th>
+                                <th>Cost</th>
+                                <th>Markup</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var lineItem in Model.LineItems)
+                                {
+                                    Html.RenderPartial("Partials/Quote/LineItems/Row", lineItem.Asset);
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    @UIHelpers.PageNumber(Model.PaginationUrl, Model.LineItems, "aui-nav aui-nav-pagination")
+                }
             </section><!-- .aui-page-panel-content -->
-
-            <aside class="aui-page-panel-sidebar">
-                <h3>Versions</h3>
-
-            </aside>
         </div><!-- .aui-page-panel-inner -->
     </div><!-- .aui-page-panel -->
 </section>

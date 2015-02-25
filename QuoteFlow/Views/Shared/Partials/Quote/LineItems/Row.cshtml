@@ -1,0 +1,14 @@
+﻿@using System.Globalization
+@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Api.Models.Asset
+<tr>
+    <td class="name">
+        <a href="@Url.Asset(Model.Id, Model.Name)" title="@Model.Name">@Model.Name</a>
+    </td>
+    <td class="sku">
+        <span title="@Model.SKU">@Model.SKU</span>
+    </td>
+    <td>$@Model.Cost.ToString("N")</td>
+    <td>@Model.Markup.ToString("P", CultureInfo.InvariantCulture)</td>
+    <td>$@Model.Price.ToString("N")</td>
+</tr>

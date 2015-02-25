@@ -90,6 +90,7 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IManufacturerService>().To<ManufacturerService>().InRequestScope();
             Bind<IManufacturerLogoService>().To<ManufacturerLogoService>().InRequestScope();
             Bind<IOrganizationService>().To<OrganizationService>().InRequestScope();
+            Bind<IQuoteLineItemService>().To<QuoteLineItemService>().InRequestScope();
             Bind<IQuoteService>().To<QuoteService>().InRequestScope();
             Bind<IQuoteStatusService>().To<QuoteStatusService>().InRequestScope();
             Bind<ISearchHandlerManager>().To<SearchHandlerManager>().InRequestScope();

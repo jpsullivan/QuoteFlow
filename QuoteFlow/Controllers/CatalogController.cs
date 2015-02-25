@@ -26,7 +26,7 @@ namespace QuoteFlow.Controllers
     [Authorize]
     public partial class CatalogController : AppController
     {
-        #region IoC
+        #region DI
 
         public IAssetService AssetService { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
