@@ -1,0 +1,29 @@
+﻿<div class="aui-group split-view">
+    <div class="aui-item list-results-panel">
+        <div class="list-panel">
+            <div class="list-ordering">
+                {{! order by goes in here}}
+            </div>
+            <div class="list-content">
+                {{! list of issues goes in here}}
+                {{#if assetPanelData}}
+                <!-- {call .issueList data="$issuePanelData" /} -->
+                {{/if}}
+            </div>
+        </div>
+        <div class="end-of-stable-message-container"></div>
+        <div class="aui-group pagination-view count-pagination">
+            <div class="refresh-container aui-item">
+                <!-- {call JIRA.Templates.IssueNav.refreshResults /} -->
+            </div>
+            <div class="pagination-container aui-item">
+                {{#if pagination}}
+                <!-- {call JIRA.Templates.IssueNavTable.pagination data="$pagination"/} -->
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="aui-item detail-panel navigator-issue-only">
+        <div></div>
+    </div>
+</div>

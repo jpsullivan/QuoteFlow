@@ -550,6 +550,21 @@
     <Content Include="Content\less\asset-navigator.css">
       <DependentUpon>asset-navigator.less</DependentUpon>
     </Content>
+    <Content Include="Content\less\asset-navigator.min.css">
+      <DependentUpon>asset-navigator.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\asset-nav\asset-nav.css">
+      <DependentUpon>asset-nav.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\asset-nav\asset-nav.min.css">
+      <DependentUpon>asset-nav.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\asset-nav\split-view.css">
+      <DependentUpon>split-view.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\asset-nav\split-view.min.css">
+      <DependentUpon>split-view.css</DependentUpon>
+    </Content>
     <Content Include="Content\less\asset.css">
       <DependentUpon>asset.less</DependentUpon>
     </Content>
@@ -852,6 +867,20 @@
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.eot" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
+    <Content Include="Content\less\asset-nav\split-view.less" />
+    <Content Include="Content\less\asset-nav\mixins\border-box.less" />
+    <Content Include="Content\less\asset-nav\mixins\clearfix.less" />
+    <Content Include="Content\less\asset-nav\mixins\content-box.less" />
+    <Content Include="Content\less\asset-nav\mixins\text-overflow.less" />
+    <Content Include="Content\less\asset-nav\split-view.css.map">
+      <DependentUpon>split-view.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\asset-nav\asset-nav.less" />
+    <Content Include="Content\less\asset-nav\asset-nav.css.map">
+      <DependentUpon>asset-nav.css</DependentUpon>
+    </Content>
+    <Content Include="Content\views\quote-builder\split-view\structure.hbs" />
+    <Content Include="Content\views\quote-builder\split-view\asset-row.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

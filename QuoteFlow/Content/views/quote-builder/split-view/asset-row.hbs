@@ -1,0 +1,9 @@
+﻿{{! "splitview-asset-link" is used instead to stop enhanceAssetLinks from running }}
+<a class="splitview-asset-link" data-asset-id="{{id}}" href="{{assetUrl}}">
+    {if $type}
+    {call .issueIcon data="$type" /}
+    &nbsp;
+    {/if}
+    <span class="issue-link-key">{$key}</span><br />
+    <span class="issue-link-summary">{$summary}</span>
+</a>

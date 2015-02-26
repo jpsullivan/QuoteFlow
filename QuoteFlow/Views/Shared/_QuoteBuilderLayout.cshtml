@@ -1,24 +1,30 @@
 ﻿@using QuoteFlow.Html
 @using QuoteFlow.Infrastructure.Extensions
 @using StackExchange.Profiling
-@model QuoteFlow.Api.Models.ViewModels.Quotes.QuoteShowModel
+
+@{
+    var bodyClass = "page-type-navigator";
+}
+
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title>@ViewBag.Title</title>
+    
     <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui.min.css")" media="all">
     <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui-experimental.min.css")" media="all">
-    @Styles.Render("~/bundles/css_app")
+    @Html.RenderCssBundle("app.css", BundleOptions.BuildConfigDependent)
 </head>
-<body class="aui-layout page-type-split">
+<body class="aui-layout ajax-issue-search-and-view @bodyClass">
     <div id="page">
         @(User.Identity.IsAuthenticated ? Html.Partial("_AuthenticatedHeader") : Html.Partial("_UnauthenticatedHeader"))
 
         <section id="content" role="main">
             <div class="navigator-container">
+                <div class="navigator-sidebar" id="navigator_sidebar"></div>
                 <div class="navigator-body">
                     <div class="contained-content">
                         <header class="saved-search-selector">
@@ -30,36 +36,47 @@
                             </div>
                             <div class="search-header-view">
                                 <div class="header-section-primary">
-                                    <h1 class="search-title" title="Search">@Model.Quote.Name</h1>
+                                    <h1 class="search-title" title="Search">@Model.Catalog.Name</h1>
                                     <ul class="filter-operations">
                                         <li><a href="@Url.NewAsset()" class="aui-button aui-button-light" title="">Create new asset</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </header>
-                        
-                        @Html.Partial("Partials/Asset/AssetNavigator", Model.CurrentAsset)
+
+                        <form class="navigator-search"></form>
+
+                        <div class="navigator-group">
+                            <div class="results-panel navigator-item">
+                                <div class="navigator-content"
+                                     data-issue-table-model-state="$!{action.issueNavJson}"
+                                     data-session-search-state="$!{action.search}"
+                                     data-selected-issue="$!{action.selectedIssueJson}">
+                                    $!action.issueNavHtml
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="issue-container"></div>
 
             @RenderBody()
         </section>
 
         @Html.Partial("_Footer")
     </div>
-    
-    @*    @Scripts.Render("~/bundles/js_lib", "~/bundles/js_app")*@
-    @*    @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)*@
-    @*    <!--[if lt IE 9]><script src="@Url.Content("~/Content/js/lib/aui/aui-ie.js")"></script><![endif]-->*@
-    @*    @RenderSection("scripts", false)*@
 
     <script>
         // set the global application vars
         window.rootUrl = '@Url.SiteRoot()';
         window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
-        window.currentOrganization = '@CurrentOrganization.Id.ToString()';
-        window.currentUser = @ViewHelpers.JsEncode(CurrentUser);
+        @if (Request.IsAuthenticated)
+        {
+            <text>window.currentOrganization = '@CurrentOrganization.Id.ToString()';</text>
+            <text>window.currentUser = @ViewHelpers.JsEncode(CurrentUser);</text>
+        }
     </script>
 
     <script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>

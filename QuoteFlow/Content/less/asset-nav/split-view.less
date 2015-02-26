@@ -1,0 +1,130 @@
+﻿@import "mixins/text-overflow";
+@import "mixins/content-box";
+
+.page-type-split {
+    overflow-y: hidden;
+    .navigator-body {
+        background-color: white;
+        border-bottom: 0;
+    }
+    .navigator-group {
+        background-color: #fff;
+        padding-right: 0;
+        padding-bottom: 0;
+    }
+    .navigator-sidebar {
+        padding-bottom: 0;
+        .favourite-filters,
+        .filter-info {
+            margin-bottom: -10px;
+            max-height: none;
+            min-height: 0;
+        }
+    }
+    #footer {
+        display: none;
+    }
+    .issue-container {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overflow-x: visible;
+        outline: none;
+        position: relative;
+    }
+
+    /**
+     * Override styles for fullscreen layout
+     */
+    .navigator-group > .results-panel {
+        padding: 0;
+    }
+}
+
+.split-view {
+    .list-results-panel {
+        border-right: 1px solid;
+        // Force box-sizing to be context-box, overriding AUI's border-box. This is because
+        // Safari doesn't respect border-box for display: table-cell, causing inconsistent behaviour with Sidebar.js
+        .content-box();
+        width: 320px;
+        padding-left: 15px;
+        + .detail-panel {
+            padding-left: 0;
+        }
+        .count-pagination {
+            border-top: 1px solid;
+            margin-top: 0;
+
+            // Making the pagination controls more compact to fit in split view
+            .pagination {
+                padding: 0 10px 0 0;
+                vertical-align: middle;
+            }
+            .icon-previous {
+                width: 13px;
+                margin-left: 0;
+            }
+            .icon-next {
+                width: 6px;
+            }
+        }
+    }
+
+    #stalker,
+    .issue-header {
+        background-color: #fff;
+        padding: 0;
+        &.detached {
+            box-shadow: 10px -4px 10px 0 rgba(0, 0, 0, 0.5);
+        }
+    }
+    .ops.page-navigation * {
+        float: right;
+    }
+
+    #stalker {
+        .issue-header-content {
+            > .command-bar {
+                border-top: none;
+            }
+            > .aui-page-header .aui-page-header-actions {
+                width: auto;
+            }
+        }
+    }
+}
+
+.list-panel {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 10px 0 0;
+}
+
+.issue-list {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x:hidden;
+    > li {
+        border-bottom: 1px solid;
+        cursor: pointer;
+        padding: 5px 0 5px 5px;
+        position: relative;
+        .date-info time {
+            margin-left: 4px;
+        }
+        img {
+            vertical-align: text-bottom;
+        }
+        .splitview-issue-link {
+            outline: none;
+
+            .issue-link-summary {
+                .text-overflow();
+                display: block;
+                margin-top: 3px;
+            }
+        }
+    }
+}
