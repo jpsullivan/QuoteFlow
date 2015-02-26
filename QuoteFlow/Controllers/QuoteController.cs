@@ -16,6 +16,8 @@ namespace QuoteFlow.Controllers
         #region DI
 
         public IAssetService AssetService { get; protected set; }
+        public ICatalogService CatalogService { get; protected set; }
+        public IManufacturerService ManufacturerService { get; protected set; }
         public IQuoteLineItemService QuoteLineItemService { get; protected set; }
         public IQuoteService QuoteService { get; protected set; }
         public IQuoteStatusService QuoteStatusService { get; protected set; }
@@ -24,12 +26,16 @@ namespace QuoteFlow.Controllers
         public QuoteController() { }
 
         public QuoteController(IAssetService assetService,
+            ICatalogService catalogService,
+            IManufacturerService manufacturerService,
             IQuoteLineItemService quoteLineItemService,
             IQuoteService quoteService, 
             IQuoteStatusService quoteStatusService,
             IUserService userService)
         {
             AssetService = assetService;
+            CatalogService = catalogService;
+            ManufacturerService = manufacturerService;
             QuoteService = quoteService;
             QuoteLineItemService = quoteLineItemService;
             QuoteStatusService = quoteStatusService;
@@ -143,6 +149,19 @@ namespace QuoteFlow.Controllers
             var creator = UserService.GetUser(quote.CreatorId);
 
             var model = new QuoteShowModel(quote, creator);
+            return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
+        },
+
+        [Route("quote/{id:INT}/{name}/builder")]
+        public virtual ActionResult ShowBuilder(int id, string name)
+        {
+            var quote = QuoteService.GetQuote(id);
+            var catalogs = CatalogService.GetCatalogs(CurrentOrganization.Id);
+            var manufacturers = ManufacturerService.GetManufacturers(CurrentOrganization.Id);
+            var creators = UserService.GetUsers(CurrentOrganization.Id);
+
+            var model = new QuoteBuilderViewModel(quote, catalogs, manufacturers, creators);
+
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
     }

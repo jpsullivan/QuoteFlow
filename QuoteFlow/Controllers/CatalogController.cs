@@ -147,46 +147,6 @@ namespace QuoteFlow.Controllers
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
         }
 
-//        [Route("catalog/{catalogId:INT}/{catalogName}/assets/iv")]
-//        public virtual ActionResult ShowAssetsInteractive(int catalogId, string catalogName, int? page)
-//        {
-//            var catalog = CatalogService.GetCatalog(catalogId);
-//            if (catalog == null)
-//            {
-//                return PageNotFound();
-//            }
-//
-//            const int perPage = 50;
-//            var currentPage = Math.Max(page ?? 1, 1);
-//
-//            var creator = UserService.GetUser(catalog.CreatorId);
-//            var assets = AssetService.GetAssets(catalog.Id).ToList();
-//            var pagedAssets = assets.ToPagedList(currentPage, perPage);
-//            var paginationUrl = Url.CatalogAssetsInteractive(catalog.Id, catalog.Name.UrlFriendly(), -1);
-//
-//            // build up the navigation filter items
-//            var manufacturers = assets.Select(a => a.Manufacturer).ToList();
-//            manufacturers = manufacturers.Distinct(m => m.Id).ToList();
-//            var creators = UserService.GetUsers(CurrentOrganization.Id);
-//
-//            // populate the comments section for the first asset
-//            // todo: this is a total hack and sucks entirely. Not sure what I even want to do here.
-//            pagedAssets[0] = AssetService.GetAsset(pagedAssets.First().Id);
-//
-//            var model = new CatalogShowAssetsModel
-//            {
-//                AssetCreators = creators,
-//                Assets = pagedAssets,
-//                Catalog = catalog,
-//                CatalogCreator = creator,                
-//                CurrentPage = currentPage,
-//                Manufacturers = manufacturers,
-//                PaginationUrl = paginationUrl
-//            };
-//
-//            return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
-//        }
-
         [Route("catalog/{catalogId:INT}/{catalogName}/import-results/{filter?}")]
         public virtual async Task<ActionResult> ShowImportSummary(int catalogId, string catalogName, string filter, int? page)
         {
