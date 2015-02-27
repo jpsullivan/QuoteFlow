@@ -1,6 +1,7 @@
 ﻿@using QuoteFlow.Html
 @using QuoteFlow.Infrastructure.Extensions
 @using StackExchange.Profiling
+@model QuoteFlow.Api.Models.ViewModels.Quotes.QuoteBuilderViewModel
 
 @{
     var bodyClass = "page-type-navigator";
@@ -30,13 +31,13 @@
                         <header class="saved-search-selector">
                             <div class="saved-search-operations">
                                 <ul class="operations">
-                                    <li class="aui-dd-parent"><a href="#" class="header-views header-operations aui-dropdown-trigger aui-dd-link standard icon-export lnk" role="button" original-title="Export this filter in another format"><span>Export</span></a></li>
-                                    <li class="aui-dd-parent"><a href="#" class="header-tools header-operations aui-dropdown-trigger aui-dd-link standard icon-tools" role="button" original-title="Select operations that can be completed"><span>Tools</span></a></li>
+                                    <li class="aui-dd-parent"><a href="#" class="header-views header-operations aui-dropdown-trigger aui-dd-link" role="button" original-title="Export this filter in another format"><span>Export</span></a></li>
+                                    <li class="aui-dd-parent"><a href="#" class="header-tools header-operations aui-dropdown-trigger aui-dd-link" role="button" original-title="Select operations that can be completed"><span>Tools</span></a></li>
                                 </ul>
                             </div>
-                            <div class="search-header-view">
+                            <div id="search-header-view">
                                 <div class="header-section-primary">
-                                    <h1 class="search-title" title="Search">@Model.Catalog.Name</h1>
+                                    <h1 class="search-title" title="Search">@Model.Quote.Name</h1>
                                     <ul class="filter-operations">
                                         <li><a href="@Url.NewAsset()" class="aui-button aui-button-light" title="">Create new asset</a></li>
                                     </ul>
@@ -49,10 +50,10 @@
                         <div class="navigator-group">
                             <div class="results-panel navigator-item">
                                 <div class="navigator-content"
-                                     data-issue-table-model-state="$!{action.issueNavJson}"
-                                     data-session-search-state="$!{action.search}"
-                                     data-selected-issue="$!{action.selectedIssueJson}">
-                                    $!action.issueNavHtml
+                                     data-issue-table-model-state=""
+                                     data-session-search-state=""
+                                     data-selected-issue="">
+                                    @Html.Partial("Partials/Quote/Builder/SplitView")
                                 </div>
                             </div>
                         </div>

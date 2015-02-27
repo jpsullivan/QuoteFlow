@@ -6,7 +6,7 @@ var Marionette = require('backbone.marionette');
  * 
  */
 var AssetTableLayout = Marionette.LayoutView.extend({
-    template: JIRA.Templates.IssueNavTable.structure,
+    template: JST["quote-builder/split-view/structure"],
 
     regions: {
         pagination: ".pagination",

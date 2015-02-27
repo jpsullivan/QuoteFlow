@@ -36,7 +36,7 @@
   padding: 0;
 }
 .split-view .list-results-panel {
-  border-right: 1px solid;
+  border-right: 1px solid #e6e6e6;
   -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
@@ -47,7 +47,7 @@
   padding-left: 0;
 }
 .split-view .list-results-panel .count-pagination {
-  border-top: 1px solid;
+  border-top: 1px solid #e6e6e6;
   margin-top: 0;
 }
 .split-view .list-results-panel .count-pagination .pagination {
@@ -92,10 +92,16 @@
   overflow-x: hidden;
 }
 .issue-list > li {
-  border-bottom: 1px solid;
+  border-bottom: 1px solid #ccc;
   cursor: pointer;
   padding: 5px 0 5px 5px;
   position: relative;
+}
+.issue-list > li.focused {
+  background-color: #ebf2f9;
+}
+.issue-list > li .date-info {
+  color: #707070;
 }
 .issue-list > li .date-info time {
   margin-left: 4px;

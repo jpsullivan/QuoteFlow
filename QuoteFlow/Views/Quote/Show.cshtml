@@ -1,5 +1,6 @@
 ﻿@using QuoteFlow.Api.Models
 @using QuoteFlow.Api.Models.ViewModels
+@using QuoteFlow.Infrastructure.Extensions
 @model QuoteFlow.Api.Models.ViewModels.Quotes.QuoteShowModel
            
 @{
@@ -16,7 +17,7 @@
                         <h2 style="display: inline-block;">@Model.Quote.Name</h2>
                         <ul class="immediate-operations-list">
                             <li>
-                                <a href="#" class="aui-button aui-button-light">@editQuoteText</a>
+                                <a href="@Url.QuoteBuilder(Model.Quote.Id, Model.Quote.Name)" class="aui-button aui-button-light">@editQuoteText</a>
                             </li>
                         </ul>
                     </div>

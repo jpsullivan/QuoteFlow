@@ -178,6 +178,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return string.Format("/quote/new");
         }
 
+        public static string QuoteBuilder(this UrlHelper url, int id, string name)
+        {
+            return url.RouteUrl(RouteNames.QuoteBuilder, new { id, name = name.UrlFriendly() });
+        }
+
         public static string QuoteLineItems(this UrlHelper url, int id, string name, int pageNumber)
         {
             return url.RouteUrl(RouteNames.QuoteLineItems, new { id, name, page = pageNumber });

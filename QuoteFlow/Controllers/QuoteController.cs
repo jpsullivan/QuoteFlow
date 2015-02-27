@@ -150,9 +150,9 @@ namespace QuoteFlow.Controllers
 
             var model = new QuoteShowModel(quote, creator);
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
-        },
+        }
 
-        [Route("quote/{id:INT}/{name}/builder")]
+        [Route("quote/{id:INT}/{name}/builder", Name = RouteNames.QuoteBuilder)]
         public virtual ActionResult ShowBuilder(int id, string name)
         {
             var quote = QuoteService.GetQuote(id);

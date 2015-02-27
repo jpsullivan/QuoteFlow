@@ -643,6 +643,18 @@
     <Content Include="Content\less\misc.min.css">
       <DependentUpon>misc.css</DependentUpon>
     </Content>
+    <Content Include="Content\less\operations-buttons.css">
+      <DependentUpon>operations-buttons.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\operations-buttons.min.css">
+      <DependentUpon>operations-buttons.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\operations-lists.css">
+      <DependentUpon>operations-lists.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\operations-lists.min.css">
+      <DependentUpon>operations-lists.css</DependentUpon>
+    </Content>
     <Content Include="Content\less\quote-list-table.css">
       <DependentUpon>quote-list-table.less</DependentUpon>
     </Content>
@@ -881,6 +893,15 @@
     </Content>
     <Content Include="Content\views\quote-builder\split-view\structure.hbs" />
     <Content Include="Content\views\quote-builder\split-view\asset-row.hbs" />
+    <Content Include="Content\less\operations-buttons.less" />
+    <Content Include="Content\less\operations-lists.less" />
+    <Content Include="Content\less\operations-lists.css.map">
+      <DependentUpon>operations-lists.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\operations-buttons.css.map">
+      <DependentUpon>operations-buttons.css</DependentUpon>
+    </Content>
+    <Content Include="Content\less\mixins\buttons.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -968,6 +989,8 @@
     <Content Include="Views\Quote\AccessControl.cshtml" />
     <Content Include="Views\Shared\Partials\Catalog\ShowSidebar.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\LineItems\Row.cshtml" />
+    <Content Include="Views\Quote\ShowBuilder.cshtml" />
+    <Content Include="Views\Shared\Partials\Quote\Builder\SplitView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
