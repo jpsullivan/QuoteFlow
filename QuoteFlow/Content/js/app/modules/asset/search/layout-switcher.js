@@ -70,7 +70,7 @@ var LayoutSwitcherView = Marionette.ItemView.extend({
     },
 
     _shouldShowIntro: function () {
-        return this.searchPageModule.search.getResults().hasIssues();
+        return this.searchPageModule.search.getResults().hasAssets();
     },
 
     /**

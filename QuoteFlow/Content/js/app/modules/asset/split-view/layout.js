@@ -60,7 +60,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this.addListener(this.searchResults, "newPayload", this._updateSortBy, this);
         this.addListener(this.searchResults, "newPayload", this.render, this);
         this.addListener(this.searchResults, "startIndexChange", this._onStartIndexChange, this);
-        this.addListener(this.searchResults, "highlightedIssueChange", this._onHighlightedIssueChange, this);
+        this.addListener(this.searchResults, "highlightedIssueChange", this._onHighlightedAssetChange, this);
         this.addListener(this.searchResults, "selectedIssueChange", this._onSelectedIssueChange, this);
         this.addListener(this.searchResults, "startIndexChange", this._renderEverythingExceptListView, this);
         this.search.onSearchError(this._onSearchFail, this);
@@ -121,7 +121,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      */
     _adjustNoResultsMessageHeight: function () {
         var navigatorContentTop;
-        if (this.searchResults.hasIssues()) {
+        if (this.searchResults.hasAssets()) {
             this.navigatorContent.css("height", "");
         } else {
             navigatorContentTop = this.navigatorContent.offset().top;
@@ -191,15 +191,15 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
 
         //If the selected issue is not in the list of downloaded issues go to first issue in page.
-        if (!this.searchResults.hasIssue(this.searchResults.getSelectedIssue().getId())) {
+        if (!this.searchResults.hasIssue(this.searchResults.getSelectedAsset().getId())) {
             this.searchResults.selectFirstInPage();
         }
     },
 
     _handleInitialIssueSelection: function () {
-        if (!this.searchResults.hasSelectedIssue()) {
-            if (this.searchResults.hasHighlightedIssue()) {
-                this.searchResults.selectIssueById(this.searchResults.getHighlightedIssue().getId(), { replace: true });
+        if (!this.searchResults.hasSelectedAsset()) {
+            if (this.searchResults.hasHighlightedAsset()) {
+                this.searchResults.selectAssetById(this.searchResults.getHighlightedAsset().getId(), { replace: true });
             } else {
                 this.searchResults.selectFirstInPage({ replace: true });
             }
@@ -268,13 +268,13 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @param {boolean} [options.replace=true] Whether selecting the issue should be a "replace" operation.
      * @private
      */
-    _onHighlightedIssueChange: function (model, options) {
+    _onHighlightedAssetChange: function (model, options) {
         options = _.defaults({}, options, {
             replace: true
         });
 
-        var highlightedIssueID = this.searchResults.getHighlightedIssue().getId();
-        this.searchResults.selectIssueById(highlightedIssueID, options);
+        var highlightedIssueID = this.searchResults.getHighlightedAsset().getId();
+        this.searchResults.selectAssetById(highlightedIssueID, options);
     },
 
     /**
@@ -284,9 +284,9 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      */
     _onIssueDeleted: function (issue) {
         //Locally hide the issue to be deleted immediately so there is no delay in the UI before the new issue table
-        this.listView.getIssueById(issue.id).hide();
+        this.listView.getAssetById(issue.id).hide();
         this._showPending();
-        if (this.searchResults.hasIssues()) {
+        if (this.searchResults.hasAssets()) {
             this.listView.render();
             this._renderPagination();
             this._renderEndOfStableSearch();
@@ -324,7 +324,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
 
     _onStartIndexChange: function () {
         // If there are no results, the "No Results" message has already been rendered.
-        if (this.searchResults.hasIssues()) {
+        if (this.searchResults.hasAssets()) {
             this._showPending();
         }
     },
@@ -366,7 +366,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @return {JIRA.Issues.SplitScreenLayout} <tt>this</tt>
      */
     render: function () {
-        var hasIssues = this.searchResults.hasIssues(),
+        var hasIssues = this.searchResults.hasAssets(),
             isInitialRender = this._isInitialRender();
 
         jQuery("body").addClass("page-type-split");
@@ -451,7 +451,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @private
      */
     _renderEverythingExceptListView: function () {
-        var hasIssues = this.searchResults.hasIssues();
+        var hasIssues = this.searchResults.hasAssets();
         if (hasIssues) {
             this._renderPagination();
             this._renderEndOfStableSearch();

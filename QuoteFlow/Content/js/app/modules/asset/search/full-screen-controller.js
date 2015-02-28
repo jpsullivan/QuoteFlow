@@ -34,7 +34,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
                 this.searchService.highlightIssue(issueId);
             },
             "render": function () {
-                if (!this.searchService.hasSelectedIssue()) {
+                if (!this.searchService.hasSelectedAsset()) {
                     this.fullScreenIssue.hide();
                 }
                 this.fullScreenIssue.bindSearchService(this.searchService);
@@ -50,7 +50,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
                 // internals of FullScreenIssue, when the first one is fired the IssueTable is not in the DOM
                 // so the scrollIntoView() operation will not work. We need to re-highlight the same issue now
                 // that the IssueTable is present in the DOM to force the scroll behaviour
-                this.issueTable.highlightIssue(this.searchService.getHighlightedIssue());
+                this.issueTable.highlightIssue(this.searchService.getHighlightedAsset());
             }
         });
 

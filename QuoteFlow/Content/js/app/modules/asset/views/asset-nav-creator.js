@@ -81,7 +81,7 @@ var AssetNavCreator = {
         var searchModule = new JIRA.Issues.SearchModule({
             searchPageModule: searchPageModule,
             queryModule: queryModule,
-            issueSearchManager: issueSearchManager,
+            assetSearchManager: issueSearchManager,
             initialSelectedIssue: options.initialSelectedIssue
         });
 
@@ -96,7 +96,7 @@ var AssetNavCreator = {
         var fullScreenIssue = new JIRA.Issues.FullScreenIssue({
             issueContainer: searchPageModule.issueContainer,
             searchContainer: searchPageModule.searchContainer,
-            issueCacheManager: issueCacheManager
+            assetCacheManager: issueCacheManager
         });
 
         // Register Modules
@@ -208,7 +208,7 @@ var AssetNavCreator = {
         // Create the on change bindings for updating the login link.
         this.searchPageModule.on("change", changeLoginUrl);
         this.searchResults.on("change", changeLoginUrl);
-        this.searchResults.getSelectedIssue().on("change", changeLoginUrl);
+        this.searchResults.getSelectedAsset().on("change", changeLoginUrl);
 
         return this;
     },

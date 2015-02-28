@@ -2604,7 +2604,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
                 this.searchService.highlightIssue(issueId);
             },
             "render": function () {
-                if (!this.searchService.hasSelectedIssue()) {
+                if (!this.searchService.hasSelectedAsset()) {
                     this.fullScreenIssue.hide();
                 }
                 this.fullScreenIssue.bindSearchService(this.searchService);
@@ -2620,7 +2620,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
                 // internals of FullScreenIssue, when the first one is fired the IssueTable is not in the DOM
                 // so the scrollIntoView() operation will not work. We need to re-highlight the same issue now
                 // that the IssueTable is present in the DOM to force the scroll behaviour
-                this.issueTable.highlightIssue(this.searchService.getHighlightedIssue());
+                this.issueTable.highlightIssue(this.searchService.getHighlightedAsset());
             }
         });
 
@@ -2752,7 +2752,7 @@ var LayoutSwitcherView = Marionette.ItemView.extend({
     },
 
     _shouldShowIntro: function () {
-        return this.searchPageModule.search.getResults().hasIssues();
+        return this.searchPageModule.search.getResults().hasAssets();
     },
 
     /**
@@ -2877,7 +2877,7 @@ var SearchPageModule = Brace.Model.extend({
 
         JIRA.Issues.Application.on("issueEditor:loadComplete", function (model, props) {
             if (!this.standalone && !props.reason) {
-                this.searchResults.selectIssueById(model.getId(), { reason: "issueLoaded" });
+                this.searchResults.selectAssetById(model.getId(), { reason: "issueLoaded" });
                 this.searchResults.updateIssueById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() })
 
                 // Replace URL if issue updated successfully
@@ -2959,7 +2959,7 @@ var SearchPageModule = Brace.Model.extend({
             newLayout = new layout.view({
                 fullScreenIssue: this.fullScreenIssue,
                 assetContainer: this.assetContainer,
-                issueCacheManager: this.issueCacheManager,
+                assetCacheManager: this.assetCacheManager,
                 search: this.search,
                 searchContainer: this.searchContainer,
                 searchHeaderModule: this.searchHeaderModule,
@@ -3053,11 +3053,11 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     registerIssueSearchManager: function (searchManger) {
-        this.issueSearchManager = searchManger;
+        this.assetSearchManager = searchManger;
     },
 
     registerIssueCacheManager: function (issueCacheManager) {
-        this.issueCacheManager = issueCacheManager;
+        this.assetCacheManager = issueCacheManager;
     },
 
     registerQueryModule: function (queryModule) {
@@ -3308,8 +3308,8 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     getEffectiveIssue: function () {
-        var hasHighlightedIssue = this.searchResults.hasHighlightedIssue(),
-            hasSelectedIssue = this.searchResults.hasSelectedIssue(),
+        var hasHighlightedIssue = this.searchResults.hasHighlightedAsset(),
+            hasSelectedIssue = this.searchResults.hasSelectedAsset(),
             issueModuleIssue;
 
         issueModuleIssue = new JIRA.Issues.SimpleIssue({
@@ -3320,9 +3320,9 @@ var SearchPageModule = Brace.Model.extend({
         if (this.standalone) {
             return issueModuleIssue;
         } else if (hasSelectedIssue) {
-            return this.searchResults.getSelectedIssue();
+            return this.searchResults.getSelectedAsset();
         } else if (hasHighlightedIssue) {
-            return this.searchResults.getHighlightedIssue();
+            return this.searchResults.getHighlightedAsset();
         } else {
             return issueModuleIssue;
         }
@@ -3425,7 +3425,7 @@ var SearchPageModule = Brace.Model.extend({
             return this.fullScreenIssue.isVisible();
         } else if (layoutKey === "split-view") {
             // Issue is always visible in split view AS LONG AS there are results
-            return this.search.getResults().hasIssues();
+            return this.search.getResults().hasAssets();
         }
         return false;
     },
@@ -3483,7 +3483,7 @@ var SearchPageModule = Brace.Model.extend({
         }
 
         searchOptions.jql = this.getEffectiveJql();
-        searchPromise = this.issueSearchManager.search(searchOptions);
+        searchPromise = this.assetSearchManager.search(searchOptions);
 
         searchPromise.done(_.bind(function (results) {
             if (this.fullScreenIssue.isVisible() && !AJS.Meta.get('serverRenderedViewIssue')) {
@@ -3663,8 +3663,8 @@ var SearchPageModule = Brace.Model.extend({
         }
     },
 
-    hasSelectedIssue: function () {
-        return this.search.getResults().getSelectedIssue().getKey();
+    hasSelectedAsset: function () {
+        return this.search.getResults().getSelectedAsset().getKey();
     },
 
     /**
