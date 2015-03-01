@@ -2,7 +2,7 @@
 
 var Brace = require('backbone-brace');
 
-var SearchResults = 
+//var SearchResults = 
 
 /**
  * 

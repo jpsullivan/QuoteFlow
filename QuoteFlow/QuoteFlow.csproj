@@ -459,6 +459,8 @@
     <Content Include="Content\css\lib\aui\toolbar\aui-toolbar-24px.png" />
     <Content Include="Content\images\get-started\birds-eye-view_2x.png" />
     <Content Include="Content\images\get-started\get-started_2x.png" />
+    <Content Include="Content\images\logo-medium.png" />
+    <Content Include="Content\images\logo-regular.png" />
     <Content Include="Content\images\quote-status\intro-help-progress.png" />
     <Content Include="Content\images\quoteflow_logo.png" />
     <Content Include="Content\js\app\app.js" />
