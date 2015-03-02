@@ -84,7 +84,7 @@ var AssetRouter = Marionette.AppRouter.extend({
     },
 
     _navigateToLoginIfNeeded: function (state, history) {
-        if (!this.usePushState(history) && state.selectedIssueKey && !JIRA.Issues.LoginUtils.isLoggedIn()) {
+        if (!this.usePushState(history) && state.selectedAssetKey && !JIRA.Issues.LoginUtils.isLoggedIn()) {
             var instance = this;
 
             var requestParams = {};
@@ -93,7 +93,7 @@ var AssetRouter = Marionette.AppRouter.extend({
             }
 
             jQuery.ajax({
-                url: AJS.contextPath() + "/rest/issueNav/1/issueNav/anonymousAccess/" + state.selectedIssueKey,
+                url: AJS.contextPath() + "/rest/issueNav/1/issueNav/anonymousAccess/" + state.selectedAssetKey,
                 headers: { 'X-SITEMESH-OFF': true },
                 data: requestParams,
                 success: function () {

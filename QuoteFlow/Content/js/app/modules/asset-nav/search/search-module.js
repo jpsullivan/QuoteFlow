@@ -2,7 +2,7 @@
 
 var Brace = require('backbone-brace');
 
-//var SearchResults = 
+var SearchResults = require('./search-results');
 
 /**
  * 
@@ -11,7 +11,7 @@ var SearchModule = Brace.Evented.extend({
     initialize: function (options) {
         this._assetSearchManager = options.assetSearchManager;
         this._searchPageModule = options.searchPageModule;
-        this._searchResults = new JIRA.Issues.SearchResults(null, {
+        this._searchResults = new SearchResults(null, {
             assetSearchManager: this._assetSearchManager,
             initialSelectedAsset: options.initialSelectedAsset,
             columnConfig: this._searchPageModule.columnConfig
@@ -70,7 +70,7 @@ var SearchModule = Brace.Evented.extend({
 
     /**
      * @param {object} [state=this._searchPageModule.getState()] The state to inspect.
-     * @return {boolean} Whether <tt>state</tt> describes a state where a stand alone issue is visible.
+     * @return {boolean} Whether <tt>state</tt> describes a state where a standalone asset is visible.
      */
     isStandAloneAsset: function (state) {
         state = state || this._searchPageModule.getState();
@@ -118,12 +118,11 @@ var SearchModule = Brace.Evented.extend({
     },
 
     refresh: function () {
-        return this._searchPageModule.refreshSearch()
+        return this._searchPageModule.refreshSearch();
     },
 
     /**
-     * Triggers the StableUpdate event. It will force a new
-     * search
+     * Triggers the StableUpdate event. It will force a new search.
      * 
      * @param {Object} [opts] Config object with custom options 
      */
@@ -135,3 +134,4 @@ var SearchModule = Brace.Evented.extend({
 });
 
 module.exports = SearchModule;
+

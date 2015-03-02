@@ -134,7 +134,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
 
     render: function (model, options) {
         options = options || {};
-        if (this.searchResults.hasAssets() && !this.search.isStandAloneIssue() && options.reason !== "issueLoaded") {
+        if (this.searchResults.hasAssets() && !this.search.isStandAloneAsset() && options.reason !== "issueLoaded") {
             if (this.searchResults.hasSelectedAsset()) {
                 JIRA.Issues.Application.execute("issueEditor:abortPending");
                 JIRA.Issues.Utils.debounce(this, "_renderAsset", this.searchResults.getSelectedAsset());

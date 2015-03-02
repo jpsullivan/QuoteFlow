@@ -38,8 +38,8 @@ var UrlSerializer = {
         var query = [];
         var base;
 
-        if (state.selectedIssueKey) {
-            base = BASE_BROWSE + state.selectedIssueKey;
+        if (state.selectedAssetKey) {
+            base = BASE_BROWSE + state.selectedAssetKey;
         } else {
             base = BASE_ASSETS;
         }
@@ -50,7 +50,7 @@ var UrlSerializer = {
         if (state.jql != null && (state.filterJql == null || state.jql !== state.filterJql)) {
             query.push('jql=' + encodeURIComponent(state.jql));
         }
-        if (state.startIndex && !state.selectedIssueKey) {
+        if (state.startIndex && !state.selectedAssetKey) {
             query.push('startIndex=' + state.startIndex);
         }
         return base + (query.length ? '?' + query.join('&') : "");
@@ -70,12 +70,12 @@ var UrlSerializer = {
         var state = {
             filter: null,
             jql: null,
-            selectedIssueKey: null,
+            selectedAssetKey: null,
             startIndex: 0
         };
 
         if (url.indexOf(BASE_BROWSE) == 0) {
-            state.selectedIssueKey = path.split("/")[1];
+            state.selectedAssetKey = path.split("/")[1];
         }
 
         if (url.indexOf("?") !== -1) {

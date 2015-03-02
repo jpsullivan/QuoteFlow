@@ -3,10 +3,12 @@
 var $ = require('jquery');
 var _ = require('underscore');
 
-var LayoutSwitcherView = require('../search/layout-switcher');
-var QueryComponent = require('../../../components/query');
-var SearchHeaderModule = require('../search/search-header-module');
-var SearchPageModule = require('../search/search-page-module');
+var AssetSearchManager = require('./asset-search-manager');
+var LayoutSwitcherView = require('./layout-switcher');
+var QueryComponent = require('../../../components/query.js');
+var SearchHeaderModule = require('./search-header-module');
+var SearchModule = require('./search-module');
+var SearchPageModule = require('./search-page-module');
 
 /**
  * 
@@ -71,23 +73,23 @@ var AssetNavCreator = {
 
         JIRA.Issues.FocusShifter.init();
 
-        var viewIssueData = issueModule.viewIssueData;
+        var viewIssueData = issueModule.viewAssetData;
 
-        var issueSearchManager = new JIRA.Issues.IssueSearchManager({
+        var issueSearchManager = new AssetSearchManager({
             initialAssetTableState: options.initialAssetTableState,
-            initialIssueIds: options.initialIssueIds
+            initialAssetIds: options.initialAssetIds
         });
 
-        var searchModule = new JIRA.Issues.SearchModule({
+        var searchModule = new SearchModule({
             searchPageModule: searchPageModule,
             queryModule: queryModule,
             assetSearchManager: issueSearchManager,
-            initialSelectedIssue: options.initialSelectedIssue
+            initialSelectedAsset: options.initialSelectedAsset
         });
 
         var issueCacheManager = new JIRA.Issues.Cache.IssueCacheManager({
             searchResults: searchModule.getResults(),
-            viewIssueData: viewIssueData
+            viewAssetData: viewIssueData
         });
 
         // TODO TF-693 - FullScreenIssue will detach these elements, so get a reference now before they're not discoverable.
@@ -163,9 +165,9 @@ var AssetNavCreator = {
         JIRA.Issues.overrideIssueDialogs({
             getIssueId: _.bind(searchPageModule.getEffectiveIssueId, searchPageModule),
             isNavigator: true,
-            updateIssue: function(dialog) {
+            updateAsset: function(dialog) {
                 var issueUpdate = JIRA.Issues.Utils.getUpdateCommandForDialog(dialog);
-                return searchPageModule.updateIssue(issueUpdate);
+                return searchPageModule.updateAsset(issueUpdate);
             }
         });
 

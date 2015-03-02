@@ -22,7 +22,7 @@ Backbone.$ = $;
 
 var Marionette = require('backbone.marionette');
 
-var AssetTableModule = require('./modules/asset/module');
+var AssetTableModule = require('./modules/asset-nav/module');
 var CatalogModule = require('./modules/catalog/module');
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)
@@ -172,7 +172,7 @@ qfApp.module("catalog", CatalogModule);
 
 module.exports = qfApp;
 
-},{"./helpers/application_helpers":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\helpers\\application_helpers.js","./modules/asset/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\module.js","./modules/catalog/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\module.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\router.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","jquery.browser":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery.browser\\dist\\jquery.browser.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js":[function(require,module,exports){
+},{"./helpers/application_helpers":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\helpers\\application_helpers.js","./modules/asset-nav/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\module.js","./modules/catalog/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\module.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\router.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","jquery.browser":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery.browser\\dist\\jquery.browser.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -1909,7 +1909,7 @@ var AssetVarValue = Backbone.Model.extend({
 });
 
 module.exports = AssetVarValue;
-},{"backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\controller.js":[function(require,module,exports){
+},{"backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\controller.js":[function(require,module,exports){
 "use strict";
 
 var Marionette = require('backbone.marionette');
@@ -1948,74 +1948,3308 @@ var AssetController = Marionette.Controller.extend({
 module.exports = AssetController;
 
 
-},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\module.js":[function(require,module,exports){
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\module.js":[function(require,module,exports){
 "use strict";
+
+var _ = require('underscore');
 
 var Marionette = require('backbone.marionette');
 
 var AssetController = require('./controller');
+var AssetNavCreator = require('./search/asset-nav-creator');
 var AssetRouter = require('./router');
-var LayoutSwitcher = require('./search/layout-switcher');
-var QueryComponent = require('../../components/query');
-var SearchPageModule = require('./search/search-page-module');
-var SearchHeaderModule = require('./search/search-header-module');
 
 /**
  * 
  */
-var AssetModule = Marionette.Module.extend({
+var AssetNavModule = Marionette.Module.extend({
 
     onStart: function (options) {
-        var initializedOptions = this.init();
+        options = this.init(options);
         return this.startMediator(options);
     },
 
     /**
      * Equivalent of AssetNavInit.js
      */
-    init: function() {
-        
+    init: function(options) {
+        var $navigatorContent = AJS.$(".navigator-content");
+
+        /**
+         * Read all the initial data in the DOM
+         *
+         * If the ColumnConfigState has been sent from the server we want to take the HTML from the table
+         * and pop it onto its table property.
+         *
+         * This prevents us from having to populate the HTML twice in the dom. Once in the HTML and another time in the
+         * JSON. It also prevents us needing to ensure there are no XSS vulnerabilities in the JSON HTML string.
+         */
+        var initialIssueTableState = $navigatorContent.data("issue-table-model-state");
+        if (initialIssueTableState && !initialIssueTableState.table) {
+            var wrapper = AJS.$("<div></div>").append($navigatorContent.children().clone());
+            initialIssueTableState.assetTable.table = wrapper.html();
+        }
+
+        var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
+        var selectedIssue = $navigatorContent.data("selected-issue");
+
+        // jQuery.parseJSON gracefully returns null given an empty string.
+        // Would be even nicer if the json was placed in a data- attribute, which jQuery will automatically parse with .data().
+        var initialSearcherCollectionState = jQuery.parseJSON(jQuery("#criteriaJson").text());
+        var initialSessionSearchState = $navigatorContent.data("session-search-state");
+        var systemFilters = jQuery.parseJSON(jQuery("#systemFiltersJson").text());
+
+        _.extend(options, {
+            initialIssueTableState: initialIssueTableState,
+            initialIssueIds: initialIssueIds,
+            selectedIssue: selectedIssue,
+            initialSearcherCollectionState: initialSearcherCollectionState,
+            initialSessionSearchState: initialSessionSearchState,
+            systemFilters: systemFilters
+        });
+
+        return options;
     },
 
     startMediator: function (options) {
-//        this.searchPageModule = new SearchPageModule({}, {
-//            initialAssetTableState: options.initialAssetTableState
-//        });
-//        this.searchPageModule.registerViewContainers({
-//            assetContainer: $(".asset-container"),
-//            searchContainer: $('#.navigator-container')
+        var creator = AssetNavCreator.create(AJS.$(document), {
+            initialIssueTableState: options.initialIssueTableState,
+            initialSearcherCollectionState: options.initialSearcherCollectionState,
+            initialSessionSearchState: options.initialSessionSearchState,
+            initialSelectedIssue: options.selectedIssue,
+            initialIssueIds: options.initialIssueIds,
+            systemFilters: options.systemFilters
+        });
+
+        /**
+         * Some shenanigans to get get table to resize with window gracefully. Sets the width of the issue navigator results
+         * wrapper. Keeps the right hand page elements within the browser view when the results table is wider than the browser view.
+         */
+        var bodyMinWidth = parseInt(jQuery('body').css('minWidth'), 10);
+        jQuery(document).bind('resultsWidthChanged', function () {
+            var $contained = jQuery('.contained-content');
+            var $containedParent = $contained.parent();
+
+            if ($contained.length > 0) {
+                var containedLeft = $contained.offset().left;
+                var target = Math.max(window.innerWidth, bodyMinWidth) - containedLeft;
+                var targetPct = target / $containedParent.width() * 100;
+                if (targetPct < 100) {
+                    $contained.css('width', targetPct + '%');
+                } else {
+                    $contained.css('width', '');
+                }
+                jQuery(document).trigger('issueNavWidthChanged');
+            }
+        });
+
+//        // Trigger the event on page load to make sure the controls are visible.
+//        AJS.$(document).trigger("resultsWidthChanged");
+//
+//        JIRA.Issues.onVerticalResize(function () {
+//            jQuery.event.trigger("updateOffsets.popout");
 //        });
 //
-//        // init modules
-//        this.searchHeaderModule = new SearchHeaderModule({ searchPageModule: this.searchPageModule });
-//        var queryModule = QueryComponent.create({
-//            el: $el.find("form.navigator-search"),
-//            searchers: options.initialSearcherCollectionState,
-//            preferredSearchMode: "basic",
-//            layoutSwitcher: true,
-//            autocompleteEnabled: undefined,
-//            basicAutoUpdate: true
+//        // When switching layouts we need to update the height of sidebar
+//        JIRA.bind(JIRA.Events.LAYOUT_RENDERED, function () {
+//            _.defer(function () {
+//                jQuery.event.trigger("updateOffsets.popout");
+//            });
 //        });
-//
-////        JIRA.bind(JIRA.Events.ISSUE_TABLE_REORDER, function (e) {
-////            if (!JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
-////                e.preventDefault();
-////            }
-////        });
-//
-//        this.layoutSwitcherView = new LayoutSwitcher({ searchPageModule: this.searchPageModule });
-//        this.layoutSwitcherView.setElement($el.find("#layout-switcher-toggle")).render();
-//
-//        this.controller = new AssetController();
-//        return new AssetRouter({
-//            controller: this.controller,
-//            searchPageModule: this.searchPageModule
-//        });
+
+        this.controller = new AssetController();
+        return new AssetRouter({
+            controller: this.controller,
+            searchPageModule: this.searchPageModule
+        });
     }
 });
 
-module.exports = AssetModule;
-},{"../../components/query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\query.js","./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\controller.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\router.js","./search/layout-switcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\layout-switcher.js","./search/search-header-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\search-header-module.js","./search/search-page-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\search-page-module.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\basic_query.js":[function(require,module,exports){
+module.exports = AssetNavModule;
+},{"./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\controller.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\router.js","./search/asset-nav-creator":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-nav-creator.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\router.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+var Backbone = require('backbone');
+var BackboneQueryParams = require('backbone-query-parameters');
+var Marionette = require('backbone.marionette');
+
+var CatalogController = require('./controller');
+var UrlSerializer = require('../../util/url-serializer');
+
+/**
+ * A mostly-custom router for handling routes that are used within the 
+ * asset table module.
+ */
+var AssetRouter = Marionette.AppRouter.extend({
+    
+    initialize: function (options) {
+        _.extend(this, options);
+        _.bindAll(this, "_restoreSessionSearch", "_route");
+
+        this.route(/^(.*?)([\?]{1}.*)?$/, this._route);
+        this.route(/^(assets\/)?$/, this._restoreSessionSearch);
+
+        // backbone-query-parameters supports clever decoding of values into arrays, but we don't want this.
+        delete Backbone.Router.arrayValueSplit;
+    },
+
+    /**
+     * Overwrite Marionette.AppRouter, now it fires an event each time the URL changes
+     */
+    navigate: function () {
+        this.searchPageModule.removeOpenTipsies();
+        this.trigger("navigate");
+        Marionette.AppRouter.prototype.navigate.apply(this, arguments);
+    },
+
+    /**
+     * Navigate to a new state.
+     *
+     * @param {UrlSerializer.state} state
+     */
+    pushState: function (state) {
+        this._setStatePermalink(state);
+        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false });
+    },
+
+    replaceState: function (state) {
+        this._setStatePermalink(state);
+        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false, replace: true });
+    },
+
+    _restoreSessionSearch: function () {
+        var sessionSearch = this.initialSessionSearchState,
+            url = UrlSerializer.getURLFromState(sessionSearch || this.searchPageModule.getState());
+
+        this.navigate(url, { replace: true, trigger: true });
+    },
+
+    /**
+     * The "catch-all" route that distinguishes search and issue fragments.
+     *
+     * @param {string} path The path component of the URL (relative to the root)
+     * @param {object} query The decoded querystring params
+     * @private
+     */
+    _route: function (path, query) {
+        // Re-encode back to a full fragment, since we do our own parsing in JIRA.Issues.URLSerializer
+        var fragment = this.toFragment(path, query);
+
+        if (JIRA.Issues.ignorePopState) {
+            // Workaround for Chrome bug firing a null popstate event on page load.
+            // Backbone should fix this!
+            // @see http://code.google.com/p/chromium/issues/detail?id=63040
+            // @see also JRADEV-14804
+            return;
+        }
+
+        // Remove ignored parameters (e.g. focusedCommentId).
+        var state = UrlSerializer.getStateFromURL(fragment);
+
+        if (!this._navigateToLoginIfNeeded(state)) {
+            this._navigateUsingState(state);
+        }
+    },
+
+    _navigateToLoginIfNeeded: function (state, history) {
+        if (!this.usePushState(history) && state.selectedAssetKey && !JIRA.Issues.LoginUtils.isLoggedIn()) {
+            var instance = this;
+
+            var requestParams = {};
+            if (state.filter != null) {
+                requestParams.filterId = state.filter;
+            }
+
+            jQuery.ajax({
+                url: AJS.contextPath() + "/rest/issueNav/1/issueNav/anonymousAccess/" + state.selectedAssetKey,
+                headers: { 'X-SITEMESH-OFF': true },
+                data: requestParams,
+                success: function () {
+                    instance._navigateUsingState(state);
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401) {
+                        instance._redirectToLogin(state);
+                    } else {
+                        instance._navigateUsingState(state);
+                    }
+                }
+            });
+
+            return true;
+        }
+
+        return false;
+    },
+
+    _navigateUsingState: function (state) {
+        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+            this._setStatePermalink(state);
+            this.navigate(UrlSerializer.getURLFromState(state), { replace: true, trigger: false });
+            this.searchPageModule.updateFromRouter(state);
+        }
+    },
+
+    _redirectToLogin: function (state) {
+        var url = AJS.contextPath() + "/login.jsp?permissionViolation=true&os_destination=" +
+            encodeURIComponent(UrlSerializer.getURLFromState(state));
+
+        window.location.replace(url);
+    },
+
+    /**
+     * Set the permalink for a given state into AJS.Meta to be rendered by the share plugin
+     */
+    _setStatePermalink: function (state) {
+        var viewIssueState = _.pick(state, "selectedIssueKey");
+        var baseUrl = AJS.Meta.get("jira-base-url");
+        if (!_.isEmpty(viewIssueState)) {
+            AJS.Meta.set("viewissue-permlink",
+                baseUrl + "/" + UrlSerializer.getURLFromState(viewIssueState)
+            );
+        }
+        var issueNavState = _.omit(state, "selectedIssueKey");
+        if (!_.isEmpty(issueNavState)) {
+            AJS.Meta.set("issuenav-permlink",
+                baseUrl + "/" + UrlSerializer.getURLFromState(issueNavState)
+            );
+        }
+    }
+});
+
+module.exports = AssetRouter;
+
+},{"../../util/url-serializer":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js","./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\controller.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-query-parameters":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone-query-parameters\\backbone.queryparams.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-nav-creator.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+
+var AssetSearchManager = require('./asset-search-manager');
+var LayoutSwitcherView = require('./layout-switcher');
+var QueryComponent = require('../../../components/query.js');
+var SearchHeaderModule = require('./search-header-module');
+var SearchModule = require('./search-module');
+var SearchPageModule = require('./search-page-module');
+
+/**
+ * 
+ */
+var AssetNavCreator = {
+
+    create: function($el, options) {
+        var searchPageModule = this.searchPageModule = new SearchPageModule({}, {
+            initialAssetTableState: options.initialAssetTableState
+        });
+        searchPageModule.registerViewContainers({
+            issueContainer: $(".asset-container"),
+            searchContainer: $(".navigator-container")
+        });
+
+        // Initialize Modules
+
+        var searchHeaderModule = this.searchHeaderModule = new SearchHeaderModule({
+            searchPageModule: searchPageModule
+        });
+
+//        var filterModule = new JIRA.Issues.FilterModule({
+//            searchPageModule: searchPageModule,
+//            systemFilters: searchPageModule.addOwnerToSystemFilters(options.systemFilters)
+//        });
+
+        var queryModule = QueryComponent.create({
+            el: $el.find("form.navigator-search"),
+            searchers: options.initialSearcherCollectionState,
+            preferredSearchMode: "basic",
+            layoutSwitcher: true,
+            autocompleteEnabled: false,
+            basicAutoUpdate: true
+        });
+
+//        JIRA.bind(JIRA.Events.ISSUE_TABLE_REORDER, function(e) {
+//            if (!JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+//                e.preventDefault();
+//            }
+//        });
+
+        this.layoutSwitcherView = new LayoutSwitcherView({ searchPageModule: searchPageModule });
+        this.layoutSwitcherView.setElement($el.find("#layout-switcher-toggle")).render();
+
+        var issueModule = JIRA.Issues.Application.request("issueEditor");
+        JIRA.Issues.Application.on("issueEditor:render", function(regions) {
+            JIRA.Issues.Application.execute("pager:render", regions.pager);
+        });
+        JIRA.Issues.Application.commands.setHandler("returnToSearch", function() {
+            JIRA.Issues.Application.execute("issueEditor:close");
+        });
+
+        // Initialize event bubbling
+        JIRA.Issues.Application.on("issueEditor:saveSuccess", function (props) {
+            JIRA.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
+        });
+        JIRA.Issues.Application.on("issueEditor:saveError", function (props) {
+            if (!props.deferred) {
+                JIRA.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
+            }
+        });
+
+        JIRA.Issues.FocusShifter.init();
+
+        var viewIssueData = issueModule.viewAssetData;
+
+        var issueSearchManager = new AssetSearchManager({
+            initialAssetTableState: options.initialAssetTableState,
+            initialAssetIds: options.initialAssetIds
+        });
+
+        var searchModule = new SearchModule({
+            searchPageModule: searchPageModule,
+            queryModule: queryModule,
+            assetSearchManager: issueSearchManager,
+            initialSelectedAsset: options.initialSelectedAsset
+        });
+
+        var issueCacheManager = new JIRA.Issues.Cache.IssueCacheManager({
+            searchResults: searchModule.getResults(),
+            viewAssetData: viewIssueData
+        });
+
+        // TODO TF-693 - FullScreenIssue will detach these elements, so get a reference now before they're not discoverable.
+        var issueNavToolsElement = $el.find(".saved-search-selector");
+        // TODO TF-693 - Try to prevent FullScreenIssue from hacking and mutilating the DOM so much...
+        var fullScreenIssue = new JIRA.Issues.FullScreenIssue({
+            issueContainer: searchPageModule.issueContainer,
+            searchContainer: searchPageModule.searchContainer,
+            assetCacheManager: issueCacheManager
+        });
+
+        // Register Modules
+        searchPageModule.registerSearch(searchModule);
+        searchPageModule.registerSearchHeaderModule(searchHeaderModule);
+        searchPageModule.registerFilterModule(filterModule);
+        searchPageModule.registerQueryModule(queryModule);
+
+        searchPageModule.registerFullScreenIssue(fullScreenIssue);
+        searchPageModule.registerIssueSearchManager( issueSearchManager);
+        searchPageModule.registerIssueCacheManager(issueCacheManager);
+        searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
+
+        searchHeaderModule.registerSearch(searchModule);
+        searchHeaderModule.createToolsView(issueNavToolsElement);
+
+        // Router
+
+        var issueNavRouter = this.issueNavRouter = new JIRA.Issues.IssueNavRouter({
+            searchPageModule: searchPageModule,
+            initialSessionSearchState: options.initialSessionSearchState
+        });
+
+        searchPageModule.registerIssueNavRouter(issueNavRouter);
+
+        // Overrides
+
+        JIRA.Issues.enhanceLinks.toIssueNav({
+            searchPageModule: searchPageModule
+        });
+
+        JIRA.Issues.enhanceLinks.withPushState({
+            router: issueNavRouter
+        });
+
+        JIRA.Issues.enhanceLinks.toIssue({
+            searchPageModule: searchPageModule
+        });
+
+        JIRA.Issues.enhanceLinks.transformToAjax();
+
+        JIRA.Issues.dialogCleaner(issueNavRouter);
+
+        JIRA.Issues.Api.initialize({
+            searchPageModule: searchPageModule
+        });
+
+        JIRA.Issues.IssueAPI.override({
+            searchPageModule: searchPageModule
+        });
+
+        JIRA.Issues.IssueNavigatorAPI.override({
+            searchPageModule: searchPageModule
+        });
+
+        /**
+         * Used to defer the showing of issue dialogs until all promises are resolved.
+         * We use this to ensure the dialog we are opening has the correct data.
+         * If we are inline editing the summary then open the edit dialog, we want to be sure that the summary has been
+         * updated on the server first, otherwise we will be showing stale data in the edit dialog.
+         */
+        JIRA.Dialogs.BeforeShowIssueDialogHandler.add(JIRA.Issues.Api.waitForSavesToComplete);
+
+        JIRA.Issues.overrideIssueDialogs({
+            getIssueId: _.bind(searchPageModule.getEffectiveIssueId, searchPageModule),
+            isNavigator: true,
+            updateAsset: function(dialog) {
+                var issueUpdate = JIRA.Issues.Utils.getUpdateCommandForDialog(dialog);
+                return searchPageModule.updateAsset(issueUpdate);
+            }
+        });
+
+        // Keyboard shortcuts ?
+
+        $(document).keydown(function (e) {
+            var dialogIsVisible = $("div.aui-blanket").length > 0,
+                wasSupportedKey = (e.which === $.ui.keyCode.ENTER || e.which === $.ui.keyCode.LEFT ||
+                    e.which === $.ui.keyCode.UP || e.which === $.ui.keyCode.RIGHT || e.which === $.ui.keyCode.DOWN);
+
+            if (!dialogIsVisible && wasSupportedKey) {
+                var target = $(e.target),
+                    targetIsValid = target.is(":not(:input)");
+
+                if (target == undefined || targetIsValid) {
+                    if (e.which === $.ui.keyCode.ENTER) {
+                        if (target == undefined || target.is(":not(a)")) {
+                            JIRA.Issues.Api.viewSelectedIssue();
+                        }
+                    } else if (e.which === $.ui.keyCode.LEFT) {
+                        searchPageModule.handleLeft();
+                    } else if (e.which === $.ui.keyCode.RIGHT) {
+                        searchPageModule.handleRight();
+                    } else if (e.which === $.ui.keyCode.UP) {
+                        if (searchPageModule.handleUp()) {
+                            e.preventDefault();
+                        }
+                    } else if (e.which === $.ui.keyCode.DOWN) {
+                        if (searchPageModule.handleDown()) {
+                            e.preventDefault();
+                        }
+                    }
+                }
+            }
+        });
+
+        // Not such a crash hot idea; should remove it.
+        this.searchResults = searchModule.getResults();
+
+        // Create the on change bindings for updating the login link.
+        this.searchPageModule.on("change", changeLoginUrl);
+        this.searchResults.on("change", changeLoginUrl);
+        this.searchResults.getSelectedAsset().on("change", changeLoginUrl);
+
+        return this;
+    },
+
+    /**
+     * change the login url to the current state.
+     */
+    changeLoginUrl: function() {
+        var url = JIRA.Issues.LoginUtils.redirectUrlToCurrent();
+        $('.login-link').attr('href', url);
+    }
+};
+
+module.exports = AssetNavigator
+},{"../../../components/query.js":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\query.js","./asset-search-manager":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-search-manager.js","./layout-switcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\layout-switcher.js","./search-header-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-header-module.js","./search-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-module.js","./search-page-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-page-module.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-search-manager.js":[function(require,module,exports){
+"use strict";
+
+var Brace = require('backbone-brace');
+
+var AsyncData = require('../util/async-data');
+
+/**
+ * Handles the AJAX asset search requests, including both jql search and stable update.
+ * For the very first search, this class will return the initial search data delivered with the page,
+ * if available.
+ *
+ * Also keeps AsyncData of assetKeys within the search.
+ */
+var AssetSearchManager = Brace.Evented.extend({
+    namedEvents: [
+        // Triggered before executing a search.
+        "beforeSearch",
+
+        // Triggered when a search request fails.
+        "searchError"
+    ],
+
+    /**
+     * @param {object} options
+     * @param {object} options.initialAssetTableState The asset table's initial state.
+     */
+    initialize: function (options) {
+        _.extend(this, options);
+        this.assetKeys = new AsyncData();
+    },
+
+    /**
+     * @return {boolean} whether the next search request will return the initial search without making an AJAX request.
+     */
+    hasInitialSearch: function () {
+        return !!this.initialAssetTableState;
+    },
+
+    /**
+     * Execute a new search, generating a new set of stable asset IDs.
+     *
+     * @param {object} data
+     * @param {number} [data.filterId] The ID of the search filter.
+     * @param {string} data.jql The search JQL.
+     * @param {number} [data.startIndex=0] The index of the first result to return.
+     * @param {boolean} [data.columnConfig] The request columns to be used. Either user, filter, system or explicit.
+     * @return {jQuery.Promise} a promise that is resolved when the search completes.
+     */
+    search: function (data) {
+        var deferred,
+            traceKey;
+
+        data = _.extend({}, data);
+
+        if (_.isNumber(data.startIndex) === false) {
+            data.startIndex = 0;
+        }
+
+        // We don't want to have more than one request in flight for results. This can cause unexpected results.
+        if (this.activeResultsReq) {
+            // If it is the same as the request we are currently waiting for we can just ignore.
+            if (JSON.stringify(this.activeRequestData) === JSON.stringify(data)) {
+                return jQuery.Deferred().reject().promise();
+            } else {
+                // Otherwise we will abort and issue a new request.
+                this.activeResultsReq.abort();
+            }
+        }
+
+        this.activeRequestData = data;
+        this.triggerBeforeSearch();
+
+        // Initial asset search state is included in the page to avoid making an AJAX request.
+        if (this.hasInitialSearch()) {
+            deferred = jQuery.Deferred().resolve(this.initialAssetTableState);
+            traceKey = "quoteflow.search.finished.initial";
+            this.initialAssetTableState = null;
+            this.initialAssetIds = null;
+        } else {
+            deferred = this.activeResultsReq = this._doSearch(data);
+            traceKey = "quoteflow.search.finished.secondary";
+        }
+
+        deferred.always(_.bind(function () {
+            this.activeResultsReq = null;
+            this.activeRequestData = null;
+            JIRA.trace(traceKey);
+        }, this));
+
+        deferred.done(_.bind(this._updateAssetKeysOnSearchSuccess, this));
+
+        deferred.fail(_.bind(function () {
+            this.assetKeys.reset();
+            this.triggerSearchError();
+            _.defer(JIRA.trace, "quoteflow.search.finished");
+        }, this));
+
+        return deferred.pipe(function (data) {
+            if (data.assetTable) {
+                // Only AssetSearchManager uses these.
+                delete data.assetTable.assetKeys;
+            }
+
+            return data;
+        }).promise();
+    },
+
+    /**
+     * Construct a request for asset table information.
+     * Fails fast if the given data is invalid (e.g. invalid filter ID) and
+     * doesn't actually make an AJAX request; just returns a rejected deferred.
+     *
+     * @param data The data to use in the request.
+     * @return {jQuery.Deferred} a deferred response.
+     */
+    _doSearch: function (data) {
+        // If the filter ID is invalid, fail. We really should move this logic
+        // into AssetTableResource, but that's a slightly more risky change.
+        var isInteger = /^-?\d+$/;
+        if (data.filterId && !isInteger.test(data.filterId)) {
+            var response = {
+                status: 400,
+                responseText: JSON.stringify({
+                    errors: [AJS.I18n.getText("navigator.error.filter.id.not.number", data.filterId)]
+                })
+            };
+
+            return jQuery.Deferred().reject(response).promise();
+        }
+
+        return jQuery.ajax({
+            type: "POST",
+            url: AJS.contextPath() + "/rest/issueNav/1/issueTable",
+            //headers: JIRA.Issues.XsrfTokenHeader,
+            data: _.extend(data, {
+                layoutKey: "split-view"
+            })
+        });
+    },
+
+    _updateAssetKeysOnSearchSuccess: function (searchResult) {
+        var assetIds = searchResult.assetTable.issueIds;
+        var assetKeys = searchResult.assetTable.assetKeys;
+        var assetKeyMapping;
+
+        if (assetIds && assetKeys) {
+            assetKeyMapping = {};
+            _.each(assetIds, function (assetId, index) {
+                assetKeyMapping[assetId] = {
+                    value: assetKeys[index],
+                    error: false
+                };
+            });
+            this.assetKeys.reset(assetKeyMapping);
+        } else {
+            // Stable search is off, resort to extracting keys for current page only from the table html
+            assetKeyMapping = AssetSearchManager._extractAssetKeysFromTable(searchResult.assetTable.table);
+            this.assetKeys.reset(assetKeyMapping);
+        }
+    },
+
+    /**
+     * Retrieve asset table information for the assets matching the given IDs.
+     *
+     * @param {number[]} ids The asset IDs.
+     * @return {jQuery.Deferred} A deferred that is resolved when the request completes.
+     */
+    getRowsForIds: function (ids, searchOptions) {
+        if (!ids.length) {
+            // Don't need to make a request, respond with an empty results set
+            return jQuery.Deferred().resolve({}).promise();
+        }
+
+        var request = jQuery.ajax({
+            data: _.extend({
+                id: ids,
+                layoutKey: "split-view"
+            }, searchOptions),
+            type: "POST",
+            //headers: JIRA.Issues.XsrfTokenHeader,
+            url: AJS.contextPath() + "/rest/issueNav/1/issueTable/stable"
+        });
+
+        request.fail(_.bind(function () {
+            this.triggerSearchError();
+        }, this));
+
+        return request.pipe(function (data) {
+            return data.assetTable;
+        }).done(_.bind(function (data) {
+            this.assetKeys.setMultiple(AssetSearchManager._extractAssetKeysFromTable(data.table, ids));
+            _.defer(JIRA.trace, "jira.search.finished");
+        }, this)).promise();
+    },
+
+    setAsInaccessible: function (id) {
+        return this.assetKeys.setError(id);
+    }
+}, {
+    // Returns id->key map information from asset table html.
+    // @param assetTableHtml - table html for the current page
+    // @param assetIds - optional. If supplied, inaccessible rows will have an entry in the map (mapping to null).
+    _extractAssetKeysFromTable: function (assetTableHtml, assetIds) {
+        var map = {};
+        AJS.$(assetTableHtml).find('.issuerow').each(function (i) {
+            var $row = AJS.$(this);
+            var id = assetIds ? assetIds[i] : $row.attr('rel');
+            var key = $row.data('issuekey') || null;
+            if (id) {
+                map[id] = key ? { value: key, error: false } : { error: true };
+            }
+        });
+        return map;
+    }
+});
+
+module.exports = AssetSearchManager;
+},{"../util/async-data":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\util\\async-data.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\simple-asset.js":[function(require,module,exports){
+"use strict";
+
+var Brace = require('backbone-brace');
+
+/**
+ * 
+ */
+var SimpleAsset = Brace.Model.extend({
+    properties: ["id", "key"],
+    defaults: {
+        id: null,
+        key: null
+    },
+    hasAsset: function () {
+        return !!this.getId();
+    }
+});
+
+module.exports = SimpleAsset;
+},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\full-screen-controller.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+/**
+ * A view containing the entire search/asset app.
+ * 
+ * Handles switching between the search and asset views.
+ */
+var FullScreenLayoutController = Marionette.Controller.extend({
+
+    /**
+     * Initialise the FullScreenLayout.
+     *
+     * @param {object} options
+     * @param {element} options.searchContainer The element into which the search is to be rendered.
+     */
+    initialize: function (options) {
+        this.searchService = new SearchService({
+            searchModule: options.search,
+            searchResults: options.search.getResults(),
+            columnConfig: options.columnConfig
+        });
+
+        this.$navigatorContent = options.searchContainer.find('.navigator-content');
+        this.assetTable = new IssueTable({
+            searchService: this.searchService,
+            el: this.$navigatorContent,
+            columnConfig: options.columnConfig
+        });
+
+        this.listenTo(this.assetTable, {
+            "highlightIssue": function (issueId) {
+                this.searchService.highlightIssue(issueId);
+            },
+            "render": function () {
+                if (!this.searchService.hasSelectedAsset()) {
+                    this.fullScreenIssue.hide();
+                }
+                this.fullScreenIssue.bindSearchService(this.searchService);
+                this.trigger("render");
+            }
+        });
+
+        this.fullScreenIssue = options.fullScreenIssue;
+
+        this.listenTo(this.fullScreenIssue, {
+            "assetHidden": function () {
+                // This is the second highlight. The first one is inside IssueTable component, but due the
+                // internals of FullScreenIssue, when the first one is fired the IssueTable is not in the DOM
+                // so the scrollIntoView() operation will not work. We need to re-highlight the same issue now
+                // that the IssueTable is present in the DOM to force the scroll behaviour
+                this.assetTable.highlightIssue(this.searchService.getHighlightedAsset());
+            }
+        });
+
+        Application.on("assetEditor:loadError", this.onLoadError, this);
+    },
+
+    onLoadError: function (issue) {
+        if (!this.fullScreenIssue.isVisible()) {
+            this.searchService.unselectAsset();
+            Messages.showErrorMsg(
+                AJS.I18n.getText('viewissue.error.message.cannotopen', issue.issueKey),
+                { closeable: true }
+            );
+        }
+    },
+
+    render: function () {
+        this.assetTable.show();
+    },
+
+    onClose: function () {
+        this.fullScreenIssue.deactivate();
+        this.assetTable.close();
+        this.searchService.close();
+
+        Application.off("issueEditor:loadError", this.onLoadError, this);
+
+        delete this.fullScreenIssue;
+        delete this.assetTable;
+        delete this.searchService;
+    },
+
+    nextAsset: function () {
+        this.searchService.selectNextAsset();
+    },
+
+    prevAsset: function () {
+        this.searchService.selectPreviousIssue();
+    },
+
+    returnToSearch: function () {
+        this.searchService.unselectAsset();
+    },
+
+    handleLeft: function () {
+        // No-op
+    },
+
+    handleRight: function () {
+        // No-op
+    },
+
+    isIssueViewActive: function () {
+        return this.fullScreenIssue.isVisible();
+    }
+});
+
+module.exports = FullScreenLayoutController;
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\layout-switcher.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+/**
+ * The layout switcher control.
+ */
+var LayoutSwitcherView = Marionette.ItemView.extend({
+    
+    template: JST["asset/nav-search/layout-switcher"],
+
+    /**
+     * @param {object} options
+     * @param {JIRA.Issues.SearchPageModule} options.searchPageModule
+     */
+    initialize: function (options) {
+        _.bindAll(this, "_onLayoutSwitchClick");
+
+        this.searchPageModule = options.searchPageModule;
+        this.searchPageModule.on("change:currentLayout", this.render, this);
+    },
+
+    /**
+     * @return {JIRA.Issues.LayoutSwitcherView} <tt>this</tt>
+     */
+    render: function () {
+        this.$el.html(this.template({
+            layouts: this.searchPageModule.getSortedLayouts(),
+            activeLayout: this.searchPageModule.getActiveLayout()
+        }));
+
+        this._addLayoutSwitcherTooltip();
+
+        // We can't use delegate events as the dropdown is appended to the body.
+        this.$el.find(".aui-list-item-link").click(this._onLayoutSwitchClick);
+        JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.$el, JIRA.CONTENT_ADDED_REASON.layoutSwitcherReady]);
+        return this;
+    },
+
+    /**
+     * @returns {JIRA.Issues.LayoutSwitcherView} <tt>this</tt>
+     */
+    enableLayoutSwitcher: function () {
+        this.$el.find("#layout-switcher-button").removeClass("disabled").removeAttr('disabled');
+        return this;
+    },
+
+    /**
+     * @returns {JIRA.Issues.LayoutSwitcherView} <tt>this</tt>
+     */
+    disableLayoutSwitcher: function () {
+        this.$el.find("#layout-switcher-button").addClass("disabled").attr('disabled', '');
+        return this;
+    },
+
+    createHelptipForSwitchingToDetailView: function (weight) {
+        var tip;
+        if (this._shouldShowIntro() && this.$el.is(":visible")) {
+            tip = new AJS.HelpTip({
+                id: "split-view-intro",
+                title: AJS.I18n.getText('issuenav.layoutswitcher.intro.title'),
+                url: AJS.Meta.get('issue-search-help-url'),
+                bodyHtml: AJS.I18n.getText('issuenav.layoutswitcher.intro.desc'),
+                anchor: ".view-selector button",
+                isSequence: true,
+                weight: weight
+            });
+        }
+        return tip;
+    },
+
+    _shouldShowIntro: function () {
+        return this.searchPageModule.search.getResults().hasAssets();
+    },
+
+    /**
+     * Adds a tooltip to the layout switcher button
+     * @private
+     */
+    _addLayoutSwitcherTooltip: function () {
+        function getTooltipMessage() {
+            // If there is no shortcut for this action, just display the regular text. (i.e. without the 'Type X' part)
+            var shortcut = AJS.KeyboardShortcut.getKeyboardShortcutKeys('switch.search.layouts');
+            if (shortcut) {
+                return AJS.I18n.getText("issuenav.layoutswitcher.button.tooltip", AJS.KeyboardShortcut.getKeyboardShortcutKeys('switch.search.layouts'));
+            } else {
+                return AJS.I18n.getText("issuenav.layoutswitcher.button.tooltip.whitout.kb.shortcut");
+            }
+        }
+
+        new JIRA.Issues.Tipsy({
+            el: this.$el.find("#layout-switcher-button"),
+            showCondition: ":not(.active)",
+            tipsy: {
+                title: getTooltipMessage,
+                gravity: 'ne'
+            }
+        });
+    },
+
+    /**
+     * Tell the <tt>SearchPageModule</tt> to change layout.
+     * <p/>
+     * Called when a layout button is clicked.
+     *
+     * @param {object} e The click event.
+     * @param {object} [options] Options used in tests.
+     *
+     * @private
+     */
+    _onLayoutSwitchClick: function (e, options) {
+        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+            // HACK: Hover intent has a strange bug that when we click the layout switcher it triggers a mouseleave event on the filters panel
+            // To get around this, we disable it whilst we are transitioning to new layout.
+            var layoutKey = AJS.$(e.target).closest("[data-layout-key]").data("layout-key");
+            e.preventDefault();
+            this.searchPageModule.changeLayout(layoutKey, options);
+        }
+    }
+})
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-header-module.js":[function(require,module,exports){
+"use strict";
+
+var Brace = require('backbone-brace');
+
+/**
+ * Interface to the search header.
+ */
+var SearchHeaderModule = Brace.Evented.extend({
+
+    initialize: function (options) {
+        this._searchPageModule = options.searchPageModule;
+    },
+
+    registerSearch: function (search) {
+        this._search = search;
+    }
+});
+
+module.exports = SearchHeaderModule;
+},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-module.js":[function(require,module,exports){
+"use strict";
+
+var Brace = require('backbone-brace');
+
+var SearchResults = require('./search-results');
+
+/**
+ * 
+ */
+var SearchModule = Brace.Evented.extend({
+    initialize: function (options) {
+        this._assetSearchManager = options.assetSearchManager;
+        this._searchPageModule = options.searchPageModule;
+        this._searchResults = new SearchResults(null, {
+            assetSearchManager: this._assetSearchManager,
+            initialSelectedAsset: options.initialSelectedAsset,
+            columnConfig: this._searchPageModule.columnConfig
+        });
+
+        // TF-447 - Refactoring step to remove nested dependencies on SearchModule.
+        JIRA.Issues.Application.reqres.setHandler("issueNav:currentSearchRequest", this.getCurrentSearchRequest, this);
+
+        JIRA.Issues.Application.commands.setHandler("issueNav:refreshSearch", this.refresh, this);
+    },
+
+    /**
+     * Sorts this search using the specified JQL or fieldId.
+     *
+     * @param {object} sortOptions
+     * @param {string} sortOptions.fieldId
+     * @param {string} sortOptions.jql
+     */
+    doSort: function (jql) {
+        if (jql) {
+            this._searchPageModule.update({
+                jql: jql,
+                startIndex: null,
+                selectedAssetKey: null
+            }, true);
+        }
+    },
+
+    getFilterId: function () {
+        var filter = this._searchPageModule.getFilter();
+        return filter && filter.getId();
+    },
+
+    getJql: function () {
+        return this._searchPageModule.getJql();
+    },
+
+    getEffectiveJql: function () {
+        return this._searchPageModule.getEffectiveJql();
+    },
+
+    getResults: function () {
+        return this._searchResults;
+    },
+
+    getState: function () {
+        return this._searchPageModule.getState();
+    },
+
+    getCurrentSearchRequest: function () {
+        return {
+            jql: this.getJql(),
+            filterId: this.getFilterId()
+        }
+    },
+
+    /**
+     * @param {object} [state=this._searchPageModule.getState()] The state to inspect.
+     * @return {boolean} Whether <tt>state</tt> describes a state where a standalone asset is visible.
+     */
+    isStandAloneAsset: function (state) {
+        state = state || this._searchPageModule.getState();
+        return !!state.selectedAssetKey && !_.isString(state.jql) && !state.filter;
+    },
+
+    /**
+     * Register a callback to be executed before a search is performed.
+     *
+     * @param {function} callback The callback to execute.
+     * @param {object} context The context in which to execute.
+     */
+    onBeforeSearch: function (callback, context) {
+        this._assetSearchManager.bindBeforeSearch(callback, context);
+    },
+
+    /**
+     * Remove a before search callback.
+     *
+     * @param {function} callback The callback to remove.
+     * @param {object} context The callback's context.
+     */
+    offBeforeSearch: function (callback, context) {
+        this._assetSearchManager.unbindBeforeSearch(callback, context);
+    },
+
+    /**
+     * Register a callback to be executed when a search fails.
+     *
+     * @param {function} callback The callback to execute.
+     * @param {object} context The context in which to execute.
+     */
+    onSearchError: function (callback, context) {
+        this._assetSearchManager.bindSearchError(callback, context);
+    },
+
+    /**
+     * Remove a search error callback.
+     *
+     * @param {function} callback The callback to remove.
+     * @param {object} context The callback's context.
+     */
+    offSearchError: function (callback, context) {
+        this._assetSearchManager.unbindSearchError(callback, context);
+    },
+
+    refresh: function () {
+        return this._searchPageModule.refreshSearch();
+    },
+
+    /**
+     * Triggers the StableUpdate event. It will force a new search.
+     * 
+     * @param {Object} [opts] Config object with custom options 
+     */
+    stableUpdate: function (opts) {
+        this._searchResults.triggerStableUpdate(_.extend({
+            force: true
+        }, opts));
+    }
+});
+
+module.exports = SearchModule;
+
+
+},{"./search-results":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-results.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-page-module.js":[function(require,module,exports){
+"use strict";
+
+var Brace = require('backbone-brace');
+var Utilities = require('../../../components/utilities');
+
+var FullScreenLayout = require('./full-screen-controller');
+
+/**
+ * 
+ */
+var SearchPageModule = Brace.Model.extend({
+    namedEvents: ["changeFilterProps"],
+
+    properties: [
+        "currentLayout",
+        "layouts",
+        "filter",
+        "jql",
+        "searchId"
+    ],
+
+    defaults: function () {
+        return {
+            filter: null,
+            jql: null
+        };
+    },
+
+    initialize: function (attributes, options) {
+        _.extend(this, options);
+
+        this.registerColumnPicker();
+
+        // This is here instead of in defaults, because we use the defaults
+        // to reset this module's state (filter and jql) but we don't want to
+        // reset the layouts.
+        this.setLayouts({});
+
+        this.registerLayout("list-view", {
+            label: AJS.I18n.getText("issuenav.layoutswitcher.listview"),
+            iconClass: 'icon-view-list',
+            view: FullScreenLayout
+        });
+
+        this.registerLayout("split-view", {
+            label: AJS.I18n.getText("issuenav.layoutswitcher.splitview"),
+            iconClass: 'icon-view-split',
+            view: JIRA.Issues.SplitScreenLayout
+        });
+        this._onFilterChanged();
+        this.on("change:filter", this._onFilterChanged, this);
+
+        JIRA.Issues.Application.on("issueEditor:close", this.returnToSearch, this);
+
+        JIRA.Issues.Application.on("issueEditor:loadComplete", function (model, props) {
+            if (!this.standalone && !props.reason) {
+                this.searchResults.selectAssetById(model.getId(), { reason: "issueLoaded" });
+                this.searchResults.updateAssetById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() })
+
+                // Replace URL if issue updated successfully
+                if (model.getKey()) {
+                    var state = this._getUpdateState({ selectedAssetKey: model.getKey() });
+                    if (this._validateNavigate(state)) {
+                        this.issueNavRouter.replaceState(state);
+                    }
+                }
+            }
+        }, this);
+
+        JIRA.Issues.Application.on("issueEditor:saveSuccess", function (props) {
+            this.searchResults.updateAssetById({ id: props.issueId, action: "inlineEdit" }, { filter: this.getFilter() });
+        }, this);
+
+        Utilities.initializeResizeHooks();
+    },
+
+    registerColumnPicker: function () {
+        this.columnConfig = JIRA.Issues.ColumnPicker.create({ search: this });
+    },
+
+
+    getInactiveLayouts: function () {
+        var layouts = [];
+        _.each(this.getLayouts(), function (layout, key) {
+            if (key !== JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey()) {
+                layouts.push(layout);
+            }
+        }, this);
+        return layouts;
+    },
+
+    getActiveLayout: function () {
+        return this.getLayouts()[JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey()];
+    },
+
+    /**
+     * Change the page layout.
+     * <p/>
+     * No-op if the requested layout is already selected.
+     *
+     * @param {string} key The key of the layout to change to.
+     * @param {object} [options]
+     * @param {boolean} [options.ajax=true] Whether to POST the user's preferred layout to the server.
+     * @param {boolean} [options.render=true] Whether to render the new layout.
+     */
+    changeLayout: function (key, options) {
+        var layout = this.getLayout(key),
+            newLayout,
+            previousLayout = this.getCurrentLayout();
+
+        JIRA.Issues.changingLayout = true;
+
+        // JRADEV-20786 - Scroll to top of page before changing layouts.
+        jQuery("body, html").scrollTop(0);
+
+        options = _.defaults({}, options, {
+            ajax: true,
+            render: true
+        });
+
+        if (layout) {
+            // If the requested layout is already selected, do nothing.
+            if (previousLayout instanceof layout.view) {
+                return;
+            }
+
+            if (previousLayout && previousLayout.close) {
+                previousLayout.close();
+                // now unselect the selected issue. the assumption here is that we are switching to
+                // a mode that does not have an issue selected by default (i.e. list view).
+                this.searchResults.unselectAsset({ replace: true });
+            }
+
+            JIRA.Issues.LayoutPreferenceManager.setPreferredLayoutKey(key, options);
+
+            newLayout = new layout.view({
+                fullScreenIssue: this.fullScreenIssue,
+                assetContainer: this.assetContainer,
+                assetCacheManager: this.assetCacheManager,
+                search: this.search,
+                searchContainer: this.searchContainer,
+                searchHeaderModule: this.searchHeaderModule,
+                columnConfig: this.columnConfig
+            });
+
+            newLayout.on("close", function () {
+                this.searchContainer.find('.navigator-content').addClass("pending");
+            }, this);
+
+            newLayout.on("render", function () {
+                this.searchContainer.find('.navigator-content').removeClass("pending");
+                JIRA.trigger(JIRA.Events.LAYOUT_RENDERED, [key]);
+            }, this);
+
+            options.render && newLayout.render();
+            this.setCurrentLayout(newLayout);
+
+            this.standalone = false;
+        }
+    },
+
+    /**
+     * Create an instance of the user's preferred layout and set it as the current layout.
+     */
+    createLayout: function () {
+        if (!this.getCurrentLayout()) {
+            this.changeLayout(JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey(), { render: false });
+            this.fullScreenIssue.deactivate();
+        }
+    },
+
+    _onFilterChanged: function () {
+        var previousFilter = this.previous('filter');
+        if (previousFilter) {
+            previousFilter.off('change', this.triggerChangeFilterProps, this);
+        }
+
+        var currentFilter = this.getFilter();
+        if (currentFilter) {
+            currentFilter.on('change', this.triggerChangeFilterProps, this);
+        }
+    },
+
+    /**
+     * @param {string} key A layout key.
+     * @return {object|null} The layout associated with <tt>key</tt> or <tt>null</tt>.
+     */
+    getLayout: function (key) {
+        return this.getLayouts()[key] || null;
+    },
+
+    /**
+     * @return {object} an array of all registered layouts, sorted by label.
+     */
+    getSortedLayouts: function () {
+        return _.sortBy(this.getLayouts(), "label");
+    },
+
+    /**
+     * Associate a layout class with a key.
+     *
+     * @param {string} key A key used to identify the layout. If the key isn't unique, the old layout is overridden.
+     * @param {object} layout The layout class to be associated with <tt>key</tt>; its constructor, not an instance.
+     */
+    registerLayout: function (key, layout) {
+        layout.id = key;
+        this.getLayouts()[key] = layout;
+    },
+
+    /**
+     * Get jql but make sure that any requests to get jql have completed.
+     * @return {jQuery.Deferred}
+     */
+    getJqlDeferred: function () {
+        var deferred = jQuery.Deferred();
+        var instance = this;
+        // I am adding a settimeout to fix the following case and avoid similar ones in the future.
+        // I open a searcher, make some changes. Clicking the "Save" button to update the filter, I want to
+        // get the jql after the searcher have made their request to the server. Unfortunately because the click
+        // event of the "Save" button happens before the searchers make their request, we need to delay a tad.
+        _.defer(function () {
+            instance.queryModule.searchersReady().always(function () {
+                // Similar senario as the one above except in this case the request has returned but the jql hasn't been set.
+                _.defer(function () {
+                    deferred.resolve(instance.getEffectiveJql());
+                });
+            });
+        });
+        return deferred.promise();
+    },
+
+    registerIssueSearchManager: function (searchManger) {
+        this.assetSearchManager = searchManger;
+    },
+
+    registerIssueCacheManager: function (issueCacheManager) {
+        this.assetCacheManager = issueCacheManager;
+    },
+
+    registerQueryModule: function (queryModule) {
+        this.queryModule = queryModule;
+        this.queryModule.onJqlChanged(this.queryModuleSearchRequested, this);
+        this.queryModule.onJqlError(this.disableLayoutSwitcher, this);
+        this.queryModule.onJqlSuccess(this.enableLayoutSwitcher, this);
+        this.queryModule.onVerticalResize(QuoteFlow.Interactive.triggerVerticalResize);
+        this.queryModule.onQueryTooComplexSwitchToAdvanced(function () {
+            JIRA.Issues.Application.execute("analytics:trigger", "kickass.queryTooComplexSwitchToAdvanced");
+        });
+        this.queryModule.onBasicModeCriteriaCountWhenSearching(function (data) {
+            JIRA.Issues.Application.execute("analytics:trigger", "kickass.basicModeCriteriaCountWhenSearching", data);
+        });
+        this.queryModule.onChangedPreferredSearchMode(function (mode) {
+            JIRA.Issues.Application.execute("analytics:trigger", "kickass.switchto" + mode);
+        });
+        JIRA.Shifter.register(JIRA.Issues.SearchShifter({
+            isBasicMode: _.bind(this.queryModule.isBasicMode, this.queryModule),
+            isFullScreenIssue: _.bind(this.isFullScreenIssueVisible, this),
+            searcherCollection: this.queryModule.getSearcherCollection()
+        }));
+    },
+
+    disableLayoutSwitcher: function () {
+        if (this.layoutSwitcher) {
+            this.layoutSwitcher.disableLayoutSwitcher();
+        }
+    },
+
+    enableLayoutSwitcher: function () {
+        if (this.layoutSwitcher) {
+            this.layoutSwitcher.enableLayoutSwitcher();
+        }
+    },
+
+
+    registerLayoutSwitcher: function (layoutSwitcher) {
+        this.layoutSwitcher = layoutSwitcher;
+    },
+
+    registerFilterModule: function (newFilterModule) {
+        if (this.filterModule) {
+            this.filterModule.off('filterRemoved');
+            this.filterModule.off('filterSelected');
+        }
+
+        this.filterModule = newFilterModule;
+        this.filterModule.on('filterRemoved', function (props) {
+            var currentFilter = this.getFilter();
+            if (currentFilter && props.filterId === currentFilter.getId()) {
+                this.resetToBlank();
+            }
+        }, this);
+
+        this.filterModule.on('filterSelected', function (props) {
+            this.resetToFilter(props.filterId);
+        }, this);
+    },
+
+    registerSearch: function (search) {
+        this.search = search;
+        this.searchResults = this.search.getResults();
+        this.searchResults.on("change:resultsId", this._handleSearchResultsChange, this);
+        this.searchResults.onStartIndexChange(this._handleSearchResultsChange, this);
+        this.searchResults.onSelectedAssetChange(this._handleSearchResultsChange, this);
+
+        var columnConfig = this.columnConfig;
+
+        //TODO This event must be fired before searchResults.on*Change events in order to work
+        //Make sure that is a design feature and not a coincidence
+        this.on("change:filter", function () {
+            //When switch to another filter, clear the columns
+            columnConfig.clearFilterConfiguration();
+        });
+
+        this.searchResults.onColumnsChange(function (searchResults) {
+            var configName = searchResults.getColumnConfig();
+            if (configName) { //There is no columnConfig on empty search
+                columnConfig.syncColumns(configName, searchResults.getColumns());
+            }
+        });
+
+        this.searchResults.onColumnConfigChange(function (searchResults) {
+            var configName = searchResults.getColumnConfig();
+            if (configName) { //There is no columnConfig on empty search
+                columnConfig.setCurrentColumnConfig(configName);
+                //When the columnConfig changes, always set the columns
+                columnConfig.syncColumns(configName, searchResults.getColumns());
+            }
+        });
+
+        columnConfig.onColumnsSync(function (columnConfigName) {
+            search.stableUpdate({
+                columnConfig: columnConfigName
+            });
+        });
+
+        this.searchResults.onSelectedAssetChange(_.bind(function (issue) {
+            if (!issue.hasAsset()) {
+                JIRA.Issues.Application.execute("issueEditor:removeIssueMetadata");
+            }
+        }, this));
+    },
+
+    _handleSearchResultsChange: function (model, options) {
+        options = options || {};
+        options.replace ?
+                this.issueNavRouter.replaceState(this.getState()) :
+                this.issueNavRouter.pushState(this.getState());
+    },
+
+    registerSearchHeaderModule: function (searchHeaderModule) {
+        this.searchHeaderModule = searchHeaderModule;
+    },
+
+    registerFullScreenIssue: function (fullScreenIssue) {
+        this.fullScreenIssue = fullScreenIssue;
+        this.fullScreenIssue.bindIssueHidden(function () {
+            JIRA.Issues.Application.execute("issueEditor:dismiss");
+
+            this.updateWindowTitle(this.getFilter());
+            JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
+        }, this);
+    },
+
+    /**
+     * @param {element} options.issueContainer The element in which issues are to be rendered.
+     * @param {element} options.searchContainer The element in which search results are to be rendered.
+     */
+    registerViewContainers: function (options) {
+        this.assetContainer = options.assetContainer;
+        this.searchContainer = options.searchContainer;
+    },
+
+    registerIssueNavRouter: function (issueNavRouter) {
+        this.issueNavRouter = issueNavRouter;
+    },
+
+    prevAsset: function () {
+        if (this._overlayIsVisible()) {
+            return false;
+        }
+        if (JIRA.Issues.Application.request("issueEditor:canDismissComment") && !this.standalone) {
+            this.getCurrentLayout().prevAsset();
+            return true;
+        }
+
+        return false;
+    },
+
+    nextAsset: function () {
+        if (this._overlayIsVisible()) {
+            return false;
+        }
+        if (JIRA.Issues.Application.request("issueEditor:canDismissComment") && !this.standalone) {
+            this.getCurrentLayout().nextAsset();
+            return true;
+        }
+
+        return false;
+    },
+
+    /**
+     * Is there an issue currently being loaded
+     * @return Boolean
+     */
+    isCurrentlyLoadingIssue: function () {
+        return JIRA.Issues.Application.request("issueEditor:isCurrentlyLoading");
+    },
+
+    _overlayIsVisible: function () {
+        return AJS.$(".aui-blanket").filter(":visible").length > 0;
+    },
+
+    /**
+     * Retrieve the ID of the selected issue.
+     * <p/>
+     * If issue search is visible, the ID of the currently highlighted issue is
+     * returned; if we're viewing an issue, its ID is returned.
+     *
+     * @param {AJS.Dialog} [dialog] The dialog requesting this information.
+     * @return {number} The ID of the currently selected issue.
+     */
+    getEffectiveIssueId: function (dialog) {
+        return this.getEffectiveIssue().getId();
+    },
+
+    /**
+     * Update the UI in response to an issue update.
+     *
+     * @param {object} issueUpdate An issue update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @return {jQuery.Deferred} A deferred that is resolved when the refresh completes.
+     */
+    updateAsset: function (issueUpdate) {
+        var isDelete = issueUpdate.action === JIRA.Issues.Actions.DELETE,
+            isFullScreen = this.fullScreenIssue.isVisible();
+
+        if (isDelete) {
+            return this._deleteIssue(issueUpdate);
+        } else if (isFullScreen) {
+            return this.fullScreenIssue.updateAsset(issueUpdate).done(_.bind(function () {
+                // If it's not a standalone issue, then we also need to update the search results.
+                //
+                // Things break if these requests are made in parallel, so force them to be serial.
+                !this.standalone && this.searchResults.updateAsset(issueUpdate, { showMessage: false, filter: this.getFilter() });
+            }, this));
+        } else {
+            return this.searchResults.updateAsset(issueUpdate, { filter: this.getFilter() });
+        }
+    },
+
+    /**
+     * Update the UI in response to issue deletion.
+     *
+     * @param {object} issueUpdate An issue update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @return {jQuery.Deferred} A deferred that is resolved when the update completes.
+     * @private
+     */
+    _deleteIssue: function (issueUpdate) {
+        var isFullScreen = this.fullScreenIssue.isVisible(),
+            isVisibleIssue = issueUpdate.key == JIRA.Issues.Application.request("issueEditor:getIssueKey");
+
+        if (!isFullScreen) {
+            return this.searchResults.updateAsset(issueUpdate);
+        } else if (!isVisibleIssue) {
+            return this.fullScreenIssue.updateAsset(issueUpdate);
+        } else if (this.standalone) {
+            this.resetToBlank();
+            JIRA.Issues.showNotification(issueUpdate.message, issueUpdate.key);
+            return jQuery.Deferred().resolve().promise();
+        } else {
+            this.returnToSearch();
+            return this.searchResults.updateAsset(issueUpdate);
+        }
+    },
+
+    /**
+     * Retrieve the key of the selected issue.
+     * <p/>
+     * If issue search is visible, the key of the currently highlighted issue is
+     * returned; if we're viewing an issue, its key is returned.
+     *
+     * @return {number} The key of the currently selected issue.
+     */
+    getEffectiveIssueKey: function () {
+        return this.getEffectiveIssue().getKey();
+    },
+
+    getEffectiveIssue: function () {
+        var hasHighlightedIssue = this.searchResults.hasHighlightedAsset(),
+            hasSelectedIssue = this.searchResults.hasSelectedAsset(),
+            issueModuleIssue;
+
+        issueModuleIssue = new JIRA.Issues.SimpleIssue({
+            id: JIRA.Issues.Application.request("issueEditor:getIssueId"),
+            key: JIRA.Issues.Application.request("issueEditor:getIssueKey")
+        });
+
+        if (this.standalone) {
+            return issueModuleIssue;
+        } else if (hasSelectedIssue) {
+            return this.searchResults.getSelectedAsset();
+        } else if (hasHighlightedIssue) {
+            return this.searchResults.getHighlightedAsset();
+        } else {
+            return issueModuleIssue;
+        }
+    },
+
+    isHighlightedAssetAccessible: function () {
+        return this.search.getResults().isHighlightedAssetAccessible();
+    },
+
+    /**
+     * Show issue search and change the URL to match model state.
+     * <p/>
+     * If returning from a stand-alone issue, reset to a blank search.
+     */
+    returnToSearch: function () {
+        if (this.standalone) {
+            this.resetToBlank();
+            JIRA.trace("jira.returned.to.search");
+        } else if (this.fullScreenIssue.isVisible()) {
+            this.searchResults.unselectAsset();
+            JIRA.Issues.Application.execute("issueEditor:beforeHide");
+            // TODO: defensive check, incase issue-nav-components is a lower version than expected. Can remove after
+            // soaking for bit on ondemand.
+            if (this.queryModule.refreshLayout) {
+                this.queryModule.refreshLayout();
+            }
+        } else {
+            JIRA.trace("jira.returned.to.search");
+        }
+        jQuery.event.trigger("updateOffsets.popout")
+    },
+
+    toggleFilterPanel: function () {
+        return this.filterModule.toggleFilterPanel();
+    },
+
+    issueTableSortRequested: function (jql, startIndex) {
+        this.update({ jql: jql, startIndex: startIndex });
+    },
+
+    issueTableSearchError: function (response) {
+        if (response.status !== 0) {
+            // if we haven't aborted the request
+            this.filterModule.filtersComponent.markFilterHeaderAsInvalid();
+            var errors;
+            try {
+                errors = JSON.parse(response.responseText);
+            } catch (error) {
+                errors = { errorMessages: [AJS.I18n.getText("issue.nav.common.server.error")] };
+            }
+            this.queryModule.onSearchError(errors);
+        }
+    },
+
+    issueTableSearchSuccess: function (data) {
+        this.update({
+            startIndex: data.startIndex
+        });
+        this.queryModule.onSearchSuccess(data.warnings);
+    },
+
+    issueTableStableUpdate: function (startIndex) {
+        this.update({ startIndex: startIndex });
+    },
+
+    /**
+     * Prompt the user to confirm navigation if there are any dirty forms.
+     *
+     * @param {object} [options]
+     * @param {function} [options.confirm=window.confirm] Show a confirmation dialog.
+     * @param {boolean} [options.ignoreDirtiness=false] Whether to ignore dirty forms.
+     * @return {boolean} whether the user confirmed navigation.
+     */
+    confirmNavigation: function (options) {
+        options = _.defaults({}, options, {
+            // Why can't we use bind or apply, I hear you ask? IE8, that's why.
+            confirm: function (message) {
+                return window.confirm(message);
+            },
+            ignoreDirtiness: false
+        });
+
+        var message = JIRA.DirtyForm.getDirtyWarning() || JIRA.Issue.getDirtyCommentWarning();
+        return !!options.ignoreDirtiness || message === undefined || options.confirm(message);
+    },
+
+    /**
+     * @return {boolean} whether a full screen issue is visible.
+     */
+    isFullScreenIssueVisible: function () {
+        return this.fullScreenIssue && this.fullScreenIssue.isVisible();
+    },
+
+    isIssueVisible: function () {
+        var layoutKey = JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey();
+
+        if (this.isFullScreenIssueVisible()) {
+            return true;
+        } else if (layoutKey === "list-view") {
+            return this.fullScreenIssue.isVisible();
+        } else if (layoutKey === "split-view") {
+            // Issue is always visible in split view AS LONG AS there are results
+            return this.search.getResults().hasAssets();
+        }
+        return false;
+    },
+
+    queryModuleSearchRequested: function (jql) {
+        this.update({
+            jql: jql,
+            startIndex: 0,
+            selectedAssetKey: null,
+            searchId: _.uniqueId()
+        });
+    },
+
+    filterModuleSaved: function (filterModel) {
+        this.reset({ filter: filterModel.getId() });
+    },
+
+    discardFilterChanges: function () {
+        this.update({
+            jql: null,
+            selectedAssetKey: null
+        }, true);
+    },
+
+    getState: function () {
+        var filter = this.getFilter();
+
+        var state = {
+            filter: filter && filter.getId(),
+            filterJql: filter && filter.getJql(),
+            jql: this.getJql()
+        };
+
+        if (this.standalone) {
+            state.selectedAssetKey = JIRA.Issues.Application.request("issueEditor:getIssueKey")
+        } else {
+            _.extend(state, this.search.getResults().getState());
+        }
+
+        return state;
+    },
+
+    _doSearch: function (options) {
+        options = options || {};
+        var searchOptions = {};
+        var searchPromise;
+        var filter = this.getFilter();
+        searchOptions.startIndex = options.startIndex;
+        if (filter) {
+            searchOptions.filterId = filter.getId();
+        }
+
+        if (options.columnConfig) {
+            searchOptions.columnConfig = options.columnConfig;
+        }
+
+        searchOptions.jql = this.getEffectiveJql();
+        searchPromise = this.assetSearchManager.search(searchOptions);
+
+        searchPromise.done(_.bind(function (results) {
+            if (this.fullScreenIssue.isVisible() && !AJS.Meta.get('serverRenderedViewIssue')) {
+                JIRA.Issues.Application.execute("issueEditor:beforeHide");
+            }
+            this.searchResults.resetFromSearch(_.extend(options, results.assetTable));
+            this.queryModule.onSearchSuccess(results.warnings);
+            jQuery.event.trigger("updateOffsets.popout");
+        }, this)).fail(_.bind(function (xhr) {
+            if (xhr.statusText !== "abort") {
+                if (xhr.status == 400 && options.selectedAssetKey) {
+                    this.reset({ selectedAssetKey: options.selectedAssetKey }, { replace: true });
+                } else {
+                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedIssueKey"), this.searchResults.defaults));
+                    this.issueTableSearchError(xhr);
+                }
+            }
+        }, this));
+
+        return searchPromise;
+    },
+
+    updateWindowTitle: function (model) {
+        if (this.isFullScreenIssueVisible()) {
+            return;
+        }
+
+        var filter = model,
+            navigatorTitle = AJS.format('{0} - {1}', AJS.I18n.getText('navigator.title'), JIRA.Settings.ApplicationTitle.get());
+
+        if (filter && filter.getIsValid()) {
+            document.title = "[" + filter.getName() + "] " + navigatorTitle;
+        } else {
+            document.title = navigatorTitle;
+        }
+    },
+
+    _applyState: function (state, isReset, options) {
+        options = options || {};
+        var prevState = _.extend(this.toJSON(), this.search.getResults().toJSON());
+        var stateToApply = _.pick(state, this.properties);
+        this.set(stateToApply);
+        var newState = _.extend(this.toJSON(), state);
+        this.updateWindowTitle(this.getFilter());
+
+        if (isReset) {
+            var jql = (state.filter && state.jql == null) ? state.filter.getJql() : state.jql;
+            this.queryModule.resetToQuery(jql, { focusQuery: options.isNewSearch }).always(_.bind(function () {
+                // Hide the query view for invalid filters.
+                this.queryModule.setVisible(!state.filter || state.filter.getIsValid());
+            }, this))
+        }
+        if (this.shouldPerformNewSearch(prevState, newState)) {
+            var searchPromise = this._doSearch(newState);
+        } else {
+            var searchPromise = jQuery.Deferred().resolve();
+            if ("selectedIssueKey" in state) {
+                this.searchResults.selectAssetByKey(state.selectedAssetKey);
+            }
+            // If an issue is selected, its position in the results determines the page and we can ignore startIndex.
+            if ("startIndex" in state && !state.selectedAssetKey) {
+                this.searchResults.goToPage(state.startIndex);
+            }
+        }
+
+        this._showIntroDialogs(searchPromise);
+    },
+
+    /**
+     * Determines if we would need to perform a new (unstable) search if
+     * <tt>SearchPageModule</tt> was to be updated with the given attributes.
+     *
+     * @return {boolean} whether we should perform a new search.
+     */
+    shouldPerformNewSearch: function (prevState, newState) {
+        var prevFilterId = prevState.filter && prevState.filter.getId();
+        var filterId = newState.filter && newState.filter.getId();
+        var filterChanged = prevFilterId !== filterId;
+        var jqlChanged = newState.jql !== prevState.jql;
+        var searchIdChanged = newState.searchId !== prevState.searchId;
+        return filterChanged || jqlChanged || searchIdChanged;
+    },
+
+    refreshSearch: function () {
+        return this._doSearch(_.extend({}, this.getState(), {
+            selectedAssetKey: undefined
+        }));
+    },
+
+    _navigateToState: function (state, isReset, options) {
+
+        options = options || {};
+
+        if (!JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+            this.queryModule.queryChanged();
+            AJS.InlineLayer.current && AJS.InlineLayer.current.hide();
+            return null;
+        }
+
+        if (this._validateNavigate(state)) {
+            options.replace ? this.issueNavRouter.replaceState(state) : this.issueNavRouter.pushState(state);
+        }
+        if (this.search.isStandAloneAsset(state)) {
+            this.resetToStandaloneIssue(state);
+        } else {
+            return this.applyState(state, isReset, options);
+        }
+    },
+
+
+    _validateNavigate: function (newState) {
+        var urlFromState = JIRA.Issues.URLSerializer.getURLFromState;
+        return urlFromState(newState) !== urlFromState(this.getState());
+    },
+
+    _getUpdateState: function (state) {
+        return _.extend({}, this.getState(), state);
+    },
+
+    update: function (state, isReset, options) {
+        this._navigateToState(this._getUpdateState(state), isReset, options);
+    },
+
+    reset: function (state, options) {
+        var resetState = _.extend({}, this.defaults(), state);
+        resetState.searchId = _.uniqueId();
+        this._navigateToState(resetState, true, options);
+    },
+
+    _deactivateCurrentLayout: function () {
+        var currentLayout = this.getCurrentLayout();
+        if (currentLayout) {
+            currentLayout.close && currentLayout.close();
+            this.setCurrentLayout(null);
+        }
+    },
+
+    resetToStandaloneIssue: function (state) {
+        this._deactivateCurrentLayout();
+        this.set(this.defaults());
+        this.standalone = true;
+        this.fullScreenIssue.show({
+            key: state.selectedAssetKey,
+            viewIssueQuery: state.viewIssueQuery
+        });
+    },
+
+    applyState: function (state, isReset, options) {
+        var filterRequest,
+            shouldFetchFilter = state.filter && !(state.filter instanceof JIRA.Components.Filters.Models.Filter),
+            systemFiltersRequest = this.initSystemFilters();
+
+        JIRA.Issues.Application.execute("issueEditor:abortPending");
+        this.createLayout();
+
+        if (shouldFetchFilter) {
+            // Wait for the system filters request to finish as state.filter may refer to a system filter.
+            filterRequest = jQuery.Deferred();
+            systemFiltersRequest.always(_.bind(function () {
+                this.filterModule.getFilterById(state.filter).always(function (filterModel) {
+                    state.filter = filterModel;
+                    filterRequest.resolve();
+                });
+            }, this));
+        }
+
+        jQuery.when(filterRequest, systemFiltersRequest).always(_.bind(function () {
+            this._applyState(state, isReset, options);
+        }, this));
+    },
+
+    updateFromRouter: function (state) {
+        if (this.search.isStandAloneAsset(state)) {
+            this.resetToStandaloneIssue(state);
+        } else {
+            this.applyState(state, !this._isSearchStateEqual(state));
+        }
+    },
+
+    hasSelectedAsset: function () {
+        return this.search.getResults().getSelectedAsset().getKey();
+    },
+
+    /**
+     * Reset the application state to match a given filter.
+     *
+     * @param {number|JIRA.Components.Filters.Models.Filter} filter The (id of) the filter to reset to.
+     */
+    resetToFilter: function (filter) {
+        //Selecting a filter should always attempt to use the filter columns by default
+        //This will ensure request are being made with the specified behaviour above
+        //Returning issue table request will contain the actual columns being used and
+        //  the preference state will be updated accordingly
+        this.reset({
+            filter: filter,
+            searchId: _.uniqueId()
+        });
+    },
+
+    /**
+     * Reset the query to jql=
+     * A reset forces a new search to be performed even if there are no changes.
+     */
+    resetToBlank: function (options) {
+        this.reset({ jql: "" }, options);
+    },
+
+    /**
+     * @return {boolean} whether the current search is dirty (a modified filter).
+     */
+    isDirty: function () {
+        var filter = this.getFilter();
+        return !!filter && filter.getJql() !== this.getEffectiveJql();
+    },
+
+    getSearchMode: function () {
+        return this.queryModule.getSearchMode();
+    },
+
+    getActiveBasicModeSearchers: function () {
+        return this.queryModule.getActiveBasicModeSearchers();
+    },
+
+    /**
+     * Set the user's session search to a given filter.
+     *
+     * @param filterModel The filter.
+     * @private
+     */
+    setSessionSearch: function (filterModel) {
+        // We don't really care if this request fails; it just means that the
+        // URL may unnecessarily include the JQL parameter.
+        AJS.$.ajax({
+            data: {
+                filterId: filterModel.getId()
+            },
+            type: "PUT",
+            url: AJS.contextPath() + "/rest/issueNav/1/issueTable/sessionSearch/"
+        });
+    },
+
+    openFocusShifter: function () {
+        JIRA.Issues.FocusShifter.show();
+    },
+
+    /**
+     * @param {Object} issueProps. Either id or key needs to be present.
+     * @param issueProps.issueId
+     * @param issueProps.issueKey
+     */
+    setAsInaccessible: function (issueProps) {
+        this.issueTableModule.setAsInaccessible(issueProps);
+    },
+
+    /**
+     * @param {Object|null} issueProps. If null/undefined, use currently selected issue.
+     * @param issueProps.issueId
+     * @param issueProps.issueKey
+     */
+    showInlineIssueLoadError: function (issueProps) {
+        var html = JIRA.Components.IssueViewer.Templates.Body.errorsLoading();
+        JIRA.Messages.showErrorMsg(html, { closeable: true });
+    },
+
+    /**
+     * In the case of no filter selected, simply gets the jql property.
+     * When a filter is selected, will get the filter jql and any modifications.
+     *
+     * @return {string} the effective JQL.
+     */
+    getEffectiveJql: function () {
+        var filter = this.getFilter(),
+            jql = this.getJql();
+
+        if (_.isString(jql)) {
+            return jql;
+        } else if (filter) {
+            return filter.getJql() || "";
+        } else {
+            return "";
+        }
+    },
+
+    /**
+     * On standalone VI, system filters data will not be available on page load
+     * Thus make calls to make sure it is loaded properly via ajax
+     */
+    initSystemFilters: function () {
+        return this.filterModule.initSystemFilters();
+    },
+
+    addOwnerToSystemFilters: function (systemFilters) {
+        var loggedInUser = AJS.Meta.get('remote-user');
+
+        if (!loggedInUser) {
+            return systemFilters;
+        }
+
+        var ownerDisplayName = AJS.Meta.get('remote-user-fullname');
+        var avatarUrl = AJS.Meta.get('remote-user-avatar-url');
+
+        return _.map(systemFilters, function (filter) {
+            filter.ownerUserName = loggedInUser;
+            filter.ownerDisplayName = ownerDisplayName;
+            filter.avatarUrl = avatarUrl;
+            return filter;
+        });
+    },
+
+    handleLeft: function () {
+        if (this._allowLeftRightNavigation()) {
+            this.getCurrentLayout() && this.getCurrentLayout().handleLeft();
+        }
+    },
+
+    handleRight: function () {
+        if (this._allowLeftRightNavigation()) {
+            this.getCurrentLayout() && this.getCurrentLayout().handleRight();
+        }
+    },
+
+    handleUp: function () {
+        if (!this._allowUpDownNavigation()) {
+            return false;
+        }
+
+        // Allow arrow scrolling up if first issue is highlighted.
+        if (this.searchResults.isFirstAssetHighlighted()) {
+            return false;
+        }
+
+        return this.prevAsset();
+    },
+
+    handleDown: function () {
+        if (!this._allowUpDownNavigation()) {
+            return false;
+        }
+
+        return this.nextAsset();
+    },
+
+    _allowLeftRightNavigation: function () {
+        return !AJS.keyboardShortcutsDisabled;
+    },
+
+    _allowUpDownNavigation: function () {
+        if (AJS.keyboardShortcutsDisabled) {
+            return false;
+        }
+
+        // Don't allow up/down navigation if dropdowns are open.
+        if (AJS.InlineLayer.current || AJS.Dropdown.current || JIRA.Dialog.current || AJS.$(".aui-dropdown2:visible").length > 0) {
+            return false;
+        }
+
+        return this.getCurrentLayout() && !this.getCurrentLayout().isIssueViewActive();
+    },
+
+    _isSearchStateEqual: function (state) {
+        var searchParams = ["filter", "jql", "startIndex"];
+        return _.isEqual(_.pick(state, searchParams), _.pick(this.getState(), searchParams));
+    },
+
+    /**
+     * Remove all of the tipsies that are open.
+     */
+    //removeOpenTipsies: JIRA.Issues.Tipsy.revalidate,
+
+    _showIntroDialogs: function (searchPromise) {
+        var filterPanelPromise = (this.filterModule && this.filterModule.filterPanelView) ? this.filterModule.filterPanelView.panelReady : undefined;
+        if (!this._shownIntroDialog && this.layoutSwitcher) {
+            jQuery.when(searchPromise, filterPanelPromise).done(_.bind(function () {
+                this.layoutSwitcher.createHelptipForSwitchingToDetailView(1);
+                this.filterModule.createHelptipForFilterPanelDocking(2);
+                AJS.HelpTip.Manager.showSequences();
+            }, this));
+            this._shownIntroDialog = true;
+        }
+    }
+});
+},{"../../../components/utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","./full-screen-controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\full-screen-controller.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-results.js":[function(require,module,exports){
+"use strict";
+
+var Brace = require('backbone-brace');
+
+var SimpleAsset = require('./asset/simple-asset');
+
+/**
+ * 
+ */
+var SearchResults = Brace.Model.extend({
+    defaults: {
+        assetIds: [],
+        selectedAsset: new SimpleAsset(),
+        highlightedAsset: new SimpleAsset(),
+        total: 0
+    },
+
+    properties: [
+        "columnSortJql",
+        "highlightedAsset",
+        "assetIds", // only present in stable search
+        "assetIdsForPage",
+        "quoteflowHasAssets",
+        "pageSize",
+        "resultsId",
+        "selectedAsset",
+        "startIndex",
+        "sortBy",
+        "columns",
+        "table",
+        "total",
+        "initialPayload",
+        "columnConfig"
+    ],
+
+    namedEvents: [
+        "prevAssetSelected",
+        "nextAssetSelected",
+
+        "assetUpdated",
+        "assetDeleted",
+
+        "assetDoesNotExist",
+
+        "stableUpdate"
+    ],
+
+    initialize: function (attr, options) {
+        //ModelUtils.makeTransactional(this, "resetFromSearch", "selectNextAsset", "selectPrevAsset");
+        this.assetUpdateCallbacks = [];
+        this._assetSearchManager = options.assetSearchManager;
+        this._initialSelectedAsset = options.initialSelectedAsset;
+        this._columnConfig = options.columnConfig;
+    },
+
+    /**
+     * Returns the startIndex for a given page.
+     *
+     * @param {Number} page the page number (0 based)
+     * @return {number} the startIndex
+     */
+    getStartIndexForPage: function (page) {
+        return page * this.getPageSize();
+    },
+
+    hasAsset: function (id) {
+        return _.indexOf(this.getAssetIds(), id) !== -1;
+    },
+
+    getPager: function () {
+        if (this.hasAsset(this.getSelectedAsset().getId())) {
+            var assetIds = this.getAssetIds();
+            var selectedId = this.getSelectedAsset().getId();
+            var position = _.indexOf(assetIds, selectedId);
+            var resultCount = this.getTotal();
+            var stableSearchLimit = assetIds.length;
+            var pager = {
+                position: JIRA.NumberFormatter.format(position + 1),
+                resultCount: JIRA.NumberFormatter.format(resultCount)
+            };
+            if (position > 0) {
+                var prevAssetId = this._getPrevAssetId(selectedId);
+                if (prevAssetId) {
+                    pager.previousAsset = {
+                        id: prevAssetId,
+                        key: this._getAssetKeyForId(prevAssetId)
+                    };
+                }
+            }
+            if (position < resultCount - 1 && position < stableSearchLimit - 1) {
+                var nextAssetId = this._getNextAssetId(selectedId);
+                if (nextAssetId) {
+                    pager.nextAsset = {
+                        id: nextAssetId,
+                        key: this._getAssetKeyForId(nextAssetId)
+                    };
+                }
+            }
+            return pager;
+        }
+    },
+
+    /**
+     * Returns the number of pages in this SearchResults.
+     *
+     * @return {Number} the number of pages
+     */
+    getNumberOfPages: function () {
+        return this._getPageNumberForStartIndex(this.getDisplayableTotal() - 1);
+    },
+
+    /**
+     * Remove an asset from the search results.
+     * The highlighted asset is updated accordingly.
+     *
+     * @param {number} id The ID of the asset to remove.
+     */
+    removeAsset: function (id) {
+        id = parseInt(id, 10);
+
+        var isFirstAsset = this.getAssetIds()[0] === id,
+            isHighlighted = this.getHighlightedAsset().getId() === id,
+            isLastAsset = _.last(this.getAssetIds()) === id;
+
+        if (isHighlighted) {
+            if (!isLastAsset) {
+                this.highlightNextAsset({ replace: true });
+            } else if (!isFirstAsset) {
+                this.highlightPrevAsset({ replace: true });
+            }
+        }
+
+        this.setAssetIds(_.without(this.getAssetIds(), id));
+        this.setTotal(this.getTotal() - 1);
+        this.triggerAssetDeleted({
+            id: id,
+            key: this._getAssetKeyForId(id)
+        });
+    },
+
+    isFirstAssetHighlighted: function () {
+        if (!this.hasHighlightedAsset()) {
+            return false;
+        }
+
+        return this.getHighlightedAsset().getId() === this.getAssetIds()[0];
+    },
+
+    updateAssetById: function (assetUpdateObject, options) {
+        return this.updateAsset(assetUpdateObject, options);
+    },
+
+    /**
+     * Update the search results in response to an asset update.
+     *
+     * @param {object} assetUpdate An asset update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @param {object} [options]
+     * @param {boolean} [options.showMessage=true] Whether a success message should be shown.
+     * @param {JIRA.Components.Filters.Models.Filter} [options.filter=null] Filter, in which context assets should be shown.
+     * @return {jQuery.Deferred} A deferred that is resolved when the update completes.
+     */
+    updateAsset: function (assetUpdate, options) {
+        var isDelete = assetUpdate.action === JIRA.Issues.Actions.DELETE,
+            assetId = assetUpdate.id,
+            promises = [];
+
+        options = _.defaults({}, options, {
+            showMessage: true,
+            filter: null
+        });
+
+        if (isDelete) {
+            this.removeAsset(assetId);
+            options.showMessage && this._notifyOfAssetUpdate(assetUpdate);
+            return jQuery.Deferred().resolve().promise();
+        } else {
+            return this.getResultForId(assetId, options.filter).done(_.bind(function (entity) {
+                _.each(this.assetUpdateCallbacks, function (callback) {
+                    var result = callback.handler.call(callback.ctx || window, assetId, entity, assetUpdate);
+                    if (result && result.promise) {
+                        promises.push(result);
+                    }
+                });
+
+                $.when(promises).done(_.bind(function () {
+                    options.showMessage && this._notifyOfAssetUpdate(assetUpdate);
+                }, this));
+            }, this));
+        }
+    },
+
+    _notifyOfAssetUpdate: function (assetUpdate) {
+        assetUpdate.message && JIRA.Issues.showNotification(assetUpdate.message, assetUpdate.key);
+        JIRA.trace("jira.search.stable.update");
+    },
+
+    getResultForId: function (id, filter) {
+        var options = { columnConfig: this._columnConfig.columnPickerModel.getColumnConfig() };
+
+        // if used filter is system filter we don't want to get results based off him
+        if (filter && !filter.getIsSystem()) {
+            options = _.extend({ filterId: filter.getId() }, options);
+        }
+        return this._assetSearchManager.getRowsForIds([id], options);
+    },
+
+    isHighlightedAssetAccessible: function () {
+        if (!this.hasHighlightedAsset()) {
+            return null;
+        }
+        return !this._assetSearchManager.assetKeys.hasError(this.getHighlightedAsset().getId());
+    },
+
+    getDisplayableTotal: function () {
+        return this.getAssetIds().length;
+    },
+
+    selectAssetByKey: function (key, options) {
+        if (!key) {
+            this.unselectAsset();
+            return;
+        }
+
+        var id = this._getAssetIdForKey(key);
+
+        if (!id || id == -1) {
+            this._unhighlightAsset();
+
+            this.getSelectedAsset().set({
+                id: -1,
+                key: key
+            });
+
+            this.triggerAssetDoesNotExist();
+        } else {
+            this._selectExistingAssetById(id, options);
+        }
+    },
+
+    _unhighlightAsset: function () {
+        this.getHighlightedAsset().set({
+            id: null,
+            key: null
+        });
+    },
+
+    selectFirstInPage: function (options) {
+        this.selectAssetById(this.getAssetIds()[this.getStartIndex()], options);
+    },
+
+    getPrevPageStartIndex: function () {
+        var target = (this.getStartIndex() || 0) - this.getPageSize();
+        return (target < 0) ? null : target;
+    },
+
+    getNextPageStartIndex: function () {
+        var target = this.getPositionOfLastAssetInPage();
+        return (target >= this.getDisplayableTotal()) ? null : target;
+    },
+
+    /**
+     * Returns the position in the search results of the last asset on the current page 
+     * (e.g. if the page size is 5 and we are on the first page this returns 5).
+     *
+     * @return {Number}
+     */
+    getPositionOfLastAssetInPage: function () {
+        var startIndex = this.getStartIndex();
+        var pageSize = this._pageSize();
+
+        return Math.min(startIndex + pageSize, this.getDisplayableTotal());
+    },
+
+    highlightFirstInPage: function () {
+        this.highlightAssetById(this.getAssetIds()[this.getStartIndex()]);
+    },
+
+    selectAssetById: function (id, options) {
+        if (!id) {
+            this.unselectAsset();
+        } else {
+            this._selectExistingAssetById(id, options);
+        }
+    },
+
+    _selectExistingAssetById: function (id, options) {
+        if (id !== this.getSelectedAsset().getId() && JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+            id = id ? parseInt(id, 10) : null;
+            this.getSelectedAsset().set({
+                id: id,
+                key: id ? this._getAssetKeyForId(id) : null
+            }, options);
+            this.highlightAssetById(id);
+        }
+    },
+
+    /**
+     * Sets the asset with the given id as the highlighted asset and updates the startIndex accordingly (such that
+     * the startIndex is equal to the offset of the first asset of the page that contains the highlighted asset).
+     *
+     * @param {number} id The ID of the asset to highlight.
+     * @param {object} [options]
+     * @param {boolean} [options.replace=false] Whether highlighting the asset should be a "replace" operation.
+     */
+    highlightAssetById: function (id, options) {
+        options = _.defaults({}, options, {
+            replace: false
+        });
+
+        if (id && id !== this.getHighlightedAsset().getId()) {
+            id = id ? parseInt(id, 10) : null;
+            this.getHighlightedAsset().set({
+                id: id,
+                key: id ? this._getAssetKeyForId(id) : null
+            }, options);
+            if (id) {
+                this.setStartIndex(this._getStartIndexForAssetId(id));
+            }
+        }
+    },
+
+    getState: function () {
+        return {
+            selectedAssetKey: this.getSelectedAsset().getKey(),
+            startIndex: this.getStartIndex()
+        };
+    },
+
+    /**
+     * Resets this SearchResults using new search data. This effectively wipes any existing state and replaces it
+     * with the passed-in state.
+     *
+     * Calling this method generates a new <code>resultsId</code>, which triggers a "newPayload" event.
+     *
+     * @param state
+     */
+    resetFromSearch: function (state) {
+        state.resultsId = _.uniqueId();
+        this.getSelectedAsset().set({ id: null, key: null });
+        this.set({ sortBy: null });
+        this.set("startIndex", state.startIndex, { silent: true });
+        this.set(_.pick(state, this.properties));
+        if (typeof state.selectedAssetKey === 'string') {
+            this.selectAssetByKey(state.selectedAssetKey);
+        } else {
+            if (this.hasAssets()) {
+                this.highlightFirstInPage();
+            } else {
+                this.getHighlightedAsset().set({ id: null, key: null });
+            }
+        }
+    },
+
+    hasAssets: function () {
+        return !!this.getAssetIds().length;
+    },
+
+    isAssetOnPage: function (id) {
+        return _.indexOf(this.getPageAssetIds(), id) !== -1;
+    },
+
+    isFirstAssetSelected: function () {
+        if (this.hasAsset(this.getSelectedAsset().getId())) {
+            var assetIds = this.getAssetIds();
+            var selectedId = this.getSelectedAsset().getId();
+            var position = _.indexOf(assetIds, selectedId);
+            return position === 0;
+        }
+
+        return false;
+    },
+
+    /**
+     * @param options
+     * @param options.filterId
+     * @param options.columnConfig
+     */
+    getResultsForPage: function (options) {
+        _.extend(options, { columnConfig: this._columnConfig.columnPickerModel.getColumnConfig() });
+
+        if (this.getTable()) {
+            var result = this.getTable();
+            this.setTable(null, { silent: true }); //do not trigger a new search
+            _.defer(function () {
+                JIRA.trace("jira.search.finished");
+            });
+            return $.Deferred().resolve(result).promise();
+        }
+        return this.getResultsForIds(this.getPageAssetIds(), options);
+    },
+
+    /**
+     * @param ids
+     * @param options
+     * @param options.filterId
+     * @param options.columnConfig
+     */
+    getResultsForIds: function (ids, options) {
+        var instance = this;
+        var deferred = $.Deferred();
+        this._assetSearchManager.getRowsForIds(ids, options)
+        .done(function (result) {
+            //HACK - The REST endpoint for splitview always returns columnConfig="user", which is very
+            //wrong. We can update the columnConfig only for listview, as that REST endpoint is the one
+            //returning the good values.
+            var isSplitViewResponse = _.isArray(result.table);
+            if (!isSplitViewResponse) {
+                instance.setColumnConfig(result.columnConfig);
+                instance.setColumns(result.columns);
+                instance.setColumnSortJql(result.columnSortJql);
+            }
+            deferred.resolve(result.table);
+        }).fail(deferred.reject)
+            .always(function () {
+                _.defer(function () {
+                    JIRA.trace("jira.search.finished");
+                });
+            });
+        return deferred;
+    },
+
+    applyState: function (state) {
+        this.set(_.pick(state, this.properties));
+    },
+
+    unselectAsset: function (options) {
+        var selectedAsset = this.getSelectedAsset();
+        if (selectedAsset.getId() && JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+            selectedAsset.set({
+                id: null,
+                key: null
+            }, options);
+        }
+    },
+
+    hasSelectedAsset: function () {
+        return !!this.getSelectedAsset().getId();
+    },
+
+    hasHighlightedAsset: function () {
+        return !!this.getHighlightedAsset().getId();
+    },
+
+    getPageAssetIds: function () {
+        var startIndex = this.getStartIndex();
+        var pageSize = this._pageSize();
+
+        var assetIds = this.getAssetIds();
+        return assetIds ? assetIds.slice(startIndex, Math.min(startIndex + pageSize, assetIds.length)) : [];
+    },
+
+    getPageAssets: function () {
+        // return ids and keys
+        return _.map(this.getPageAssetIds(), function (id) {
+            return { id: id, key: this._getAssetKeyForId(id) };
+        }, this);
+    },
+
+    getPageNumber: function () {
+        return Math.floor(this.getStartIndex() / this._pageSize());
+    },
+
+    /**
+     * Returns the position of the given asset id on the page (0-based).
+     *
+     * @param assetId
+     * @return {number}
+     */
+    getPositionOfAssetInPage: function (assetId) {
+        return this.getPositionOfAssetInSearchResults(assetId) % this._pageSize();
+    },
+
+    /**
+     * Returns the position of the given asset in the stable search results (0-based).
+     *
+     * @param assetId
+     * @return {*}
+     */
+    getPositionOfAssetInSearchResults: function (assetId) {
+        return _.indexOf(this.getAssetIds(), assetId);
+    },
+
+    /**
+     * (Async) Selects the next asset in the search results if possible. Clients can register a 
+     * callback using onSelectedAssetChange() to subscribe to selected asset change events, 
+     * or alternatively use the promise that this method returns.
+     *
+     * @return {jQuery.Promise} a promise with the id of the selected asset if successful
+     */
+    selectNextAsset: function (options) {
+        if (!this.hasSelectedAsset()) {
+            return $.Deferred().reject().promise();
+        }
+
+        var nextId = this._getNextAssetId(this.getSelectedAsset().getId());
+        this._triggerNextAssetSelectedEvent(nextId);
+
+        return this._selectAsset(nextId, options);
+    },
+
+    /**
+     * (Async) Selects the previous asset in the search results if possible. Clients can register a 
+     * callback using onSelectedAssetChange() to subscribe to selected asset change events, 
+     * or alternatively use the promise that this method returns.
+     *
+     * @return {jQuery.Promise} a promise with the id of the selected asset if successful
+     */
+    selectPrevAsset: function (options) {
+        if (!this.hasSelectedAsset()) {
+            return $.Deferred().reject().promise();
+        }
+
+        var prevId = this._getPrevAssetId(this.getSelectedAsset().getId());
+        this._triggerPrevAssetSelectedEvent(prevId);
+
+        return this._selectAsset(prevId, options);
+    },
+
+    _selectAsset: function (assetId, options) {
+        this.selectAssetById(assetId, options);
+        return $.Deferred().resolve(assetId).promise();
+    },
+
+    /**
+     * (Async) Highlights the previous asset in the search results if possible. Clients can register a 
+     * callback using onHighlightedAssetChange() to subscribe to selected asset highlighted events, 
+     * or alternatively use the promise that this method returns.
+     *
+     * @param {object} [options]
+     * @param {boolean} [options.replace=false] Whether highlighting the asset should be a "replace" operation.
+     * @return {jQuery.Promise} a promise with the id of the highlighted asset if successful
+     */
+    highlightNextAsset: function (options) {
+        if (!this.hasHighlightedAsset()) {
+            return $.Deferred().reject().promise();
+        }
+
+        // this is always synchronous in stable search but it is async when we are going across page boundaries
+        // in dynamic search (we need to get the set of assets in the next page at this point)
+        var nextId = this._getNextAssetId(this.getHighlightedAsset().getId());
+        this.highlightAssetById(nextId, options);
+
+        return $.Deferred().resolve(nextId).promise();
+    },
+
+    /**
+     * (Async) Highlights the next asset in the search results if possible. Clients can register a 
+     * callback using onHighlightedAssetChange() to subscribe to selected asset highlighted events, 
+     * or alternatively use the promise that this method returns.
+     *
+     * @param {object} [options]
+     * @param {boolean} [options.replace=false] Whether highlighting the asset should be a "replace" operation.
+     * @return {jQuery.Promise} a promise with the id of the highlighted asset if successful
+     */
+    highlightPrevAsset: function (options) {
+        if (!this.hasHighlightedAsset()) {
+            return $.Deferred().reject().promise();
+        }
+
+        // this is always synchronous in stable search but it is async when we are going across page boundaries
+        // in dynamic search (we need to get the set of assets in the next page at this point)
+        var prevId = this._getPrevAssetId(this.getHighlightedAsset().getId());
+        this.highlightAssetById(prevId, options);
+
+        return $.Deferred().resolve(prevId).promise();
+    },
+
+    /**
+     * Show the page starting at <tt>startIndex</tt>.
+     * <p/>
+     * This method is asynchronous.
+     *
+     * @param {number} startIndex The index of the first asset on the page.
+     * @param {object} [options]
+     * @param {boolean} [options.replace=false] Whether showing the page should be a "replace" operation.
+     * @return {jQuery.Deferred} A deferred that will be resolved with the ID of the newly highlighted asset.
+     */
+    goToPage: function (startIndex, options) {
+        options = _.defaults({}, options, {
+            replace: false
+        });
+
+        if (startIndex === null || startIndex === this.getStartIndex()) {
+            return $.Deferred().resolve().promise();
+        }
+
+        // Highlighting an asset updates the startIndex to ensure it is on the current page.
+        var ID = this.getAssetIds()[startIndex];
+        this.highlightAssetById(ID, options);
+
+        return $.Deferred().resolve(ID).promise();
+    },
+
+    onHighlightedAssetChange: function (callback, context) {
+        this.getHighlightedAsset().on("change", callback, context);
+    },
+
+    offHighlightedAssetChange: function (callback, context) {
+        this.getHighlightedAsset().off("change", callback, context);
+    },
+
+    onSelectedAssetChange: function (callback, context) {
+        this.getSelectedAsset().on("change", callback, context);
+    },
+
+    offSelectedAssetChange: function (callback, context) {
+        this.getSelectedAsset().off("change", callback, context);
+    },
+
+    onColumnConfigChange: function (callback, context) {
+        this.on("change:columnConfig", callback, context);
+    },
+
+    offColumnConfigChange: function (callback, context) {
+        this.off("change:columnConfig", callback, context);
+    },
+
+    onColumnsChange: function (callback, context) {
+        this.on("change:columns", callback, context);
+    },
+
+    offColumnsChange: function (callback, context) {
+        this.off("change:columns", callback, context);
+    },
+
+    onStartIndexChange: function (callback, context) {
+        this.on("change:startIndex", callback, context);
+    },
+
+    onNewAssetIds: function (callback, context) {
+        this.on("change:assetIds", callback, context);
+    },
+
+    offNewAssetIds: function (callback, context) {
+        this.off("change:assetIds", callback, context);
+    },
+
+    offStartIndexChange: function (callback, context) {
+        this.off("change:startIndex", callback, context);
+    },
+
+    onNewPayload: function (func, context) {
+        this.on("change:resultsId", func, context);
+    },
+
+    offNewPayload: function (func, context) {
+        this.off("change:resultsId", func, context);
+    },
+
+    onAssetUpdated: function (func, ctx) {
+        this.assetUpdateCallbacks.push({
+            handler: func,
+            ctx: ctx
+        });
+    },
+
+    offAssetUpdated: function (func) {
+        var filteredCallbacks = [];
+        this.assetUpdateCallbacks = _.each(this.assetUpdateCallbacks, function (callback) {
+            if (callback.handler !== func) {
+                filteredCallbacks.push(callback);
+            }
+        });
+        this.assetUpdateCallbacks = filteredCallbacks;
+    },
+
+    _getNextAssetId: function (id) {
+        var assetIds = this.getAssetIds();
+        return assetIds[Math.min(_.indexOf(assetIds, id) + 1, this.getDisplayableTotal() - 1)];
+    },
+
+    getNextAssetForId: function (id) {
+        var nextId = this._getNextAssetId(id);
+        return { id: nextId, key: this._getAssetKeyForId(nextId) }
+    },
+
+    getNextAssetForSelectedAsset: function () {
+        return this.getNextAssetForId(this.getSelectedAsset().getId());
+    },
+
+    _getPrevAssetId: function (id) {
+        var assetIds = this.getAssetIds();
+        return assetIds[Math.max(0, _.indexOf(this.getAssetIds(), id) - 1)];
+    },
+
+    /**
+     * Calculate the start index that should be used to show a particular asset.
+     * Returns 0 if the asset isn't present in the search results.
+     *
+     * @param {number} id The asset's ID.
+     * @return {number} The start index.
+     * @private
+     */
+    _getStartIndexForAssetId: function (id) {
+        var assetIndex = _.indexOf(this.getAssetIds(), id),
+            pageSize = this._pageSize();
+
+        return Math.max(0, Math.floor(assetIndex / pageSize) * pageSize);
+    },
+
+    _getAssetIdForKey: function (key) {
+        // this only happens if the selected asset is not in the search results (i.e. when the user
+        // navigates to the selected asset directly but has a search context).
+        if (this._initialSelectedAsset && key === this._initialSelectedAsset.key) {
+            return this._initialSelectedAsset.id;
+        }
+
+        return this._getAssetKeysToIds()[key];
+    },
+
+    _getAssetKeyForId: function (id) {
+        // this only happens if the selected asset is not in the search results (i.e. when the user
+        // navigates to the selected asset directly but has a search context).
+        if (this._initialSelectedAsset && id === this._initialSelectedAsset.id) {
+            return this._initialSelectedAsset.key;
+        }
+
+        return this._getAssetIdsToKeys()[id];
+    },
+
+    _getAssetIdsToKeys: function () {
+        return this._assetSearchManager.assetKeys.getAllCached();
+    },
+
+    _getAssetKeysToIds: function () {
+        var obj = {};
+        var idsToKeys = this._assetSearchManager.assetKeys.getAllCached();
+        _.each(idsToKeys, function (value, name) {
+            obj[value] = name;
+        });
+
+        return obj;
+    },
+
+    /**
+     * Returns a 0-based page number.
+     *
+     * @param startIndex the start index
+     * @return {Number} a 0-based page number.
+     * @private
+     */
+    _getPageNumberForStartIndex: function (startIndex) {
+        return Math.floor(startIndex / this._pageSize());
+    },
+
+    /**
+     * Returns the page size used for the search.
+     *
+     * @return {Number} the page size
+     * @private
+     */
+    _pageSize: function () {
+        return this.getPageSize();
+    },
+
+    _triggerPrevAssetSelectedEvent: function (prevId) {
+        if (prevId !== this.getSelectedAsset().getId()) {
+            var prevPrevId = this._getPrevAssetId(prevId);
+
+            this.trigger("prevAssetSelected", {
+                prevAsset: { id: prevId, key: this._getAssetKeyForId(prevId) },
+                prevPrevAsset: { id: prevPrevId, key: this._getAssetKeyForId(prevPrevId) }
+            });
+        }
+    },
+
+    _triggerNextAssetSelectedEvent: function (nextId) {
+        if (nextId !== this.getSelectedAsset().getId()) {
+            var nextNextId = this._getNextAssetId(nextId);
+
+            this.trigger("nextAssetSelected", {
+                nextAsset: { id: nextId, key: this._getAssetKeyForId(nextId) },
+                nextNextAsset: { id: nextNextId, key: this._getAssetKeyForId(nextNextId) }
+            });
+        }
+    }
+});
+
+module.exports = SearchResults;
+},{"./asset/simple-asset":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\simple-asset.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\util\\async-data.js":[function(require,module,exports){
+"use strict";
+
+var Brace = require('backbone-brace');
+
+/**
+ * 
+ */
+var AsyncData = Brace.Evented.extend({
+    namedEvents: ["change"],
+
+    /**
+     * @param options
+     * @param {Boolean} options.disableCache A flag to indicate whether to cache the data
+     */
+    initialize: function (options) {
+        this.data = {};
+        this.pendings = {};
+        this.accessIndex = 0;
+
+        if (options) {
+            this.disableCache = options.disableCache;
+            this.maxCacheSize = options.maxCacheSize;
+        }
+    },
+
+    /**
+     * Get item from the cache if possible, otherwise fetch it.
+     *
+     * If forceFetch is true, always fetch the latest data and override any pending request.
+     *
+     * If the fetch succeeds, updates the item and metadata in cache.
+     * If the fetch fails, the last successful value is kept (null if there is no previous success),
+     * and metadata is updated to indicate an error.
+     *
+     * @return {jQuery.Promise} resolves when fetch() succeeds or fails, and cache has been updated.
+     */
+    get: function (id, forceFetch, options) {
+        var deferred = jQuery.Deferred();
+        var data = this.disableCache ? {} : this.data; // Keep a reference to the data object at the time the get() is called
+
+        var resolveWith = _.bind(function (meta, additionalMeta) {
+            var changedData = this._set(data, id, _.defaults(meta, { accessIndex: this.accessIndex++ }), true, options);
+
+            // combinedMeta is what is passed to the deferred callbacks
+            var combinedMeta = _.defaults({ changed: changedData }, additionalMeta, data[id]);
+            if (options && options.mergeIntoCurrent) {
+                combinedMeta.mergeIntoCurrent = true;
+            }
+
+            if (data[id] && !data[id].error) {
+                deferred.resolve(data[id].value, combinedMeta, options);
+            } else {
+                deferred.reject(data[id] && data[id].value, combinedMeta, options);
+            }
+        }, this);
+
+        var resolveAfterFetch = _.bind(function (initialLoad) {
+            var fetchPromise = this.fetch(id, options);
+
+            this.setPending(id, fetchPromise, function (value) {
+                resolveWith({
+                    value: value,
+                    error: false,
+                    updated: new Date()
+                }, { initialLoad: initialLoad });
+            }, function (value) {
+                var meta = {
+                    error: true,
+                    updated: new Date()
+                };
+                if (value !== undefined) {
+                    meta.value = value;
+                }
+                resolveWith(meta, {
+                    initialLoad: initialLoad,
+                    error: true
+                });
+            });
+        }, this);
+
+        var resolveFromCache = function () {
+            resolveWith({}, { fromCache: true });
+        };
+
+        var resolveAfterPending = _.bind(function () {
+            this.pendings[id].always(_.bind(resolveWith, this, {}, {
+                // resolveAfterPending is used to resolve deferreds that have piggy-backed onto a fetch() call that's
+                // already in progress (i.e. a "pending"). therefore, the correct thing is to resolve the deferred with
+                // meta.initialLoad=true, since it is also getting the data returned from the initial cache load.
+                initialLoad: true
+            }));
+        }, this);
+
+        // if caching is disabled then always fetch.
+        if (forceFetch || this.disableCache) {
+            resolveAfterFetch(false);
+        } else if (this.hasCached(id)) {
+            resolveFromCache();
+        } else if (this.hasPending(id)) {
+            resolveAfterPending();
+        } else {
+            resolveAfterFetch(true);
+        }
+
+        return deferred.promise();
+    },
+
+    setPending: function (id, task, doneCallback, failCallback) {
+        if (this.hasPending(id)) {
+            this.pendings[id].update(task);
+        } else {
+            this.pendings[id] = jQuery.ConcurrentDeferred(task);
+        }
+        return this.pendings[id].done(function (value) {
+            doneCallback(value);
+        }).fail(function (value) {
+            failCallback(value);
+        });
+    },
+
+    /**
+     * Get id by value
+     *
+     * @return {String|null} id of the value. Can be null to indicate not found.
+     */
+    getIdByValue: function (value) {
+        var id;
+        for (id in this.data) {
+            if (this.data[id].value === value) {
+                return id;
+            }
+        }
+        return null;
+    },
+
+    /**
+     * Retrieves item as stored in the cache, with attached metadata.
+     * @return {
+     *     value: value
+     *     updated: {Date},
+     *     accessIndex: {Number},
+     *     error: {Boolean}
+     * }
+     */
+    getMeta: function (id) {
+        return this.data[id] || {};
+    },
+
+    getAllCached: function () {
+        var obj = {};
+        _.each(this.data, function (value, id) {
+            obj[id] = value.value;
+        });
+        return obj;
+    },
+
+    /**
+     * @return {Boolean} whether or not a value/error for the given id is already in the cache
+     */
+    hasCached: function (id) {
+        var meta = this.getMeta(id);
+        return meta.value !== undefined || meta.error === true;
+    },
+
+    /**
+     * @return {Boolean} whether or not the given id has an error set on it
+     */
+    hasError: function (id) {
+        var meta = this.getMeta(id);
+        return meta.error === true;
+    },
+
+    /**
+     * @return {Boolean} whether or not a request is currently in progress for the given id
+     */
+    hasPending: function (id) {
+        var pending = this.pendings[id];
+        return pending ? pending.isPending() : false;
+    },
+
+    /**
+     * Sets a value in the cache.
+     * Triggers a change event if the value or the error state has changed.
+     *
+     * @return {Boolean} whether the value changed
+     */
+    set: function (id, value) {
+        return this._set(this.data, id, {
+            value: value,
+            updated: new Date()
+        }, true);
+    },
+
+    /**
+     * Remove item from the cache
+     * @param id
+     * @return {Boolean} whether an item was removed
+     */
+    remove: function (id) {
+        if (this.data[id]) {
+            delete this.data[id];
+            this.triggerChange();
+            return true;
+        }
+        return false;
+    },
+
+    /**
+     * Sets the error flag and optionally the value for the given item in the cache
+     * Triggers a change event if the error state has changed.
+     *
+     * @param id
+     * @param {Object|null} value - optionally change the value at the same time
+     *
+     * @return {Boolean} whether the error state or value changed
+     */
+    setError: function (id, value) {
+        var meta = {
+            error: true,
+            updated: new Date()
+        };
+        if (value !== undefined) {
+            meta.value = value;
+        }
+        return this._set(this.data, id, meta, true);
+    },
+
+    /**
+     * Sets multiple values at once, triggering at most one change event
+     * @param {Object} map of id:meta, where:
+     *     id: {String} id
+     *     meta: {Object} meta, containing at least one of:
+     *         value: {Object}
+     *         error: {Object}
+     * @return {Boolean} whether any value changed
+     */
+    setMultiple: function (map) {
+        var updated = new Date();
+        var changed = false;
+        _.each(map, _.bind(function (meta, id) {
+            meta = _.pick(meta, 'value', 'error');
+            meta.updated = updated;
+            if (this._set(this.data, id, meta, false)) {
+                changed = true;
+            }
+        }, this));
+        if (changed) {
+            this.triggerChange();
+        }
+        return changed;
+    },
+
+    /**
+     * Resets the cached data. Optionally, ids and values can be passed in to set initial values.
+     */
+    reset: function (map) {
+        this.data = {};
+        this.pendings = {};
+        this.accessIndex = 0;
+        if (map) {
+            this.setMultiple(map);
+        } else {
+            this.triggerChange();
+        }
+    },
+
+    /**
+     * @param {Object} data
+     * @param {String} id
+     * @param {Object} metaValues
+     * @param {Boolean} triggerChange - trigger change event if:
+     *    - value or error is changed, AND
+     *    - data === this.data
+     * @return {Boolean} whether the value changed
+     *
+     * Note: Why are we passing in `data` and not just using `this.data`?
+     *  - get() is asynchronous, so by the time it resolves, reset() may have been called
+     *  - reset() replaces `this.data` with a new object
+     *  - when get() resolves it shouldn't add its results to the new `data`,
+     *    but it should have access to the `data` at the time it was initiated.
+     */
+    _set: function (data, id, metaValues, triggerChange, options) {
+        if (this.disableCache && data === this.data) {
+            data = {}; // Don't modify the cache
+        }
+
+        var item = data[id] ? _.clone(data[id]) : {};
+
+        var changedData = this.mergeFetchedAndCached(item, metaValues, options ? options : {}, data[id]);
+
+        if (triggerChange && (!data[id] || changedData || data[id].error !== item.error) && data === this.data) {
+            this.triggerChange();
+        }
+
+        if (!data[id] && this.maxCacheSize && _.keys(data).length === this.maxCacheSize) {
+            if (metaValues.accessIndex) {
+                this._dropItem(data);
+                data[id] = item;
+            }
+        } else {
+            data[id] = item;
+        }
+
+        return changedData;
+    },
+
+    _dropItem: function (data) {
+        // Drop the least-recently accessed item
+        var leastRecentKey = null;
+        for (var key in data) {
+            if (!data[key].accessIndex) {
+                leastRecentKey = key;
+                break;
+            } else if (leastRecentKey === null || data[key].accessIndex < data[leastRecentKey].accessIndex) {
+                leastRecentKey = key;
+            }
+        }
+        if (leastRecentKey !== null) {
+            delete data[leastRecentKey];
+        }
+    },
+
+    /**
+     * Override to specify fetch behaviour.
+     * @return {jQuery.Promise}
+     */
+    fetch: function (id, options) {
+        var meta = this.getMeta(id);
+        var deferred = jQuery.Deferred();
+        if (!this.hasCached(id) || meta.error) {
+            deferred.reject(meta.value);
+        } else {
+            deferred.resolve(meta.value);
+        }
+        return deferred.promise();
+    },
+
+    mergeFetchedAndCached: function (toResolve, fetched, options, inCache) {
+        _.extend(toResolve, fetched);
+
+        return !inCache || inCache.value !== toResolve.value || inCache.error !== toResolve.error;
+    }
+});
+
+module.exports = AsyncData;
+},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\basic_query.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -2413,1459 +5647,7 @@ var AssetQueryModule = Brace.Evented.extend({
 });
 
 module.exports = AssetQueryModule;
-},{"./basic_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\basic_query.js","./jql_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\jql_query.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\router.js":[function(require,module,exports){
-"use strict";
-
-var _ = require('underscore');
-var Backbone = require('backbone');
-var BackboneQueryParams = require('backbone-query-parameters');
-var Marionette = require('backbone.marionette');
-
-var CatalogController = require('./controller');
-var UrlSerializer = require('../../util/url-serializer');
-
-/**
- * A mostly-custom router for handling routes that are used within the 
- * asset table module.
- */
-var AssetRouter = Marionette.AppRouter.extend({
-    
-    initialize: function (options) {
-        _.extend(this, options);
-        _.bindAll(this, "_restoreSessionSearch", "_route");
-
-        this.route(/^(.*?)([\?]{1}.*)?$/, this._route);
-        this.route(/^(assets\/)?$/, this._restoreSessionSearch);
-
-        // backbone-query-parameters supports clever decoding of values into arrays, but we don't want this.
-        delete Backbone.Router.arrayValueSplit;
-    },
-
-    /**
-     * Overwrite Marionette.AppRouter, now it fires an event each time the URL changes
-     */
-    navigate: function () {
-        this.searchPageModule.removeOpenTipsies();
-        this.trigger("navigate");
-        Marionette.AppRouter.prototype.navigate.apply(this, arguments);
-    },
-
-    /**
-     * Navigate to a new state.
-     *
-     * @param {UrlSerializer.state} state
-     */
-    pushState: function (state) {
-        this._setStatePermalink(state);
-        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false });
-    },
-
-    replaceState: function (state) {
-        this._setStatePermalink(state);
-        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false, replace: true });
-    },
-
-    _restoreSessionSearch: function () {
-        var sessionSearch = this.initialSessionSearchState,
-            url = UrlSerializer.getURLFromState(sessionSearch || this.searchPageModule.getState());
-
-        this.navigate(url, { replace: true, trigger: true });
-    },
-
-    /**
-     * The "catch-all" route that distinguishes search and issue fragments.
-     *
-     * @param {string} path The path component of the URL (relative to the root)
-     * @param {object} query The decoded querystring params
-     * @private
-     */
-    _route: function (path, query) {
-        // Re-encode back to a full fragment, since we do our own parsing in JIRA.Issues.URLSerializer
-        var fragment = this.toFragment(path, query);
-
-        if (JIRA.Issues.ignorePopState) {
-            // Workaround for Chrome bug firing a null popstate event on page load.
-            // Backbone should fix this!
-            // @see http://code.google.com/p/chromium/issues/detail?id=63040
-            // @see also JRADEV-14804
-            return;
-        }
-
-        // Remove ignored parameters (e.g. focusedCommentId).
-        var state = UrlSerializer.getStateFromURL(fragment);
-
-        if (!this._navigateToLoginIfNeeded(state)) {
-            this._navigateUsingState(state);
-        }
-    },
-
-    _navigateToLoginIfNeeded: function (state, history) {
-        if (!this.usePushState(history) && state.selectedIssueKey && !JIRA.Issues.LoginUtils.isLoggedIn()) {
-            var instance = this;
-
-            var requestParams = {};
-            if (state.filter != null) {
-                requestParams.filterId = state.filter;
-            }
-
-            jQuery.ajax({
-                url: AJS.contextPath() + "/rest/issueNav/1/issueNav/anonymousAccess/" + state.selectedIssueKey,
-                headers: { 'X-SITEMESH-OFF': true },
-                data: requestParams,
-                success: function () {
-                    instance._navigateUsingState(state);
-                },
-                error: function (xhr) {
-                    if (xhr.status === 401) {
-                        instance._redirectToLogin(state);
-                    } else {
-                        instance._navigateUsingState(state);
-                    }
-                }
-            });
-
-            return true;
-        }
-
-        return false;
-    },
-
-    _navigateUsingState: function (state) {
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
-            this._setStatePermalink(state);
-            this.navigate(UrlSerializer.getURLFromState(state), { replace: true, trigger: false });
-            this.searchPageModule.updateFromRouter(state);
-        }
-    },
-
-    _redirectToLogin: function (state) {
-        var url = AJS.contextPath() + "/login.jsp?permissionViolation=true&os_destination=" +
-            encodeURIComponent(UrlSerializer.getURLFromState(state));
-
-        window.location.replace(url);
-    },
-
-    /**
-     * Set the permalink for a given state into AJS.Meta to be rendered by the share plugin
-     */
-    _setStatePermalink: function (state) {
-        var viewIssueState = _.pick(state, "selectedIssueKey");
-        var baseUrl = AJS.Meta.get("jira-base-url");
-        if (!_.isEmpty(viewIssueState)) {
-            AJS.Meta.set("viewissue-permlink",
-                baseUrl + "/" + UrlSerializer.getURLFromState(viewIssueState)
-            );
-        }
-        var issueNavState = _.omit(state, "selectedIssueKey");
-        if (!_.isEmpty(issueNavState)) {
-            AJS.Meta.set("issuenav-permlink",
-                baseUrl + "/" + UrlSerializer.getURLFromState(issueNavState)
-            );
-        }
-    }
-});
-
-module.exports = AssetRouter;
-
-},{"../../util/url-serializer":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js","./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\controller.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-query-parameters":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone-query-parameters\\backbone.queryparams.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\full-screen-controller.js":[function(require,module,exports){
-"use strict";
-
-var Marionette = require('backbone.marionette');
-
-/**
- * A view containing the entire search/asset app.
- * 
- * Handles switching between the search and asset views.
- */
-var FullScreenLayoutController = Marionette.Controller.extend({
-
-    /**
-     * Initialise the FullScreenLayout.
-     *
-     * @param {object} options
-     * @param {element} options.searchContainer The element into which the search is to be rendered.
-     */
-    initialize: function (options) {
-        this.searchService = new SearchService({
-            searchModule: options.search,
-            searchResults: options.search.getResults(),
-            columnConfig: options.columnConfig
-        });
-
-        this.$navigatorContent = options.searchContainer.find('.navigator-content');
-        this.issueTable = new IssueTable({
-            searchService: this.searchService,
-            el: this.$navigatorContent,
-            columnConfig: options.columnConfig
-        });
-
-        this.listenTo(this.issueTable, {
-            "highlightIssue": function (issueId) {
-                this.searchService.highlightIssue(issueId);
-            },
-            "render": function () {
-                if (!this.searchService.hasSelectedAsset()) {
-                    this.fullScreenIssue.hide();
-                }
-                this.fullScreenIssue.bindSearchService(this.searchService);
-                this.trigger("render");
-            }
-        });
-
-        this.fullScreenIssue = options.fullScreenIssue;
-
-        this.listenTo(this.fullScreenIssue, {
-            "assetHidden": function () {
-                // This is the second highlight. The first one is inside IssueTable component, but due the
-                // internals of FullScreenIssue, when the first one is fired the IssueTable is not in the DOM
-                // so the scrollIntoView() operation will not work. We need to re-highlight the same issue now
-                // that the IssueTable is present in the DOM to force the scroll behaviour
-                this.issueTable.highlightIssue(this.searchService.getHighlightedAsset());
-            }
-        });
-
-        Application.on("assetEditor:loadError", this.onLoadError, this);
-    },
-
-    onLoadError: function (issue) {
-        if (!this.fullScreenIssue.isVisible()) {
-            this.searchService.unselectIssue();
-            Messages.showErrorMsg(
-                AJS.I18n.getText('viewissue.error.message.cannotopen', issue.issueKey),
-                { closeable: true }
-            );
-        }
-    },
-
-    render: function () {
-        this.issueTable.show();
-    },
-
-    onClose: function () {
-        this.fullScreenIssue.deactivate();
-        this.issueTable.close();
-        this.searchService.close();
-
-        Application.off("issueEditor:loadError", this.onLoadError, this);
-
-        delete this.fullScreenIssue;
-        delete this.issueTable;
-        delete this.searchService;
-    },
-
-    nextIssue: function () {
-        this.searchService.selectNextIssue();
-    },
-
-    prevIssue: function () {
-        this.searchService.selectPreviousIssue();
-    },
-
-    returnToSearch: function () {
-        this.searchService.unselectIssue();
-    },
-
-    handleLeft: function () {
-        // No-op
-    },
-
-    handleRight: function () {
-        // No-op
-    },
-
-    isIssueViewActive: function () {
-        return this.fullScreenIssue.isVisible();
-    }
-});
-
-module.exports = FullScreenLayoutController;
-},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\layout-switcher.js":[function(require,module,exports){
-"use strict";
-
-var Marionette = require('backbone.marionette');
-
-/**
- * The layout switcher control.
- */
-var LayoutSwitcherView = Marionette.ItemView.extend({
-    
-    template: JST["asset/nav-search/layout-switcher"],
-
-    /**
-     * @param {object} options
-     * @param {JIRA.Issues.SearchPageModule} options.searchPageModule
-     */
-    initialize: function (options) {
-        _.bindAll(this, "_onLayoutSwitchClick");
-
-        this.searchPageModule = options.searchPageModule;
-        this.searchPageModule.on("change:currentLayout", this.render, this);
-    },
-
-    /**
-     * @return {JIRA.Issues.LayoutSwitcherView} <tt>this</tt>
-     */
-    render: function () {
-        this.$el.html(this.template({
-            layouts: this.searchPageModule.getSortedLayouts(),
-            activeLayout: this.searchPageModule.getActiveLayout()
-        }));
-
-        this._addLayoutSwitcherTooltip();
-
-        // We can't use delegate events as the dropdown is appended to the body.
-        this.$el.find(".aui-list-item-link").click(this._onLayoutSwitchClick);
-        JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.$el, JIRA.CONTENT_ADDED_REASON.layoutSwitcherReady]);
-        return this;
-    },
-
-    /**
-     * @returns {JIRA.Issues.LayoutSwitcherView} <tt>this</tt>
-     */
-    enableLayoutSwitcher: function () {
-        this.$el.find("#layout-switcher-button").removeClass("disabled").removeAttr('disabled');
-        return this;
-    },
-
-    /**
-     * @returns {JIRA.Issues.LayoutSwitcherView} <tt>this</tt>
-     */
-    disableLayoutSwitcher: function () {
-        this.$el.find("#layout-switcher-button").addClass("disabled").attr('disabled', '');
-        return this;
-    },
-
-    createHelptipForSwitchingToDetailView: function (weight) {
-        var tip;
-        if (this._shouldShowIntro() && this.$el.is(":visible")) {
-            tip = new AJS.HelpTip({
-                id: "split-view-intro",
-                title: AJS.I18n.getText('issuenav.layoutswitcher.intro.title'),
-                url: AJS.Meta.get('issue-search-help-url'),
-                bodyHtml: AJS.I18n.getText('issuenav.layoutswitcher.intro.desc'),
-                anchor: ".view-selector button",
-                isSequence: true,
-                weight: weight
-            });
-        }
-        return tip;
-    },
-
-    _shouldShowIntro: function () {
-        return this.searchPageModule.search.getResults().hasAssets();
-    },
-
-    /**
-     * Adds a tooltip to the layout switcher button
-     * @private
-     */
-    _addLayoutSwitcherTooltip: function () {
-        function getTooltipMessage() {
-            // If there is no shortcut for this action, just display the regular text. (i.e. without the 'Type X' part)
-            var shortcut = AJS.KeyboardShortcut.getKeyboardShortcutKeys('switch.search.layouts');
-            if (shortcut) {
-                return AJS.I18n.getText("issuenav.layoutswitcher.button.tooltip", AJS.KeyboardShortcut.getKeyboardShortcutKeys('switch.search.layouts'));
-            } else {
-                return AJS.I18n.getText("issuenav.layoutswitcher.button.tooltip.whitout.kb.shortcut");
-            }
-        }
-
-        new JIRA.Issues.Tipsy({
-            el: this.$el.find("#layout-switcher-button"),
-            showCondition: ":not(.active)",
-            tipsy: {
-                title: getTooltipMessage,
-                gravity: 'ne'
-            }
-        });
-    },
-
-    /**
-     * Tell the <tt>SearchPageModule</tt> to change layout.
-     * <p/>
-     * Called when a layout button is clicked.
-     *
-     * @param {object} e The click event.
-     * @param {object} [options] Options used in tests.
-     *
-     * @private
-     */
-    _onLayoutSwitchClick: function (e, options) {
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
-            // HACK: Hover intent has a strange bug that when we click the layout switcher it triggers a mouseleave event on the filters panel
-            // To get around this, we disable it whilst we are transitioning to new layout.
-            var layoutKey = AJS.$(e.target).closest("[data-layout-key]").data("layout-key");
-            e.preventDefault();
-            this.searchPageModule.changeLayout(layoutKey, options);
-        }
-    }
-})
-},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\search-header-module.js":[function(require,module,exports){
-"use strict";
-
-var Brace = require('backbone-brace');
-
-/**
- * Interface to the search header.
- */
-var SearchHeaderModule = Brace.Evented.extend({
-
-    initialize: function (options) {
-        this._searchPageModule = options.searchPageModule;
-    },
-
-    registerSearch: function (search) {
-        this._search = search;
-    }
-});
-
-module.exports = SearchHeaderModule;
-},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\search-page-module.js":[function(require,module,exports){
-"use strict";
-
-var Brace = require('backbone-brace');
-var Utilities = require('../../../components/utilities');
-
-var FullScreenLayout = require('./full-screen-controller');
-
-/**
- * 
- */
-var SearchPageModule = Brace.Model.extend({
-    namedEvents: ["changeFilterProps"],
-
-    properties: [
-        "currentLayout",
-        "layouts",
-        "filter",
-        "jql",
-        "searchId"
-    ],
-
-    defaults: function () {
-        return {
-            filter: null,
-            jql: null
-        };
-    },
-
-    initialize: function (attributes, options) {
-        _.extend(this, options);
-
-        this.registerColumnPicker();
-
-        // This is here instead of in defaults, because we use the defaults
-        // to reset this module's state (filter and jql) but we don't want to
-        // reset the layouts.
-        this.setLayouts({});
-
-        this.registerLayout("list-view", {
-            label: AJS.I18n.getText("issuenav.layoutswitcher.listview"),
-            iconClass: 'icon-view-list',
-            view: FullScreenLayout
-        });
-
-        this.registerLayout("split-view", {
-            label: AJS.I18n.getText("issuenav.layoutswitcher.splitview"),
-            iconClass: 'icon-view-split',
-            view: JIRA.Issues.SplitScreenLayout
-        });
-        this._onFilterChanged();
-        this.on("change:filter", this._onFilterChanged, this);
-
-        JIRA.Issues.Application.on("issueEditor:close", this.returnToSearch, this);
-
-        JIRA.Issues.Application.on("issueEditor:loadComplete", function (model, props) {
-            if (!this.standalone && !props.reason) {
-                this.searchResults.selectAssetById(model.getId(), { reason: "issueLoaded" });
-                this.searchResults.updateIssueById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() })
-
-                // Replace URL if issue updated successfully
-                if (model.getKey()) {
-                    var state = this._getUpdateState({ selectedIssueKey: model.getKey() });
-                    if (this._validateNavigate(state)) {
-                        this.issueNavRouter.replaceState(state);
-                    }
-                }
-            }
-        }, this);
-
-        JIRA.Issues.Application.on("issueEditor:saveSuccess", function (props) {
-            this.searchResults.updateIssueById({ id: props.issueId, action: "inlineEdit" }, { filter: this.getFilter() });
-        }, this);
-
-        Utilities.initializeResizeHooks();
-    },
-
-    registerColumnPicker: function () {
-        this.columnConfig = JIRA.Issues.ColumnPicker.create({ search: this });
-    },
-
-
-    getInactiveLayouts: function () {
-        var layouts = [];
-        _.each(this.getLayouts(), function (layout, key) {
-            if (key !== JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey()) {
-                layouts.push(layout);
-            }
-        }, this);
-        return layouts;
-    },
-
-    getActiveLayout: function () {
-        return this.getLayouts()[JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey()];
-    },
-
-    /**
-     * Change the page layout.
-     * <p/>
-     * No-op if the requested layout is already selected.
-     *
-     * @param {string} key The key of the layout to change to.
-     * @param {object} [options]
-     * @param {boolean} [options.ajax=true] Whether to POST the user's preferred layout to the server.
-     * @param {boolean} [options.render=true] Whether to render the new layout.
-     */
-    changeLayout: function (key, options) {
-        var layout = this.getLayout(key),
-            newLayout,
-            previousLayout = this.getCurrentLayout();
-
-        JIRA.Issues.changingLayout = true;
-
-        // JRADEV-20786 - Scroll to top of page before changing layouts.
-        jQuery("body, html").scrollTop(0);
-
-        options = _.defaults({}, options, {
-            ajax: true,
-            render: true
-        });
-
-        if (layout) {
-            // If the requested layout is already selected, do nothing.
-            if (previousLayout instanceof layout.view) {
-                return;
-            }
-
-            if (previousLayout && previousLayout.close) {
-                previousLayout.close();
-                // now unselect the selected issue. the assumption here is that we are switching to
-                // a mode that does not have an issue selected by default (i.e. list view).
-                this.searchResults.unselectIssue({ replace: true });
-            }
-
-            JIRA.Issues.LayoutPreferenceManager.setPreferredLayoutKey(key, options);
-
-            newLayout = new layout.view({
-                fullScreenIssue: this.fullScreenIssue,
-                assetContainer: this.assetContainer,
-                assetCacheManager: this.assetCacheManager,
-                search: this.search,
-                searchContainer: this.searchContainer,
-                searchHeaderModule: this.searchHeaderModule,
-                columnConfig: this.columnConfig
-            });
-
-            newLayout.on("close", function () {
-                this.searchContainer.find('.navigator-content').addClass("pending");
-            }, this);
-
-            newLayout.on("render", function () {
-                this.searchContainer.find('.navigator-content').removeClass("pending");
-                JIRA.trigger(JIRA.Events.LAYOUT_RENDERED, [key]);
-            }, this);
-
-            options.render && newLayout.render();
-            this.setCurrentLayout(newLayout);
-
-            this.standalone = false;
-        }
-    },
-
-    /**
-     * Create an instance of the user's preferred layout and set it as the current layout.
-     */
-    createLayout: function () {
-        if (!this.getCurrentLayout()) {
-            this.changeLayout(JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey(), { render: false });
-            this.fullScreenIssue.deactivate();
-        }
-    },
-
-    _onFilterChanged: function () {
-        var previousFilter = this.previous('filter');
-        if (previousFilter) {
-            previousFilter.off('change', this.triggerChangeFilterProps, this);
-        }
-
-        var currentFilter = this.getFilter();
-        if (currentFilter) {
-            currentFilter.on('change', this.triggerChangeFilterProps, this);
-        }
-    },
-
-    /**
-     * @param {string} key A layout key.
-     * @return {object|null} The layout associated with <tt>key</tt> or <tt>null</tt>.
-     */
-    getLayout: function (key) {
-        return this.getLayouts()[key] || null;
-    },
-
-    /**
-     * @return {object} an array of all registered layouts, sorted by label.
-     */
-    getSortedLayouts: function () {
-        return _.sortBy(this.getLayouts(), "label");
-    },
-
-    /**
-     * Associate a layout class with a key.
-     *
-     * @param {string} key A key used to identify the layout. If the key isn't unique, the old layout is overridden.
-     * @param {object} layout The layout class to be associated with <tt>key</tt>; its constructor, not an instance.
-     */
-    registerLayout: function (key, layout) {
-        layout.id = key;
-        this.getLayouts()[key] = layout;
-    },
-
-    /**
-     * Get jql but make sure that any requests to get jql have completed.
-     * @return {jQuery.Deferred}
-     */
-    getJqlDeferred: function () {
-        var deferred = jQuery.Deferred();
-        var instance = this;
-        // I am adding a settimeout to fix the following case and avoid similar ones in the future.
-        // I open a searcher, make some changes. Clicking the "Save" button to update the filter, I want to
-        // get the jql after the searcher have made their request to the server. Unfortunately because the click
-        // event of the "Save" button happens before the searchers make their request, we need to delay a tad.
-        _.defer(function () {
-            instance.queryModule.searchersReady().always(function () {
-                // Similar senario as the one above except in this case the request has returned but the jql hasn't been set.
-                _.defer(function () {
-                    deferred.resolve(instance.getEffectiveJql());
-                });
-            });
-        });
-        return deferred.promise();
-    },
-
-    registerIssueSearchManager: function (searchManger) {
-        this.assetSearchManager = searchManger;
-    },
-
-    registerIssueCacheManager: function (issueCacheManager) {
-        this.assetCacheManager = issueCacheManager;
-    },
-
-    registerQueryModule: function (queryModule) {
-        this.queryModule = queryModule;
-        this.queryModule.onJqlChanged(this.queryModuleSearchRequested, this);
-        this.queryModule.onJqlError(this.disableLayoutSwitcher, this);
-        this.queryModule.onJqlSuccess(this.enableLayoutSwitcher, this);
-        this.queryModule.onVerticalResize(QuoteFlow.Interactive.triggerVerticalResize);
-        this.queryModule.onQueryTooComplexSwitchToAdvanced(function () {
-            JIRA.Issues.Application.execute("analytics:trigger", "kickass.queryTooComplexSwitchToAdvanced");
-        });
-        this.queryModule.onBasicModeCriteriaCountWhenSearching(function (data) {
-            JIRA.Issues.Application.execute("analytics:trigger", "kickass.basicModeCriteriaCountWhenSearching", data);
-        });
-        this.queryModule.onChangedPreferredSearchMode(function (mode) {
-            JIRA.Issues.Application.execute("analytics:trigger", "kickass.switchto" + mode);
-        });
-        JIRA.Shifter.register(JIRA.Issues.SearchShifter({
-            isBasicMode: _.bind(this.queryModule.isBasicMode, this.queryModule),
-            isFullScreenIssue: _.bind(this.isFullScreenIssueVisible, this),
-            searcherCollection: this.queryModule.getSearcherCollection()
-        }));
-    },
-
-    disableLayoutSwitcher: function () {
-        if (this.layoutSwitcher) {
-            this.layoutSwitcher.disableLayoutSwitcher();
-        }
-    },
-
-    enableLayoutSwitcher: function () {
-        if (this.layoutSwitcher) {
-            this.layoutSwitcher.enableLayoutSwitcher();
-        }
-    },
-
-
-    registerLayoutSwitcher: function (layoutSwitcher) {
-        this.layoutSwitcher = layoutSwitcher;
-    },
-
-    registerFilterModule: function (newFilterModule) {
-        if (this.filterModule) {
-            this.filterModule.off('filterRemoved');
-            this.filterModule.off('filterSelected');
-        }
-
-        this.filterModule = newFilterModule;
-        this.filterModule.on('filterRemoved', function (props) {
-            var currentFilter = this.getFilter();
-            if (currentFilter && props.filterId === currentFilter.getId()) {
-                this.resetToBlank();
-            }
-        }, this);
-
-        this.filterModule.on('filterSelected', function (props) {
-            this.resetToFilter(props.filterId);
-        }, this);
-    },
-
-    registerSearch: function (search) {
-        this.search = search;
-        this.searchResults = this.search.getResults();
-        this.searchResults.on("change:resultsId", this._handleSearchResultsChange, this);
-        this.searchResults.onStartIndexChange(this._handleSearchResultsChange, this);
-        this.searchResults.onSelectedIssueChange(this._handleSearchResultsChange, this);
-
-        var columnConfig = this.columnConfig;
-
-        //TODO This event must be fired before searchResults.on*Change events in order to work
-        //Make sure that is a design feature and not a coincidence
-        this.on("change:filter", function () {
-            //When switch to another filter, clear the columns
-            columnConfig.clearFilterConfiguration();
-        });
-
-        this.searchResults.onColumnsChange(function (searchResults) {
-            var configName = searchResults.getColumnConfig();
-            if (configName) { //There is no columnConfig on empty search
-                columnConfig.syncColumns(configName, searchResults.getColumns());
-            }
-        });
-
-        this.searchResults.onColumnConfigChange(function (searchResults) {
-            var configName = searchResults.getColumnConfig();
-            if (configName) { //There is no columnConfig on empty search
-                columnConfig.setCurrentColumnConfig(configName);
-                //When the columnConfig changes, always set the columns
-                columnConfig.syncColumns(configName, searchResults.getColumns());
-            }
-        });
-
-        columnConfig.onColumnsSync(function (columnConfigName) {
-            search.stableUpdate({
-                columnConfig: columnConfigName
-            });
-        });
-
-        this.searchResults.onSelectedIssueChange(_.bind(function (issue) {
-            if (!issue.hasIssue()) {
-                JIRA.Issues.Application.execute("issueEditor:removeIssueMetadata");
-            }
-        }, this));
-    },
-
-    _handleSearchResultsChange: function (model, options) {
-        options = options || {};
-        options.replace ?
-                this.issueNavRouter.replaceState(this.getState()) :
-                this.issueNavRouter.pushState(this.getState());
-    },
-
-    registerSearchHeaderModule: function (searchHeaderModule) {
-        this.searchHeaderModule = searchHeaderModule;
-    },
-
-    registerFullScreenIssue: function (fullScreenIssue) {
-        this.fullScreenIssue = fullScreenIssue;
-        this.fullScreenIssue.bindIssueHidden(function () {
-            JIRA.Issues.Application.execute("issueEditor:dismiss");
-
-            this.updateWindowTitle(this.getFilter());
-            JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
-        }, this);
-    },
-
-    /**
-     * @param {element} options.issueContainer The element in which issues are to be rendered.
-     * @param {element} options.searchContainer The element in which search results are to be rendered.
-     */
-    registerViewContainers: function (options) {
-        this.assetContainer = options.assetContainer;
-        this.searchContainer = options.searchContainer;
-    },
-
-    registerIssueNavRouter: function (issueNavRouter) {
-        this.issueNavRouter = issueNavRouter;
-    },
-
-    prevIssue: function () {
-        if (this._overlayIsVisible()) {
-            return false;
-        }
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment") && !this.standalone) {
-            this.getCurrentLayout().prevIssue();
-            return true;
-        }
-
-        return false;
-    },
-
-    nextIssue: function () {
-        if (this._overlayIsVisible()) {
-            return false;
-        }
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment") && !this.standalone) {
-            this.getCurrentLayout().nextIssue();
-            return true;
-        }
-
-        return false;
-    },
-
-    /**
-     * Is there an issue currently being loaded
-     * @return Boolean
-     */
-    isCurrentlyLoadingIssue: function () {
-        return JIRA.Issues.Application.request("issueEditor:isCurrentlyLoading");
-    },
-
-    _overlayIsVisible: function () {
-        return AJS.$(".aui-blanket").filter(":visible").length > 0;
-    },
-
-    /**
-     * Retrieve the ID of the selected issue.
-     * <p/>
-     * If issue search is visible, the ID of the currently highlighted issue is
-     * returned; if we're viewing an issue, its ID is returned.
-     *
-     * @param {AJS.Dialog} [dialog] The dialog requesting this information.
-     * @return {number} The ID of the currently selected issue.
-     */
-    getEffectiveIssueId: function (dialog) {
-        return this.getEffectiveIssue().getId();
-    },
-
-    /**
-     * Update the UI in response to an issue update.
-     *
-     * @param {object} issueUpdate An issue update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
-     * @return {jQuery.Deferred} A deferred that is resolved when the refresh completes.
-     */
-    updateIssue: function (issueUpdate) {
-        var isDelete = issueUpdate.action === JIRA.Issues.Actions.DELETE,
-            isFullScreen = this.fullScreenIssue.isVisible();
-
-        if (isDelete) {
-            return this._deleteIssue(issueUpdate);
-        } else if (isFullScreen) {
-            return this.fullScreenIssue.updateIssue(issueUpdate).done(_.bind(function () {
-                // If it's not a standalone issue, then we also need to update the search results.
-                //
-                // Things break if these requests are made in parallel, so force them to be serial.
-                !this.standalone && this.searchResults.updateIssue(issueUpdate, { showMessage: false, filter: this.getFilter() });
-            }, this));
-        } else {
-            return this.searchResults.updateIssue(issueUpdate, { filter: this.getFilter() });
-        }
-    },
-
-    /**
-     * Update the UI in response to issue deletion.
-     *
-     * @param {object} issueUpdate An issue update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
-     * @return {jQuery.Deferred} A deferred that is resolved when the update completes.
-     * @private
-     */
-    _deleteIssue: function (issueUpdate) {
-        var isFullScreen = this.fullScreenIssue.isVisible(),
-            isVisibleIssue = issueUpdate.key == JIRA.Issues.Application.request("issueEditor:getIssueKey");
-
-        if (!isFullScreen) {
-            return this.searchResults.updateIssue(issueUpdate);
-        } else if (!isVisibleIssue) {
-            return this.fullScreenIssue.updateIssue(issueUpdate);
-        } else if (this.standalone) {
-            this.resetToBlank();
-            JIRA.Issues.showNotification(issueUpdate.message, issueUpdate.key);
-            return jQuery.Deferred().resolve().promise();
-        } else {
-            this.returnToSearch();
-            return this.searchResults.updateIssue(issueUpdate);
-        }
-    },
-
-    /**
-     * Retrieve the key of the selected issue.
-     * <p/>
-     * If issue search is visible, the key of the currently highlighted issue is
-     * returned; if we're viewing an issue, its key is returned.
-     *
-     * @return {number} The key of the currently selected issue.
-     */
-    getEffectiveIssueKey: function () {
-        return this.getEffectiveIssue().getKey();
-    },
-
-    getEffectiveIssue: function () {
-        var hasHighlightedIssue = this.searchResults.hasHighlightedAsset(),
-            hasSelectedIssue = this.searchResults.hasSelectedAsset(),
-            issueModuleIssue;
-
-        issueModuleIssue = new JIRA.Issues.SimpleIssue({
-            id: JIRA.Issues.Application.request("issueEditor:getIssueId"),
-            key: JIRA.Issues.Application.request("issueEditor:getIssueKey")
-        });
-
-        if (this.standalone) {
-            return issueModuleIssue;
-        } else if (hasSelectedIssue) {
-            return this.searchResults.getSelectedAsset();
-        } else if (hasHighlightedIssue) {
-            return this.searchResults.getHighlightedAsset();
-        } else {
-            return issueModuleIssue;
-        }
-    },
-
-    isHighlightedIssueAccessible: function () {
-        return this.search.getResults().isHighlightedIssueAccessible();
-    },
-
-    /**
-     * Show issue search and change the URL to match model state.
-     * <p/>
-     * If returning from a stand-alone issue, reset to a blank search.
-     */
-    returnToSearch: function () {
-        if (this.standalone) {
-            this.resetToBlank();
-            JIRA.trace("jira.returned.to.search");
-        } else if (this.fullScreenIssue.isVisible()) {
-            this.searchResults.unselectIssue();
-            JIRA.Issues.Application.execute("issueEditor:beforeHide");
-            // TODO: defensive check, incase issue-nav-components is a lower version than expected. Can remove after
-            // soaking for bit on ondemand.
-            if (this.queryModule.refreshLayout) {
-                this.queryModule.refreshLayout();
-            }
-        } else {
-            JIRA.trace("jira.returned.to.search");
-        }
-        jQuery.event.trigger("updateOffsets.popout")
-    },
-
-    toggleFilterPanel: function () {
-        return this.filterModule.toggleFilterPanel();
-    },
-
-    issueTableSortRequested: function (jql, startIndex) {
-        this.update({ jql: jql, startIndex: startIndex });
-    },
-
-    issueTableSearchError: function (response) {
-        if (response.status !== 0) {
-            // if we haven't aborted the request
-            this.filterModule.filtersComponent.markFilterHeaderAsInvalid();
-            var errors;
-            try {
-                errors = JSON.parse(response.responseText);
-            } catch (error) {
-                errors = { errorMessages: [AJS.I18n.getText("issue.nav.common.server.error")] };
-            }
-            this.queryModule.onSearchError(errors);
-        }
-    },
-
-    issueTableSearchSuccess: function (data) {
-        this.update({
-            startIndex: data.startIndex
-        });
-        this.queryModule.onSearchSuccess(data.warnings);
-    },
-
-    issueTableStableUpdate: function (startIndex) {
-        this.update({ startIndex: startIndex });
-    },
-
-    /**
-     * Prompt the user to confirm navigation if there are any dirty forms.
-     *
-     * @param {object} [options]
-     * @param {function} [options.confirm=window.confirm] Show a confirmation dialog.
-     * @param {boolean} [options.ignoreDirtiness=false] Whether to ignore dirty forms.
-     * @return {boolean} whether the user confirmed navigation.
-     */
-    confirmNavigation: function (options) {
-        options = _.defaults({}, options, {
-            // Why can't we use bind or apply, I hear you ask? IE8, that's why.
-            confirm: function (message) {
-                return window.confirm(message);
-            },
-            ignoreDirtiness: false
-        });
-
-        var message = JIRA.DirtyForm.getDirtyWarning() || JIRA.Issue.getDirtyCommentWarning();
-        return !!options.ignoreDirtiness || message === undefined || options.confirm(message);
-    },
-
-    /**
-     * @return {boolean} whether a full screen issue is visible.
-     */
-    isFullScreenIssueVisible: function () {
-        return this.fullScreenIssue && this.fullScreenIssue.isVisible();
-    },
-
-    isIssueVisible: function () {
-        var layoutKey = JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey();
-
-        if (this.isFullScreenIssueVisible()) {
-            return true;
-        } else if (layoutKey === "list-view") {
-            return this.fullScreenIssue.isVisible();
-        } else if (layoutKey === "split-view") {
-            // Issue is always visible in split view AS LONG AS there are results
-            return this.search.getResults().hasAssets();
-        }
-        return false;
-    },
-
-    queryModuleSearchRequested: function (jql) {
-        this.update({
-            jql: jql,
-            startIndex: 0,
-            selectedIssueKey: null,
-            searchId: _.uniqueId()
-        });
-    },
-
-    filterModuleSaved: function (filterModel) {
-        this.reset({ filter: filterModel.getId() });
-    },
-
-    discardFilterChanges: function () {
-        this.update({
-            jql: null,
-            selectedIssueKey: null
-        }, true);
-    },
-
-    getState: function () {
-        var filter = this.getFilter();
-
-        var state = {
-            filter: filter && filter.getId(),
-            filterJql: filter && filter.getJql(),
-            jql: this.getJql()
-        };
-
-        if (this.standalone) {
-            state.selectedIssueKey = JIRA.Issues.Application.request("issueEditor:getIssueKey")
-        } else {
-            _.extend(state, this.search.getResults().getState());
-        }
-
-        return state;
-    },
-
-    _doSearch: function (options) {
-        options = options || {};
-        var searchOptions = {};
-        var searchPromise;
-        var filter = this.getFilter();
-        searchOptions.startIndex = options.startIndex;
-        if (filter) {
-            searchOptions.filterId = filter.getId();
-        }
-
-        if (options.columnConfig) {
-            searchOptions.columnConfig = options.columnConfig;
-        }
-
-        searchOptions.jql = this.getEffectiveJql();
-        searchPromise = this.assetSearchManager.search(searchOptions);
-
-        searchPromise.done(_.bind(function (results) {
-            if (this.fullScreenIssue.isVisible() && !AJS.Meta.get('serverRenderedViewIssue')) {
-                JIRA.Issues.Application.execute("issueEditor:beforeHide");
-            }
-            this.searchResults.resetFromSearch(_.extend(options, results.issueTable));
-            this.queryModule.onSearchSuccess(results.warnings);
-            jQuery.event.trigger("updateOffsets.popout");
-        }, this)).fail(_.bind(function (xhr) {
-            if (xhr.statusText !== "abort") {
-                if (xhr.status == 400 && options.selectedIssueKey) {
-                    this.reset({ selectedIssueKey: options.selectedIssueKey }, { replace: true });
-                } else {
-                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedIssueKey"), this.searchResults.defaults));
-                    this.issueTableSearchError(xhr);
-                }
-            }
-        }, this));
-
-        return searchPromise;
-    },
-
-    updateWindowTitle: function (model) {
-        if (this.isFullScreenIssueVisible()) {
-            return;
-        }
-
-        var filter = model,
-            navigatorTitle = AJS.format('{0} - {1}', AJS.I18n.getText('navigator.title'), JIRA.Settings.ApplicationTitle.get());
-
-        if (filter && filter.getIsValid()) {
-            document.title = "[" + filter.getName() + "] " + navigatorTitle;
-        } else {
-            document.title = navigatorTitle;
-        }
-    },
-
-    _applyState: function (state, isReset, options) {
-        options = options || {};
-        var prevState = _.extend(this.toJSON(), this.search.getResults().toJSON());
-        var stateToApply = _.pick(state, this.properties);
-        this.set(stateToApply);
-        var newState = _.extend(this.toJSON(), state);
-        this.updateWindowTitle(this.getFilter());
-
-        if (isReset) {
-            var jql = (state.filter && state.jql == null) ? state.filter.getJql() : state.jql;
-            this.queryModule.resetToQuery(jql, { focusQuery: options.isNewSearch }).always(_.bind(function () {
-                // Hide the query view for invalid filters.
-                this.queryModule.setVisible(!state.filter || state.filter.getIsValid());
-            }, this))
-        }
-        if (this.shouldPerformNewSearch(prevState, newState)) {
-            var searchPromise = this._doSearch(newState);
-        } else {
-            var searchPromise = jQuery.Deferred().resolve();
-            if ("selectedIssueKey" in state) {
-                this.searchResults.selectIssueByKey(state.selectedIssueKey);
-            }
-            // If an issue is selected, its position in the results determines the page and we can ignore startIndex.
-            if ("startIndex" in state && !state.selectedIssueKey) {
-                this.searchResults.goToPage(state.startIndex);
-            }
-        }
-
-        this._showIntroDialogs(searchPromise);
-    },
-
-    /**
-     * Determines if we would need to perform a new (unstable) search if
-     * <tt>SearchPageModule</tt> was to be updated with the given attributes.
-     *
-     * @return {boolean} whether we should perform a new search.
-     */
-    shouldPerformNewSearch: function (prevState, newState) {
-        var prevFilterId = prevState.filter && prevState.filter.getId();
-        var filterId = newState.filter && newState.filter.getId();
-        var filterChanged = prevFilterId !== filterId;
-        var jqlChanged = newState.jql !== prevState.jql;
-        var searchIdChanged = newState.searchId !== prevState.searchId;
-        return filterChanged || jqlChanged || searchIdChanged;
-    },
-
-    refreshSearch: function () {
-        return this._doSearch(_.extend({}, this.getState(), {
-            selectedIssueKey: undefined
-        }));
-    },
-
-    _navigateToState: function (state, isReset, options) {
-
-        options = options || {};
-
-        if (!JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
-            this.queryModule.queryChanged();
-            AJS.InlineLayer.current && AJS.InlineLayer.current.hide();
-            return null;
-        }
-
-        if (this._validateNavigate(state)) {
-            options.replace ? this.issueNavRouter.replaceState(state) : this.issueNavRouter.pushState(state);
-        }
-        if (this.search.isStandAloneIssue(state)) {
-            this.resetToStandaloneIssue(state);
-        } else {
-            return this.applyState(state, isReset, options);
-        }
-    },
-
-
-    _validateNavigate: function (newState) {
-        var urlFromState = JIRA.Issues.URLSerializer.getURLFromState;
-        return urlFromState(newState) !== urlFromState(this.getState());
-    },
-
-    _getUpdateState: function (state) {
-        return _.extend({}, this.getState(), state);
-    },
-
-    update: function (state, isReset, options) {
-        this._navigateToState(this._getUpdateState(state), isReset, options);
-    },
-
-    reset: function (state, options) {
-        var resetState = _.extend({}, this.defaults(), state);
-        resetState.searchId = _.uniqueId();
-        this._navigateToState(resetState, true, options);
-    },
-
-    _deactivateCurrentLayout: function () {
-        var currentLayout = this.getCurrentLayout();
-        if (currentLayout) {
-            currentLayout.close && currentLayout.close();
-            this.setCurrentLayout(null);
-        }
-    },
-
-    resetToStandaloneIssue: function (state) {
-        this._deactivateCurrentLayout();
-        this.set(this.defaults());
-        this.standalone = true;
-        this.fullScreenIssue.show({
-            key: state.selectedIssueKey,
-            viewIssueQuery: state.viewIssueQuery
-        });
-    },
-
-    applyState: function (state, isReset, options) {
-        var filterRequest,
-            shouldFetchFilter = state.filter && !(state.filter instanceof JIRA.Components.Filters.Models.Filter),
-            systemFiltersRequest = this.initSystemFilters();
-
-        JIRA.Issues.Application.execute("issueEditor:abortPending");
-        this.createLayout();
-
-        if (shouldFetchFilter) {
-            // Wait for the system filters request to finish as state.filter may refer to a system filter.
-            filterRequest = jQuery.Deferred();
-            systemFiltersRequest.always(_.bind(function () {
-                this.filterModule.getFilterById(state.filter).always(function (filterModel) {
-                    state.filter = filterModel;
-                    filterRequest.resolve();
-                });
-            }, this));
-        }
-
-        jQuery.when(filterRequest, systemFiltersRequest).always(_.bind(function () {
-            this._applyState(state, isReset, options);
-        }, this));
-    },
-
-    updateFromRouter: function (state) {
-        if (this.search.isStandAloneIssue(state)) {
-            this.resetToStandaloneIssue(state);
-        } else {
-            this.applyState(state, !this._isSearchStateEqual(state));
-        }
-    },
-
-    hasSelectedAsset: function () {
-        return this.search.getResults().getSelectedAsset().getKey();
-    },
-
-    /**
-     * Reset the application state to match a given filter.
-     *
-     * @param {number|JIRA.Components.Filters.Models.Filter} filter The (id of) the filter to reset to.
-     */
-    resetToFilter: function (filter) {
-        //Selecting a filter should always attempt to use the filter columns by default
-        //This will ensure request are being made with the specified behaviour above
-        //Returning issue table request will contain the actual columns being used and
-        //  the preference state will be updated accordingly
-        this.reset({
-            filter: filter,
-            searchId: _.uniqueId()
-        });
-    },
-
-    /**
-     * Reset the query to jql=
-     * A reset forces a new search to be performed even if there are no changes.
-     */
-    resetToBlank: function (options) {
-        this.reset({ jql: "" }, options);
-    },
-
-    /**
-     * @return {boolean} whether the current search is dirty (a modified filter).
-     */
-    isDirty: function () {
-        var filter = this.getFilter();
-        return !!filter && filter.getJql() !== this.getEffectiveJql();
-    },
-
-    getSearchMode: function () {
-        return this.queryModule.getSearchMode();
-    },
-
-    getActiveBasicModeSearchers: function () {
-        return this.queryModule.getActiveBasicModeSearchers();
-    },
-
-    /**
-     * Set the user's session search to a given filter.
-     *
-     * @param filterModel The filter.
-     * @private
-     */
-    setSessionSearch: function (filterModel) {
-        // We don't really care if this request fails; it just means that the
-        // URL may unnecessarily include the JQL parameter.
-        AJS.$.ajax({
-            data: {
-                filterId: filterModel.getId()
-            },
-            type: "PUT",
-            url: AJS.contextPath() + "/rest/issueNav/1/issueTable/sessionSearch/"
-        });
-    },
-
-    openFocusShifter: function () {
-        JIRA.Issues.FocusShifter.show();
-    },
-
-    /**
-     * @param {Object} issueProps. Either id or key needs to be present.
-     * @param issueProps.issueId
-     * @param issueProps.issueKey
-     */
-    setAsInaccessible: function (issueProps) {
-        this.issueTableModule.setAsInaccessible(issueProps);
-    },
-
-    /**
-     * @param {Object|null} issueProps. If null/undefined, use currently selected issue.
-     * @param issueProps.issueId
-     * @param issueProps.issueKey
-     */
-    showInlineIssueLoadError: function (issueProps) {
-        var html = JIRA.Components.IssueViewer.Templates.Body.errorsLoading();
-        JIRA.Messages.showErrorMsg(html, { closeable: true });
-    },
-
-    /**
-     * In the case of no filter selected, simply gets the jql property.
-     * When a filter is selected, will get the filter jql and any modifications.
-     *
-     * @return {string} the effective JQL.
-     */
-    getEffectiveJql: function () {
-        var filter = this.getFilter(),
-            jql = this.getJql();
-
-        if (_.isString(jql)) {
-            return jql;
-        } else if (filter) {
-            return filter.getJql() || "";
-        } else {
-            return "";
-        }
-    },
-
-    /**
-     * On standalone VI, system filters data will not be available on page load
-     * Thus make calls to make sure it is loaded properly via ajax
-     */
-    initSystemFilters: function () {
-        return this.filterModule.initSystemFilters();
-    },
-
-    addOwnerToSystemFilters: function (systemFilters) {
-        var loggedInUser = AJS.Meta.get('remote-user');
-
-        if (!loggedInUser) {
-            return systemFilters;
-        }
-
-        var ownerDisplayName = AJS.Meta.get('remote-user-fullname');
-        var avatarUrl = AJS.Meta.get('remote-user-avatar-url');
-
-        return _.map(systemFilters, function (filter) {
-            filter.ownerUserName = loggedInUser;
-            filter.ownerDisplayName = ownerDisplayName;
-            filter.avatarUrl = avatarUrl;
-            return filter;
-        });
-    },
-
-    handleLeft: function () {
-        if (this._allowLeftRightNavigation()) {
-            this.getCurrentLayout() && this.getCurrentLayout().handleLeft();
-        }
-    },
-
-    handleRight: function () {
-        if (this._allowLeftRightNavigation()) {
-            this.getCurrentLayout() && this.getCurrentLayout().handleRight();
-        }
-    },
-
-    handleUp: function () {
-        if (!this._allowUpDownNavigation()) {
-            return false;
-        }
-
-        // Allow arrow scrolling up if first issue is highlighted.
-        if (this.searchResults.isFirstIssueHighlighted()) {
-            return false;
-        }
-
-        return this.prevIssue();
-    },
-
-    handleDown: function () {
-        if (!this._allowUpDownNavigation()) {
-            return false;
-        }
-
-        return this.nextIssue();
-    },
-
-    _allowLeftRightNavigation: function () {
-        return !AJS.keyboardShortcutsDisabled;
-    },
-
-    _allowUpDownNavigation: function () {
-        if (AJS.keyboardShortcutsDisabled) {
-            return false;
-        }
-
-        // Don't allow up/down navigation if dropdowns are open.
-        if (AJS.InlineLayer.current || AJS.Dropdown.current || JIRA.Dialog.current || AJS.$(".aui-dropdown2:visible").length > 0) {
-            return false;
-        }
-
-        return this.getCurrentLayout() && !this.getCurrentLayout().isIssueViewActive();
-    },
-
-    _isSearchStateEqual: function (state) {
-        var searchParams = ["filter", "jql", "startIndex"];
-        return _.isEqual(_.pick(state, searchParams), _.pick(this.getState(), searchParams));
-    },
-
-    /**
-     * Remove all of the tipsies that are open.
-     */
-    //removeOpenTipsies: JIRA.Issues.Tipsy.revalidate,
-
-    _showIntroDialogs: function (searchPromise) {
-        var filterPanelPromise = (this.filterModule && this.filterModule.filterPanelView) ? this.filterModule.filterPanelView.panelReady : undefined;
-        if (!this._shownIntroDialog && this.layoutSwitcher) {
-            jQuery.when(searchPromise, filterPanelPromise).done(_.bind(function () {
-                this.layoutSwitcher.createHelptipForSwitchingToDetailView(1);
-                this.filterModule.createHelptipForFilterPanelDocking(2);
-                AJS.HelpTip.Manager.showSequences();
-            }, this));
-            this._shownIntroDialog = true;
-        }
-    }
-});
-},{"../../../components/utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","./full-screen-controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\search\\full-screen-controller.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js":[function(require,module,exports){
+},{"./basic_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\basic_query.js","./jql_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\jql_query.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js":[function(require,module,exports){
 "use strict";
 
 var Marionette = require('backbone.marionette');
@@ -5819,8 +7601,8 @@ var UrlSerializer = {
         var query = [];
         var base;
 
-        if (state.selectedIssueKey) {
-            base = BASE_BROWSE + state.selectedIssueKey;
+        if (state.selectedAssetKey) {
+            base = BASE_BROWSE + state.selectedAssetKey;
         } else {
             base = BASE_ASSETS;
         }
@@ -5831,7 +7613,7 @@ var UrlSerializer = {
         if (state.jql != null && (state.filterJql == null || state.jql !== state.filterJql)) {
             query.push('jql=' + encodeURIComponent(state.jql));
         }
-        if (state.startIndex && !state.selectedIssueKey) {
+        if (state.startIndex && !state.selectedAssetKey) {
             query.push('startIndex=' + state.startIndex);
         }
         return base + (query.length ? '?' + query.join('&') : "");
@@ -5851,12 +7633,12 @@ var UrlSerializer = {
         var state = {
             filter: null,
             jql: null,
-            selectedIssueKey: null,
+            selectedAssetKey: null,
             startIndex: 0
         };
 
         if (url.indexOf(BASE_BROWSE) == 0) {
-            state.selectedIssueKey = path.split("/")[1];
+            state.selectedAssetKey = path.split("/")[1];
         }
 
         if (url.indexOf("?") !== -1) {

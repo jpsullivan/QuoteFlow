@@ -23,13 +23,13 @@ var FullScreenLayoutController = Marionette.Controller.extend({
         });
 
         this.$navigatorContent = options.searchContainer.find('.navigator-content');
-        this.issueTable = new IssueTable({
+        this.assetTable = new IssueTable({
             searchService: this.searchService,
             el: this.$navigatorContent,
             columnConfig: options.columnConfig
         });
 
-        this.listenTo(this.issueTable, {
+        this.listenTo(this.assetTable, {
             "highlightIssue": function (issueId) {
                 this.searchService.highlightIssue(issueId);
             },
@@ -50,7 +50,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
                 // internals of FullScreenIssue, when the first one is fired the IssueTable is not in the DOM
                 // so the scrollIntoView() operation will not work. We need to re-highlight the same issue now
                 // that the IssueTable is present in the DOM to force the scroll behaviour
-                this.issueTable.highlightIssue(this.searchService.getHighlightedAsset());
+                this.assetTable.highlightIssue(this.searchService.getHighlightedAsset());
             }
         });
 
@@ -59,7 +59,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
 
     onLoadError: function (issue) {
         if (!this.fullScreenIssue.isVisible()) {
-            this.searchService.unselectIssue();
+            this.searchService.unselectAsset();
             Messages.showErrorMsg(
                 AJS.I18n.getText('viewissue.error.message.cannotopen', issue.issueKey),
                 { closeable: true }
@@ -68,31 +68,31 @@ var FullScreenLayoutController = Marionette.Controller.extend({
     },
 
     render: function () {
-        this.issueTable.show();
+        this.assetTable.show();
     },
 
     onClose: function () {
         this.fullScreenIssue.deactivate();
-        this.issueTable.close();
+        this.assetTable.close();
         this.searchService.close();
 
         Application.off("issueEditor:loadError", this.onLoadError, this);
 
         delete this.fullScreenIssue;
-        delete this.issueTable;
+        delete this.assetTable;
         delete this.searchService;
     },
 
-    nextIssue: function () {
-        this.searchService.selectNextIssue();
+    nextAsset: function () {
+        this.searchService.selectNextAsset();
     },
 
-    prevIssue: function () {
+    prevAsset: function () {
         this.searchService.selectPreviousIssue();
     },
 
     returnToSearch: function () {
-        this.searchService.unselectIssue();
+        this.searchService.unselectAsset();
     },
 
     handleLeft: function () {

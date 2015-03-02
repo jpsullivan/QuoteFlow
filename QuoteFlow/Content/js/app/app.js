@@ -9,7 +9,7 @@ Backbone.$ = $;
 
 var Marionette = require('backbone.marionette');
 
-var AssetTableModule = require('./modules/asset/module');
+var AssetTableModule = require('./modules/asset-nav/module');
 var CatalogModule = require('./modules/catalog/module');
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)

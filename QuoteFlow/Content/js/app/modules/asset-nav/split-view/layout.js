@@ -55,7 +55,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         QuoteFlow.Interactive.onHorizontalResize(this._updateSidebarPosition);
         QuoteFlow.Interactive.onVerticalResize(this._updateSidebarPosition);
         this.addListener(options.search, "beforeSearch", this._showPending, this);
-        this.addListener(this.searchResults, "issueDeleted", this._onIssueDeleted, this);
+        this.addListener(this.searchResults, "issueDeleted", this._onAssetDeleted, this);
         this.addListener(this.searchResults, "newPayload", this._hidePending, this);
         this.addListener(this.searchResults, "newPayload", this._updateSortBy, this);
         this.addListener(this.searchResults, "newPayload", this.render, this);
@@ -191,7 +191,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
 
         //If the selected issue is not in the list of downloaded issues go to first issue in page.
-        if (!this.searchResults.hasIssue(this.searchResults.getSelectedAsset().getId())) {
+        if (!this.searchResults.hasAsset(this.searchResults.getSelectedAsset().getId())) {
             this.searchResults.selectFirstInPage();
         }
     },
@@ -282,7 +282,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      *
      * @private
      */
-    _onIssueDeleted: function (issue) {
+    _onAssetDeleted: function (issue) {
         //Locally hide the issue to be deleted immediately so there is no delay in the UI before the new issue table
         this.listView.getAssetById(issue.id).hide();
         this._showPending();
@@ -332,15 +332,15 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     /**
      * Called when the 'j' keyboard shortcut is used and this layout is active.
      */
-    nextIssue: function () {
-        this.searchResults.selectNextIssue({ replace: true });
+    nextAsset: function () {
+        this.searchResults.selectNextAsset({ replace: true });
     },
 
     /**
      * Called when the 'k' keyboard shortcut is used and this layout is active.
      */
-    prevIssue: function () {
-        this.searchResults.selectPrevIssue({ replace: true });
+    prevAsset: function () {
+        this.searchResults.selectPrevAsset({ replace: true });
     },
 
     /**
