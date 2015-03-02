@@ -1912,106 +1912,18 @@ module.exports = AssetVarValue;
 },{"backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\controller.js":[function(require,module,exports){
 "use strict";
 
+var $ = require('jquery');
 var Marionette = require('backbone.marionette');
+
+var AssetNavCreator = require('./search/asset-nav-creator');
 
 /**
  * Contains callbacks for the asset module router.
  */
-var AssetController = Marionette.Controller.extend({
+var AssetNavController = Marionette.Controller.extend({
 
-    create: function () {
-        AJS.$(document).ready(function () {
-            AJS.$('#catalog_expiration_date').datePicker({ 'overrideBrowserDefault': true });
-        });
-    },
-
-    importCatalog: function () {
-        AsyncFileUploadManager.init(window.asyncActionUrl, 'uploadForm', window.asyncJqueryFallback);
-    },
-
-    verify: function () {
-        var view = new CatalogImportSetFields({ rawRows: window.rawRows });
-    },
-
-    verifySecondary: function () {
-        var view = new CatalogImportSetOptionalFields({
-            headers: window.headers,
-            rawRows: window.rawRows
-        });
-    },
-
-    showAssetsInteractive: function () {
-        debugger;
-    }
-});
-
-module.exports = AssetController;
-
-
-},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\module.js":[function(require,module,exports){
-"use strict";
-
-var _ = require('underscore');
-
-var Marionette = require('backbone.marionette');
-
-var AssetController = require('./controller');
-var AssetNavCreator = require('./search/asset-nav-creator');
-var AssetRouter = require('./router');
-
-/**
- * 
- */
-var AssetNavModule = Marionette.Module.extend({
-
-    onStart: function (options) {
-        options = this.init(options);
-        return this.startMediator(options);
-    },
-
-    /**
-     * Equivalent of AssetNavInit.js
-     */
-    init: function(options) {
-        var $navigatorContent = AJS.$(".navigator-content");
-
-        /**
-         * Read all the initial data in the DOM
-         *
-         * If the ColumnConfigState has been sent from the server we want to take the HTML from the table
-         * and pop it onto its table property.
-         *
-         * This prevents us from having to populate the HTML twice in the dom. Once in the HTML and another time in the
-         * JSON. It also prevents us needing to ensure there are no XSS vulnerabilities in the JSON HTML string.
-         */
-        var initialIssueTableState = $navigatorContent.data("issue-table-model-state");
-        if (initialIssueTableState && !initialIssueTableState.table) {
-            var wrapper = AJS.$("<div></div>").append($navigatorContent.children().clone());
-            initialIssueTableState.assetTable.table = wrapper.html();
-        }
-
-        var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
-        var selectedIssue = $navigatorContent.data("selected-issue");
-
-        // jQuery.parseJSON gracefully returns null given an empty string.
-        // Would be even nicer if the json was placed in a data- attribute, which jQuery will automatically parse with .data().
-        var initialSearcherCollectionState = jQuery.parseJSON(jQuery("#criteriaJson").text());
-        var initialSessionSearchState = $navigatorContent.data("session-search-state");
-        var systemFilters = jQuery.parseJSON(jQuery("#systemFiltersJson").text());
-
-        _.extend(options, {
-            initialIssueTableState: initialIssueTableState,
-            initialIssueIds: initialIssueIds,
-            selectedIssue: selectedIssue,
-            initialSearcherCollectionState: initialSearcherCollectionState,
-            initialSessionSearchState: initialSessionSearchState,
-            systemFilters: systemFilters
-        });
-
-        return options;
-    },
-
-    startMediator: function (options) {
+    builder: function () {
+        var options = this.initOptions();
         var creator = AssetNavCreator.create(AJS.$(document), {
             initialIssueTableState: options.initialIssueTableState,
             initialSearcherCollectionState: options.initialSearcherCollectionState,
@@ -2045,22 +1957,89 @@ var AssetNavModule = Marionette.Module.extend({
 
 //        // Trigger the event on page load to make sure the controls are visible.
 //        AJS.$(document).trigger("resultsWidthChanged");
-//
+//        
 //        JIRA.Issues.onVerticalResize(function () {
 //            jQuery.event.trigger("updateOffsets.popout");
 //        });
-//
+//        
 //        // When switching layouts we need to update the height of sidebar
 //        JIRA.bind(JIRA.Events.LAYOUT_RENDERED, function () {
 //            _.defer(function () {
 //                jQuery.event.trigger("updateOffsets.popout");
 //            });
 //        });
+    },
 
-        this.controller = new AssetController();
+    /**
+     * Equivalent of AssetNavInit.js
+     */
+    initOptions: function () {
+        var $navigatorContent = AJS.$(".navigator-content");
+
+        /**
+         * Read all the initial data in the DOM
+         *
+         * If the ColumnConfigState has been sent from the server we want to take the HTML from the table
+         * and pop it onto its table property.
+         *
+         * This prevents us from having to populate the HTML twice in the dom. Once in the HTML and another time in the
+         * JSON. It also prevents us needing to ensure there are no XSS vulnerabilities in the JSON HTML string.
+         */
+        var initialIssueTableState = $navigatorContent.data("issue-table-model-state");
+        if (initialIssueTableState && !initialIssueTableState.table) {
+            var wrapper = AJS.$("<div></div>").append($navigatorContent.children().clone());
+            initialIssueTableState.assetTable.table = wrapper.html();
+        }
+
+        var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
+        var selectedIssue = $navigatorContent.data("selected-issue");
+
+        // jQuery.parseJSON gracefully returns null given an empty string.
+        // Would be even nicer if the json was placed in a data- attribute, which jQuery will automatically parse with .data().
+        var initialSearcherCollectionState = jQuery.parseJSON(jQuery("#criteriaJson").text());
+        var initialSessionSearchState = $navigatorContent.data("session-search-state");
+        var systemFilters = jQuery.parseJSON(jQuery("#systemFiltersJson").text());
+
+        _.extend({}, {
+            initialIssueTableState: initialIssueTableState,
+            initialIssueIds: initialIssueIds,
+            selectedIssue: selectedIssue,
+            initialSearcherCollectionState: initialSearcherCollectionState,
+            initialSessionSearchState: initialSessionSearchState,
+            systemFilters: systemFilters
+        });
+
+        return options;
+    },
+});
+
+module.exports = AssetNavController;
+
+
+},{"./search/asset-nav-creator":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-nav-creator.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\module.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+
+var Marionette = require('backbone.marionette');
+
+var AssetNavController = require('./controller');
+var AssetNavCreator = require('./search/asset-nav-creator');
+var AssetRouter = require('./router');
+
+/**
+ * 
+ */
+var AssetNavModule = Marionette.Module.extend({
+
+    onStart: function (options) {
+        return this.startMediator(options);
+    },
+
+    startMediator: function (options) {
+        this.controller = new AssetNavController();
         return new AssetRouter({
-            controller: this.controller,
-            searchPageModule: this.searchPageModule
+            controller: this.controller
         });
     }
 });
@@ -2074,153 +2053,157 @@ var Backbone = require('backbone');
 var BackboneQueryParams = require('backbone-query-parameters');
 var Marionette = require('backbone.marionette');
 
-var CatalogController = require('./controller');
 var UrlSerializer = require('../../util/url-serializer');
 
-/**
- * A mostly-custom router for handling routes that are used within the 
- * asset table module.
- */
-var AssetRouter = Marionette.AppRouter.extend({
-    
-    initialize: function (options) {
-        _.extend(this, options);
-        _.bindAll(this, "_restoreSessionSearch", "_route");
-
-        this.route(/^(.*?)([\?]{1}.*)?$/, this._route);
-        this.route(/^(assets\/)?$/, this._restoreSessionSearch);
-
-        // backbone-query-parameters supports clever decoding of values into arrays, but we don't want this.
-        delete Backbone.Router.arrayValueSplit;
-    },
-
-    /**
-     * Overwrite Marionette.AppRouter, now it fires an event each time the URL changes
-     */
-    navigate: function () {
-        this.searchPageModule.removeOpenTipsies();
-        this.trigger("navigate");
-        Marionette.AppRouter.prototype.navigate.apply(this, arguments);
-    },
-
-    /**
-     * Navigate to a new state.
-     *
-     * @param {UrlSerializer.state} state
-     */
-    pushState: function (state) {
-        this._setStatePermalink(state);
-        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false });
-    },
-
-    replaceState: function (state) {
-        this._setStatePermalink(state);
-        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false, replace: true });
-    },
-
-    _restoreSessionSearch: function () {
-        var sessionSearch = this.initialSessionSearchState,
-            url = UrlSerializer.getURLFromState(sessionSearch || this.searchPageModule.getState());
-
-        this.navigate(url, { replace: true, trigger: true });
-    },
-
-    /**
-     * The "catch-all" route that distinguishes search and issue fragments.
-     *
-     * @param {string} path The path component of the URL (relative to the root)
-     * @param {object} query The decoded querystring params
-     * @private
-     */
-    _route: function (path, query) {
-        // Re-encode back to a full fragment, since we do our own parsing in JIRA.Issues.URLSerializer
-        var fragment = this.toFragment(path, query);
-
-        if (JIRA.Issues.ignorePopState) {
-            // Workaround for Chrome bug firing a null popstate event on page load.
-            // Backbone should fix this!
-            // @see http://code.google.com/p/chromium/issues/detail?id=63040
-            // @see also JRADEV-14804
-            return;
-        }
-
-        // Remove ignored parameters (e.g. focusedCommentId).
-        var state = UrlSerializer.getStateFromURL(fragment);
-
-        if (!this._navigateToLoginIfNeeded(state)) {
-            this._navigateUsingState(state);
-        }
-    },
-
-    _navigateToLoginIfNeeded: function (state, history) {
-        if (!this.usePushState(history) && state.selectedAssetKey && !JIRA.Issues.LoginUtils.isLoggedIn()) {
-            var instance = this;
-
-            var requestParams = {};
-            if (state.filter != null) {
-                requestParams.filterId = state.filter;
-            }
-
-            jQuery.ajax({
-                url: AJS.contextPath() + "/rest/issueNav/1/issueNav/anonymousAccess/" + state.selectedAssetKey,
-                headers: { 'X-SITEMESH-OFF': true },
-                data: requestParams,
-                success: function () {
-                    instance._navigateUsingState(state);
-                },
-                error: function (xhr) {
-                    if (xhr.status === 401) {
-                        instance._redirectToLogin(state);
-                    } else {
-                        instance._navigateUsingState(state);
-                    }
-                }
-            });
-
-            return true;
-        }
-
-        return false;
-    },
-
-    _navigateUsingState: function (state) {
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
-            this._setStatePermalink(state);
-            this.navigate(UrlSerializer.getURLFromState(state), { replace: true, trigger: false });
-            this.searchPageModule.updateFromRouter(state);
-        }
-    },
-
-    _redirectToLogin: function (state) {
-        var url = AJS.contextPath() + "/login.jsp?permissionViolation=true&os_destination=" +
-            encodeURIComponent(UrlSerializer.getURLFromState(state));
-
-        window.location.replace(url);
-    },
-
-    /**
-     * Set the permalink for a given state into AJS.Meta to be rendered by the share plugin
-     */
-    _setStatePermalink: function (state) {
-        var viewIssueState = _.pick(state, "selectedIssueKey");
-        var baseUrl = AJS.Meta.get("jira-base-url");
-        if (!_.isEmpty(viewIssueState)) {
-            AJS.Meta.set("viewissue-permlink",
-                baseUrl + "/" + UrlSerializer.getURLFromState(viewIssueState)
-            );
-        }
-        var issueNavState = _.omit(state, "selectedIssueKey");
-        if (!_.isEmpty(issueNavState)) {
-            AJS.Meta.set("issuenav-permlink",
-                baseUrl + "/" + UrlSerializer.getURLFromState(issueNavState)
-            );
-        }
+var AssetNavRouter = Marionette.AppRouter.extend({
+    appRoutes: {
+        "quote/:id/:name/builder": "builder"
     }
 });
 
-module.exports = AssetRouter;
+///**
+// * A mostly-custom router for handling routes that are used within the 
+// * asset table module.
+// */
+//var AssetRouter = Marionette.AppRouter.extend({
+//    initialize: function (options) {
+//        _.extend(this, options);
+//        _.bindAll(this, "_restoreSessionSearch", "_route");
+//
+//        this.route(/^(.*?)([\?]{1}.*)?$/, this._route);
+//        this.route(/^(assets\/)?$/, this._restoreSessionSearch);
+//
+//        // backbone-query-parameters supports clever decoding of values into arrays, but we don't want this.
+//        delete Backbone.Router.arrayValueSplit;
+//    },
+//
+//    /**
+//     * Overwrite Marionette.AppRouter, now it fires an event each time the URL changes
+//     */
+//    navigate: function () {
+//        this.searchPageModule.removeOpenTipsies();
+//        this.trigger("navigate");
+//        Marionette.AppRouter.prototype.navigate.apply(this, arguments);
+//    },
+//
+//    /**
+//     * Navigate to a new state.
+//     *
+//     * @param {UrlSerializer.state} state
+//     */
+//    pushState: function (state) {
+//        this._setStatePermalink(state);
+//        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false });
+//    },
+//
+//    replaceState: function (state) {
+//        this._setStatePermalink(state);
+//        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false, replace: true });
+//    },
+//
+//    _restoreSessionSearch: function () {
+//        var sessionSearch = this.initialSessionSearchState,
+//            url = UrlSerializer.getURLFromState(sessionSearch || this.searchPageModule.getState());
+//
+//        this.navigate(url, { replace: true, trigger: true });
+//    },
+//
+//    /**
+//     * The "catch-all" route that distinguishes search and issue fragments.
+//     *
+//     * @param {string} path The path component of the URL (relative to the root)
+//     * @param {object} query The decoded querystring params
+//     * @private
+//     */
+//    _route: function (path, query) {
+//        // Re-encode back to a full fragment, since we do our own parsing in JIRA.Issues.URLSerializer
+//        var fragment = this.toFragment(path, query);
+//
+//        if (JIRA.Issues.ignorePopState) {
+//            // Workaround for Chrome bug firing a null popstate event on page load.
+//            // Backbone should fix this!
+//            // @see http://code.google.com/p/chromium/issues/detail?id=63040
+//            // @see also JRADEV-14804
+//            return;
+//        }
+//
+//        // Remove ignored parameters (e.g. focusedCommentId).
+//        var state = UrlSerializer.getStateFromURL(fragment);
+//
+//        if (!this._navigateToLoginIfNeeded(state)) {
+//            this._navigateUsingState(state);
+//        }
+//    },
+//
+//    _navigateToLoginIfNeeded: function (state, history) {
+//        if (!this.usePushState(history) && state.selectedAssetKey && !JIRA.Issues.LoginUtils.isLoggedIn()) {
+//            var instance = this;
+//
+//            var requestParams = {};
+//            if (state.filter != null) {
+//                requestParams.filterId = state.filter;
+//            }
+//
+//            jQuery.ajax({
+//                url: AJS.contextPath() + "/rest/issueNav/1/issueNav/anonymousAccess/" + state.selectedAssetKey,
+//                headers: { 'X-SITEMESH-OFF': true },
+//                data: requestParams,
+//                success: function () {
+//                    instance._navigateUsingState(state);
+//                },
+//                error: function (xhr) {
+//                    if (xhr.status === 401) {
+//                        instance._redirectToLogin(state);
+//                    } else {
+//                        instance._navigateUsingState(state);
+//                    }
+//                }
+//            });
+//
+//            return true;
+//        }
+//
+//        return false;
+//    },
+//
+//    _navigateUsingState: function (state) {
+//        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+//            this._setStatePermalink(state);
+//            this.navigate(UrlSerializer.getURLFromState(state), { replace: true, trigger: false });
+//            this.searchPageModule.updateFromRouter(state);
+//        }
+//    },
+//
+//    _redirectToLogin: function (state) {
+//        var url = AJS.contextPath() + "/login.jsp?permissionViolation=true&os_destination=" +
+//            encodeURIComponent(UrlSerializer.getURLFromState(state));
+//
+//        window.location.replace(url);
+//    },
+//
+//    /**
+//     * Set the permalink for a given state into AJS.Meta to be rendered by the share plugin
+//     */
+//    _setStatePermalink: function (state) {
+//        var viewIssueState = _.pick(state, "selectedIssueKey");
+//        var baseUrl = AJS.Meta.get("jira-base-url");
+//        if (!_.isEmpty(viewIssueState)) {
+//            AJS.Meta.set("viewissue-permlink",
+//                baseUrl + "/" + UrlSerializer.getURLFromState(viewIssueState)
+//            );
+//        }
+//        var issueNavState = _.omit(state, "selectedIssueKey");
+//        if (!_.isEmpty(issueNavState)) {
+//            AJS.Meta.set("issuenav-permlink",
+//                baseUrl + "/" + UrlSerializer.getURLFromState(issueNavState)
+//            );
+//        }
+//    }
+//});
 
-},{"../../util/url-serializer":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js","./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\controller.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-query-parameters":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone-query-parameters\\backbone.queryparams.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-nav-creator.js":[function(require,module,exports){
+module.exports = AssetNavRouter;
+
+},{"../../util/url-serializer":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-query-parameters":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone-query-parameters\\backbone.queryparams.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-nav-creator.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
