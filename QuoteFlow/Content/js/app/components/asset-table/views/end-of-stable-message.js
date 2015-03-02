@@ -23,11 +23,11 @@ var EndOfStableMessage = Marionette.ItemView.extend({
     },
 
     getTemplate: function () {
-        return (this.shouldRender) ? JIRA.Templates.IssueNav.endOfStableMessage : jQuery.noop;
+        return (this.shouldRender) ? JST["quote-builder/results/end-of-stable-message"] : jQuery.noop;
     },
 
     onBeforeRender: function () {
-        this.shouldRender = this._hasMoreIssues() && this._onLastPage();
+        this.shouldRender = this._hasMoreAssets() && this._onLastPage();
     },
 
     onRender: function () {
@@ -38,7 +38,7 @@ var EndOfStableMessage = Marionette.ItemView.extend({
         }
     },
 
-    _hasMoreIssues: function () {
+    _hasMoreAssets: function () {
         return !!(this.options.total - this.options.displayableTotal);
     },
 

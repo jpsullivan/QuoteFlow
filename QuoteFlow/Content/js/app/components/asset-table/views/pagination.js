@@ -6,6 +6,8 @@ var AssetTableLayout = require('../views/asset-table-layout');
 var AssetTableView = require('../views/asset-table');
 var ResultsCountView = require('../views/results-count');
 
+var UrlSerializer = require('../../../util/url-serializer');
+
 /**
  * This view renders a set of pagination links
  *
@@ -20,7 +22,7 @@ var ResultsCountView = require('../views/results-count');
  * @param {number} options.total Number of assets in this search
  */
 var PaginationView = Marionette.ItemView.extend({
-    template: JIRA.Templates.IssueNavTable.pagination,
+    template: JST["quote-builder/pagination/pagination"],
 
     events: {
         /**
@@ -49,7 +51,7 @@ var PaginationView = Marionette.ItemView.extend({
      * @return {string} the URL.
      */
     _getPagingUri: function () {
-        return QuoteFlow.Utilities.URLSerializer.getURLFromState({
+        return UrlSerializer.getURLFromState({
             selectedIssueKey: null,
             jql: this.options.currentSearch.jql,
             filter: this.options.currentSearch.filterId

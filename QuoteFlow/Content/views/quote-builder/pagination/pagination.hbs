@@ -1,0 +1,12 @@
+﻿{{! Template to render the pagination links on issue nav page. }}
+<div class="pagination" data-displayable-total="{{displayableTotal}}">
+    <a href="#" data-start-index="{{prevStartIndex}}" class="icon icon-previous"
+       title="Go to page {{pageNumber}} of {{lastPage}}">
+        <span>&lt;&lt; Previous</span>
+    </a>
+
+    <a href="#" data-start-index="{{nextStartIndex}}" class="icon icon-next"
+       title="Go to page {{pageNumber}} of {{lastPage}}">
+        <span>Next &gt;&gt;</span>
+    </a>
+</div>

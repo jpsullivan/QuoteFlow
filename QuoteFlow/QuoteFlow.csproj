@@ -910,6 +910,13 @@
     <Content Include="Content\less\mixins\buttons.less" />
     <Content Include="Content\views\quote-builder\split-view\asset-details-no-selection.hbs" />
     <Content Include="Content\views\quote-builder\split-view\asset-list.hbs" />
+    <Content Include="Content\views\quote-builder\table\no-results.hbs" />
+    <Content Include="Content\views\quote-builder\table\top-results-count-bar.hbs" />
+    <Content Include="Content\views\quote-builder\table\structure.hbs" />
+    <Content Include="Content\views\quote-builder\results\end-of-stable-message.hbs" />
+    <Content Include="Content\views\quote-builder\pagination\pagination.hbs" />
+    <Content Include="Content\views\quote-builder\results\results-count.hbs" />
+    <Content Include="Content\views\quote-builder\results\refresh-results.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

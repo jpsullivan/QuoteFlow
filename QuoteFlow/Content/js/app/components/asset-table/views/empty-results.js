@@ -3,7 +3,7 @@
 var Marionette = require('backbone.marionette');
 
 /**
- * Renders a message that tells the user there are no issues, with an optional link to create an issue
+ * Renders a message that tells the user there are no assets, with an optional link to create an asset.
  *
  * @extends Marionette.ItemView
  *
@@ -11,7 +11,7 @@ var Marionette = require('backbone.marionette');
  * @param {boolean} options.quoteflowHasAssets Whether there are assets created in this QuoteFlow instance
  */
 var EmptyResultsView = Marionette.ItemView.extend({
-    template: JIRA.Templates.IssueNavTable.noResults,
+    template: JST["quote-builder/table/no-results"],
 
     serializeData: function () {
         var message;

@@ -11,7 +11,7 @@ var Marionette = require('backbone.marionette');
  * @param {number} options.pageSize Size of each page
  */
 var ResultsCountView = Marionette.ItemView.extend({
-    template: JIRA.Templates.IssueNav.resultsCount,
+    template: JST["quote-builder/results/results-count"],
 
     serializeData: function () {
         var total = this.options.total;

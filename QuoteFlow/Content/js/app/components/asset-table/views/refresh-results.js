@@ -9,7 +9,7 @@ var Marionette = require('backbone.marionette');
  */
 var RefreshResultsView = Marionette.ItemView.extend({
     tagName: 'span',
-    template: JIRA.Templates.IssueNav.refreshResults,
+    template: JST["quote-builder/results/refresh-results"],
     triggers: {
         /**
          * @event refresh
