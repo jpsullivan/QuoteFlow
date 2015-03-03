@@ -1,4 +1,5 @@
-﻿@using QuoteFlow.Html
+﻿@using Jil
+@using QuoteFlow.Html
 @using QuoteFlow.Infrastructure.Extensions
 @using StackExchange.Profiling
 @model QuoteFlow.Api.Models.ViewModels.Quotes.QuoteBuilderViewModel
@@ -50,7 +51,7 @@
                         <div class="navigator-group">
                             <div class="results-panel navigator-item">
                                 <div class="navigator-content"
-                                     data-issue-table-model-state=""
+                                     data-issue-table-model-state="@JSON.Serialize(Model.AssetTable, new Options(true))"
                                      data-session-search-state=""
                                      data-selected-issue="">
                                     @Html.Partial("Partials/Quote/Builder/SplitView")

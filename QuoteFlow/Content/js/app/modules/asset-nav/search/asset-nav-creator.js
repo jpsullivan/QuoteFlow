@@ -3,7 +3,11 @@
 var $ = require('jquery');
 var _ = require('underscore');
 
+var Marionette = require('backbone.marionette');
+
+var AssetCacheManager = require('./cache/asset-cache-manager');
 var AssetSearchManager = require('./asset-search-manager');
+var FullScreenAsset = require('./asset/full-screen-asset');
 var LayoutSwitcherView = require('./layout-switcher');
 var QueryComponent = require('../../../components/query.js');
 var SearchHeaderModule = require('./search-header-module');
@@ -20,7 +24,7 @@ var AssetNavCreator = {
             initialAssetTableState: options.initialAssetTableState
         });
         searchPageModule.registerViewContainers({
-            issueContainer: $(".asset-container"),
+            assetContainer: $(".asset-container"),
             searchContainer: $(".navigator-container")
         });
 
@@ -35,7 +39,7 @@ var AssetNavCreator = {
 //            systemFilters: searchPageModule.addOwnerToSystemFilters(options.systemFilters)
 //        });
 
-        var queryModule = QueryComponent.create({
+        var queryModule = QueryComponent().create({
             el: $el.find("form.navigator-search"),
             searchers: options.initialSearcherCollectionState,
             preferredSearchMode: "basic",
@@ -50,30 +54,28 @@ var AssetNavCreator = {
 //            }
 //        });
 
-        this.layoutSwitcherView = new LayoutSwitcherView({ searchPageModule: searchPageModule });
-        this.layoutSwitcherView.setElement($el.find("#layout-switcher-toggle")).render();
+//        this.layoutSwitcherView = new LayoutSwitcherView({ searchPageModule: searchPageModule });
+//        this.layoutSwitcherView.setElement($el.find("#layout-switcher-toggle")).render();
 
-        var issueModule = JIRA.Issues.Application.request("issueEditor");
-        JIRA.Issues.Application.on("issueEditor:render", function(regions) {
-            JIRA.Issues.Application.execute("pager:render", regions.pager);
+        var issueModule = QuoteFlow.application.request("issueEditor");
+        QuoteFlow.application.vent.on("issueEditor:render", function (regions) {
+            QuoteFlow.application.execute("pager:render", regions.pager);
         });
-        JIRA.Issues.Application.commands.setHandler("returnToSearch", function() {
-            JIRA.Issues.Application.execute("issueEditor:close");
+        QuoteFlow.application.commands.setHandler("returnToSearch", function () {
+            QuoteFlow.application.execute("issueEditor:close");
         });
 
         // Initialize event bubbling
-        JIRA.Issues.Application.on("issueEditor:saveSuccess", function (props) {
-            JIRA.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
+        QuoteFlow.application.vent.on("issueEditor:saveSuccess", function (props) {
+            QuoteFlow.application.vent.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
         });
-        JIRA.Issues.Application.on("issueEditor:saveError", function (props) {
+        QuoteFlow.application.vent.on("issueEditor:saveError", function (props) {
             if (!props.deferred) {
-                JIRA.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
+                QuoteFlow.application.vent.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
             }
         });
 
-        JIRA.Issues.FocusShifter.init();
-
-        var viewIssueData = issueModule.viewAssetData;
+        //FocusShifter.init();
 
         var issueSearchManager = new AssetSearchManager({
             initialAssetTableState: options.initialAssetTableState,
@@ -87,16 +89,20 @@ var AssetNavCreator = {
             initialSelectedAsset: options.initialSelectedAsset
         });
 
-        var issueCacheManager = new JIRA.Issues.Cache.IssueCacheManager({
-            searchResults: searchModule.getResults(),
-            viewAssetData: viewIssueData
+//        var viewIssueData = issueModule.viewAssetData;
+//        var issueCacheManager = new AssetCacheManager({
+//            searchResults: searchModule.getResults(),
+//            viewAssetData: viewIssueData
+//        });
+        var issueCacheManager = new AssetCacheManager({
+            searchResults: searchModule.getResults()
         });
 
-        // TODO TF-693 - FullScreenIssue will detach these elements, so get a reference now before they're not discoverable.
+        // TODO: FullScreenAsset will detach these elements, so get a reference now before they're not discoverable.
         var issueNavToolsElement = $el.find(".saved-search-selector");
-        // TODO TF-693 - Try to prevent FullScreenIssue from hacking and mutilating the DOM so much...
-        var fullScreenIssue = new JIRA.Issues.FullScreenIssue({
-            issueContainer: searchPageModule.issueContainer,
+        // TODO: Try to prevent FullScreenAsset from hacking and mutilating the DOM so much...
+        var fullScreenIssue = new FullScreenAsset({
+            assetContainer: searchPageModule.assetContainer,
             searchContainer: searchPageModule.searchContainer,
             assetCacheManager: issueCacheManager
         });
@@ -104,11 +110,11 @@ var AssetNavCreator = {
         // Register Modules
         searchPageModule.registerSearch(searchModule);
         searchPageModule.registerSearchHeaderModule(searchHeaderModule);
-        searchPageModule.registerFilterModule(filterModule);
+        //searchPageModule.registerFilterModule(filterModule);
         searchPageModule.registerQueryModule(queryModule);
 
-        searchPageModule.registerFullScreenIssue(fullScreenIssue);
-        searchPageModule.registerIssueSearchManager( issueSearchManager);
+        searchPageModule.registerFullScreenAsset(fullScreenIssue);
+        searchPageModule.registerIssueSearchManager(issueSearchManager);
         searchPageModule.registerIssueCacheManager(issueCacheManager);
         searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
 
@@ -117,7 +123,7 @@ var AssetNavCreator = {
 
         // Router
 
-        var issueNavRouter = this.issueNavRouter = new JIRA.Issues.IssueNavRouter({
+        var issueNavRouter = this.assetNavRouter = new JIRA.Issues.IssueNavRouter({
             searchPageModule: searchPageModule,
             initialSessionSearchState: options.initialSessionSearchState
         });
@@ -224,4 +230,4 @@ var AssetNavCreator = {
     }
 };
 
-module.exports = AssetNavigator
+module.exports = AssetNavCreator;

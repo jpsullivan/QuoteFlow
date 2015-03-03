@@ -27,6 +27,7 @@ var CatalogModule = require('./modules/catalog/module');
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)
 var QuoteFlow = {
+    application: {},
     Backbone: {},
     Catalog: {},
     Collection: {
@@ -56,7 +57,6 @@ var QuoteFlow = {
         Catalog: {},
         Common: {}
     },
-    Vent: _.extend({}, Backbone.Events),
     Views: {}
 };
 
@@ -151,14 +151,33 @@ var Application = Marionette.Application.extend({
     }
 });
 
-var qfApp = new Application({
+QuoteFlow.application = new Application({
     rootUrl: window.rootUrl,
     applicationPath: window.applicationPath,
     currentOrgId: window.currentOrganization,
     currentUser: window.currentUser
 });
 
-qfApp.on("start", function (options) {
+QuoteFlow.application.on("before:start", function (options) {
+    // add some mixins to underscore
+    _.mixin({
+        lambda: function(x) {
+            return function() { return x; };
+        },
+        isNotBlank: function(object) {
+            return !!object;
+        },
+        bindObjectTo: function(obj, context) {
+            _.map(obj, function(value, key) {
+                if (_.isFunction(value)) {
+                    obj[key] = _.bind(value, context);
+                }
+            });
+        }
+    });
+});
+
+QuoteFlow.application.on("start", function (options) {
     if (Backbone.history) {
         Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
     }
@@ -167,10 +186,10 @@ qfApp.on("start", function (options) {
     ApplicationHelpers.initialize();
 });
 
-qfApp.module("asset-table", AssetTableModule);
-qfApp.module("catalog", CatalogModule);
+QuoteFlow.application.module("asset-table", AssetTableModule);
+QuoteFlow.application.module("catalog", CatalogModule);
 
-module.exports = qfApp;
+module.exports = QuoteFlow.application;
 
 },{"./helpers/application_helpers":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\helpers\\application_helpers.js","./modules/asset-nav/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\module.js","./modules/catalog/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\module.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\router.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","jquery.browser":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery.browser\\dist\\jquery.browser.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js":[function(require,module,exports){
 "use strict";
@@ -899,7 +918,1078 @@ var AssetVarCollection = Backbone.Collection.extend({
 });
 
 module.exports = AssetVarCollection;
-},{"../models/asset_var":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\jqui-widget_sidebar.js":[function(require,module,exports){
+},{"../models/asset_var":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\models\\asset_var.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-config-model.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+var Brace = require('backbone-brace');
+
+/**
+ * 
+ */
+var ColumnConfigModel = Brace.Model.extend({
+    namedAttributes: [
+        "name",
+        "columns",
+        "autoUpdate",
+        "savedColumns",
+        "description",
+        "previousColumns",
+        "actionBarText",
+        "isActive"
+    ],
+
+    namedEvents: [
+        "columnsSync"
+    ],
+
+    defaults: {
+        actionBarText: AJS.I18n.getText("issue.columns.restore.defaults"),
+        isActive: false
+    },
+
+    idAttribute: "name",
+
+    initialize: function (attributes, options) {
+        _.extend(this, options);
+    },
+
+    /**
+     * Get the defaults columns, parsing the response from defaultColumns().
+     * The promise can be resolved with the list of columns (Array.string) or
+     * rejected with a null value
+     * 
+     * @returns {jQuery.Promise}
+     */
+    getDefaultColumns: function () {
+        var deferred = jQuery.Deferred();
+
+        this.defaultColumns().done(_.bind(function (response) {
+            var parsedResponse = this.parse(response);
+            if (parsedResponse && parsedResponse.columns) {
+                deferred.resolve(parsedResponse.columns);
+            } else {
+                deferred.reject(null);
+            }
+        }, this));
+
+        return deferred.promise();
+    },
+
+    /**
+     * Parses the REST response to extract our model values.
+     *
+     * @param {Object} response REST response
+     */
+    parse: function (response) {
+        if (!response) {
+            return {};
+        }
+
+        return {
+            columns: _.compact(_.pluck(response, "value"))
+        };
+    },
+
+    /**
+     * Checks if the column config is disabled.
+     *
+     * For example, "filter" column config is disabled if there is no active filter.
+     *
+     * By default, this method returns false (i.e. all column config are enabled). It can be
+     * overridden when creating this model
+     *
+     * @returns {boolean}
+     */
+    isDisabled: function () {
+        return false;
+    },
+
+    /**
+     * Checks if the column config edition is disabled.
+     *
+     * For example, "filter" column config edition is disabled if the user does not own the filter.
+     *
+     * By default, this method returns false (i.e. all column config edit are enabled). It can be
+     * overridden when creating this model
+     *
+     * @returns {boolean}
+     */
+    isEditDisabled: function () {
+        return false;
+    },
+
+    /**
+     * Returns a promise that will resolve with a list of defaults columns.
+     *
+     * This method will be used if the columnConfig contains no columns. By default,
+     * the returned promise resolves immediately to an empty array.
+     *
+     * This method can be overridden when constructing this model
+     *
+     * @returns {jQuery.Promise}
+     */
+    defaultColumns: function () {
+        var deferred = jQuery.Deferred();
+        deferred.resolve([]);
+        return deferred.promise();
+    },
+
+    /**
+     * Sorts a list of columns preserving the original order, using the following pattern:
+     *    - Columns already present will keep their order
+     *    - New columns will be append at the end
+     *
+     * Example:
+     *    - Current columns ["a", "b", "c"]
+     *    - New columns ["c", "d", "a"]
+     *
+     *    - Result ["a", "c", "d"]
+     *
+     * @param {Array.string} currentColumns Columns already present in the model
+     * @param {Array.string} newColumns New columns to sort
+     * @returns {Array.string} Sorted columns
+     * @private
+     */
+    _sortColumnsUsingOriginalOrder: function (currentColumns, newColumns) {
+        return _.intersection(currentColumns, newColumns).concat(_.difference(newColumns, currentColumns));
+    },
+
+    /**
+     * Sets an unsorted list of columns in the model.
+     *
+     * This method will store the new list of columns, preserving the order of the previous column list.
+     *
+     * @param {Array.<string>} columns Columns to update the model with
+     */
+    setUnsortedColumns: function (columns) {
+        columns = this._sortColumnsUsingOriginalOrder(this.getColumns(), columns);
+        //TODO Check if this can be moved to backbone's previous() functionality
+        this.setPreviousColumns(this.getColumns(), { silent: true });
+        this.setColumns(columns);
+    },
+
+    /**
+     * Creates a JSON representation for this model.
+     *
+     * This method will be used by Backbone when saving a model. We don't want to save the entire model, just
+     * the columns, so the output only contains that attribute.
+     *
+     * @returns {{columns: Array.<string>}}
+     */
+    toJSON: function () {
+        return {
+            columns: this.getColumns()
+        };
+    },
+
+    revertUnsavedColumns: function (opts) {
+        if (this.getSavedColumns() !== this.getColumns()) {
+            this.setColumns(this.getSavedColumns(), opts);
+        }
+    },
+
+    loadDefaultColumns: function () {
+        this.getDefaultColumns().done(_.bind(function (columns) {
+            this.setColumns(columns);
+        }, this));
+    },
+
+    shouldRefreshSearchOnActivation: function () {
+        return true;
+    },
+
+    shouldCloseOnActivation: function () {
+        return true;
+    },
+
+    shouldLoadDefaultsOnActivation: function () {
+        return false;
+    },
+
+    shouldRevertOnHide: function () {
+        return true;
+    }
+});
+
+ColumnConfigModel.create = function (name, description, overriddenMethods, autoUpdate) {
+    return new ColumnConfigModel({
+        autoUpdate: autoUpdate,
+        name: name,
+        description: description
+    }, overriddenMethods);
+};
+
+module.exports = ColumnConfigModel;
+},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker-model.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+var Brace = require('backbone-brace');
+
+/**
+ * 
+ */
+var ColumnPickerModel = Brace.Model.extend({
+    namedAttributes: [
+        /** The source of the column configuration, e.g. "user", "filter", "explicit" */
+        "columnConfig",
+        "savedColumnConfig",
+        "search",
+        "availableColumns",
+        "autoUpdate"
+    ],
+
+    namedEvents: [
+        "columnsSync",
+        "changeColumnConfigDisabled",
+        "destroyColumnConfig"
+    ],
+
+    allColumnsUrl: '/rest/gadget/1.0/availableColumns',
+
+
+    shouldRefreshSearchOnActivation: function () {
+        return this.getCurrentColumnConfig().shouldRefreshSearchOnActivation();
+    },
+
+    shouldCloseOnActivation: function () {
+        return this.getCurrentColumnConfig().shouldCloseOnActivation();
+    },
+
+    shouldLoadDefaultsOnActivation: function () {
+        return this.getCurrentColumnConfig().shouldLoadDefaultsOnActivation();
+    },
+
+    shouldRevertOnHide: function () {
+        return this.getCurrentColumnConfig().shouldRevertOnHide();
+    },
+
+    loadDefaultColumns: function () {
+        this.getCurrentColumnConfig().loadDefaultColumns();
+    },
+
+    initialize: function () {
+        this.columnsData = {};
+    },
+
+    refreshSearchWithColumns: function (columnConfigModel) {
+        columnConfigModel = columnConfigModel || this.getCurrentColumnConfig();
+        this.triggerColumnsSync(columnConfigModel.getName(), columnConfigModel.getColumns());
+    },
+
+    fetchAvailableColumnsIfNeeded: function () {
+        if (!this.has("availableColumns")) {
+            jQuery.ajax(this.allColumnsUrl).done(_.bind(function (response) {
+                this.setAvailableColumns(response.availableColumns);
+            }, this));
+        }
+    },
+
+    getCurrentColumnConfig: function (name) {
+        if (!name) {
+            name = this.getColumnConfig();
+        }
+        return this.columnsData[name];
+    },
+
+    revertColumnConfig: function () {
+        if (this.shouldRevertOnHide() && this.getSavedColumnConfig() != this.getColumnConfig()) {
+            //HACK
+            //BackboneJS does not update the 'previousAttributes' if the change is silent. That means
+            //the next time we change columnConfig (non-silent change), we will get the wrong value.
+            this._previousAttributes["columnConfig"] = this.getSavedColumnConfig();
+            this.setColumnConfig(this.getSavedColumnConfig(), { silent: true });
+        }
+    },
+
+    setCurrentColumnConfig: function (columnConfig) {
+        this.setColumnConfig(columnConfig);
+        this.setSavedColumnConfig(columnConfig);
+    },
+
+    syncColumns: function (newColumnConfigName, columns) {
+        _.each(this.columnsData, function (columnConfigModel) {
+            if (columnConfigModel.getName() == newColumnConfigName) {
+                columnConfigModel.setColumns(columns);
+                columnConfigModel.setSavedColumns(columns);
+            }
+        });
+    },
+
+    /**
+     * Save a list of columns in the current ColumnConfig.
+     * 
+     * This method will save the list of columns in the provided order. In other words,
+     * the previous order is deleted.
+     * 
+     * @param {Array.string} cols Columns to save
+     */
+    saveColumns: function (cols) {
+        this.getCurrentColumnConfig().setColumns(cols);
+        this.getCurrentColumnConfig().save();
+        this.getCurrentColumnConfig().triggerColumnsSync();
+    },
+
+
+    addColumnProvider: function (id, provider) {
+        this.columnsData[id] = provider;
+
+        provider.on("columnsSync sync destroy", _.bind(function () {
+            this.refreshSearchWithColumns(provider);
+        }, this));
+
+        provider.on("change:isDisabled", _.bind(function (model, isDisabled) {
+            this.triggerChangeColumnConfigDisabled(model, isDisabled);
+        }, this));
+
+        provider.on("destroy", _.bind(function (model) {
+            this.triggerDestroyColumnConfig(model);
+        }, this));
+    }
+});
+
+module.exports = ColumnPickerModel;
+},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker-sparkler-view.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+var Brace = require('backbone-brace');
+
+/**
+ * This object wraps a Sparkler. It is used by the ColumnPicker to render sparklers for select columns
+ * (it will render one sparkler per column layout).
+ *
+ * @constructs
+ * @param {Object} config Configuration object for this object
+ * @param {jQuery} config.el Element where the sparkler should be rendered
+ * @param {ColumnConfigModel} config.model Model used for this view
+ * @param {number} [config.maxResults=25] Max number of items to display
+ */
+var ColumnPickerSparklerView = Brace.View.extend({
+    initialize: function (config) {
+        //Don't use || to get the default value, it will fail with 0
+        this._maxResults = (typeof config.maxResults == "number") ? config.maxResults : this.MAX_DISPLAYED_ITEMS;
+        this._autoUpdate = !!config.autoUpdate;
+        this.$el.scrollLock('.aui-list-scroll');
+        if (!this._autoUpdate) {
+            this.model.on("change:columns", _.bind(this._setSelectedColumns, this));
+        }
+    },
+
+    /**
+     * Default for max displayed columns
+     * @type {Number}
+     * @default
+     * @private
+     * @constant
+     */
+    MAX_DISPLAYED_ITEMS: 25,
+
+    /**
+     * Stores the actual AJS.CheckboxMultiSelect object that represents the sparkler
+     * @type {AJS.CheckboxMultiSelect}
+     * @private
+     */
+    _sparkler: null,
+
+    activate: function () {
+        this.model.setIsActive(true);
+    },
+
+    deactivate: function () {
+        this.model.setIsActive(false);
+    },
+
+    /**
+     * Hides the sparkler
+     */
+    hide: function () {
+        this.model.revertUnsavedColumns({ silent: true });
+
+        this.$el.addClass("hidden");
+
+        //Clear the sparkler search field
+        var input = this.$el.find("input[id *= column-sparkler-input]");
+        input.val('');
+    },
+
+    /**
+     * Shows the sparkler
+     */
+    show: function () {
+        this.$el.removeClass("hidden");
+
+        //Set the selected columns
+        this._setSelectedColumns();
+
+        //Focus the sparkler input
+        var input = this.$el.find("input[id *= column-sparkler-input]");
+        if (!input.is(":disabled")) {
+            input.focus();
+        }
+    },
+
+    addMessage: function (message) {
+        if (this.$el.find(".aui-message." + message.type).length === 0) {
+            AJS.messages[message.type](this.$el, {
+                body: message.content,
+                closeable: false,
+                insert: "prepend",
+                id: message.id
+            });
+        }
+    },
+
+    /**
+     * Disables the sparkler whenever the edit is disabled in the model
+     *
+     * @private
+     */
+    _disableEditIfNeeded: function () {
+        if (this.model.isEditDisabled()) {
+            this._disableEdit();
+        } else {
+            this._enableEdit();
+        }
+    },
+
+    /**
+     * Shows the EditDisabled message
+     *
+     * @private
+     */
+    _showEditDisabledMessage: function () {
+        this.addMessage({
+            content: AJS.I18n.getText("issues.components.column.config.filter.disabled"),
+            type: "warning",
+            id: this.model.getName() + '-edit-disabled-message'
+        });
+    },
+
+    /**
+     * Destroys the EditDisabled message
+     *
+     * @private
+     */
+    _hideEditDisabledMessage: function () {
+        this.$el.find("#" + this.model.getName() + '-edit-disabled-message').remove();
+    },
+
+    /**
+     * Disables the sparkler interactions.
+     *
+     * This method is used when the user does not have permission to change the columns.
+     *
+     * @private
+     */
+    _disableEdit: function () {
+        //Disable the search input
+        this._sparkler.disable();
+
+        //Disable the checkboxes
+        this.$el.find("input[type='checkbox']").attr("disabled", "disabled");  //Disable checkboxes
+        this.$el.find(".check-list-item").addClass("disabled");                //Disable labels
+        this.$el.find(".no-suggestions").addClass("disabled");                 //Disable "more" message
+
+        //Disable the action bar
+        this.$el.find(".restore-defaults").attr("aria-disabled", "true");
+
+        //Show reason to user
+        this._showEditDisabledMessage();
+    },
+
+    /**
+     * Enables the sparkler interactions.
+     *
+     * This method is used when the user have permission to change the columns.
+     *
+     * @private
+     */
+    _enableEdit: function () {
+        //Enable the search input
+        this._sparkler.enable();
+
+        //Enable the checkboxes
+        this.$el.find("input[type='checkbox']").removeAttr("disabled");  //Enable checkboxes
+        this.$el.find(".check-list-item").removeClass("disabled");       //Enable labels
+        this.$el.find(".no-suggestions").removeClass("disabled");        //Enable "more" message
+
+        //Enable the action bar
+        this.$el.find(".restore-defaults").removeAttr("aria-disabled");
+
+        //Remove editDisabled message
+        this._hideEditDisabledMessage();
+    },
+
+    /**
+     * Creates the internal sparkler
+     *
+     * @param {Array.<{label: string, value: string}>} items Items to include in the sparkler
+     */
+    createSparklerControl: function (items) {
+        //Make sure we destroy the actual sparkler. 
+        //This should not happen unless some event is being fired twice
+        if (this._sparkler) {
+            this._sparkler.remove();
+        }
+
+        var selectElement = this._buildQueryableSelect(items);
+        this.$el.append(selectElement);
+
+        //Create the sparkler control
+        this._sparkler = new AJS.CheckboxMultiSelect({
+            element: selectElement,
+            maxInlineResultsDisplayed: this._maxResults,
+            //suggestionsHandler: JIRA.Issues.ColumnPickerSuggestHandler,
+            actionBar: this.model.getActionBarText()
+        });
+
+        //Set the selected columns
+        this._setSelectedColumns();
+
+        if (this._autoUpdate) {
+            selectElement.bind("selected", _.bind(this.saveColumns, this));
+            selectElement.bind("unselect", _.bind(this.saveColumns, this));
+        }
+
+        this._sparkler.$field.focus();
+
+        // Intercept column reset and use our own method
+        this.$el.on("actionclick", _.bind(function (ev) {
+            ev.preventDefault();
+            this.model.unset("columns");
+            this.model.destroy();
+        }, this));
+
+        this.model.on("change:editDisabled", _.bind(this._disableEditIfNeeded, this));
+    },
+
+    /**
+     * Saves the sparkler's columns in our model and persists them
+     */
+    saveColumns: function () {
+        this.model.setUnsortedColumns(this._sparkler.model.getSelectedValues());
+        this.model.save(null, { wait: false });
+    },
+
+    /**
+     * Sets the selected items in the sparkler
+     * @private
+     */
+    _setSelectedColumns: function () {
+        var selectedColumns = this.model.getColumns();
+        var sparkler = this._sparkler;
+
+        //If the sparkler has already been built, and we hae selectedColumns...
+        if (sparkler && selectedColumns && selectedColumns.length) {
+            _.each(sparkler.model.getDisplayableUnSelectedDescriptors(), function (descriptor) {
+                if (_.contains(selectedColumns, descriptor.value())) {
+                    sparkler.selectItem(descriptor);
+                }
+            });
+            _.each(sparkler.model.getDisplayableSelectedDescriptors(), function (descriptor) {
+                if (!_.contains(selectedColumns, descriptor.value())) {
+                    sparkler.unselectItem(descriptor);
+                }
+            });
+
+            sparkler.render();
+            this._disableEditIfNeeded();
+        }
+    },
+
+    /**
+     * Builds the queryableSelect with all the available items
+     *
+     * @param {Array.<{label: string, value: string}>} columns Columns to include in the sparkler
+     * @returns {jQuery} A select element containing all the options
+     * @private
+     */
+    _buildQueryableSelect: function (columns) {
+        var instance = this;
+        var availableItems = _.map(columns, function (column) {
+            return new AJS.ItemDescriptor(_.extend(column, {
+                title: column.label
+            }));
+        });
+
+        return jQuery(AJS.Templates.queryableSelect({
+            id: instance.model.getName() + "-column-sparkler",
+            descriptors: [
+                new AJS.GroupDescriptor({
+                    items: availableItems
+                })
+            ]
+        }));
+    }
+});
+
+module.exports = ColumnPickerSparklerView;
+},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker-view.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+var Brace = require('backbone-brace');
+
+var ColumnPickerModel = require('./column-picker-model');
+var ColumnPickerSparklerView = require('./column-picker-sparkler-view');
+
+/**
+ * This view contains the column picker trigger, the dialog and one subview ({@link ColumnPickerSparklerView})
+ * per each column config. Its job is to open/close the dialog, display buttons to select the column config, and
+ * display the corresponding subview based on those buttons.  It also handles the 'Save' and 'Cancel' buttons at
+ * the bottom of the dialog.
+ *
+ * The model of this view is {@link JIRA.Issues.columnPickerModel}
+ *
+ * @constructs
+ * @extends Brace.View
+ * @param {Object} options
+ * @param {ColumnPickerModel} options.columnPickerModel Model to use in this view
+ */
+var ColumnPickerView = Brace.View.extend({
+    initialize: function (options) {
+        _.extend(this, options);
+        _.bindAll(this,
+            "_generateInlineDialogContent",
+            "_onDOMCloseDialogClick",
+            "_onDOMConfigChooserClick",
+            "_onDOMDialogHide",
+            "_onDOMFormSubmit",
+            "_onDOMTriggerClick",
+            "_onModelChangeAvailableColumns",
+            "_onModelChangeColumnConfig",
+            "_onModelChangeColumnConfigDisabled",
+            "_onModelDestroyColumnConfig");
+
+        /**
+         * Stores all the subviews handled by this view, indexed by name
+         * @type {Object.<string, ColumnPickerSparklerView>}
+         */
+        this.subViews = {};
+    },
+
+    /**
+     * Stores the inline dialog used by this view. Populated by {@link JIRA.Issues.ColumnPickerView#render}
+     * @type {AJS.InlineDialog}
+     */
+    dialog: null,
+
+    /**
+     * Stores a reference to the active subview. Populated by {@link JIRA.Issues.ColumnPickerView#_activateNewSubView}
+     * @type {ColumnPickerSparklerView}
+     */
+    activeSubview: null,
+
+    /**
+     * Handles the click event on config chooser
+     *
+     * This method sets the columnConfig in our model and closes the dialog
+     *
+     * @param ev (jQuery.Event)
+     * @private
+     */
+    _onDOMConfigChooserClick: function (ev) {
+        var $target = jQuery(ev.target);
+
+        // If the button is disabled, do nothing
+        if ($target.attr("aria-disabled")) {
+            return;
+        }
+
+        this.columnPickerModel.setColumnConfig($target.data("value") || "user");
+    },
+
+    /**
+     * Activate a new subview. Each column config has a different logic, so all the decisions are delegated
+     * to the columnConfig models.
+     *
+     * @param {ColumnPickerSparklerView} subview View being activated
+     * @private
+     */
+    _activateNewSubView: function (subview) {
+        subview.activate();
+
+        if (this.columnPickerModel.shouldCloseOnActivation()) {
+            this.dialog.hide();
+        } else {
+            this.activeSubview = subview;
+            this.activeSubview.show();
+            this.adjustHeight();
+        }
+
+        if (this.columnPickerModel.shouldRefreshSearchOnActivation()) {
+            this.columnPickerModel.refreshSearchWithColumns();
+        }
+
+        if (this.columnPickerModel.shouldLoadDefaultsOnActivation()) {
+            this.columnPickerModel.loadDefaultColumns();
+        }
+    },
+
+    /**
+     * Handles the form submit event
+     *
+     * This method saves the columns in the active columnConfig and closes the dialog
+     *
+     * @param ev (jQuery.Event)
+     * @private
+     */
+    _onDOMFormSubmit: function (ev) {
+        // Stops the form submission
+        ev.preventDefault();
+
+        this.activeSubview.saveColumns();
+        this.dialog.hide();
+    },
+
+    /**
+     * Handles click event on the close dialog link
+     *
+     * This method hides the dialog
+     * @param ev (jQuery.Event)
+     * @private
+     */
+    _onDOMCloseDialogClick: function (ev) {
+        this.dialog.hide();
+    },
+
+    /**
+     * Handles the click on the dialog trigger
+     *
+     * @param ev (jQuery.Event)
+     * @private
+     */
+    _onDOMTriggerClick: function (ev) {
+        //Display the dialog
+        this.dialog.show();
+
+        // Display the active sparkler
+        this.activeSubview = this.subViews[this.columnPickerModel.getCurrentColumnConfig().getName()];
+        this.activeSubview.show();
+        this._activateConfigChooserButton(this.columnPickerModel.getCurrentColumnConfig().getName());
+
+        // Send request to get the available columns
+        this.columnPickerModel.fetchAvailableColumnsIfNeeded();
+    },
+
+    _activateConfigChooserButton: function (newButtonName) {
+        this.dialog.find(".config-chooser.active").removeClass("active");
+        this.dialog.find("#columns-chooser-" + newButtonName).addClass("active");
+    },
+
+    /**
+     * Handles the close event on the InlineDialog
+     *
+     * @param ev (jQuery.Event)
+     * @private
+     */
+    _onDOMDialogHide: function (ev) {
+        this.columnPickerModel.revertColumnConfig();
+        this.activeSubview.hide();
+    },
+
+    /**
+     * Handler for change:columnConfig
+     *
+     * @param {JIRA.Issues.columnPickerModel} columnPickerModel Model that has changed
+     * @param {string} columnConfig New value for columnConfig
+     * @private
+     */
+    _onModelChangeColumnConfig: function (columnPickerModel, columnConfig) {
+        var newSubView = this.subViews[columnConfig];
+        this._activateConfigChooserButton(newSubView.model.getName());
+
+        var oldSubView = this.subViews[columnPickerModel.previous("columnConfig")];
+        if (oldSubView != newSubView) {
+            oldSubView.hide();
+            oldSubView.deactivate();
+            this._activateNewSubView(newSubView);
+        }
+    },
+
+    /**
+     * Handler for change:availableColumns
+     *
+     * @param {JIRA.Issues.columnPickerModel} columnPickerModel Model that has changed
+     * @param {Array.<{label: string, value: string}>} availableColumns New value for availableColumns
+     * @private
+     */
+    _onModelChangeAvailableColumns: function (columnPickerModel, availableColumns) {
+        _.each(this.subViews, function (columnPickerView) {
+            columnPickerView.createSparklerControl(availableColumns);
+        });
+    },
+
+    /**
+     * Handler for destroy
+     * @private
+     */
+    _onModelDestroyColumnConfig: function () {
+        this.dialog.hide();
+    },
+
+    /**
+     * Handler for change:isDisabled
+     *
+     * @param {ColumnConfigModel} model Model that has changed
+     * @param {boolean} isDisabled New value for isDisabled
+     * @private
+     */
+    _onModelChangeColumnConfigDisabled: function (model, isDisabled) {
+        var button = this.dialog.find("#columns-chooser-" + model.getName());
+        if (isDisabled) {
+            button.attr("aria-disabled", true);
+        } else {
+            button.removeAttr("aria-disabled");
+        }
+    },
+
+    /**
+     * Renders the trigger and the dialog
+     */
+    render: function () {
+        if (!this.$trigger) {
+            this.$trigger = jQuery(JIRA.Templates.Dialogs.ColumnPicker.trigger());
+        }
+        this.$el.append(this.$trigger);
+        this.$trigger.click(this._onDOMTriggerClick);
+
+        this._renderInlineDialog();
+    },
+
+    /**
+     * Adjust the height of the dialog based on window height
+     *
+     * @returns {Boolean}
+     * @private
+     */
+    adjustHeight: function () {
+        if (AJS.InlineDialog.current && AJS.InlineDialog.current.id === "column-picker-dialog" && this.activeSubview) {
+            var scrollList = jQuery(this.activeSubview.el).find(".aui-list-scroll");
+            //Maximum available height = ((window height - trigger y position) - dialog bottom padding)
+            var maxDialogHeight = ((window.innerHeight - this.$trigger.offset().top) - 90);
+            //Delta = max available height - actual height
+            var heightDelta = maxDialogHeight - this.dialog.height();
+            //Desired scroll list height = actual height + Delta
+            //Height confined to: 80 pixel < Scroll list height < 270 pixel
+            var scrollListHeight = Math.max(Math.min(scrollList.height() + heightDelta, 270), 80);
+            scrollList.css("height", scrollListHeight);
+            return true;
+        }
+        return false;
+    },
+
+    /**
+     * Generates the dialog's content
+     *
+     * @param {jQuery} $content The div element that will contain the custom content
+     * @param {jQuery} $trigger The element of your dialog trigger
+     * @param {Function} done Callback to run when the content is ready to be displayed
+     * @private
+     */
+    _generateInlineDialogContent: function ($content, $trigger, done) {
+        if (!this.dialogContent) {
+            // Injects the template into the dialog
+            $content.html(JIRA.Templates.Dialogs.ColumnPicker.popup({
+                modifierKey: AJS.Navigator.modifierKey(),
+                isAutoUpdate: this.columnPickerModel.getAutoUpdate(),
+                columns: _.map(this.columnPickerModel.columnsData, _.bind(function (col) {
+                    return {
+                        name: col.getName(),
+                        description: col.getDescription(),
+                        selected: false,
+                        isDisabled: col.isDisabled(),
+                        isActive: this.columnPickerModel.getCurrentColumnConfig() == col
+                    };
+                }, this))
+            }));
+
+            // Bind DOM handlers
+            $content.find(".config-chooser").click(this._onDOMConfigChooserClick);
+            $content.find("form").submit(this._onDOMFormSubmit);
+            $content.find(".close-dialog").click(this._onDOMCloseDialogClick);
+
+            // Avoid dialog being closed on click
+            $content.click(function (e) {
+                e.stopPropagation();
+            });
+
+            // Create the sparklers
+            this._createSubViews($content);
+
+            this.dialogContent = $content.children();
+        } else {
+            $content.append(this.dialogContent);
+        }
+
+        done();
+    },
+
+    /**
+     * Renders the InlineDialog
+     *
+     * @private
+     */
+    _renderInlineDialog: function () {
+        // If the dialog has been already rendered, do nothing
+        if (this.dialog) {
+            return;
+        }
+
+        // Build the dialog
+        this.dialog = AJS.InlineDialog(
+            this.$trigger,
+            "column-picker-dialog",
+            this._generateInlineDialogContent,
+            {
+                offsetY: 15,
+                addActiveClass: true,
+                hideDelay: null,
+                noBind: true,
+                initCallback: _.bind(function () {
+                    //This is called when the inline dialog has finished rendering
+                    //Using a timeout to adjust the height because when this is called, the column picker
+                    //has not been completely rendered into the page yet
+                    var instance = this;
+                    var timeoutAdjust = function () {
+                        if (!instance.adjustHeight()) {
+                            //noinspection DynamicallyGeneratedCodeJS
+                            setTimeout(timeoutAdjust, 100);
+                        }
+                    };
+                    timeoutAdjust();
+                }, this),
+                hideCallback: this._onDOMDialogHide
+            }
+        );
+    },
+
+    /**
+     * Creates the sparklers subViews
+     *
+     * @param {jQuery} $content
+     * @private
+     */
+    _createSubViews: function ($content) {
+        _.each(this.columnPickerModel.columnsData, _.bind(function (columnConfigModel) {
+            this.subViews[columnConfigModel.getName()] = new ColumnPickerSparklerView({
+                el: $content.find("." + columnConfigModel.getName() + "-column-sparkler"),
+                model: columnConfigModel,
+                autoUpdate: this.columnPickerModel.getAutoUpdate()
+            });
+        }, this));
+
+        //Create sparkler controls if/when we have the available columns 
+        if (this.columnPickerModel.has("availableColumns")) {
+            this._onModelChangeAvailableColumns(this.columnPickerModel, this.columnPickerModel.getAvailableColumns());
+        }
+        this.columnPickerModel.on("change:availableColumns", this._onModelChangeAvailableColumns);
+
+        //Bind model events
+        this.columnPickerModel.on("change:columnConfig", this._onModelChangeColumnConfig);
+        this.columnPickerModel.onChangeColumnConfigDisabled(this._onModelChangeColumnConfigDisabled);
+        this.columnPickerModel.onDestroyColumnConfig(this._onModelDestroyColumnConfig);
+    }
+});
+
+module.exports = ColumnPickerView;
+},{"./column-picker-model":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker-model.js","./column-picker-sparkler-view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker-sparkler-view.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+var Brace = require('backbone-brace');
+
+var ColumnConfigModel = require('./column-config-model');
+var ColumnPickerModel = require('./column-picker-model');
+var ColumnPickerView = require('./column-picker-view');
+
+/**
+ * A module that controls the column picker model and the column picker view in a single interface.
+ */
+var ColumnPickerComponent = Brace.Model.extend({
+    initialize: function (attr, options) {
+        this.columnPickerModel = new ColumnPickerModel({ autoUpdate: options.autoUpdate });
+        this.columnPickerView = new ColumnPickerView({ columnPickerModel: this.columnPickerModel });
+
+        _.each(options.providers, _.bind(function (descriptor) {
+            if (descriptor instanceof ColumnConfigModel) {
+                this.columnPickerModel.addColumnProvider(descriptor.getName(), descriptor);
+            } else {
+                this.columnPickerModel.addColumnProvider(descriptor.id, this._createProviderModel(descriptor));
+                if (descriptor.columns) {
+                    this.columnPickerModel.syncColumns(descriptor.id, descriptor.columns);
+                }
+            }
+        }, this));
+
+        this.setCurrentColumnConfig(options.providers[0].id);
+        if (options.el) {
+            this.columnPickerView.setElement(options.el).render();
+        }
+    },
+
+    _createProviderModel: function (descriptor) {
+        return ColumnConfigModel.create(descriptor.id, descriptor.label,
+            _.omit(descriptor, "id", "label", "columns"));
+    },
+
+    getCurrentColumnConfig: function () {
+        return this.columnPickerModel.getCurrentColumnConfig();
+    },
+
+    setElement: function ($el) {
+        this.columnPickerView.setElement($el);
+        return this;
+    },
+    render: function () {
+        this.columnPickerView.render();
+        return this;
+    },
+    clearFilterConfiguration: function () {
+        this.columnPickerModel.clearFilterConfiguration();
+        return this;
+    },
+    adjustHeight: function () {
+        this.columnPickerView.adjustHeight();
+        return this;
+    },
+    setCurrentColumnConfig: function (name) {
+        this.columnPickerModel.setCurrentColumnConfig(name);
+        return this;
+    },
+    saveColumns: function (cols) {
+        this.columnPickerModel.saveColumns(cols);
+        return this;
+    },
+    syncColumns: function (name, columns) {
+        this.columnPickerModel.syncColumns(name, columns);
+        return this;
+    },
+    getColumnConfig: function () {
+        this.columnPickerModel.getColumnConfig();
+    },
+    onColumnsSync: function (func, ctx) {
+        this.columnPickerModel.onColumnsSync(func, ctx);
+        return this;
+    },
+    on: function (evt, func, ctx) {
+        this.columnPickerModel.on(evt, func, ctx);
+        return this;
+    },
+    off: function (evt, func) {
+        this.columnPickerModel.off(evt, func);
+        return this;
+    }
+});
+
+ColumnPickerComponent.create = function(options) {
+    return new ColumnPickerComponent(null, options);
+};
+
+module.exports = ColumnPickerComponent;
+},{"./column-config-model":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-config-model.js","./column-picker-model":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker-model.js","./column-picker-view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker-view.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\jqui-widget_sidebar.js":[function(require,module,exports){
 "use strict";
 
 var _ = require('underscore');
@@ -1154,7 +2244,155 @@ var Routes = {
 };
 
 module.exports = Routes;
-},{"./utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","string-extensions":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\extensions\\string_extensions.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js":[function(require,module,exports){
+},{"./utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","string-extensions":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\extensions\\string_extensions.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\table\\column-picker.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+
+var ColumnConfigModel = require('../column-picker/column-config-model');
+var ColumnPickerComponent = require('../column-picker/column-picker');
+
+/**
+ * A module that controls the column picker model and the column picker view in a single interface.
+ */
+var ColumnPicker = ColumnPickerComponent.extend({
+    initialize: function (attr, options) {
+        var providers = [this._getUserColumnProvider(), this._getFilterColumnProvider()];
+//        if (JIRA.isAdmin()) {
+//            providers.push(this._getSystemColumnProvider());
+//        }
+        ColumnPickerComponent.prototype.initialize.call(this, null, {
+            providers: providers
+        });
+        this.search = options.search;
+        this.search.on("change:filter", function () {
+            var filterModel = this.filterColumn;
+            var isEditDisabled = filterModel.isEditDisabled();
+            var isColumnConfigDisabled = filterModel.isDisabled();
+            filterModel.trigger("change:isDisabled", filterModel, isColumnConfigDisabled);
+            filterModel.trigger("change:editDisabled", filterModel, isColumnConfigDisabled || isEditDisabled);
+        }, this);
+    },
+
+    /**
+     * Is the system filter column config in play.
+     * @returns {boolean}
+     */
+    isSystemMode: function () {
+        return this.columnPickerModel.getColumnConfig() === "system";
+    },
+
+    sanitizeColumnConfig: function (columnConfig) {
+        columnConfig = columnConfig.toLowerCase();
+        var shouldOverrideSystem = columnConfig == "system" && !this.isSystemMode();
+        return shouldOverrideSystem ? "user" : columnConfig;
+    },
+
+    syncColumns: function (newColumnConfigName, columns) {
+        newColumnConfigName = this.sanitizeColumnConfig(newColumnConfigName);
+        return ColumnPickerComponent.prototype.syncColumns.call(this, newColumnConfigName, columns);
+    },
+
+    clearFilterConfiguration: function () {
+        this.filterColumn.unset('columns');
+        this.filterColumn.unset('savedColumns');
+    },
+
+    setCurrentColumnConfig: function (columnConfig) {
+        columnConfig = this.sanitizeColumnConfig(columnConfig);
+        return ColumnPickerComponent.prototype.setCurrentColumnConfig.call(this, columnConfig);
+    },
+
+    _getFilterColumnProvider: function () {
+        var instance = this;
+        return this.filterColumn = ColumnConfigModel.create(
+            "filter",
+            AJS.I18n.getText("issues.components.column.config.filter.columns"),
+            {
+                url: function () {
+                    return '/rest/api/2/filter/' + instance.search.getState().filter + '/columns';
+                },
+                isDisabled: function () {
+                    return !instance.search.getFilter() || instance.search.getFilter().getIsSystem();
+                },
+                isEditDisabled: function () {
+                    return !instance.search.filterModule.canEditColumns();
+                },
+                shouldRefreshSearchOnActivation: function () {
+                    //If the filter has configured columns, refresh the search on activation
+                    return this.has("savedColumns");
+                },
+                shouldCloseOnActivation: function () {
+                    //If the filter has configured columns, close the column picker on activation
+                    return this.has("savedColumns");
+                },
+                shouldLoadDefaultsOnActivation: function () {
+                    //If the filter has not  configured columns, load the default columns
+                    return !this.has("savedColumns");
+                },
+                defaultColumns: _.bind(function () {
+                    //If a filter doesn't have columns, then it will use the user columns by default
+                    //Need to retrieve the user columns and set that as the selected columns
+                    if (this.userColumns.has("columns")) {
+                        var deferred = jQuery.Deferred();
+                        deferred.resolve(_.map(this.userColumns.getColumns(), function (item) { return { value: item } }));
+                        return deferred.promise();
+                    } else {
+                        return jQuery.ajax(this.userColumns.url()).promise();
+                    }
+                }, this)
+            }
+        )
+    },
+
+    _getSystemColumnProvider: function () {
+        //Adding a toggle for 'system' columns if user is an admin
+
+        return ColumnConfigModel.create(
+            "system",
+            AJS.I18n.getText('issues.components.column.config.system.columns'),
+            {
+                url: _.lambda('/rest/api/2/settings/columns'),
+                defaultColumns: function () {
+                    //Load columns from our REST endpoint
+                    return jQuery.ajax(this.url()).promise();
+                },
+                shouldRefreshSearchOnActivation: function () {
+                    //Always refresh the search on activation
+                    return true;
+                },
+                shouldCloseOnActivation: function () {
+                    //Never close the column picker on activation
+                    return false;
+                },
+                shouldLoadDefaultsOnActivation: function () {
+                    //Always load the default columns
+                    return true;
+                },
+                shouldRevertOnHide: function () {
+                    return false;
+                }
+            }
+        );
+    },
+
+    _getUserColumnProvider: function () {
+        this.userColumns = ColumnConfigModel.create("user",
+            "issues.components.column.config.user.columns",
+            {
+                url: _.lambda('/rest/api/2/user/columns')
+            }
+        );
+        return this.userColumns;
+    }
+});
+
+ColumnPicker.create = function(options) {
+    return new ColumnPicker(null, options);
+};
+
+module.exports = ColumnPicker;
+},{"../column-picker/column-config-model":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-config-model.js","../column-picker/column-picker":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js":[function(require,module,exports){
 "use strict";
 
 var _ = require('underscore');
@@ -1913,6 +3151,7 @@ module.exports = AssetVarValue;
 "use strict";
 
 var $ = require('jquery');
+var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var AssetNavCreator = require('./search/asset-nav-creator');
@@ -1986,21 +3225,21 @@ var AssetNavController = Marionette.Controller.extend({
          * JSON. It also prevents us needing to ensure there are no XSS vulnerabilities in the JSON HTML string.
          */
         var initialIssueTableState = $navigatorContent.data("issue-table-model-state");
-        if (initialIssueTableState && !initialIssueTableState.table) {
+        if (initialIssueTableState && !initialIssueTableState.Table) {
             var wrapper = AJS.$("<div></div>").append($navigatorContent.children().clone());
-            initialIssueTableState.assetTable.table = wrapper.html();
+            initialIssueTableState.Table = wrapper.html();
         }
 
         var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
         var selectedIssue = $navigatorContent.data("selected-issue");
 
-        // jQuery.parseJSON gracefully returns null given an empty string.
-        // Would be even nicer if the json was placed in a data- attribute, which jQuery will automatically parse with .data().
-        var initialSearcherCollectionState = jQuery.parseJSON(jQuery("#criteriaJson").text());
+        var criteriaJson = jQuery("#criteriaJson").text();
+        var systemFiltersJson = jQuery("#systemFiltersJson").text();
+        var initialSearcherCollectionState = _.isEmpty(criteriaJson) ? null : JSON.parse(criteriaJson);
         var initialSessionSearchState = $navigatorContent.data("session-search-state");
-        var systemFilters = jQuery.parseJSON(jQuery("#systemFiltersJson").text());
+        var systemFilters = _.isEmpty(systemFiltersJson) ? null : JSON.parse(systemFiltersJson);
 
-        _.extend({}, {
+        var options = _.extend({}, {
             initialIssueTableState: initialIssueTableState,
             initialIssueIds: initialIssueIds,
             selectedIssue: selectedIssue,
@@ -2016,7 +3255,7 @@ var AssetNavController = Marionette.Controller.extend({
 module.exports = AssetNavController;
 
 
-},{"./search/asset-nav-creator":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-nav-creator.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\module.js":[function(require,module,exports){
+},{"./search/asset-nav-creator":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-nav-creator.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\module.js":[function(require,module,exports){
 "use strict";
 
 var _ = require('underscore');
@@ -2209,7 +3448,11 @@ module.exports = AssetNavRouter;
 var $ = require('jquery');
 var _ = require('underscore');
 
+var Marionette = require('backbone.marionette');
+
+var AssetCacheManager = require('./cache/asset-cache-manager');
 var AssetSearchManager = require('./asset-search-manager');
+var FullScreenAsset = require('./asset/full-screen-asset');
 var LayoutSwitcherView = require('./layout-switcher');
 var QueryComponent = require('../../../components/query.js');
 var SearchHeaderModule = require('./search-header-module');
@@ -2226,7 +3469,7 @@ var AssetNavCreator = {
             initialAssetTableState: options.initialAssetTableState
         });
         searchPageModule.registerViewContainers({
-            issueContainer: $(".asset-container"),
+            assetContainer: $(".asset-container"),
             searchContainer: $(".navigator-container")
         });
 
@@ -2241,7 +3484,7 @@ var AssetNavCreator = {
 //            systemFilters: searchPageModule.addOwnerToSystemFilters(options.systemFilters)
 //        });
 
-        var queryModule = QueryComponent.create({
+        var queryModule = QueryComponent().create({
             el: $el.find("form.navigator-search"),
             searchers: options.initialSearcherCollectionState,
             preferredSearchMode: "basic",
@@ -2256,30 +3499,28 @@ var AssetNavCreator = {
 //            }
 //        });
 
-        this.layoutSwitcherView = new LayoutSwitcherView({ searchPageModule: searchPageModule });
-        this.layoutSwitcherView.setElement($el.find("#layout-switcher-toggle")).render();
+//        this.layoutSwitcherView = new LayoutSwitcherView({ searchPageModule: searchPageModule });
+//        this.layoutSwitcherView.setElement($el.find("#layout-switcher-toggle")).render();
 
-        var issueModule = JIRA.Issues.Application.request("issueEditor");
-        JIRA.Issues.Application.on("issueEditor:render", function(regions) {
-            JIRA.Issues.Application.execute("pager:render", regions.pager);
+        var issueModule = QuoteFlow.application.request("issueEditor");
+        QuoteFlow.application.vent.on("issueEditor:render", function (regions) {
+            QuoteFlow.application.execute("pager:render", regions.pager);
         });
-        JIRA.Issues.Application.commands.setHandler("returnToSearch", function() {
-            JIRA.Issues.Application.execute("issueEditor:close");
+        QuoteFlow.application.commands.setHandler("returnToSearch", function () {
+            QuoteFlow.application.execute("issueEditor:close");
         });
 
         // Initialize event bubbling
-        JIRA.Issues.Application.on("issueEditor:saveSuccess", function (props) {
-            JIRA.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
+        QuoteFlow.application.vent.on("issueEditor:saveSuccess", function (props) {
+            QuoteFlow.application.vent.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
         });
-        JIRA.Issues.Application.on("issueEditor:saveError", function (props) {
+        QuoteFlow.application.vent.on("issueEditor:saveError", function (props) {
             if (!props.deferred) {
-                JIRA.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
+                QuoteFlow.application.vent.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
             }
         });
 
-        JIRA.Issues.FocusShifter.init();
-
-        var viewIssueData = issueModule.viewAssetData;
+        //FocusShifter.init();
 
         var issueSearchManager = new AssetSearchManager({
             initialAssetTableState: options.initialAssetTableState,
@@ -2293,16 +3534,20 @@ var AssetNavCreator = {
             initialSelectedAsset: options.initialSelectedAsset
         });
 
-        var issueCacheManager = new JIRA.Issues.Cache.IssueCacheManager({
-            searchResults: searchModule.getResults(),
-            viewAssetData: viewIssueData
+//        var viewIssueData = issueModule.viewAssetData;
+//        var issueCacheManager = new AssetCacheManager({
+//            searchResults: searchModule.getResults(),
+//            viewAssetData: viewIssueData
+//        });
+        var issueCacheManager = new AssetCacheManager({
+            searchResults: searchModule.getResults()
         });
 
-        // TODO TF-693 - FullScreenIssue will detach these elements, so get a reference now before they're not discoverable.
+        // TODO: FullScreenAsset will detach these elements, so get a reference now before they're not discoverable.
         var issueNavToolsElement = $el.find(".saved-search-selector");
-        // TODO TF-693 - Try to prevent FullScreenIssue from hacking and mutilating the DOM so much...
-        var fullScreenIssue = new JIRA.Issues.FullScreenIssue({
-            issueContainer: searchPageModule.issueContainer,
+        // TODO: Try to prevent FullScreenAsset from hacking and mutilating the DOM so much...
+        var fullScreenIssue = new FullScreenAsset({
+            assetContainer: searchPageModule.assetContainer,
             searchContainer: searchPageModule.searchContainer,
             assetCacheManager: issueCacheManager
         });
@@ -2310,11 +3555,11 @@ var AssetNavCreator = {
         // Register Modules
         searchPageModule.registerSearch(searchModule);
         searchPageModule.registerSearchHeaderModule(searchHeaderModule);
-        searchPageModule.registerFilterModule(filterModule);
+        //searchPageModule.registerFilterModule(filterModule);
         searchPageModule.registerQueryModule(queryModule);
 
-        searchPageModule.registerFullScreenIssue(fullScreenIssue);
-        searchPageModule.registerIssueSearchManager( issueSearchManager);
+        searchPageModule.registerFullScreenAsset(fullScreenIssue);
+        searchPageModule.registerIssueSearchManager(issueSearchManager);
         searchPageModule.registerIssueCacheManager(issueCacheManager);
         searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
 
@@ -2323,7 +3568,7 @@ var AssetNavCreator = {
 
         // Router
 
-        var issueNavRouter = this.issueNavRouter = new JIRA.Issues.IssueNavRouter({
+        var issueNavRouter = this.assetNavRouter = new JIRA.Issues.IssueNavRouter({
             searchPageModule: searchPageModule,
             initialSessionSearchState: options.initialSessionSearchState
         });
@@ -2430,10 +3675,11 @@ var AssetNavCreator = {
     }
 };
 
-module.exports = AssetNavigator
-},{"../../../components/query.js":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\query.js","./asset-search-manager":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-search-manager.js","./layout-switcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\layout-switcher.js","./search-header-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-header-module.js","./search-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-module.js","./search-page-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-page-module.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-search-manager.js":[function(require,module,exports){
+module.exports = AssetNavCreator;
+},{"../../../components/query.js":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\query.js","./asset-search-manager":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-search-manager.js","./asset/full-screen-asset":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\full-screen-asset.js","./cache/asset-cache-manager":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\cache\\asset-cache-manager.js","./layout-switcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\layout-switcher.js","./search-header-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-header-module.js","./search-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-module.js","./search-page-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-page-module.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-search-manager.js":[function(require,module,exports){
 "use strict";
 
+var _ = require('underscore');
 var Brace = require('backbone-brace');
 
 var AsyncData = require('../util/async-data');
@@ -2649,7 +3895,212 @@ var AssetSearchManager = Brace.Evented.extend({
 });
 
 module.exports = AssetSearchManager;
-},{"../util/async-data":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\util\\async-data.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\simple-asset.js":[function(require,module,exports){
+},{"../util/async-data":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\util\\async-data.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\full-screen-asset.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+
+var Marionette = require('backbone.marionette');
+
+/**
+ * 
+ */
+var FullScreenAsset = Marionette.ItemView.extend({
+    initialize: function (options) {
+        _.extend(this, options);
+        _.bindAll(this,
+            "onLoadComplete",
+            "showError");
+
+        if (this.assetContainer.hasClass("hidden")) {
+            this.assetContainer.detach();
+            this.assetContainer.removeClass("hidden");
+        }
+
+        if (this.searchContainer.hasClass("hidden")) {
+            this.searchContainer.detach();
+            this.searchContainer.removeClass("hidden");
+        }
+    },
+
+    bindSearchService: function (searchService) {
+        this.listenTo(searchService, {
+            "assetUpdated": function (assetId, entity, reason) {
+                if (reason.action !== "inlineEdit" && reason.action !== "rowUpdate") {
+                    return this.updateAsset(reason);
+                }
+            },
+            "selectedAssetChanged": function (selectedAsset) {
+                if (selectedAsset.hasAsset()) {
+                    QuoteFlow.application.execute("assetEditor:abortPending");
+                    //TODO Why do we need to debounce this?
+                    //JIRA.Issues.Utils.debounce(this, "_loadIssue", issue);
+                    this.show({
+                        id: selectedAsset.getId(),
+                        key: selectedAsset.getKey(),
+                        pager: searchService.getPager()
+                    });
+                    this.updatePager(searchService.getPager());
+                } else {
+                    if (this.isVisible()) {
+                        this.hide();
+//                        QuoteFlow.trace("quoteflow.returned.to.search");
+//                        QuoteFlow.trace("quoteflow.psycho.returned.to.search");
+                        QuoteFlow.application.execute("analytics:trigger", 'kickass.returntosearch');
+                    }
+                    //TODO Why the full $navigatorContent is marked as pending?
+                    //this.$navigatorContent.removeClass("pending");
+                }
+            }
+        });
+    },
+
+    onBeforeDestroy: function () {
+        this.stopListening();
+        if (this.active) {
+            if (this.stalker) {
+                this.stalker.unstalk();
+            }
+            QuoteFlow.application.off("assetEditor:loadComplete", this.onLoadComplete);
+            QuoteFlow.application.off("assetEditor:loadError", this.showError);
+            QuoteFlow.application.execute("assetEditor:abortPending");
+            this.active = false;
+        }
+    },
+
+    activate: function () {
+        if (!this.active) {
+            QuoteFlow.application.on("assetEditor:loadComplete", this.onLoadComplete);
+            QuoteFlow.application.on("assetEditor:loadError", this.showError);
+            this.active = true;
+        }
+    },
+
+    onLoadComplete: function (model, props) {
+        this.stalker = AJS.$(".js-stalker", this.assetContainer).stalker();
+        this._makeAssetVisible();
+        if (props.isNewAsset) {
+            this._scrollToTop();
+        }
+    },
+
+    _makeAssetVisible: function () {
+        QuoteFlow.application.execute("assetEditor:beforeShow");
+        this._setBodyClasses({
+            error: false,
+            asset: true,
+            search: true
+        });
+
+        if (!this.isVisible()) {
+            this.assetContainer.insertBefore(this.searchContainer);
+            this.searchContainer.detach();
+
+            //QuoteFlow.trace("jira.psycho.issue.refreshed", { id: JIRA.Issues.Application.request("issueEditor:getIssueId") });
+            QuoteFlow.application.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.assetContainer, JIRA.CONTENT_ADDED_REASON.pageLoad]);
+        }
+    },
+
+    /**
+     * Refresh the visible asset in response to an asset update.
+     *
+     * @param {object} assetUpdate An asset update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @return {jQuery.Deferred} A deferred that is resolved after the asset has been refreshed.
+     */
+    updateAsset: function (assetUpdate) {
+        var deferred;
+
+        var isVisibleAsset = assetUpdate.key === QuoteFlow.application.request("assetEditor:getAssetKey");
+
+        if (this.isVisible()) {
+            deferred = QuoteFlow.application.request("assetEditor:refreshAsset", assetUpdate);
+            deferred.done(function () {
+                if (!isVisibleAsset && assetUpdate.message) {
+                    JIRA.Issues.showNotification(assetUpdate.message, assetUpdate.key);
+                }
+            });
+        } else {
+            deferred = jQuery.Deferred().resolve().promise();
+        }
+
+        return deferred;
+    },
+
+    /**
+     * Show error message for loading asset.
+     */
+    showError: function () {
+        this._setBodyClasses({
+            error: true,
+            asset: false,
+            search: false
+        });
+    },
+
+    /**
+     * @return {boolean} whether an asset is visible.
+     */
+    isVisible: function () {
+        return this.assetContainer.closest("body").length > 0;
+    },
+
+    /**
+     * Scroll to the top of the window.
+     *
+     * @private
+     */
+    _scrollToTop: function () {
+        AJS.$(window).scrollTop(0);
+    },
+
+    _setBodyClasses: function (options) {
+        AJS.$("body")
+            .toggleClass("page-type-message", options.error)
+            .toggleClass("navigator-issue-only", options.asset)
+            .toggleClass("page-type-navigator", options.search);
+    },
+
+    hide: function () {
+        this._setBodyClasses({
+            error: false,
+            asset: false,
+            search: true
+        });
+
+        if (this.isVisible()) {
+            this.searchContainer.insertBefore(this.assetContainer);
+            this.assetContainer.detach();
+            this.trigger("assetHidden");
+        }
+    },
+
+    updatePager: function (pager) {
+        QuoteFlow.application.execute("pager:update", pager);
+    },
+
+    /**
+     * Load and show an asset.
+     *
+     * @param {object} asset The asset to show.
+     * @param {number} asset.id The asset's ID.
+     * @param {string} asset.key The asset's key.
+     * @return {jQuery.Deferred} A deferred that is resolved when the asset is visible.
+     */
+    show: function (asset) {
+        this.activate();
+        QuoteFlow.application.execute("assetEditor:setContainer", this.assetContainer);
+        return QuoteFlow.application.request("assetEditor:loadAsset", asset).always(_.bind(function () {
+            AJS.$(".js-stalker", this.assetContainer).stalker();
+
+            this.updatePager(asset.pager);
+            // now is a good time to pre-fetch anything that needs to be pre-fetched
+            this.assetCacheManager.prefetchAssets();
+        }, this));
+    }
+});
+
+module.exports = FullScreenAsset;
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\simple-asset.js":[function(require,module,exports){
 "use strict";
 
 var Brace = require('backbone-brace');
@@ -2669,6 +4120,95 @@ var SimpleAsset = Brace.Model.extend({
 });
 
 module.exports = SimpleAsset;
+},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\cache\\asset-cache-manager.js":[function(require,module,exports){
+"use strict";
+
+var Brace = require('backbone-brace');
+
+/**
+ * Updates a ViewAssetData asset cache in response to changes in a SearchResults instance.
+ * This includes removing deleted assets from the cache and pre-fetching assets that are
+ * likely to be requested.
+ */
+var AssetCacheManager = Brace.Evented.extend({
+    /**
+     * @param {object} options
+     * @param {SearchResults} options.searchResults The application's <tt>SearchResults</tt> instance.
+     * @param {ViewAssetData} options.viewAssetData The application's <tt>ViewAssetData</tt> instance.
+     */
+    initialize: function (options) {
+        this.searchResults = options.searchResults;
+        this.viewAssetData = options.viewAssetData;
+
+        this.searchResults.bind("assetDeleted", this._onAssetDeleted, this);
+        this.searchResults.bind("nextAssetSelected", this._onNextAssetSelected, this);
+        this.searchResults.bind("prevAssetSelected", this._onPrevAssetSelected, this);
+
+        this._prefetchCandidate = null;
+    },
+
+    /**
+     * Triggers pre-fetching of assets that this AssetCacheManager sees fit to pre-fetch. Calling this method is
+     * essentially a hint to the AssetCacheManager that now is a good time to fetch things from the server.
+     */
+    prefetchAssets: function () {
+        if (this._prefetchCandidate && this._prefetchCandidate.key) {
+            this._prefetchAsset(this._prefetchCandidate.key);
+            this._prefetchCandidate = null;
+        }
+    },
+
+    scheduleAssetToBePrefetched: function (issue) {
+        this._prefetchCandidate = issue;
+    },
+
+    /**
+     * Remove an asset from the cache in response to its deletion.
+     *
+     * @param {object} asset
+     * @param {number} asset.id The asset's ID.
+     * @param {string} asset.key The asset's key.
+     * @private
+     */
+    _onAssetDeleted: function (asset) {
+        this.viewAssetData.remove(asset.key);
+    },
+
+    /**
+     * Handles a SearchResults "nextAssetSelected" event.
+     *
+     * @param event the event
+     * @param event.selected the currently selected asset in the search results
+     * @param event.next the next asset in the search results
+     */
+    _onNextAssetSelected: function (event) {
+        // mark the asset just after the selected one as a candidate for pre-fetching
+        this._prefetchCandidate = event.nextNextAsset;
+    },
+
+    /**
+     * Handles a SearchResults "prevAssetSelected" event.
+     *
+     * @param event the event
+     * @param event.selected the currently selected asset in the search results
+     * @param event.next the next asset in the search results
+     */
+    _onPrevAssetSelected: function (event) {
+        // mark the asset just previous to the selected one as a candidate for pre-fetching
+        this._prefetchCandidate = event.prevPrevAsset;
+    },
+
+    /**
+     * Pre-fetches an asset by getting it from the cache.
+     */
+    _prefetchAsset: function (issueKey) {
+        if (!JIRA.Issues.DarkFeatures.NO_PREFETCH.enabled()) {
+            this.viewAssetData.get(issueKey, false, { prefetch: true });
+        }
+    }
+});
+
+module.exports = AssetCacheManager;
 },{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\full-screen-controller.js":[function(require,module,exports){
 "use strict";
 
@@ -2707,16 +4247,16 @@ var FullScreenLayoutController = Marionette.Controller.extend({
             },
             "render": function () {
                 if (!this.searchService.hasSelectedAsset()) {
-                    this.fullScreenIssue.hide();
+                    this.fullScreenAsset.hide();
                 }
-                this.fullScreenIssue.bindSearchService(this.searchService);
+                this.fullScreenAsset.bindSearchService(this.searchService);
                 this.trigger("render");
             }
         });
 
-        this.fullScreenIssue = options.fullScreenIssue;
+        this.fullScreenAsset = options.fullScreenAsset;
 
-        this.listenTo(this.fullScreenIssue, {
+        this.listenTo(this.fullScreenAsset, {
             "assetHidden": function () {
                 // This is the second highlight. The first one is inside IssueTable component, but due the
                 // internals of FullScreenIssue, when the first one is fired the IssueTable is not in the DOM
@@ -2730,7 +4270,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
     },
 
     onLoadError: function (issue) {
-        if (!this.fullScreenIssue.isVisible()) {
+        if (!this.fullScreenAsset.isVisible()) {
             this.searchService.unselectAsset();
             Messages.showErrorMsg(
                 AJS.I18n.getText('viewissue.error.message.cannotopen', issue.issueKey),
@@ -2744,13 +4284,13 @@ var FullScreenLayoutController = Marionette.Controller.extend({
     },
 
     onClose: function () {
-        this.fullScreenIssue.deactivate();
+        this.fullScreenAsset.deactivate();
         this.assetTable.close();
         this.searchService.close();
 
         Application.off("issueEditor:loadError", this.onLoadError, this);
 
-        delete this.fullScreenIssue;
+        delete this.fullScreenAsset;
         delete this.assetTable;
         delete this.searchService;
     },
@@ -2776,7 +4316,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
     },
 
     isIssueViewActive: function () {
-        return this.fullScreenIssue.isVisible();
+        return this.fullScreenAsset.isVisible();
     }
 });
 
@@ -2902,6 +4442,80 @@ var LayoutSwitcherView = Marionette.ItemView.extend({
         }
     }
 })
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\query\\search-shifter.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+/**
+  * Creates a shifter group factory for search criteria.
+  *
+  * @param {object} options
+  * @param {function} options.isBasicMode A function that returns true iff basic mode is selected.
+  * @param {function} options.isFullScreenIssue A function that returns true iff a full screen issue is visible.
+  * @param {SearcherCollection} options.searcherCollection The application's searcher collection.
+  * @return {function} A shifter group factory suitable to be passed to <tt>JIRA.Shifter.register</tt>.
+  */
+var SearchShifter = function(options) {
+    var getSuggestions,
+        onSelection,
+        shouldShow,
+        toSuggestion;
+
+    getSuggestions = function () {
+        var suggestions = options.searcherCollection.chain()
+            .filter(shouldShow)
+            .map(toSuggestion)
+            .value();
+
+        return function () {
+            return jQuery.Deferred().resolve(suggestions).promise();
+        };
+    };
+
+    onSelection = function (id) {
+        var currentSearcher = JIRA.Issues.SearcherDialog.instance.getCurrentSearcher(),
+            searcher = options.searcherCollection.get(id);
+
+        if (!searcher.getIsSelected()) {
+            searcher.select();
+        }
+
+        // toggle closes the dialog if it's open, so ensure that's not the case.
+        if (!currentSearcher || currentSearcher.getId() !== searcher.getId()) {
+            JIRA.Issues.SearcherDialog.instance.toggle(searcher);
+        }
+    };
+
+    // Determine whether the given searcher should be suggested.
+    shouldShow = function (searcherModel) {
+        return searcherModel.getIsShown();
+    };
+
+    // Create a shifter suggestion from a SearcherModel.
+    toSuggestion = function (searcherModel) {
+        return {
+            label: searcherModel.getName(),
+            value: searcherModel.getId()
+        }
+    };
+
+    return function () {
+        // Only show suggestions if we're in basic mode and the search criteria are visible.
+        if (!options.isBasicMode() || options.isFullScreenIssue()) {
+            return null;
+        }
+
+        return {
+            getSuggestions: getSuggestions(),
+            name: "shifter.group.searchcriteria",
+            onSelection: onSelection,
+            weight: 150
+        };
+    };
+};
+
+module.exports = SearchShifter;
 },{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-header-module.js":[function(require,module,exports){
 "use strict";
 
@@ -2942,10 +4556,9 @@ var SearchModule = Brace.Evented.extend({
             columnConfig: this._searchPageModule.columnConfig
         });
 
-        // TF-447 - Refactoring step to remove nested dependencies on SearchModule.
-        JIRA.Issues.Application.reqres.setHandler("issueNav:currentSearchRequest", this.getCurrentSearchRequest, this);
-
-        JIRA.Issues.Application.commands.setHandler("issueNav:refreshSearch", this.refresh, this);
+        // Refactoring step to remove nested dependencies on SearchModule.
+        QuoteFlow.application.reqres.setHandler("assetNav:currentSearchRequest", this.getCurrentSearchRequest, this);
+        QuoteFlow.application.commands.setHandler("assetNav:refreshSearch", this.refresh, this);
     },
 
     /**
@@ -3064,10 +4677,17 @@ module.exports = SearchModule;
 },{"./search-results":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-results.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-page-module.js":[function(require,module,exports){
 "use strict";
 
+var _ = require('underscore');
+
 var Brace = require('backbone-brace');
 var Utilities = require('../../../components/utilities');
 
+var ColumnPicker = require('../../../components/table/column-picker');
 var FullScreenLayout = require('./full-screen-controller');
+var SearchShifter = require('./query/search-shifter');
+var SplitScreenLayout = require('../split-view/layout');
+var SimpleAsset = require('./asset/simple-asset');
+var UrlSerializer = require('../../../util/url-serializer');
 
 /**
  * 
@@ -3075,7 +4695,7 @@ var FullScreenLayout = require('./full-screen-controller');
 var SearchPageModule = Brace.Model.extend({
     namedEvents: ["changeFilterProps"],
 
-    properties: [
+    namedAttributes: [
         "currentLayout",
         "layouts",
         "filter",
@@ -3083,11 +4703,9 @@ var SearchPageModule = Brace.Model.extend({
         "searchId"
     ],
 
-    defaults: function () {
-        return {
-            filter: null,
-            jql: null
-        };
+    defaults: {
+        filter: null,
+        jql: null
     },
 
     initialize: function (attributes, options) {
@@ -3098,7 +4716,9 @@ var SearchPageModule = Brace.Model.extend({
         // This is here instead of in defaults, because we use the defaults
         // to reset this module's state (filter and jql) but we don't want to
         // reset the layouts.
-        this.setLayouts({});
+        this.set({
+            layouts: {}
+        });
 
         this.registerLayout("list-view", {
             label: AJS.I18n.getText("issuenav.layoutswitcher.listview"),
@@ -3109,29 +4729,29 @@ var SearchPageModule = Brace.Model.extend({
         this.registerLayout("split-view", {
             label: AJS.I18n.getText("issuenav.layoutswitcher.splitview"),
             iconClass: 'icon-view-split',
-            view: JIRA.Issues.SplitScreenLayout
+            view: SplitScreenLayout
         });
         this._onFilterChanged();
         this.on("change:filter", this._onFilterChanged, this);
 
-        JIRA.Issues.Application.on("issueEditor:close", this.returnToSearch, this);
+        QuoteFlow.application.vent.on("assetEditor:close", this.returnToSearch, this);
 
-        JIRA.Issues.Application.on("issueEditor:loadComplete", function (model, props) {
+        QuoteFlow.application.vent.on("assetEditor:loadComplete", function (model, props) {
             if (!this.standalone && !props.reason) {
-                this.searchResults.selectAssetById(model.getId(), { reason: "issueLoaded" });
+                this.searchResults.selectAssetById(model.getId(), { reason: "assetLoaded" });
                 this.searchResults.updateAssetById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() })
 
                 // Replace URL if issue updated successfully
                 if (model.getKey()) {
                     var state = this._getUpdateState({ selectedAssetKey: model.getKey() });
                     if (this._validateNavigate(state)) {
-                        this.issueNavRouter.replaceState(state);
+                        this.assetNavRouter.replaceState(state);
                     }
                 }
             }
         }, this);
 
-        JIRA.Issues.Application.on("issueEditor:saveSuccess", function (props) {
+        QuoteFlow.application.vent.on("assetEditor:saveSuccess", function (props) {
             this.searchResults.updateAssetById({ id: props.issueId, action: "inlineEdit" }, { filter: this.getFilter() });
         }, this);
 
@@ -3139,14 +4759,14 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     registerColumnPicker: function () {
-        this.columnConfig = JIRA.Issues.ColumnPicker.create({ search: this });
+        this.columnConfig = ColumnPicker.create({ search: this });
     },
 
 
     getInactiveLayouts: function () {
         var layouts = [];
         _.each(this.getLayouts(), function (layout, key) {
-            if (key !== JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey()) {
+            if (key !== "split-view") {
                 layouts.push(layout);
             }
         }, this);
@@ -3154,7 +4774,7 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     getActiveLayout: function () {
-        return this.getLayouts()[JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey()];
+        return this.getLayouts()["split-view"];
     },
 
     /**
@@ -3198,7 +4818,7 @@ var SearchPageModule = Brace.Model.extend({
             JIRA.Issues.LayoutPreferenceManager.setPreferredLayoutKey(key, options);
 
             newLayout = new layout.view({
-                fullScreenIssue: this.fullScreenIssue,
+                fullScreenAsset: this.fullScreenAsset,
                 assetContainer: this.assetContainer,
                 assetCacheManager: this.assetCacheManager,
                 search: this.search,
@@ -3228,8 +4848,8 @@ var SearchPageModule = Brace.Model.extend({
      */
     createLayout: function () {
         if (!this.getCurrentLayout()) {
-            this.changeLayout(JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey(), { render: false });
-            this.fullScreenIssue.deactivate();
+            this.changeLayout("split-view", { render: false });
+            this.fullScreenAsset.deactivate();
         }
     },
 
@@ -3268,7 +4888,7 @@ var SearchPageModule = Brace.Model.extend({
      */
     registerLayout: function (key, layout) {
         layout.id = key;
-        this.getLayouts()[key] = layout;
+        this.get("layouts")[key] = layout;
     },
 
     /**
@@ -3308,15 +4928,15 @@ var SearchPageModule = Brace.Model.extend({
         this.queryModule.onJqlSuccess(this.enableLayoutSwitcher, this);
         this.queryModule.onVerticalResize(QuoteFlow.Interactive.triggerVerticalResize);
         this.queryModule.onQueryTooComplexSwitchToAdvanced(function () {
-            JIRA.Issues.Application.execute("analytics:trigger", "kickass.queryTooComplexSwitchToAdvanced");
+            QuoteFlow.application.execute("analytics:trigger", "kickass.queryTooComplexSwitchToAdvanced");
         });
         this.queryModule.onBasicModeCriteriaCountWhenSearching(function (data) {
-            JIRA.Issues.Application.execute("analytics:trigger", "kickass.basicModeCriteriaCountWhenSearching", data);
+            QuoteFlow.application.execute("analytics:trigger", "kickass.basicModeCriteriaCountWhenSearching", data);
         });
         this.queryModule.onChangedPreferredSearchMode(function (mode) {
-            JIRA.Issues.Application.execute("analytics:trigger", "kickass.switchto" + mode);
+            QuoteFlow.application.execute("analytics:trigger", "kickass.switchto" + mode);
         });
-        JIRA.Shifter.register(JIRA.Issues.SearchShifter({
+        JIRA.Shifter.register(SearchShifter({
             isBasicMode: _.bind(this.queryModule.isBasicMode, this.queryModule),
             isFullScreenIssue: _.bind(this.isFullScreenIssueVisible, this),
             searcherCollection: this.queryModule.getSearcherCollection()
@@ -3384,9 +5004,9 @@ var SearchPageModule = Brace.Model.extend({
 
         this.searchResults.onColumnConfigChange(function (searchResults) {
             var configName = searchResults.getColumnConfig();
-            if (configName) { //There is no columnConfig on empty search
+            if (configName) { // there is no columnConfig on empty search
                 columnConfig.setCurrentColumnConfig(configName);
-                //When the columnConfig changes, always set the columns
+                // when the columnConfig changes, always set the columns
                 columnConfig.syncColumns(configName, searchResults.getColumns());
             }
         });
@@ -3399,7 +5019,7 @@ var SearchPageModule = Brace.Model.extend({
 
         this.searchResults.onSelectedAssetChange(_.bind(function (issue) {
             if (!issue.hasAsset()) {
-                JIRA.Issues.Application.execute("issueEditor:removeIssueMetadata");
+                JIRA.Issues.Application.execute("assetEditor:removeAssetMetadata");
             }
         }, this));
     },
@@ -3407,21 +5027,20 @@ var SearchPageModule = Brace.Model.extend({
     _handleSearchResultsChange: function (model, options) {
         options = options || {};
         options.replace ?
-                this.issueNavRouter.replaceState(this.getState()) :
-                this.issueNavRouter.pushState(this.getState());
+                this.assetNavRouter.replaceState(this.getState()) :
+                this.assetNavRouter.pushState(this.getState());
     },
 
     registerSearchHeaderModule: function (searchHeaderModule) {
         this.searchHeaderModule = searchHeaderModule;
     },
 
-    registerFullScreenIssue: function (fullScreenIssue) {
-        this.fullScreenIssue = fullScreenIssue;
-        this.fullScreenIssue.bindIssueHidden(function () {
-            JIRA.Issues.Application.execute("issueEditor:dismiss");
-
+    registerFullScreenAsset: function (fullScreenIssue) {
+        this.fullScreenAsset = fullScreenIssue;
+        this.fullScreenAsset.bindIssueHidden(function () {
+            QuoteFlow.application.execute("assetEditor:dismiss");
             this.updateWindowTitle(this.getFilter());
-            JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
+            QuoteFlow.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
         }, this);
     },
 
@@ -3434,15 +5053,15 @@ var SearchPageModule = Brace.Model.extend({
         this.searchContainer = options.searchContainer;
     },
 
-    registerIssueNavRouter: function (issueNavRouter) {
-        this.issueNavRouter = issueNavRouter;
+    registerIssueNavRouter: function (assetNavRouter) {
+        this.assetNavRouter = assetNavRouter;
     },
 
     prevAsset: function () {
         if (this._overlayIsVisible()) {
             return false;
         }
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment") && !this.standalone) {
+        if (QuoteFlow.application.request("assetEditor:canDismissComment") && !this.standalone) {
             this.getCurrentLayout().prevAsset();
             return true;
         }
@@ -3454,7 +5073,7 @@ var SearchPageModule = Brace.Model.extend({
         if (this._overlayIsVisible()) {
             return false;
         }
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment") && !this.standalone) {
+        if (QuoteFlow.application.request("assetEditor:canDismissComment") && !this.standalone) {
             this.getCurrentLayout().nextAsset();
             return true;
         }
@@ -3466,8 +5085,8 @@ var SearchPageModule = Brace.Model.extend({
      * Is there an issue currently being loaded
      * @return Boolean
      */
-    isCurrentlyLoadingIssue: function () {
-        return JIRA.Issues.Application.request("issueEditor:isCurrentlyLoading");
+    isCurrentlyLoadingAsset: function () {
+        return QuoteFlow.application.request("assetEditor:isCurrentlyLoading");
     },
 
     _overlayIsVisible: function () {
@@ -3475,92 +5094,89 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     /**
-     * Retrieve the ID of the selected issue.
-     * <p/>
-     * If issue search is visible, the ID of the currently highlighted issue is
-     * returned; if we're viewing an issue, its ID is returned.
+     * Retrieve the ID of the selected asset.
+     * If asset search is visible, the ID of the currently highlighted asset is
+     * returned; if we're viewing an asset, its ID is returned.
      *
      * @param {AJS.Dialog} [dialog] The dialog requesting this information.
-     * @return {number} The ID of the currently selected issue.
+     * @return {number} The ID of the currently selected asset.
      */
     getEffectiveIssueId: function (dialog) {
-        return this.getEffectiveIssue().getId();
+        return this.getEffectiveAsset().getId();
     },
 
     /**
-     * Update the UI in response to an issue update.
+     * Update the UI in response to an asset update.
      *
-     * @param {object} issueUpdate An issue update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @param {object} issueUpdate An asset update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
      * @return {jQuery.Deferred} A deferred that is resolved when the refresh completes.
      */
-    updateAsset: function (issueUpdate) {
-        var isDelete = issueUpdate.action === JIRA.Issues.Actions.DELETE,
-            isFullScreen = this.fullScreenIssue.isVisible();
+    updateAsset: function (assetUpdate) {
+        var isDelete = assetUpdate.action === JIRA.Issues.Actions.DELETE,
+            isFullScreen = this.fullScreenAsset.isVisible();
 
         if (isDelete) {
-            return this._deleteIssue(issueUpdate);
+            return this._deleteIssue(assetUpdate);
         } else if (isFullScreen) {
-            return this.fullScreenIssue.updateAsset(issueUpdate).done(_.bind(function () {
+            return this.fullScreenAsset.updateAsset(assetUpdate).done(_.bind(function () {
                 // If it's not a standalone issue, then we also need to update the search results.
                 //
                 // Things break if these requests are made in parallel, so force them to be serial.
-                !this.standalone && this.searchResults.updateAsset(issueUpdate, { showMessage: false, filter: this.getFilter() });
+                !this.standalone && this.searchResults.updateAsset(assetUpdate, { showMessage: false, filter: this.getFilter() });
             }, this));
         } else {
-            return this.searchResults.updateAsset(issueUpdate, { filter: this.getFilter() });
+            return this.searchResults.updateAsset(assetUpdate, { filter: this.getFilter() });
         }
     },
 
     /**
-     * Update the UI in response to issue deletion.
+     * Update the UI in response to asset deletion.
      *
-     * @param {object} issueUpdate An issue update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @param {object} issueUpdate An asset update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
      * @return {jQuery.Deferred} A deferred that is resolved when the update completes.
      * @private
      */
-    _deleteIssue: function (issueUpdate) {
-        var isFullScreen = this.fullScreenIssue.isVisible(),
-            isVisibleIssue = issueUpdate.key == JIRA.Issues.Application.request("issueEditor:getIssueKey");
+    _deleteIssue: function (assetUpdate) {
+        var isFullScreen = this.fullScreenAsset.isVisible(),
+            isVisibleAsset = assetUpdate.key == QuoteFlow.application.request("assetEditor:getAssetKey");
 
         if (!isFullScreen) {
-            return this.searchResults.updateAsset(issueUpdate);
-        } else if (!isVisibleIssue) {
-            return this.fullScreenIssue.updateAsset(issueUpdate);
+            return this.searchResults.updateAsset(assetUpdate);
+        } else if (!isVisibleAsset) {
+            return this.fullScreenAsset.updateAsset(assetUpdate);
         } else if (this.standalone) {
             this.resetToBlank();
-            JIRA.Issues.showNotification(issueUpdate.message, issueUpdate.key);
+            JIRA.Issues.showNotification(assetUpdate.message, assetUpdate.key);
             return jQuery.Deferred().resolve().promise();
         } else {
             this.returnToSearch();
-            return this.searchResults.updateAsset(issueUpdate);
+            return this.searchResults.updateAsset(assetUpdate);
         }
     },
 
     /**
-     * Retrieve the key of the selected issue.
-     * <p/>
-     * If issue search is visible, the key of the currently highlighted issue is
-     * returned; if we're viewing an issue, its key is returned.
+     * Retrieve the key of the selected asset.
+     * If asset search is visible, the key of the currently highlighted asset is
+     * returned; if we're viewing an asset, its key is returned.
      *
-     * @return {number} The key of the currently selected issue.
+     * @return {number} The key of the currently selected asset.
      */
-    getEffectiveIssueKey: function () {
-        return this.getEffectiveIssue().getKey();
+    getEffectiveAssetKey: function () {
+        return this.getEffectiveAsset().getKey();
     },
 
-    getEffectiveIssue: function () {
+    getEffectiveAsset: function () {
         var hasHighlightedIssue = this.searchResults.hasHighlightedAsset(),
-            hasSelectedIssue = this.searchResults.hasSelectedAsset(),
-            issueModuleIssue;
+            hasSelectedAsset = this.searchResults.hasSelectedAsset();
 
-        issueModuleIssue = new JIRA.Issues.SimpleIssue({
-            id: JIRA.Issues.Application.request("issueEditor:getIssueId"),
-            key: JIRA.Issues.Application.request("issueEditor:getIssueKey")
+        var issueModuleIssue = new SimpleAsset({
+            id: QuoteFlow.application.request("assetEditor:getAssetId"),
+            key: QuoteFlow.application.request("assetEditor:getAssetKey")
         });
 
         if (this.standalone) {
             return issueModuleIssue;
-        } else if (hasSelectedIssue) {
+        } else if (hasSelectedAsset) {
             return this.searchResults.getSelectedAsset();
         } else if (hasHighlightedIssue) {
             return this.searchResults.getHighlightedAsset();
@@ -3574,26 +5190,24 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     /**
-     * Show issue search and change the URL to match model state.
-     * <p/>
-     * If returning from a stand-alone issue, reset to a blank search.
+     * Show asset search and change the URL to match model state.
+     * If returning from a stand-alone asset, reset to a blank search.
      */
     returnToSearch: function () {
         if (this.standalone) {
             this.resetToBlank();
-            JIRA.trace("jira.returned.to.search");
-        } else if (this.fullScreenIssue.isVisible()) {
+            //QuoteFlow.trace("quoteflow.returned.to.search");
+        } else if (this.fullScreenAsset.isVisible()) {
             this.searchResults.unselectAsset();
-            JIRA.Issues.Application.execute("issueEditor:beforeHide");
-            // TODO: defensive check, incase issue-nav-components is a lower version than expected. Can remove after
-            // soaking for bit on ondemand.
+            QuoteFlow.application.execute("assetEditor:beforeHide");
+            // TODO: defensive check, incase issue-nav-components is a lower version than expected. Can remove after soaking for bit on ondemand.
             if (this.queryModule.refreshLayout) {
                 this.queryModule.refreshLayout();
             }
         } else {
-            JIRA.trace("jira.returned.to.search");
+            QuoteFlow.trace("quoteflow.returned.to.search");
         }
-        jQuery.event.trigger("updateOffsets.popout")
+        jQuery.event.trigger("updateOffsets.popout");
     },
 
     toggleFilterPanel: function () {
@@ -3654,7 +5268,7 @@ var SearchPageModule = Brace.Model.extend({
      * @return {boolean} whether a full screen issue is visible.
      */
     isFullScreenIssueVisible: function () {
-        return this.fullScreenIssue && this.fullScreenIssue.isVisible();
+        return this.fullScreenAsset && this.fullScreenAsset.isVisible();
     },
 
     isIssueVisible: function () {
@@ -3663,7 +5277,7 @@ var SearchPageModule = Brace.Model.extend({
         if (this.isFullScreenIssueVisible()) {
             return true;
         } else if (layoutKey === "list-view") {
-            return this.fullScreenIssue.isVisible();
+            return this.fullScreenAsset.isVisible();
         } else if (layoutKey === "split-view") {
             // Issue is always visible in split view AS LONG AS there are results
             return this.search.getResults().hasAssets();
@@ -3701,7 +5315,7 @@ var SearchPageModule = Brace.Model.extend({
         };
 
         if (this.standalone) {
-            state.selectedAssetKey = JIRA.Issues.Application.request("issueEditor:getIssueKey")
+            state.selectedAssetKey = QuoteFlow.application.request("issueEditor:getIssueKey");
         } else {
             _.extend(state, this.search.getResults().getState());
         }
@@ -3712,7 +5326,6 @@ var SearchPageModule = Brace.Model.extend({
     _doSearch: function (options) {
         options = options || {};
         var searchOptions = {};
-        var searchPromise;
         var filter = this.getFilter();
         searchOptions.startIndex = options.startIndex;
         if (filter) {
@@ -3724,11 +5337,11 @@ var SearchPageModule = Brace.Model.extend({
         }
 
         searchOptions.jql = this.getEffectiveJql();
-        searchPromise = this.assetSearchManager.search(searchOptions);
+        var searchPromise = this.assetSearchManager.search(searchOptions);
 
         searchPromise.done(_.bind(function (results) {
-            if (this.fullScreenIssue.isVisible() && !AJS.Meta.get('serverRenderedViewIssue')) {
-                JIRA.Issues.Application.execute("issueEditor:beforeHide");
+            if (this.fullScreenAsset.isVisible() && !AJS.Meta.get('serverRenderedViewIssue')) {
+                QuoteFlow.application.execute("assetEditor:beforeHide");
             }
             this.searchResults.resetFromSearch(_.extend(options, results.assetTable));
             this.queryModule.onSearchSuccess(results.warnings);
@@ -3738,7 +5351,7 @@ var SearchPageModule = Brace.Model.extend({
                 if (xhr.status == 400 && options.selectedAssetKey) {
                     this.reset({ selectedAssetKey: options.selectedAssetKey }, { replace: true });
                 } else {
-                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedIssueKey"), this.searchResults.defaults));
+                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedAssetKey"), this.searchResults.defaults));
                     this.issueTableSearchError(xhr);
                 }
             }
@@ -3772,15 +5385,17 @@ var SearchPageModule = Brace.Model.extend({
 
         if (isReset) {
             var jql = (state.filter && state.jql == null) ? state.filter.getJql() : state.jql;
-            this.queryModule.resetToQuery(jql, { focusQuery: options.isNewSearch }).always(_.bind(function () {
+            this.queryModule.resetToQuery(jql, { focusQuery: options.isNewSearch }).always(_.bind(function() {
                 // Hide the query view for invalid filters.
                 this.queryModule.setVisible(!state.filter || state.filter.getIsValid());
-            }, this))
+            }, this));
         }
+
+        var searchPromise;
         if (this.shouldPerformNewSearch(prevState, newState)) {
-            var searchPromise = this._doSearch(newState);
+            searchPromise = this._doSearch(newState);
         } else {
-            var searchPromise = jQuery.Deferred().resolve();
+            searchPromise = jQuery.Deferred().resolve();
             if ("selectedIssueKey" in state) {
                 this.searchResults.selectAssetByKey(state.selectedAssetKey);
             }
@@ -3818,14 +5433,14 @@ var SearchPageModule = Brace.Model.extend({
 
         options = options || {};
 
-        if (!JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+        if (!QuoteFlow.application.request("assetEditor:canDismissComment")) {
             this.queryModule.queryChanged();
             AJS.InlineLayer.current && AJS.InlineLayer.current.hide();
             return null;
         }
 
         if (this._validateNavigate(state)) {
-            options.replace ? this.issueNavRouter.replaceState(state) : this.issueNavRouter.pushState(state);
+            options.replace ? this.assetNavRouter.replaceState(state) : this.assetNavRouter.pushState(state);
         }
         if (this.search.isStandAloneAsset(state)) {
             this.resetToStandaloneIssue(state);
@@ -3836,7 +5451,7 @@ var SearchPageModule = Brace.Model.extend({
 
 
     _validateNavigate: function (newState) {
-        var urlFromState = JIRA.Issues.URLSerializer.getURLFromState;
+        var urlFromState = UrlSerializer.getURLFromState;
         return urlFromState(newState) !== urlFromState(this.getState());
     },
 
@@ -3866,7 +5481,7 @@ var SearchPageModule = Brace.Model.extend({
         this._deactivateCurrentLayout();
         this.set(this.defaults());
         this.standalone = true;
-        this.fullScreenIssue.show({
+        this.fullScreenAsset.show({
             key: state.selectedAssetKey,
             viewIssueQuery: state.viewIssueQuery
         });
@@ -3877,7 +5492,7 @@ var SearchPageModule = Brace.Model.extend({
             shouldFetchFilter = state.filter && !(state.filter instanceof JIRA.Components.Filters.Models.Filter),
             systemFiltersRequest = this.initSystemFilters();
 
-        JIRA.Issues.Application.execute("issueEditor:abortPending");
+        QuoteFlow.application.execute("assetEditor:abortPending");
         this.createLayout();
 
         if (shouldFetchFilter) {
@@ -4106,7 +5721,9 @@ var SearchPageModule = Brace.Model.extend({
         }
     }
 });
-},{"../../../components/utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","./full-screen-controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\full-screen-controller.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-results.js":[function(require,module,exports){
+
+module.exports = SearchPageModule;
+},{"../../../components/table/column-picker":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\table\\column-picker.js","../../../components/utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","../../../util/url-serializer":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js","../split-view/layout":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\split-view\\layout.js","./asset/simple-asset":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\simple-asset.js","./full-screen-controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\full-screen-controller.js","./query/search-shifter":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\query\\search-shifter.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-results.js":[function(require,module,exports){
 "use strict";
 
 var Brace = require('backbone-brace');
@@ -4124,7 +5741,7 @@ var SearchResults = Brace.Model.extend({
         total: 0
     },
 
-    properties: [
+    namedAttributes: [
         "columnSortJql",
         "highlightedAsset",
         "assetIds", // only present in stable search
@@ -4756,22 +6373,22 @@ var SearchResults = Brace.Model.extend({
         this.off("change:resultsId", func, context);
     },
 
-    onAssetUpdated: function (func, ctx) {
-        this.assetUpdateCallbacks.push({
-            handler: func,
-            ctx: ctx
-        });
-    },
-
-    offAssetUpdated: function (func) {
-        var filteredCallbacks = [];
-        this.assetUpdateCallbacks = _.each(this.assetUpdateCallbacks, function (callback) {
-            if (callback.handler !== func) {
-                filteredCallbacks.push(callback);
-            }
-        });
-        this.assetUpdateCallbacks = filteredCallbacks;
-    },
+//    onAssetUpdated: function (func, ctx) {
+//        this.assetUpdateCallbacks.push({
+//            handler: func,
+//            ctx: ctx
+//        });
+//    },
+//
+//    offAssetUpdated: function (func) {
+//        var filteredCallbacks = [];
+//        this.assetUpdateCallbacks = _.each(this.assetUpdateCallbacks, function (callback) {
+//            if (callback.handler !== func) {
+//                filteredCallbacks.push(callback);
+//            }
+//        });
+//        this.assetUpdateCallbacks = filteredCallbacks;
+//    },
 
     _getNextAssetId: function (id) {
         var assetIds = this.getAssetIds();
@@ -4886,7 +6503,515 @@ var SearchResults = Brace.Model.extend({
 });
 
 module.exports = SearchResults;
-},{"./asset/simple-asset":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\simple-asset.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\util\\async-data.js":[function(require,module,exports){
+},{"./asset/simple-asset":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\simple-asset.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\split-view\\layout.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+var Utilities = require('../../../components/utilities');
+
+/**
+ * Controller/view for detail view layout.
+ */
+var SplitScreenLayout = Marionette.ItemView.extend({
+
+    /**
+     * @param {object} options
+     * @param {JIRA.Issues.FullScreenIssue} options.fullScreenIssue The application's <tt>FullScreenIssue</tt>.
+     * @param {JIRA.Components.IssueViewer} options.issueModule The application's <tt>IssueModule</tt>.
+     * @param {JIRA.Issues.SearchModule} options.search The layout's interface to the rest of the application.
+     * @param {jQuery} options.searchContainer The element in which search results are to be rendered.
+     */
+    initialize: function (options) {
+        _.bindAll(this,
+            "_adjustHeight",
+            "_adjustNoResultsMessageHeight",
+            "_updateSidebarPosition",
+            "applyResponsiveDesign");
+
+        if (options.easeOff) {
+            this.applyResponsiveDesign = jQuery.noop;
+            _.debounce(this._adjustHeight, options.easeOff);
+        }
+
+        options = _.extend(options, {
+            serverRendered: this._consumeServerRenderedSplitView(options)
+        });
+
+        this.search = options.search;
+        this.fullScreenAsset = options.fullScreenAsset;
+        this.navigatorContent = options.searchContainer.find(".navigator-content");
+        this.searchResults = options.search.getResults();
+
+        this.emptyResultsView = new JIRA.Issues.EmptyResultsView({
+            searchResults: this.searchResults,
+            el: this.navigatorContent
+        });
+
+        this.detailsView = new JIRA.Issues.SplitScreenDetailView(options);
+        this.listView = new JIRA.Issues.SplitScreenListView(options);
+
+        this.orderBy = JIRA.Components.OrderBy.create();
+        this.orderBy.onSort(this._handleSort, this);
+
+        Utilities.initializeResizeHooks();
+
+        QuoteFlow.Interactive.onVerticalResize(this._adjustHeight);
+        QuoteFlow.Interactive.onVerticalResize(this._adjustNoResultsMessageHeight);
+        QuoteFlow.Interactive.onHorizontalResize(this._updateSidebarPosition);
+        QuoteFlow.Interactive.onVerticalResize(this._updateSidebarPosition);
+        this.addListener(options.search, "beforeSearch", this._showPending, this);
+        this.addListener(this.searchResults, "issueDeleted", this._onAssetDeleted, this);
+        this.addListener(this.searchResults, "newPayload", this._hidePending, this);
+        this.addListener(this.searchResults, "newPayload", this._updateSortBy, this);
+        this.addListener(this.searchResults, "newPayload", this.render, this);
+        this.addListener(this.searchResults, "startIndexChange", this._onStartIndexChange, this);
+        this.addListener(this.searchResults, "highlightedIssueChange", this._onHighlightedAssetChange, this);
+        this.addListener(this.searchResults, "selectedIssueChange", this._onSelectedIssueChange, this);
+        this.addListener(this.searchResults, "startIndexChange", this._renderEverythingExceptListView, this);
+        this.search.onSearchError(this._onSearchFail, this);
+
+        JIRA.Issues.Application.on("issueEditor:loadError", this._onIssueLoadError, this);
+        this.listView.searchPromise.done(_.bind(function () {
+            this._makeVisible();
+        }, this));
+
+        this.fullScreenAsset.hide();
+        JIRA.Issues.overrideScrollIntoViewForSplit();
+
+        this.setElement(this.navigatorContent);
+        if (options.serverRendered) {
+            this._activateSubviews();
+        }
+
+        this._scrollLayoutOnZoom = this._initScrollLayoutOnZoom();
+        if (this._scrollLayoutOnZoom) {
+            jQuery(window).on('resize', this._scrollLayoutOnZoom);
+        }
+
+        this._updateSortBy();
+    },
+
+
+    _updateSortBy: function () {
+        this.orderBy.setJql(this.search.getEffectiveJql());
+    },
+
+    _handleSort: function (jql) {
+        this.search.doSort(jql);
+    },
+
+    /**
+     * Recalculate the list's height.
+     *
+     * @private
+     */
+    _adjustHeight: function () {
+        var $listPanel = this.$el.find(".list-panel");
+        var endOfStableSearchMessageHeight = 0,
+            offsetTop = this.listView.$el.offset().top + $listPanel.scrollTop(),
+            paginationHeight = this.$el.find(".pagination-container").outerHeight(), // NOTE: this is the pagination container, not the pagination view!
+            windowHeight = window.innerHeight;
+
+        if (this.endOfStableSearchView && this.endOfStableSearchView.$el) {
+            endOfStableSearchMessageHeight = this.endOfStableSearchView.$el.outerHeight();
+        }
+
+        $listPanel.css("height", windowHeight - offsetTop - endOfStableSearchMessageHeight - paginationHeight);
+    },
+
+    /**
+     * Adjust the height of the no results message so it fills the screen.
+     *
+     * @private
+     */
+    _adjustNoResultsMessageHeight: function () {
+        var navigatorContentTop;
+        if (this.searchResults.hasAssets()) {
+            this.navigatorContent.css("height", "");
+        } else {
+            navigatorContentTop = this.navigatorContent.offset().top;
+            this.navigatorContent.css("height", window.innerHeight - navigatorContentTop);
+        }
+    },
+
+    // TF-38, JRA-34879 - Zooming in IE causes parts of page to disappear in split view.
+    _initScrollLayoutOnZoom: function () {
+        if (jQuery.browser.msie) {
+            this.cachedDPI = screen.deviceXDPI;
+            return _.bind(function () {
+                if (this.cachedDPI !== screen.deviceXDPI) {
+                    jQuery("body, html").scrollTop(0);
+                }
+                this.cachedDPI = screen.deviceXDPI;
+            }, this);
+        }
+        return null;
+    },
+
+    /**
+     * Consume server rendered split view markup, preventing it from being used again.
+     *
+     * @param {object} options
+     * @param {jQuery} options.searchContainer
+     * @return {boolean} <tt>true</tt> iff there was markup to consume.
+     * @private
+     */
+    _consumeServerRenderedSplitView: function (options) {
+        var hasConsumed = !!AJS.Meta.get("consumed-server-rendered-split-view"),
+            hasExisting = !!options.searchContainer.find(".split-view").length;
+
+        AJS.Meta.set("consumed-server-rendered-split-view", true);
+        return !hasConsumed && hasExisting;
+    },
+
+    /**
+     * Prepare to be removed, deactivating all subviews.
+     */
+    close: function () {
+        QuoteFlow.Interactive.offVerticalResize(this._adjustHeight);
+        QuoteFlow.Interactive.offVerticalResize(this._adjustNoResultsMessageHeight);
+        QuoteFlow.Interactive.offHorizontalResize(this._updateSidebarPosition);
+        QuoteFlow.Interactive.restoreScrollIntoViewForNormal();
+        jQuery("body").removeClass("page-type-split");
+        JIRA.Issues.Application.off("issueEditor:loadError", this._onIssueLoadError, this);
+        this.navigatorContent.addClass("pending").css("height", "");
+        this.orderBy.offSort(this._handleSort, this);
+        this.search.offSearchError(this._onSearchFail, this);
+
+        if (this._isIOS()) {
+            this._deactivateIOSSpecificBehaviour();
+        }
+
+        // *first* deactivate the subviews. this ensures that they stop receiving change events, which
+        // is important because we are about to modify the SearchResults after this.
+        this.detailsView.deactivate();
+        this.listView.deactivate();
+
+        jQuery(window).off('resize', this.applyResponsiveDesign);
+        if (this._scrollLayoutOnZoom) {
+            jQuery(window).off('resize', this._scrollLayoutOnZoom);
+            delete this._scrollLayoutOnZoom;
+        }
+
+        JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
+
+        //If the selected issue is not in the list of downloaded issues go to first issue in page.
+        if (!this.searchResults.hasAsset(this.searchResults.getSelectedAsset().getId())) {
+            this.searchResults.selectFirstInPage();
+        }
+    },
+
+    _handleInitialIssueSelection: function () {
+        if (!this.searchResults.hasSelectedAsset()) {
+            if (this.searchResults.hasHighlightedAsset()) {
+                this.searchResults.selectAssetById(this.searchResults.getHighlightedAsset().getId(), { replace: true });
+            } else {
+                this.searchResults.selectFirstInPage({ replace: true });
+            }
+        }
+    },
+
+    _hidePending: function () {
+        this.navigatorContent.removeClass("pending");
+    },
+
+    _isInitialRender: function () {
+        return !this.navigatorContent.find(".split-view").length;
+    },
+
+    _applyWidthClass: function () {
+        var width = this.detailsView.$el.width();
+        this.$el.toggleClass("skinny", width < 900);
+        this.$el.toggleClass("very-skinny", width < 600);
+    },
+
+    _makeVisible: function () {
+        this.navigatorContent.removeClass("pending");
+        if (this._isInitialRender()) {
+            this.navigatorContent.html(this.$el);
+        }
+        this.$el.find(".list-results-panel").sidebar({
+            id: "splitview",
+            minWidth: function (ui) {
+                return 250;
+            },
+            maxWidth: _.bind(function () {
+                return this.$el[0].clientWidth - 500;
+            }, this),
+            resize: this.applyResponsiveDesign
+        });
+        jQuery(window).on('resize', this.applyResponsiveDesign);
+
+        //TF-729: Ensure we put the appropriate width classes on first render to ensure the sidebar picks up the correct width.
+        this._applyWidthClass();
+
+        JIRA.trigger(JIRA.Events.LAYOUT_RENDERED);
+        this.applyResponsiveDesign();
+    },
+
+    _updateSidebarPosition: function () {
+        var $sidebar = this.$el.find(".list-results-panel");
+        $sidebar.sidebar("updatePosition");
+    },
+
+    applyResponsiveDesign: function () {
+        if (this.reapplyResponsive) {
+            clearTimeout(this.reapplyResponsive);
+        }
+        this.reapplyResponsive = setTimeout(_.bind(function () {
+            this._applyWidthClass();
+            clearTimeout(this.reapplyResponsive);
+            delete this.reapplyResponsive;
+        }, this), 0);
+    },
+
+    /**
+     * Synchronise the highlighted and selected issue.
+     *
+     * @param {JIRA.Issues.SimpleIssue} model The application's highlighted issue model.
+     * @param {object} [options]
+     * @param {boolean} [options.replace=true] Whether selecting the issue should be a "replace" operation.
+     * @private
+     */
+    _onHighlightedAssetChange: function (model, options) {
+        options = _.defaults({}, options, {
+            replace: true
+        });
+
+        var highlightedIssueID = this.searchResults.getHighlightedAsset().getId();
+        this.searchResults.selectAssetById(highlightedIssueID, options);
+    },
+
+    /**
+     * Render the issue list or empty results message after issue deletion.
+     *
+     * @private
+     */
+    _onAssetDeleted: function (issue) {
+        //Locally hide the issue to be deleted immediately so there is no delay in the UI before the new issue table
+        this.listView.getAssetById(issue.id).hide();
+        this._showPending();
+        if (this.searchResults.hasAssets()) {
+            this.listView.render();
+            this._renderPagination();
+            this._renderEndOfStableSearch();
+            this._renderRefreshResults();
+        } else {
+            this._renderEmptyResults();
+        }
+    },
+
+    /**
+     * Handle the failure to load an issue.
+     * <p/>
+     * Update the issue list, etc.
+     *
+     * @param {object} entity
+     * @param {number} entity.issueId The issue's ID.
+     * @param {string} entity.issueKey The issue's key.
+     * @param {object} entity.pager Pager data.
+     * @param {object} entity.response The data returned from the cache/server.
+     */
+    _onIssueLoadError: function (entity) {
+        if (entity.response.status === 404) {
+            this.listView.markIssueInaccessible(entity.issueId);
+        }
+    },
+
+    _onSearchFail: function () {
+        this._renderEmptyResults();
+        this._hidePending();
+    },
+
+    _onSelectedIssueChange: function () {
+        this._setIssueModuleContainer();
+    },
+
+    _onStartIndexChange: function () {
+        // If there are no results, the "No Results" message has already been rendered.
+        if (this.searchResults.hasAssets()) {
+            this._showPending();
+        }
+    },
+
+    /**
+     * Called when the 'j' keyboard shortcut is used and this layout is active.
+     */
+    nextAsset: function () {
+        this.searchResults.selectNextAsset({ replace: true });
+    },
+
+    /**
+     * Called when the 'k' keyboard shortcut is used and this layout is active.
+     */
+    prevAsset: function () {
+        this.searchResults.selectPrevAsset({ replace: true });
+    },
+
+    /**
+     * Called when a pagination link is clicked
+     */
+    goToPage: function (startIndex) {
+        // TODO: Layout shouldn't use behaviour on this model. Should trigger event for Module to handle.
+        this.searchResults.goToPage(startIndex);
+    },
+
+    refreshSearch: function () {
+        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+            JIRA.Issues.Application.execute("analytics:trigger", "kickass.issueTableRefresh");
+            JIRA.Issues.Application.execute("issueNav:refreshSearch");
+        }
+    },
+
+    /**
+     * Render the layout.
+     * <p/>
+     * Some subviews render asynchronously.
+     *
+     * @return {JIRA.Issues.SplitScreenLayout} <tt>this</tt>
+     */
+    render: function () {
+        var hasIssues = this.searchResults.hasAssets(),
+            isInitialRender = this._isInitialRender();
+
+        jQuery("body").addClass("page-type-split");
+
+        if (this._isIOS()) {
+            this._activateIOSSpecificBehaviour();
+        }
+
+        if (hasIssues) {
+            this._handleInitialIssueSelection();
+            this.navigatorContent.removeClass("empty-results");
+
+            // if this is the initial render then we need to create the structure for the list and details view
+            // to render into before handling initial issue selection.
+            if (isInitialRender) {
+                this.$el.children().detach();
+                this.$el.html(JIRA.Templates.SplitView.structure());
+            }
+
+            this._renderPagination();
+            this._renderEndOfStableSearch();
+            this._renderRefreshResults();
+
+            this._activateSubviews();
+            this.detailsView.render();
+            this.listView.render();
+        } else {
+            this._hidePending();
+            this._renderEmptyResults();
+        }
+
+        this._adjustHeight();
+        this._adjustNoResultsMessageHeight();
+        this.orderBy.render();
+        return this;
+    },
+
+    _renderPagination: function () {
+        if (this.paginationView) {
+            this.paginationView.close();
+        }
+        this.paginationView = new JIRA.Components.IssueNavigator.Views.Pagination({
+            startIndex: this.searchResults.getStartIndex(),
+            pageSize: this.searchResults.getPageSize(),
+            total: this.searchResults.getTotal(),
+            currentSearch: JIRA.Issues.Application.request("issueNav:currentSearchRequest")
+        });
+        this.listenTo(this.paginationView, "goToPage", this.goToPage);
+        this.paginationView.render();
+        this.$(".pagination-container").empty().append(this.paginationView.$el);
+    },
+
+    _renderEndOfStableSearch: function () {
+        if (this.endOfStableSearchView) {
+            this.endOfStableSearchView.close();
+        }
+        this.endOfStableSearchView = new JIRA.Components.IssueNavigator.Views.EndOfStableMessage({
+            total: this.searchResults.getTotal(),
+            displayableTotal: this.searchResults.getDisplayableTotal(),
+            pageNumber: this.searchResults.getPageNumber(),
+            numberOfPages: this.searchResults.getNumberOfPages()
+        });
+        this.endOfStableSearchView.render();
+        this.$(".end-of-stable-message-container").empty().append(this.endOfStableSearchView.$el);
+    },
+
+
+    _renderRefreshResults: function () {
+        if (this.refreshResultsView) {
+            this.refreshResultsView.close();
+        }
+        this.refreshResultsView = new JIRA.Components.IssueNavigator.Views.RefreshResults();
+        this.listenTo(this.refreshResultsView, "refresh", this.refreshSearch);
+        this.refreshResultsView.render();
+        this.$(".refresh-container").empty().append(this.refreshResultsView.$el);
+    },
+
+    /**
+     * Exists because list view listens for events that *just so happen* to mean that a new set of results came in.
+     * But we want to know that, too! Oh well, we'll untangle that later.
+     * TODO: Consolidate the re-render entry points. When searchresults fires its startIndexChanged and highlightedIssueChange events, those are smells.
+     * @private
+     */
+    _renderEverythingExceptListView: function () {
+        var hasIssues = this.searchResults.hasAssets();
+        if (hasIssues) {
+            this._renderPagination();
+            this._renderEndOfStableSearch();
+            this._renderRefreshResults();
+
+            this._adjustHeight();
+            this._adjustNoResultsMessageHeight();
+        }
+    },
+
+    _renderEmptyResults: function () {
+        this.emptyResultsView.render();
+    },
+
+    /**
+     * Set the issue container element so issues render correctly.
+     *
+     * @private
+     */
+    _setIssueModuleContainer: function () {
+        JIRA.Issues.Application.execute("issueEditor:setContainer", this.$(".split-view .detail-panel > div"));
+    },
+
+    _showPending: function () {
+        this.navigatorContent.addClass("pending");
+    },
+
+    /**
+     * Calls setElement on all the sub-views and activates them if necessary.
+     *
+     * @private
+     */
+    _activateSubviews: function () {
+        this.detailsView.setElement(this.$(".detail-panel")).activate();
+        this.orderBy.setElement(this.$('.list-ordering'));
+        this.listView.setElement(this.$(".list-content"));
+        this._setIssueModuleContainer();
+    },
+
+    handleLeft: function () {
+        this.detailsView.blur();
+    },
+
+    handleRight: function () {
+        this.detailsView.focus();
+    },
+
+    isIssueViewActive: function () {
+        return this.detailsView.hasFocus();
+    }
+});
+
+module.exports = SplitScreenLayout;
+},{"../../../components/utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\util\\async-data.js":[function(require,module,exports){
 "use strict";
 
 var Brace = require('backbone-brace');

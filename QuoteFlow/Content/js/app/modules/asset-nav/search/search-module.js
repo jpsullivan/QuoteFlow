@@ -17,10 +17,9 @@ var SearchModule = Brace.Evented.extend({
             columnConfig: this._searchPageModule.columnConfig
         });
 
-        // TF-447 - Refactoring step to remove nested dependencies on SearchModule.
-        JIRA.Issues.Application.reqres.setHandler("issueNav:currentSearchRequest", this.getCurrentSearchRequest, this);
-
-        JIRA.Issues.Application.commands.setHandler("issueNav:refreshSearch", this.refresh, this);
+        // Refactoring step to remove nested dependencies on SearchModule.
+        QuoteFlow.application.reqres.setHandler("assetNav:currentSearchRequest", this.getCurrentSearchRequest, this);
+        QuoteFlow.application.commands.setHandler("assetNav:refreshSearch", this.refresh, this);
     },
 
     /**

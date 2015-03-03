@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using QuoteFlow.Api.Infrastructure.Helpers;
+using QuoteFlow.Api.Models.AssetNavigator;
 using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure;
@@ -159,8 +160,9 @@ namespace QuoteFlow.Controllers
             var catalogs = CatalogService.GetCatalogs(CurrentOrganization.Id);
             var manufacturers = ManufacturerService.GetManufacturers(CurrentOrganization.Id);
             var creators = UserService.GetUsers(CurrentOrganization.Id);
+            var assetTable = new AssetTable();
 
-            var model = new QuoteBuilderViewModel(quote, catalogs, manufacturers, creators);
+            var model = new QuoteBuilderViewModel(quote, catalogs, manufacturers, creators, assetTable);
 
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }

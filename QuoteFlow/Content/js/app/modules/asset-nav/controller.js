@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 var $ = require('jquery');
+var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var AssetNavCreator = require('./search/asset-nav-creator');
@@ -74,21 +75,21 @@ var AssetNavController = Marionette.Controller.extend({
          * JSON. It also prevents us needing to ensure there are no XSS vulnerabilities in the JSON HTML string.
          */
         var initialIssueTableState = $navigatorContent.data("issue-table-model-state");
-        if (initialIssueTableState && !initialIssueTableState.table) {
+        if (initialIssueTableState && !initialIssueTableState.Table) {
             var wrapper = AJS.$("<div></div>").append($navigatorContent.children().clone());
-            initialIssueTableState.assetTable.table = wrapper.html();
+            initialIssueTableState.Table = wrapper.html();
         }
 
         var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
         var selectedIssue = $navigatorContent.data("selected-issue");
 
-        // jQuery.parseJSON gracefully returns null given an empty string.
-        // Would be even nicer if the json was placed in a data- attribute, which jQuery will automatically parse with .data().
-        var initialSearcherCollectionState = jQuery.parseJSON(jQuery("#criteriaJson").text());
+        var criteriaJson = jQuery("#criteriaJson").text();
+        var systemFiltersJson = jQuery("#systemFiltersJson").text();
+        var initialSearcherCollectionState = _.isEmpty(criteriaJson) ? null : JSON.parse(criteriaJson);
         var initialSessionSearchState = $navigatorContent.data("session-search-state");
-        var systemFilters = jQuery.parseJSON(jQuery("#systemFiltersJson").text());
+        var systemFilters = _.isEmpty(systemFiltersJson) ? null : JSON.parse(systemFiltersJson);
 
-        _.extend({}, {
+        var options = _.extend({}, {
             initialIssueTableState: initialIssueTableState,
             initialIssueIds: initialIssueIds,
             selectedIssue: selectedIssue,

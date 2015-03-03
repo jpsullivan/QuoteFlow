@@ -14,6 +14,7 @@ var CatalogModule = require('./modules/catalog/module');
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)
 var QuoteFlow = {
+    application: {},
     Backbone: {},
     Catalog: {},
     Collection: {
@@ -43,7 +44,6 @@ var QuoteFlow = {
         Catalog: {},
         Common: {}
     },
-    Vent: _.extend({}, Backbone.Events),
     Views: {}
 };
 
@@ -138,14 +138,33 @@ var Application = Marionette.Application.extend({
     }
 });
 
-var qfApp = new Application({
+QuoteFlow.application = new Application({
     rootUrl: window.rootUrl,
     applicationPath: window.applicationPath,
     currentOrgId: window.currentOrganization,
     currentUser: window.currentUser
 });
 
-qfApp.on("start", function (options) {
+QuoteFlow.application.on("before:start", function (options) {
+    // add some mixins to underscore
+    _.mixin({
+        lambda: function(x) {
+            return function() { return x; };
+        },
+        isNotBlank: function(object) {
+            return !!object;
+        },
+        bindObjectTo: function(obj, context) {
+            _.map(obj, function(value, key) {
+                if (_.isFunction(value)) {
+                    obj[key] = _.bind(value, context);
+                }
+            });
+        }
+    });
+});
+
+QuoteFlow.application.on("start", function (options) {
     if (Backbone.history) {
         Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
     }
@@ -154,7 +173,7 @@ qfApp.on("start", function (options) {
     ApplicationHelpers.initialize();
 });
 
-qfApp.module("asset-table", AssetTableModule);
-qfApp.module("catalog", CatalogModule);
+QuoteFlow.application.module("asset-table", AssetTableModule);
+QuoteFlow.application.module("catalog", CatalogModule);
 
-module.exports = qfApp;
+module.exports = QuoteFlow.application;

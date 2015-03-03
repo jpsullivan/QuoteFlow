@@ -1,9 +1,16 @@
 ﻿"use strict";
 
+var _ = require('underscore');
+
 var Brace = require('backbone-brace');
 var Utilities = require('../../../components/utilities');
 
+var ColumnPicker = require('../../../components/table/column-picker');
 var FullScreenLayout = require('./full-screen-controller');
+var SearchShifter = require('./query/search-shifter');
+var SplitScreenLayout = require('../split-view/layout');
+var SimpleAsset = require('./asset/simple-asset');
+var UrlSerializer = require('../../../util/url-serializer');
 
 /**
  * 
@@ -11,7 +18,7 @@ var FullScreenLayout = require('./full-screen-controller');
 var SearchPageModule = Brace.Model.extend({
     namedEvents: ["changeFilterProps"],
 
-    properties: [
+    namedAttributes: [
         "currentLayout",
         "layouts",
         "filter",
@@ -19,11 +26,9 @@ var SearchPageModule = Brace.Model.extend({
         "searchId"
     ],
 
-    defaults: function () {
-        return {
-            filter: null,
-            jql: null
-        };
+    defaults: {
+        filter: null,
+        jql: null
     },
 
     initialize: function (attributes, options) {
@@ -34,7 +39,9 @@ var SearchPageModule = Brace.Model.extend({
         // This is here instead of in defaults, because we use the defaults
         // to reset this module's state (filter and jql) but we don't want to
         // reset the layouts.
-        this.setLayouts({});
+        this.set({
+            layouts: {}
+        });
 
         this.registerLayout("list-view", {
             label: AJS.I18n.getText("issuenav.layoutswitcher.listview"),
@@ -45,29 +52,29 @@ var SearchPageModule = Brace.Model.extend({
         this.registerLayout("split-view", {
             label: AJS.I18n.getText("issuenav.layoutswitcher.splitview"),
             iconClass: 'icon-view-split',
-            view: JIRA.Issues.SplitScreenLayout
+            view: SplitScreenLayout
         });
         this._onFilterChanged();
         this.on("change:filter", this._onFilterChanged, this);
 
-        JIRA.Issues.Application.on("issueEditor:close", this.returnToSearch, this);
+        QuoteFlow.application.vent.on("assetEditor:close", this.returnToSearch, this);
 
-        JIRA.Issues.Application.on("issueEditor:loadComplete", function (model, props) {
+        QuoteFlow.application.vent.on("assetEditor:loadComplete", function (model, props) {
             if (!this.standalone && !props.reason) {
-                this.searchResults.selectAssetById(model.getId(), { reason: "issueLoaded" });
+                this.searchResults.selectAssetById(model.getId(), { reason: "assetLoaded" });
                 this.searchResults.updateAssetById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() })
 
                 // Replace URL if issue updated successfully
                 if (model.getKey()) {
                     var state = this._getUpdateState({ selectedAssetKey: model.getKey() });
                     if (this._validateNavigate(state)) {
-                        this.issueNavRouter.replaceState(state);
+                        this.assetNavRouter.replaceState(state);
                     }
                 }
             }
         }, this);
 
-        JIRA.Issues.Application.on("issueEditor:saveSuccess", function (props) {
+        QuoteFlow.application.vent.on("assetEditor:saveSuccess", function (props) {
             this.searchResults.updateAssetById({ id: props.issueId, action: "inlineEdit" }, { filter: this.getFilter() });
         }, this);
 
@@ -75,14 +82,14 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     registerColumnPicker: function () {
-        this.columnConfig = JIRA.Issues.ColumnPicker.create({ search: this });
+        this.columnConfig = ColumnPicker.create({ search: this });
     },
 
 
     getInactiveLayouts: function () {
         var layouts = [];
         _.each(this.getLayouts(), function (layout, key) {
-            if (key !== JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey()) {
+            if (key !== "split-view") {
                 layouts.push(layout);
             }
         }, this);
@@ -90,7 +97,7 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     getActiveLayout: function () {
-        return this.getLayouts()[JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey()];
+        return this.getLayouts()["split-view"];
     },
 
     /**
@@ -134,7 +141,7 @@ var SearchPageModule = Brace.Model.extend({
             JIRA.Issues.LayoutPreferenceManager.setPreferredLayoutKey(key, options);
 
             newLayout = new layout.view({
-                fullScreenIssue: this.fullScreenIssue,
+                fullScreenAsset: this.fullScreenAsset,
                 assetContainer: this.assetContainer,
                 assetCacheManager: this.assetCacheManager,
                 search: this.search,
@@ -164,8 +171,8 @@ var SearchPageModule = Brace.Model.extend({
      */
     createLayout: function () {
         if (!this.getCurrentLayout()) {
-            this.changeLayout(JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey(), { render: false });
-            this.fullScreenIssue.deactivate();
+            this.changeLayout("split-view", { render: false });
+            this.fullScreenAsset.deactivate();
         }
     },
 
@@ -204,7 +211,7 @@ var SearchPageModule = Brace.Model.extend({
      */
     registerLayout: function (key, layout) {
         layout.id = key;
-        this.getLayouts()[key] = layout;
+        this.get("layouts")[key] = layout;
     },
 
     /**
@@ -244,15 +251,15 @@ var SearchPageModule = Brace.Model.extend({
         this.queryModule.onJqlSuccess(this.enableLayoutSwitcher, this);
         this.queryModule.onVerticalResize(QuoteFlow.Interactive.triggerVerticalResize);
         this.queryModule.onQueryTooComplexSwitchToAdvanced(function () {
-            JIRA.Issues.Application.execute("analytics:trigger", "kickass.queryTooComplexSwitchToAdvanced");
+            QuoteFlow.application.execute("analytics:trigger", "kickass.queryTooComplexSwitchToAdvanced");
         });
         this.queryModule.onBasicModeCriteriaCountWhenSearching(function (data) {
-            JIRA.Issues.Application.execute("analytics:trigger", "kickass.basicModeCriteriaCountWhenSearching", data);
+            QuoteFlow.application.execute("analytics:trigger", "kickass.basicModeCriteriaCountWhenSearching", data);
         });
         this.queryModule.onChangedPreferredSearchMode(function (mode) {
-            JIRA.Issues.Application.execute("analytics:trigger", "kickass.switchto" + mode);
+            QuoteFlow.application.execute("analytics:trigger", "kickass.switchto" + mode);
         });
-        JIRA.Shifter.register(JIRA.Issues.SearchShifter({
+        JIRA.Shifter.register(SearchShifter({
             isBasicMode: _.bind(this.queryModule.isBasicMode, this.queryModule),
             isFullScreenIssue: _.bind(this.isFullScreenIssueVisible, this),
             searcherCollection: this.queryModule.getSearcherCollection()
@@ -320,9 +327,9 @@ var SearchPageModule = Brace.Model.extend({
 
         this.searchResults.onColumnConfigChange(function (searchResults) {
             var configName = searchResults.getColumnConfig();
-            if (configName) { //There is no columnConfig on empty search
+            if (configName) { // there is no columnConfig on empty search
                 columnConfig.setCurrentColumnConfig(configName);
-                //When the columnConfig changes, always set the columns
+                // when the columnConfig changes, always set the columns
                 columnConfig.syncColumns(configName, searchResults.getColumns());
             }
         });
@@ -335,7 +342,7 @@ var SearchPageModule = Brace.Model.extend({
 
         this.searchResults.onSelectedAssetChange(_.bind(function (issue) {
             if (!issue.hasAsset()) {
-                JIRA.Issues.Application.execute("issueEditor:removeIssueMetadata");
+                JIRA.Issues.Application.execute("assetEditor:removeAssetMetadata");
             }
         }, this));
     },
@@ -343,21 +350,20 @@ var SearchPageModule = Brace.Model.extend({
     _handleSearchResultsChange: function (model, options) {
         options = options || {};
         options.replace ?
-                this.issueNavRouter.replaceState(this.getState()) :
-                this.issueNavRouter.pushState(this.getState());
+                this.assetNavRouter.replaceState(this.getState()) :
+                this.assetNavRouter.pushState(this.getState());
     },
 
     registerSearchHeaderModule: function (searchHeaderModule) {
         this.searchHeaderModule = searchHeaderModule;
     },
 
-    registerFullScreenIssue: function (fullScreenIssue) {
-        this.fullScreenIssue = fullScreenIssue;
-        this.fullScreenIssue.bindIssueHidden(function () {
-            JIRA.Issues.Application.execute("issueEditor:dismiss");
-
+    registerFullScreenAsset: function (fullScreenIssue) {
+        this.fullScreenAsset = fullScreenIssue;
+        this.fullScreenAsset.bindIssueHidden(function () {
+            QuoteFlow.application.execute("assetEditor:dismiss");
             this.updateWindowTitle(this.getFilter());
-            JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
+            QuoteFlow.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
         }, this);
     },
 
@@ -370,15 +376,15 @@ var SearchPageModule = Brace.Model.extend({
         this.searchContainer = options.searchContainer;
     },
 
-    registerIssueNavRouter: function (issueNavRouter) {
-        this.issueNavRouter = issueNavRouter;
+    registerIssueNavRouter: function (assetNavRouter) {
+        this.assetNavRouter = assetNavRouter;
     },
 
     prevAsset: function () {
         if (this._overlayIsVisible()) {
             return false;
         }
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment") && !this.standalone) {
+        if (QuoteFlow.application.request("assetEditor:canDismissComment") && !this.standalone) {
             this.getCurrentLayout().prevAsset();
             return true;
         }
@@ -390,7 +396,7 @@ var SearchPageModule = Brace.Model.extend({
         if (this._overlayIsVisible()) {
             return false;
         }
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment") && !this.standalone) {
+        if (QuoteFlow.application.request("assetEditor:canDismissComment") && !this.standalone) {
             this.getCurrentLayout().nextAsset();
             return true;
         }
@@ -402,8 +408,8 @@ var SearchPageModule = Brace.Model.extend({
      * Is there an issue currently being loaded
      * @return Boolean
      */
-    isCurrentlyLoadingIssue: function () {
-        return JIRA.Issues.Application.request("issueEditor:isCurrentlyLoading");
+    isCurrentlyLoadingAsset: function () {
+        return QuoteFlow.application.request("assetEditor:isCurrentlyLoading");
     },
 
     _overlayIsVisible: function () {
@@ -411,92 +417,89 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     /**
-     * Retrieve the ID of the selected issue.
-     * <p/>
-     * If issue search is visible, the ID of the currently highlighted issue is
-     * returned; if we're viewing an issue, its ID is returned.
+     * Retrieve the ID of the selected asset.
+     * If asset search is visible, the ID of the currently highlighted asset is
+     * returned; if we're viewing an asset, its ID is returned.
      *
      * @param {AJS.Dialog} [dialog] The dialog requesting this information.
-     * @return {number} The ID of the currently selected issue.
+     * @return {number} The ID of the currently selected asset.
      */
     getEffectiveIssueId: function (dialog) {
-        return this.getEffectiveIssue().getId();
+        return this.getEffectiveAsset().getId();
     },
 
     /**
-     * Update the UI in response to an issue update.
+     * Update the UI in response to an asset update.
      *
-     * @param {object} issueUpdate An issue update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @param {object} issueUpdate An asset update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
      * @return {jQuery.Deferred} A deferred that is resolved when the refresh completes.
      */
-    updateAsset: function (issueUpdate) {
-        var isDelete = issueUpdate.action === JIRA.Issues.Actions.DELETE,
-            isFullScreen = this.fullScreenIssue.isVisible();
+    updateAsset: function (assetUpdate) {
+        var isDelete = assetUpdate.action === JIRA.Issues.Actions.DELETE,
+            isFullScreen = this.fullScreenAsset.isVisible();
 
         if (isDelete) {
-            return this._deleteIssue(issueUpdate);
+            return this._deleteIssue(assetUpdate);
         } else if (isFullScreen) {
-            return this.fullScreenIssue.updateAsset(issueUpdate).done(_.bind(function () {
+            return this.fullScreenAsset.updateAsset(assetUpdate).done(_.bind(function () {
                 // If it's not a standalone issue, then we also need to update the search results.
                 //
                 // Things break if these requests are made in parallel, so force them to be serial.
-                !this.standalone && this.searchResults.updateAsset(issueUpdate, { showMessage: false, filter: this.getFilter() });
+                !this.standalone && this.searchResults.updateAsset(assetUpdate, { showMessage: false, filter: this.getFilter() });
             }, this));
         } else {
-            return this.searchResults.updateAsset(issueUpdate, { filter: this.getFilter() });
+            return this.searchResults.updateAsset(assetUpdate, { filter: this.getFilter() });
         }
     },
 
     /**
-     * Update the UI in response to issue deletion.
+     * Update the UI in response to asset deletion.
      *
-     * @param {object} issueUpdate An issue update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @param {object} issueUpdate An asset update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
      * @return {jQuery.Deferred} A deferred that is resolved when the update completes.
      * @private
      */
-    _deleteIssue: function (issueUpdate) {
-        var isFullScreen = this.fullScreenIssue.isVisible(),
-            isVisibleIssue = issueUpdate.key == JIRA.Issues.Application.request("issueEditor:getIssueKey");
+    _deleteIssue: function (assetUpdate) {
+        var isFullScreen = this.fullScreenAsset.isVisible(),
+            isVisibleAsset = assetUpdate.key == QuoteFlow.application.request("assetEditor:getAssetKey");
 
         if (!isFullScreen) {
-            return this.searchResults.updateAsset(issueUpdate);
-        } else if (!isVisibleIssue) {
-            return this.fullScreenIssue.updateAsset(issueUpdate);
+            return this.searchResults.updateAsset(assetUpdate);
+        } else if (!isVisibleAsset) {
+            return this.fullScreenAsset.updateAsset(assetUpdate);
         } else if (this.standalone) {
             this.resetToBlank();
-            JIRA.Issues.showNotification(issueUpdate.message, issueUpdate.key);
+            JIRA.Issues.showNotification(assetUpdate.message, assetUpdate.key);
             return jQuery.Deferred().resolve().promise();
         } else {
             this.returnToSearch();
-            return this.searchResults.updateAsset(issueUpdate);
+            return this.searchResults.updateAsset(assetUpdate);
         }
     },
 
     /**
-     * Retrieve the key of the selected issue.
-     * <p/>
-     * If issue search is visible, the key of the currently highlighted issue is
-     * returned; if we're viewing an issue, its key is returned.
+     * Retrieve the key of the selected asset.
+     * If asset search is visible, the key of the currently highlighted asset is
+     * returned; if we're viewing an asset, its key is returned.
      *
-     * @return {number} The key of the currently selected issue.
+     * @return {number} The key of the currently selected asset.
      */
-    getEffectiveIssueKey: function () {
-        return this.getEffectiveIssue().getKey();
+    getEffectiveAssetKey: function () {
+        return this.getEffectiveAsset().getKey();
     },
 
-    getEffectiveIssue: function () {
+    getEffectiveAsset: function () {
         var hasHighlightedIssue = this.searchResults.hasHighlightedAsset(),
-            hasSelectedIssue = this.searchResults.hasSelectedAsset(),
-            issueModuleIssue;
+            hasSelectedAsset = this.searchResults.hasSelectedAsset();
 
-        issueModuleIssue = new JIRA.Issues.SimpleIssue({
-            id: JIRA.Issues.Application.request("issueEditor:getIssueId"),
-            key: JIRA.Issues.Application.request("issueEditor:getIssueKey")
+        var issueModuleIssue = new SimpleAsset({
+            id: QuoteFlow.application.request("assetEditor:getAssetId"),
+            key: QuoteFlow.application.request("assetEditor:getAssetKey")
         });
 
         if (this.standalone) {
             return issueModuleIssue;
-        } else if (hasSelectedIssue) {
+        } else if (hasSelectedAsset) {
             return this.searchResults.getSelectedAsset();
         } else if (hasHighlightedIssue) {
             return this.searchResults.getHighlightedAsset();
@@ -510,26 +513,24 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     /**
-     * Show issue search and change the URL to match model state.
-     * <p/>
-     * If returning from a stand-alone issue, reset to a blank search.
+     * Show asset search and change the URL to match model state.
+     * If returning from a stand-alone asset, reset to a blank search.
      */
     returnToSearch: function () {
         if (this.standalone) {
             this.resetToBlank();
-            JIRA.trace("jira.returned.to.search");
-        } else if (this.fullScreenIssue.isVisible()) {
+            //QuoteFlow.trace("quoteflow.returned.to.search");
+        } else if (this.fullScreenAsset.isVisible()) {
             this.searchResults.unselectAsset();
-            JIRA.Issues.Application.execute("issueEditor:beforeHide");
-            // TODO: defensive check, incase issue-nav-components is a lower version than expected. Can remove after
-            // soaking for bit on ondemand.
+            QuoteFlow.application.execute("assetEditor:beforeHide");
+            // TODO: defensive check, incase issue-nav-components is a lower version than expected. Can remove after soaking for bit on ondemand.
             if (this.queryModule.refreshLayout) {
                 this.queryModule.refreshLayout();
             }
         } else {
-            JIRA.trace("jira.returned.to.search");
+            QuoteFlow.trace("quoteflow.returned.to.search");
         }
-        jQuery.event.trigger("updateOffsets.popout")
+        jQuery.event.trigger("updateOffsets.popout");
     },
 
     toggleFilterPanel: function () {
@@ -590,7 +591,7 @@ var SearchPageModule = Brace.Model.extend({
      * @return {boolean} whether a full screen issue is visible.
      */
     isFullScreenIssueVisible: function () {
-        return this.fullScreenIssue && this.fullScreenIssue.isVisible();
+        return this.fullScreenAsset && this.fullScreenAsset.isVisible();
     },
 
     isIssueVisible: function () {
@@ -599,7 +600,7 @@ var SearchPageModule = Brace.Model.extend({
         if (this.isFullScreenIssueVisible()) {
             return true;
         } else if (layoutKey === "list-view") {
-            return this.fullScreenIssue.isVisible();
+            return this.fullScreenAsset.isVisible();
         } else if (layoutKey === "split-view") {
             // Issue is always visible in split view AS LONG AS there are results
             return this.search.getResults().hasAssets();
@@ -637,7 +638,7 @@ var SearchPageModule = Brace.Model.extend({
         };
 
         if (this.standalone) {
-            state.selectedAssetKey = JIRA.Issues.Application.request("issueEditor:getIssueKey")
+            state.selectedAssetKey = QuoteFlow.application.request("issueEditor:getIssueKey");
         } else {
             _.extend(state, this.search.getResults().getState());
         }
@@ -648,7 +649,6 @@ var SearchPageModule = Brace.Model.extend({
     _doSearch: function (options) {
         options = options || {};
         var searchOptions = {};
-        var searchPromise;
         var filter = this.getFilter();
         searchOptions.startIndex = options.startIndex;
         if (filter) {
@@ -660,11 +660,11 @@ var SearchPageModule = Brace.Model.extend({
         }
 
         searchOptions.jql = this.getEffectiveJql();
-        searchPromise = this.assetSearchManager.search(searchOptions);
+        var searchPromise = this.assetSearchManager.search(searchOptions);
 
         searchPromise.done(_.bind(function (results) {
-            if (this.fullScreenIssue.isVisible() && !AJS.Meta.get('serverRenderedViewIssue')) {
-                JIRA.Issues.Application.execute("issueEditor:beforeHide");
+            if (this.fullScreenAsset.isVisible() && !AJS.Meta.get('serverRenderedViewIssue')) {
+                QuoteFlow.application.execute("assetEditor:beforeHide");
             }
             this.searchResults.resetFromSearch(_.extend(options, results.assetTable));
             this.queryModule.onSearchSuccess(results.warnings);
@@ -674,7 +674,7 @@ var SearchPageModule = Brace.Model.extend({
                 if (xhr.status == 400 && options.selectedAssetKey) {
                     this.reset({ selectedAssetKey: options.selectedAssetKey }, { replace: true });
                 } else {
-                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedIssueKey"), this.searchResults.defaults));
+                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedAssetKey"), this.searchResults.defaults));
                     this.issueTableSearchError(xhr);
                 }
             }
@@ -708,15 +708,17 @@ var SearchPageModule = Brace.Model.extend({
 
         if (isReset) {
             var jql = (state.filter && state.jql == null) ? state.filter.getJql() : state.jql;
-            this.queryModule.resetToQuery(jql, { focusQuery: options.isNewSearch }).always(_.bind(function () {
+            this.queryModule.resetToQuery(jql, { focusQuery: options.isNewSearch }).always(_.bind(function() {
                 // Hide the query view for invalid filters.
                 this.queryModule.setVisible(!state.filter || state.filter.getIsValid());
-            }, this))
+            }, this));
         }
+
+        var searchPromise;
         if (this.shouldPerformNewSearch(prevState, newState)) {
-            var searchPromise = this._doSearch(newState);
+            searchPromise = this._doSearch(newState);
         } else {
-            var searchPromise = jQuery.Deferred().resolve();
+            searchPromise = jQuery.Deferred().resolve();
             if ("selectedIssueKey" in state) {
                 this.searchResults.selectAssetByKey(state.selectedAssetKey);
             }
@@ -754,14 +756,14 @@ var SearchPageModule = Brace.Model.extend({
 
         options = options || {};
 
-        if (!JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+        if (!QuoteFlow.application.request("assetEditor:canDismissComment")) {
             this.queryModule.queryChanged();
             AJS.InlineLayer.current && AJS.InlineLayer.current.hide();
             return null;
         }
 
         if (this._validateNavigate(state)) {
-            options.replace ? this.issueNavRouter.replaceState(state) : this.issueNavRouter.pushState(state);
+            options.replace ? this.assetNavRouter.replaceState(state) : this.assetNavRouter.pushState(state);
         }
         if (this.search.isStandAloneAsset(state)) {
             this.resetToStandaloneIssue(state);
@@ -772,7 +774,7 @@ var SearchPageModule = Brace.Model.extend({
 
 
     _validateNavigate: function (newState) {
-        var urlFromState = JIRA.Issues.URLSerializer.getURLFromState;
+        var urlFromState = UrlSerializer.getURLFromState;
         return urlFromState(newState) !== urlFromState(this.getState());
     },
 
@@ -802,7 +804,7 @@ var SearchPageModule = Brace.Model.extend({
         this._deactivateCurrentLayout();
         this.set(this.defaults());
         this.standalone = true;
-        this.fullScreenIssue.show({
+        this.fullScreenAsset.show({
             key: state.selectedAssetKey,
             viewIssueQuery: state.viewIssueQuery
         });
@@ -813,7 +815,7 @@ var SearchPageModule = Brace.Model.extend({
             shouldFetchFilter = state.filter && !(state.filter instanceof JIRA.Components.Filters.Models.Filter),
             systemFiltersRequest = this.initSystemFilters();
 
-        JIRA.Issues.Application.execute("issueEditor:abortPending");
+        QuoteFlow.application.execute("assetEditor:abortPending");
         this.createLayout();
 
         if (shouldFetchFilter) {
@@ -1042,3 +1044,5 @@ var SearchPageModule = Brace.Model.extend({
         }
     }
 });
+
+module.exports = SearchPageModule;

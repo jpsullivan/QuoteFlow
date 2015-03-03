@@ -81,9 +81,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Jil, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Jil, Version=2.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Jil.2.0.0\lib\net45\Jil.dll</HintPath>
+      <HintPath>..\packages\Jil.2.8.1\lib\net45\Jil.dll</HintPath>
     </Reference>
     <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -207,9 +207,9 @@
     <Reference Include="PowerCollections">
       <HintPath>..\packages\XAct.Wintellect.PowerCollections.0.0.1\lib\net20\PowerCollections.dll</HintPath>
     </Reference>
-    <Reference Include="Sigil, Version=4.2.1.0, Culture=neutral, PublicKeyToken=2d06c3494341c8ab, processorArchitecture=MSIL">
+    <Reference Include="Sigil, Version=4.4.0.0, Culture=neutral, PublicKeyToken=2d06c3494341c8ab, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Sigil.4.2.1\lib\net45\Sigil.dll</HintPath>
+      <HintPath>..\packages\Sigil.4.4.0\lib\net45\Sigil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable">
@@ -468,6 +468,7 @@
     <Content Include="Content\js\app\base\mixins.js" />
     <Content Include="Content\js\app\collections\asset\searcher.js" />
     <Content Include="Content\js\app\collections\asset_vars.js" />
+    <Content Include="Content\js\app\components\ajax\smart-ajax.js" />
     <Content Include="Content\js\app\components\asset-table\asset-table.js" />
     <Content Include="Content\js\app\components\asset-table\controllers\asset-table.js" />
     <Content Include="Content\js\app\components\asset-table\views\asset-table-layout.js" />
@@ -477,11 +478,29 @@
     <Content Include="Content\js\app\components\asset-table\views\pagination.js" />
     <Content Include="Content\js\app\components\asset-table\views\refresh-results.js" />
     <Content Include="Content\js\app\components\asset-table\views\results-count.js" />
+    <Content Include="Content\js\app\components\column-picker\column-config-model.js" />
+    <Content Include="Content\js\app\components\column-picker\column-picker-model.js" />
+    <Content Include="Content\js\app\components\column-picker\column-picker-sparkler-view.js" />
+    <Content Include="Content\js\app\components\column-picker\column-picker-view.js" />
+    <Content Include="Content\js\app\components\column-picker\column-picker.js" />
+    <Content Include="Content\js\app\components\control\control.js" />
+    <Content Include="Content\js\app\components\descriptor\descriptor.js" />
+    <Content Include="Content\js\app\components\input\mouse.js" />
+    <Content Include="Content\js\app\components\list\group-descriptor.js" />
+    <Content Include="Content\js\app\components\list\item-descriptor.js" />
+    <Content Include="Content\js\app\components\list\list.js" />
+    <Content Include="Content\js\app\components\list\message-descriptor.js" />
     <Content Include="Content\js\app\components\query.js" />
     <Content Include="Content\js\app\components\routes.js" />
-    <Content Include="Content\js\app\components\search\search-module.js" />
     <Content Include="Content\js\app\components\search\search-service-controller.js" />
+    <Content Include="Content\js\app\components\select\fetchers\ajax-descriptor-fetcher.js" />
+    <Content Include="Content\js\app\components\select\queryable-dropdown-select.js" />
+    <Content Include="Content\js\app\components\select\default-suggestion-handler.js" />
+    <Content Include="Content\js\app\components\select\suggest-helper.js" />
+    <Content Include="Content\js\app\components\shifter\shifter-dialog.js" />
+    <Content Include="Content\js\app\components\shifter\shifter-select.js" />
     <Content Include="Content\js\app\components\table\asset-table-view.js" />
+    <Content Include="Content\js\app\components\table\column-picker.js" />
     <Content Include="Content\js\app\components\utilities.js" />
     <Content Include="Content\js\app\extensions\string_extensions.js" />
     <Content Include="Content\js\app\helpers\application_helpers.js" />
@@ -498,8 +517,10 @@
     <Content Include="Content\js\app\modules\asset-nav\controller.js" />
     <Content Include="Content\js\app\modules\asset-nav\module.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-search-manager.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset\full-screen-asset.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset\simple-asset.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\cache\asset-cache-manager.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\query\search-shifter.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\search-module.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\search-results.js" />
     <Content Include="Content\js\app\modules\asset-nav\util\async-data.js" />
@@ -923,6 +944,8 @@
     <Content Include="Content\views\quote-builder\pagination\pagination.hbs" />
     <Content Include="Content\views\quote-builder\results\results-count.hbs" />
     <Content Include="Content\views\quote-builder\results\refresh-results.hbs" />
+    <Content Include="Content\views\shifter\dialog.hbs" />
+    <Content Include="Content\views\shifter\group-heading.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

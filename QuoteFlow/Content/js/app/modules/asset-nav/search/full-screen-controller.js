@@ -35,16 +35,16 @@ var FullScreenLayoutController = Marionette.Controller.extend({
             },
             "render": function () {
                 if (!this.searchService.hasSelectedAsset()) {
-                    this.fullScreenIssue.hide();
+                    this.fullScreenAsset.hide();
                 }
-                this.fullScreenIssue.bindSearchService(this.searchService);
+                this.fullScreenAsset.bindSearchService(this.searchService);
                 this.trigger("render");
             }
         });
 
-        this.fullScreenIssue = options.fullScreenIssue;
+        this.fullScreenAsset = options.fullScreenAsset;
 
-        this.listenTo(this.fullScreenIssue, {
+        this.listenTo(this.fullScreenAsset, {
             "assetHidden": function () {
                 // This is the second highlight. The first one is inside IssueTable component, but due the
                 // internals of FullScreenIssue, when the first one is fired the IssueTable is not in the DOM
@@ -58,7 +58,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
     },
 
     onLoadError: function (issue) {
-        if (!this.fullScreenIssue.isVisible()) {
+        if (!this.fullScreenAsset.isVisible()) {
             this.searchService.unselectAsset();
             Messages.showErrorMsg(
                 AJS.I18n.getText('viewissue.error.message.cannotopen', issue.issueKey),
@@ -72,13 +72,13 @@ var FullScreenLayoutController = Marionette.Controller.extend({
     },
 
     onClose: function () {
-        this.fullScreenIssue.deactivate();
+        this.fullScreenAsset.deactivate();
         this.assetTable.close();
         this.searchService.close();
 
         Application.off("issueEditor:loadError", this.onLoadError, this);
 
-        delete this.fullScreenIssue;
+        delete this.fullScreenAsset;
         delete this.assetTable;
         delete this.searchService;
     },
@@ -104,7 +104,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
     },
 
     isIssueViewActive: function () {
-        return this.fullScreenIssue.isVisible();
+        return this.fullScreenAsset.isVisible();
     }
 });
 

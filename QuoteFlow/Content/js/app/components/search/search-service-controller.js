@@ -40,9 +40,9 @@ var SearchServiceController = Marionette.Controller.extend({
 
     /**
      * @param {Object} options
-     * @param {JIRA.Issues.SearchModule} options.searchModule
-     * @param {JIRA.Issues.SearchResults} options.searchResults
-     * @param {JIRA.Issues.ColumnConfigModel} options.columnConfig
+     * @param {SearchModule} options.searchModule
+     * @param {SearchResults} options.searchResults
+     * @param {ColumnConfigModel} options.columnConfig
      */
     initialize: function (options) {
         this.searchModule = options.searchModule;

@@ -15,7 +15,7 @@ var SearchResults = Brace.Model.extend({
         total: 0
     },
 
-    properties: [
+    namedAttributes: [
         "columnSortJql",
         "highlightedAsset",
         "assetIds", // only present in stable search
@@ -647,22 +647,22 @@ var SearchResults = Brace.Model.extend({
         this.off("change:resultsId", func, context);
     },
 
-    onAssetUpdated: function (func, ctx) {
-        this.assetUpdateCallbacks.push({
-            handler: func,
-            ctx: ctx
-        });
-    },
-
-    offAssetUpdated: function (func) {
-        var filteredCallbacks = [];
-        this.assetUpdateCallbacks = _.each(this.assetUpdateCallbacks, function (callback) {
-            if (callback.handler !== func) {
-                filteredCallbacks.push(callback);
-            }
-        });
-        this.assetUpdateCallbacks = filteredCallbacks;
-    },
+//    onAssetUpdated: function (func, ctx) {
+//        this.assetUpdateCallbacks.push({
+//            handler: func,
+//            ctx: ctx
+//        });
+//    },
+//
+//    offAssetUpdated: function (func) {
+//        var filteredCallbacks = [];
+//        this.assetUpdateCallbacks = _.each(this.assetUpdateCallbacks, function (callback) {
+//            if (callback.handler !== func) {
+//                filteredCallbacks.push(callback);
+//            }
+//        });
+//        this.assetUpdateCallbacks = filteredCallbacks;
+//    },
 
     _getNextAssetId: function (id) {
         var assetIds = this.getAssetIds();

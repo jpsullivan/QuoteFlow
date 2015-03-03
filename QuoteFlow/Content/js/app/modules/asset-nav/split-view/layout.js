@@ -33,7 +33,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         });
 
         this.search = options.search;
-        this.fullScreenIssue = options.fullScreenIssue;
+        this.fullScreenAsset = options.fullScreenAsset;
         this.navigatorContent = options.searchContainer.find(".navigator-content");
         this.searchResults = options.search.getResults();
 
@@ -70,7 +70,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             this._makeVisible();
         }, this));
 
-        this.fullScreenIssue.hide();
+        this.fullScreenAsset.hide();
         JIRA.Issues.overrideScrollIntoViewForSplit();
 
         this.setElement(this.navigatorContent);
