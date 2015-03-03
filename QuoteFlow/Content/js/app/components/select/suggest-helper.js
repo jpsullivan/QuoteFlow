@@ -4,6 +4,10 @@ var _ = require('underscore');
 
 var GroupDescriptor = require('../list/group-descriptor');
 var ItemDescriptor = require('../list/item-descriptor');
+var MixedDescriptorFetcher = require('./fetchers/mixed-descriptor-fetcher');
+var AjaxDescriptorFetcher = require('./fetchers/ajax-descriptor-fetcher');
+var FuncDescriptorFetcher = require('./fetchers/func-descriptor-fetcher');
+var StaticDescriptorFetcher = require('./fetchers/static-descriptor-fetcher');
 
 /**
  * A utility object to manipulate/create suggestions.

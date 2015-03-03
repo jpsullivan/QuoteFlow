@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 var $ = require('jquery');
+var Utils = require('../../util/utils');
 
 /**
  * The Ajax handling in JQuery is broken to some degree. For example if the server is down 
@@ -59,7 +60,7 @@ var SmartAjax = {};
 SmartAjax.SmartAjaxResult = function (xhr, requestId, statusText, data, successful, errorThrown) {
     // in some browser you are NOT allowed to touch the xhr.status variable otherwise it throws a DOM exception
     // depending on the state of the xhr request.  So lets be super careful.
-    var status = tryIt(function () {
+    var status = Utils.tryIt(function () {
         return xhr.status;
     }, 0);
 
@@ -180,7 +181,7 @@ SmartAjax.makeRequest = function (ajaxOptions) {
         // HTTP request headers
         headers: {
             // username of logged in user on page load. see JRADEV-6999
-            'X-AUSERNAME': encodeURIComponent(params.loggedInUser)
+            //'X-AUSERNAME': encodeURIComponent(params.loggedInUser)
         }
     };
 
@@ -229,6 +230,7 @@ SmartAjax.makeRequest = function (ajaxOptions) {
     //log('started', _requestId, '' + ourAjaxOptions.url);
     return xhr;
 };
+
 /**
  * This function will build standardized error messages for handling AJAX errors.
  *

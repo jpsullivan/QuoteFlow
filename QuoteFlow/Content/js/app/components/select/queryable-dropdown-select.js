@@ -3,10 +3,15 @@
 var $ = require('jquery');
 var Marionette = require('backbone.marionette');
 
+var Control = require('../control/control');
+var DefaultSuggestHandler = require('./default-suggestion-handler');
+var List = require('../list/list');
+
 /**
  * A dropdown that can be queried and it's links selected via keyboard. Dropdown contents retrieved via AJAX.
  */
 var QueryableDropdownSelect = Marionette.ItemView.extend({
+
     /**
      *  A request will not be fired and suggestions will not reset if any of these keys are inputted.
      *
