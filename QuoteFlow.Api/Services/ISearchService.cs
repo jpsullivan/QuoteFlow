@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using QuoteFlow.Api.Asset.Search;
+using QuoteFlow.Api.Infrastructure.Paging;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
@@ -23,18 +24,19 @@ namespace QuoteFlow.Api.Services
         Task<SearchResult> Search(SearchFilter filter);
 
         /// <summary>
-        /// Search the index, and only return assets that are in the pagers' range.
-        /// NOTE: This method returns read-only <see cref="Asset"/> objects, and should not be used
-        /// where you need the Asset for update.
+        /// Search the index, and only return assets that are in the pager's range.
         /// 
-        /// Also note that if you are running a more complicated query, see <seealso cref="SearchProvider"/>.
+        /// Note: that this method returns read only <see cref="IAsset"/> objects, and should not be
+        /// used where you need the asset for update.
+        /// 
+        /// Also note that if you are after running a more complicated query see <see cref="SearchProvider"/>.
         /// </summary>
-        /// <param name="searcher">The user performing the search, which will be used to create a permission 
-        /// filter that filters out any of the results the user is not able to see and will be used to provide 
-        /// context for the search.</param>
         /// <param name="query">Contains the information required to perform the search.</param>
-        /// <returns></returns>
-        SearchResults Search(User searcher, IQuery query);
+        /// <param name="searcher">The user performing the search, which will be used to create a permission filter that filters out
+        /// any of the results the user is not able to see and will be used to provide context for the search.</param>
+        /// <param name="pager">Pager filter (use <see cref="PagerFilter{T}#getUnlimitedFilter()"/> to get all assets).</param>
+        /// <returns>A <seealso cref="SearchResults"/> containing the resulting issues.</returns>
+        SearchResults Search(User searcher, IQuery query, IPagerFilter pager);
 
         /// <summary>
         /// Search the index and return the count of the assets matching the query.
@@ -50,7 +52,7 @@ namespace QuoteFlow.Api.Services
         /// <param name="searcher">The user in context.</param>
         /// <param name="query">The raw query string to parse into a <see cref="Query"/> object.</param>
         /// <returns></returns>
-        string GetQueryString(User searcher, string query);
+        string GetQueryString(User searcher, IQuery query);
 
         /// <summary>
         /// Parses the query into a JQL <see cref="Query"/>.
@@ -77,7 +79,7 @@ namespace QuoteFlow.Api.Services
         /// <param name="query">The search query to validate.</param>
         /// <param name="searchRequestId">Validate in the context of this search request.</param>
         /// <returns></returns>
-        IMessageSet ValidateQuery(User searcher, IQuery query, long searchRequestId);
+        IMessageSet ValidateQuery(User searcher, IQuery query, long? searchRequestId);
 
         /// <summary>
         /// Generates a full QueryContext for the specified <see cref="IQuery"/> for the searching user. 

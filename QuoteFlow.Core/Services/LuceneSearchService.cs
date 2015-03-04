@@ -24,6 +24,8 @@ namespace QuoteFlow.Core.Services
 {
     public class LuceneSearchService : ISearchProvider
     {
+        #region DI
+
         private readonly ISearchProviderFactory searchProviderFactory;
         private readonly IAssetService _asssetService;
         private readonly ISearchHandlerManager searchHandlerManager;
@@ -40,6 +42,8 @@ namespace QuoteFlow.Core.Services
             this.luceneQueryBuilder = luceneQueryBuilder;
         }
 
+        #endregion
+
         public virtual SearchResults Search(IQuery query, User searcher, IPagerFilter pager)
         {
             return Search(query, searcher, pager, null);
@@ -50,18 +54,18 @@ namespace QuoteFlow.Core.Services
             return Search(query, searcher, pager, andQuery, false);
         }
 
-        public virtual SearchResults searchOverrideSecurity(IQuery query, User searcher, IPagerFilter pager, Query andQuery)
+        public virtual SearchResults SearchOverrideSecurity(IQuery query, User searcher, IPagerFilter pager, Query andQuery)
         {
             return Search(query, searcher, pager, andQuery, true);
         }
 
-        public virtual long searchCount(IQuery query, User user)
+        public virtual long SearchCount(IQuery query, User user)
         {
             IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
             return GetHitCount(query, user, null, null, false, issueSearcher, null);
         }
 
-        public virtual long searchCountOverrideSecurity(IQuery query, User user)
+        public virtual long SearchCountOverrideSecurity(IQuery query, User user)
         {
             IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
             return GetHitCount(query, user, null, null, true, issueSearcher, null);
@@ -77,7 +81,7 @@ namespace QuoteFlow.Core.Services
             Search(query, searcher, collector, andQuery, false);
         }
 
-        public virtual void searchOverrideSecurity(IQuery query, User user, Collector collector)
+        public virtual void SearchOverrideSecurity(IQuery query, User user, Collector collector)
         {
             Search(query, user, collector, null, true);
         }
@@ -87,7 +91,7 @@ namespace QuoteFlow.Core.Services
             SearchAndSort(query, user, collector, pagerFilter, false);
         }
 
-        public virtual void searchAndSortOverrideSecurity(IQuery query, User user, Collector collector, IPagerFilter pagerFilter)
+        public virtual void SearchAndSortOverrideSecurity(IQuery query, User user, Collector collector, IPagerFilter pagerFilter)
         {
             SearchAndSort(query, user, collector, pagerFilter, true);
         }
@@ -131,17 +135,17 @@ namespace QuoteFlow.Core.Services
         /// <summary>
         /// Returns null if there are no Lucene parameters (search request is null), otherwise returns a collection of Lucene
         /// Document objects.
-        /// <p/>
+        /// 
         /// The collection has 0 results if there are no matches.
         /// </summary>
-        /// <param name="searchQuery">    search request </param>
-        /// <param name="searchUser"> user performing the search </param>
-        /// <param name="sortField">  array of fields to sort by </param>
-        /// <param name="andQuery">   a query to join with the request </param>
-        /// <param name="overrideSecurity"> ignore the user security permissions </param>
-        /// <param name="issueSearcher"> the IndexSearcher to be used when searching </param>
-        /// <param name="pager"> a pager which holds information about which page of search results is actually required. </param>
-        /// <returns> hits </returns>
+        /// <param name="searchQuery">Search request</param>
+        /// <param name="searchUser">User performing the search</param>
+        /// <param name="sortField">Array of fields to sort by</param>
+        /// <param name="andQuery">A query to join with the request</param>
+        /// <param name="overrideSecurity">Ignore the user security permissions</param>
+        /// <param name="issueSearcher">The IndexSearcher to be used when searching</param>
+        /// <param name="pager">A pager which holds information about which page of search results is actually required.</param>
+        /// <returns>Hits</returns>
         /// <exception cref="SearchException"> if error occurs </exception>
         /// <exception cref="ClauseTooComplexSearchException">If query creates a lucene query that is too complex to be processed. </exception>
         private TopDocs GetHits(IQuery searchQuery, User searchUser, SortField[] sortField, Query andQuery, bool overrideSecurity, IndexSearcher issueSearcher, IPagerFilter pager)
@@ -154,10 +158,6 @@ namespace QuoteFlow.Core.Services
             {
                 Filter permissionsFilter = GetPermissionsFilter(overrideSecurity, searchUser);
                 Query finalQuery = CreateLuceneQuery(searchQuery, andQuery, searchUser, overrideSecurity);
-//                if (log.DebugEnabled)
-//                {
-//                    log.debug("JQL sorts: " + Arrays.ToString(sortField));
-//                }
                 return RunSearch(issueSearcher, finalQuery, permissionsFilter, sortField, searchQuery.ToString(), pager);
             }
             catch (Exception e)
@@ -188,12 +188,6 @@ namespace QuoteFlow.Core.Services
                     {
                         finalQuery = query;
                     }
-//                    log.debug("JQL query: " + searchQuery.ToString());
-//                    log.debug("JQL lucene query: " + finalQuery);
-                }
-                else
-                {
-                    //log.debug("Got a null query from the JQL Query.");
                 }
             }
 
@@ -226,11 +220,6 @@ namespace QuoteFlow.Core.Services
                 Query query = luceneQueryBuilder.CreateLuceneQuery(context, searchQuery.WhereClause);
                 if (query != null)
                 {
-//                    if (log.DebugEnabled)
-//                    {
-//                        log.debug("JQL query: " + jqlSearchQuery);
-//                    }
-
                     if (finalQuery != null)
                     {
                         var join = new BooleanQuery();
@@ -243,13 +232,6 @@ namespace QuoteFlow.Core.Services
                         finalQuery = query;
                     }
                 }
-                else
-                {
-//                    if (log.DebugEnabled)
-//                    {
-//                        log.debug("Got a null query from the JQL Query.");
-//                    }
-                }
             }
 
             // NOTE: we do this because when you are searching for everything the query is null
@@ -258,10 +240,6 @@ namespace QuoteFlow.Core.Services
                 finalQuery = new MatchAllDocsQuery();
             }
 
-//            if (log.DebugEnabled)
-//            {
-//                log.debug("JQL lucene query: " + finalQuery);
-//            }
             return finalQuery;
         }
 
@@ -412,6 +390,7 @@ namespace QuoteFlow.Core.Services
             finally
             {
             }
+
             return hits;
         }
 

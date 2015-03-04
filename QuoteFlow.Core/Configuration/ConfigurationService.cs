@@ -33,6 +33,13 @@ namespace QuoteFlow.Core.Configuration
             set { _indexConfig = value; }
         }
 
+        private IAssetTableServiceConfiguration _assetTableConfig;
+        public virtual IAssetTableServiceConfiguration AssetTableConfig
+        {
+            get { return _assetTableConfig ?? (_assetTableConfig = ResolveAssetTableSettings());}
+            set { _assetTableConfig = value; }
+        }
+
         private readonly Lazy<string> _httpSiteRootThunk;
         private readonly Lazy<string> _httpsSiteRootThunk;
 
@@ -55,6 +62,11 @@ namespace QuoteFlow.Core.Configuration
         public virtual IndexConfiguration ResolveIndexSettings()
         {
             return ResolveConfigObject(new IndexConfiguration(), IndexPrefix);
+        }
+
+        public virtual IAssetTableServiceConfiguration ResolveAssetTableSettings()
+        {
+            return ResolveConfigObject(new AssetTableServiceConfiguration());
         }
 
         public virtual IAppConfiguration ResolveSettings()
@@ -102,6 +114,47 @@ namespace QuoteFlow.Core.Configuration
                 else if (property.Attributes.OfType<RequiredAttribute>().Any())
                 {
                     throw new ConfigurationErrorsException(String.Format(CultureInfo.InvariantCulture, "Missing required configuration setting: '{0}'", settingName));
+                }
+            }
+            return instance;
+        }
+
+        /// <summary>
+        /// Same as <see cref="ResolveConfigObject{T}(T,string)"/> but ignores doing any
+        /// config file lookups (meaning, just rely on default value attributes).
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
+        /// <returns></returns>
+        public virtual T ResolveConfigObject<T>(T instance)
+        {
+            // Iterate over the properties
+            foreach (var property in GetConfigProperties<T>(instance))
+            {
+                var value = String.Empty;
+
+                // attempt to assign the property to the default value (if it has one)
+                var defaultValue = property.Attributes.OfType<DefaultValueAttribute>().FirstOrDefault();
+                if (defaultValue != null && defaultValue.Value != null)
+                {
+                    if (defaultValue.Value.GetType() == property.PropertyType)
+                    {
+                        property.SetValue(instance, defaultValue.Value);
+                        continue;
+                    }
+                    value = defaultValue.Value as string;
+                }
+
+                if (String.IsNullOrEmpty(value)) continue;
+
+                if (property.PropertyType.IsAssignableFrom(typeof(string)))
+                {
+                    property.SetValue(instance, value);
+                }
+                else if (property.Converter != null && property.Converter.CanConvertFrom(typeof(string)))
+                {
+                    // Convert the value
+                    property.SetValue(instance, property.Converter.ConvertFromString(value));
                 }
             }
             return instance;

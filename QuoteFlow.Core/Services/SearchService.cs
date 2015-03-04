@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Managers;
+using QuoteFlow.Api.Infrastructure.Extensions;
+using QuoteFlow.Api.Infrastructure.Paging;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
+using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Search;
@@ -22,6 +25,8 @@ namespace QuoteFlow.Core.Services
 {
     public class SearchService : ISearchService
     {
+        #region DI
+
         public IJqlQueryParser JqlQueryParser { get; protected set; }
         public IJqlStringSupport JqlStringSupport { get; protected set; }
         public IJqlOperandResolver JqlOperandResolver { get; protected set; }
@@ -52,39 +57,85 @@ namespace QuoteFlow.Core.Services
             SearchProvider = searchProvider;
         }
 
+        #endregion
+
         public Task<SearchResult> Search(SearchFilter filter)
         {
             throw new NotImplementedException();
         }
 
-        public SearchResults Search(User searcher, IQuery query)
+        public SearchResults Search(User searcher, IQuery query, IPagerFilter pager)
         {
-            throw new NotImplementedException();
+            return SearchProvider.Search(query, searcher, pager);
         }
 
         public long SearchCount(User searcher, IQuery query)
         {
-            throw new NotImplementedException();
+            return SearchProvider.SearchCount(query, searcher);
         }
 
-        public string GetQueryString(User searcher, string query)
+        public string GetQueryString(User searcher, IQuery query)
         {
-            throw new NotImplementedException();
+            return QueryString.Current.Add("jqlQuery", GetJqlString(query)).ToString();
         }
 
         public ParseResult ParseQuery(User searcher, string query)
         {
-            throw new NotImplementedException();
+            if (query.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("Must not be null or empty.", "query");
+            }
+
+            IQuery newQuery = null;
+            var errors = new MessageSet();
+
+            try
+            {
+                newQuery = JqlQueryParser.ParseQuery(query);
+            }
+            catch (JqlParseException ex)
+            {
+                var errorMessage = ex.ParseErrorMessage;
+                errors.AddErrorMessage(errorMessage.ToString());
+            }
+
+            return new ParseResult(newQuery, errors);
         }
 
         public IMessageSet ValidateQuery(User searcher, IQuery query)
         {
-            throw new NotImplementedException();
+            return ValidateQuery(searcher, query, null);
         }
 
-        public IMessageSet ValidateQuery(User searcher, IQuery query, long searchRequestId)
+        public IMessageSet ValidateQuery(User searcher, IQuery query, long? searchRequestId)
         {
-            throw new NotImplementedException();
+            if (query == null)
+            {
+                throw new ArgumentNullException("query");
+            }
+
+            var clause = query.WhereClause;
+            IMessageSet messageSet;
+
+            if (clause != null)
+            {
+                // validate clause
+                var visitor = ValidatorVisitorFactory.CreateVisitor(searcher, searchRequestId);
+                messageSet = clause.Accept(visitor);
+            }
+            else
+            {
+                messageSet = new MessageSet();
+            }
+
+            var orderBy = query.OrderByClause;
+            if (orderBy != null)
+            {
+                // validate OrderBy
+                //messageSet.AddMessageSet(OrderByValidator.Validate(searcher, orderBy));
+            }
+
+            return messageSet;
         }
 
         public IQueryContext GetQueryContext(User searcher, IQuery query)
@@ -171,12 +222,21 @@ namespace QuoteFlow.Core.Services
 
         public string GetJqlString(IQuery query)
         {
-            throw new NotImplementedException();
+            if (query == null) throw new ArgumentNullException("query");
+
+            if (query.QueryString != null)
+            {
+                return query.QueryString;
+            }
+
+            return GetGeneratedJqlString(query);
         }
 
         public string GetGeneratedJqlString(IQuery query)
         {
-            throw new NotImplementedException();
+            if (query == null) throw new ArgumentNullException("query");
+
+            return JqlStringSupport.GenerateJqlString(query);
         }
 
         public ISearchContext CreateSearchContext(List<int?> catalogs, List<int> manufacturers)

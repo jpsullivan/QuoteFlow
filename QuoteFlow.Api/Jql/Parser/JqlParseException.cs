@@ -28,18 +28,12 @@ namespace QuoteFlow.Api.Jql.Parser
 
         public virtual int LineNumber
         {
-            get
-            {
-                return ParseErrorMessage == null ? -1 : ParseErrorMessage.LineNumber;
-            }
+            get { return ParseErrorMessage == null ? -1 : ParseErrorMessage.LineNumber; }
         }
 
         public virtual int ColumnNumber
         {
-            get
-            {
-                return ParseErrorMessage == null ? -1 : ParseErrorMessage.ColumnNumber;
-            }
+            get { return ParseErrorMessage == null ? -1 : ParseErrorMessage.ColumnNumber; }
         }
     }
 }

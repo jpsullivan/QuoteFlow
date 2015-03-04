@@ -158,6 +158,7 @@
     <Compile Include="Asset\Fields\IOrderableField.cs" />
     <Compile Include="Asset\Fields\ISearchableField.cs" />
     <Compile Include="Asset\Fields\ISummaryField.cs" />
+    <Compile Include="Asset\Fields\Layout\Column\ColumnConfig.cs" />
     <Compile Include="Asset\Fields\NavigableFieldOrder.cs" />
     <Compile Include="Asset\IAssetConstant.cs" />
     <Compile Include="Asset\Index\Analyzer\EnglishAnalyzer.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Asset\Index\Indexers\IFieldIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\Phrase\PhraseQuerySupportField.cs" />
     <Compile Include="Asset\Index\QuoteFlowAnalyzer.cs" />
+    <Compile Include="Asset\Nav\IAssetTableService.cs" />
     <Compile Include="Asset\Search\ClauseNames.cs" />
     <Compile Include="Asset\Search\Constants\AllTextSearchConstants.cs" />
     <Compile Include="Asset\Search\Constants\AssetIdConstants.cs" />
@@ -242,6 +244,7 @@
     <Compile Include="Asset\Transport\IFieldValuesHolder.cs" />
     <Compile Include="Authentication\CredentialTypes.cs" />
     <Compile Include="Authentication\Providers\AuthenticatorUI.cs" />
+    <Compile Include="Configuration\IAssetTableServiceConfiguration.cs" />
     <Compile Include="Configuration\IAppConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationSource.cs" />
     <Compile Include="Configuration\LuceneIndexLocation.cs" />
@@ -428,6 +431,7 @@
     <Compile Include="Models\ViewModels\Assets\AssetVarEditRequest.cs" />
     <Compile Include="Models\ViewModels\Assets\EditAssetRequest.cs" />
     <Compile Include="Models\ViewModels\Assets\InteractiveAssetNavigatorViewModel.cs" />
+    <Compile Include="Models\ViewModels\Assets\Nav\AssetTableViewModel.cs" />
     <Compile Include="Models\ViewModels\Assets\NewAssetCommentViewModel.cs" />
     <Compile Include="Models\ViewModels\CatalogModels.cs" />
     <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
@@ -496,6 +500,7 @@
     <Compile Include="Util\ISupplier.cs" />
     <Compile Include="Util\MessageSet.cs" />
     <Compile Include="Util\ParameterUtils.cs" />
+    <Compile Include="Util\QueryString.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

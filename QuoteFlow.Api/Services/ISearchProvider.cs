@@ -21,7 +21,7 @@ namespace QuoteFlow.Api.Services
         /// used where you need the issue for update</em>.
         /// 
         /// Also note that if you are only after the number of search results use
-        /// <see cref="searchCount(IQuery ,Models.User)"/> as it provides better performance.
+        /// <see cref="SearchCount"/> as it provides better performance.
         /// </summary>
         /// <param name="query"> contains the information required to perform the search. </param>
         /// <param name="searcher"> the user performing the search, which will be used to create a permission filter that filters out
@@ -39,7 +39,7 @@ namespace QuoteFlow.Api.Services
         /// used where you need the issue for update</em>.
         /// 
         /// Also note that if you are only after the number of search results use
-        /// <see cref="searchCount(IQuery ,User)"/> as it provides better performance.
+        /// <see cref="SearchCount"/> as it provides better performance.
         /// </summary>
         /// <param name="query"> contains the information required to perform the search. </param>
         /// <param name="searcher"> the user performing the search, which will be used to create a permission filter that filters out
@@ -61,7 +61,7 @@ namespace QuoteFlow.Api.Services
         /// 
         /// <em>Note that this method returns read only <see cref="QuoteFlow.Api.Asset"/> objects, and should not be
         /// used where you need the issue for update</em>.  Also note that if you are only after the number of search
-        /// results use <see cref="searchCount(IQuery, User)"/> as it provides better performance.
+        /// results use <see cref="SearchCount"/> as it provides better performance.
         /// </summary>
         /// <param name="query"> contains the information required to perform the search. </param>
         /// <param name="searcher"> the user performing the search which will be used to provide context for the search. </param>
@@ -69,7 +69,7 @@ namespace QuoteFlow.Api.Services
         /// <param name="andQuery"> raw lucene Query to AND with the request.
         /// </param>
         /// <returns> A <see cref="SearchResults"/> containing the resulting issues.</returns>
-        SearchResults searchOverrideSecurity(IQuery query, User searcher, IPagerFilter pager, global::Lucene.Net.Search.Query andQuery);
+        SearchResults SearchOverrideSecurity(IQuery query, User searcher, IPagerFilter pager, global::Lucene.Net.Search.Query andQuery);
 
         /// <summary>
         /// Return the number of issues matching the provided search criteria.
@@ -79,45 +79,27 @@ namespace QuoteFlow.Api.Services
         /// <param name="query"> contains the information required to perform the search. </param>
         /// <param name="searcher"> the user performing the search which will be used to provide context for the search.
         /// </param>
-        /// <returns> number of matching results.
-        /// </returns>
-        /// <exception cref="SearchException"> thrown if there is a severe problem encountered with lucene when searching (wraps an
-        /// IOException). </exception>
-        /// <exception cref="ClauseTooComplexSearchException"> if the query or part of the query produces
-        /// lucene that is too complex to be processed.
-        ///  @since v4.3 </exception>
-        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        //ORIGINAL LINE: long searchCount(IQuery query, com.atlassian.crowd.embedded.api.User searcher) throws SearchException;
-        long searchCount(IQuery query, User searcher);
+        /// <returns>Number of matching results.</returns>
+        long SearchCount(IQuery query, User searcher);
 
         /// <summary>
         /// Return the number of issues matching the provided search criteria, overridding any security constraints.
         /// 
-        /// Do not use this method, use <see cref="searchCount(IQuery , User)"/>
+        /// Do not use this method, use <see cref="SearchCount"/>
         /// instead, this should only be used when performing administrative tasks where you need to know ALL the issues
         /// that will be affected.
         /// 
-        /// <b>Note:</b> This does not load all results into memory and provides better performance than
-        /// <see cref="Search"/>
+        /// Note: This does not load all results into memory and provides better performance than <see cref="Search"/>.
         /// </summary>
-        /// <param name="query"> contains the information required to perform the search. </param>
-        /// <param name="searcher"> the user performing the search which will be used to provide context for the search.
-        /// </param>
-        /// <returns> number of matching results.
-        /// </returns>
-        /// <exception cref="SearchException"> thrown if there is a severe problem encountered with lucene when searching (wraps an
-        /// IOException). </exception>
-        /// <exception cref="ClauseTooComplexSearchException"> if the query or part of the query produces
-        /// lucene that is too complex to be processed.
-        ///  @since v4.3 </exception>
-        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        //ORIGINAL LINE: long searchCountOverrideSecurity(IQuery query, com.atlassian.crowd.embedded.api.User searcher) throws SearchException;
-        long searchCountOverrideSecurity(IQuery query, User searcher);
+        /// <param name="query">Contains the information required to perform the search.</param>
+        /// <param name="searcher">The user performing the search which will be used to provide context for the search.</param>
+        /// <returns>Number of matching results.</returns>
+        long SearchCountOverrideSecurity(IQuery query, User searcher);
 
         /// <summary>
         /// Run a search based on the provided search criteria and, for each match, call Collector.collect().
         /// Collectors are low level Lucene classes, but they allow issues to be placed into buckets very quickly. Many of
-        /// JIRA's graphs and stats are generated in this manner. This method is useful if you need to execute a query in
+        /// QuoteFlow's graphs and stats are generated in this manner. This method is useful if you need to execute a query in
         /// constant-memory (i.e. you do not want to load the results of your complete search into memory) and the query
         /// generated via JQL needs to be augmented with some custom Lucene query.
         /// </summary>
@@ -125,31 +107,18 @@ namespace QuoteFlow.Api.Services
         /// <param name="searcher"> the user performing the search which will be used to provide context for the search. </param>
         /// <param name="collector"> the Lucene object that will have collect called for each match. </param>
         /// <param name="andQuery"> additional Lucene query to be anded with the lucene query that will be generated from JQL </param>
-        /// <exception cref="SearchException"> thrown if there is a severe problem encountered with lucene when searching (wraps an
-        /// IOException). </exception>
-        /// <exception cref="ClauseTooComplexSearchException"> if the query or part of the query
-        /// produces lucene that is too complex to be processed. </exception>
-        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        //ORIGINAL LINE: void search(IQuery query, com.atlassian.crowd.embedded.api.User searcher, org.apache.lucene.search.Collector collector, org.apache.lucene.search.Query andQuery) throws SearchException;
         void Search(IQuery query, User searcher, Collector collector, global::Lucene.Net.Search.Query andQuery);
 
         /// <summary>
         /// Run a search based on the provided search criteria and, for each match, call Collector.collect().
         /// Collectors are low level Lucene classes, but they allow issues to be placed into buckets very quickly.
-        /// Many of JIRA's graphs and stats are generated in this manner. This method is useful if you need to execute a
+        /// Many of QuoteFlow's graphs and stats are generated in this manner. This method is useful if you need to execute a
         /// query in constant-memory (i.e. you do not want to load the results of your complete search into memory).
         /// </summary>
         /// <param name="query"> contains the information required to perform the search. </param>
         /// <param name="searcher"> the user performing the search which will be used to provide context for the search. </param>
         /// <param name="collector"> the Lucene object that will have collect called for each match.
         /// </param>
-        /// <exception cref="SearchException"> thrown if there is a severe problem encountered with lucene when searching (wraps an
-        /// IOException). </exception>
-        /// <exception cref="ClauseTooComplexSearchException"> if the query or part of the query produces
-        /// lucene that is too complex to be processed.
-        ///  @since v4.3 </exception>
-        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        //ORIGINAL LINE: void search(IQuery query, com.atlassian.crowd.embedded.api.User searcher, org.apache.lucene.search.Collector collector) throws SearchException;
         void Search(IQuery query, User searcher, Collector collector);
 
         /// <summary>
@@ -161,14 +130,13 @@ namespace QuoteFlow.Api.Services
         /// that will be affected.
         /// 
         /// Collectors are low level Lucene classes, but they allow issues to be placed into buckets very quickly.
-        /// Many of JIRA's graphs and stats are generated in this manner. This method is useful if you need to execute a
+        /// Many of QuoteFlow's graphs and stats are generated in this manner. This method is useful if you need to execute a
         /// query in constant-memory (i.e. you do not want to load the results of your complete search into memory).
         /// </summary>
         /// <param name="query"> contains the information required to perform the search. </param>
         /// <param name="searcher"> the user performing the search which will be used to provide context for the search. </param>
         /// <param name="collector"> the Lucene object that will have collect called for each match. </param>
-        /// <exception cref="ClauseTooComplexSearchException"> if the query or part of the query produces lucene that is too complex to be processed.</exception>
-        void searchOverrideSecurity(IQuery query, User searcher, Collector collector);
+        void SearchOverrideSecurity(IQuery query, User searcher, Collector collector);
 
         /// <summary>
         /// Run a search based on the provided search criteria and, for each match call Collector.collect(). This method
@@ -184,7 +152,6 @@ namespace QuoteFlow.Api.Services
         /// <param name="searcher"> the user performing the search which will be used to provide context for the search. </param>
         /// <param name="collector"> the Lucene object that will have collect called for each match. </param>
         /// <param name="pager"> Pager filter (use <see cref="IPagerFilter#getUnlimitedFilter()"/> to get all issues). </param>
-        /// <exception cref="ClauseTooComplexSearchException">If the query or part of the query produces lucene that is too complex to be processed.</exception>
         void SearchAndSort(IQuery query, User searcher, Collector collector, IPagerFilter pager);
 
         /// <summary>
@@ -205,7 +172,6 @@ namespace QuoteFlow.Api.Services
         /// <param name="searcher">The user performing the search which will be used to provide context for the search. </param>
         /// <param name="collector">The Lucene object that will have collect called for each match. </param>
         /// <param name="pager">Pager filter (use <see cref="IPagerFilter.GetUnlimitedFilter()"/> to get all issues).</param>
-        /// <exception cref="ClauseTooComplexSearchException">If the query or part of the query produces lucene that is too complex to be processed.</exception>
-        void searchAndSortOverrideSecurity(IQuery query, User searcher, Collector collector, IPagerFilter pager);
+        void SearchAndSortOverrideSecurity(IQuery query, User searcher, Collector collector, IPagerFilter pager);
     }
 }

@@ -186,6 +186,7 @@
     <Compile Include="Asset\Index\Indexers\ManufacturerIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\SummaryIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\UserFieldIndexer.cs" />
+    <Compile Include="Asset\Nav\AssetTableService.cs" />
     <Compile Include="Asset\Search\Handlers\ManufacturerSearchHandlerFactory.cs" />
     <Compile Include="Asset\Search\Handlers\SimpleSearchHandlerFactory.cs" />
     <Compile Include="Asset\Search\Handlers\SummarySearchHandlerFactory.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Authentication\Providers\AuthenticatorConfiguration.cs" />
     <Compile Include="Authentication\Providers\LocalUser\LocalUserAuthenticator.cs" />
     <Compile Include="Configuration\AppConfiguration.cs" />
+    <Compile Include="Configuration\AssetTableServiceConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\IndexConfiguration.cs" />
     <Compile Include="Configuration\Lucene\DefaultIndexWriterConfiguration.cs" />
