@@ -2307,386 +2307,7 @@ ColumnPickerComponent.create = function(options) {
 };
 
 module.exports = ColumnPickerComponent;
-},{"./column-config-model":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-config-model.js","./column-picker-model":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker-model.js","./column-picker-view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker-view.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\control\\control.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var Brace = require('backbone-brace');
-
-/**
- * An abstract class, providing utility methods helpful when building controls.
- */
-var Control = Brace.Evented.extend({
-    INVALID: "INVALID",
-
-    /**
-     * An error for people trying to access private properties
-     *
-     * @method _throwReadOnlyError
-     * @param property - property attempted to be read
-     */
-    _throwReadOnlyError: function (property) {
-        new Error(this.CLASS_SIGNATURE + ": Sorry [" + property + "] is a read-only property");
-    },
-
-    /**
-     * Allows binding of multiple events via a group. Event groups are stored under the _events property of the class.
-     *
-     * @method _assignEvents
-     * @protected
-     * @param {String} group - name of object group containing events
-     * @param {String | HTMLElement | jQuery} $target - element to bind events to
-     */
-    _assignEvents: function (group, $target) {
-        this._unassignEvents(group, $target); // Prevent duplicate event handlers.
-        var events = this._events[group];
-        if (typeof $target === "string") {
-            for (var eventType in events) {
-                if (events.hasOwnProperty(eventType)) {
-                    jQuery(document).delegate($target, eventType, this._getDispatcher(group, eventType));
-                }
-            }
-        } else {
-            $target = jQuery($target);
-            for (eventType in events) {
-                if (events.hasOwnProperty(eventType)) {
-                    $target.bind(eventType, this._getDispatcher(group, eventType));
-                }
-            }
-        }
-
-        return this;
-    },
-
-    /**
-     * Allows unbinding of multiple events via a group. Event groups are stored under the _events property of the class.
-     *
-     * @method _assignEvents
-     * @protected
-     * @param {String} group - name of object group containing events
-     * @param {String | HTMLElement | jQuery} $target - element to unbind events from
-     */
-    _unassignEvents: function (group, $target) {
-        var events = this._events[group];
-        if (typeof $target === "string") {
-            for (var eventType in events) {
-                if (events.hasOwnProperty(eventType)) {
-                    jQuery(document).undelegate($target, eventType, this._getDispatcher(group, eventType));
-                }
-            }
-        } else {
-            $target = jQuery($target);
-            for (eventType in events) {
-                if (events.hasOwnProperty(eventType)) {
-                    $target.unbind(eventType, this._getDispatcher(group, eventType));
-                }
-            }
-        }
-    },
-
-    /**
-     * Helper method for _assignEvents, _unassignEvents
-     *
-     * @param {string} group
-     * @param {string} eventType
-     */
-    _getDispatcher: function (group, eventType) {
-        var ns = group + "/" + eventType;
-        if (!this._dispatchers) {
-            this._dispatchers = {};
-        }
-        if (!this._dispatchers[ns]) {
-            var handler = this._events[group][eventType];
-            var instance = this;
-            this._dispatchers[ns] = function (event) {
-                return handler.call(instance, event, jQuery(this));
-            };
-        }
-        return this._dispatchers[ns];
-    },
-
-    /**
-     * @method _isValidInput
-     * @return {Boolean}
-     */
-    _isValidInput: function () {
-        return true;
-    },
-
-    /**
-     * @method _handleKeyEvent --
-     *   Handle "aui:keydown" and "input" events, by dispatching them to the corresponding handler
-     *   in this.keys or this.onEdit method if the key event may have caused a text field value
-     *   to be changed.
-     *   @see jquery/plugins/keyevents/keyevents.js for supported keys.
-     *
-     * @param {Object} event -- event object
-     */
-    _handleKeyEvent: function (event) {
-        if (this._isValidInput(event)) {
-            if (event.type === "input") {
-                if (typeof this.onEdit === "function") {
-                    this.onEdit(event);
-                }
-            } else {
-                var heyHandler = this.keys && this.keys[event.key];
-                if (typeof heyHandler === "function") {
-                    heyHandler.call(this, event);
-                }
-            }
-        }
-    },
-
-    /**
-     * Appends the class signature to the event name for more descriptive and unique event names.
-     *
-     * @method getCustomEventName
-     * @param {String} methodName
-     * @return {String}
-     */
-    getCustomEventName: function (methodName) {
-        return (this.CLASS_SIGNATURE || "") + "_" + methodName;
-    },
-
-    /**
-     * Gets default arguments to be passed to the custom event handlers
-     *
-     * @method _getCustomEventArgs
-     * @protected
-     * @return {Array}
-     */
-    _getCustomEventArgs: function () {
-        return [this];
-    },
-
-    /**
-     * Does the browser support css3 box shadows
-     *
-     * @method _supportsBoxShadow
-     * @return {Boolean}
-     */
-    _supportsBoxShadow: function () {
-        var s = document.body.style;
-        return s.WebkitBoxShadow !== undefined || s.MozBoxShadow !== undefined || s.boxShadow !== undefined;
-    },
-
-
-    /**
-     * Overrides default options with user options. If the element property is set to a field set, it will attempt
-     * to parse options the options from fieldset
-     *
-     * @method _setOptions
-     * @param options
-     * @return {String | undefined} if invalid will return this.INVALID
-     */
-    _setOptions: function (options) {
-        var element, optionsFromDOM;
-
-        options = options || {};
-
-        // just supplied element selector
-        if (options instanceof jQuery || typeof options === "string" || (typeof options === "object" && options.nodeName)) {
-            options = { element: options };
-        }
-
-        element = jQuery(options.element);
-
-        optionsFromDOM = element.getOptionsFromAttributes();
-
-        this.options = jQuery.extend(true, this._getDefaultOptions(options), optionsFromDOM, options);
-
-        if (element.length === 0) {
-            return this.INVALID;
-        }
-
-        return undefined;
-    },
-
-    /**
-     * Gets position of carot in field
-     *
-     * @method getCaret
-     * @param {HTMLElement} node
-     * @return {Number} - The caret position within node, or -1 if some text is selected (and no unique caret position exists).
-     */
-    getCaret: function (node) {
-        var startIndex = node.selectionStart;
-
-        if (startIndex >= 0) {
-            return (node.selectionEnd > startIndex) ? -1 : startIndex;
-        }
-
-        if (document.selection) {
-            var textRange1 = document.selection.createRange();
-
-            if (textRange1.text.length === 0) {
-                var textRange2 = textRange1.duplicate();
-
-                textRange2.moveToElementText(node); // Set textRange2 to select all text in node.
-                textRange2.setEndPoint("EndToStart", textRange1); // Set the end point of textRange2 to the start point of textRange1.
-
-                return textRange2.text.length;
-            }
-        }
-
-        return -1;
-    },
-
-    /**
-     * Delegates DOM rendering
-     *
-     * @method _render
-     * @protected
-     * @return {jQuery}
-     */
-    _render: function () {
-
-        var i,
-            name = arguments[0],
-            args = [];
-
-        for (i = 1; i < arguments.length; i++) {
-            args.push(arguments[i]);
-        }
-
-        return this._renders[name].apply(this, args);
-    }
-});
-
-module.exports = Control;
-},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\descriptor\\descriptor.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var Brace = require('backbone-brace');
-
-/**
- * An abstract class used to maintain complex descriptors.
- */
-var Descriptor = Brace.Evented.extend({
-
-    initialize: function(options) {
-        if (this._validate(options)) {
-            this.properties = $.extend(this._getDefaultOptions(), options);
-        }
-    },
-
-    /**
-     * Gets all properties.
-     *
-     * @method allProperties
-     * @return {Object}
-     */
-    allProperties: function () {
-        return this.properties;
-    },
-
-    /**
-     * Ensures all required properites are defined otherwise throws error.
-     *
-     * @method _validate
-     * @protected
-     */
-    _validate: function (properties) {
-        if (this.REQUIRED_PROPERTIES) {
-            $.each(this.REQUIRED_PROPERTIES, function (name) {
-                if (typeof properties[name] === "undefined") {
-                    throw new Error("Descriptor: expected property [" + name + "] but was undefined");
-                }
-            });
-        }
-        return true;
-    }
-});
-
-module.exports = Descriptor;
-},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\input\\mouse.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-
-/**
- * Utility methods and classes for the mouse.
- */
-var Mouse = {};
-
-/**
- * Detects actual mouse movements, rather than mousemoves triggered by
- * content changing beneath a stationary mouse.
- *
- * @constructor
- */
-var MotionDetector = Mouse.MotionDetector = function () {
-    this.reset();
-};
-
-/**
- * @private
- */
-MotionDetector.prototype.reset = function () {
-    /**
-     * Event handler we bind so that we can unbind.
-     * @private
-     */
-    this._handler = null;
-
-    this._x = null;
-    this._y = null;
-
-    /**
-     * Whether there was an actual mouse movement since last waiting.
-     */
-    this.moved = false;
-};
-
-/**
- * Wait for the first mousemove that changes the mouse's position.
- *
- * To be notified, you can either provide a callback or query the moved
- * property. You are only notified, at most, once per proper mouse
- * movement, i.e., you'll need to reactivate the motion detector by
- * calling wait if you need it again.
- *
- * You must call unbind when you no longer require the motion detector.
- *
- * @param {function(this:document, event)} eventHandler optional callback
- */
-MotionDetector.prototype.wait = function (eventHandler) {
-    var instance = this;
-    if (!instance._handler) {
-        this.reset();
-        // If we're in an iframe, we need to listen to this event on the topmost window's document.
-        $(window.top.document).bind('mousemove', instance._handler = function (e) {
-            if (!instance._x && !instance._y) {
-                // Trap first mousemove in case it was caused by content changing underneath a stationary mouse.
-                instance._x = e.pageX;
-                instance._y = e.pageY;
-            } else if (!(e.pageX === instance._x && e.pageY === instance._y)) {
-                instance.unbind();
-                instance.moved = true;
-                if (eventHandler) {
-                    eventHandler.call(this, e);
-                }
-            }
-        });
-    }
-};
-
-/**
- * Release resources required by the motion detector.
- *
- * If you call wait, you must call this method when you no longer require
- * the motion detector.
- */
-MotionDetector.prototype.unbind = function () {
-    if (this._handler) {
-        $(window.top.document).unbind('mousemove', this._handler);
-        this.reset();
-    }
-};
-
-module.exports = Mouse;
-},{"jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\jqui-widget_sidebar.js":[function(require,module,exports){
+},{"./column-config-model":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-config-model.js","./column-picker-model":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker-model.js","./column-picker-view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-picker-view.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\jqui-widget_sidebar.js":[function(require,module,exports){
 "use strict";
 
 var _ = require('underscore');
@@ -2803,1318 +2424,7 @@ var _ = require('underscore');
     });
 })(window.jQuery);
 
-},{"underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\list\\group-descriptor.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var Descriptor = require('../descriptor/descriptor');
-
-/**
- * The group descriptor is used in {@link QueryableDropdownSelect} to define characteristics and display
- * of groups of items added to suggestions dropdown and in the case of {@link QueryableDropdownSelect} and
- * {@link SelectModel} also.
- *
- * @class GroupDescriptor
- * @extends Descriptor
- */
-var GroupDescriptor = Descriptor.extend({
-    /**
-     * Defines default properties
-     *
-     * @method _getDefaultOptions
-     * @return {Object}
-     */
-    _getDefaultOptions: function () {
-        return {
-            showLabel: true,
-            label: "",
-            items: []
-        };
-    },
-
-    placement: function () {
-        return this.properties.placement;
-    },
-
-    /**
-     * Gets styleClass, in the case of {@link QueryableDropdownSelect} these are the classNames that will be applied to the
-     * &lt;div&gt; surrounding a group of suggestions.
-     *
-     * @method styleClass
-     * @return {String}
-     */
-    styleClass: function () {
-        return this.properties.styleClass;
-    },
-
-    /**
-     * Gets weight, in the case of {@link QueryableDropdownSelect} this defines the order in which the group is appended in
-     * the &lt;optgroup&gt; and as a result displayed in the suggestions.
-     *
-     * @method weight
-     * @return {Number}
-     */
-    weight: function () {
-        return this.properties.weight;
-    },
-
-    /**
-     * Gets label, in the case of {@link QueryableDropdownSelect} this is the heading that is displayed in the suggestions
-     *
-     * @method label
-     * @return {String}
-     */
-    label: function () {
-        return this.properties.label;
-    },
-
-    /**
-     * Unselectable Li appended to bottom of list
-     * @return {String}
-     */
-    footerText: function (footerText) {
-        if (footerText) {
-            this.properties.footerText = footerText;
-        } else {
-            return this.properties.footerText;
-        }
-    },
-
-    /**
-     * Unselectable Li appended to bottom of list
-     * @return {String}
-     */
-    footerHtml: function (footerHtml) {
-        if (footerHtml) {
-            this.properties.footerHtml = footerHtml;
-        } else {
-            return this.properties.footerHtml;
-        }
-    },
-
-    /**
-     * Prepended to group list; used for "Clear All" link
-     * @param {string=} actionBarHtml
-     * @return {string}
-     */
-    actionBarHtml: function (actionBarHtml) {
-        if (actionBarHtml) {
-            this.properties.actionBarHtml = actionBarHtml;
-        }
-        return this.properties.actionBarHtml;
-    },
-
-    /**
-     * Determines if the label should be shown or not, in the case of {@link QueryableDropdownSelect} this is used when we have
-     * a suggestion that mirrors that of the user input. It sits in a seperate group but we do not want a heading for it.
-     *
-     * @method showLabel
-     * @return {Boolean}
-     */
-    showLabel: function () {
-        return this.properties.showLabel;
-    },
-
-    /**
-     * Gets items, in the case of {@link QueryableDropdownSelect} and subclasses these are instances of {@link ItemDescriptor}.
-     * These items are used to describe the elements built as &lt;option&gt;'s in {@link SelectModel} and suggestion
-     * items built in {@link List}
-     *
-     * @method items
-     * @return {ItemDescriptor[]}
-     */
-    items: function (items) {
-        if (items) {
-            this.properties.items = items;
-            return this;
-        } else {
-            return this.properties.items;
-        }
-    },
-
-    /**
-     * Adds item to the items array.
-     *
-     * @method addItem
-     * @param {ItemDescriptor} item
-     */
-    addItem: function (item) {
-        this.properties.items.push(item);
-        return this;
-    },
-
-    /**
-     * @return a unique id
-     */
-    id: function () {
-        return this.properties.id;
-    },
-
-
-    /**
-     * Sets model, in the
-     *
-     * @param {jQuery} $model
-     */
-    setModel: function ($model) {
-        this.properties.model = $model;
-    },
-
-
-    replace: function () {
-        return this.properties.replace;
-    },
-
-    /**
-     * Defines a scope within which items in this Group must be unique; allowed values are:
-     *
-     * - 'group':     (default) the item must be unique in this group
-     * - 'container': the item must be unique in this Group *and* its container
-     * - 'none':      the item does not need to be unique.
-     *
-     * The setting here may be overridden by the {@link ItemDescriptor#allowDuplicate} property.
-     */
-    uniqueItemScope: function () {
-        return this.properties.uniqueItemScope;
-    },
-
-
-    description: function () {
-        return this.properties.description;
-    },
-
-    /**
-     * Gets or sets model, in the case of {@link SelectModel} gets jQuery wrapped &lt;optgroup&gt; element
-     *
-     * @method model
-     *
-     * @return {jQuery}
-     */
-    model: function ($model) {
-        if ($model) {
-            this.properties.model = $model;
-        }
-        else {
-            return this.properties.model;
-        }
-    }
-});
-
-module.exports = GroupDescriptor;
-},{"../descriptor/descriptor":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\descriptor\\descriptor.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\list\\item-descriptor.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var Descriptor = require('../descriptor/descriptor');
-
-/**
- * The item descriptor is used in {@see QueryableDropdownSelect} to define characteristics and
- * display of items added to suggestions dropdown and in the case of {@see QueryableDropdownSelect}
- * and {@see SelectModel} also.
- *
- * @class ItemDescriptor
- * @extends Descriptor
- */
-var ItemDescriptor = Descriptor.extend({
-
-    initialize: function (options) {
-        if (options && typeof options.meta === "object") {
-            // normalise
-            options.meta = JSON.stringify(options.meta);
-        }
-        this._super(options);
-    },
-
-    /**
-     * Defines properties required during invocation to form a valid descriptor.
-     *
-     * @property {Object} REQUIRED_PROPERTIES
-     */
-    REQUIRED_PROPERTIES: {
-        label: true
-    },
-
-    /**
-     * Defines default properties
-     *
-     * @method _getDefaultOptions
-     * @return {Object};
-     */
-    _getDefaultOptions: function () {
-        return {
-            showLabel: true
-        };
-    },
-
-    /**
-     * Gets styleClass, in the case of {@link QueryableDropdownSelect} these are the classNames that will be applied to the
-     * &lt;a&gt; surrounding suggestion.
-     *
-     * @method styleClass
-     * @return {String}
-     */
-    styleClass: function () {
-        return this.properties.styleClass;
-    },
-
-    /**
-     * Misc data useful to rendering etc stored here. We store it as a string so that i can be pulled from data attributes.
-     *
-     * @return {JSON}
-     */
-    meta: function () {
-        if (this.properties.meta) {
-            return JSON.parse(this.properties.meta);
-        }
-    },
-
-    /**
-     * Gets value, in the case of a {@link QueryableDropdownSelect} this will be the value set on the &lt;option&gt;
-     *
-     * @method value
-     * @return {String}
-     */
-    value: function () {
-        return this.properties.value;
-    },
-
-    /**
-     * Gets invalid, in the case of a {@link QueryableDropdownSelect}, a span will be added to label as a hover over the invalid
-     * icon;
-     *
-     * @method invalid
-     * @return {String}
-     */
-    invalid: function () {
-        return this.properties.invalid;
-    },
-
-    /**
-     * Gets label suffix, in the case of {@link QueryableDropdownSelect} where we mirror the users input as a suggestion we
-     * use this to append some help text such as (Add Label).
-     *
-     * @deprecated not i18n friendly, use *fieldText* and *label* instead
-     * @method labelSuffix
-     * @return {String}
-     */
-    labelSuffix: function (value) {
-        if (typeof value !== "undefined") {
-            this.properties.labelSuffix = value;
-        }
-        return this.properties.labelSuffix;
-    },
-
-    /**
-     * Gets title, in the case of {@link MultiSelect} we use this as the title tag applied to {@link MultiSelect.Lozenge} element
-     *
-     * @method title
-     * @return {String}
-     */
-    title: function () {
-        return this.properties.title;
-    },
-
-    /**
-     * Gets label, in the case of {@link QueryableDropdownSelect} this is the label displayed in the suggestion items, unless
-     * the html property of this descriptor has been set.
-     *
-     * @method label
-     * @return {String}
-     */
-    label: function () {
-        return this.properties.label;
-    },
-
-
-    disabled: function (disabled) {
-        if (disabled) {
-            this.properties.disabled = disabled;
-        } else {
-            return this.properties.disabled;
-        }
-    },
-
-    /**
-     * Asks whether or not to allow duplicates of this descriptor. This is used in {@link QueryableDropdownSelect} where there
-     * is a suggetion appended that mirrors user input. In this case if we have another suggestion in the list that is
-     * the same as this one, we do not want to show this one.
-     *
-     * @method allowDuplicate
-     */
-    allowDuplicate: function () {
-        return this.properties.allowDuplicate;
-    },
-
-
-    /**
-     * @method removeOnUnSelect
-     * @param {Boolean} value
-     * @return {Boolean}
-     */
-    removeOnUnSelect: function (value) {
-        if (typeof value !== "undefined") {
-            this.properties.removeOnUnSelect = value;
-        }
-        return this.properties.removeOnUnSelect;
-    },
-
-    /**
-     * Gets icon url
-     *
-     * @method icon
-     * @return {String}
-     */
-    icon: function () {
-        return this.properties.icon;
-    },
-
-    /**
-     * Gets the fallback icon url
-     *
-     * @method icon
-     * @return {String}
-     */
-    fallbackIcon: function () {
-        return this.properties.fallbackIcon;
-    },
-
-    /**
-     * Gets or sets selected state.
-     *
-     * @method selected
-     * @param {Boolean} value
-     * @return {Boolean}
-     */
-    selected: function (value) {
-        if (typeof value !== "undefined") {
-            this.properties.selected = value;
-        }
-        return this.properties.selected;
-    },
-
-    /**
-     * Gets or sets model. The model in the case of {@link QueryableDropdownSelect} is the jQuery wrapped <option> element
-     *
-     * @param $model
-     */
-    model: function ($model) {
-        if ($model) {
-            this.properties.model = $model;
-        } else {
-            return this.properties.model;
-        }
-    },
-
-    /**
-     * Gets the keywords attribute
-     *
-     * @method keywords
-     * @return {String}
-     */
-    keywords: function () {
-        return this.properties.keywords;
-    },
-
-    /**
-     * Gets the href attribute
-     *
-     * @method href
-     * @return {String}
-     */
-    href: function () {
-        return this.properties.href;
-    },
-
-    /**
-     * {@link List} looks at this to determine if it should do the highlighting/filtering or it has already been done
-     * @return {Boolean}
-     */
-    highlighted: function (value) {
-        if (value === false) {
-            if (this.properties.html) {
-                this.properties.label = jQuery("<div>" + this.properties.html + "</div>").text();
-                this.properties.html = null;
-            }
-            this.properties.highlighted = false;
-        }
-        return this.properties.highlighted && this.properties.html;
-    },
-
-    /**
-     * Gets html, in the case of {@link QueryableDropdownSelect} this html will be shown as the suggestion item instead of [label]
-     *
-     * @method html
-     * @return {String}
-     */
-    html: function () {
-        return this.properties.html;
-    },
-
-    /**
-     * @return {String} the text displayed in field when this item is selected
-     */
-    fieldText: function () {
-        return this.properties.fieldText;
-    },
-
-    /**
-     * @return true if this {@link ItemDescriptor} should not be selected in the dropdown, even if it's an exact text match for a query.
-     */
-    noExactMatch: function () {
-        return this.properties.noExactMatch;
-    }
-});
-
-/**
- * Factory method which allows the creation of an ItemDescriptor.
- * @param suggestion
- * @param groupIndex
- * @return {ItemDescriptor}
- */
-ItemDescriptor.create = function(suggestion, groupIndex) {
-    return new ItemDescriptor({
-        label: suggestion.label,
-        styleClass: suggestion.styleClass,
-        value: suggestion.value,
-        keywords: suggestion.keywords,
-        meta: { groupIndex: groupIndex }
-    });
-};
-
-module.exports = ItemDescriptor;
-},{"../descriptor/descriptor":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\descriptor\\descriptor.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\list\\list.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-
-var Control = require('../control/control');
-var Mouse = require('../input/mouse');
-
-var List = Control.extend({
-    MAX_RESULT_LIMIT: 2000,
-
-    initialize: function (options) {
-        options = options || {};
-        if (options) {
-            this.options = jQuery.extend(true, this._getDefaultOptions(options), options);
-        } else {
-            this.options = this._getDefaultOptions(options);
-        }
-
-        this.maxInlineResultsDisplayed = this.options.maxInlineResultsDisplayed || this.MAX_RESULT_LIMIT;
-
-        this._renders = jQuery.extend({}, this._renders, this.options.renderers);
-        this.disabled = true;
-
-        this.reset();
-
-        var instance = this;
-
-        if (this.options.selectionHandler) {
-            this.$container.delegate(this.options.itemSelector, this.options.selectionEvent, function (e) {
-                instance.options.selectionHandler.call(instance, e);
-            });
-        }
-
-        // Initialise the mouse motion detector.
-        this.motionDetector.wait();
-
-        this.$container.delegate(this.options.itemSelector, "mousemove", function () {
-            if (!instance.disabled && instance.motionDetector.moved) {
-                instance.index = jQuery.inArray(this, instance.$visibleItems);
-                instance.focus(true);
-            }
-        });
-    },
-
-    _getDefaultOptions: function () {
-        return {
-            selectionEvent: "click",
-            delegateTarget: document,
-            matchingStrategy: "(^|.*?(\\s+|\\())({0})(.*)", // match start of words, including after '('
-            itemSelector: "li.aui-list-item",
-            hasLinks: true,
-            stallEventBind: true,
-            expandAllResults: false
-        };
-    },
-
-    index: 0,
-
-    /**
-     * Focuses first item element in list. If the mutliselectMode is set to true will toogle that elements focused state.
-     *
-     * @method moveToFirst
-     */
-    moveToFirst: function () {
-        if (this.$visibleItems.length > 0) {
-            this.index = 0;
-            this.focus();
-        }
-    },
-
-    /**
-     * Focuses item element in list. If the mutliselectMode is set to true will toogle that elements focused state.
-     *
-     * @method moveToNext
-     */
-    moveToNext: function () {
-        if (this.index < this.maxIndex) {
-            ++this.index; // increase the index
-            this.focus(); // focus it
-        } else if (this.options.expandAllResults && this.hasTooManySuggestions) {
-            this._expandAllResults();
-            ++this.index; // increase the index
-            this.focus(); // focus it
-        } else if (this.$visibleItems.length > 1) {
-            this.index = 0;
-            this.focus();
-        }
-    },
-
-    container: function (container) {
-        if (container) {
-            this.$container = jQuery(container);
-            this.containerSelector = container;
-        } else {
-            return this.$container;
-        }
-    },
-
-    getItemsByDescriptor: function (descriptorToMatch) {
-        var $matches = jQuery();
-        this.$container.find(this.options.itemSelector).each(function () {
-            var descriptor = jQuery.data(this, "descriptor");
-            if (descriptor && descriptor.value() === descriptorToMatch.value()) {
-                $matches = $matches.add(this);
-            }
-        });
-        return $matches;
-    },
-
-    scrollContainer: function () {
-        return (this.options.scrollContainer) ? this.$container.find(this.options.scrollContainer) : this.$container.parent();
-    },
-
-    /**
-     * @private
-     * @return {boolean}
-     *
-     * Indicates whether the scrollContainer or the document should be
-     * scrolled. If a scroll container is declared explicitly, or a
-     * dialog is currently limiting the viewport's scrolling, this
-     * method will return true.
-     */
-    _isScrollConstrained: function () {
-        var scrollContainer = this.scrollContainer()[0];
-        return scrollContainer.clientHeight < scrollContainer.scrollHeight;
-    },
-
-    /**
-     * Focuses item element in list. If the mutliselectMode is set to true will toogle that elements focused state.
-     *
-     * @method moveToPrevious
-     */
-    moveToPrevious: function () {
-        if (this.index > 0) {
-            --this.index; // decrease the index
-            this.focus();
-        } else if (this.$visibleItems.length > 0) {
-            this.index = this.$visibleItems.length - 1;
-            this.focus();
-        }
-    },
-
-    /**
-     * Scroll the container to ensure the active element is visible.
-     *
-     * Notes:
-     *
-     *   1. The scrolling algorithm chosen depends on the value of
-     *      this._isScrollConstrained(). If constrained, we cannot
-     *      scroll the documentElement, so instead we scroll
-     *      this.scrollContainer().
-     *
-     *   2. We assume $scrollContainer has borderTop, borderLeft,
-     *      paddingTop, paddingLeft are all zero.
-     *
-     *   3. We assume the active element will fit vertically inside
-     *      the scrolling region.
-     */
-    scrollActiveItemIntoView: function () {
-        var $activeItem = this.$visibleItems.filter(".active");
-        var $scrollContainer = this.scrollContainer();
-        var scrollTop = $scrollContainer.scrollTop();
-
-        if ($activeItem.length === 0) {
-            // Sanity check.
-            return;
-        }
-
-        if (!this._isScrollConstrained()) {
-            // Scrolling is unconstrained, so we are allowed to scroll the
-            // documentElement to ensure $activeItem is in view.
-            $activeItem.scrollIntoView({
-                callback: jQuery.proxy(this.motionDetector, "wait")
-            });
-
-            return;
-        }
-
-        // Scrolling is constrained to within $scrollContainer so assume it's 
-        // scrollable and scroll it in place to ensure $activeItem is in view.
-
-        if ($activeItem.closest($scrollContainer).length === 0) {
-            // If $activeItem is not a descendant of $scrollContainer, we
-            // don't need to scroll. (Most likely, $activeItem resides in
-            // the ".aui-list-fixed" container.)
-            return;
-        }
-
-        if ($activeItem.is($scrollContainer.find(this.items).first())) {
-            // Take a shortcut: If $activeItem is the first selectable item
-            // in $scrollContainer, just scroll straight to the top. This
-            // ensures optgroup headings are visible when autoscrolling.
-            this._scrollContainerTo(0);
-            return;
-        }
-
-        var roomAbove = $activeItem.offset().top - $scrollContainer.offset().top;
-        var roomBelow = $scrollContainer.outerHeight() - $activeItem.outerHeight() - roomAbove;
-
-        if (roomAbove >= 0) {
-
-            if (roomBelow < 0) {
-                // Scroll $scrollContainer so that $activeItem aligns with
-                // the baseline of $scrollContainer's scrolling region.
-                this._scrollContainerTo(scrollTop - roomBelow);
-            }
-
-        } else {
-            // Scroll $scrollContainer so that $activeItem aligns with the
-            // top of $scrollContainer's scrolling region.
-            this._scrollContainerTo(scrollTop + roomAbove);
-        }
-    },
-
-    /**
-     * Helper method to ensure autoscrolling always evades mousemove events.
-     * @private
-     * @param {number} scrollTop
-     */
-    _scrollContainerTo: function (scrollTop) {
-        var $scrollContainer = this.scrollContainer();
-        if ($scrollContainer.scrollTop() !== scrollTop) {
-            this.motionDetector.unbind();
-            this.motionDetector.wait();
-            $scrollContainer.scrollTop(scrollTop);
-        }
-    },
-
-    /**
-     * Focus the item at this.index.
-     *
-     * @param {boolean=} noScroll
-     *   -- whether to automatically scroll the active item into view
-     */
-    focus: function (noScroll) {
-        this.$visibleItems.removeClass("active");
-        var $target = this.$visibleItems.eq(this.index);
-        $target.addClass("active");
-        this.lastFocusedItemDescriptor = $target.data("descriptor");
-        if (!noScroll) {
-            this.scrollActiveItemIntoView();
-        }
-    },
-
-    motionDetector: new Mouse.MotionDetector(),
-
-    disable: function () {
-        if (this.disabled) {
-            return;
-        }
-
-        this._unassignEvents("delegateTarget", this.options.delegateTarget);
-
-        this.disabled = true;
-        this.lastFocusedItemDescriptor = null;
-    },
-
-    enable: function () {
-        var instance = this;
-        if (!instance.disabled) {
-            return;
-        }
-
-        if (this.options.stallEventBind) {
-            window.setTimeout(function () {
-                instance._assignEvents("delegateTarget", instance.options.delegateTarget);
-            }, 0);
-        } else {
-            instance._assignEvents("delegateTarget", instance.options.delegateTarget);
-        }
-
-        instance.disabled = false;
-        this._scrollContainerTo(0);
-    },
-
-    getFocused: function () {
-        return this.$visibleItems.filter(".active");
-    },
-
-    reset: function (index) {
-        this.$container = jQuery(this.options.containerSelector);
-        this.items = jQuery(this.options.itemSelector, this.$container).not(".no-suggestions");
-        this.$visibleItems = this._computeVisibleItems();
-        this.groups = jQuery(this.options.groupSelector, this.$container);
-        this.maxIndex = this.$visibleItems.length - 1;
-        this.index = this.$visibleItems[index] ? index : 0;
-
-        this.focus(true);
-    },
-
-    _computeVisibleItems: function () {
-        return this.items.not(".hidden, .disabled");
-    },
-
-    selectValue: function (value) {
-        var matchedItem = this.$container.find(this.options.itemSelector).filter(function () {
-            return jQuery(this).parent().data('descriptor').value() == value;
-        });
-        if (!matchedItem.length) {
-            AJS.log("WARN: No List item found with Decriptor value '" + value + "'");
-        }
-        matchedItem.click();
-    },
-
-    _getLinkFromItem: function (item) {
-        var link;
-
-        item = jQuery(item);
-        if (item.is("a")) {
-            link = item;
-        } else {
-            link = item.find("a");
-        }
-
-        return link;
-    },
-
-    _makeResultDiv: function (data, query) {
-
-        var $fixedContainer = jQuery('<div class="aui-list-fixed">'),
-            $resultsContainer = jQuery('<div class="aui-list-scroll" tabindex="-1">'),
-            instance = this,
-            ungrouped = [];
-
-        function appendUngrouped() {
-            if (ungrouped.length > 0) {
-                $resultsContainer.append(instance._generateUngroupedOptions(ungrouped, query));
-                ungrouped = [];
-            }
-        }
-
-        jQuery.each(data, function (i, descriptor) {
-            var $container, $optgroup;
-            if (descriptor instanceof GroupDescriptor) {
-                appendUngrouped();
-                $container = (descriptor.placement() === "fixed") ? $fixedContainer : $resultsContainer;
-                $optgroup = instance._generateOptGroup(descriptor, query);
-                $container.append($optgroup);
-
-            } else if (descriptor instanceof ItemDescriptor) {
-                ungrouped.push(descriptor);
-            }
-        });
-        appendUngrouped();
-        if ($fixedContainer.children().length === 0) {
-            // If $fixedContainer is empty, don't include it in the returned collection.
-            return $resultsContainer;
-        }
-
-        return $fixedContainer.add($resultsContainer);
-    },
-
-    _addResultToContainer: function ($result) {
-        // Don't count suggestions in the "fixed" group.
-        if ($result.not(".aui-list-fixed").find(this.options.itemSelector).length === 0) {
-            var $scrollContainer = this.$container.find(".aui-list-scroll");
-            if ($scrollContainer.length == 0) {
-                $scrollContainer = jQuery('<div class="aui-list-scroll" tabindex="-1">').appendTo(this.$container);
-            }
-            $scrollContainer.html(this._render("noSuggestion"));
-        } else {
-            $result.find("ul:last").addClass("aui-last");
-            this.$container.html($result);
-        }
-    },
-
-    /**
-     * Using the array of {@see GroupDescriptor} and {@see ItemDescriptor} matches items using the supplied query
-     * argument. These items are then rendered. Note: Any previous items in the list a removed.
-     *
-     * @method generateListFromJSON
-     * @param {Array} data
-     * @param {string} query
-     * @param {boolean} [forceAllResults=false] True to display all the results, overriding maxInlineResultsDisplayed config option
-     */
-    generateListFromJSON: function (data, query, forceAllResults) {
-
-        this.suggestions = 0;
-        this.exactMatchIndex = -1;
-        this.lastFocusedIndex = -1;
-
-        this.lastQuery = query;
-        this.lastData = data;
-        this.forceAllResults = forceAllResults;
-        this.hasTooManySuggestions = false; // will be set to the correct value by _addOptionsToContainer(), if needed
-
-        var $result = this._makeResultDiv(data, query);
-
-        this.$container.hide();
-        this._addResultToContainer($result, query);
-        this.$container.show();
-
-        var indexToHighlight = this.exactMatchIndex >= 0 ? this.exactMatchIndex : this.lastFocusedIndex;
-        this.reset(indexToHighlight);
-    },
-
-    _generateOption: function (item, query, labelRegex) {
-        var replacementText;
-
-        // Only highlight query matches if html has NOT been specified - assume the back end knows what it's doing.
-        if (!item.highlighted() && labelRegex && labelRegex.test(item.label())) {
-            replacementText = item.label().replace(labelRegex, function (_, prefix, spaceOrParenthesis, match, suffix) {
-                var div = jQuery("<div>");
-
-                prefix && div.append(jQuery("<span>").text(prefix));
-                div.append(jQuery("<em>").text(match));
-                suffix && div.append(jQuery("<span>").text(suffix));
-
-                return div.html();
-            });
-        }
-
-        if (this.exactMatchIndex < 0) {
-            var itemValue = jQuery.trim(item.label()).toLowerCase();
-            if (!item.noExactMatch() && itemValue === jQuery.trim(query).toLowerCase()) {
-                this.exactMatchIndex = this.suggestions;
-            } else if (this.lastFocusedIndex < 0 && this.lastFocusedItemDescriptor && itemValue === jQuery.trim(this.lastFocusedItemDescriptor.label()).toLowerCase()) {
-                this.lastFocusedIndex = this.suggestions;
-            }
-        }
-
-        this.suggestions++;
-
-        return this._render("suggestion", item, replacementText);
-    },
-
-    _filterOptions: function (options, regexEscapedQuery, labelRegex) {
-
-        if (!regexEscapedQuery) return options;
-
-        var filtered = [],
-            keywordsRegex = new RegExp(AJS.format(".*{0}.*", regexEscapedQuery), "i");
-
-        for (var i = 0, len = options.length; i < len; i++) {
-            var item = this._filterOption(options[i], keywordsRegex, labelRegex);
-            if (item) {
-                filtered.push(item);
-            }
-        }
-
-        return filtered;
-    },
-
-    _filterOption: function (item, keywordsRegex, labelRegex) {
-        var result;
-
-        if (item.highlighted()) {
-            result = item; // if we have html we assume the server has already filtered
-        } else if (labelRegex.test(item.label())) {
-            result = item;
-        } else if (item.keywords()) {
-            // if we didn't match on the label, try to match on keywords
-            // for each keyword that contains the query, add it to the item's suffix string
-            // otherwise return null if we don't match on the label or on any keywords
-            var matchedKeywords = [];
-            var keywordString = "" + item.keywords(),
-                    keywords = keywordString.split(",");
-
-            for (var j = 0; j < keywords.length; j++) {
-                var keyword = keywords[j];
-                if (keywordsRegex.test(keyword)) {
-                    matchedKeywords.push(keyword);
-                }
-            }
-
-            if (matchedKeywords.length) {
-                item.labelSuffix(" " + matchedKeywords.join(', '));
-                result = item;
-            }
-        }
-
-        return result;
-    },
-
-    _addOptionsToContainer: function (options, $container, query, labelRegex) {
-        var instance = this,
-            maxResult = this.maxInlineResultsDisplayed,
-            hasSuggestion = false,
-            forceAllResults = this.forceAllResults,
-            suggestions = [];
-
-        for (var i = 0, len = options.length; i < len; i++) {
-            var option = options[i];
-            if (i < maxResult || forceAllResults) {
-                var $suggestion = instance._generateOption(option, query, labelRegex);
-                if ($suggestion) {
-                    hasSuggestion = true;
-                    suggestions.push($suggestion[0]);
-                }
-            } else {
-                this.hasTooManySuggestions = true;
-                suggestions.push(instance._render("tooManySuggestions", options.length - i)[0]);
-                break;
-            }
-        }
-        $container.html(jQuery(suggestions));
-
-        return hasSuggestion;
-    },
-
-    _filterAndAddOptions: function (options, container, query) {
-
-        var regexEscapedQuery, labelRegex;
-
-        if (query) {
-
-            regexEscapedQuery = RegExp.escape(query);
-            labelRegex = new RegExp(AJS.format(this.options.matchingStrategy, regexEscapedQuery), "i");
-            options = this._filterOptions(options, regexEscapedQuery, labelRegex);
-        }
-
-        if (this.options.maxResultsDisplayedPerGroup) {
-            options = options.slice(0, this.options.maxResultsDisplayedPerGroup);
-        }
-
-        return this._addOptionsToContainer(options, container, query, labelRegex);
-    },
-
-    _generateUngroupedOptions: function (options, query) {
-        var $container = this._render("ungroupedSuggestions");
-        var optionsAdded = this._filterAndAddOptions(options, $container, query);
-        if (optionsAdded) {
-            return $container;
-        }
-    },
-
-    _generateOptGroup: function (groupDescriptor, query) {
-
-        var res = jQuery(),
-                optContainer = this._render("suggestionGroup", groupDescriptor),
-                options = groupDescriptor.items(),
-                optionsAdded;
-
-        optionsAdded = this._filterAndAddOptions(options, optContainer, query);
-
-        if (!optionsAdded) {
-            return;
-        }
-
-        if (groupDescriptor.label() && groupDescriptor.showLabel() !== false) {
-            res = res.add(this._render("suggestionGroupHeading", groupDescriptor));
-        }
-
-        if (groupDescriptor.footerText()) {
-            optContainer.append(this._render("suggestionsGroupFooter", groupDescriptor.footerText()));
-        } else if (groupDescriptor.footerHtml()) {
-            optContainer.append(groupDescriptor.footerHtml());
-        }
-
-        if (groupDescriptor.actionBarHtml()) {
-            optContainer.prepend(groupDescriptor.actionBarHtml());
-        }
-
-        res = res.add(optContainer);
-
-        return res;
-    },
-
-    _expandAllResults: function () {
-        this.generateListFromJSON(this.lastData, this.lastQuery, true);
-    },
-
-    _events: {
-        delegateTarget: {
-            "aui:keydown": function (event) {
-                this._handleKeyEvent(event);
-            }
-        }
-    },
-
-    _renders: {
-
-        suggestion: function (descriptor, replacementText) {
-
-            //adding the label as a class for testing.
-            var idSuffix = descriptor.fieldText() || descriptor.label();
-            var itemId = AJS.escapeHtml(jQuery.trim(idSuffix.toLowerCase()).replace(/[\s\.]+/g, "-")),
-                    listElem = jQuery('<li class="aui-list-item aui-list-item-li-' + itemId + '"><a class="aui-list-item-link"/></li>'),
-                    linkElem = listElem.children();
-
-            if (descriptor.selected()) {
-                listElem.addClass("aui-checked");
-            }
-
-            if (this.options.hasLinks) {
-                linkElem.attr("href", descriptor.href() || "#");
-            }
-
-            if (descriptor.styleClass()) {
-                linkElem.addClass(descriptor.styleClass());
-            }
-
-            if (replacementText) {
-                linkElem.html(replacementText);
-            } else if (descriptor.html()) {
-                linkElem.html(descriptor.html());
-            } else {
-                linkElem.text(descriptor.label());
-            }
-
-            if (descriptor.labelSuffix()) {
-                var suffixSpan = jQuery("<span class='aui-item-suffix' />").text(descriptor.labelSuffix());
-                linkElem.append(suffixSpan);
-            }
-
-            if (descriptor.icon() && descriptor.icon() !== "none") {
-                var icon = AJS.$('<img class="icon"  alt="" />');
-                icon.attr("src", descriptor.icon());
-                linkElem.addClass("aui-iconised-link").prepend(icon);
-            }
-
-            if (descriptor.title()) {
-                linkElem.prop('title', descriptor.title());
-            } else {
-                linkElem.prop('title', linkElem.text());
-            }
-
-            listElem.data("descriptor", descriptor);
-
-            return listElem;
-        },
-        noSuggestion: function () {
-            return jQuery("<li class='no-suggestions'>" + AJS.I18n.getText("common.concepts.no.matches") + "</li>");
-        },
-        tooManySuggestions: function (suggestionCount) {
-            if (this.options.expandAllResults) {
-                var instance = this;
-                var $button = jQuery([
-                    "<button type='button' class='aui-button aui-button-link view-all'>",
-                        AJS.I18n.getText("common.concepts.view.all.with.total.info", suggestionCount),
-                    "</button>"
-                ].join(""));
-                var $li = jQuery("<li class='no-suggestions'></li>").append($button);
-
-                // This can't be extracted to _events.delegateTarget as some consumers set the delegateTarget element
-                // to be outside the list, therefore this event will not be handled.
-                $button.click(function (ev) {
-                    instance._expandAllResults();
-                    ev.stopPropagation();
-                });
-                $button = null;
-                return $li;
-            } else {
-                return jQuery("<li class='no-suggestions'>" + AJS.I18n.getText("common.concepts.too.many.matches", suggestionCount) + "</li>");
-            }
-        },
-        ungroupedSuggestions: function () {
-            return jQuery('<ul>');
-        },
-        suggestionGroup: function (descriptor) {
-            return jQuery("<ul class='aui-list-section' />").attr("id", descriptor.label().replace(/\s/g, "-").toLowerCase())
-                    .addClass(descriptor.styleClass()).data("descriptor", descriptor);
-        },
-        suggestionGroupHeading: function (descriptor) {
-            var elem = jQuery("<h5 />").text(descriptor.label()).addClass(descriptor.styleClass()).data("descriptor", descriptor);
-
-            if (descriptor.description()) {
-                jQuery("<span class='aui-section-description' />").text(" (" + descriptor.description() + ")").appendTo(elem);
-            }
-
-            return elem;
-        },
-        suggestionsGroupFooter: function (text) {
-            return jQuery("<li class='aui-list-section-footer' />").text(text);
-        }
-    },
-
-    _acceptSuggestion: function (item) {
-
-        if (!item instanceof jQuery) {
-            item = jQuery(item);
-        }
-
-        var linkNode = this._getLinkFromItem(item);
-
-        if (linkNode.length) {
-            var event = new jQuery.Event("click");
-            linkNode.trigger(event, [linkNode]);
-            if (!event.isDefaultPrevented()) {
-                window.location.href = linkNode.attr("href");
-            }
-        }
-    },
-
-    getAllItems: function () {
-        return this.$container.find(this.options.itemSelector);
-    },
-
-    _acceptUserInput: function ($field) {
-        // Call the blur event handler on this field, so that accepting user input goes through a different
-        // code path to accepting suggestions.
-        // TODO: Refactor this so that AJS.List doesn't need to know about is owner AJS.QueryableDropdownSelect.
-        $field.triggerHandler("blur");
-    },
-
-    _handleSectionByKeyboard: function (e) {
-        var $focusedItem = this.getFocused();
-        var $field = jQuery(e.target);
-
-        if ($focusedItem.length === 0) {
-            return;
-        }
-
-        // NOTE: See AJS.QueryableDropdownSelect.prototype._requestThenResetSuggestions for where this._latestQuery is set.
-        if (this._latestQuery && jQuery.trim($field.val()) !== this._latestQuery) {
-            // Handle case where user input is inconsistent with suggestion text like a user-inputted-option.
-            var inputWords = $field.val().toLowerCase().match(/\S+/g);
-            if (inputWords) {
-                var html = this.lastFocusedItemDescriptor && this.lastFocusedItemDescriptor.html();
-                var $item = html ? jQuery("<div>").html(html) : $focusedItem;
-                var matches = [];
-                $item.find("em,b").each(function () {
-                    var $match = jQuery(this),
-                            nextText = jQuery($match.attr('nextSibling')).text().toLowerCase().match(/^\S*/)[0];
-                    jQuery.each($match.text().toLowerCase().match(/\S+/g), function (i, match) {
-                        matches.push(match + nextText);
-                    });
-                });
-
-                for (var i = 0; i < inputWords.length; i++) {
-                    var word = inputWords[i];
-                    var n = word.length;
-                    var hasMatch = false;
-                    for (var j = 0; j < matches.length; j++) {
-                        if (matches[j].slice(0, n) === word) {
-                            hasMatch = true;
-                            break;
-                        }
-                    }
-                    if (!hasMatch) {
-                        this._acceptUserInput($field);
-                        return;
-                    }
-                }
-            }
-        }
-
-        this.scrollActiveItemIntoView();
-
-        // If it's a genuine matching selection, defer to the selectionHandler if one exists.
-        // The selection handler may choose to handle accepting a suggestion on its own, in which
-        // case we don't need to do any further work.
-        if (this.options.selectionHandler && !this.options.selectionHandler.call(this, e)) {
-            return;
-        }
-
-        this._acceptSuggestion($focusedItem);
-    },
-
-    _isValidInput: function () {
-        return !this.disabled && this.$container.is(":visible");
-    },
-
-    keys: {
-        "Down": function (event) {
-            this.moveToNext();
-            event.preventDefault();
-        },
-        "Up": function (event) {
-            this.moveToPrevious();
-            event.preventDefault();
-        },
-        "Return": function (event) {
-            this._handleSectionByKeyboard(event);
-            event.preventDefault();
-        }
-    }
-});
-
-module.exports = List;
-},{"../control/control":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\control\\control.js","../input/mouse":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\input\\mouse.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\list\\message-descriptor.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var ItemDescriptor = require('./item-descriptor');
-
-/**
- * The message descriptor is used in {@link QueryableDropdownSelect} to define characteristics and
- * display of items added to suggestions dropdown and in the case of {@link QueryableDropdownSelect}
- * and {@link SelectModel} also.
- *
- * It displays an AUI message instead a regular item.
- *
- * @class MessageDescriptor
- * @extends ItemDescriptor
- */
-var MessageDescriptor = ItemDescriptor.extend({
-
-    /**
-     * Gets the useAUI attribute
-     *
-     * @method useAUI
-     * @return {Boolean}
-     */
-    useAUI: function () {
-        return this.properties.useAUI;
-    },
-
-    /**
-     * Gets message ID, used for the DOM Element
-     *
-     * @method domID
-     * @return {String}
-     */
-    messageID: function () {
-        return this.properties.messageID;
-    },
-
-    _getDefaultOptions: function () {
-        return $.extend(this._super(), {
-            useAUI: true
-        });
-    }
-});
-
-/**
- * Factory method that creates a MessageDescriptor.
- */
-MessageDescriptor.create = function(suggestion, groupIndex) {
-    return new MessageDescriptor({
-        label: suggestion.label,
-        styleClass: suggestion.styleClass,
-        useAUI: suggestion.useAUI,
-        messageID: suggestion.messageID,
-        value: suggestion.value,
-        keywords: suggestion.keywords,
-        meta: { groupIndex: groupIndex }
-    });
-};
-
-module.exports = MessageDescriptor;
-},{"./item-descriptor":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\list\\item-descriptor.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\query.js":[function(require,module,exports){
+},{"underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\query.js":[function(require,module,exports){
 "use strict";
 
 var _ = require('underscore');
@@ -4252,1334 +2562,7 @@ var Routes = {
 };
 
 module.exports = Routes;
-},{"./utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","string-extensions":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\extensions\\string_extensions.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\default-suggestion-handler.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var _ = require('underscore');
-var Brace = require('backbone-brace');
-
-var SuggestHelper = require('./suggest-helper');
-
-/**
- * A default suggestion handler. Used for autocomplete without a backing <select>
- * @class SuggestHandler
- * @class DefaultSuggestHandler
- */
-var DefaultSuggestHandler = Brace.Evented.extend({
-    /**
-     * @constructor
-     * @param options
-     */
-    initialize: function (options) {
-        this.options = options;
-        this.descriptorFetcher = SuggestHelper.createDescriptorFetcher(options);
-    },
-
-    /**
-     * Check if we should mirror input as a suggestion
-     * @param {String} query
-     * @return {Boolean}
-     */
-    validateMirroring: function (query) {
-        return this.options.userEnteredOptionsMsg && query.length > 0;
-    },
-
-    /**
-     * Applies default formatting
-     *
-     * @param {Array} descriptors
-     * @param {String} query
-     * @return {*}
-     */
-    formatSuggestions: function (descriptors, query) {
-        if (this.validateMirroring(query)) {
-
-            descriptors.push(SuggestHelper.mirrorQuery(query, this.options.userEnteredOptionsMsg, this.options.uppercaseUserEnteredOnSelect));
-        }
-        return descriptors;
-    },
-
-    /**
-     * Requests descriptors then formats them
-     * @param {String} query
-     * @param {Boolean} force
-     * @return {*}
-     */
-    execute: function (query, force) {
-        var deferred = jQuery.Deferred();
-        var fetcherDef = this.descriptorFetcher.execute(query, force).done(_.bind(function (descriptors) {
-            if (descriptors) {
-                descriptors = this.formatSuggestions(descriptors, query);
-            }
-            deferred.resolve(descriptors, query);
-        }, this));
-        deferred.fail(function () {
-            fetcherDef.reject();
-        });
-        return deferred;
-    }
-});
-
-module.exports = DefaultSuggestHandler;
-},{"./suggest-helper":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\suggest-helper.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\fetchers\\ajax-descriptor-fetcher.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var _ = require('underscore');
-var Brace = require('backbone-brace');
-var SmartAjax = require('../../ajax/smart-ajax');
-
-/**
- * Retrieves json from server and converts it into descriptors using formatSuggestions function supplied by user.
- * @class AjaxDescriptorFetcher
- */
-var AjaxDescriptorFetcher = Brace.Evented.extend({
-
-    /**
-     * @constructor
-     * @param options
-     */
-    initialize: function (options) {
-        this.options = _.extend({
-            keyInputPeriod: 75, // Wait this long between key strokes before going to server
-            minQueryLength: 1, // Need these many characters before we go to server
-            data: {},
-            dataType: "json"
-        }, options);
-    },
-
-    // Actually make the request and notify those interested
-    makeRequest: function (deferred, ajaxOptions, query) {
-        ajaxOptions.complete = _.bind(function () {
-            this.outstandingRequest = null;
-        }, this);
-        ajaxOptions.success = _.bind(function (data) {
-            if (ajaxOptions.query) {
-                deferred.resolve(ajaxOptions.formatResponse(data, query));
-            } else {
-                this.lastResponse = ajaxOptions.formatResponse(data, query);
-                deferred.resolve(this.lastResponse);
-            }
-        }, this);
-        var originalError = ajaxOptions.error;
-        ajaxOptions.error = function (xhr, textStatus, msg, smartAjaxResult) {
-            if (!smartAjaxResult.aborted) {
-                if (originalError) {
-                    originalError.apply(this, arguments);
-                } else {
-                    alert(SmartAjax.buildSimpleErrorContent(smartAjaxResult, { alert: true }));
-                }
-            }
-        };
-
-        this.outstandingRequest = SmartAjax.makeRequest(ajaxOptions); // issue requestcle
-    },
-
-    /**
-     * Prepare the data and prevent throttling of server
-     * @param {jQuery.Deferred} deferred
-     * @param {Object} ajaxOptions - standard jQuery ajax options
-     * @param {String} query - in most cases this is the user input
-     * @param {Boolean} force - ignore request buffers. I want my request dispatched NOW.
-     */
-    incubateRequest: function (deferred, ajaxOptions, query, force) {
-        clearTimeout(this.queuedRequest); // cancel any queued requests
-
-        if (force && this.outstandingRequest) {
-            this.outstandingRequest.abort();
-            this.outstandingRequest = null;
-        }
-
-        if (!ajaxOptions.query && this.lastResponse) {
-            deferred.resolve(this.lastResponse);
-        } else if (!this.outstandingRequest) {
-            if (typeof ajaxOptions.data === 'function') {
-                ajaxOptions.data = ajaxOptions.data(query);
-            } else {
-                ajaxOptions.data.query = query;
-            }
-
-            if (typeof ajaxOptions.url === 'function') {
-                ajaxOptions.url = ajaxOptions.url();
-            }
-
-            if ((query.length >= parseInt(ajaxOptions.minQueryLength, 10)) || force) {
-                this.makeRequest(deferred, ajaxOptions, query);
-            } else {
-                deferred.resolve();
-            }
-        } else {
-            this.queuedRequest = setTimeout(_.bind(function () {
-                this.incubateRequest(deferred, ajaxOptions, query, true);
-            }, this), ajaxOptions.keyInputPeriod);
-        }
-
-        return deferred;
-    },
-    
-    /**
-     * Sets up a request
-     * @param {Function} query - lazily evaluated value of input field.
-     * @param {Boolean} force - Piss off all buffers etc. Make request now!
-     * @return {jQuery.Deferred}
-     */
-    execute: function (query, force) {
-        var deferred = jQuery.Deferred();
-        deferred.fail(_.bind(function () {
-            clearTimeout(this.queuedRequest);
-            if (this.outstandingRequest) {
-                this.outstandingRequest.abort();
-            }
-        }, this));
-        this.incubateRequest(deferred, _.extend({}, this.options), query, force);
-        return deferred;
-    }
-});
-
-module.exports = AjaxDescriptorFetcher;
-},{"../../ajax/smart-ajax":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\ajax\\smart-ajax.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\fetchers\\func-descriptor-fetcher.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var Brace = require('backbone-brace');
-
-/**
- * A single fetcher that will just return the result of calling supplied function.
- *
- * @class FuncDescriptorFetcher
- */
-var FuncDescriptorFetcher = Brace.Evented.extend({
-    /**
-     * @constructor
-     * @param options
-     */
-    initialize: function (options) {
-        this.options = options;
-    },
-
-    /**
-     * Gets result of function
-     * @param query
-
-     */
-    execute: function (query) {
-        var deferred = jQuery.Deferred();
-        deferred.resolve(this.options.suggestions(query), query);
-        return deferred;
-    }
-});
-
-module.exports = FuncDescriptorFetcher;
-},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\fetchers\\mixed-descriptor-fetcher.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var _ = require('underscore');
-var Brace = require('backbone-brace');
-
-var AjaxDescriptorFetcher = require('./ajax-descriptor-fetcher');
-
-/**
- * Gets suggestions from unselected <option>s in <select> as well as going to the 
- * server upon character for more results on input.
- *
- * @class MixedDescriptorFetcher
- */
-var MixedDescriptorFetcher = Brace.Evented.extend({
-    /**
-     *
-     * @param {Object} options - jQuery ajax options object. With additional:
-     * @param {function} options.formatResponse - function for creating descriptors out of server response
-     * @param {number} options.minQueryLength - min input length before a request is made
-     * @param {Object} options.ajaxOptions
-     * @param {SelectModel} model - a wrapper around <select> element
-     */
-    initialize: function (options, model) {
-        this.ajaxFetcher = new AjaxDescriptorFetcher(options.ajaxOptions);
-        this.options = options;
-        this.model = model;
-    },
-
-    /**
-     * @param query
-     * @param force
-     * @return {jQuery.Deferred}
-     */
-    execute: function (query, force) {
-        var deferred = jQuery.Deferred();
-        // This needs to come after the return statement...
-        if (query.length >= 1) {
-            var ajaxDeferred = this.ajaxFetcher.execute(query, force).done(_.bind(function (suggestions) {
-                // JRADEV-21004
-                // Put suggestions at the front to avoid them being removed by removeDuplicates() method.
-                // After that, we sort the descriptors based on a label, so this change won't affect the
-                // final result
-                var descriptors = [].concat(suggestions).concat(this.model.getAllDescriptors());
-                deferred.resolve(descriptors, query);
-            }, this));
-            deferred.fail(function () {
-                ajaxDeferred.reject();
-            });
-        } else {
-            deferred.resolve(this.model.getUnSelectedDescriptors(), query);
-        }
-        return deferred;
-    }
-});
-
-module.exports = MixedDescriptorFetcher;
-},{"./ajax-descriptor-fetcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\fetchers\\ajax-descriptor-fetcher.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\fetchers\\static-descriptor-fetcher.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var Brace = require('backbone-brace');
-
-/**
- * Gets unselected <option>s from <select> as suggestions
- * @class StaticDescriptorFetcher
- */
-var StaticDescriptorFetcher = Brace.Evented.extend({
-    /**
-     * @param {Object} options - empty in this case
-     * @param {SelectModel} model - a wrapper around <select> element
-     */
-    initialize: function (options, model) {
-        this.model = model;
-        this.model.$element.data("static-suggestions", true);
-    },
-
-    /**
-     * @return {jQuery.Deferred}
-     */
-    execute: function (query) {
-        var deferred = jQuery.Deferred();
-        deferred.resolve(this.model.getUnSelectedDescriptors(), query);
-        return deferred;
-    }
-});
-
-module.exports = StaticDescriptorFetcher;
-},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\queryable-dropdown-select.js":[function(require,module,exports){
-var $ = require('jquery');
-var Marionette = require('backbone.marionette');
-
-var Control = require('../control/control');
-var DefaultSuggestHandler = require('./default-suggestion-handler');
-var List = require('../list/list');
-var Navigator = require('../../util/navigator');
-
-/**
- * A dropdown that can be queried and it's links selected via keyboard. Dropdown contents retrieved via AJAX.
- */
-var QueryableDropdownSelect = Marionette.ItemView.extend({
-
-    /**
-     *  A request will not be fired and suggestions will not reset if any of these keys are inputted.
-     *
-     * @property {Array} INVALID_KEYS
-     */
-    INVALID_KEYS: {
-        "Shift": true,
-        "Esc": true,
-        "Right": true
-    },
-
-    /**
-     * Overrides default options with user options. Inserts an input field before dropdown.
-     *
-     * @param {Object} options
-     * @param {jQuery | HTMLElement} options.element
-     * @param {SuggestHandler} options.suggestionsHandler
-     */
-    initialize: function (options) {
-        this.suggestionsVisible = false;
-        this._setOptions(options);
-        this._createFurniture();
-        this._createDropdownController();
-        this._createSuggestionsController();
-        this._createListController();
-        this._assignEventsToFurniture();
-
-        if (this.options.width) {
-            this.setFieldWidth(this.options.width);
-        }
-
-        if (this.options.loadOnInit) {
-            // eagerly get suggestions
-            this.requestSuggestions(true);
-        }
-
-        this.on("deactivate", this._deactivate);
-        this.on("handleKeypress", this._handleEscape);
-    },
-
-    /**
-     * Creates dropdown controller
-     * @private
-     */
-    _createDropdownController: function () {
-        var instance = this;
-        if (this.options.dropdownController) {
-            this.dropdownController = this.options.dropdownController;
-        } else {
-            this.dropdownController = InlineLayerFactory.createInlineLayers({
-                offsetTarget: this.$field,
-                width: this.$field.innerWidth(),
-                content: this.options.element
-            });
-        }
-        this.dropdownController.onhide(function () {
-            instance.hideSuggestions();
-        });
-    },
-
-    /**
-     * Creates suggestions controller
-     * @private
-     */
-    _createSuggestionsController: function () {
-        this.suggestionsHandler = this.options.suggestionsHandler
-            ? new this.options.suggestionsHandler(this.options)
-            : new DefaultSuggestHandler(this.options);
-    },
-
-    /**
-     * Creates list controller
-     * @private
-     */
-    _createListController: function () {
-        var instance = this;
-        this.listController = new List({
-            containerSelector: this.options.element,
-            groupSelector: "ul.aui-list-section",
-            matchingStrategy: this.options.matchingStrategy,
-            eventTarget: this.$field,
-            selectionHandler: function () {
-                // prevent form field from being dirty
-                instance.$field.val("Loading...").css("color", "#999");
-                instance.hideSuggestions();
-                return true;
-            }
-        });
-    },
-
-    /**
-     * Sets field width
-     *
-     * @param {Number} width - field width
-     */
-    setFieldWidth: function (width) {
-        this.$container.css({
-            width: width,
-            minWidth: width
-        });
-    },
-
-    /**
-     * Show an error message near this field
-     *
-     * @param {String} value (optional) - The user input text responsible for the error
-     */
-    showErrorMessage: function (value) {
-        var $container = this.$container.parent(".field-group"); // aui container
-        this.hideErrorMessage(); // remove old
-        this.$errorMessage.text(AJS.format(this.options.errorMessage, value || this.getQueryVal()));
-
-        if ($container.length === 1) {
-            $container.append(this.$errorMessage);
-            return;
-        }
-
-        if ($container.length === 0) {
-            $container = this.$container.parent(".frother-control-renderer"); // not in aui but JIRA renderer
-        }
-
-        if ($container.length === 1) {
-            this.$errorMessage.prependTo($container);
-            return;
-        }
-
-        if ($container.length === 0) {
-            this.$container.parent().append(this.$errorMessage);
-        }
-    },
-
-    /**
-     * @method hideErrorMessage - Hide the error message-
-     */
-    hideErrorMessage: function () {
-        if (this.$errorMessage) {
-            this.$errorMessage.remove();
-        }
-        this.$container.parent().find(".error").remove(); // remove all error message from server also
-    },
-
-    /**
-     * Gets default options
-     *
-     * @method _getDefaultOptions
-     * @private
-     * @return {Object}
-     */
-    _getDefaultOptions: function () {
-        return {
-            id: "default",
-            // keyInputPeriod: expected milliseconds between consecutive keystrokes
-            // If this user types faster than this, no requests will be issued until they slow down.
-            keyInputPeriod: 75,
-            // localListLiveUpdateLimit: Won't search for new options if there are more options than this value
-            localListLiveUpdateLimit: 25,
-            // Only search for new options locally after this delay.
-            localListLiveUpdateDelay: 150
-        };
-    },
-
-    /**
-     * Appends furniture around specified dropdown element. This includes:
-     *
-     * <ul>
-     *  <li>Field - text field used fro querying</li>
-     *  <li>Container - Wrapper used to contain all furniture</li>
-     *  <li>Dropdown Icon - Button in right of field used to open dropdown via mouse</li>
-     * </ul>
-     *
-     * @method _createFurniture
-     * @private
-     */
-    _createFurniture: function () {
-        this.$container = this._render("container").insertBefore(this.options.element);
-        this.$field = this._render("field").appendTo(this.$container);
-        this.$dropDownIcon = this._render("dropdownAndLoadingIcon", this._hasDropdownButton()).appendTo(this.$container);
-        if (this.options.overlabel) {
-            this.$overlabel = this._render("overlabel").insertBefore(this.$field);
-            this.$overlabel.overlabel();
-        }
-    },
-
-    /**
-     * Whether or not to display dropdown icon/button
-     *
-     * @method _hasDropdownButton
-     * @protected
-     * @return {Boolean}
-     */
-    _hasDropdownButton: function () {
-        return this.options.showDropdownButton || this.options.ajaxOptions && this.options.ajaxOptions.minQueryLength === 0;
-    },
-
-    /**
-     * Assigns events to DOM nodes
-     *
-     * @method _assignEventsToFurniture
-     * @protected
-     */
-    _assignEventsToFurniture: function () {
-
-        var instance = this;
-
-        this._assignEvents("ignoreBlurElement", this.dropdownController.$layer);
-        this._assignEvents("container", this.$container);
-
-        if (this._hasDropdownButton()) {
-            this._assignEvents("ignoreBlurElement", this.$dropDownIcon);
-            this._assignEvents("dropdownAndLoadingIcon", this.$dropDownIcon);
-        }
-
-        // if this control is created as the result of a keydown event then we do no want to catch keyup or keypress for a moment
-        setTimeout(function () {
-            instance._assignEvents("field", instance.$field);
-            instance._assignEvents("keys", instance.$field);
-        }, 15);
-    },
-
-    /**
-     * Requests JSON formatted suggestions from specified resource. Resource is sepecified in the ajaxOptions object
-     * passed to the constructed during initialization.
-     *
-     * If the query option of ajaxOptions is set to true, an ajax request will be made for every keypress. Otherwise
-     * ajax request will be made only the first time the dropdown is shown.
-     *
-     * @method _requestThenResetSuggestions
-     * @private
-     * @param {Boolean} force - flag to specify that gating by keyInputPeriod should be circumvented
-     */
-    requestSuggestions: function (force) {
-        var instance = this,
-            deferred = jQuery.Deferred();
-
-        this.outstandingRequest = this.suggestionsHandler.execute(this.getQueryVal(), force).done(function (descriptors, query) {
-            if (query === instance.getQueryVal()) {
-                deferred.resolve(descriptors, query);
-            }
-        });
-        if (this.outstandingRequest.state() !== "resolved") {
-            window.clearTimeout(this.loadingWait); // clear existing wait
-            // wait 150ms until we should throbber to avoid flickering while typing
-            this.loadingWait = window.setTimeout(function () {
-                if (instance.outstandingRequest.state() === "pending") {
-                    instance.showLoading();
-                }
-            }, 150);
-
-            this.outstandingRequest.always(function () {
-                instance.hideLoading(); // make sure we always remove throbber
-            });
-        }
-        return deferred;
-    },
-
-    /**
-     * Show the loading indicator
-     * @return {*} this
-     */
-    showLoading: function () {
-        this.$dropDownIcon.addClass("loading").removeClass("noloading");
-        return this;
-    },
-
-    /**
-     * Hide the loading indicator
-     * @return {*} this
-     */
-    hideLoading: function () {
-        this.$dropDownIcon.removeClass("loading").addClass("noloading");
-        return this;
-    },
-
-    /**
-     *
-     * Sets suggestions and shows them
-     *
-     * @method _setSuggestions
-     * @param {Array} Descriptors
-     */
-    _setSuggestions: function (data) {
-
-        // JRADEV-2053: If the field is no longer focused (i.e. the user has already tabbed away) don't set
-        // suggestions as it will bring focus back to this field.
-        this.suggestionsVisible = true;
-
-        if (data) {
-            this.listController.generateListFromJSON(data, this.getQueryVal());
-            this.dropdownController.show();
-            this.dropdownController.setWidth(this.$field.innerWidth());
-            this.dropdownController.setPosition();
-            this.listController.enable();
-
-        } else {
-            this.hideSuggestions();
-        }
-
-        // Makes WebDriver wait for the correct suggestions
-        this.$container.attr("data-query", this.getQueryVal());
-    },
-
-    /**
-     * Fades out & disables interactions with fielddisabledBlanket
-     */
-    disable: function () {
-        if (!this.disabled) {
-            this.$container.addClass("aui-disabled");
-            // The disabledBlanket is necessary to prevent clicks on other elements positioned over the field.
-            this.$disabledBlanket = this._render("disabledBlanket").appendTo(this.$container);
-            this.$field.attr('disabled', true);
-            this.dropdownController.hide();
-            this.disabled = true;
-        }
-    },
-
-    /**
-     * Enables interactions with field
-     */
-    enable: function () {
-        if (this.disabled) {
-            this.$container.removeClass("aui-disabled");
-            this.$disabledBlanket.remove();
-            this.$field.attr('disabled', false);
-            this.disabled = false;
-        }
-    },
-
-    /**
-     * Gets input field value
-     *
-     * @return {String}
-     */
-    getQueryVal: function () {
-        return jQuery.trim(this.$field.val());
-    },
-
-    _isValidInput: function (event) {
-        return this.$field.is(":visible") && !(event.type === "aui:keydown" && this.INVALID_KEYS[event.key]);
-    },
-
-    /**
-     * Hides list if the is no value in input, otherwise shows and resets suggestions in dropdown
-     *
-     * @method _handleCharacterInput
-     * @param {Boolean} force - flag to specify that gating by keyInputPeriod (via requestSuggestions) should be circumvented
-     * @private
-     */
-    _handleCharacterInput: function (force) {
-        var queryLength = this.getQueryVal().length;
-        if (queryLength >= 1 || force) {
-            this.requestSuggestions(force).done(_.bind(function (suggestions) {
-                this._setSuggestions(suggestions);
-            }, this));
-        } else {
-            this.hideSuggestions();
-        }
-    },
-
-    /**
-     * Handles down key
-     *
-     * @method _handleDown
-     * @param {Event} e
-     */
-    _handleDown: function (e) {
-        if (!this.suggestionsVisible) {
-            this.listController._latestQuery = ""; // JRADEV-9009 Resetting query value
-            this._handleCharacterInput(true);
-        }
-        e.preventDefault();
-    },
-
-    /**
-     * Cancels and pending or outstanding requests
-     *
-     * @method _rejectPendingRequests
-     * @protected
-     */
-    _rejectPendingRequests: function () {
-        if (this.outstandingRequest) {
-            this.outstandingRequest.reject();
-        }
-    },
-
-    /**
-     * Hides suggestions
-     *
-     * @method hideSuggestions
-     */
-    hideSuggestions: function () {
-        if (!this.suggestionsVisible) {
-            return;
-        }
-
-        this._rejectPendingRequests();
-        this.suggestionsVisible = false;
-        this.$dropDownIcon.addClass("noloading");
-        this.dropdownController.hide();
-        this.listController.disable();
-    },
-
-    _deactivate: function () {
-        debugger;
-        this.hideSuggestions();
-    },
-
-    /**
-     * Handles Escape key
-     *
-     * @method _handleEscape
-     * @param {Event} e
-     */
-    _handleEscape: function (e) {
-        if (this.suggestionsVisible) {
-            e.stopPropagation();
-            if (e.type === "keyup") {
-                this.hideSuggestions();
-                if (Navigator.isIE() && Navigator.majorVersion() < 12) {
-                    // IE - field has already received the event and lost focus (default browser behaviour)
-                    this.$field.focus();
-                }
-            }
-        }
-    },
-
-    /**
-     * Selects currently focused suggestion, if there is one
-     */
-    acceptFocusedSuggestion: function () {
-        var focused = this.listController.getFocused();
-        if (focused.length !== 0 && focused.is(":visible")) {
-            this.listController._acceptSuggestion(focused);
-        }
-    },
-
-    keys: {
-        "Down": function (e) {
-            if (this._hasDropdownButton()) {
-                this._handleDown(e);
-            }
-        },
-        "Up": function (e) {
-            e.preventDefault();
-        },
-        "Return": function (e) {
-            e.preventDefault();
-        }
-    },
-
-    onEdit: function () {
-        this._handleCharacterInput();
-    },
-
-    _events: {
-        dropdownAndLoadingIcon: {
-            click: function (e) {
-                if (this.suggestionsVisible) {
-                    this.hideSuggestions();
-                } else {
-                    this._handleDown(e);
-                    this.$field.focus();
-                }
-                e.stopPropagation();
-            }
-        },
-
-        container: {
-            disable: function () {
-                this.disable();
-            },
-            enable: function () {
-                this.enable();
-            }
-        },
-
-        field: {
-            blur: function () {
-                if (!this.ignoreBlurEvent) {
-                    this._deactivate();
-                } else {
-                    this.ignoreBlurEvent = false;
-                }
-            },
-            click: function (e) {
-                e.stopPropagation();
-            },
-            "keydown keyup": function (e) {
-                if (e.keyCode === 27) {
-                    this._handleEscape(e);
-                }
-            }
-        },
-
-        keys: {
-            "aui:keydown input": function (event) {
-                this._handleKeyEvent(event);
-            }
-        },
-
-        ignoreBlurElement: {
-            mousedown: function (e) {
-                if (Navigator.isIE() && Navigator.majorVersion() < 12) {
-                    // IE fires blur events when user clicks on the scrollbar inside autocomplete suggestion list.
-                    // In that case we don't deactivate the input field by setting a flag and checking it in field:blur.
-                    var targetIsDropdownController = (jQuery(e.target)[0] == jQuery(this.dropdownController.$layer)[0]);
-
-                    if (targetIsDropdownController) {
-                        this.ignoreBlurEvent = true;
-                    }
-
-                    if (typeof document.addEventListener === "undefined") { // IE8
-                        // Scrollbar freezes in IE8 if we 'preventDefault' when user clicked on the scrollbar.
-                        if (!targetIsDropdownController) {
-                            var field = this.$field.get(0);
-
-                            /**
-                             * Performs an IE specific "preventDefault"
-                             */
-                            function onbeforedeactivate(event) {
-                                event.returnValue = false;
-                            }
-
-                            // Preventing the default action of "mousedown" events stops the
-                            // activeElement losing focus in all non-IE. We need to use a funky
-                            // workaround for IE which allows the field to lose focus briefly
-                            // so that UI controls like scrollbars are still interactive.
-                            field.attachEvent("onbeforedeactivate", onbeforedeactivate);
-                            setTimeout(function () {
-                                field.detachEvent("onbeforedeactivate", onbeforedeactivate);
-                            }, 0);
-                        }
-                        return;
-                    }
-                }
-
-                // IE9 and other browsers
-                e.preventDefault();
-            }
-        }
-    },
-
-    _renders: {
-
-        disabledBlanket: function () {
-            return jQuery("<div class='aui-disabled-blanket' />").height(this.$field.outerHeight());
-        },
-        overlabel: function () {
-            return jQuery("<span id='" + this.options.id + "-overlabel' data-target='" + this.options.id + "-field' class='overlabel'>" + this.options.overlabel + "</span>");
-        },
-        field: function () {
-            // Create <input> element in a way that is compatible with IE8 "input" event shim.
-            // @see jquery.inputevent.js -- Note #2
-            return jQuery("<input>").attr({
-                "autocomplete": "off",
-                "class": "text",
-                "id": this.options.id + "-field",
-                "type": "text"
-            });
-        },
-        container: function () {
-            return jQuery("<div class='queryable-select' id='" + this.options.id + "-queryable-container' />");
-        },
-        dropdownAndLoadingIcon: function (showDropdown) {
-            var $element = jQuery('<span class="icon noloading"><span>More</span></span>');
-            if (showDropdown) {
-                $element.addClass("drop-menu");
-            }
-            return $element;
-        },
-        suggestionsContainer: function () {
-            return jQuery("<div class='aui-list' id='" + this.options.id + "' tabindex='-1'></div>");
-        }
-    }
-});
-
-module.exports = QueryableDropdownSelect;
-},{"../../util/navigator":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\navigator.js","../control/control":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\control\\control.js","../list/list":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\list\\list.js","./default-suggestion-handler":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\default-suggestion-handler.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\suggest-helper.js":[function(require,module,exports){
-"use strict";
-
-var _ = require('underscore');
-
-var GroupDescriptor = require('../list/group-descriptor');
-var ItemDescriptor = require('../list/item-descriptor');
-var MixedDescriptorFetcher = require('./fetchers/mixed-descriptor-fetcher');
-var AjaxDescriptorFetcher = require('./fetchers/ajax-descriptor-fetcher');
-var FuncDescriptorFetcher = require('./fetchers/func-descriptor-fetcher');
-var StaticDescriptorFetcher = require('./fetchers/static-descriptor-fetcher');
-
-/**
- * A utility object to manipulate/create suggestions.
- */
-var SuggestHelper = {
-
-    /**
-     * Factory method to create descriptor fetcher based on user optiosn
-     *
-     * @param options
-     * @param {SelectModel} model
-     */
-    createDescriptorFetcher: function (options, model) {
-        if (options.ajaxOptions && options.ajaxOptions.url) {
-            if (model && options.content === "mixed") {
-                return new MixedDescriptorFetcher(options, model);
-            } else {
-                return new AjaxDescriptorFetcher(options.ajaxOptions);
-            }
-        } else if (options.suggestions) {
-            return new FuncDescriptorFetcher(options);
-        } else if (model) {
-            return new StaticDescriptorFetcher(options, model);
-        }
-    },
-
-    /**
-     * Extract all item descriptors within an array of group descriptors.
-     *
-     * @param descriptors {GroupDescriptor[]} The group descriptors.
-     * @return {ItemDescriptor[]} All item descriptors within.
-     */
-    extractItems: function (descriptors) {
-        return _.flatten(_.map(descriptors, function (descriptor) {
-            if (descriptor instanceof GroupDescriptor) {
-                return descriptor.items();
-            } else {
-                return [descriptor];
-            }
-        }));
-    },
-    /**
-     * Creates a descriptor group that mirrors the inputted query
-     * @param {String} query
-     * @param {String} label
-     * @param {Boolean} uppercaseValue
-     * @return {GroupDescriptor}
-     */
-    mirrorQuery: function (query, label, uppercaseValue) {
-        var value = uppercaseValue ? query.toUpperCase() : query;
-        return new GroupDescriptor({
-            label: "user inputted option",
-            showLabel: false,
-            replace: true
-        }).addItem(new ItemDescriptor({
-            value: value,
-            label: value,
-            labelSuffix: " (" + label + ")",
-            title: value,
-            allowDuplicate: false,
-            noExactMatch: true          // this item doesn't count as an exact query match for selthis.ection purposes
-        }));
-    },
-    /**
-     * Does the item descriptor match any of the selected values
-     * @param {ItemDescriptor} itemDescriptor
-     * @param {String[]} selectedVals
-     * @return {Boolean}
-     */
-    isSelected: function (itemDescriptor, selectedVals) {
-        return _.any(selectedVals, function (descriptor) {
-            return itemDescriptor.value() === descriptor.value();
-        });
-    },
-    /**
-     * Removes duplicate descriptors
-     *
-     * @param descriptors
-     * @param vals
-     * @return {Array}
-     */
-    removeDuplicates: function (descriptors, vals) {
-        vals = vals || [];
-        return _.filter(descriptors, _.bind(function (descriptor) {
-            if (descriptor instanceof GroupDescriptor) {
-                descriptor.items(this.removeDuplicates(descriptor.items(), vals));
-                return true;
-            } else if (!_.include(vals, descriptor.value())) {
-                if (descriptor.value()) {
-                    vals.push(descriptor.value());
-                }
-                return true;
-            }
-        }, this));
-    },
-    /**
-     * Loop over all descriptors and remove descriptors that match selected vals. Usually if the user has already
-     * selected a suggestion, we don't want to show it.
-     * @param {GroupDescriptor[], ItemDescriptor[]} descriptors
-     * @param {String[]} selectedValues
-     * @return {GroupDescriptor[], ItemDescriptor[]} descriptors
-     * @private
-     */
-    removeSelected: function (descriptors, selectedValues) {
-        return _.filter(descriptors, _.bind(function (descriptor) {
-            if ((descriptor instanceof ItemDescriptor) && this.isSelected(descriptor, selectedValues)) {
-                return false;
-            }
-            if (descriptor instanceof GroupDescriptor) {
-                descriptor.items(this.removeSelected(descriptor.items(), selectedValues));
-            }
-            return true;
-        }, this));
-    }
-};
-
-module.exports = SuggestHelper;
-},{"../list/group-descriptor":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\list\\group-descriptor.js","../list/item-descriptor":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\list\\item-descriptor.js","./fetchers/ajax-descriptor-fetcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\fetchers\\ajax-descriptor-fetcher.js","./fetchers/func-descriptor-fetcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\fetchers\\func-descriptor-fetcher.js","./fetchers/mixed-descriptor-fetcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\fetchers\\mixed-descriptor-fetcher.js","./fetchers/static-descriptor-fetcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\fetchers\\static-descriptor-fetcher.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\shifter\\shifter-dialog.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var _ = require('underscore');
-
-var Brace = require('backbone-brace');
-var ShifterSelect = require('./shifter-select');
-
-var ShifterDialog = Brace.Evented.extend({
-    BLUR_DELAY: 50,
-
-    /**
-     * @param {String} options.id - unique id for this dialog
-     * @param {ShifterGroup[]} options.groups
-     * @param {Number} options.maxResultsDisplayedPerGroup
-     */
-    initialize: function (options) {
-        this.id = options.id;
-        this.groups = options.groups;
-        this.options = options;
-        this._render();
-        this._destroyOnBlur();
-        this._preventFocusOnNonInputElements();
-        jQuery(document).on('mousedown.shifterdialog.' + id, _.bind(this._destroyOnMousedownOutside, this));
-    },
-
-    focus: function() {
-        if (this.$dialog) {
-            this.$dialog.find('input').focus();
-        }
-    },
-
-    destroy: function() {
-        var $dialog = this.$dialog;
-        if ($dialog) {
-            $dialog.stop().animate({
-                top: -1 * $dialog.height()
-            }, 100, function() {
-                $dialog.remove();
-            });
-            this.$dialog = null;
-            jQuery(document).off('mousedown.shifterdialog.' + this.id);
-        }
-    },
-
-    destroyed: function() {
-        return !this.$dialog;
-    },
-
-    saveLastQuery: function(query) {
-        sessionStorage.setItem('JIRA.Shifter.lastQuery', query);
-    },
-
-    getLastQuery: function() {
-        return sessionStorage.getItem('JIRA.Shifter.lastQuery');
-    },
-
-    enterLoadingState: function() {
-        var $dialog = this.$dialog;
-        $dialog.addClass('loading-action');
-        $dialog.find('.aui-list').slideUp(200);
-    },
-
-    _render: function() {
-        var html = JST["shifter/dialog"]({
-            id: this.id
-        });
-        var $dialog = this.$dialog = jQuery(html).appendTo('body');
-
-        var shifterSelect = this.shifterSelect = new ShifterSelect({
-            id: this.id,
-            element: $dialog.find('.aui-list'),
-            groups: this.groups,
-            suggestionsHandler: this._makeSuggestionsHandler(),
-            onSelection: _.bind(this._onSelection, this),
-            maxResultsDisplayedPerGroup: this.options.maxResultsDisplayedPerGroup
-        });
-
-        if (this.getLastQuery()) {
-            shifterSelect.$field.val(this.getLastQuery()).select();
-            shifterSelect.onEdit();
-        }
-
-        shifterSelect.$field.on('keyup', _.bind(function(e) {
-            if (e.which === jQuery.ui.keyCode.ESCAPE) {
-                e.stopPropagation();
-                this.destroy();
-            }
-        }, this));
-
-        //JRADEV-19747 - Hide any layer to avoid conflicts with the keyboard handling (up, down, return...)
-        if (AJS.currentLayerItem && AJS.currentLayerItem.hide) {
-            AJS.currentLayerItem.hide()
-        }
-
-        $dialog.css('top', -1 * $dialog.height()).animate({
-            top: 0
-        }, 100);
-    },
-
-    _destroyOnBlur: function() {
-        this.$dialog.find('input').blur(_.bind(function() {
-            setTimeout(_.bind(function() {
-                if (this.$dialog && !jQuery.contains(this.$dialog[0], document.activeElement)) {
-                    this.destroy();
-                }
-            }, this), this.BLUR_DELAY);
-        }, this));
-    },
-
-    /**
-     * Preventing focus when clicking on elements inside the dialog doesn't completely work in IE8
-     */
-    _destroyOnMousedownOutside: function(e) {
-        if (this.$dialog.find(e.target).length === 0 && e.target !== this.$dialog) {
-            this.destroy();
-        }
-    },
-
-    _preventFocusOnNonInputElements: function() {
-        var $inputs = this.$dialog.find('input');
-        this.$dialog.mousedown(function(e) {
-            if (jQuery.inArray(e.target, $inputs) === -1) {
-                e.preventDefault();
-            }
-        });
-    },
-
-    _makeSuggestionsHandler: function() {
-        var groups = this.groups;
-        return Brace.Evented.extend({
-            execute: function(query) {
-                var suggestions = [];
-                var masterDeferred = jQuery.Deferred();
-                var deferredsRemaining = groups.length;
-                _.map(groups, function(group, groupIndex) {
-                    return group.getSuggestions(query).done(function(groupSuggestions) {
-                        if (!_.isArray(groupSuggestions)) {
-                            return;
-                        }
-                        suggestions.push(new GroupDescriptor({
-                            label: group.name,
-                            description: group.context,
-                            weight: group.weight,
-                            items: _.map(groupSuggestions, function(suggestion) {
-                                return ItemDescriptor.create(suggestion, groupIndex);
-                            })
-                        }));
-                        // Keep the groups sorted
-                        suggestions.sort(function(a,b){ return a.weight() - b.weight(); });
-                    }).always(function() {
-                        deferredsRemaining--;
-                        if (deferredsRemaining === 0) {
-                            masterDeferred.resolve(suggestions, query);
-                        }
-                    });
-                });
-                return masterDeferred;
-            }
-        });
-    },
-
-    _onSelection: function(group, value, label) {
-        this.saveLastQuery(label);
-        var ret = group.onSelection(value);
-        if (ret && _.isFunction(ret.always)) {
-            this.enterLoadingState();
-            ret.always(_.bind(this.destroy, this));
-        } else {
-            this.destroy();
-        }
-    }
-});
-
-module.exports = ShifterDialog;
-},{"./shifter-select":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\shifter\\shifter-select.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\shifter\\shifter-select.js":[function(require,module,exports){
-"use strict";
-
-var $ = require('jquery');
-var _ = require('underscore');
-
-var QueryableDropdownSelect = require('../select/queryable-dropdown-select');
-var ListWithMessages = require('../list/list');
-var MessageDescriptor = require('../list/message-descriptor');
-
-var ShifterSelect = QueryableDropdownSelect.extend({
-
-    /**
-     * @param options.id
-     * @param options.element
-     * @param {ShifterGroup[]} options.groups
-     * @param {Class} options.suggestionsHandler
-     * @param {Function} options.onSelection - called with (group, value) when a suggestion is selected
-     * @param {Number} options.maxSuggestionsPerGroup
-     */
-    initialize: function (options) {
-        _.extend(options, {
-            dropdownController: {
-                setWidth: jQuery.noop,
-                setPosition: jQuery.noop,
-                onhide: jQuery.noop,
-                hide: jQuery.noop,
-                show: jQuery.noop
-            }
-        });
-
-        QueryableDropdownSelect(options);
-        this._super(options);
-
-        this.$field.attr('placeholder', "Find Actions...");
-        this.$dropDownIcon.click(_.bind(this.clear, this));
-        this._handleCharacterInput();
-    },
-
-    onEdit: function () {
-        this.toggleClearButton();
-        this._handleCharacterInput();
-    },
-
-    clear: function () {
-        this.$field.val('').focus();
-        this.onEdit();
-    },
-
-    toggleClearButton: function () {
-        this.$dropDownIcon.toggleClass('aui-iconfont-remove', !!this.$field.val());
-    },
-
-    showLoading: function () {
-        this._super();
-        this.$dropDownIcon.removeClass('aui-iconfont-remove');
-    },
-
-    hideLoading: function () {
-        this._super();
-        this.toggleClearButton();
-    },
-
-    _handleCharacterInput: function () {
-        this._super(true);
-        if (this.getQueryVal().length === 0) {
-            this.listController.moveToFirst();
-        }
-    },
-
-    _createListController: function () {
-        var instance = this;
-        this.listController = new ListWithMessages({
-            containerSelector: this.options.element,
-            groupSelector: "ul.aui-list-section",
-            scrollContainer: ".aui-list-scroll",
-            matchingStrategy: this.options.matchingStrategy,
-            maxResultsDisplayedPerGroup: this.options.maxResultsDisplayedPerGroup,
-            eventTarget: this.$field,
-            hasLinks: false,
-            renderers: {
-                suggestionGroupHeading: this._renders.suggestionGroupHeading
-            },
-            selectionHandler: function (e) {
-                var targetData = jQuery(e.currentTarget).data();
-                if (targetData && targetData.descriptor instanceof MessageDescriptor) {
-                    //If selected element is a message, do nothing
-                    return false;
-                }
-                var selectedDescriptor = this.getFocused().data("descriptor");
-                var groupIndex = selectedDescriptor.meta().groupIndex;
-                var group = instance.options.groups[groupIndex];
-                var value = selectedDescriptor.value();
-                var label = selectedDescriptor.label();
-                instance.$dropDownIcon.removeClass('aui-iconfont-remove');
-                instance.$field.val("Loading...").prop('disabled', true);
-                instance.options.onSelection(group, value, label);
-            }
-        });
-    },
-
-    hideSuggestions: jQuery.noop,
-
-    _renders: {
-        suggestionGroupHeading: function (descriptor) {
-            return jQuery(JST["shifter/group-heading"]({
-                groupName: descriptor.label(),
-                groupContext: descriptor.description()
-            })).data('descriptor', descriptor);
-        },
-        dropdownAndLoadingIcon: function (showDropdown) {
-            return jQuery('<span class="icon noloading aui-icon aui-icon-small"><span>More</span></span>');
-        }
-    }
-});
-
-module.exports = ShifterSelect;
-},{"../list/list":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\list\\list.js","../list/message-descriptor":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\list\\message-descriptor.js","../select/queryable-dropdown-select":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\select\\queryable-dropdown-select.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\shifter\\shifter.js":[function(require,module,exports){
-"use strict";
-
-var ShifterController = require('./shifter-dialog.js');
-
-var Shifter = new ShifterController("shifter-dialog");
-
-module.exports = Shifter;
-},{"./shifter-dialog.js":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\shifter\\shifter-dialog.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\table\\column-picker.js":[function(require,module,exports){
+},{"./utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","string-extensions":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\extensions\\string_extensions.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\table\\column-picker.js":[function(require,module,exports){
 "use strict";
 
 var _ = require('underscore');
@@ -6619,7 +3602,158 @@ var AssetNavModule = Marionette.Module.extend({
 });
 
 module.exports = AssetNavModule;
-},{"./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\controller.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\router.js","./search/asset-nav-creator":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-nav-creator.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\router.js":[function(require,module,exports){
+},{"./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\controller.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\router.js","./search/asset-nav-creator":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-nav-creator.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\router-custom.js":[function(require,module,exports){
+"use strict";
+
+var _ = require('underscore');
+var Backbone = require('backbone');
+var BackboneQueryParams = require('backbone-query-parameters');
+var Marionette = require('backbone.marionette');
+
+var UrlSerializer = require('../../util/url-serializer');
+
+/**
+ * A mostly-custom router for handling routes that are used within the 
+ * asset table module.
+ */
+var AssetNavCustomRouter = Marionette.AppRouter.extend({
+    initialize: function (options) {
+        _.extend(this, options);
+        _.bindAll(this, "_restoreSessionSearch", "_route");
+
+        this.route(/^(.*?)([\?]{1}.*)?$/, this._route);
+        this.route(/^(assets\/)?$/, this._restoreSessionSearch);
+
+        // backbone-query-parameters supports clever decoding of values into arrays, but we don't want this.
+        delete Backbone.Router.arrayValueSplit;
+    },
+
+    /**
+     * Overwrite Marionette.AppRouter, now it fires an event each time the URL changes
+     */
+    navigate: function () {
+        this.searchPageModule.removeOpenTipsies();
+        this.trigger("navigate");
+        Marionette.AppRouter.prototype.navigate.apply(this, arguments);
+    },
+
+    /**
+     * Navigate to a new state.
+     *
+     * @param {UrlSerializer.state} state
+     */
+    pushState: function (state) {
+        this._setStatePermalink(state);
+        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false });
+    },
+
+    replaceState: function (state) {
+        this._setStatePermalink(state);
+        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false, replace: true });
+    },
+
+    _restoreSessionSearch: function () {
+        var sessionSearch = this.initialSessionSearchState,
+            url = UrlSerializer.getURLFromState(sessionSearch || this.searchPageModule.getState());
+
+        this.navigate(url, { replace: true, trigger: true });
+    },
+
+    /**
+     * The "catch-all" route that distinguishes search and issue fragments.
+     *
+     * @param {string} path The path component of the URL (relative to the root)
+     * @param {object} query The decoded querystring params
+     * @private
+     */
+    _route: function (path, query) {
+        // Re-encode back to a full fragment, since we do our own parsing in JIRA.Issues.URLSerializer
+        var fragment = this.toFragment(path, query);
+
+        if (JIRA.Issues.ignorePopState) {
+            // Workaround for Chrome bug firing a null popstate event on page load.
+            // Backbone should fix this!
+            // @see http://code.google.com/p/chromium/issues/detail?id=63040
+            // @see also JRADEV-14804
+            return;
+        }
+
+        // Remove ignored parameters (e.g. focusedCommentId).
+        var state = UrlSerializer.getStateFromURL(fragment);
+
+        if (!this._navigateToLoginIfNeeded(state)) {
+            this._navigateUsingState(state);
+        }
+    },
+
+    _navigateToLoginIfNeeded: function (state, history) {
+        if (!this.usePushState(history) && state.selectedAssetKey && !JIRA.Issues.LoginUtils.isLoggedIn()) {
+            var instance = this;
+
+            var requestParams = {};
+            if (state.filter != null) {
+                requestParams.filterId = state.filter;
+            }
+
+            jQuery.ajax({
+                url: AJS.contextPath() + "/rest/issueNav/1/issueNav/anonymousAccess/" + state.selectedAssetKey,
+                headers: { 'X-SITEMESH-OFF': true },
+                data: requestParams,
+                success: function () {
+                    instance._navigateUsingState(state);
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401) {
+                        instance._redirectToLogin(state);
+                    } else {
+                        instance._navigateUsingState(state);
+                    }
+                }
+            });
+
+            return true;
+        }
+
+        return false;
+    },
+
+    _navigateUsingState: function (state) {
+        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+            this._setStatePermalink(state);
+            this.navigate(UrlSerializer.getURLFromState(state), { replace: true, trigger: false });
+            this.searchPageModule.updateFromRouter(state);
+        }
+    },
+
+    _redirectToLogin: function (state) {
+        var url = AJS.contextPath() + "/login.jsp?permissionViolation=true&os_destination=" +
+            encodeURIComponent(UrlSerializer.getURLFromState(state));
+
+        window.location.replace(url);
+    },
+
+    /**
+     * Set the permalink for a given state into AJS.Meta to be rendered by the share plugin
+     */
+    _setStatePermalink: function (state) {
+        var viewIssueState = _.pick(state, "selectedIssueKey");
+        var baseUrl = AJS.Meta.get("jira-base-url");
+        if (!_.isEmpty(viewIssueState)) {
+            AJS.Meta.set("viewissue-permlink",
+                baseUrl + "/" + UrlSerializer.getURLFromState(viewIssueState)
+            );
+        }
+        var issueNavState = _.omit(state, "selectedIssueKey");
+        if (!_.isEmpty(issueNavState)) {
+            AJS.Meta.set("issuenav-permlink",
+                baseUrl + "/" + UrlSerializer.getURLFromState(issueNavState)
+            );
+        }
+    }
+});
+
+module.exports = AssetNavCustomRouter;
+},{"../../util/url-serializer":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-query-parameters":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone-query-parameters\\backbone.queryparams.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\router.js":[function(require,module,exports){
 "use strict";
 
 var _ = require('underscore');
@@ -6635,146 +3769,6 @@ var AssetNavRouter = Marionette.AppRouter.extend({
     }
 });
 
-///**
-// * A mostly-custom router for handling routes that are used within the 
-// * asset table module.
-// */
-//var AssetRouter = Marionette.AppRouter.extend({
-//    initialize: function (options) {
-//        _.extend(this, options);
-//        _.bindAll(this, "_restoreSessionSearch", "_route");
-//
-//        this.route(/^(.*?)([\?]{1}.*)?$/, this._route);
-//        this.route(/^(assets\/)?$/, this._restoreSessionSearch);
-//
-//        // backbone-query-parameters supports clever decoding of values into arrays, but we don't want this.
-//        delete Backbone.Router.arrayValueSplit;
-//    },
-//
-//    /**
-//     * Overwrite Marionette.AppRouter, now it fires an event each time the URL changes
-//     */
-//    navigate: function () {
-//        this.searchPageModule.removeOpenTipsies();
-//        this.trigger("navigate");
-//        Marionette.AppRouter.prototype.navigate.apply(this, arguments);
-//    },
-//
-//    /**
-//     * Navigate to a new state.
-//     *
-//     * @param {UrlSerializer.state} state
-//     */
-//    pushState: function (state) {
-//        this._setStatePermalink(state);
-//        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false });
-//    },
-//
-//    replaceState: function (state) {
-//        this._setStatePermalink(state);
-//        this.navigate(UrlSerializer.getURLFromState(state), { trigger: false, replace: true });
-//    },
-//
-//    _restoreSessionSearch: function () {
-//        var sessionSearch = this.initialSessionSearchState,
-//            url = UrlSerializer.getURLFromState(sessionSearch || this.searchPageModule.getState());
-//
-//        this.navigate(url, { replace: true, trigger: true });
-//    },
-//
-//    /**
-//     * The "catch-all" route that distinguishes search and issue fragments.
-//     *
-//     * @param {string} path The path component of the URL (relative to the root)
-//     * @param {object} query The decoded querystring params
-//     * @private
-//     */
-//    _route: function (path, query) {
-//        // Re-encode back to a full fragment, since we do our own parsing in JIRA.Issues.URLSerializer
-//        var fragment = this.toFragment(path, query);
-//
-//        if (JIRA.Issues.ignorePopState) {
-//            // Workaround for Chrome bug firing a null popstate event on page load.
-//            // Backbone should fix this!
-//            // @see http://code.google.com/p/chromium/issues/detail?id=63040
-//            // @see also JRADEV-14804
-//            return;
-//        }
-//
-//        // Remove ignored parameters (e.g. focusedCommentId).
-//        var state = UrlSerializer.getStateFromURL(fragment);
-//
-//        if (!this._navigateToLoginIfNeeded(state)) {
-//            this._navigateUsingState(state);
-//        }
-//    },
-//
-//    _navigateToLoginIfNeeded: function (state, history) {
-//        if (!this.usePushState(history) && state.selectedAssetKey && !JIRA.Issues.LoginUtils.isLoggedIn()) {
-//            var instance = this;
-//
-//            var requestParams = {};
-//            if (state.filter != null) {
-//                requestParams.filterId = state.filter;
-//            }
-//
-//            jQuery.ajax({
-//                url: AJS.contextPath() + "/rest/issueNav/1/issueNav/anonymousAccess/" + state.selectedAssetKey,
-//                headers: { 'X-SITEMESH-OFF': true },
-//                data: requestParams,
-//                success: function () {
-//                    instance._navigateUsingState(state);
-//                },
-//                error: function (xhr) {
-//                    if (xhr.status === 401) {
-//                        instance._redirectToLogin(state);
-//                    } else {
-//                        instance._navigateUsingState(state);
-//                    }
-//                }
-//            });
-//
-//            return true;
-//        }
-//
-//        return false;
-//    },
-//
-//    _navigateUsingState: function (state) {
-//        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
-//            this._setStatePermalink(state);
-//            this.navigate(UrlSerializer.getURLFromState(state), { replace: true, trigger: false });
-//            this.searchPageModule.updateFromRouter(state);
-//        }
-//    },
-//
-//    _redirectToLogin: function (state) {
-//        var url = AJS.contextPath() + "/login.jsp?permissionViolation=true&os_destination=" +
-//            encodeURIComponent(UrlSerializer.getURLFromState(state));
-//
-//        window.location.replace(url);
-//    },
-//
-//    /**
-//     * Set the permalink for a given state into AJS.Meta to be rendered by the share plugin
-//     */
-//    _setStatePermalink: function (state) {
-//        var viewIssueState = _.pick(state, "selectedIssueKey");
-//        var baseUrl = AJS.Meta.get("jira-base-url");
-//        if (!_.isEmpty(viewIssueState)) {
-//            AJS.Meta.set("viewissue-permlink",
-//                baseUrl + "/" + UrlSerializer.getURLFromState(viewIssueState)
-//            );
-//        }
-//        var issueNavState = _.omit(state, "selectedIssueKey");
-//        if (!_.isEmpty(issueNavState)) {
-//            AJS.Meta.set("issuenav-permlink",
-//                baseUrl + "/" + UrlSerializer.getURLFromState(issueNavState)
-//            );
-//        }
-//    }
-//});
-
 module.exports = AssetNavRouter;
 
 },{"../../util/url-serializer":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-query-parameters":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone-query-parameters\\backbone.queryparams.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-nav-creator.js":[function(require,module,exports){
@@ -6786,7 +3780,11 @@ var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var AssetCacheManager = require('./cache/asset-cache-manager');
+var AssetNavCustomRouter = require('../router-custom');
+var AssetsApi = require('./assets-api');
 var AssetSearchManager = require('./asset-search-manager');
+var DialogCleaner = require('../../../util/dialog-cleanup');
+var EnhanceLinks = require('./enhance-links');
 var FullScreenAsset = require('./asset/full-screen-asset');
 var LayoutSwitcherView = require('./layout-switcher');
 var QueryComponent = require('../../../components/query.js');
@@ -6899,11 +3897,11 @@ var AssetNavCreator = {
         searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
 
         searchHeaderModule.registerSearch(searchModule);
-        searchHeaderModule.createToolsView(issueNavToolsElement);
+        //searchHeaderModule.createToolsView(issueNavToolsElement);
 
         // Router
 
-        var issueNavRouter = this.assetNavRouter = new JIRA.Issues.IssueNavRouter({
+        var issueNavRouter = this.assetNavRouter = new AssetNavCustomRouter({
             searchPageModule: searchPageModule,
             initialSessionSearchState: options.initialSessionSearchState
         });
@@ -6912,33 +3910,33 @@ var AssetNavCreator = {
 
         // Overrides
 
-        JIRA.Issues.enhanceLinks.toIssueNav({
+        EnhanceLinks.toIssueNav({
             searchPageModule: searchPageModule
         });
 
-        JIRA.Issues.enhanceLinks.withPushState({
+        EnhanceLinks.withPushState({
             router: issueNavRouter
         });
 
-        JIRA.Issues.enhanceLinks.toIssue({
+        EnhanceLinks.toIssue({
             searchPageModule: searchPageModule
         });
 
-        JIRA.Issues.enhanceLinks.transformToAjax();
+        EnhanceLinks.transformToAjax();
 
-        JIRA.Issues.dialogCleaner(issueNavRouter);
+        DialogCleaner(issueNavRouter);
 
-        JIRA.Issues.Api.initialize({
+        AssetsApi.initialize({
             searchPageModule: searchPageModule
         });
 
-        JIRA.Issues.IssueAPI.override({
-            searchPageModule: searchPageModule
-        });
+//        JIRA.Issues.IssueAPI.override({
+//            searchPageModule: searchPageModule
+//        });
 
-        JIRA.Issues.IssueNavigatorAPI.override({
-            searchPageModule: searchPageModule
-        });
+//        JIRA.Issues.IssueNavigatorAPI.override({
+//            searchPageModule: searchPageModule
+//        });
 
         /**
          * Used to defer the showing of issue dialogs until all promises are resolved.
@@ -6946,16 +3944,16 @@ var AssetNavCreator = {
          * If we are inline editing the summary then open the edit dialog, we want to be sure that the summary has been
          * updated on the server first, otherwise we will be showing stale data in the edit dialog.
          */
-        JIRA.Dialogs.BeforeShowIssueDialogHandler.add(JIRA.Issues.Api.waitForSavesToComplete);
+        //JIRA.Dialogs.BeforeShowIssueDialogHandler.add(JIRA.Issues.Api.waitForSavesToComplete);
 
-        JIRA.Issues.overrideIssueDialogs({
-            getIssueId: _.bind(searchPageModule.getEffectiveIssueId, searchPageModule),
-            isNavigator: true,
-            updateAsset: function(dialog) {
-                var issueUpdate = JIRA.Issues.Utils.getUpdateCommandForDialog(dialog);
-                return searchPageModule.updateAsset(issueUpdate);
-            }
-        });
+//        JIRA.Issues.overrideIssueDialogs({
+//            getIssueId: _.bind(searchPageModule.getEffectiveIssueId, searchPageModule),
+//            isNavigator: true,
+//            updateAsset: function(dialog) {
+//                var issueUpdate = JIRA.Issues.Utils.getUpdateCommandForDialog(dialog);
+//                return searchPageModule.updateAsset(issueUpdate);
+//            }
+//        });
 
         // Keyboard shortcuts ?
 
@@ -6968,10 +3966,10 @@ var AssetNavCreator = {
                 var target = $(e.target),
                     targetIsValid = target.is(":not(:input)");
 
-                if (target == undefined || targetIsValid) {
+                if (_.isUndefined(target) || targetIsValid) {
                     if (e.which === $.ui.keyCode.ENTER) {
-                        if (target == undefined || target.is(":not(a)")) {
-                            JIRA.Issues.Api.viewSelectedIssue();
+                        if (_.isUndefined(target) || target.is(":not(a)")) {
+                            AssetsApi.viewSelectedIssue();
                         }
                     } else if (e.which === $.ui.keyCode.LEFT) {
                         searchPageModule.handleLeft();
@@ -6994,9 +3992,9 @@ var AssetNavCreator = {
         this.searchResults = searchModule.getResults();
 
         // Create the on change bindings for updating the login link.
-        this.searchPageModule.on("change", changeLoginUrl);
-        this.searchResults.on("change", changeLoginUrl);
-        this.searchResults.getSelectedAsset().on("change", changeLoginUrl);
+        this.searchPageModule.on("change", this.changeLoginUrl);
+        this.searchResults.on("change", this.changeLoginUrl);
+        this.searchResults.getSelectedAsset().on("change", this.changeLoginUrl);
 
         return this;
     },
@@ -7011,7 +4009,7 @@ var AssetNavCreator = {
 };
 
 module.exports = AssetNavCreator;
-},{"../../../components/query.js":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\query.js","./asset-search-manager":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-search-manager.js","./asset/full-screen-asset":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\full-screen-asset.js","./cache/asset-cache-manager":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\cache\\asset-cache-manager.js","./layout-switcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\layout-switcher.js","./search-header-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-header-module.js","./search-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-module.js","./search-page-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-page-module.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-search-manager.js":[function(require,module,exports){
+},{"../../../components/query.js":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\query.js","../../../util/dialog-cleanup":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\dialog-cleanup.js","../router-custom":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\router-custom.js","./asset-search-manager":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-search-manager.js","./asset/full-screen-asset":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\full-screen-asset.js","./assets-api":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\assets-api.js","./cache/asset-cache-manager":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\cache\\asset-cache-manager.js","./enhance-links":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\enhance-links.js","./layout-switcher":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\layout-switcher.js","./search-header-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-header-module.js","./search-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-module.js","./search-page-module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-page-module.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset-search-manager.js":[function(require,module,exports){
 "use strict";
 
 var _ = require('underscore');
@@ -7455,7 +4453,274 @@ var SimpleAsset = Brace.Model.extend({
 });
 
 module.exports = SimpleAsset;
-},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\cache\\asset-cache-manager.js":[function(require,module,exports){
+},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\assets-api.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+
+
+var AssetsApi = {
+    searchPageModule: null,
+
+    /**
+     * Initialize the API.
+     *
+     * @param {object} options
+     * @param {SearchPageModule} options.searchPageModule
+     */
+    initialize: function (options) {
+        this.searchPageModule = options.searchPageModule;
+    },
+
+    /**
+     * Initiate editing the value of a field on the selected issue.
+     *
+     * It's not always possible for the user to edit a field, for example if the issue is currently not editable, or
+     * if the user doesn't have the correct permissions.
+     *
+     * For visible fields inline editing is used. For hidden fields, a modal dialog is used.
+     *
+     * @param fieldId the ID of the field to edit
+     * @return {boolean} true if the field editing did/will happen, otherwise false.
+     */
+    editFieldOnSelectedIssue: function (fieldId) {
+        var fields = JIRA.Issues.Api.getFieldsOnSelectedIssue(),
+            field = fields && fields.get(fieldId),
+            permitted = field && field.isEditable();
+
+        if (permitted && this.searchPageModule) {
+            JIRA.Issues.Application.execute("issueEditor:editField", field);
+        }
+
+        return permitted;
+    },
+
+    /**
+     * Focus the search controls.
+     * <p/>
+     * In basic mode, the project criteria; in advanced mode, the JQL input.
+     */
+    focusSearch: function () {
+        AJS.$(".criteria-selector:first, #advanced-search").focus().select();
+    },
+
+    /**
+     * @return {SimpleIssue} the currently selected issue.
+     */
+    getSelectedIssue: function () {
+        return this.searchPageModule.getEffectiveIssue();
+    },
+
+    /**
+     * @return {null|number} the ID of the selected issue or null.
+     */
+    getSelectedIssueId: function () {
+        return this.searchPageModule.getEffectiveIssueId();
+    },
+
+    /**
+     * @return {null|string} the key of the selected issue or <tt>null</tt>.
+     */
+    getSelectedIssueKey: function () {
+        return this.searchPageModule.getEffectiveIssueKey();
+    },
+
+    /**
+     * Returns the fields on the selected issue.
+     *
+     * @return {undefined|Backbone.Collection} collection of {JIRA.Components.IssueEditor.Models.Field} objects
+     */
+    getFieldsOnSelectedIssue: function () {
+        var fields = QuoteFlow.application.request("assetEditor:fields");
+        return fields.length ? fields : undefined;
+    },
+
+    /**
+     * @return {Boolean} whether there are saves in progress.
+     */
+    hasSavesInProgress: function () {
+        return QuoteFlow.application.request("assetEditor:hasSavesInProgress");
+    },
+
+    /**
+     * @return {boolean} whether an issue is currently being loaded.
+     */
+    isCurrentlyLoadingIssue: function () {
+        return this.searchPageModule.isCurrentlyLoadingIssue();
+    },
+
+    /**
+     * @return {boolean|null} whether the selected issue can be opened, or <tt>null</tt> if no issue is selected.
+     */
+    isSelectedIssueAccessible: function () {
+        return this.searchPageModule.isHighlightedIssueAccessible();
+    },
+
+    /**
+     * @return {boolean} whether an issue is visible.
+     */
+    issueIsVisible: function () {
+        return this.searchPageModule.isIssueVisible();
+    },
+
+    /**
+     * Select the next issue.
+     * <p/>
+     * When in issue search, the next issue is highlighted; when viewing an
+     * issue, the next one is loaded. No-op if an overlay is visible.
+     */
+    nextIssue: function () {
+        this.searchPageModule.nextIssue();
+    },
+
+    /**
+     * Open the focus shifter.
+     */
+    openFocusShifter: function () {
+        if (this.searchPageModule.isIssueVisible()) {
+            this.searchPageModule.openFocusShifter();
+        }
+    },
+
+    /**
+     * Select the previous issue.
+     * 
+     * When in issue search, the previous issue is highlighted; when viewing
+     * an issue, the previous one is loaded. No-op if an overlay is visible.
+     */
+    prevIssue: function () {
+        this.searchPageModule.prevIssue();
+    },
+
+    /**
+     * Refresh the content of the selected issue, by merging changes from the server.
+     *
+     * @param {object} [options] Extra options to include in the internal triggerRefreshIssue() call
+     * @returns {jQuery.Promise}
+     *
+     * The returned promise is:
+     * - resolved when the selected issue is refreshed, or if there is no selected issue
+     * - rejected *only* when refreshing the selected issue fails
+     */
+    refreshSelectedIssue: function (options) {
+        return QuoteFlow.application.request("assetEditor:refreshAsset", options);
+    },
+
+    /**
+     * Return to issue search.
+     * <p/>
+     * If a form is dirty, we ask the user to confirm navigation.
+     *
+     * @param {boolean} ignoreDirtiness Whether we should ignore dirtiness
+     *     (used, for example, to force return after deleting an issue).
+     */
+    returnToSearch: function (ignoreDirtiness) {
+        this.searchPageModule.returnToSearch({
+            ignoreDirtiness: ignoreDirtiness
+        });
+    },
+
+    /**
+     * @param {Object|null} issueProps - if null/undefined, use currently selected issue
+     */
+    showInlineIssueLoadError: function (issueProps) {
+        this.searchPageModule.showInlineIssueLoadError(issueProps);
+    },
+
+    /**
+     * Switch to the next search layout.
+     * <p/>
+     * We cycle through layouts in the order they appear in the layout switcher.
+     */
+    switchLayouts: function (options) {
+        var currentIndex = -1,
+            currentLayout = this.searchPageModule.getCurrentLayout(),
+            layouts = this.searchPageModule.getSortedLayouts();
+
+        _.find(layouts, function (layout, index) {
+            if (currentLayout instanceof layout.view) {
+                currentIndex = index;
+                return true;
+            }
+        });
+
+        var newLayout = layouts[(currentIndex + 1) % layouts.length];
+        this.searchPageModule.changeLayout(newLayout.id, options);
+    },
+
+    /**
+     * Return if the current query is valid.
+     * @returns {boolean}
+     */
+    isQueryValid: function () {
+        return this.searchPageModule.queryModule.isQueryValid();
+    },
+
+    /**
+     * @returns {*|boolean}
+     */
+    isFullScreenIssueVisible: function () {
+        return this.searchPageModule.isFullScreenIssueVisible();
+    },
+
+    /**
+     * View the issue that is currently highlighted in the issue table.
+     */
+    viewSelectedIssue: function () {
+        if (!JIRA.Issues.Api.isSelectedIssueAccessible()) return;
+
+        var issueKey = JIRA.Issues.Api.getSelectedIssueKey();
+
+        if (!this.searchPageModule.isIssueVisible()) {
+            this.searchPageModule.update({
+                selectedIssueKey: issueKey
+            });
+        }
+    },
+
+    /**
+     * Undocks/Docks filter panel
+     */
+    toggleFilterPanel: function () {
+        this.searchPageModule.toggleFilterPanel();
+    },
+
+    /**
+     * Returns a deferred that is resolved once all inline edits are complete.
+     * Or straight away if you have no inline edits pending.
+     *
+     * @return jQuery.Deferred
+     */
+    waitForSavesToComplete: function () {
+        var d = jQuery.Deferred();
+        window.setTimeout(function () {
+            if (!JIRA.Issues.Api.hasSavesInProgress()) {
+                d.resolve();
+            } else {
+                JIRA.bind(JIRA.Events.INLINE_EDIT_SAVE_COMPLETE, function (e) {
+                    if (!JIRA.Issues.Api.hasSavesInProgress()) {
+                        d.resolve();
+                    }
+                });
+            }
+        }, 10);
+    },
+
+    updateIssue: function (issue, message) {
+        message = message || "thanks_issue_updated";
+
+        return this.searchPageModule.updateIssue({
+            key: issue.key,
+            id: issue.id,
+            action: JIRA.Issues.Actions.UPDATE,
+            message: message,
+            meta: {}
+        });
+    }
+};
+
+module.exports = AssetsApi;
+},{"jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\cache\\asset-cache-manager.js":[function(require,module,exports){
 "use strict";
 
 var Brace = require('backbone-brace');
@@ -7544,7 +4809,209 @@ var AssetCacheManager = Brace.Evented.extend({
 });
 
 module.exports = AssetCacheManager;
-},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\full-screen-controller.js":[function(require,module,exports){
+},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\enhance-links.js":[function(require,module,exports){
+"use strict";
+
+var $ = require('jquery');
+var _ = require('underscore');
+
+var AssetsApi = require('./assets-api');
+var SmartAjax = require('../../../components/ajax/smart-ajax');
+
+/**
+ * Enhance links outside KA, usually to load things via AJAX.
+ * <p/>
+ * Only works if the AJAX view issue dark feature is enabled.
+ *
+ * @param {object} options
+ * @param {SearchPageModule} options.searchPageModule The application's SearchPageModule.
+ */
+var EnhanceLinks = {
+
+    /**
+     * Search for links that should alter the page state via pushState
+     *
+     * @param options {Object} Options used by the enhancer
+     * @param options.selector {String} (Optional) Selector to use, defaults to .push-state
+     * @param options.router {JIRA.Issues.IssueNavRouter} Main router instance in the page
+     */
+    withPushState: function (options) {
+        options = _.defaults(options, {
+            selector: ".push-state"
+        });
+
+        AJS.$(document).delegate(options.selector, "simpleClick", function (e) {
+            if (this.href) {
+                e.preventDefault();
+
+                // Let's assume we're only going to be pushing relative links.
+                var uriComponents = parseUri(this.href);
+                var fragment = uriComponents.path;
+
+                if (uriComponents.query) {
+                    fragment += "?" + uriComponents.query;
+                }
+
+                // Backbone's fragment doesn't include the history root.
+                fragment = fragment.replace(Backbone.history.options.root, "");
+
+                // Force refreshing even if the URL hasn't changed.
+                // https://github.com/documentcloud/backbone/issues/652
+                if (Backbone.history.fragment == fragment ||
+                    Backbone.history.fragment == decodeURIComponent(fragment)) {
+                    Backbone.history.loadUrl(fragment);
+                }
+                else {
+                    options.router.navigate(fragment, { trigger: true });
+                }
+            }
+        });
+    },
+
+    /**
+     * Search for links to the the issue navigator and enhances them
+     *
+     * @param options {Object} Options used by the enhancer
+     * @param options.searchPageModule {JIRA.Issues.SearchPageModule} Main SearchPageModule instance in the page
+     */
+    toIssueNav: function (options) {
+        var filterSelector = "a.filter-link[data-filter-id], a.filter-link[data-jql]",
+            newSelector = "#issues_new_search_link_lnk";
+
+        AJS.$(document).on("simpleClick", filterSelector, function (e) {
+            e.preventDefault();
+
+            var $anchor = AJS.$(e.target).closest("a"),
+                filterId = $anchor.data("filter-id"),
+                jql = $anchor.data("jql");
+
+            options.searchPageModule.reset({
+                filter: filterId,
+                jql: jql
+            });
+        });
+
+        // The "Search for Issues" link in the header.
+        AJS.$(document).on("simpleClick", newSelector, function (e) {
+            e.preventDefault();
+            options.searchPageModule.resetToBlank();
+        });
+    },
+
+    isIssueTableDropdown: function (e) {
+        if (AJS.InlineLayer.current) {
+            var $offsetTarget = jQuery(AJS.InlineLayer.current.offsetTarget());
+            if ($offsetTarget.closest(".list-view table#issuetable").size()) {
+                return true;
+            }
+        }
+    },
+
+    /**
+     * Search for links to a particular issue and enhances them
+     *
+     * @param options {Object} Options used by the enhancer
+     */
+    toIssue: function (options) {
+
+        // Enhance Attachment options links
+        AJS.$(document).on("simpleClick",
+            [
+                "#attachment-sorting-options a",
+                "#attachment-sorting-order-options a",
+                "#subtasks-show-all",
+                "#subtasks-show-open"
+            ].join(','),
+            function (e) {
+                if (this.href) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Capture the new ViewIssueQuery from the link href and update the issue
+                    var uriComponents = parseUri(this.href);
+                    if (uriComponents.queryKey) {
+                        QuoteFlow.application.execute("assetEditor:updateAssetWithQuery", uriComponents.queryKey);
+
+                        // Adjust checked marks on our radio group
+                        // This is needed for IE8, as this browser won't render the new Attachments panels if the content
+                        // is the same (i.e. the sort order has not changed)
+                        AJS.$(this).parents('ul').find('a.aui-checked').removeClass('aui-checked');
+                        AJS.$(this).addClass('aui-checked');
+                    }
+                }
+            }
+        );
+
+        // Make issue links load via AJAX.
+        var issueSelector = "a.issue-link[data-issue-key]",
+            issueIsParentSelector = ".parentIssue",
+            issueFromTableSelector = ".list-view table#issuetable a.issue-link[data-issue-key]";
+
+        AJS.$(document).on("simpleClick", issueSelector, function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var searchResults = options.searchPageModule.searchResults;
+
+            var issueKey = AJS.$(e.target).closest("a").data("issue-key");
+            var issueIdAsString = searchResults._getIssueIdForKey(issueKey);
+            var issueId = parseInt(issueIdAsString, 10);
+
+            // Check if it is a link from the results table
+            var isFromResultsTable = AJS.$(e.target).is(issueFromTableSelector);
+            var isLinkToParentIssue = AJS.$(e.target).is(issueIsParentSelector);
+            var isIssueTableDropdown = EnhanceLinks.isIssueTableDropdown(issueFromTableSelector);
+            if ((isFromResultsTable && !isLinkToParentIssue) || isIssueTableDropdown) {
+                QuoteFlow.application.execute("analytics:trigger", "kickass.openIssueFromTable", {
+                    issueId: issueIdAsString,
+                    // these are 1-based indices
+                    absolutePosition: searchResults.getPositionOfIssueInSearchResults(issueId) + 1,
+                    relativePosition: searchResults.getPositionOfIssueInPage(issueId) + 1
+                });
+                options.searchPageModule.update({
+                    selectedIssueKey: issueKey
+                });
+            } else {
+                options.searchPageModule.reset({
+                    selectedIssueKey: issueKey
+                });
+            }
+        });
+    },
+
+
+    /**
+     * Search for links that should be loaded via AJAX
+     */
+    transformToAjax: function () {
+        // Enhance Attachment options links
+        AJS.$(document).on("simpleClick", ".subtask-reorder a", function (e) {
+            if (this.href) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                AJS.$.ajax({
+                    type: "GET",
+                    data: {
+                        disableRedirect: true
+                    },
+                    url: this.href
+                }).done(function () {
+                    AssetsApi.refreshSelectedIssue({
+                        reason: JIRA.Issues.Actions.UPDATE
+                    });
+                }).fail(function (xhr) {
+                    JIRA.Messages.showErrorMsg(SmartAjax.buildSimpleErrorContent(xhr), {
+                        closeable: true
+                    });
+                });
+            }
+        });
+    }
+};
+
+module.exports = EnhanceLinks;
+},{"../../../components/ajax/smart-ajax":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\ajax\\smart-ajax.js","./assets-api":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\assets-api.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\full-screen-controller.js":[function(require,module,exports){
 "use strict";
 
 var Marionette = require('backbone.marionette');
@@ -7777,81 +5244,7 @@ var LayoutSwitcherView = Marionette.ItemView.extend({
         }
     }
 })
-},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\query\\search-shifter.js":[function(require,module,exports){
-"use strict";
-
-var Brace = require('backbone-brace');
-
-/**
- * Creates a shifter group factory for search criteria.
- *
- * @param {object} options
- * @param {function} options.isBasicMode A function that returns true iff basic mode is selected.
- * @param {function} options.isFullScreenIssue A function that returns true iff a full screen issue is visible.
- * @param {SearcherCollection} options.searcherCollection The application's searcher collection.
- * @return {function} A shifter group factory suitable to be passed to <tt>JIRA.Shifter.register</tt>.
- */
-var SearchShifter = Brace.Evented.extend({
-
-    initialize: function(options) {
-        this.options = options;
-    },
-
-    getSuggestions: function() {
-        var suggestions = options.searcherCollection.chain()
-            .filter(this.shouldShow)
-            .map(this.toSuggestion)
-            .value();
-
-        return function () {
-            return jQuery.Deferred().resolve(suggestions).promise();
-        };
-    },
-
-    onSelection: function (id) {
-        var currentSearcher = "split-view",
-            searcher = options.searcherCollection.get(id);
-
-        if (!searcher.getIsSelected()) {
-            searcher.select();
-        }
-
-        // toggle closes the dialog if it's open, so ensure that's not the case.
-        if (!currentSearcher || currentSearcher.getId() !== searcher.getId()) {
-            JIRA.Issues.SearcherDialog.instance.toggle(searcher);
-        }
-    },
-
-    // Determine whether the given searcher should be suggested.
-    shouldShow: function (searcherModel) {
-        return searcherModel.getIsShown();
-    },
-
-    // Create a shifter suggestion from a SearcherModel.
-    toSuggestion: function (searcherModel) {
-        return {
-            label: searcherModel.getName(),
-            value: searcherModel.getId()
-        }
-    },
-
-    create: function() {
-        // Only show suggestions if we're in basic mode and the search criteria are visible.
-        if (!options.isBasicMode() || options.isFullScreenIssue()) {
-            return null;
-        }
-
-        return {
-            getSuggestions: getSuggestions(),
-            name: "shifter.group.searchcriteria",
-            onSelection: onSelection,
-            weight: 150
-        };
-    }
-});
-
-module.exports = SearchShifter;
-},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-header-module.js":[function(require,module,exports){
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-header-module.js":[function(require,module,exports){
 "use strict";
 
 var Brace = require('backbone-brace');
@@ -8019,8 +5412,6 @@ var Utilities = require('../../../components/utilities');
 
 var ColumnPicker = require('../../../components/table/column-picker');
 var FullScreenLayout = require('./full-screen-controller');
-var SearchShifter = require('./query/search-shifter');
-var Shifter = require('../../../components/shifter/shifter');
 var SimpleAsset = require('./asset/simple-asset');
 var SplitScreenLayout = require('../split-view/layout');
 var UrlSerializer = require('../../../util/url-serializer');
@@ -8374,11 +5765,11 @@ var SearchPageModule = Brace.Model.extend({
 
     registerFullScreenAsset: function (fullScreenIssue) {
         this.fullScreenAsset = fullScreenIssue;
-        this.fullScreenAsset.bindIssueHidden(function () {
-            QuoteFlow.application.execute("assetEditor:dismiss");
-            this.updateWindowTitle(this.getFilter());
-            QuoteFlow.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
-        }, this);
+//        this.fullScreenAsset.bindIssueHidden(function () {
+//            QuoteFlow.application.execute("assetEditor:dismiss");
+//            this.updateWindowTitle(this.getFilter());
+//            QuoteFlow.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
+//        }, this);
     },
 
     /**
@@ -9060,7 +6451,7 @@ var SearchPageModule = Brace.Model.extend({
 });
 
 module.exports = SearchPageModule;
-},{"../../../components/shifter/shifter":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\shifter\\shifter.js","../../../components/table/column-picker":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\table\\column-picker.js","../../../components/utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","../../../util/url-serializer":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js","../split-view/layout":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\split-view\\layout.js","./asset/simple-asset":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\simple-asset.js","./full-screen-controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\full-screen-controller.js","./query/search-shifter":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\query\\search-shifter.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-results.js":[function(require,module,exports){
+},{"../../../components/table/column-picker":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\table\\column-picker.js","../../../components/utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","../../../util/url-serializer":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js","../split-view/layout":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\split-view\\layout.js","./asset/simple-asset":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\simple-asset.js","./full-screen-controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\full-screen-controller.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\search-results.js":[function(require,module,exports){
 "use strict";
 
 var Brace = require('backbone-brace');
@@ -13005,72 +10396,23 @@ var PanelTable = Marionette.ItemView.extend({
 });
 
 module.exports = PanelTable;
-},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\navigator.js":[function(require,module,exports){
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\dialog-cleanup.js":[function(require,module,exports){
 "use strict";
 
-var $ = require('jquery');
-var _ = require('underscore');
-
-/**
- * A module that wraps all the browser+os checks you'd want to do via 
- * checking the window.navigator properties.
- *
- * Code is borrowed (i.e., copy-pasted) from a Bower component.
- * 
- * Probably best to avoid this at all costs and rely on feature detection
- * instead.
- */
-var Navigator = {
-    userAgent: window.navigator.userAgent,
-    platform: window.navigator.platform,
-
-    _isTrident: function(userAgent) {
-        return (/\bTrident\b/).test(userAgent);
-    },
-
-    isChrome: _.once(function() {
-        return (/Chrome/).test(userAgent);
-    }),
-
-    isIE: _.once(function() {
-        return _isTrident(userAgent);
-    }),
-
-    isMozilla: _.once(function() {
-        return $.browser.mozilla;
-    }),
-
-    isSafari: _.once(function() {
-        return $.browser.safari && !isChrome();
-    }),
-
-    isWebkit: _.once(function() {
-        return $.browser.webkit;
-    }),
-
-    isOpera: _.once(function() {
-        return $.browser.opera === true;
-    }),
-
-    majorVersion: _.once(function() {
-        return parseInt($.browser.version, 10);
-    }),
-
-    isLinux: _.once(function() {
-        return platform.indexOf('Linux') !== -1;
-    }),
-
-    isMac: _.once(function() {
-        return platform.indexOf('Mac') !== -1;
-    }),
-
-    isWin: _.once(function() {
-        return platform.indexOf('Win') !== -1;
-    })
+var DialogCleaner = function(router) {
+    router.on("navigate", function() {
+        if (JIRA.Dialog.current) {
+            JIRA.Dialog.current.hide();
+        }
+        if (AJS.HelpTip && AJS.HelpTip.Manager) {
+            AJS.HelpTip.Manager.hideSequences();
+            AJS.HelpTip.Manager.clearSequences();
+        }
+    });
 };
 
-module.exports = Navigator;
-},{"jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js":[function(require,module,exports){
+module.exports = DialogCleaner;
+},{}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\url-serializer.js":[function(require,module,exports){
 "use strict";
 
 var BASE_BROWSE = "browse/",

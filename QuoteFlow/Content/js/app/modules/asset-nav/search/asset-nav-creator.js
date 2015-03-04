@@ -6,7 +6,11 @@ var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var AssetCacheManager = require('./cache/asset-cache-manager');
+var AssetNavCustomRouter = require('../router-custom');
+var AssetsApi = require('./assets-api');
 var AssetSearchManager = require('./asset-search-manager');
+var DialogCleaner = require('../../../util/dialog-cleanup');
+var EnhanceLinks = require('./enhance-links');
 var FullScreenAsset = require('./asset/full-screen-asset');
 var LayoutSwitcherView = require('./layout-switcher');
 var QueryComponent = require('../../../components/query.js');
@@ -119,11 +123,11 @@ var AssetNavCreator = {
         searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
 
         searchHeaderModule.registerSearch(searchModule);
-        searchHeaderModule.createToolsView(issueNavToolsElement);
+        //searchHeaderModule.createToolsView(issueNavToolsElement);
 
         // Router
 
-        var issueNavRouter = this.assetNavRouter = new JIRA.Issues.IssueNavRouter({
+        var issueNavRouter = this.assetNavRouter = new AssetNavCustomRouter({
             searchPageModule: searchPageModule,
             initialSessionSearchState: options.initialSessionSearchState
         });
@@ -132,33 +136,33 @@ var AssetNavCreator = {
 
         // Overrides
 
-        JIRA.Issues.enhanceLinks.toIssueNav({
+        EnhanceLinks.toIssueNav({
             searchPageModule: searchPageModule
         });
 
-        JIRA.Issues.enhanceLinks.withPushState({
+        EnhanceLinks.withPushState({
             router: issueNavRouter
         });
 
-        JIRA.Issues.enhanceLinks.toIssue({
+        EnhanceLinks.toIssue({
             searchPageModule: searchPageModule
         });
 
-        JIRA.Issues.enhanceLinks.transformToAjax();
+        EnhanceLinks.transformToAjax();
 
-        JIRA.Issues.dialogCleaner(issueNavRouter);
+        DialogCleaner(issueNavRouter);
 
-        JIRA.Issues.Api.initialize({
+        AssetsApi.initialize({
             searchPageModule: searchPageModule
         });
 
-        JIRA.Issues.IssueAPI.override({
-            searchPageModule: searchPageModule
-        });
+//        JIRA.Issues.IssueAPI.override({
+//            searchPageModule: searchPageModule
+//        });
 
-        JIRA.Issues.IssueNavigatorAPI.override({
-            searchPageModule: searchPageModule
-        });
+//        JIRA.Issues.IssueNavigatorAPI.override({
+//            searchPageModule: searchPageModule
+//        });
 
         /**
          * Used to defer the showing of issue dialogs until all promises are resolved.
@@ -166,16 +170,16 @@ var AssetNavCreator = {
          * If we are inline editing the summary then open the edit dialog, we want to be sure that the summary has been
          * updated on the server first, otherwise we will be showing stale data in the edit dialog.
          */
-        JIRA.Dialogs.BeforeShowIssueDialogHandler.add(JIRA.Issues.Api.waitForSavesToComplete);
+        //JIRA.Dialogs.BeforeShowIssueDialogHandler.add(JIRA.Issues.Api.waitForSavesToComplete);
 
-        JIRA.Issues.overrideIssueDialogs({
-            getIssueId: _.bind(searchPageModule.getEffectiveIssueId, searchPageModule),
-            isNavigator: true,
-            updateAsset: function(dialog) {
-                var issueUpdate = JIRA.Issues.Utils.getUpdateCommandForDialog(dialog);
-                return searchPageModule.updateAsset(issueUpdate);
-            }
-        });
+//        JIRA.Issues.overrideIssueDialogs({
+//            getIssueId: _.bind(searchPageModule.getEffectiveIssueId, searchPageModule),
+//            isNavigator: true,
+//            updateAsset: function(dialog) {
+//                var issueUpdate = JIRA.Issues.Utils.getUpdateCommandForDialog(dialog);
+//                return searchPageModule.updateAsset(issueUpdate);
+//            }
+//        });
 
         // Keyboard shortcuts ?
 
@@ -188,10 +192,10 @@ var AssetNavCreator = {
                 var target = $(e.target),
                     targetIsValid = target.is(":not(:input)");
 
-                if (target == undefined || targetIsValid) {
+                if (_.isUndefined(target) || targetIsValid) {
                     if (e.which === $.ui.keyCode.ENTER) {
-                        if (target == undefined || target.is(":not(a)")) {
-                            JIRA.Issues.Api.viewSelectedIssue();
+                        if (_.isUndefined(target) || target.is(":not(a)")) {
+                            AssetsApi.viewSelectedIssue();
                         }
                     } else if (e.which === $.ui.keyCode.LEFT) {
                         searchPageModule.handleLeft();
@@ -214,9 +218,9 @@ var AssetNavCreator = {
         this.searchResults = searchModule.getResults();
 
         // Create the on change bindings for updating the login link.
-        this.searchPageModule.on("change", changeLoginUrl);
-        this.searchResults.on("change", changeLoginUrl);
-        this.searchResults.getSelectedAsset().on("change", changeLoginUrl);
+        this.searchPageModule.on("change", this.changeLoginUrl);
+        this.searchResults.on("change", this.changeLoginUrl);
+        this.searchResults.getSelectedAsset().on("change", this.changeLoginUrl);
 
         return this;
     },

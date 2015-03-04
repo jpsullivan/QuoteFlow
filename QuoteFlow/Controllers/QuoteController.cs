@@ -12,6 +12,7 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
+    [Authorize]
     public class QuoteController : AppController
     {
         #region DI

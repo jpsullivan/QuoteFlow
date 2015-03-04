@@ -7,8 +7,6 @@ var Utilities = require('../../../components/utilities');
 
 var ColumnPicker = require('../../../components/table/column-picker');
 var FullScreenLayout = require('./full-screen-controller');
-var SearchShifter = require('./query/search-shifter');
-var Shifter = require('../../../components/shifter/shifter');
 var SimpleAsset = require('./asset/simple-asset');
 var SplitScreenLayout = require('../split-view/layout');
 var UrlSerializer = require('../../../util/url-serializer');
@@ -362,11 +360,11 @@ var SearchPageModule = Brace.Model.extend({
 
     registerFullScreenAsset: function (fullScreenIssue) {
         this.fullScreenAsset = fullScreenIssue;
-        this.fullScreenAsset.bindIssueHidden(function () {
-            QuoteFlow.application.execute("assetEditor:dismiss");
-            this.updateWindowTitle(this.getFilter());
-            QuoteFlow.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
-        }, this);
+//        this.fullScreenAsset.bindIssueHidden(function () {
+//            QuoteFlow.application.execute("assetEditor:dismiss");
+//            this.updateWindowTitle(this.getFilter());
+//            QuoteFlow.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
+//        }, this);
     },
 
     /**
