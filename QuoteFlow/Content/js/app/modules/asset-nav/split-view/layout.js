@@ -2,6 +2,9 @@
 
 var Marionette = require('backbone.marionette');
 
+var EmptyResultsView = require('../../../components/asset-table/views/empty-results');
+var SplitScreenDetailView = require('./detail-view');
+var SplitScreenListView = require('./list-view');
 var Utilities = require('../../../components/utilities');
 
 /**
@@ -17,6 +20,8 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @param {jQuery} options.searchContainer The element in which search results are to be rendered.
      */
     initialize: function (options) {
+        debugger;
+
         _.bindAll(this,
             "_adjustHeight",
             "_adjustNoResultsMessageHeight",
@@ -37,13 +42,13 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this.navigatorContent = options.searchContainer.find(".navigator-content");
         this.searchResults = options.search.getResults();
 
-        this.emptyResultsView = new JIRA.Issues.EmptyResultsView({
+        this.emptyResultsView = new EmptyResultsView({
             searchResults: this.searchResults,
             el: this.navigatorContent
         });
 
-        this.detailsView = new JIRA.Issues.SplitScreenDetailView(options);
-        this.listView = new JIRA.Issues.SplitScreenListView(options);
+        this.detailsView = new SplitScreenDetailView(options);
+        this.listView = new SplitScreenListView(options);
 
         this.orderBy = JIRA.Components.OrderBy.create();
         this.orderBy.onSort(this._handleSort, this);
@@ -65,7 +70,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this.addListener(this.searchResults, "startIndexChange", this._renderEverythingExceptListView, this);
         this.search.onSearchError(this._onSearchFail, this);
 
-        JIRA.Issues.Application.on("issueEditor:loadError", this._onIssueLoadError, this);
+        QuoteFlow.application.on("assetEditor:loadError", this._onIssueLoadError, this);
         this.listView.searchPromise.done(_.bind(function () {
             this._makeVisible();
         }, this));
@@ -168,7 +173,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         QuoteFlow.Interactive.offHorizontalResize(this._updateSidebarPosition);
         QuoteFlow.Interactive.restoreScrollIntoViewForNormal();
         jQuery("body").removeClass("page-type-split");
-        JIRA.Issues.Application.off("issueEditor:loadError", this._onIssueLoadError, this);
+        QuoteFlow.application.off("assetEditor:loadError", this._onIssueLoadError, this);
         this.navigatorContent.addClass("pending").css("height", "");
         this.orderBy.offSort(this._handleSort, this);
         this.search.offSearchError(this._onSearchFail, this);
@@ -273,8 +278,8 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             replace: true
         });
 
-        var highlightedIssueID = this.searchResults.getHighlightedAsset().getId();
-        this.searchResults.selectAssetById(highlightedIssueID, options);
+        var highlightedIssueId = this.searchResults.getHighlightedAsset().getId();
+        this.searchResults.selectAssetById(highlightedIssueId, options);
     },
 
     /**
@@ -352,9 +357,9 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     refreshSearch: function () {
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
-            JIRA.Issues.Application.execute("analytics:trigger", "kickass.issueTableRefresh");
-            JIRA.Issues.Application.execute("issueNav:refreshSearch");
+        if (QuoteFlow.application.request("assetEditor:canDismissComment")) {
+            QuoteFlow.application.execute("analytics:trigger", "kickass.issueTableRefresh");
+            QuoteFlow.application.execute("assetNav:refreshSearch");
         }
     },
 
@@ -363,7 +368,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * <p/>
      * Some subviews render asynchronously.
      *
-     * @return {JIRA.Issues.SplitScreenLayout} <tt>this</tt>
+     * @return {SplitScreenLayout} <tt>this</tt>
      */
     render: function () {
         var hasIssues = this.searchResults.hasAssets(),
@@ -383,7 +388,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             // to render into before handling initial issue selection.
             if (isInitialRender) {
                 this.$el.children().detach();
-                this.$el.html(JIRA.Templates.SplitView.structure());
+                this.$el.html(JST["quote-builder/split-view/structure"]());
             }
 
             this._renderPagination();

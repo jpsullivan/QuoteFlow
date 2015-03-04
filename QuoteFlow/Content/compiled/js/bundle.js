@@ -1236,7 +1236,82 @@ function wrapDialogErrorContent(content) {
 }
 
 module.exports = SmartAjax;
-},{"../../util/utils":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\utils.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-config-model.js":[function(require,module,exports){
+},{"../../util/utils":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\util\\utils.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\asset-table\\views\\empty-results.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+/**
+ * Renders a message that tells the user there are no assets, with an optional link to create an asset.
+ *
+ * @extends Marionette.ItemView
+ *
+ * @param {object} options Options
+ * @param {boolean} options.quoteflowHasAssets Whether there are assets created in this QuoteFlow instance
+ */
+var EmptyResultsView = Marionette.ItemView.extend({
+    template: JST["quote-builder/table/no-results"],
+
+    serializeData: function () {
+        var message;
+        var hint;
+        var cssClass;
+        var linkType;
+        //var createIssuePerm = JIRA.Issues.UserParms.get().createIssue;
+        var createAssetPerm = true;
+
+        if (!JIRA.Issues.LoginUtils.isLoggedIn()) {
+            message = "No assets were found to match your search";
+            hint = "Try <a>logging in</a> to see more results";
+            cssClass = "not-logged-in-message";
+            linkType = 'login';
+        } else if (this.options.quoteflowHasAssets === false) {
+            message = "No assets have been created (yet)";
+            hint = createAssetPerm ? "Be the first to <a>create an asset</a>" : null;
+            cssClass = "empty-results-message";
+            this.linkType = 'create';
+        } else {
+            message = "No assets were found to match your search";
+            hint = createAssetPerm ?
+                "Try modifying your search criteria or <a>creating a new asset</a>" :
+                AJS.I18n.getText('Try modifying your search criteria');
+            cssClass = "no-results-message";
+            this.linkType = 'create';
+        }
+
+        return {
+            message: message,
+            hint: hint,
+            cssClass: cssClass
+        };
+    },
+
+    onRender: function () {
+        this.$el.addClass("empty-results");
+
+        var $links = this.$('.no-results-hint a');
+        //var isLoggedIn = JIRA.Issues.LoginUtils.isLoggedIn();
+        var isLoggedIn = true;
+        if (!isLoggedIn) {
+            //$links.attr('href', JIRA.Issues.LoginUtils.redirectUrlToCurrent()).addClass('login-link');
+        } else {
+            $links.addClass('create-issue').attr('href', AJS.contextPath() + "/secure/CreateIssue!default.jspa");
+        }
+
+        this.hidePending();
+    },
+
+    showPending: function () {
+        this.$el.addClass('pending');
+    },
+
+    hidePending: function () {
+        this.$el.removeClass("pending");
+    }
+});
+
+module.exports = EmptyResultsView;
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\column-picker\\column-config-model.js":[function(require,module,exports){
 "use strict";
 
 var _ = require('underscore');
@@ -5448,13 +5523,13 @@ var SearchPageModule = Brace.Model.extend({
         });
 
         this.registerLayout("list-view", {
-            label: AJS.I18n.getText("issuenav.layoutswitcher.listview"),
+            label: "List View",
             iconClass: 'icon-view-list',
             view: FullScreenLayout
         });
 
         this.registerLayout("split-view", {
-            label: AJS.I18n.getText("issuenav.layoutswitcher.splitview"),
+            label: "Detail View",
             iconClass: 'icon-view-split',
             view: SplitScreenLayout
         });
@@ -5462,11 +5537,10 @@ var SearchPageModule = Brace.Model.extend({
         this.on("change:filter", this._onFilterChanged, this);
 
         QuoteFlow.application.vent.on("assetEditor:close", this.returnToSearch, this);
-
         QuoteFlow.application.vent.on("assetEditor:loadComplete", function (model, props) {
             if (!this.standalone && !props.reason) {
                 this.searchResults.selectAssetById(model.getId(), { reason: "assetLoaded" });
-                this.searchResults.updateAssetById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() })
+                this.searchResults.updateAssetById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() });
 
                 // Replace URL if issue updated successfully
                 if (model.getKey()) {
@@ -5488,7 +5562,6 @@ var SearchPageModule = Brace.Model.extend({
     registerColumnPicker: function () {
         this.columnConfig = ColumnPicker.create({ search: this });
     },
-
 
     getInactiveLayouts: function () {
         var layouts = [];
@@ -7231,11 +7304,207 @@ var SearchResults = Brace.Model.extend({
 });
 
 module.exports = SearchResults;
-},{"./asset/simple-asset":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\simple-asset.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\split-view\\layout.js":[function(require,module,exports){
+},{"./asset/simple-asset":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\search\\asset\\simple-asset.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\split-view\\detail-view.js":[function(require,module,exports){
 "use strict";
 
 var Marionette = require('backbone.marionette');
 
+var Utilities = require('../../../components/utilities');
+
+/**
+ * The split view "asset panel" (where the asset is rendered).
+ */
+var SplitScreenDetailView = Marionette.ItemView.extend({
+    events: {
+        "focus #addcomment textarea": "scrollToBottom"
+    },
+
+    issueDetailsNoSelectionTemplate: JST["quote-builder/split-view/asset-details-no-selection"],
+
+    /**
+     * @param {object} options
+     * @param {AssetCacheManager} options.assetCacheManager The application's <tt>AssetCacheManager</tt>.
+     * @param {AssetViewer} options.assetModule The application's <tt>AssetViewer</tt>.
+     * @param {SearchModule} options.search The application's <tt>SearchModule</tt>.
+     */
+    initialize: function (options) {
+        _.bindAll(this, "adjustHeight", "_renderIssue");
+
+        Utilities.initializeResizeHooks();
+
+        this.assetCacheManager = options.assetCacheManager;
+        this.search = options.search;
+        this.searchResults = options.search.getResults();
+
+//        JIRA.Issues.Application.on("issueEditor:fieldSubmitted", this.focus, this);
+//        JIRA.Issues.Application.on("issueEditor:replacedFocusedPanel", this.focus, this);
+        this.adjustHeight = _.debounce(this.adjustHeight, options.easeOff);
+    },
+
+    adjustHeight: function () {
+        _.defer(_.bind(function () {
+            var assetContainer = this.getAssetContainer(),
+                issueContainerTop;
+            if (assetContainer.length) {
+                issueContainerTop = assetContainer.length && assetContainer.offset().top;
+                assetContainer.css("height", window.innerHeight - issueContainerTop);
+            }
+        }, this));
+    },
+
+    getAssetContainer: function () {
+        return this.$el.find(".issue-container");
+    },
+
+    scrollToTop: function () {
+        var $assetContainer = this.getAssetContainer();
+        if ($assetContainer.size()) {
+            $assetContainer.scrollTop(0);
+        }
+    },
+
+    scrollToBottom: function () {
+        var $assetContainer = this.getAssetContainer();
+        if ($assetContainer.size()) {
+            $assetContainer.scrollTop($assetContainer.prop("scrollHeight"));
+        }
+    },
+
+    /**
+     * Activates this SplitScreenDetailView.
+     *
+     * @return {SplitScreenDetailView} this
+     */
+    activate: function () {
+        // if this view is already activated, do nothing
+        if (this.isActive) return this;
+
+        var instance = this;
+        this.$el.focusin(function () {
+            instance.focused = true;
+        });
+        this.$el.focusout(function () {
+            instance.focused = false;
+        });
+
+        this.addListener(this.searchResults, "selectedAssetChange", this.render, this);
+        this.addListener(this.searchResults, "assetUpdated", this.onAssetUpdated, this);
+        this.addListener(this.searchResults, "assetDoesNotExist", this._onAssetDoesNotExist, this);
+
+        //JIRA.bind(JIRA.Events.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
+
+        QuoteFlow.Interactive.onVerticalResize(this.adjustHeight);
+        //JIRA.Issues.Application.on("issueEditor:loadComplete", this.adjustHeight, this);
+        this.isActive = true;
+        return this;
+    },
+
+    onBeforeDestroy: function () {
+        //JIRA.Issues.Application.execute("issueEditor:abortPending");
+        QuoteFlow.Interactive.offVerticalResize(this.adjustHeight);
+        //JIRA.Issues.Application.off("issueEditor:loadComplete", this.adjustHeight);
+        //JIRA.unbind(JIRA.Events.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
+        //JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
+        this.isActive = false;
+    },
+
+    /**
+     * Adds markup to hide all mentions drop down on mentionable fields when the user scrolls
+     *
+     * @param event
+     * @param $context
+     * @param reason
+     */
+    fixMentionsDropdownInMentionableFields: function (event, $context, reason) {
+        if (reason === JIRA.CONTENT_ADDED_REASON.panelRefreshed ||
+            reason === JIRA.CONTENT_ADDED_REASON.inlineEditStarted
+            ) {
+            // Search for mentionable elements, add markup to force Mentions drop down
+            // to follow the scroll of .split-view .issue-container
+            $context.find(".mentionable:not([data-follow-scroll])").attr("follow-scroll", ".split-view .issue-container");
+
+            // Search for mentionable elements, add markup to force Mentions drop down
+            // to push the scroll of .issue-body-content if there is not enough room to
+            // display the drop down
+            $context.find(".mentionable:not([data-push-scroll])").attr("push-scroll", ".issue-body-content");
+
+        }
+    },
+
+    onAssetUpdated: function (id, entity, reason) {
+        if (reason.action !== JIRA.Issues.Actions.INLINE_EDIT && reason.action !== JIRA.Issues.Actions.ROW_UPDATE) {
+            return JIRA.Issues.Application.request("issueEditor:refreshIssue", reason);
+        } else {
+            return jQuery.Deferred().resolve();
+        }
+    },
+
+    render: function (model, options) {
+        options = options || {};
+        if (this.searchResults.hasAssets() && !this.search.isStandAloneAsset() && options.reason !== "issueLoaded") {
+            if (this.searchResults.hasSelectedAsset()) {
+                JIRA.Issues.Application.execute("issueEditor:abortPending");
+                JIRA.Issues.Utils.debounce(this, "_renderAsset", this.searchResults.getSelectedAsset());
+            } else {
+                this._renderNoAsset();
+            }
+        }
+        this.adjustHeight();
+        return this;
+    },
+
+    _renderAsset: function (selectedAsset) {
+        JIRA.Issues.Application.request("issueEditor:loadIssue", {
+            id: selectedAsset.get("id"),
+            key: selectedAsset.get("key"),
+            detailView: true
+        }).always(_.bind(function () {
+            JIRA.Issues.Application.execute("pager:update", _.extend({}, this.searchResults.getPager(), { isSplitView: true }));
+            // when the first asset is selected, prefetch the second one
+            if (this.searchResults.isFirstAssetSelected() && this.searchResults.getDisplayableTotal() > 1) {
+                this.assetCacheManager.scheduleAssetToBePrefetched(this.searchResults.getNextAssetForSelectedAsset());
+            }
+            this.assetCacheManager.prefetchAssets();
+            this.$el.addClass("active");
+            this.scrollToTop();
+        }, this));
+    },
+
+    focus: function () {
+        if (!this.hasFocus()) {
+            this.getAssetContainer().focus();
+        }
+    },
+
+    blur: function () {
+        this.getAssetContainer().blur();
+    },
+
+    _onAssetDoesNotExist: function () {
+        this._renderNoAsset();
+        JIRA.Issues.Application.execute("issueEditor:setContainer", this.$el);
+        this.render();
+    },
+
+    _renderNoAsset: function () {
+        this.$el.html(this.issueDetailsNoSelectionTemplate());
+    },
+
+    hasFocus: function () {
+        return this.focused === true;
+    }
+});
+
+module.exports = SplitScreenDetailView;
+
+},{"../../../components/utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\split-view\\layout.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+var EmptyResultsView = require('../../../components/asset-table/views/empty-results');
+var SplitScreenDetailView = require('./detail-view');
+var SplitScreenListView = require('./list-view');
 var Utilities = require('../../../components/utilities');
 
 /**
@@ -7251,6 +7520,8 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @param {jQuery} options.searchContainer The element in which search results are to be rendered.
      */
     initialize: function (options) {
+        debugger;
+
         _.bindAll(this,
             "_adjustHeight",
             "_adjustNoResultsMessageHeight",
@@ -7271,13 +7542,13 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this.navigatorContent = options.searchContainer.find(".navigator-content");
         this.searchResults = options.search.getResults();
 
-        this.emptyResultsView = new JIRA.Issues.EmptyResultsView({
+        this.emptyResultsView = new EmptyResultsView({
             searchResults: this.searchResults,
             el: this.navigatorContent
         });
 
-        this.detailsView = new JIRA.Issues.SplitScreenDetailView(options);
-        this.listView = new JIRA.Issues.SplitScreenListView(options);
+        this.detailsView = new SplitScreenDetailView(options);
+        this.listView = new SplitScreenListView(options);
 
         this.orderBy = JIRA.Components.OrderBy.create();
         this.orderBy.onSort(this._handleSort, this);
@@ -7299,7 +7570,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this.addListener(this.searchResults, "startIndexChange", this._renderEverythingExceptListView, this);
         this.search.onSearchError(this._onSearchFail, this);
 
-        JIRA.Issues.Application.on("issueEditor:loadError", this._onIssueLoadError, this);
+        QuoteFlow.application.on("assetEditor:loadError", this._onIssueLoadError, this);
         this.listView.searchPromise.done(_.bind(function () {
             this._makeVisible();
         }, this));
@@ -7402,7 +7673,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         QuoteFlow.Interactive.offHorizontalResize(this._updateSidebarPosition);
         QuoteFlow.Interactive.restoreScrollIntoViewForNormal();
         jQuery("body").removeClass("page-type-split");
-        JIRA.Issues.Application.off("issueEditor:loadError", this._onIssueLoadError, this);
+        QuoteFlow.application.off("assetEditor:loadError", this._onIssueLoadError, this);
         this.navigatorContent.addClass("pending").css("height", "");
         this.orderBy.offSort(this._handleSort, this);
         this.search.offSearchError(this._onSearchFail, this);
@@ -7507,8 +7778,8 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             replace: true
         });
 
-        var highlightedIssueID = this.searchResults.getHighlightedAsset().getId();
-        this.searchResults.selectAssetById(highlightedIssueID, options);
+        var highlightedIssueId = this.searchResults.getHighlightedAsset().getId();
+        this.searchResults.selectAssetById(highlightedIssueId, options);
     },
 
     /**
@@ -7586,9 +7857,9 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     refreshSearch: function () {
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
-            JIRA.Issues.Application.execute("analytics:trigger", "kickass.issueTableRefresh");
-            JIRA.Issues.Application.execute("issueNav:refreshSearch");
+        if (QuoteFlow.application.request("assetEditor:canDismissComment")) {
+            QuoteFlow.application.execute("analytics:trigger", "kickass.issueTableRefresh");
+            QuoteFlow.application.execute("assetNav:refreshSearch");
         }
     },
 
@@ -7597,7 +7868,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * <p/>
      * Some subviews render asynchronously.
      *
-     * @return {JIRA.Issues.SplitScreenLayout} <tt>this</tt>
+     * @return {SplitScreenLayout} <tt>this</tt>
      */
     render: function () {
         var hasIssues = this.searchResults.hasAssets(),
@@ -7617,7 +7888,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             // to render into before handling initial issue selection.
             if (isInitialRender) {
                 this.$el.children().detach();
-                this.$el.html(JIRA.Templates.SplitView.structure());
+                this.$el.html(JST["quote-builder/split-view/structure"]());
             }
 
             this._renderPagination();
@@ -7739,6 +8010,217 @@ var SplitScreenLayout = Marionette.ItemView.extend({
 });
 
 module.exports = SplitScreenLayout;
+},{"../../../components/asset-table/views/empty-results":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\asset-table\\views\\empty-results.js","../../../components/utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","./detail-view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\split-view\\detail-view.js","./list-view":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\split-view\\list-view.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\split-view\\list-view.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+var Utilities = require('../../../components/utilities');
+
+/**
+ * The split view "asset panel" (where the asset is rendered).
+ */
+var SplitScreenListView = Marionette.ItemView.extend({
+    //inaccessibleIssueRowTemplate: JIRA.Templates.SplitView.inaccessibleIssueRow,
+    template: JST["quote-builder/split-view/asset-list"],
+
+    events: {
+        "simpleClick .issue-list li": "_onClickAsset"
+    },
+
+    /**
+     * @param {object} options
+     * @param {SearchModule} options.search The view's interface to the rest of the application.
+     */
+    initialize: function (options) {
+        _.bindAll(this,
+            "_onSearchDone",
+            "_onSearchFail");
+
+        this.search = options.search;
+        this.searchContainer = options.searchContainer;
+        this.searchPromise = this._createSearchPromise({
+            done: this._onSearchDone,
+            fail: this._onSearchFail
+        });
+
+        this.searchResults = options.search.getResults();
+        this.serverRendered = !!options.serverRendered && this._assetsRendered(options);
+
+        this.addListener(this.searchResults, "highlightedAssetChange", this._onHighlightedAssetChange, this);
+        this.addListener(this.searchResults, "assetUpdated", this._onAssetUpdated, this);
+        this.addListener(this.searchResults, "startIndexChange", this.render, this);
+    },
+
+    _assetsRendered: function (options) {
+        return !!options.searchContainer.find(".issue-list").length;
+    },
+
+    scrollToFocused: function () {
+        var $assetPanel = this.searchContainer.find(".list-panel");
+        var $focused = this.$el.find(".focused");
+        if ($assetPanel.size() && $focused.size()) {
+            $assetPanel.scrollTop($focused.position().top);
+        }
+    },
+
+    /**
+     * Prepare to be removed, deactivating all subviews.
+     */
+    onBeforeDestroy: function () {
+        this.searchPromise.reset();
+        //JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
+    },
+
+    /**
+     * Load an asset into the detail panel after its row was clicked.
+     *
+     * @param {jQuery.Event} e The click event.
+     * @private
+     */
+    _onClickAsset: function (e) {
+        var assetId = AJS.$(e.target).closest("[data-id]").data("id"),
+            isSelected = this.searchResults.getSelectedAsset().getId() === assetId;
+
+        e.preventDefault();
+
+        if (!isSelected) {
+            this.searchResults.selectAssetById(assetId, { replace: true });
+
+//            JIRA.Issues.Application.execute("analytics:trigger", "kickass.openIssueFromTable", {
+//                issueId: assetId,
+//                // these are 1-based indices
+//                absolutePosition: this.searchResults.getPositionOfIssueInSearchResults(assetId) + 1,
+//                relativePosition: this.searchResults.getPositionOfIssueInPage(assetId) + 1
+//            });
+        }
+    },
+
+    /**
+     * Create the recurring search promise. The added deferreds trigger a render on done.
+     *
+     * @param {object} [options]
+     * @param {function} [options.done] A done callback.
+     * @param {function} [options.fail] A fail callback.
+     * @return {jQuery.RecurringPromise} the recurring search promise.
+     * @private
+     */
+    _createSearchPromise: function (options) {
+        var promise = jQuery.RecurringPromise();
+
+        options = options || {};
+        options.done && promise.done(_.bind(options.done, this));
+        options.fail && promise.fail(_.bind(options.fail, this));
+
+        return promise;
+    },
+
+    getAssetById: function (id) {
+        return this.$el.find("[data-id=" + id + "]");
+    },
+
+    /**
+     * Highlight an asset in the list.
+     *
+     * @param {SimpleAsset} [asset] The asset to highlight; if falsey, the highlight is removed.
+     * @private
+     */
+    _highlightAsset: function (asset) {
+        this.$el.find(".focused").removeClass("focused");
+        // A little trick to scroll to the correct item without having to implement our
+        asset && this.getAssetById(asset.getId()).addClass("focused").scrollIntoView();
+    },
+
+    /**
+     * Mark an asset in the list as being inaccessible.
+     *
+     * @param {number} id The asset ID.
+     */
+    markIssueInaccessible: function (id) {
+        this.getAssetById(id).replaceWith(this.inaccessibleIssueRowTemplate({
+            isHighlighted: this.searchResults.getHighlightedAsset().getId() === id,
+            assetId: id
+        }));
+    },
+
+    /**
+     * Highlight the currently highlighted asset.
+     *
+     * @private
+     */
+    _onHighlightedAssetChange: function () {
+        this._highlightAsset(this.searchResults.getHighlightedAsset());
+    },
+
+    _onAssetUpdated: function (id, entity) {
+        if (entity.table[0] === null) {
+            this.markIssueInaccessible(id);
+        } else {
+            this.getAssetById(id).html(JIRA.Templates.SplitView.issueRow(entity.table[0]));
+        }
+    },
+
+    /**
+     * Render the asset list. Called when a search request is fulfilled.
+     *
+     * @param {object} result The search payload, extended with additional information.
+     * @param {boolean} [result.serverRendered] Whether the existing HTML was server rendered.
+     * @private
+     */
+    _onSearchDone: function (result) {
+        //Depending on the default layout, anonymous user may have their layout preference set to the other layout
+        //if that's true, data given by the server on page load will not be compatible. Hence do a check here.
+        if (result instanceof Array) {
+            if (this.searchResults.hasAssets()) {
+                this.$el.html(this.template({
+                    highlightedID: this.searchResults.getHighlightedAsset().getId(),
+                    assetIDs: this.searchResults.getPageAssetIds(),
+                    assets: result
+                }));
+            }
+
+            _.defer(_.bind(this.scrollToFocused, this));
+        }
+    },
+
+    /**
+     * Display an error after a search fails.
+     * Called when an operation in <tt>searchPromise</tt> fails.
+     *
+     * @private
+     */
+    _onSearchFail: function () {
+        var navigatorContent = this.searchContainer.find(".navigator-content");
+        navigatorContent.html(JIRA.Templates.Issues.ComponentUtil.errorMessage({
+            msg: AJS.I18n.getText("issue.nav.common.server.error")
+        }));
+    },
+
+    render: function () {
+        var serverRendered = this.serverRendered;
+        this.serverRendered = false;
+
+        if (this.searchResults.hasAssets()) {
+            if (!this.searchResults.hasHighlightedAsset() && !this.searchResults.hasSelectedAsset()) {
+                // Highlighting the asset sets the start index, causing another render. Return to avoid double rendering.
+                this.searchResults.highlightFirstInPage();
+                return;
+            }
+
+            // Pass the serverRendered value through so _onSearchDone knows whether to preserve HTML.
+            return this.searchPromise.add(this.searchResults.getResultsForPage({
+                jql: this.search.getEffectiveJql()
+            }).then(function (result) {
+                return _.extend(result, { serverRendered: serverRendered });
+            }));
+        } else {
+            return jQuery.Deferred().resolve();
+        }
+    }
+});
+
+module.exports = SplitScreenListView;
+
 },{"../../../components/utilities":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\components\\utilities.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\util\\async-data.js":[function(require,module,exports){
 "use strict";
 

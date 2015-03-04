@@ -43,13 +43,13 @@ var SearchPageModule = Brace.Model.extend({
         });
 
         this.registerLayout("list-view", {
-            label: AJS.I18n.getText("issuenav.layoutswitcher.listview"),
+            label: "List View",
             iconClass: 'icon-view-list',
             view: FullScreenLayout
         });
 
         this.registerLayout("split-view", {
-            label: AJS.I18n.getText("issuenav.layoutswitcher.splitview"),
+            label: "Detail View",
             iconClass: 'icon-view-split',
             view: SplitScreenLayout
         });
@@ -57,11 +57,10 @@ var SearchPageModule = Brace.Model.extend({
         this.on("change:filter", this._onFilterChanged, this);
 
         QuoteFlow.application.vent.on("assetEditor:close", this.returnToSearch, this);
-
         QuoteFlow.application.vent.on("assetEditor:loadComplete", function (model, props) {
             if (!this.standalone && !props.reason) {
                 this.searchResults.selectAssetById(model.getId(), { reason: "assetLoaded" });
-                this.searchResults.updateAssetById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() })
+                this.searchResults.updateAssetById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() });
 
                 // Replace URL if issue updated successfully
                 if (model.getKey()) {
@@ -83,7 +82,6 @@ var SearchPageModule = Brace.Model.extend({
     registerColumnPicker: function () {
         this.columnConfig = ColumnPicker.create({ search: this });
     },
-
 
     getInactiveLayouts: function () {
         var layouts = [];
