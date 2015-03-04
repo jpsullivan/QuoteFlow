@@ -23,7 +23,7 @@ var ColumnConfigModel = Brace.Model.extend({
     ],
 
     defaults: {
-        actionBarText: AJS.I18n.getText("issue.columns.restore.defaults"),
+        actionBarText: "Restore Defaults",
         isActive: false
     },
 

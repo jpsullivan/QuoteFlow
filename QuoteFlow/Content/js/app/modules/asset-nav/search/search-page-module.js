@@ -8,8 +8,9 @@ var Utilities = require('../../../components/utilities');
 var ColumnPicker = require('../../../components/table/column-picker');
 var FullScreenLayout = require('./full-screen-controller');
 var SearchShifter = require('./query/search-shifter');
-var SplitScreenLayout = require('../split-view/layout');
+var Shifter = require('../../../components/shifter/shifter');
 var SimpleAsset = require('./asset/simple-asset');
+var SplitScreenLayout = require('../split-view/layout');
 var UrlSerializer = require('../../../util/url-serializer');
 
 /**
@@ -259,11 +260,12 @@ var SearchPageModule = Brace.Model.extend({
         this.queryModule.onChangedPreferredSearchMode(function (mode) {
             QuoteFlow.application.execute("analytics:trigger", "kickass.switchto" + mode);
         });
-        JIRA.Shifter.register(SearchShifter({
-            isBasicMode: _.bind(this.queryModule.isBasicMode, this.queryModule),
-            isFullScreenIssue: _.bind(this.isFullScreenIssueVisible, this),
-            searcherCollection: this.queryModule.getSearcherCollection()
-        }));
+
+//        Shifter.register(SearchShifter({
+//            isBasicMode: _.bind(this.queryModule.isBasicMode, this.queryModule),
+//            isFullScreenIssue: _.bind(this.isFullScreenIssueVisible, this),
+//            searcherCollection: this.queryModule.getSearcherCollection()
+//        }).create());
     },
 
     disableLayoutSwitcher: function () {

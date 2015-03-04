@@ -1,11 +1,10 @@
-﻿"use strict";
-
-var $ = require('jquery');
+﻿var $ = require('jquery');
 var Marionette = require('backbone.marionette');
 
 var Control = require('../control/control');
 var DefaultSuggestHandler = require('./default-suggestion-handler');
 var List = require('../list/list');
+var Navigator = require('../../util/navigator');
 
 /**
  * A dropdown that can be queried and it's links selected via keyboard. Dropdown contents retrieved via AJAX.
@@ -42,10 +41,14 @@ var QueryableDropdownSelect = Marionette.ItemView.extend({
         if (this.options.width) {
             this.setFieldWidth(this.options.width);
         }
+
         if (this.options.loadOnInit) {
             // eagerly get suggestions
             this.requestSuggestions(true);
         }
+
+        this.on("deactivate", this._deactivate);
+        this.on("handleKeypress", this._handleEscape);
     },
 
     /**
@@ -116,11 +119,8 @@ var QueryableDropdownSelect = Marionette.ItemView.extend({
      * @param {String} value (optional) - The user input text responsible for the error
      */
     showErrorMessage: function (value) {
-
         var $container = this.$container.parent(".field-group"); // aui container
-
         this.hideErrorMessage(); // remove old
-
         this.$errorMessage.text(AJS.format(this.options.errorMessage, value || this.getQueryVal()));
 
         if ($container.length === 1) {
@@ -283,6 +283,7 @@ var QueryableDropdownSelect = Marionette.ItemView.extend({
         this.$dropDownIcon.removeClass("loading").addClass("noloading");
         return this;
     },
+
     /**
      *
      * Sets suggestions and shows them
@@ -312,7 +313,7 @@ var QueryableDropdownSelect = Marionette.ItemView.extend({
     },
 
     /**
-     * Fades out & disables interactions with field
+     * Fades out & disables interactions with fielddisabledBlanket
      */
     disable: function () {
         if (!this.disabled) {
@@ -361,7 +362,7 @@ var QueryableDropdownSelect = Marionette.ItemView.extend({
         var queryLength = this.getQueryVal().length;
         if (queryLength >= 1 || force) {
             this.requestSuggestions(force).done(_.bind(function (suggestions) {
-                this._setSuggestions(suggestions)
+                this._setSuggestions(suggestions);
             }, this));
         } else {
             this.hideSuggestions();
@@ -403,6 +404,7 @@ var QueryableDropdownSelect = Marionette.ItemView.extend({
         if (!this.suggestionsVisible) {
             return;
         }
+
         this._rejectPendingRequests();
         this.suggestionsVisible = false;
         this.$dropDownIcon.addClass("noloading");
@@ -411,6 +413,7 @@ var QueryableDropdownSelect = Marionette.ItemView.extend({
     },
 
     _deactivate: function () {
+        debugger;
         this.hideSuggestions();
     },
 
@@ -439,7 +442,7 @@ var QueryableDropdownSelect = Marionette.ItemView.extend({
     acceptFocusedSuggestion: function () {
         var focused = this.listController.getFocused();
         if (focused.length !== 0 && focused.is(":visible")) {
-            this.listController._acceptSuggestion(focused)
+            this.listController._acceptSuggestion(focused);
         }
     },
 
@@ -510,7 +513,7 @@ var QueryableDropdownSelect = Marionette.ItemView.extend({
         ignoreBlurElement: {
             mousedown: function (e) {
                 if (Navigator.isIE() && Navigator.majorVersion() < 12) {
-                    // JRA-27685. IE fires blur events when user clicks on the scrollbar inside autocomplete suggestion list.
+                    // IE fires blur events when user clicks on the scrollbar inside autocomplete suggestion list.
                     // In that case we don't deactivate the input field by setting a flag and checking it in field:blur.
                     var targetIsDropdownController = (jQuery(e.target)[0] == jQuery(this.dropdownController.$layer)[0]);
 

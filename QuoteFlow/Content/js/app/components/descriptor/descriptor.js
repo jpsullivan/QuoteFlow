@@ -6,7 +6,7 @@ var Brace = require('backbone-brace');
 /**
  * An abstract class used to maintain complex descriptors.
  */
-var Descriptor = Backbone.Evented.extend({
+var Descriptor = Brace.Evented.extend({
 
     initialize: function(options) {
         if (this._validate(options)) {
