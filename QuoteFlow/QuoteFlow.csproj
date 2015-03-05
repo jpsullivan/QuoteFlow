@@ -1061,7 +1061,6 @@
     <Folder Include="Infrastructure\Exceptions\Antlr\" />
     <Folder Include="Infrastructure\Exceptions\Search\" />
     <Folder Include="Infrastructure\Lucene\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

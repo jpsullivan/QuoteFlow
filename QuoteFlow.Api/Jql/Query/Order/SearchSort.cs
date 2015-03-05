@@ -14,15 +14,15 @@ namespace QuoteFlow.Api.Jql.Query.Order
     [Serializable]
     public class SearchSort
     {
-        public SortOrder Order;
+        public SortOrder? Order;
         public string Field { get; set; }
         public IEnumerable<Property> Property;
 
         /// <summary>
         /// Used to construct a search sort for a field with a direction.
         /// </summary>
-        /// <param name="field"> to sort by. </param>
-        /// <param name="order"> direction to sort by, if null the default order for the field will be used. </param>
+        /// <param name="field">The field to sort by.</param>
+        /// <param name="order">The order direction to sort by, if null the default order for the field will be used.</param>
         public SearchSort(string field, SortOrder order = SortOrder.ASC)
             : this(field, null, order)
         {
@@ -44,12 +44,11 @@ namespace QuoteFlow.Api.Jql.Query.Order
         /// Used to construct a search sort for a field with a direction.
         /// 
         /// NOTE: it would be better if the order of these parameters was reversed but we are leaving it for backward compatibility. </summary>
-        /// @deprecated use <seealso cref="#SearchSort(String, SortOrder)"/> instead.
+        /// @deprecated use <see cref="#SearchSort(String, SortOrder)"/> instead.
         /// 
-        /// <param name="order"> the order of the sort, if null, will be the default order for the system, if not one of
-        /// <seealso cref="com.atlassian.query.order.SortOrder#ASC"/> or <seealso cref="SortOrder#DESC"/> it will
-        /// default to <seealso cref="com.atlassian.query.order.SortOrder#ASC"/>. </param>
-        /// <param name="field"> to sort by. </param>
+        /// <param name="order">The order of the sort, if null, will be the default order for the system, if not one of
+        /// <see cref="SortOrder#ASC"/> or <seealso cref="SortOrder#DESC"/> it will default to <seealso cref="SortOrder#ASC"/>.</param>
+        /// <param name="field">To sort by.</param>
         public SearchSort(string order, string field)
             : this(field, null, SortOrderHelpers.ParseString(order))
         {
@@ -62,12 +61,14 @@ namespace QuoteFlow.Api.Jql.Query.Order
             Property = copy.Property;
         }
 
+        public string GetOrder()
+        {
+            return (Order == null) ? null : Order.Value.ToString();
+        }
+
         public virtual bool Reverse
         {
-            get
-            {
-                return Order == SortOrder.DESC;
-            }
+            get { return Order == SortOrder.DESC; }
         }
 
         public override string ToString()

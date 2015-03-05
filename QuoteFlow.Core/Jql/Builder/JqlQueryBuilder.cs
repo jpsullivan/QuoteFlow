@@ -1,5 +1,4 @@
 ﻿using Ninject;
-using QuoteFlow.Api.Infrastructure.IoC;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Order;

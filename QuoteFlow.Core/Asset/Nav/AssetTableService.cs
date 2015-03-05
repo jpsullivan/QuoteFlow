@@ -9,11 +9,11 @@ using QuoteFlow.Api.Asset.Search.Util;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Query;
+using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Api.Models;
-using QuoteFlow.Api.Models.AssetNavigator;
 using QuoteFlow.Api.Models.ViewModels.Assets.Nav;
 using QuoteFlow.Api.Services;
-using QuoteFlow.Api.Util;
+using QuoteFlow.Core.Jql.Builder;
 
 namespace QuoteFlow.Core.Asset.Nav
 {
@@ -110,13 +110,50 @@ namespace QuoteFlow.Core.Asset.Nav
                 searchRequest = new SearchRequest(query);
             }
 
-            Query queryWithOrderBy = AddOrderByToSearchRequest(query, configuration.SortBy);
+            var queryWithOrderBy = AddOrderByToSearchRequest(query, configuration.SortBy);
             PreferredLayoutKey = configuration;
 
             return CreateIssueTableFromCreator(issueTableCreatorFactory.getNormalIssueTableCreator(configuration, queryWithOrderBy, returnIssueIds, searchRequest, authenticationContext.LoggedInUser));
         }
 
-        internal virtual void ValidateColumnNames(IList<string> columnNames, ErrorCollection errors)
+        internal virtual IQuery AddOrderByToSearchRequest(IQuery preOrderByQuery, string sortBy)
+        {
+            if (sortBy.IsNullOrWhiteSpace())
+            {
+                return preOrderByQuery;
+            }
+
+            string sortDirection = null;
+            if (sortBy.EndsWith(":DESC") || sortBy.EndsWith(":ASC"))
+            {
+                sortDirection = sortBy.Substring(sortBy.LastIndexOf(':') + 1);
+                sortBy = sortBy.Substring(0, sortBy.LastIndexOf(':'));
+            }
+
+            var queryBuilder = JqlQueryBuilder.NewBuilder(preOrderByQuery);
+
+            string[] sortArray = { sortDirection };
+            string[] fieldArray = { sortBy };
+
+            var @params = new Dictionary<string, string[]>
+            {
+                {SearchSortUtil.SorterOrder, sortArray},
+                {SearchSortUtil.SorterField, fieldArray}
+            };
+
+            IOrderBy newOrder = SearchSortUtil.GetOrderByClause(@params);
+            IOrderBy oldOrder = queryBuilder.OrderBy().BuildOrderBy();
+
+            User user = authenticationContext.LoggedInUser;
+            IList<SearchSort> newSearchSorts = newOrder.SearchSorts;
+            IList<SearchSort> oldSearchSorts = oldOrder.SearchSorts;
+            IList<SearchSort> sorts = SearchSortUtil.MergeSearchSorts(user, newSearchSorts, oldSearchSorts, 3);
+
+            queryBuilder.OrderBy().SetSorts(sorts);
+            return queryBuilder.BuildQuery();
+        }
+
+        internal virtual void ValidateColumnNames(IList<string> columnNames)
         {
             if (columnNames == null || columnNames.Count <= 0) return;
 
@@ -129,7 +166,7 @@ namespace QuoteFlow.Core.Asset.Nav
                 foreach (string columnName in columnNames)
                 {
                     // skip the --Default-- column if present
-                    if (IssueTableLayoutBean.DEFAULT_COLUMNS.equalsIgnoreCase(columnName))
+                    if (columnName.Equals("--Default--", StringComparison.CurrentCultureIgnoreCase))
                     {
                         continue;
                     }
@@ -144,7 +181,7 @@ namespace QuoteFlow.Core.Asset.Nav
                 if (fieldsNotFound.Count > 0)
                 {
                     var fieldsNotFoundString = String.Join(", ", fieldsNotFound);
-                    errors.AddError(ColumnNames, string.Format("The following columns are invalid: {0}", fieldsNotFoundString));
+                    //errors.AddError(ColumnNames, string.Format("The following columns are invalid: {0}", fieldsNotFoundString));
                 }
             }
             catch (FieldException e)

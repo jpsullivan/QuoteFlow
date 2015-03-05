@@ -12,6 +12,9 @@ namespace QuoteFlow.Api.Asset.Search.Util
     /// </summary>
     public interface ISearchSortUtil
     {
+        string SorterOrder { get; }
+        string SorterField { get; }
+
         /// <summary>
         /// Combine the new search sorts and the old search sorts returning a list of sorts that is only of size maxLength.
         /// Old sorts will fall off the end of the list first. If there are any sorts that are duplicated (the field is

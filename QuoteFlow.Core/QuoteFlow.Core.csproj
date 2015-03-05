@@ -186,6 +186,8 @@
     <Compile Include="Asset\Index\Indexers\ManufacturerIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\SummaryIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\UserFieldIndexer.cs" />
+    <Compile Include="Asset\Nav\AbstractAssetTableCreator.cs" />
+    <Compile Include="Asset\Nav\AssetTableCreatorFactory.cs" />
     <Compile Include="Asset\Nav\AssetTableService.cs" />
     <Compile Include="Asset\Search\Handlers\ManufacturerSearchHandlerFactory.cs" />
     <Compile Include="Asset\Search\Handlers\SimpleSearchHandlerFactory.cs" />
@@ -319,6 +321,7 @@
     <Compile Include="Jql\Query\LuceneQueryBuilder.cs" />
     <Compile Include="Jql\Query\Lucene\Parsing\LuceneQueryParserFactory.cs" />
     <Compile Include="Jql\Query\ManufacturerClauseQueryFactory.cs" />
+    <Compile Include="Jql\Query\Order\OrderByUtil.cs" />
     <Compile Include="Jql\Query\QueryRegistry.cs" />
     <Compile Include="Jql\Query\QueryVisitor.cs" />
     <Compile Include="Jql\Query\SummaryClauseQueryFactory.cs" />
@@ -353,6 +356,7 @@
     <Compile Include="Jql\ValuesGeneratingClauseHandler.cs" />
     <Compile Include="Jql\Values\CatalogClauseValuesGenerator.cs" />
     <Compile Include="Jql\Values\ManufacturerClauseValuesGenerator.cs" />
+    <Compile Include="Jql\Values\SortJqlGenerator.cs" />
     <Compile Include="Lucene\AnalysisHelper.cs" />
     <Compile Include="Lucene\Index\AccumulatingResultBuilder.cs" />
     <Compile Include="Lucene\Index\DelayCloseSearcher.cs" />

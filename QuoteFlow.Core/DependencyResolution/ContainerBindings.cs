@@ -26,9 +26,11 @@ using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Operand.Registry;
+using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Api.Jql.Resolver;
 using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Api.Jql.Validator;
+using QuoteFlow.Api.Jql.Values;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.CustomFields.Searchers.Transformer;
@@ -184,6 +186,8 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IQueryRegistry>().To<QueryRegistry>().InRequestScope();
             Bind<ISystemClauseHandlerFactory>().To<SystemClauseHandlerFactory>().InRequestScope();
             Bind<IValidatorRegistry>().To<ValidatorRegistry>().InRequestScope();
+            Bind<ISortJqlGenerator>().To<ISortJqlGenerator>().InRequestScope();
+            Bind<IOrderByUtil>().To<IOrderByUtil>().InRequestScope();
             Bind<QueryContextConverter>().ToSelf().InRequestScope();
             Bind<ValidatorVisitor.ValidatorVisitorFactory>().ToSelf().InRequestScope();
 

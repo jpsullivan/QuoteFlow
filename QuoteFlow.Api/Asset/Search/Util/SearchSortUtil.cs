@@ -17,6 +17,9 @@ namespace QuoteFlow.Api.Asset.Search.Util
 {
     public class SearchSortUtil : ISearchSortUtil
     {
+        public string SorterOrder { get { return "sorter/order"; } }
+        public string SorterField { get { return "sorter/field"; } }
+
         public ISearchHandlerManager SearchHandlerManager { get; protected set; }
         public IFieldManager FieldManager { get; protected set; }
         

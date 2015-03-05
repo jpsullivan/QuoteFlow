@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using QuoteFlow.Api.Asset.Nav;
 using QuoteFlow.Api.Infrastructure.Helpers;
-using QuoteFlow.Api.Models.AssetNavigator;
 using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure;

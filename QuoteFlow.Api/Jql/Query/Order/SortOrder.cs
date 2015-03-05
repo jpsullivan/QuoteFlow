@@ -1,4 +1,5 @@
 ﻿using System;
+using QuoteFlow.Api.Infrastructure.Extensions;
 
 namespace QuoteFlow.Api.Jql.Query.Order
 {

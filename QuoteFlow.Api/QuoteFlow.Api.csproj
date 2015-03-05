@@ -172,6 +172,10 @@
     <Compile Include="Asset\Index\Indexers\IFieldIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\Phrase\PhraseQuerySupportField.cs" />
     <Compile Include="Asset\Index\QuoteFlowAnalyzer.cs" />
+    <Compile Include="Asset\Nav\AbstractAssetTableCreator.cs" />
+    <Compile Include="Asset\Nav\AssetTableCreator.cs" />
+    <Compile Include="Asset\Nav\AssetTableCreatorFactory.cs" />
+    <Compile Include="Asset\Nav\IAssetTableCreatorFactory.cs" />
     <Compile Include="Asset\Nav\IAssetTableService.cs" />
     <Compile Include="Asset\Search\ClauseNames.cs" />
     <Compile Include="Asset\Search\Constants\AllTextSearchConstants.cs" />
@@ -362,8 +366,10 @@
     <Compile Include="Jql\Query\Operand\SingleValueOperandHandler.cs" />
     <Compile Include="Jql\Query\Operator.cs" />
     <Compile Include="Jql\Query\Order\IOrderBy.cs" />
+    <Compile Include="Jql\Query\Order\IOrderByUtil.cs" />
     <Compile Include="Jql\Query\Order\OrderBy.cs" />
     <Compile Include="Jql\Query\Order\SearchSort.cs" />
+    <Compile Include="Jql\Query\Order\SortBy.cs" />
     <Compile Include="Jql\Query\Order\SortOrder.cs" />
     <Compile Include="Jql\Query\Query.cs" />
     <Compile Include="Jql\Query\QueryCreationContext.cs" />
@@ -393,6 +399,7 @@
     <Compile Include="Jql\Values\ClauseValuesGeneratorResult.cs" />
     <Compile Include="Jql\Values\ClauseValuesGeneratorResults.cs" />
     <Compile Include="Jql\Values\IClauseValuesGenerator.cs" />
+    <Compile Include="Jql\Values\ISortJqlGenerator.cs" />
     <Compile Include="Jql\Values\IValueGeneratingClauseHandler.cs" />
     <Compile Include="Lucene\Index\IIndexResult.cs" />
     <Compile Include="Lucene\Index\IndexLocation.cs" />
@@ -401,7 +408,7 @@
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetComment.cs" />
     <Compile Include="Models\AssetImage.cs" />
-    <Compile Include="Models\AssetNavigator\AssetTable.cs" />
+    <Compile Include="Asset\Nav\AssetTable.cs" />
     <Compile Include="Models\AssetType.cs" />
     <Compile Include="Models\AssetVar.cs" />
     <Compile Include="Models\AssetVarValue.cs" />
@@ -508,6 +515,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\CustomFields\Converters\" />
+    <Folder Include="Models\AssetNavigator\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

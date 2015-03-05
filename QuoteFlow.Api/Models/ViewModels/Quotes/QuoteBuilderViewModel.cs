@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using QuoteFlow.Api.Models.AssetNavigator;
+using QuoteFlow.Api.Asset.Nav;
 
 namespace QuoteFlow.Api.Models.ViewModels.Quotes
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace QuoteFlow.Api.Models.AssetNavigator
+namespace QuoteFlow.Api.Asset.Nav
 {
     public class AssetTable
     {
