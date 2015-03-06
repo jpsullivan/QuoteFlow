@@ -1,4 +1,5 @@
 ﻿using Lucene.Net.Search;
+using QuoteFlow.Api.Services;
 
 namespace QuoteFlow.Api.Asset.Search
 {
@@ -22,7 +23,7 @@ namespace QuoteFlow.Api.Asset.Search
 
     public static class SearchProviderTypes
     {
-        public const string ISSUE_INDEX = "assets";
+        public const string AssetIndex = "assets";
         public const string COMMENT_INDEX = "comments";
         public const string CHANGE_HISTORY_INDEX = "changes";
     }

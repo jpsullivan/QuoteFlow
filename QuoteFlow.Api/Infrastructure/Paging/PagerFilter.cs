@@ -8,33 +8,33 @@ namespace QuoteFlow.Api.Infrastructure.Paging
     /// Most other filters (which want paging ability) will extend this.
     /// </summary>
     [Serializable]
-    public class PagerFilter<T> : IPagerFilter
+    public sealed class PagerFilter<T> : IPagerFilter
     {
-        private const int PAGES_TO_LIST = 5;
+        private const int PagesToList = 5;
 
-        // the number of issues per page
-        private int max = 20;
-        private int start;
+        // the number of assets per page
+        private int _max = 20;
+        private int _start;
 
         /// <summary>
         /// A collection of <seealso cref="AssetPage"/> objects
         /// </summary>
-        /// @deprecated since 4.0 use #getPages() rather than access pages directly 
-        protected internal List<AssetPage> pages;
+        [Obsolete("Use GetPages() rather than access pages directory.")]
+        internal List<AssetPage> Pages;
 
         public PagerFilter()
         {
         }
 
-        public PagerFilter(PagerFilter<T> old)
+        public PagerFilter(IPagerFilter old)
         {
-            this.Max = old.Max;
-            this.Start = old.Start;
+            Max = old.Max;
+            Start = old.Start;
         }
 
         public PagerFilter(int max)
         {
-            this.max = max == -1 ? int.MaxValue : max;
+            _max = max == -1 ? int.MaxValue : max;
         }
 
         public PagerFilter(int start, int max)
@@ -78,42 +78,42 @@ namespace QuoteFlow.Api.Infrastructure.Paging
         /// Gets the current page out of a list of objects.
         /// </summary>
         /// <returns> the sublist that is the current page. </returns>
-        public virtual IList<T> GetCurrentPage(List<T> itemsCol)
+        public IList<T> GetCurrentPage(List<T> itemsCol)
         {
             List<T> items = itemsCol ?? new List<T>();
 
             if (items.Count == 0)
             {
-                start = 0;
+                _start = 0;
                 return new List<T>();
             }
 
             // now return the appropriate page of issues
             // now make sure that the start is valid
-            if (start >= items.Count)
+            if (_start >= items.Count)
             {
-                start = 0;
-                return items.GetRange(0, Math.Min(max, items.Count));
+                _start = 0;
+                return items.GetRange(0, Math.Min(_max, items.Count));
             }
 
-            return items.GetRange(start, Math.Min(start + max, items.Count));
+            return items.GetRange(_start, Math.Min(_start + _max, items.Count));
         }
 
-        public virtual IList<AssetPage> GetPages(ICollection<T> itemsCol)
+        public IList<AssetPage> GetPages(ICollection<T> itemsCol)
         {
-            if (pages == null)
+            if (Pages == null)
             {
-                pages = GeneratePages(itemsCol);
+                Pages = GeneratePages(itemsCol);
             }
 
-            return RestrictPages(pages, itemsCol.Count);
+            return RestrictPages(Pages, itemsCol.Count);
         }
 
         /// <summary>
         /// generates a collection of page objects which keep track of the pages for display
         /// </summary>
         /// <param name="items"> </param>
-        public virtual List<AssetPage> GeneratePages(ICollection<T> items)
+        public List<AssetPage> GeneratePages(ICollection<T> items)
         {
             if ((items == null) || items.Count == 0)
             {
@@ -124,7 +124,7 @@ namespace QuoteFlow.Api.Infrastructure.Paging
             int total = items.Count;
 
             int pageNumber = 1;
-            for (int index = 0; index < total; index += max)
+            for (int index = 0; index < total; index += _max)
             {
                 pages.Add(new AssetPage(index, pageNumber, this));
                 pageNumber++;
@@ -138,28 +138,28 @@ namespace QuoteFlow.Api.Infrastructure.Paging
         /// <p/>
         /// The number of pages to list is stored in <seealso cref="#PAGES_TO_LIST"/>.
         /// </summary>
-        public virtual IList<AssetPage> RestrictPages(List<AssetPage> assetPages, int size)
+        public IList<AssetPage> RestrictPages(List<AssetPage> assetPages, int size)
         {
-            IList<AssetPage> pagesToDisplay = new List<AssetPage>(2 * PAGES_TO_LIST);
+            IList<AssetPage> pagesToDisplay = new List<AssetPage>(2 * PagesToList);
 
             // enhance the calculation so that at least
             // PAGES_TO_LIST-1 pages are always shown
             //
             // calculate sliding window
-            int maxpage = (size + max - 1) / max; // 1 .. n
+            int maxpage = (size + _max - 1) / _max; // 1 .. n
             int firstpage = 1; // 1 .. n
-            int lastpage = firstpage + PAGES_TO_LIST + PAGES_TO_LIST - 2; // 1 .. n
+            int lastpage = firstpage + PagesToList + PagesToList - 2; // 1 .. n
             if (lastpage < maxpage)
             {
-                int ourpage = (Start / max) + 1; // 1 .. n
-                if (ourpage - firstpage > PAGES_TO_LIST - 1)
+                int ourpage = (Start / _max) + 1; // 1 .. n
+                if (ourpage - firstpage > PagesToList - 1)
                 {
-                    lastpage = ourpage + PAGES_TO_LIST - 1;
+                    lastpage = ourpage + PagesToList - 1;
                     if (lastpage > maxpage)
                     {
                         lastpage = maxpage;
                     }
-                    firstpage = lastpage - PAGES_TO_LIST - PAGES_TO_LIST + 2;
+                    firstpage = lastpage - PagesToList - PagesToList + 2;
                 }
             }
             else if (lastpage > maxpage)
@@ -167,8 +167,8 @@ namespace QuoteFlow.Api.Infrastructure.Paging
                 lastpage = maxpage;
             }
 
-            int minstart = (firstpage - 1) * max;
-            int maxstart = (lastpage - 1) * max;
+            int minstart = (firstpage - 1) * _max;
+            int maxstart = (lastpage - 1) * _max;
             foreach (AssetPage page in assetPages)
             {
                 if (page.Start > size) continue;
@@ -183,69 +183,48 @@ namespace QuoteFlow.Api.Infrastructure.Paging
             return new List<AssetPage>(assetPages);
         }
 
-        public virtual int Max
+        public int Max
         {
-            get
-            {
-                return max;
-            }
+            get { return _max; }
             set
             {
-                if (this.max != value)
+                if (_max != value)
                 {
-                    pages = null;
+                    Pages = null;
                 }
-                this.max = value;
+                _max = value;
             }
         }
 
-        public virtual int PageSize
+        public int PageSize
         {
-            get
-            {
-                return Max;
-            }
+            get { return Max; }
         }
 
-        public virtual int Start
+        public int Start
         {
-            get
-            {
-                return start;
-            }
-            set
-            {
-                this.start = value;
-            }
+            get { return _start; }
+            set { _start = value; }
         }
 
-        public virtual int End
+        public int End
         {
-            get
-            {
-                return Math.Max(start + max, max);
-            }
+            get { return Math.Max(_start + _max, _max); }
         }
 
-        public virtual int NextStart
+        public int NextStart
         {
-            get
-            {
-                return Math.Max(start + max, max);
-            }
+            get { return Math.Max(_start + _max, _max); }
         }
 
-        public virtual int PreviousStart
+        public int PreviousStart
         {
-            get
-            {
-                return Math.Max(0, start - max);
-            }
+            get { return Math.Max(0, _start - _max); }
         }
 
         public override string ToString()
         {
-            return string.Format("start: {0}, end: {1}, max: {2}", Start.ToString(), End.ToString(), Max.ToString());
+            return string.Format("start: {0}, end: {1}, max: {2}", Start, End, Max);
         }
     }
 }

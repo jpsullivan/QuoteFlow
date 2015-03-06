@@ -9,6 +9,7 @@
 
         public const string AssetId = "assetId";
         public const string AssetName = "name";
+        public const string AssetSku = "sku";
         public const string AssetDesc = "description";
         public const string AssetCurrentUser = "asset_current_user";
         public const string AssetCreator = "asset_creator";

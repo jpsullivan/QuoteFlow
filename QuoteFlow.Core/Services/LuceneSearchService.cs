@@ -61,13 +61,13 @@ namespace QuoteFlow.Core.Services
 
         public virtual long SearchCount(IQuery query, User user)
         {
-            IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
+            IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.AssetIndex);
             return GetHitCount(query, user, null, null, false, issueSearcher, null);
         }
 
         public virtual long SearchCountOverrideSecurity(IQuery query, User user)
         {
-            IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
+            IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.AssetIndex);
             return GetHitCount(query, user, null, null, true, issueSearcher, null);
         }
 
@@ -168,7 +168,7 @@ namespace QuoteFlow.Core.Services
 
         private void Search(IQuery searchQuery, User user, Collector collector, Query andQuery, bool overrideSecurity)
         {
-            IndexSearcher searcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
+            IndexSearcher searcher = searchProviderFactory.GetSearcher(SearchProviderTypes.AssetIndex);
             Query finalQuery = andQuery;
 
             if (searchQuery.WhereClause != null)
@@ -245,7 +245,7 @@ namespace QuoteFlow.Core.Services
 
         private SearchResults Search(IQuery query, User searcher, IPagerFilter pager, Query andQuery, bool overrideSecurity)
         {
-            IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
+            IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.AssetIndex);
             TopDocs luceneMatches = GetHits(query, searcher, GetSearchSorts(searcher, query), andQuery, overrideSecurity, issueSearcher, pager);
 
             try
@@ -281,7 +281,7 @@ namespace QuoteFlow.Core.Services
         {
             try
             {
-                IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.ISSUE_INDEX);
+                IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.AssetIndex);
 
                 TopDocs hits = GetHits(query, user, GetSearchSorts(user, query), null, overrideSecurity, issueSearcher, pagerFilter);
                 if (hits != null)

@@ -172,7 +172,6 @@
     <Compile Include="Asset\Index\Indexers\IFieldIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\Phrase\PhraseQuerySupportField.cs" />
     <Compile Include="Asset\Index\QuoteFlowAnalyzer.cs" />
-    <Compile Include="Asset\Nav\AbstractAssetTableCreator.cs" />
     <Compile Include="Asset\Nav\AssetTableCreator.cs" />
     <Compile Include="Asset\Nav\AssetTableCreatorFactory.cs" />
     <Compile Include="Asset\Nav\IAssetTableCreatorFactory.cs" />
@@ -231,6 +230,7 @@
     <Compile Include="Asset\Search\Searchers\Util\IndexedInputHelper.cs" />
     <Compile Include="Asset\Search\Searchers\Util\RecursiveClauseVisitor.cs" />
     <Compile Include="Asset\Search\Searchers\Util\TextTermEscaper.cs" />
+    <Compile Include="Asset\Search\SearchException.cs" />
     <Compile Include="Asset\Search\SearchHandler.cs" />
     <Compile Include="Asset\Search\SearchRequest.cs" />
     <Compile Include="Asset\Search\SearchResult.cs" />

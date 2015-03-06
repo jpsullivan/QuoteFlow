@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QuoteFlow.Api.Jql.Query.Order;
 
 namespace QuoteFlow.Api.Asset.Nav
 {
@@ -18,6 +19,7 @@ namespace QuoteFlow.Api.Asset.Nav
         public string Title { get; set; }
         public int Total { get; set; }
         public string Url { get; set; }
+        public SortBy SortBy { get; set; }
         public IList<string> Columns { get; set; }
         public string ColumnConfig { get; set; }
     }

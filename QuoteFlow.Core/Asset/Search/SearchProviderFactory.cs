@@ -16,7 +16,7 @@ namespace QuoteFlow.Core.Asset.Search
 
         public IndexSearcher GetSearcher(string searcherName)
         {
-            if (SearchProviderTypes.ISSUE_INDEX.Equals(searcherName))
+            if (SearchProviderTypes.AssetIndex.Equals(searcherName))
             {
                 return AssetIndexManager.AssetSearcher;
             }
