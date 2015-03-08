@@ -18,6 +18,7 @@ namespace QuoteFlow.Api.Asset.Search.Util
     public class SearchSortUtil : ISearchSortUtil
     {
         public string SorterOrder { get { return "sorter/order"; } }
+
         public string SorterField { get { return "sorter/field"; } }
 
         public ISearchHandlerManager SearchHandlerManager { get; protected set; }
@@ -82,7 +83,7 @@ namespace QuoteFlow.Api.Asset.Search.Util
                     {
                         if (!newSort.Field.Equals(oldSort.Field))
                         {
-                            convertedSort = new SearchSort(oldSort.Field, newSort.Order);
+                            convertedSort = new SearchSort(oldSort.Field, newSort.Order.Value);
                         }
                     }
                 }

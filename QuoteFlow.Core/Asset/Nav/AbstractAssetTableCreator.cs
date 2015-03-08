@@ -15,6 +15,7 @@ using QuoteFlow.Api.Jql.Values;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Search;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Api.Util;
 using QuoteFlow.Core.Asset.Index;
 using QuoteFlow.Core.Jql.Builder;
 
@@ -25,7 +26,7 @@ namespace QuoteFlow.Core.Asset.Nav
     /// 
     /// Subclasses provide the <see cref="AssetTable.Table"/> property by implementing <see cref=".GetTable()"/>.
     /// </summary>
-    public class AbstractAssetTableCreator : AssetTableCreator
+    public abstract class AbstractAssetTableCreator : AssetTableCreator
     {
         private readonly ApplicationProperties _applicationProperties;
 		private readonly DisplayedColumnsHelper _searchColumnsFinder;
@@ -104,7 +105,7 @@ namespace QuoteFlow.Core.Asset.Nav
 			_user = user;
 			_fieldManager = fieldManager;
 			_orderByUtil = orderByUtil;
-		    _searchColumnsFinder = new DisplayedColumnsHelper(columnLayoutManager, fieldManager);
+		    //_searchColumnsFinder = new DisplayedColumnsHelper(columnLayoutManager, fieldManager);
 
 			// query and searchRequest aren't provided as we're searching by ID. They're used
 			// frequently while constructing the table, so set them here to make them available.
@@ -142,7 +143,7 @@ namespace QuoteFlow.Core.Asset.Nav
             var idCollector = new AssetDocumentAndIdCollector(assetSearcher, GetStableSearchResultsLimit(),
                 _configuration.NumberToShow, selectedAssetKey, _configuration.Start);
 
-            _searchProvider.SearchAndSort(_query, _user, idCollector, new PagerFilter(0, GetStableSearchResultsLimit()));
+            _searchProvider.SearchAndSort(_query, _user, idCollector, new PagerFilter<object>(0, GetStableSearchResultsLimit()));
             return idCollector;
         }
 
@@ -220,8 +221,184 @@ namespace QuoteFlow.Core.Asset.Nav
                     collectedResult.Total,
                     _configuration.NumberToShow,
                     collectedResult.Start
-                    ));
+                    );
+            }
+            else
+            {
+                var pagerFilter = new PagerFilter<object>(_configuration.Start, _configuration.NumberToShow);
+                _searchResults = _searchProvider.Search(_query, _user, pagerFilter);
+
+                // Ensure that the start index doesn't exceed the number of results
+                int pageSize = pagerFilter.PageSize;
+                int resultsCount = _searchResults.Total;
+                while (pagerFilter.Start > 0 && pagerFilter.Start >= _searchResults.Total)
+                {
+                    pagerFilter.Start = Math.Max(0, resultsCount - 1) / pageSize * pageSize;
+                    _searchResults = _searchProvider.Search(_query, _user, pagerFilter);
+                }
             }
         }
+
+        /// <summary>
+        /// Retrieve and store the assets whose IDs were passed to the constructor from the Lucene index.
+        /// The results are stored in <see cref="_searchResults"/> and they are stored as they were
+        /// in the ID list.
+        /// </summary>
+        /// <param name="columns"></param>
+        private void ExecuteStableSearch(List<ColumnLayoutItem> columns)
+        {
+            _columnSortJql = _sortJqlGenerator.GenerateColumnSortJql(_originalQuery, GetSortableColumns(columns));
+
+            var pagerFilter = new PagerFilter<object>(0, GetStableSearchResultsLimit());
+            _searchResults = _searchProvider.Search(_query, _user, pagerFilter);
+
+            // Sort results so they are in the same order as the list of asset IDs
+            var assetMap = _searchResults.Assets.ToDictionary(asset => asset.Id);
+            var sortedAssets = _assetIds.Select(assetId => assetMap[(int) assetId]).ToList();
+
+            _searchResults = new SearchResults(sortedAssets, _searchResults.Total, pagerFilter);
+        }
+
+        /// <summary>
+        /// Returns the layout items for requested columns </summary>
+        /// <param name="columnNames"> of requested columns
+        /// </param>
+        /// <returns> the columns that should be visible to the user. </returns>
+        private IList<ColumnLayoutItem> GetDisplayedColumns(IList<string> columnNames)
+        {
+            return _searchColumnsFinder.GetDisplayedColumns(_user, columnNames).ColumnLayoutItems;
+        }
+
+        /// <summary>
+        /// Returns the layout items for a given columnLayout </summary>
+        /// <param name="columns"> layout </param>
+        /// <returns> the columns that should be visible to the user. </returns>
+        internal IList<ColumnLayoutItem> GetDisplayedColumns(ColumnLayout columns)
+        {
+            return columns.ColumnLayoutItems;
+        }
+
+        /// <summary>
+        /// Returns the columns that are displayed to the user in list view.
+        /// </summary>
+        /// <returns> the columns that should be visible to the user. </returns>
+        internal virtual ColumnLayout ColumnLayout
+        {
+            get
+            {
+                return _searchColumnsFinder.GetDisplayedColumns(_user, _searchRequest, _configuration);
+            }
+        }
+
+        /// <returns> whether the JIRA instance contains any issues. </returns>
+        /// <exception cref="SearchException"> If querying the Lucene index fails. </exception>
+        private bool QuoteFlowHasAssets
+        {
+            get
+            {
+                if (_searchResults.Total > 0)
+                {
+                    return true;
+                }
+                
+                return _searchProvider.SearchCountOverrideSecurity(new Query(), _user) > 0;
+            }
+        }
+
+        /// <summary>
+        /// Returns the maximum number of assets in a stable search.
+        /// </summary>
+        private int StableSearchResultsLimit
+        {
+            get
+            {
+                return Convert.ToInt32(applicationProperties.getDefaultBackedString(APKeys.JIRA_STABLE_SEARCH_MAX_RESULTS));
+            }
+        }
+
+        /// <summary>
+        /// Calculate the issue table's start index, taking the selected issue into consideration.
+        /// </summary>
+        /// <param name="issueKeys"> The keys of all issues matching the search. </param>
+        /// <returns> The index of the first issue to show in the table. </returns>
+        private int GetStartIndex(IList<string> issueKeys)
+        {
+            int pageSize = _configuration.NumberToShow;
+            string selectedAssetKey = _configuration.SelectedAssetKey;
+
+            if (selectedAssetKey != null)
+            {
+                return Math.Max(issueKeys.IndexOf(selectedAssetKey), 0) / pageSize * pageSize;
+            }
+            
+            return _configuration.Start;
+        }
+
+        public abstract object Table { get; }
+
+        /// <summary>
+        /// Validate the issue table request.
+        /// </summary>
+        /// <returns> a message set containing any validation errors/warnings. </returns>
+        public override IMessageSet Validate()
+        {
+            // Don't run validation stable search query (we assume its correct).
+            if (!_fromAssetIds)
+            {
+                int filterId = _searchRequest != null ? _searchRequest.Id : 0;
+                return _searchService.ValidateQuery(_user, _query, filterId);
+            }
+
+            return new MessageSet();
+        }
+
+        /// <summary>
+        /// Returns the fields for which we display sortable columns on the issue navigator. We generate sort JQL for these
+        /// columns so that when the user clicks them that instantly changes the sort.
+        /// </summary>
+        /// <param name="displayedColumns"> list of columns to be displayed.
+        /// </param>
+        /// <returns> the columns to generate sort JQL for. </returns>
+        private IList<NavigableField> GetSortableColumns(IList<ColumnLayoutItem> displayedColumns)
+        {
+            var fields = new List<INavigableField>();
+
+            // add the columns that are displayed in list view
+            foreach (ColumnLayoutItem columnLayoutItem in displayedColumns)
+            {
+                fields.Add(columnLayoutItem.NavigableField);
+            }
+
+            // add the columns that are in the ORDER BY clause
+            fields.AddRange(OrderByFields);
+
+            return fields;
+        }
+
+        /// <summary>
+        /// Returns the NavigableField instances for the fields present in the query's ORDER BY clause.
+        /// </summary>
+        /// <returns> NavigableField instances for the fields present in the query's ORDER BY clause. </returns>
+        private IList<INavigableField> OrderByFields
+        {
+            get
+            {
+                IOrderBy orderBy = _query.OrderByClause;
+                if (orderBy == null || orderBy.SearchSorts == null || !orderBy.SearchSorts.Any())
+                {
+                    return new List<INavigableField>();
+                }
+
+                var orderByFields = new List<INavigableField>();
+                foreach (SearchSort sort in orderBy.SearchSorts)
+                {
+                    ICollection<string> fieldIds = _searchHandlerManager.GetFieldIds(sort.Field);
+                    orderByFields.AddRange(fieldIds.Select(fieldId => _fieldManager.GetField(fieldId)).OfType<INavigableField>());
+                }
+
+                return orderByFields;
+            }
+        }
+
     }
 }

@@ -24,6 +24,7 @@ namespace QuoteFlow.Core.Asset.Nav
 
         #region DI
 
+        public IAssetTableCreatorFactory AssetTableCreatorFactory { get; protected set; }
         public IFieldManager FieldManager { get; protected set; }
         public ISearchService SearchService { get; protected set; }
         public ISearchSortUtil SearchSortUtil { get; protected set; }
@@ -113,7 +114,7 @@ namespace QuoteFlow.Core.Asset.Nav
             var queryWithOrderBy = AddOrderByToSearchRequest(query, configuration.SortBy);
             PreferredLayoutKey = configuration;
 
-            return CreateIssueTableFromCreator(issueTableCreatorFactory.getNormalIssueTableCreator(configuration, queryWithOrderBy, returnIssueIds, searchRequest, authenticationContext.LoggedInUser));
+            return CreateAssetTableFromCreator(AssetTableCreatorFactory.GetNormalAssetTableCreator(configuration, queryWithOrderBy, returnIssueIds, searchRequest, authenticationContext.LoggedInUser));
         }
 
         internal virtual IQuery AddOrderByToSearchRequest(IQuery preOrderByQuery, string sortBy)

@@ -1,4 +1,5 @@
-﻿using QuoteFlow.Api.Util;
+﻿using QuoteFlow.Api.Asset.Search;
+using QuoteFlow.Api.Util;
 
 namespace QuoteFlow.Api.Asset.Nav
 {
@@ -11,7 +12,7 @@ namespace QuoteFlow.Api.Asset.Nav
         /// Validates the search.
         /// </summary>
         /// <returns>A <see cref="MessageSet"/> containing validation errors.</returns>
-        public IMessageSet Validate()
+        public virtual IMessageSet Validate()
         {
             return new MessageSet();
         }

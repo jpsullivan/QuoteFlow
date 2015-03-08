@@ -173,7 +173,6 @@
     <Compile Include="Asset\Index\Indexers\Phrase\PhraseQuerySupportField.cs" />
     <Compile Include="Asset\Index\QuoteFlowAnalyzer.cs" />
     <Compile Include="Asset\Nav\AssetTableCreator.cs" />
-    <Compile Include="Asset\Nav\AssetTableCreatorFactory.cs" />
     <Compile Include="Asset\Nav\IAssetTableCreatorFactory.cs" />
     <Compile Include="Asset\Nav\IAssetTableService.cs" />
     <Compile Include="Asset\Search\ClauseNames.cs" />

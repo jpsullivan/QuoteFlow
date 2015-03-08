@@ -16,6 +16,7 @@ using Ninject.Web.Common;
 using QuoteFlow.Api.Asset.CustomFields.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Index;
+using QuoteFlow.Api.Asset.Nav;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
@@ -35,6 +36,7 @@ using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.CustomFields.Searchers.Transformer;
 using QuoteFlow.Core.Asset.Fields;
+using QuoteFlow.Core.Asset.Nav;
 using QuoteFlow.Core.Asset.Search;
 using QuoteFlow.Core.Asset.Search.Handlers;
 using QuoteFlow.Core.Asset.Search.Managers;
@@ -165,6 +167,7 @@ namespace QuoteFlow.Core.DependencyResolution
 
             #region Asset Fields
 
+            Bind<IAssetTableCreatorFactory>().To<AssetTableCreatorFactory>().InRequestScope();
             Bind<FieldClausePermissionChecker.IFactory>().To<FieldClausePermissionChecker.Factory>().InRequestScope();
             Bind<ICustomFieldInputHelper>().To<CustomFieldInputHelper>().InRequestScope();
             Bind<IFieldFlagOperandRegistry>().To<FieldFlagOperandRegistry>().InRequestScope();
