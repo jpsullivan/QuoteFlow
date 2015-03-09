@@ -236,6 +236,7 @@
     <Compile Include="Configuration\IndexConfiguration.cs" />
     <Compile Include="Configuration\Lucene\DefaultIndexWriterConfiguration.cs" />
     <Compile Include="Configuration\Lucene\IIndexWriterConfiguration.cs" />
+    <Compile Include="Configuration\Lucene\IndexPathManager.cs" />
     <Compile Include="Configuration\Lucene\WriterSettings.cs" />
     <Compile Include="Configuration\MailAddressConverter.cs" />
     <Compile Include="Configuration\SmtpUri.cs" />
@@ -379,8 +380,6 @@
     <Compile Include="Lucene\Index\IndexOperation.cs" />
     <Compile Include="Lucene\Index\IWriter.cs" />
     <Compile Include="Lucene\Index\WriterWrapper.cs" />
-    <Compile Include="Lucene\LuceneCommon.cs" />
-    <Compile Include="Lucene\LuceneIndexingJob.cs" />
     <Compile Include="Lucene\PerFieldAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AssetSearchService.cs" />
@@ -396,7 +395,6 @@
     <Compile Include="Services\FileSystemService.cs" />
     <Compile Include="Services\HttpContextCacheService.cs" />
     <Compile Include="Services\LocalFileReference.cs" />
-    <Compile Include="Services\LuceneIndexingService.cs" />
     <Compile Include="Services\LuceneSearchService.cs" />
     <Compile Include="Services\ManufacturerLogoService.cs" />
     <Compile Include="Services\ManufacturerService.cs" />

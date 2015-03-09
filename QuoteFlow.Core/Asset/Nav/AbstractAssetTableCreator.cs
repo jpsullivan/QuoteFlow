@@ -163,18 +163,18 @@ namespace QuoteFlow.Core.Asset.Nav
 
         public override AssetTable Create()
         {
-            var columnLayout = ColumnLayout;
-            var columns = GetDisplayedColumns(columnLayout).ToList();
-            var columnIds = columns.Select(c => c.Id).ToList();
+//            var columnLayout = ColumnLayout;
+//            var columns = GetDisplayedColumns(columnLayout).ToList();
+//            var columnIds = columns.Select(c => c.Id).ToList();
 
-            _configuration.ColumnNames = columnIds;
+            //_configuration.ColumnNames = columnIds;
             if (_fromAssetIds)
             {
-                ExecuteStableSearch(columns);
+                ExecuteStableSearch();
             }
             else
             {
-                ExecuteNormalSearch(columns);
+                ExecuteNormalSearch();
             }
 
             return new AssetTable()
@@ -187,7 +187,7 @@ namespace QuoteFlow.Core.Asset.Nav
                 SortBy = _sortBy,
                 PageSize = _configuration.NumberToShow,
                 Columns = _configuration.ColumnNames,
-                ColumnConfig = columnLayout.ColumnConfig.ToString(),
+                ColumnConfig = "USER",
                 ColumnSortJql = _columnSortJql,
                 QuoteFlowHasAssets = QuoteFlowHasAssets,
                 AssetIds = (_fromAssetIds ? null : _assetIds),
@@ -200,10 +200,9 @@ namespace QuoteFlow.Core.Asset.Nav
         /// If asset IDs were requested, data will also be stored in <see cref="_assetIds"/> 
         /// and <see cref="_assetKeys"/>.
         /// </summary>
-        /// <param name="columns"></param>
-        private void ExecuteNormalSearch(IEnumerable<IColumnLayoutItem> columns)
+        private void ExecuteNormalSearch()
         {
-            _columnSortJql = _sortJqlGenerator.GenerateColumnSortJql(_query, GetSortableColumns(columns));
+            //_columnSortJql = _sortJqlGenerator.GenerateColumnSortJql(_query, GetSortableColumns(columns));
             _sortBy = _orderByUtil.GenerateSortBy(_query);
 
             if (_returnAssetIds)
@@ -242,10 +241,9 @@ namespace QuoteFlow.Core.Asset.Nav
         /// The results are stored in <see cref="SearchResults"/> and they are stored as they were
         /// in the ID list.
         /// </summary>
-        /// <param name="columns"></param>
-        private void ExecuteStableSearch(IEnumerable<IColumnLayoutItem> columns)
+        private void ExecuteStableSearch()
         {
-            _columnSortJql = _sortJqlGenerator.GenerateColumnSortJql(_originalQuery, GetSortableColumns(columns));
+            //_columnSortJql = _sortJqlGenerator.GenerateColumnSortJql(_originalQuery, GetSortableColumns(columns));
 
             var pagerFilter = new PagerFilter<object>(0, StableSearchResultsLimit);
             SearchResults = _searchProvider.Search(_query, _user, pagerFilter);

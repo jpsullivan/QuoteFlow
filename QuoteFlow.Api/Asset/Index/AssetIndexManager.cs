@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Threading;
 using Lucene.Net.Search;
+using QuoteFlow.Api.Configuration.Lucene;
 using QuoteFlow.Api.Infrastructure.Collect;
 using QuoteFlow.Api.Infrastructure.Lucene;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
 using QuoteFlow.Api.Util;
 using WebBackgrounder;
 
@@ -12,6 +14,21 @@ namespace QuoteFlow.Api.Asset.Index
 {
     public class AssetIndexManager : IAssetIndexManager
     {
+        #region DI
+
+        public IAssetService AssetService { get; protected set; }
+        public IIndexPathManager IndexPathManager { get; protected set; }
+
+        public AssetIndexManager(IAssetService assetService, IIndexPathManager indexPathManager)
+        {
+            AssetService = assetService;
+            IndexPathManager = indexPathManager;
+        }
+
+        #endregion
+
+        private static readonly object IndexSearcherLock = new object();
+
         public global::Lucene.Net.Analysis.Analyzer AnalyzerForSearching 
         { 
             get { return QuoteFlowAnalyzer.AnalyzerForSearching; } 
@@ -171,7 +188,14 @@ namespace QuoteFlow.Api.Asset.Index
             throw new NotImplementedException();
         }
 
-        public IndexSearcher AssetSearcher { get; private set; }
+        public IndexSearcher AssetSearcher
+        {
+            get
+            {
+                return assetSearcher
+            }
+        }
+
         public IndexSearcher CommentSearcher { get; private set; }
         public IndexSearcher ChangeHistorySearcher { get; private set; }
 
@@ -180,78 +204,78 @@ namespace QuoteFlow.Api.Asset.Index
             throw new NotImplementedException();
         }
 
-//        /// <summary>
-//        /// Holds the index read/write locks.
-//        /// </summary>
-//        private class IndexLocks
-//        {
-//            /// <summary>
-//            /// Internal lock. Not to be used by clients.
-//            /// </summary>
-//            internal readonly ReaderWriterLock indexLock = new ReaderWriterLock();
-//
-//            /// <summary>
-//            /// The index read lock. This lock needs to be acquired when updating the index (i.e. adding to it or updating
-//            /// existing documents in the index).
-//            /// </summary>
-//            internal IndexLock readLock = new IndexLock(indexLock.AcquireReaderLock());
-//
-//            /// <summary>
-//            /// The index write lock. This lock needs to be acquired only when a "stop the world" reindex is taking place and
-//            /// the entire index is being deleted and re-created.
-//            /// </summary>
-//            internal IndexLock writeLock;
-//        }
-//
-//        /// <summary>
-//        /// An index lock that can be acquired using a configurable time out.
-//        /// </summary>
-//        private sealed class IndexLock
-//        {
-//            private readonly DefaultIndexManager outerInstance;
-//
-//            internal readonly ReaderWriterLock Lock;
-//
-//            internal IndexLock(DefaultIndexManager outerInstance, object @lock)
-//            {
-//                this.outerInstance = outerInstance;
-//                Lock = notNull("lock", @lock);
-//            }
-//
-//            /// <summary>
-//            /// Tries to acquire this lock using a timeout of <seealso cref="IndexingConfiguration#getIndexLockWaitTime()"/>
-//            /// milliseconds.
-//            /// </summary>
-//            /// <returns> a boolean indicating whether the lock was acquired within the timeout </returns>
-//            public bool tryLock()
-//            {
-//                return outerInstance.Obtain(new AwaitableAnonymousInnerClassHelper(this));
-//            }
-//
-//            private class AwaitableAnonymousInnerClassHelper : Awaitable
-//            {
-//                private readonly IndexLock outerInstance;
-//
-//                public AwaitableAnonymousInnerClassHelper(IndexLock outerInstance)
-//                {
-//                    this.outerInstance = outerInstance;
-//                }
-//
-//                //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//                //ORIGINAL LINE: public boolean await(final long time, final java.util.concurrent.TimeUnit unit) throws InterruptedException
-//                public virtual bool @await(long time, TimeUnit unit)
-//                {
-//                    return outerInstance.Lock.tryLock(time, unit);
-//                }
-//            }
-//
-//            /// <summary>
-//            /// Unlocks this lock.
-//            /// </summary>
-//            public void unlock()
-//            {
-//                Lock.unlock();
-//            }
-//        }
+        /// <summary>
+        /// Holds the index read/write locks.
+        /// </summary>
+        private class IndexLocks
+        {
+            /// <summary>
+            /// Internal lock. Not to be used by clients.
+            /// </summary>
+            internal static readonly ReaderWriterLock indexLock = new ReaderWriterLock();
+
+            /// <summary>
+            /// The index read lock. This lock needs to be acquired when updating the index (i.e. adding to it or updating
+            /// existing documents in the index).
+            /// </summary>
+            internal IndexLock readLock = new IndexLock(indexLock.AcquireReaderLock());
+
+            /// <summary>
+            /// The index write lock. This lock needs to be acquired only when a "stop the world" reindex is taking place and
+            /// the entire index is being deleted and re-created.
+            /// </summary>
+            internal IndexLock writeLock;
+        }
+
+        /// <summary>
+        /// An index lock that can be acquired using a configurable time out.
+        /// </summary>
+        private sealed class IndexLock
+        {
+            private readonly DefaultIndexManager outerInstance;
+
+            internal readonly ReaderWriterLock Lock;
+
+            internal IndexLock(DefaultIndexManager outerInstance, object @lock)
+            {
+                this.outerInstance = outerInstance;
+                Lock = notNull("lock", @lock);
+            }
+
+            /// <summary>
+            /// Tries to acquire this lock using a timeout of <seealso cref="IndexingConfiguration#getIndexLockWaitTime()"/>
+            /// milliseconds.
+            /// </summary>
+            /// <returns> a boolean indicating whether the lock was acquired within the timeout </returns>
+            public bool tryLock()
+            {
+                return outerInstance.Obtain(new AwaitableAnonymousInnerClassHelper(this));
+            }
+
+            private class AwaitableAnonymousInnerClassHelper : Awaitable
+            {
+                private readonly IndexLock outerInstance;
+
+                public AwaitableAnonymousInnerClassHelper(IndexLock outerInstance)
+                {
+                    this.outerInstance = outerInstance;
+                }
+
+                //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+                //ORIGINAL LINE: public boolean await(final long time, final java.util.concurrent.TimeUnit unit) throws InterruptedException
+                public virtual bool @await(long time, TimeUnit unit)
+                {
+                    return outerInstance.Lock.tryLock(time, unit);
+                }
+            }
+
+            /// <summary>
+            /// Unlocks this lock.
+            /// </summary>
+            public void unlock()
+            {
+                Lock.unlock();
+            }
+        }
     }
 }

@@ -255,6 +255,7 @@
     <Compile Include="Configuration\IAppConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationSource.cs" />
     <Compile Include="Configuration\LuceneIndexLocation.cs" />
+    <Compile Include="Configuration\Lucene\IIndexPathManager.cs" />
     <Compile Include="Configuration\StorageType.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Entity\Property\EntityPropertyType.cs" />
@@ -492,7 +493,6 @@
     <Compile Include="Services\IFileReference.cs" />
     <Compile Include="Services\IFileStorageService.cs" />
     <Compile Include="Services\IFileSystemService.cs" />
-    <Compile Include="Services\IIndexingService.cs" />
     <Compile Include="Services\IManufacturerLogoService.cs" />
     <Compile Include="Services\IManufacturerService.cs" />
     <Compile Include="Services\IMessageService.cs" />

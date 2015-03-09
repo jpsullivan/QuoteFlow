@@ -1,13 +1,15 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Web.Hosting;
 using Lucene.Net.Store;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Api.Configuration.Lucene;
 using Directory = Lucene.Net.Store.Directory;
 using Version = Lucene.Net.Util.Version;
 
-namespace QuoteFlow.Core.Lucene
+namespace QuoteFlow.Core.Configuration.Lucene
 {
-    public static class LuceneCommon
+    public class IndexPathManager : IIndexPathManager
     {
         public static readonly Version LuceneVersion = Version.LUCENE_30;
 
@@ -16,19 +18,6 @@ namespace QuoteFlow.Core.Lucene
         // Factory method for DI/IOC that creates the directory the index is stored in.
         // Used by real website. Bypassed for unit tests.
         private static SimpleFSDirectory _directorySingleton;
-
-        internal static string GetDirectoryLocation()
-        {
-            // Don't create the directory if it's not already present.
-            return _directorySingleton == null ? null : _directorySingleton.Directory.FullName;
-        }
-
-        internal static string GetIndexMetadataPath()
-        {
-            // Don't create the directory if it's not already present.
-            string root = _directorySingleton == null ? "." : (_directorySingleton.Directory.FullName ?? ".");
-            return Path.Combine(root, "index.metadata");
-        }
 
         public static Directory GetDirectory(LuceneIndexLocation location)
         {
@@ -52,9 +41,44 @@ namespace QuoteFlow.Core.Lucene
             switch (location)
             {
                 case LuceneIndexLocation.Temp:
-                    return Path.Combine(Path.GetTempPath(), "QuoteFlow", "Lucene");
+                    return Path.Combine(Path.GetTempPath(), "NuGetGallery", "Lucene");
                 default:
                     return HostingEnvironment.MapPath("~/App_Data/Lucene");
+            }
+        }
+
+        public string IndexRootPath
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public string DefaultIndexRootPath
+        {
+            get
+            {
+                // Don't create the directory if it's not already present.
+                return _directorySingleton == null ? null : _directorySingleton.Directory.FullName;
+            }
+        }
+
+        public string AssetIndexPath
+        {
+            get
+            {
+                // Don't create the directory if it's not already present.
+                string root = _directorySingleton == null ? "." : (_directorySingleton.Directory.FullName ?? ".");
+                return Path.Combine(root, "assets");
+            }
+        }
+
+        public string CommentIndexPath
+        {
+            get
+            {
+                // Don't create the directory if it's not already present.
+                string root = _directorySingleton == null ? "." : (_directorySingleton.Directory.FullName ?? ".");
+                return Path.Combine(root, "comments");
             }
         }
     }

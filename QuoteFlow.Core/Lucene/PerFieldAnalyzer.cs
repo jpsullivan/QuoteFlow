@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
+using QuoteFlow.Core.Configuration.Lucene;
 
 namespace QuoteFlow.Core.Lucene
 {
     public class PerFieldAnalyzer : PerFieldAnalyzerWrapper
     {
         public PerFieldAnalyzer()
-            : base(new StandardAnalyzer(LuceneCommon.LuceneVersion), CreateFieldAnalyzers())
+            : base(new StandardAnalyzer(IndexPathManager.LuceneVersion), CreateFieldAnalyzers())
         {
         }
 
@@ -17,7 +18,7 @@ namespace QuoteFlow.Core.Lucene
         {
             return new Dictionary<string, Analyzer>(StringComparer.OrdinalIgnoreCase)
             {
-                { "Id", new StandardAnalyzer(LuceneCommon.LuceneVersion, new HashSet<string>()) },
+                { "Id", new StandardAnalyzer(IndexPathManager.LuceneVersion, new HashSet<string>()) },
                 { "Title", new TitleAnalyzer() },
                 { "Description", new DescriptionAnalyzer() },
                 { "Tags", new DescriptionAnalyzer() },

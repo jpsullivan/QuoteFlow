@@ -23,6 +23,7 @@ using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Search.Util;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Api.Configuration.Lucene;
 using QuoteFlow.Api.Infrastructure.Lucene;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Parser;
@@ -46,6 +47,7 @@ using QuoteFlow.Core.Asset.Search.Searchers;
 using QuoteFlow.Core.Asset.Search.Util;
 using QuoteFlow.Core.Auditing;
 using QuoteFlow.Core.Configuration;
+using QuoteFlow.Core.Configuration.Lucene;
 using QuoteFlow.Core.Infrastructure.Mvc;
 using QuoteFlow.Core.Jql.Builder;
 using QuoteFlow.Core.Jql.Context;
@@ -77,7 +79,7 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IConfigurationSource>().ToMethod(context => configuration);
 
             Bind<Directory>()
-                .ToMethod(_ => LuceneCommon.GetDirectory(configuration.Current.LuceneIndexLocation))
+                .ToMethod(_ => IndexPathManager.GetDirectory(configuration.Current.LuceneIndexLocation))
                 .InSingletonScope();
 
             ConfigureSearch();
@@ -250,12 +252,12 @@ namespace QuoteFlow.Core.DependencyResolution
         private void ConfigureSearch()
         {
             Bind<IAssetIndexManager>().To<AssetIndexManager>().InRequestScope();
+            Bind<IIndexPathManager>().To<IndexPathManager>().InRequestScope();
             Bind<ILuceneQueryBuilder>().To<LuceneQueryBuilder>().InRequestScope();
             Bind<ILuceneQueryModifier>().To<LuceneQueryModifier>().InRequestScope();
             Bind<ISearchProvider>().To<LuceneSearchService>().InRequestScope();
             Bind<ISearchProviderFactory>().To<SearchProviderFactory>().InRequestScope();
             Bind<ISearchSortUtil>().To<SearchSortUtil>().InRequestScope();
-            Bind<IIndexingService>().To<LuceneIndexingService>().InRequestScope();
 
             #region All-Text Searching
 
