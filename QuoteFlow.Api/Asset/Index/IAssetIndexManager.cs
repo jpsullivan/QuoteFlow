@@ -165,15 +165,6 @@ namespace QuoteFlow.Api.Asset.Index
         IndexSearcher CommentSearcher { get; }
 
         /// <summary>
-        /// Get an <seealso cref="IndexSearcher"/> that can be used to search the change history index.
-        /// 
-        /// Note: This is an unmanaged IndexSearcher. You MUST call <seealso cref="IndexSearcher#close()"/> when you are done with it. Alternatively you should
-        /// really call <seealso cref="SearchProviderFactory#getSearcher(String))"/> passing in <seealso cref="SearchProviderFactory#CHANGE_HISTORY_INDEX"/> as it is a managed
-        /// searcher and all the closing semantics are handled for you.
-        /// </summary>
-        IndexSearcher ChangeHistorySearcher { get; }
-
-        /// <summary>
         /// Returns an <seealso cref="Analyzer"/> for searching.
         /// </summary>
         /// <returns>An analyzer for searching.</returns>

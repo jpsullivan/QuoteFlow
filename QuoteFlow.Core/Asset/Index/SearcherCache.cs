@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
@@ -10,79 +11,81 @@ namespace QuoteFlow.Core.Asset.Index
     /// This class manages the searcher thread local cache. The actual searchers themselves are
     /// stored in this object, which is stored in a <seealso cref="ThreadLocal{T}"/>.
     /// </summary>
-    internal class SearcherCache
+    public class SearcherCache
     {
-        private static readonly ThreadLocal<SearcherCache> ThreadLocal = new ThreadLocal<SearcherCache>();
+        private static ThreadLocal<SearcherCache> _threadLocal = new ThreadLocal<SearcherCache>();
 
         private SearcherCache()
         {
         }
 
-        internal static SearcherCache ThreadLocalCache
+        public static SearcherCache ThreadLocalCache
         {
             get
             {
-                SearcherCache threadLocalSearcherCache = ThreadLocal.get();
-                if (threadLocalSearcherCache == null)
+                SearcherCache threadLocalSearcherCache = _threadLocal.Value;
+                if (threadLocalSearcherCache != null)
                 {
-                    threadLocalSearcherCache = new SearcherCache();
-                    ThreadLocal.set(threadLocalSearcherCache);
+                    return threadLocalSearcherCache;
                 }
+
+                threadLocalSearcherCache = new SearcherCache();
+                _threadLocal = new ThreadLocal<SearcherCache>(() => threadLocalSearcherCache);
                 return threadLocalSearcherCache;
             }
         }
 
-        private IndexSearcher assetSearcher;
-        private IndexSearcher commentSearcher;
+        private IndexSearcher _assetSearcher;
+        private IndexSearcher _commentSearcher;
 
-        internal virtual IndexSearcher RetrieveAssetSearcher(ISupplier<IndexSearcher> searcherSupplier)
+        public IndexSearcher RetrieveAssetSearcher(ISupplier<IndexSearcher> searcherSupplier)
         {
-            if (assetSearcher == null)
-            {
-                assetSearcher = searcherSupplier.Get();
-            }
-
-            return assetSearcher;
+            return _assetSearcher ?? (_assetSearcher = searcherSupplier.Get());
         }
 
-        internal virtual IndexReader RetrieveAssetReader(ISupplier<IndexSearcher> searcherSupplier)
+        public IndexSearcher RetrieveAssetSearcher(Func<IndexSearcher> searcherSupplier)
+        {
+            return _assetSearcher ?? (_assetSearcher = searcherSupplier());
+        }
+
+        public IndexReader RetrieveAssetReader(ISupplier<IndexSearcher> searcherSupplier)
         {
             return RetrieveAssetSearcher(searcherSupplier).IndexReader;
         }
 
-        internal virtual IndexSearcher RetrieveCommentSearcher(ISupplier<IndexSearcher> searcherSupplier)
+        public IndexSearcher RetrieveCommentSearcher(ISupplier<IndexSearcher> searcherSupplier)
         {
-            if (commentSearcher == null)
-            {
-                commentSearcher = searcherSupplier.Get();
-            }
+            return _commentSearcher ?? (_commentSearcher = searcherSupplier.Get());
+        }
 
-            return commentSearcher;
+        public IndexSearcher RetrieveCommentSearcher(Func<IndexSearcher> searcherSupplier)
+        {
+            return _commentSearcher ?? (_commentSearcher = searcherSupplier());
         }
 
         /// <summary>
         /// Close the issues and comments searchers.
         /// </summary>
         /// <exception cref="IOException"> if there's a lucene exception accessing the disk </exception>
-        internal virtual void CloseSearchers()
+        public void CloseSearchers()
         {
             try
             {
-                CloseSearcher(assetSearcher);
+                CloseSearcher(_assetSearcher);
             }
             finally
             {
                 // if close throws an IOException, we still need to null the searcher
-                assetSearcher = null;
+                _assetSearcher = null;
 
                 try
                 {
-                    CloseSearcher(commentSearcher);
+                    CloseSearcher(_commentSearcher);
                 }
                 finally
                 {
                     // if close throws an IOException, we still need to null the searcher (JRA-10423)
-                    commentSearcher = null;
+                    _commentSearcher = null;
                 }
 
             }
@@ -96,5 +99,4 @@ namespace QuoteFlow.Core.Asset.Index
             }
         }
     }
-
 }

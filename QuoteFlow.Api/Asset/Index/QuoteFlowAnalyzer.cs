@@ -10,9 +10,9 @@ namespace QuoteFlow.Api.Asset.Index
 {
     public class QuoteFlowAnalyzer : global::Lucene.Net.Analysis.Analyzer
     {
-        private readonly bool indexing;
-		private readonly Stemming stemming;
-		private readonly StopWordRemoval stopWordRemoval;
+        private readonly bool _indexing;
+		private readonly Stemming _stemming;
+		private readonly StopWordRemoval _stopWordRemoval;
 
 		public enum Stemming
 		{
@@ -32,14 +32,14 @@ namespace QuoteFlow.Api.Asset.Index
 
         public readonly IDictionary<string, global::Lucene.Net.Analysis.Analyzer> Analyzers = new Dictionary<string, global::Lucene.Net.Analysis.Analyzer>();
 
-		private readonly global::Lucene.Net.Analysis.Analyzer fallbackAnalyzer;
+		private readonly global::Lucene.Net.Analysis.Analyzer _fallbackAnalyzer;
 
 		public QuoteFlowAnalyzer(bool indexing, Stemming stemming, StopWordRemoval stopWordRemoval)
 		{
-			this.indexing = indexing;
-			this.stemming = stemming;
-			this.stopWordRemoval = stopWordRemoval;
-		    fallbackAnalyzer = new SimpleAnalyzer();
+			this._indexing = indexing;
+			this._stemming = stemming;
+			this._stopWordRemoval = stopWordRemoval;
+		    _fallbackAnalyzer = new SimpleAnalyzer();
             Analyzers.Add("english", MakeAnalyzer());
 		    //fallbackAnalyzer = new SimpleAnalyzer(LuceneVersion.Get(), this.indexing);
 		}
@@ -47,15 +47,15 @@ namespace QuoteFlow.Api.Asset.Index
         internal global::Lucene.Net.Analysis.Analyzer MakeAnalyzer()
         {
             return new EnglishAnalyzer(LuceneVersion.Get(),
-                indexing, stemming == Stemming.On
+                _indexing, _stemming == Stemming.On
                     ? TokenFilters.English.Stemming.Aggressive
                     : TokenFilters.General.Stemming.None,
-                stopWordRemoval == StopWordRemoval.On
+                _stopWordRemoval == StopWordRemoval.On
                     ? TokenFilters.English.StopWordRemoval.DefaultSet
                     : TokenFilters.General.StopWordRemoval.None);
 
             // Deep fallback
-            return fallbackAnalyzer;
+            return _fallbackAnalyzer;
         }
 
         /// <summary>
@@ -66,8 +66,6 @@ namespace QuoteFlow.Api.Asset.Index
         /// <returns></returns>
         public override TokenStream TokenStream(string fieldName, TextReader reader)
         {
-            // workaround for https://issues.apache.org/jira/browse/LUCENE-1359
-            // reported here: http://jira.atlassian.com/browse/JRA-16239
             if (fieldName == null)
             {
                 fieldName = "";
@@ -90,6 +88,7 @@ namespace QuoteFlow.Api.Asset.Index
         private global::Lucene.Net.Analysis.Analyzer FindAnalyzer()
         {
             global::Lucene.Net.Analysis.Analyzer analyzer;
+            
             try
             {
                 analyzer = Analyzers["english"];
@@ -97,14 +96,10 @@ namespace QuoteFlow.Api.Asset.Index
             catch (Exception e)
             {
                 //log.error("Invalid indexing language: '" + language + "', defaulting to '" + APKeys.Languages.OTHER + "'.");
-                analyzer = fallbackAnalyzer;
+                analyzer = _fallbackAnalyzer;
             }
-            if (analyzer == null)
-            {
-                //log.error("Invalid indexing language: '" + language + "', defaulting to '" + APKeys.Languages.OTHER + "'.");
-                analyzer = fallbackAnalyzer;
-            }
-            return analyzer;
+            
+            return analyzer ?? (analyzer = _fallbackAnalyzer);
         }
     }
 }

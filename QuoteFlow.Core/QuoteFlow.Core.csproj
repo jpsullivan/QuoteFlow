@@ -178,6 +178,7 @@
     <Compile Include="Asset\Fields\SummarySystemField.cs" />
     <Compile Include="Asset\Index\AssetDocumentAndIdCollector.cs" />
     <Compile Include="Asset\Index\AssetIndexer.cs" />
+    <Compile Include="Asset\Index\AssetIndexManager.cs" />
     <Compile Include="Asset\Index\IAssetDocumentFactory.cs" />
     <Compile Include="Asset\Index\IAssetIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\AssetNameIndexer.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Asset\Index\Indexers\ManufacturerIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\SummaryIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\UserFieldIndexer.cs" />
+    <Compile Include="Asset\Index\SearcherCache.cs" />
     <Compile Include="Asset\Nav\AbstractAssetTableCreator.cs" />
     <Compile Include="Asset\Nav\AssetTableCreatorFactory.cs" />
     <Compile Include="Asset\Nav\AssetTableService.cs" />

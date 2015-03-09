@@ -64,6 +64,7 @@ using QuoteFlow.Core.Jql.Values;
 using QuoteFlow.Core.Lucene;
 using QuoteFlow.Core.Services;
 using QuoteFlow.Services;
+using AssetIndexManager = QuoteFlow.Core.Asset.Index.AssetIndexManager;
 
 namespace QuoteFlow.Core.DependencyResolution
 {

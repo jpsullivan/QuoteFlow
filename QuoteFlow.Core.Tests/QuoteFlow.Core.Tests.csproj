@@ -98,6 +98,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Asset\Index\SearcherCacheTests.cs" />
     <Compile Include="Jql\Parser\Antlr\AntlrPositionTests.cs" />
     <Compile Include="Jql\Parser\Antlr\LexerErrorHelperTests.cs" />
     <Compile Include="Jql\Parser\JqlQueryParserTests.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Jql\Query\QueryFactoryResultTests.cs" />
     <Compile Include="Jql\Query\QueryVisitorTests.cs" />
     <Compile Include="Jql\Query\WasClauseQueryFactoryTests.cs" />
+    <Compile Include="Jql\Util\Searchers\MockSearcherFactory.cs" />
     <Compile Include="Jql\Util\ToJqlStringVisitorTests.cs" />
     <Compile Include="Jql\Validator\AllTextValidatorTests.cs" />
     <Compile Include="Jql\Validator\MockJqlOperandResolver.cs" />
@@ -136,6 +138,7 @@
       <Name>QuoteFlow.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
