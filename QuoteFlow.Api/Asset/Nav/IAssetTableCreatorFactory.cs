@@ -2,6 +2,7 @@
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Jql.Query;
+using QuoteFlow.Api.Models;
 
 namespace QuoteFlow.Api.Asset.Nav
 {
@@ -10,17 +11,18 @@ namespace QuoteFlow.Api.Asset.Nav
     ///</summary>
     public interface IAssetTableCreatorFactory
     {
-        /// <summary>
-        /// Create an <see cref="AssetTableCreator"/> for a normal (non-stable) search.
-        ///</summary>
+        ///  <summary>
+        ///  Create an <see cref="AssetTableCreator"/> for a normal (non-stable) search.
+        /// </summary>
+        /// <param name="user">The user performing the search.</param>
         /// <param name="configuration">The <see cref="IAssetTableService"/> configuration to use.</param>
-        /// <param name="query">The query whose results will form the table's content.</param>
-        /// <param name="returnAssetIds">Whether asset IDs should be returned.</param>
-        /// <param name="searchRequest">The search request being executed (may differ from {@code query}).</param>
-        /// <returns>An <see cref="AssetTableCreator"/>.</returns>
-        /// <exception cref="IllegalArgumentException">If no <see cref="AssetTableCreator"/> corresponds to {@code layoutKey}.</exception>
-        /// <exception cref="RuntimeException">If creating the instance fails.</exception>
-        AssetTableCreator GetNormalAssetTableCreator(IAssetTableServiceConfiguration configuration, IQuery query, bool returnAssetIds, SearchRequest searchRequest);
+        ///  <param name="query">The query whose results will form the table's content.</param>
+        ///  <param name="returnAssetIds">Whether asset IDs should be returned.</param>
+        ///  <param name="searchRequest">The search request being executed (may differ from {@code query}).</param>
+        ///  <returns>An <see cref="AssetTableCreator"/>.</returns>
+        ///  <exception cref="IllegalArgumentException">If no <see cref="AssetTableCreator"/> corresponds to {@code layoutKey}.</exception>
+        ///  <exception cref="RuntimeException">If creating the instance fails.</exception>
+        AssetTableCreator GetNormalAssetTableCreator(User user, IAssetTableServiceConfiguration configuration, IQuery query, bool returnAssetIds, SearchRequest searchRequest);
 
         /// <summary>
         /// Create an <see cref="AssetTableCreator"/> for a stable search.
@@ -33,6 +35,6 @@ namespace QuoteFlow.Api.Asset.Nav
         /// <returns>An <see cref="AssetTableCreator"/>.</returns>
         /// <exception cref="IllegalArgumentException">If no <see cref="AssetTableCreator"/> corresponds to {@code layoutKey}.</exception>
         /// <exception cref="RuntimeException">If creating the instance fails.</exception>
-        AssetTableCreator GetStableAssetTableCreator(IAssetTableServiceConfiguration configuration, IQuery query, List<int?> assetIds, SearchRequest searchRequest);
+        AssetTableCreator GetStableAssetTableCreator(User user, IAssetTableServiceConfiguration configuration, IQuery query, List<int?> assetIds, SearchRequest searchRequest);
     }
 }

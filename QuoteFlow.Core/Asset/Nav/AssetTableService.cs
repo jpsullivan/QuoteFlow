@@ -31,8 +31,9 @@ namespace QuoteFlow.Core.Asset.Nav
         public ISearchSortUtil SearchSortUtil { get; protected set; }
         public ISearchHandlerManager SearchHandlerManager { get; protected set; }
 
-        public AssetTableService(IFieldManager fieldManager, ISearchService searchService, ISearchSortUtil searchSortUtil, ISearchHandlerManager searchHandlerManager)
+        public AssetTableService(IAssetTableCreatorFactory assetTableCreatorFactory, IFieldManager fieldManager, ISearchService searchService, ISearchSortUtil searchSortUtil, ISearchHandlerManager searchHandlerManager)
         {
+            AssetTableCreatorFactory = assetTableCreatorFactory;
             FieldManager = fieldManager;
             SearchService = searchService;
             SearchSortUtil = searchSortUtil;
@@ -41,24 +42,30 @@ namespace QuoteFlow.Core.Asset.Nav
 
         #endregion
 
-        public AssetTableViewModel GetIssueTableFromFilterWithJql(string filterId, string jql, IAssetTableServiceConfiguration config,
+        public AssetTableViewModel GetIssueTableFromFilterWithJql(User user, string filterId, string jql, IAssetTableServiceConfiguration config,
             bool isStableSearchFirstHit)
         {
-            if (filterId.IsNullOrWhiteSpace())
+            if (filterId == null)
             {
-                return GetAssetTableFromJql(jql, config, isStableSearchFirstHit);
+                return GetAssetTableFromJql(user, jql, config, isStableSearchFirstHit);
             }
 
-            throw new NotImplementedException();
+            if (jql == null)
+            {
+                //return GetAssetTableFromFilter(filterId, config, isStableSearchFirstHit);
+            }
+
+            var parseResult = SearchService.ParseQuery(user, jql);
+            return GetAssetTable(user, config, parseResult.Query, isStableSearchFirstHit, new SearchRequest());
         }
 
-        public AssetTableViewModel GetAssetTableFromAssetIds(string filterId, string jql, List<int> ids,
+        public AssetTableViewModel GetAssetTableFromAssetIds(User user, string filterId, string jql, List<int> ids,
             IAssetTableServiceConfiguration config)
         {
             throw new NotImplementedException();
         }
 
-        private AssetTableViewModel GetAssetTableFromJql(string jql, IAssetTableServiceConfiguration config,
+        private AssetTableViewModel GetAssetTableFromJql(User user, string jql, IAssetTableServiceConfiguration config,
             bool returnMatchingAssetIds)
         {
             // parse the JQL into a Query object (and to validate it).
@@ -70,7 +77,7 @@ namespace QuoteFlow.Core.Asset.Nav
             }
 
             var searchRequest = new SearchRequest(parseResult.Query);
-            return GetAssetTable(config, parseResult.Query, returnMatchingAssetIds, searchRequest);
+            return GetAssetTable(user, config, parseResult.Query, returnMatchingAssetIds, searchRequest);
         }
 
 //        /// <summary>
@@ -100,12 +107,13 @@ namespace QuoteFlow.Core.Asset.Nav
         /// <summary>
         /// Attempt to construct an <see cref="AssetTable"/>.
         /// </summary>
+        /// <param name="user">The user performing the search.</param>
         /// <param name="configuration">The service configuration to use.</param>
         /// <param name="query">The query whose results will form the table content.</param>
         /// <param name="returnIssueIds">Whether the issues' IDs should be returned.</param>
         /// <param name="searchRequest">The search request being executed (may differ from {@code query}).</param>
         /// <returns>The result of attempting to create an <see cref="AssetTable"/> from the given arguments.</returns>
-        internal virtual AssetTableViewModel GetAssetTable(IAssetTableServiceConfiguration configuration, IQuery query, bool returnIssueIds, SearchRequest searchRequest)
+        protected virtual AssetTableViewModel GetAssetTable(User user, IAssetTableServiceConfiguration configuration, IQuery query, bool returnIssueIds, SearchRequest searchRequest)
         {
             if (searchRequest == null)
             {
@@ -115,7 +123,7 @@ namespace QuoteFlow.Core.Asset.Nav
             var queryWithOrderBy = AddOrderByToSearchRequest(query, configuration.SortBy);
             PreferredLayoutKey = configuration;
 
-            return CreateAssetTableFromCreator(AssetTableCreatorFactory.GetNormalAssetTableCreator(configuration, queryWithOrderBy, returnIssueIds, searchRequest));
+            return CreateAssetTableFromCreator(AssetTableCreatorFactory.GetNormalAssetTableCreator(user, configuration, queryWithOrderBy, returnIssueIds, searchRequest));
         }
 
         /// <summary>

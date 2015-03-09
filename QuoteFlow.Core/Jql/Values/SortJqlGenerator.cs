@@ -33,7 +33,7 @@ namespace QuoteFlow.Core.Jql.Values
         /// <param name="query"></param>
         /// <param name="fields"></param>
         /// <returns>The JQL to be contained in the column headers.</returns>
-        public IDictionary<string, string> GenerateColumnSortJql(IQuery query, List<INavigableField> fields)
+        public IDictionary<string, string> GenerateColumnSortJql(IQuery query, IEnumerable<INavigableField> fields)
         {
             var columnSortJql = new Dictionary<string, string>();
             foreach (var navigableField in fields)

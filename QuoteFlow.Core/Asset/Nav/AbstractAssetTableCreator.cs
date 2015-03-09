@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lucene.Net.Documents;
+using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Asset.Fields;
+using QuoteFlow.Api.Asset.Fields.Layout.Column;
 using QuoteFlow.Api.Asset.Nav;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Managers;
@@ -28,13 +30,13 @@ namespace QuoteFlow.Core.Asset.Nav
     /// </summary>
     public abstract class AbstractAssetTableCreator : AssetTableCreator
     {
-        private readonly ApplicationProperties _applicationProperties;
-		private readonly DisplayedColumnsHelper _searchColumnsFinder;
+//        private readonly ApplicationProperties _applicationProperties;
+//		private readonly DisplayedColumnsHelper _searchColumnsFinder;
 		private IDictionary<string, string> _columnSortJql;
 		private SortBy _sortBy;
         private readonly IAssetTableServiceConfiguration _configuration;
 		private readonly bool _fromAssetIds;
-		private readonly IAssetFactory _issueFactory;
+		private readonly IAssetFactory _assetFactory;
 		private IList<int?> _assetIds;
 		private IList<string> _assetKeys;
 		private readonly ISortJqlGenerator _sortJqlGenerator;
@@ -45,7 +47,7 @@ namespace QuoteFlow.Core.Asset.Nav
 		private readonly ISearchProvider _searchProvider;
 		private readonly ISearchProviderFactory _searchProviderFactory;
         private SearchRequest _searchRequest;
-		private SearchResults _searchResults;
+		public SearchResults SearchResults;
 		private readonly ISearchService _searchService;
 		private readonly User _user;
 		private readonly IFieldManager _fieldManager;
@@ -58,7 +60,7 @@ namespace QuoteFlow.Core.Asset.Nav
 		/// <param name="columnLayoutManager"></param>
 		/// <param name="configuration"></param>
         /// <param name="fromAssetIds">Whether we are executing a search from issue IDs (stable update).</param>
-		/// <param name="issueFactory"></param>
+		/// <param name="assetFactory"></param>
         /// <param name="assetIds">The requested asset IDs.</param>
 		/// <param name="sortJqlGenerator"></param>
         /// <param name="query">The query whose results will form the table content.</param>
@@ -71,11 +73,9 @@ namespace QuoteFlow.Core.Asset.Nav
         /// <param name="user">The user executing the search.</param>
 		/// <param name="fieldManager"></param>
 		/// <param name="orderByUtil"></param>
-		public AbstractAssetTableCreator(ApplicationProperties applicationProperties, 
-            ColumnLayoutManager columnLayoutManager, 
-            IAssetTableServiceConfiguration configuration, 
+		public AbstractAssetTableCreator(IAssetTableServiceConfiguration configuration, 
             bool fromAssetIds, 
-            IAssetFactory issueFactory, 
+            IAssetFactory assetFactory, 
             IList<int?> assetIds, 
             ISortJqlGenerator sortJqlGenerator, 
             IQuery query, 
@@ -89,10 +89,9 @@ namespace QuoteFlow.Core.Asset.Nav
             IFieldManager fieldManager, 
             IOrderByUtil orderByUtil)
 		{
-			_applicationProperties = applicationProperties;
 			_configuration = configuration;
 			_fromAssetIds = fromAssetIds;
-			_issueFactory = issueFactory;
+			_assetFactory = assetFactory;
 			_assetIds = assetIds;
 			_sortJqlGenerator = sortJqlGenerator;
 			_query = query;
@@ -105,7 +104,6 @@ namespace QuoteFlow.Core.Asset.Nav
 			_user = user;
 			_fieldManager = fieldManager;
 			_orderByUtil = orderByUtil;
-		    //_searchColumnsFinder = new DisplayedColumnsHelper(columnLayoutManager, fieldManager);
 
 			// query and searchRequest aren't provided as we're searching by ID. They're used
 			// frequently while constructing the table, so set them here to make them available.
@@ -140,10 +138,10 @@ namespace QuoteFlow.Core.Asset.Nav
         private AssetDocumentAndIdCollector CollectAssets(string selectedAssetKey)
         {
             var assetSearcher = _searchProviderFactory.GetSearcher(SearchProviderTypes.AssetIndex);
-            var idCollector = new AssetDocumentAndIdCollector(assetSearcher, GetStableSearchResultsLimit(),
+            var idCollector = new AssetDocumentAndIdCollector(assetSearcher, StableSearchResultsLimit,
                 _configuration.NumberToShow, selectedAssetKey, _configuration.Start);
 
-            _searchProvider.SearchAndSort(_query, _user, idCollector, new PagerFilter<object>(0, GetStableSearchResultsLimit()));
+            _searchProvider.SearchAndSort(_query, _user, idCollector, new PagerFilter<object>(0, StableSearchResultsLimit));
             return idCollector;
         }
 
@@ -157,7 +155,7 @@ namespace QuoteFlow.Core.Asset.Nav
             var assets = new List<IAsset>();
             foreach (var document in assetDocuments)
             {
-                assets.Add(_issueFactory.GetIssue(document));
+                assets.Add(_assetFactory.GetAsset(document));
             }
 
             return assets;
@@ -165,9 +163,9 @@ namespace QuoteFlow.Core.Asset.Nav
 
         public override AssetTable Create()
         {
-            var columnLayout = GetColumnLayout();
-            var columns = GetDisplayedColumns(columnLayout);
-            //var columnIds = 
+            var columnLayout = ColumnLayout;
+            var columns = GetDisplayedColumns(columnLayout).ToList();
+            var columnIds = columns.Select(c => c.Id).ToList();
 
             _configuration.ColumnNames = columnIds;
             if (_fromAssetIds)
@@ -181,17 +179,17 @@ namespace QuoteFlow.Core.Asset.Nav
 
             return new AssetTable()
             {
-                Table = GetTable(),
-                Displayed = _searchResults.Assets.Count(),
-                Total = _searchResults.Total,
-                StartIndex = _searchResults.Start,
-                End = _searchResults.End,
+                Table = Table,
+                Displayed = SearchResults.Assets.Count(),
+                Total = SearchResults.Total,
+                StartIndex = SearchResults.Start,
+                End = SearchResults.End,
                 SortBy = _sortBy,
                 PageSize = _configuration.NumberToShow,
                 Columns = _configuration.ColumnNames,
-                ColumnConfig = columnLayout.ColumnConfig,
+                ColumnConfig = columnLayout.ColumnConfig.ToString(),
                 ColumnSortJql = _columnSortJql,
-                QuoteFlowHasAssets = GetQuoteFlowHasAssets(),
+                QuoteFlowHasAssets = QuoteFlowHasAssets,
                 AssetIds = (_fromAssetIds ? null : _assetIds),
                 AssetKeys = _assetKeys,
             };
@@ -203,7 +201,7 @@ namespace QuoteFlow.Core.Asset.Nav
         /// and <see cref="_assetKeys"/>.
         /// </summary>
         /// <param name="columns"></param>
-        private void ExecuteNormalSearch(List<ColumnLayoutItem> columns)
+        private void ExecuteNormalSearch(IEnumerable<IColumnLayoutItem> columns)
         {
             _columnSortJql = _sortJqlGenerator.GenerateColumnSortJql(_query, GetSortableColumns(columns));
             _sortBy = _orderByUtil.GenerateSortBy(_query);
@@ -216,7 +214,7 @@ namespace QuoteFlow.Core.Asset.Nav
 
                 _assetIds = collectedResult.AssetIds;
                 _assetKeys = collectedResult.IssueKeys;
-                _searchResults = new SearchResults(
+                SearchResults = new SearchResults(
                     ConvertDocumentsToAssets(collectedResult.Documents),
                     collectedResult.Total,
                     _configuration.NumberToShow,
@@ -226,37 +224,37 @@ namespace QuoteFlow.Core.Asset.Nav
             else
             {
                 var pagerFilter = new PagerFilter<object>(_configuration.Start, _configuration.NumberToShow);
-                _searchResults = _searchProvider.Search(_query, _user, pagerFilter);
+                SearchResults = _searchProvider.Search(_query, _user, pagerFilter);
 
                 // Ensure that the start index doesn't exceed the number of results
                 int pageSize = pagerFilter.PageSize;
-                int resultsCount = _searchResults.Total;
-                while (pagerFilter.Start > 0 && pagerFilter.Start >= _searchResults.Total)
+                int resultsCount = SearchResults.Total;
+                while (pagerFilter.Start > 0 && pagerFilter.Start >= SearchResults.Total)
                 {
                     pagerFilter.Start = Math.Max(0, resultsCount - 1) / pageSize * pageSize;
-                    _searchResults = _searchProvider.Search(_query, _user, pagerFilter);
+                    SearchResults = _searchProvider.Search(_query, _user, pagerFilter);
                 }
             }
         }
 
         /// <summary>
         /// Retrieve and store the assets whose IDs were passed to the constructor from the Lucene index.
-        /// The results are stored in <see cref="_searchResults"/> and they are stored as they were
+        /// The results are stored in <see cref="SearchResults"/> and they are stored as they were
         /// in the ID list.
         /// </summary>
         /// <param name="columns"></param>
-        private void ExecuteStableSearch(List<ColumnLayoutItem> columns)
+        private void ExecuteStableSearch(IEnumerable<IColumnLayoutItem> columns)
         {
             _columnSortJql = _sortJqlGenerator.GenerateColumnSortJql(_originalQuery, GetSortableColumns(columns));
 
-            var pagerFilter = new PagerFilter<object>(0, GetStableSearchResultsLimit());
-            _searchResults = _searchProvider.Search(_query, _user, pagerFilter);
+            var pagerFilter = new PagerFilter<object>(0, StableSearchResultsLimit);
+            SearchResults = _searchProvider.Search(_query, _user, pagerFilter);
 
             // Sort results so they are in the same order as the list of asset IDs
-            var assetMap = _searchResults.Assets.ToDictionary(asset => asset.Id);
+            var assetMap = SearchResults.Assets.ToDictionary(asset => asset.Id);
             var sortedAssets = _assetIds.Select(assetId => assetMap[(int) assetId]).ToList();
 
-            _searchResults = new SearchResults(sortedAssets, _searchResults.Total, pagerFilter);
+            SearchResults = new SearchResults(sortedAssets, SearchResults.Total, pagerFilter);
         }
 
         /// <summary>
@@ -264,16 +262,17 @@ namespace QuoteFlow.Core.Asset.Nav
         /// <param name="columnNames"> of requested columns
         /// </param>
         /// <returns> the columns that should be visible to the user. </returns>
-        private IList<ColumnLayoutItem> GetDisplayedColumns(IList<string> columnNames)
+        private IList<IColumnLayoutItem> GetDisplayedColumns(IList<string> columnNames)
         {
-            return _searchColumnsFinder.GetDisplayedColumns(_user, columnNames).ColumnLayoutItems;
+            return new List<IColumnLayoutItem>();
+            //return _searchColumnsFinder.GetDisplayedColumns(_user, columnNames).ColumnLayoutItems;
         }
 
         /// <summary>
         /// Returns the layout items for a given columnLayout </summary>
         /// <param name="columns"> layout </param>
         /// <returns> the columns that should be visible to the user. </returns>
-        internal IList<ColumnLayoutItem> GetDisplayedColumns(ColumnLayout columns)
+        private IEnumerable<IColumnLayoutItem> GetDisplayedColumns(IColumnLayout columns)
         {
             return columns.ColumnLayoutItems;
         }
@@ -282,11 +281,12 @@ namespace QuoteFlow.Core.Asset.Nav
         /// Returns the columns that are displayed to the user in list view.
         /// </summary>
         /// <returns> the columns that should be visible to the user. </returns>
-        internal virtual ColumnLayout ColumnLayout
+        private IColumnLayout ColumnLayout
         {
             get
             {
-                return _searchColumnsFinder.GetDisplayedColumns(_user, _searchRequest, _configuration);
+                return null;
+                //return _searchColumnsFinder.GetDisplayedColumns(_user, _searchRequest, _configuration);
             }
         }
 
@@ -296,7 +296,7 @@ namespace QuoteFlow.Core.Asset.Nav
         {
             get
             {
-                if (_searchResults.Total > 0)
+                if (SearchResults.Total > 0)
                 {
                     return true;
                 }
@@ -310,10 +310,7 @@ namespace QuoteFlow.Core.Asset.Nav
         /// </summary>
         private int StableSearchResultsLimit
         {
-            get
-            {
-                return Convert.ToInt32(applicationProperties.getDefaultBackedString(APKeys.JIRA_STABLE_SEARCH_MAX_RESULTS));
-            }
+            get { return 50; }
         }
 
         /// <summary>
@@ -359,15 +356,10 @@ namespace QuoteFlow.Core.Asset.Nav
         /// <param name="displayedColumns"> list of columns to be displayed.
         /// </param>
         /// <returns> the columns to generate sort JQL for. </returns>
-        private IList<NavigableField> GetSortableColumns(IList<ColumnLayoutItem> displayedColumns)
+        private IEnumerable<INavigableField> GetSortableColumns(IEnumerable<IColumnLayoutItem> displayedColumns)
         {
-            var fields = new List<INavigableField>();
-
             // add the columns that are displayed in list view
-            foreach (ColumnLayoutItem columnLayoutItem in displayedColumns)
-            {
-                fields.Add(columnLayoutItem.NavigableField);
-            }
+            var fields = displayedColumns.Select(columnLayoutItem => columnLayoutItem.NavigableField).ToList();
 
             // add the columns that are in the ORDER BY clause
             fields.AddRange(OrderByFields);

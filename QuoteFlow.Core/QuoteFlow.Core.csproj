@@ -162,6 +162,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asset\AssetFactory.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Information\CustomFieldSearcherInformation.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Information\GenericSearcherInformation.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Transformer\CatalogSearchHandlerFactory.cs" />

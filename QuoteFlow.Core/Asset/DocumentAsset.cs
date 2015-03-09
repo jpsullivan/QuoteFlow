@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Lucene.Net.Documents;
 using Ninject;
 using QuoteFlow.Api.Asset;
@@ -25,7 +26,7 @@ namespace QuoteFlow.Core.Asset
         public DocumentAsset(Document document, IFieldManager fieldManager, IAssetService assetService, ICatalogService catalogService)
         {
             Document = document;
-            FieldManager = Container.Kernel.TryGet<IFieldManager>();
+            FieldManager = fieldManager ?? Container.Kernel.TryGet<IFieldManager>();
             AssetService = assetService;
             CatalogService = catalogService;
         }
@@ -117,15 +118,7 @@ namespace QuoteFlow.Core.Asset
                 return new ArrayList();
             }
 
-            var values = new List<object>();
-            foreach (string documentValue in documentValues)
-            {
-                object value = sorter.GetValueFromLuceneField(documentValue);
-                if (value != null)
-                {
-                    values.Add(value);
-                }
-            }
+            var values = documentValues.Select(dv => sorter.GetValueFromLuceneField(dv)).Where(v => v != null).ToList();
 
             values.Sort(sorter.Comparator);
             return values;

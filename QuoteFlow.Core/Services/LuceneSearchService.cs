@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Lucene.Net.Documents;
 using Lucene.Net.Search;
 using Ninject;
@@ -8,8 +9,10 @@ using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Asset.Search.Util;
+using QuoteFlow.Api.Entity.Property;
 using QuoteFlow.Api.Infrastructure.Paging;
 using QuoteFlow.Api.Jql.Query;
+using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Search;
@@ -411,52 +414,28 @@ namespace QuoteFlow.Core.Services
 
                 foreach (SearchSort searchSort in sorts)
                 {
-//                    if (searchSort.Property.Defined && EntityPropertyType.IsJqlClause(searchSort.Field))
-//                    {
-//                        EntityPropertyType entityPropertyType = EntityPropertyType.getEntityPropertyTypeForClause(searchSort.Field);
-//                        Property property = searchSort.Property.get();
-//                        luceneSortFields.Add(new SortField(entityPropertyType.IndexPrefix + "_" + property.AsPropertyString, SortField.STRING, getSortOrder(searchSort, null)));
-//                    }
-//                    else
-//                    {
-//                        // Lets figure out what field this searchSort is referring to. The {@link SearchSort#getField} method
-//                        //actually a JQL name.
-//                        var fieldIds = new List<string>(searchHandlerManager.GetFieldIds(searcher, searchSort.Field));
-//                        // sort to get consistent ordering of fields for clauses with multiple fields
-//                        fieldIds.Sort();
-//
-//                        foreach (string fieldId in fieldIds)
-//                        {
-//
-//                            if (fieldManager.IsNavigableField(fieldId))
-//                            {
-//                                INavigableField field = fieldManager.GetNavigableField(fieldId);
-//                                luceneSortFields.AddRange(field.GetSortFields(getSortOrder(searchSort, field)));
-//                            }
-//                            else
-//                            {
-////                                log.debug("Search sort contains invalid field: " + searchSort);
-//                            }
-//                        }
-//                    }
-
-                    // Lets figure out what field this searchSort is referring to. 
-                    // The {@link SearchSort#getField} method actually a JQL name.
-                    var fieldIds = new List<string>(searchHandlerManager.GetFieldIds(searcher, searchSort.Field));
-                    // sort to get consistent ordering of fields for clauses with multiple fields
-                    fieldIds.Sort();
-
-                    foreach (string fieldId in fieldIds)
+                    if (searchSort.Property != null && EntityPropertyType.IsJqlClause(searchSort.Field))
                     {
+                        EntityPropertyType entityPropertyType = EntityPropertyType.GetEntityPropertyTypeForClause(searchSort.Field);
+                        Property property = searchSort.Property.First(); // todo: .Firt() may not be correct here
+                        luceneSortFields.Add(new SortField(entityPropertyType.IndexPrefix + "_" + property, SortField.STRING, GetSortOrder(searchSort, null)));
+                    }
+                    else
+                    {
+                        // Lets figure out what field this searchSort is referring to. The {@link SearchSort#getField} method
+                        //actually a JQL name.
+                        var fieldIds = new List<string>(searchHandlerManager.GetFieldIds(searcher, searchSort.Field));
+                        // sort to get consistent ordering of fields for clauses with multiple fields
+                        fieldIds.Sort();
 
-                        if (fieldManager.IsNavigableField(fieldId))
+                        foreach (string fieldId in fieldIds)
                         {
-                            INavigableField field = fieldManager.GetNavigableField(fieldId);
-                            luceneSortFields.AddRange(field.GetSortFields(getSortOrder(searchSort, field)));
-                        }
-                        else
-                        {
-                            //                                log.debug("Search sort contains invalid field: " + searchSort);
+
+                            if (fieldManager.IsNavigableField(fieldId))
+                            {
+                                INavigableField field = fieldManager.GetNavigableField(fieldId);
+                                luceneSortFields.AddRange(field.GetSortFields(GetSortOrder(searchSort, field)));
+                            }
                         }
                     }
                 }
@@ -465,7 +444,7 @@ namespace QuoteFlow.Core.Services
             return luceneSortFields.ToArray();
         }
 
-        private bool getSortOrder(SearchSort searchSort, INavigableField field)
+        private bool GetSortOrder(SearchSort searchSort, INavigableField field)
         {
             bool order;
 

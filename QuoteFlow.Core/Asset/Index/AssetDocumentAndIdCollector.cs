@@ -111,8 +111,8 @@ namespace QuoteFlow.Core.Asset.Index
         }
 
         /// <summary>
-        ///  Computes the results for the currently matching page
-        ///  Takes into consideration the startIndex, selectedIssueKey, etc
+        /// Computes the results for the currently matching page. Takes into consideration 
+        /// the startIndex, selectedIssueKey, etc.
         /// </summary>
         public virtual Result ComputeResult()
         {

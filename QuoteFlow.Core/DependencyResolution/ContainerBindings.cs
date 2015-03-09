@@ -13,6 +13,7 @@ using Microsoft.WindowsAzure.ServiceRuntime;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Common;
+using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Asset.CustomFields.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Index;
@@ -34,6 +35,7 @@ using QuoteFlow.Api.Jql.Validator;
 using QuoteFlow.Api.Jql.Values;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Asset;
 using QuoteFlow.Core.Asset.CustomFields.Searchers.Transformer;
 using QuoteFlow.Core.Asset.Fields;
 using QuoteFlow.Core.Asset.Nav;
@@ -52,9 +54,11 @@ using QuoteFlow.Core.Jql.Operand.Registry;
 using QuoteFlow.Core.Jql.Parser;
 using QuoteFlow.Core.Jql.Permission;
 using QuoteFlow.Core.Jql.Query;
+using QuoteFlow.Core.Jql.Query.Order;
 using QuoteFlow.Core.Jql.Resolver;
 using QuoteFlow.Core.Jql.Util;
 using QuoteFlow.Core.Jql.Validator;
+using QuoteFlow.Core.Jql.Values;
 using QuoteFlow.Core.Lucene;
 using QuoteFlow.Core.Services;
 using QuoteFlow.Services;
@@ -69,6 +73,7 @@ namespace QuoteFlow.Core.DependencyResolution
             var configuration = new ConfigurationService();
             Bind<ConfigurationService>().ToMethod(context => configuration);
             Bind<IAppConfiguration>().ToMethod(context => configuration.Current);
+            Bind<IAssetTableServiceConfiguration>().ToMethod(context => configuration.AssetTableConfig);
             Bind<IConfigurationSource>().ToMethod(context => configuration);
 
             Bind<Directory>()
@@ -83,6 +88,7 @@ namespace QuoteFlow.Core.DependencyResolution
 
             Bind<ICacheService>().To<HttpContextCacheService>().InRequestScope();
             Bind<IContentService>().To<ContentService>().InSingletonScope();
+            Bind<IAssetFactory>().To<AssetFactory>().InRequestScope();
             Bind<IAssetService>().To<AssetService>().InRequestScope();
             Bind<IAssetSearchService>().To<AssetSearchService>().InRequestScope();
             Bind<IAssetSearcherManager>().To<AssetSearcherManager>().InRequestScope();
@@ -168,6 +174,7 @@ namespace QuoteFlow.Core.DependencyResolution
             #region Asset Fields
 
             Bind<IAssetTableCreatorFactory>().To<AssetTableCreatorFactory>().InRequestScope();
+            Bind<IAssetTableService>().To<AssetTableService>().InRequestScope();
             Bind<FieldClausePermissionChecker.IFactory>().To<FieldClausePermissionChecker.Factory>().InRequestScope();
             Bind<ICustomFieldInputHelper>().To<CustomFieldInputHelper>().InRequestScope();
             Bind<IFieldFlagOperandRegistry>().To<FieldFlagOperandRegistry>().InRequestScope();
@@ -189,8 +196,8 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IQueryRegistry>().To<QueryRegistry>().InRequestScope();
             Bind<ISystemClauseHandlerFactory>().To<SystemClauseHandlerFactory>().InRequestScope();
             Bind<IValidatorRegistry>().To<ValidatorRegistry>().InRequestScope();
-            Bind<ISortJqlGenerator>().To<ISortJqlGenerator>().InRequestScope();
-            Bind<IOrderByUtil>().To<IOrderByUtil>().InRequestScope();
+            Bind<ISortJqlGenerator>().To<SortJqlGenerator>().InRequestScope();
+            Bind<IOrderByUtil>().To<OrderByUtil>().InRequestScope();
             Bind<QueryContextConverter>().ToSelf().InRequestScope();
             Bind<ValidatorVisitor.ValidatorVisitorFactory>().ToSelf().InRequestScope();
 

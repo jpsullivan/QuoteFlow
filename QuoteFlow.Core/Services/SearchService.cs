@@ -81,9 +81,9 @@ namespace QuoteFlow.Core.Services
 
         public ParseResult ParseQuery(User searcher, string query)
         {
-            if (query.IsNullOrWhiteSpace())
+            if (query == null)
             {
-                throw new ArgumentException("Must not be null or empty.", "query");
+                throw new ArgumentNullException("query");
             }
 
             IQuery newQuery = null;

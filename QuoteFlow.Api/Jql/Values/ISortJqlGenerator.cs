@@ -6,6 +6,6 @@ namespace QuoteFlow.Api.Jql.Values
 {
     public interface ISortJqlGenerator
     {
-        IDictionary<string, string> GenerateColumnSortJql(IQuery query, List<INavigableField> fields);
+        IDictionary<string, string> GenerateColumnSortJql(IQuery query, IEnumerable<INavigableField> fields);
     }
 }

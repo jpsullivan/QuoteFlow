@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using QuoteFlow.Api.Asset.Nav;
+using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Infrastructure.Helpers;
 using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
@@ -18,6 +19,8 @@ namespace QuoteFlow.Controllers
         #region DI
 
         public IAssetService AssetService { get; protected set; }
+        public IAssetTableService AssetTableService { get; protected set; }
+        public IAssetTableServiceConfiguration AssetTableServiceConfiguration { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
         public IManufacturerService ManufacturerService { get; protected set; }
         public IQuoteLineItemService QuoteLineItemService { get; protected set; }
@@ -28,6 +31,8 @@ namespace QuoteFlow.Controllers
         public QuoteController() { }
 
         public QuoteController(IAssetService assetService,
+            IAssetTableService assetTableService,
+            IAssetTableServiceConfiguration configuration,
             ICatalogService catalogService,
             IManufacturerService manufacturerService,
             IQuoteLineItemService quoteLineItemService,
@@ -36,6 +41,8 @@ namespace QuoteFlow.Controllers
             IUserService userService)
         {
             AssetService = assetService;
+            AssetTableService = assetTableService;
+            AssetTableServiceConfiguration = configuration;
             CatalogService = catalogService;
             ManufacturerService = manufacturerService;
             QuoteService = quoteService;
@@ -161,9 +168,11 @@ namespace QuoteFlow.Controllers
             var catalogs = CatalogService.GetCatalogs(CurrentOrganization.Id);
             var manufacturers = ManufacturerService.GetManufacturers(CurrentOrganization.Id);
             var creators = UserService.GetUsers(CurrentOrganization.Id);
-            var assetTable = new AssetTable();
 
-            var model = new QuoteBuilderViewModel(quote, catalogs, manufacturers, creators, assetTable);
+            var assetTable = AssetTableService.GetIssueTableFromFilterWithJql(GetCurrentUser(), String.Empty, String.Empty,
+                AssetTableServiceConfiguration, true);
+
+            var model = new QuoteBuilderViewModel(quote, catalogs, manufacturers, creators, assetTable.AssetTable);
 
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }

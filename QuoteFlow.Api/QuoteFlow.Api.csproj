@@ -160,8 +160,11 @@
     <Compile Include="Asset\Fields\ISearchableField.cs" />
     <Compile Include="Asset\Fields\ISummaryField.cs" />
     <Compile Include="Asset\Fields\Layout\Column\ColumnConfig.cs" />
+    <Compile Include="Asset\Fields\Layout\Column\IColumnLayout.cs" />
+    <Compile Include="Asset\Fields\Layout\Column\IColumnLayoutItem.cs" />
     <Compile Include="Asset\Fields\NavigableFieldOrder.cs" />
     <Compile Include="Asset\IAssetConstant.cs" />
+    <Compile Include="Asset\IAssetFactory.cs" />
     <Compile Include="Asset\Index\Analyzer\EnglishAnalyzer.cs" />
     <Compile Include="Asset\Index\Analyzer\SubtokenFilter.cs" />
     <Compile Include="Asset\Index\Analyzer\TextAnalyzer.cs" />
@@ -254,6 +257,7 @@
     <Compile Include="Configuration\LuceneIndexLocation.cs" />
     <Compile Include="Configuration\StorageType.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Entity\Property\EntityPropertyType.cs" />
     <Compile Include="Index\IEntitySearchExtractor.cs" />
     <Compile Include="Index\ISearcherFunction.cs" />
     <Compile Include="Infrastructure\Attributes\HintAttribute.cs" />
