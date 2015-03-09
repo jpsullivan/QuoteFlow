@@ -13,6 +13,7 @@ using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels.Assets.Nav;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Api.Util;
 using QuoteFlow.Core.Jql.Builder;
 
 namespace QuoteFlow.Core.Asset.Nav
@@ -57,7 +58,7 @@ namespace QuoteFlow.Core.Asset.Nav
             throw new NotImplementedException();
         }
 
-        internal AssetTableViewModel GetAssetTableFromJql(string jql, IAssetTableServiceConfiguration config,
+        private AssetTableViewModel GetAssetTableFromJql(string jql, IAssetTableServiceConfiguration config,
             bool returnMatchingAssetIds)
         {
             // parse the JQL into a Query object (and to validate it).
@@ -114,10 +115,60 @@ namespace QuoteFlow.Core.Asset.Nav
             var queryWithOrderBy = AddOrderByToSearchRequest(query, configuration.SortBy);
             PreferredLayoutKey = configuration;
 
-            return CreateAssetTableFromCreator(AssetTableCreatorFactory.GetNormalAssetTableCreator(configuration, queryWithOrderBy, returnIssueIds, searchRequest, authenticationContext.LoggedInUser));
+            return CreateAssetTableFromCreator(AssetTableCreatorFactory.GetNormalAssetTableCreator(configuration, queryWithOrderBy, returnIssueIds, searchRequest));
         }
 
-        internal virtual IQuery AddOrderByToSearchRequest(IQuery preOrderByQuery, string sortBy)
+        /// <summary>
+        /// Create an <seealso cref="AssetTable"/> via an <seealso cref="AssetTableCreator"/> and handle any errors.
+        /// </summary>
+        /// <param name="creator"> The object that validates the request and creates the <seealso cref="AssetTable"/>. </param>
+        /// <returns> the result of attempting to create an <seealso cref="AssetTable"/> via {@code creator}. </returns>
+        protected virtual AssetTableViewModel CreateAssetTableFromCreator(AssetTableCreator creator)
+        {
+            //ErrorCollection errorCollection = new SimpleErrorCollection();
+
+            try
+            {
+                IMessageSet validationResult = creator.Validate();
+                if (validationResult.HasAnyErrors())
+                {
+                    return null;
+                    //return BuildJQLErrorServiceOutcome(validationResult);
+                }
+
+                AssetTable issueTable = creator.Create();
+
+                // The JQL is valid and the search can be executed, but warnings may
+                // have been generated (e.g. referencing a non-existent reporter).
+                ICollection<string> warnings = validationResult.WarningMessages;
+                return new AssetTableViewModel(issueTable, warnings.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+//            catch (SearchUnavailableException e)
+//            {
+//                if (!e.IndexingEnabled)
+//                {
+//                    string message = authenticationContext.I18nHelper.getText("gadget.common.indexing.admin");
+//                    errorCollection.addErrorMessage(message);
+//                }
+//                else
+//                {
+//                    string message = authenticationContext.I18nHelper.getText("unknown.search.error");
+//                    errorCollection.addErrorMessage(message);
+//                }
+//            }
+//            catch (SearchException e)
+//            {
+//                string message = authenticationContext.I18nHelper.getText("unknown.search.error");
+//                errorCollection.addErrorMessage(message);
+//            }
+        }
+
+        protected virtual IQuery AddOrderByToSearchRequest(IQuery preOrderByQuery, string sortBy)
         {
             if (sortBy.IsNullOrWhiteSpace())
             {
@@ -145,7 +196,8 @@ namespace QuoteFlow.Core.Asset.Nav
             IOrderBy newOrder = SearchSortUtil.GetOrderByClause(@params);
             IOrderBy oldOrder = queryBuilder.OrderBy().BuildOrderBy();
 
-            User user = authenticationContext.LoggedInUser;
+            //User user = authenticationContext.LoggedInUser;
+            User user = new User();
             IList<SearchSort> newSearchSorts = newOrder.SearchSorts;
             IList<SearchSort> oldSearchSorts = oldOrder.SearchSorts;
             IList<SearchSort> sorts = SearchSortUtil.MergeSearchSorts(user, newSearchSorts, oldSearchSorts, 3);
@@ -154,42 +206,42 @@ namespace QuoteFlow.Core.Asset.Nav
             return queryBuilder.BuildQuery();
         }
 
-        internal virtual void ValidateColumnNames(IList<string> columnNames)
-        {
-            if (columnNames == null || columnNames.Count <= 0) return;
-
-            try
-            {
-                IList<string> fieldsNotFound = new List<string>();
-                User user = authenticationContext.LoggedInUser;
-                var availableFields = FieldManager.GetAvailableNavigableFields(user);
-                    
-                foreach (string columnName in columnNames)
-                {
-                    // skip the --Default-- column if present
-                    if (columnName.Equals("--Default--", StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        continue;
-                    }
-
-                    bool found = availableFields.Any(availableField => columnName.Equals(availableField.Id));
-                    if (!found)
-                    {
-                        fieldsNotFound.Add(columnName);
-                    }
-                }
-
-                if (fieldsNotFound.Count > 0)
-                {
-                    var fieldsNotFoundString = String.Join(", ", fieldsNotFound);
-                    //errors.AddError(ColumnNames, string.Format("The following columns are invalid: {0}", fieldsNotFoundString));
-                }
-            }
-            catch (FieldException e)
-            {
-                throw new Exception(e);
-            }
-        }
+//        internal virtual void ValidateColumnNames(IList<string> columnNames)
+//        {
+//            if (columnNames == null || columnNames.Count <= 0) return;
+//
+//            try
+//            {
+//                IList<string> fieldsNotFound = new List<string>();
+//                User user = authenticationContext.LoggedInUser;
+//                var availableFields = FieldManager.GetAvailableNavigableFields(user);
+//                    
+//                foreach (string columnName in columnNames)
+//                {
+//                    // skip the --Default-- column if present
+//                    if (columnName.Equals("--Default--", StringComparison.CurrentCultureIgnoreCase))
+//                    {
+//                        continue;
+//                    }
+//
+//                    bool found = availableFields.Any(availableField => columnName.Equals(availableField.Id));
+//                    if (!found)
+//                    {
+//                        fieldsNotFound.Add(columnName);
+//                    }
+//                }
+//
+//                if (fieldsNotFound.Count > 0)
+//                {
+//                    var fieldsNotFoundString = String.Join(", ", fieldsNotFound);
+//                    //errors.AddError(ColumnNames, string.Format("The following columns are invalid: {0}", fieldsNotFoundString));
+//                }
+//            }
+//            catch (FieldException e)
+//            {
+//                throw new Exception(e.Message);
+//            }
+//        }
 
         private IAssetTableServiceConfiguration PreferredLayoutKey
         {

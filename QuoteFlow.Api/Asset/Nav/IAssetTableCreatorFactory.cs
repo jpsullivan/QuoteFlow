@@ -2,7 +2,6 @@
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Jql.Query;
-using QuoteFlow.Api.Models;
 
 namespace QuoteFlow.Api.Asset.Nav
 {
@@ -18,11 +17,10 @@ namespace QuoteFlow.Api.Asset.Nav
         /// <param name="query">The query whose results will form the table's content.</param>
         /// <param name="returnAssetIds">Whether asset IDs should be returned.</param>
         /// <param name="searchRequest">The search request being executed (may differ from {@code query}).</param>
-        /// <param name="user">The user requesting this information.</param>
         /// <returns>An <see cref="AssetTableCreator"/>.</returns>
         /// <exception cref="IllegalArgumentException">If no <see cref="AssetTableCreator"/> corresponds to {@code layoutKey}.</exception>
         /// <exception cref="RuntimeException">If creating the instance fails.</exception>
-        AssetTableCreator GetNormalAssetTableCreator(IAssetTableServiceConfiguration configuration, IQuery query, bool returnAssetIds, SearchRequest searchRequest, User user);
+        AssetTableCreator GetNormalAssetTableCreator(IAssetTableServiceConfiguration configuration, IQuery query, bool returnAssetIds, SearchRequest searchRequest);
 
         /// <summary>
         /// Create an <see cref="AssetTableCreator"/> for a stable search.
@@ -35,6 +33,6 @@ namespace QuoteFlow.Api.Asset.Nav
         /// <returns>An <see cref="AssetTableCreator"/>.</returns>
         /// <exception cref="IllegalArgumentException">If no <see cref="AssetTableCreator"/> corresponds to {@code layoutKey}.</exception>
         /// <exception cref="RuntimeException">If creating the instance fails.</exception>
-        AssetTableCreator GetStableAssetTableCreator(IAssetTableServiceConfiguration configuration, IQuery query, List<int?> assetIds, SearchRequest searchRequest, User user);
+        AssetTableCreator GetStableAssetTableCreator(IAssetTableServiceConfiguration configuration, IQuery query, List<int?> assetIds, SearchRequest searchRequest);
     }
 }

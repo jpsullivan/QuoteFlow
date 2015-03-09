@@ -148,6 +148,7 @@
     <Compile Include="Asset\CustomFields\Searchers\ICustomFieldSearcherClauseHandler.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Transformer\CustomFieldInputHelper.cs" />
     <Compile Include="Asset\CustomFields\Searchers\Transformer\ICustomFieldInputHelper.cs" />
+    <Compile Include="Asset\Fields\FieldException.cs" />
     <Compile Include="Asset\Fields\ICatalogField.cs" />
     <Compile Include="Asset\Fields\IConfigurableField .cs" />
     <Compile Include="Asset\Fields\ICustomField.cs" />
