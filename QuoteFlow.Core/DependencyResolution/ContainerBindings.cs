@@ -39,6 +39,7 @@ using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset;
 using QuoteFlow.Core.Asset.CustomFields.Searchers.Transformer;
 using QuoteFlow.Core.Asset.Fields;
+using QuoteFlow.Core.Asset.Index;
 using QuoteFlow.Core.Asset.Nav;
 using QuoteFlow.Core.Asset.Search;
 using QuoteFlow.Core.Asset.Search.Handlers;
@@ -48,6 +49,7 @@ using QuoteFlow.Core.Asset.Search.Util;
 using QuoteFlow.Core.Auditing;
 using QuoteFlow.Core.Configuration;
 using QuoteFlow.Core.Configuration.Lucene;
+using QuoteFlow.Core.Index;
 using QuoteFlow.Core.Infrastructure.Mvc;
 using QuoteFlow.Core.Jql.Builder;
 using QuoteFlow.Core.Jql.Context;
@@ -61,10 +63,9 @@ using QuoteFlow.Core.Jql.Resolver;
 using QuoteFlow.Core.Jql.Util;
 using QuoteFlow.Core.Jql.Validator;
 using QuoteFlow.Core.Jql.Values;
-using QuoteFlow.Core.Lucene;
+using QuoteFlow.Core.Lucene.Index;
 using QuoteFlow.Core.Services;
 using QuoteFlow.Services;
-using AssetIndexManager = QuoteFlow.Core.Asset.Index.AssetIndexManager;
 
 namespace QuoteFlow.Core.DependencyResolution
 {
@@ -252,7 +253,10 @@ namespace QuoteFlow.Core.DependencyResolution
 
         private void ConfigureSearch()
         {
+            Bind<IAssetIndexer>().To<AssetIndexer>().InRequestScope();
             Bind<IAssetIndexManager>().To<AssetIndexManager>().InRequestScope();
+            Bind<IIndexDirectoryFactory>().To<IndexDirectoryFactory>().InRequestScope();
+            Bind<IIndexManager>().To<DefaultIndexManager>().InRequestScope();
             Bind<IIndexPathManager>().To<IndexPathManager>().InRequestScope();
             Bind<ILuceneQueryBuilder>().To<LuceneQueryBuilder>().InRequestScope();
             Bind<ILuceneQueryModifier>().To<LuceneQueryModifier>().InRequestScope();

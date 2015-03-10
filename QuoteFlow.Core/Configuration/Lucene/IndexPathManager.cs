@@ -81,5 +81,10 @@ namespace QuoteFlow.Core.Configuration.Lucene
                 return Path.Combine(root, "comments");
             }
         }
+
+        public IndexPathManagerMode Mode
+        {
+            get { return IndexPathManagerMode.Default; }
+        }
     }
 }

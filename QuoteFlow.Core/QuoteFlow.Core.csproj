@@ -181,6 +181,8 @@
     <Compile Include="Asset\Index\AssetIndexManager.cs" />
     <Compile Include="Asset\Index\IAssetDocumentFactory.cs" />
     <Compile Include="Asset\Index\IAssetIndexer.cs" />
+    <Compile Include="Asset\Index\IIndexDirectoryFactory.cs" />
+    <Compile Include="Asset\Index\IndexDirectoryFactory.cs" />
     <Compile Include="Asset\Index\Indexers\AssetNameIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\BaseFieldIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\CatalogIdIndexer.cs" />
@@ -189,6 +191,7 @@
     <Compile Include="Asset\Index\Indexers\ManufacturerIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\SummaryIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\UserFieldIndexer.cs" />
+    <Compile Include="Asset\Index\Indexes.cs" />
     <Compile Include="Asset\Index\SearcherCache.cs" />
     <Compile Include="Asset\Nav\AbstractAssetTableCreator.cs" />
     <Compile Include="Asset\Nav\AssetTableCreatorFactory.cs" />
@@ -258,6 +261,8 @@
     <Compile Include="Diagnostics\NullDiagnosticsSource.cs" />
     <Compile Include="Diagnostics\TraceDiagnosticsSource.cs" />
     <Compile Include="Index\AssetIndexHelper.cs" />
+    <Compile Include="Index\DefaultIndexManager.cs" />
+    <Compile Include="Index\QueueingIndex.cs" />
     <Compile Include="Infrastructure\Auth\CredentialBuilder.cs" />
     <Compile Include="Infrastructure\Auth\QuoteFlowIdentity.cs" />
     <Compile Include="Infrastructure\Caching\RequestCacheKeys.cs" />

@@ -29,5 +29,14 @@
         /// Returns the path of QuoteFlow's comment indexes. </summary>
         /// <returns> the path of QuoteFlow's comment indexes </returns>
         string CommentIndexPath { get; }
+
+        IndexPathManagerMode Mode { get; }
+    }
+
+    public enum IndexPathManagerMode
+    {
+        Default,
+        Custom,
+        Disabled
     }
 }
