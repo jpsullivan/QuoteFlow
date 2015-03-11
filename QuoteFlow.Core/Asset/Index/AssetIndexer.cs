@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using Lucene.Net.Documents;
+using Lucene.Net.Index;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Infrastructure.Concurrency;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Core.Index;
 using QuoteFlow.Core.Lucene.Index;
 using WebBackgrounder;
 
@@ -12,6 +17,17 @@ namespace QuoteFlow.Core.Asset.Index
     public class AssetIndexer : IAssetIndexer
     {
         public IAssetDocumentFactory AssetDocumentFactory { get; protected set; }
+
+        private readonly Lifecycle _lifecycle;
+
+        // simple indexing strategy just asks the operation for its result
+        private readonly SimpleIndexingStrategy _simpleIndexingStrategy = new SimpleIndexingStrategy();
+
+        public AssetIndexer(IIndexDirectoryFactory indexDirectoryFactory, IAssetDocumentFactory assetDocumentFactory)
+        {
+            _lifecycle = new Lifecycle(indexDirectoryFactory);
+            AssetDocumentFactory = assetDocumentFactory;
+        }
 
 
         public IIndexResult IndexAssets(IEnumerable<IAsset> assets, Job context)
@@ -69,99 +85,149 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
-        public IList<string> IndexPaths { get; private set; }
+        public IList<string> IndexPaths
+        {
+            get
+            {
+                return new List<string>();
+            }
+        }
+
         public string IndexRootPath { get; private set; }
 
-
-        /// <summary>
-        /// Manage the life-cycle of the three index managers.
-        /// </summary>
-        private class Lifecycle : IEnumerable<IIndexManager>
+        private interface IDocumentCreationStrategy
         {
-            internal readonly AtomicReference<IDictionary<IndexDirectoryFactory.Name, IIndexManager>> @ref = new AtomicReference<IDictionary<IndexDirectoryFactory.Name, Index.Manager>>();
-            internal readonly IndexDirectoryFactory factory;
+            Documents Get(IAsset input, bool includeComments);
+        }
 
-            //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-            //ORIGINAL LINE: public Lifecycle(@Nonnull final IndexDirectoryFactory factory)
-            public Lifecycle(IndexDirectoryFactory factory)
-            {
-                this.factory = notNull("factory", factory);
-            }
+        private class Documents
+        {
+            private readonly AssetIndexer _outerInstance;
 
-            public virtual IEnumerator<Index.Manager> GetEnumerator()
-            {
-                return open().Values.GetEnumerator();
-            }
+            private readonly Document _assetDocument;
+            private readonly IEnumerable<Document> _comments;
+            private readonly Term _term;
 
-            internal virtual void close()
+            public Documents(IAsset asset, Document assetDocument, IEnumerable<Document> comments)
             {
-                IDictionary<IndexDirectoryFactory.Name, Index.Manager> indexes = @ref.getAndSet(null);
-                if (indexes == null)
+                if (assetDocument == null)
                 {
-                    return;
+                    throw new ArgumentNullException("assetDocument", "Asset document must be defined");
                 }
-                foreach (Index.Manager manager in indexes.Values)
-                {
-                    manager.close();
-                }
+
+                _assetDocument = assetDocument;
+                _comments = LuceneDocumentsBuilder.BuildAll(comments);
+                _term = _outerInstance.AssetDocumentFactory.GetIdentifyingTerm(asset);
             }
 
-            internal virtual IDictionary<IndexDirectoryFactory.Name, Index.Manager> open()
+            internal virtual Document Issue
             {
-                IDictionary<IndexDirectoryFactory.Name, Index.Manager> result = @ref.get();
-                while (result == null)
-                {
-                    @ref.compareAndSet(null, factory.get());
-                    result = @ref.get();
-                }
-                return result;
+                get { return _assetDocument; }
             }
 
-            internal virtual IAsset IssueIndex
+            internal virtual IEnumerable<Document> Comments
             {
-                get
-                {
-                    return get(Name.ISSUE).Index;
-                }
+                get { return _comments; }
             }
 
-            internal virtual IAsset CommentIndex
+            internal virtual Term IdentifyingTerm
             {
-                get
-                {
-                    return get(Name.COMMENT).Index;
-                }
+                get { return _term; }
             }
 
-            internal virtual IIndexManager get(Name key)
+            private class LuceneDocumentsBuilder
             {
-                return open()[key];
-            }
+                private static readonly ImmutableList<Document>.Builder Builder = ImmutableList.CreateBuilder<Document>();
 
-            internal virtual IList<string> IndexPaths
-            {
-                get
+                public static IEnumerable<Document> BuildAll(IEnumerable<Document> documents)
                 {
-                    return factory.IndexPaths;
-                }
-            }
+                    foreach (var document in documents)
+                    {
+                        Builder.Add(document);
+                    }
 
-            internal virtual string IndexRootPath
-            {
-                get
-                {
-                    return factory.IndexRootPath;
-                }
-            }
-
-            internal virtual Mode Mode
-            {
-                set
-                {
-                    factory.IndexingMode = value;
+                    return Builder;
                 }
             }
         }
 
+        /// <summary>
+        /// Manage the life-cycle of the two index managers.
+        /// </summary>
+        public class Lifecycle : IEnumerable<IIndexManager>
+        {
+            private readonly AtomicReference<IDictionary<IndexDirectoryFactoryName, IIndexManager>> _ref = new AtomicReference<IDictionary<IndexDirectoryFactoryName, IIndexManager>>();
+            private readonly IIndexDirectoryFactory _factory;
+
+            public Lifecycle(IIndexDirectoryFactory factory)
+            {
+                if (factory == null) throw new ArgumentNullException("factory");
+                _factory = factory;
+            }
+
+            public virtual IEnumerator<IIndexManager> GetEnumerator()
+            {
+                return Open().Values.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
+            internal void Close()
+            {
+                IDictionary<IndexDirectoryFactoryName, IIndexManager> indexes = _ref.GetAndSet(null);
+                if (indexes == null)
+                {
+                    return;
+                }
+                foreach (IIndexManager manager in indexes.Values)
+                {
+                    manager.Dispose();
+                }
+            }
+
+            protected IDictionary<IndexDirectoryFactoryName, IIndexManager> Open()
+            {
+                IDictionary<IndexDirectoryFactoryName, IIndexManager> result = _ref.Value;
+                while (result == null)
+                {
+                    //_ref.CompareAndSet(null, _factory.Get());
+                    result = _ref.Value;
+                }
+                return result;
+            }
+
+            internal IIndex AssetIndex
+            {
+                get { return Get(IndexDirectoryFactoryName.Asset).Index; }
+            }
+
+            internal IIndex CommentIndex
+            {
+                get { return Get(IndexDirectoryFactoryName.Comment).Index; }
+            }
+
+            protected IIndexManager Get(IndexDirectoryFactoryName key)
+            {
+                return Open()[key];
+            }
+
+            internal IEnumerable<string> IndexPaths
+            {
+                get { return _factory.IndexPaths; }
+            }
+
+            internal string IndexRootPath
+            {
+                get { return _factory.IndexRootPath; }
+            }
+
+            internal IndexDirectoryFactoryMode Mode
+            {
+                set { _factory.IndexingMode = value; }
+            }
+        }
     }
 }

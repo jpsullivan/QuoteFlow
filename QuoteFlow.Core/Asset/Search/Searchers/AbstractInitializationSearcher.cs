@@ -1,8 +1,8 @@
-﻿using QuoteFlow.Api.Asset.Fields;
+﻿using Apache.NMS.Util;
+using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Asset.Search.Searchers.Information;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
-using QuoteFlow.Api.Infrastructure.Concurrency;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers
 {
@@ -20,7 +20,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
 
         public void Init(ISearchableField field)
         {
-            FieldReference.Set(field);
+            FieldReference.Value = field;
         }
 
         public ISearcherInformation<ISearchableField> SearchInformation { get; private set; }

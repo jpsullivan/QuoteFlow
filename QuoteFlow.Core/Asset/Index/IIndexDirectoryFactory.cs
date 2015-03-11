@@ -5,6 +5,7 @@ using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Configuration.Lucene;
 using QuoteFlow.Api.Util;
 using QuoteFlow.Core.Configuration.Lucene;
+using QuoteFlow.Core.Index;
 using QuoteFlow.Core.Lucene.Index;
 
 namespace QuoteFlow.Core.Asset.Index

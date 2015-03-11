@@ -1,24 +1,24 @@
 ﻿using Lucene.Net.Analysis;
 using Lucene.Net.Store;
-using QuoteFlow.Core.Index;
+using QuoteFlow.Core.Asset.Index;
 using QuoteFlow.Core.Lucene.Index;
 
-namespace QuoteFlow.Core.Asset.Index
+namespace QuoteFlow.Core.Index
 {
     /// <summary>
-    /// Static factory class for creating <seealso cref="IIndex"/> and <seealso cref="IIndexManager"/>
-    /// instances.
+    /// Static factory class for creating <seealso cref="IIndex"/> and 
+    /// <seealso cref="IIndexManager"/> instances.
     /// </summary>
     public class Indexes
     {
         /// <summary>
-        /// Creates an index where the index operations are placed on a queue and the
-        /// actual work is done on a background thread. Any <seealso cref="AssetDocumentAndIdCollector.Result"/> may be
-        /// waited on to make sure that subsequent searchers will see the result of
-        /// that update, but you can timeout on that without losing the update.
+        /// Creates an index where the index operations are placed on a queue and the actual work 
+        /// is done on a background thread. Any <see cref="AssetDocumentAndIdCollector.Result"/> may be
+        /// waited on to make sure that subsequent searchers will see the result of that update, but 
+        /// you can timeout on that without losing the update.
         /// </summary>
         /// <param name="name">Used to name the background thread.</param>
-        /// <param name="config">Holds the <seealso cref="Directory"/> and <seealso cref="Analyzer"/> used for indexing and searching.</param>
+        /// <param name="config">Holds the <see cref="Directory"/> and <see cref="Analyzer"/> used for indexing and searching.</param>
         /// <param name="maxQueueSize"></param>
         /// <returns>A <seealso cref="IIndexManager"/> that has an index configured for queued operations.</returns>
         public static IIndexManager CreateQueuedIndexManager(string name, IIndexConfiguration config, long maxQueueSize)
@@ -29,14 +29,12 @@ namespace QuoteFlow.Core.Asset.Index
         }
 
         /// <summary>
-        /// Creates an index where the index operation work is done in the calling
-        /// thread. Any <seealso cref="AssetDocumentAndIdCollector.Result"/> may be waited on but it will always be a
-        /// non-blocking operation as it will be complete already. There is no way to
-        /// timeout these operations.
+        /// Creates an index where the index operation work is done in the calling thread. 
+        /// Any <see cref="AssetDocumentAndIdCollector.Result"/> may be waited on but it will always be a
+        /// non-blocking operation as it will be complete already. There is no way to timeout these operations.
         /// 
-        /// The Index write policy is that flushes will only occur if a Searcher is
-        /// requested, when the IndexWriter decides to according to its internal
-        /// buffering policy, or when the index is closed.
+        /// The Index write policy is that flushes will only occur if a Searcher is requested, when the 
+        /// IndexWriter decides to according to its internal buffering policy, or when the index is closed.
         /// </summary>
         /// <param name="config">Holds the <seealso cref="Directory"/> and <seealso cref="Analyzer"/> used for indexing and searching.</param>
         /// <returns>A <seealso cref="IIndexManager"/> that has an index configured for direct operations.</returns>

@@ -1,33 +1,72 @@
-﻿using System.Threading;
+﻿using System;
 
 namespace QuoteFlow.Api.Infrastructure.Concurrency
 {
-    public class AtomicReference<T> where T : class
+    public class AtomicReference<T>
     {
-        private T val;
+        protected T AtomicValue;
+
+        public T Value
+        {
+            get
+            {
+                lock (this)
+                {
+                    return AtomicValue;
+                }
+            }
+            set
+            {
+                lock (this)
+                {
+                    AtomicValue = value;
+                }
+            }
+        }
 
         public AtomicReference()
         {
+            AtomicValue = default(T);
         }
 
-        public AtomicReference(T val)
+        public AtomicReference(T defaultValue)
         {
-            this.val = val;
+            AtomicValue = defaultValue;
         }
 
-        public bool CompareAndSet(T expect, T update)
+        public T GetAndSet(T value)
         {
-            return (Interlocked.CompareExchange<T>(ref val, update, expect) == expect);
+            lock (this)
+            {
+                T ret = AtomicValue;
+                AtomicValue = value;
+                return ret;
+            }
+        }
+    }
+
+    public class Atomic<T> : AtomicReference<T> where T : IComparable
+    {
+        public Atomic() : base()
+        {
         }
 
-        public T Get()
+        public Atomic(T defaultValue) : base(defaultValue)
         {
-            return val;
         }
 
-        public void Set(T t)
+        public bool CompareAndSet(T expected, T newValue)
         {
-            val = t;
+            lock (this)
+            {
+                if (AtomicValue.CompareTo(expected) != 0)
+                {
+                    return false;
+                }
+
+                AtomicValue = newValue;
+                return true;
+            }
         }
     }
 }
