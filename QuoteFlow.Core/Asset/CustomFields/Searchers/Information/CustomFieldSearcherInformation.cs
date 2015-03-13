@@ -41,7 +41,7 @@ namespace QuoteFlow.Core.Asset.CustomFields.Searchers.Information
 
         public override string NameKey
         {
-            get { return fieldReference.Get().NameKey; }
+            get { return fieldReference.Value.NameKey; }
         }
     }
 }

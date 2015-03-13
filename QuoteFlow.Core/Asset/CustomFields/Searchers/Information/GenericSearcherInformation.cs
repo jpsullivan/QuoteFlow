@@ -68,7 +68,7 @@ namespace QuoteFlow.Core.Asset.CustomFields.Searchers.Information
 
         public virtual T Field
         {
-            get { return FieldReference.Get(); }
+            get { return FieldReference.Value; }
         }
     }
 }
