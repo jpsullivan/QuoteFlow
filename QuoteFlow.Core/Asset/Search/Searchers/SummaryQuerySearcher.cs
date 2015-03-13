@@ -36,7 +36,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
 
         public void Init(ISearchableField field)
         {
-            _fieldRef.Set(field);
+            _fieldRef.Value = field;
         }
     }
 }
