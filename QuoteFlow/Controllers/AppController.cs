@@ -22,6 +22,7 @@ using StackExchange.Profiling;
 
 namespace QuoteFlow.Controllers
 {
+    [HandleError]
     public abstract partial class AppController : Controller
     {
         private IOrganizationService OrganizationService { get; set; }
@@ -133,14 +134,6 @@ namespace QuoteFlow.Controllers
                 _currentOrganization = value;
                 Session["CurrentOrganization"] = _currentOrganization.Id;
             }
-        }
-
-        /// <summary>
-        /// Called when the url doesn't match any of our known routes
-        /// </summary>
-        protected override void HandleUnknownAction(string actionName)
-        {
-            PageNotFound().ExecuteResult(ControllerContext);
         }
 
         /// <summary>

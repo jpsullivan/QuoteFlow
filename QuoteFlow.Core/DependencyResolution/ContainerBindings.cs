@@ -66,6 +66,7 @@ using QuoteFlow.Core.Jql.Values;
 using QuoteFlow.Core.Lucene.Index;
 using QuoteFlow.Core.Services;
 using QuoteFlow.Services;
+using IndexConfiguration = QuoteFlow.Core.Lucene.Index.IndexConfiguration;
 
 namespace QuoteFlow.Core.DependencyResolution
 {
@@ -253,11 +254,13 @@ namespace QuoteFlow.Core.DependencyResolution
 
         private void ConfigureSearch()
         {
+            Bind<IAssetDocumentFactory>().To<AssetDocumentFactory>().InRequestScope();
             Bind<IAssetIndexer>().To<AssetIndexer>().InRequestScope();
             Bind<IAssetIndexManager>().To<AssetIndexManager>().InRequestScope();
             Bind<IIndexDirectoryFactory>().To<IndexDirectoryFactory>().InRequestScope();
             Bind<IIndexManager>().To<DefaultIndexManager>().InRequestScope();
             Bind<IIndexPathManager>().To<IndexPathManager>().InRequestScope();
+            Bind<IIndexWriterConfiguration>().To<IndexConfiguration.Default.IndexWriterConfiguration>().InRequestScope();
             Bind<ILuceneQueryBuilder>().To<LuceneQueryBuilder>().InRequestScope();
             Bind<ILuceneQueryModifier>().To<LuceneQueryModifier>().InRequestScope();
             Bind<ISearchProvider>().To<LuceneSearchService>().InRequestScope();

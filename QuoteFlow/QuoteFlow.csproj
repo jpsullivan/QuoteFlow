@@ -314,6 +314,7 @@
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -1054,6 +1055,8 @@
     <Content Include="Views\Shared\Partials\Quote\LineItems\Row.cshtml" />
     <Content Include="Views\Quote\ShowBuilder.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\Builder\SplitView.cshtml" />
+    <Content Include="Views\Errors\Error404.cshtml" />
+    <Content Include="Views\Shared\_NotificationLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

@@ -99,7 +99,7 @@ namespace QuoteFlow
             RouteAttribute.MapDecoratedRoutes(routes);
 
             // MUST be the last route as a catch-all!
-            routes.MapRoute("{*url}", new { controller = "Error", action = "PageNotFound" }.ToString());
+            //routes.MapRoute(name: "404-PageNotFound", url: "{*url}", defaults: new { controller = "Errors", action = "PageNotFound" });
         }
 
         private static void AddGlobalFilters()

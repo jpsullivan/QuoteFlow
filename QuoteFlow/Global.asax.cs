@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Configuration;
-using System.Data.Common;
-using System.Data.SqlClient;
 using System.Reflection;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
+using QuoteFlow.Controllers;
 using QuoteFlow.Core;
-using StackExchange.Profiling;
-using StackExchange.Profiling.Data;
 
 namespace QuoteFlow
 {

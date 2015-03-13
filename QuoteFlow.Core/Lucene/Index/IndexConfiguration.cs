@@ -8,13 +8,13 @@ namespace QuoteFlow.Core.Lucene.Index
 {
     public class IndexConfiguration : IIndexConfiguration
     {
-        private sealed class Default
+        public sealed class Default
         {
             /// <summary>
             /// 1million (the lucene default is 10,000).
             /// at (say) 10chars per token, that is a 10meg limit. Fair enough.
             /// </summary>
-            internal const int MAX_FIELD_LENGTH = 1000000;
+            private const int MAX_FIELD_LENGTH = 1000000;
 
             public static readonly WriterSettings Interactive = new InteractiveWriterSettings();
             private class InteractiveWriterSettings : WriterSettings
@@ -65,7 +65,7 @@ namespace QuoteFlow.Core.Lucene.Index
             }
 
             public static readonly IndexWriterConfiguration WriterConfiguration = new IndexWriterConfiguration();
-            internal class IndexWriterConfiguration : IIndexWriterConfiguration
+            public class IndexWriterConfiguration : IIndexWriterConfiguration
             {
                 public DefaultIndexWriterConfiguration Default { get; set; }
 
