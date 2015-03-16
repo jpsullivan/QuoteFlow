@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
@@ -57,7 +58,11 @@ namespace QuoteFlow.Core.Asset.Index
 
         public IIndexResult Optimize()
         {
-            throw new NotImplementedException();
+            var builder = new AccumulatingResultBuilder();
+            foreach (var manager in _lifecycle)
+            {
+                builder.Add(manager.Index.Perform(Operations))
+            }
         }
 
         public void DeleteIndexes()
@@ -67,17 +72,17 @@ namespace QuoteFlow.Core.Asset.Index
 
         public void Shutdown()
         {
-            throw new NotImplementedException();
+            _lifecycle.Close();
         }
 
         public IndexSearcher OpenAssetSearcher()
         {
-            throw new NotImplementedException();
+            return _lifecycle.Get(IndexDirectoryFactoryName.Asset).OpenSearcher();
         }
 
         public IndexSearcher OpenCommentSearcher()
         {
-            throw new NotImplementedException();
+            return _lifecycle.Get(IndexDirectoryFactoryName.Comment).OpenSearcher();
         }
 
         public IndexSearcher OpenChangeHistorySearcher()
@@ -120,7 +125,7 @@ namespace QuoteFlow.Core.Asset.Index
                 _term = _outerInstance.AssetDocumentFactory.GetIdentifyingTerm(asset);
             }
 
-            internal virtual Document Issue
+            internal virtual Document Asset
             {
                 get { return _assetDocument; }
             }
@@ -209,7 +214,7 @@ namespace QuoteFlow.Core.Asset.Index
                 get { return Get(IndexDirectoryFactoryName.Comment).Index; }
             }
 
-            protected IIndexManager Get(IndexDirectoryFactoryName key)
+            public IIndexManager Get(IndexDirectoryFactoryName key)
             {
                 return Open()[key];
             }

@@ -263,6 +263,8 @@
     <Compile Include="Diagnostics\TraceDiagnosticsSource.cs" />
     <Compile Include="Index\AssetIndexHelper.cs" />
     <Compile Include="Index\DefaultIndexManager.cs" />
+    <Compile Include="Index\Operation.cs" />
+    <Compile Include="Index\Operations.cs" />
     <Compile Include="Index\QueueingIndex.cs" />
     <Compile Include="Index\SimpleIndexingStrategy.cs" />
     <Compile Include="Infrastructure\Auth\CredentialBuilder.cs" />

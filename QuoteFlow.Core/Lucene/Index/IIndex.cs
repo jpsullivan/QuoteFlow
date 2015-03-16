@@ -1,5 +1,6 @@
 ﻿using Lucene.Net.Search;
 using QuoteFlow.Api.Lucene.Index;
+using QuoteFlow.Core.Index;
 
 namespace QuoteFlow.Core.Lucene.Index
 {
@@ -12,7 +13,7 @@ namespace QuoteFlow.Core.Lucene.Index
     /// 
     /// Note: in order to guarantee that an <seealso cref="IndexSearcher"/> returned from
     /// <seealso cref="QuoteFlow.Api.Lucene.Index.Manager#openSearcher()"/> contains a particular <seealso cref="IOperation"/>
-    /// that is <seealso cref="Perform(Operation) performed"/>, the <seealso cref="Result"/> must be
+    /// that is <seealso cref="Perform(Operation{DelegateType}) performed"/>, the <seealso cref="Result"/> must be
     /// <seealso cref="IIndex.Result.Await() waited on"/>.
     /// </summary>
     public interface IIndex
