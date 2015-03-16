@@ -417,7 +417,7 @@ namespace QuoteFlow.Core.Services
                     if (searchSort.Property != null && EntityPropertyType.IsJqlClause(searchSort.Field))
                     {
                         EntityPropertyType entityPropertyType = EntityPropertyType.GetEntityPropertyTypeForClause(searchSort.Field);
-                        Property property = searchSort.Property.First(); // todo: .Firt() may not be correct here
+                        Property property = searchSort.Property.First(); // todo: .First() may not be correct here
                         luceneSortFields.Add(new SortField(entityPropertyType.IndexPrefix + "_" + property, SortField.STRING, GetSortOrder(searchSort, null)));
                     }
                     else

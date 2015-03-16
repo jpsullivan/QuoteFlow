@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
+using QuoteFlow.Api.Lucene.Index;
 
 namespace QuoteFlow.Core.Lucene.Index
 {
@@ -13,6 +14,8 @@ namespace QuoteFlow.Core.Lucene.Index
     /// </summary>
     public interface IWriter : IDisposable
     {
+        IWriter Get(UpdateMode mode);
+
         void AddDocuments(IEnumerable<Document> documents);
 
         void DeleteDocuments(Term identifyingTerm);

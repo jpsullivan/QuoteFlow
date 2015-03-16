@@ -58,6 +58,11 @@ namespace QuoteFlow.Core.Lucene.Index
             }
         }
 
+        public IWriter Get(UpdateMode mode)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AddDocuments(IEnumerable<Document> documents)
         {
             foreach (Document document in documents)

@@ -25,7 +25,8 @@ namespace QuoteFlow.Core.Index
         {
             // writePolicy is that the IndexWriter is committed after every write
             var engine = new IndexEngine(config, IndexEngine.FlushPolicy.Flush);
-            return new DefaultIndexManager(config, engine, new QueueingIndex(name, new Lucene.Index.Index(engine), maxQueueSize));
+            //return new DefaultIndexManager(config, engine, new QueueingIndex(name, new Lucene.Index.Index(engine), maxQueueSize));
+            return new DefaultIndexManager(config, engine, new Lucene.Index.Index(engine));
         }
 
         /// <summary>

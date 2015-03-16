@@ -21,7 +21,7 @@ namespace QuoteFlow.Api.Asset.Search.Constants
 
         private AssetIdConstants()
 		{
-			JqlClauseNames = new ClauseNames("key", "issue", "issuekey", "id");
+			JqlClauseNames = new ClauseNames("id", "issue", "issuekey");
 			FieldId = DocumentConstants.AssetId;
 			IndexField = DocumentConstants.AssetId;
 			SupportedOperators = OperatorClasses.EqualityAndRelational;

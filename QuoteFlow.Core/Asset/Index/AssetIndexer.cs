@@ -199,8 +199,8 @@ namespace QuoteFlow.Core.Asset.Index
                 IDictionary<IndexDirectoryFactoryName, IIndexManager> result = _ref.Value;
                 while (result == null)
                 {
-                    var indexFactory = _factory.Get();
-                    //_ref.CompareAndSet(null, _factory.Get());
+                    //var indexFactory = _factory.Get();
+                    _ref.CompareAndSet(null, _factory.Get());
                     result = _ref.Value;
                 }
                 return result;

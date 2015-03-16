@@ -5,6 +5,7 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
+using QuoteFlow.Api.Infrastructure.Concurrency;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Api.Util;
 using QuoteFlow.Core.Index;
@@ -18,10 +19,10 @@ namespace QuoteFlow.Core.Lucene.Index
     /// </summary>
     public class IndexEngine : IEngine
     {
-        private readonly WriterReference _writerReference;
+        private static WriterReference _writerReference;
         private readonly ISearcherFactory _searcherFactory;
         private readonly SearcherReference _searcherReference;
-        private readonly FlushPolicy _writePolicy;
+        private static FlushPolicy _writePolicy;
         private static IIndexConfiguration _configuration;
 
         /// <summary>
@@ -140,6 +141,15 @@ namespace QuoteFlow.Core.Lucene.Index
                 element.CloseWhenDone();
             }
 
+            protected override DelayCloseSearcher DoCreate(UpdateMode mode)
+            {
+                // To create a valid searcher, we need a valid writer.
+                // Getting the writer reference here, ensures that.
+                _writerReference.Get(mode);
+                _writePolicy.Commit(_writerReference);
+                return new DelayCloseSearcher(_searcherSupplier.Get());
+            }
+
             protected override DelayCloseSearcher Open(DelayCloseSearcher element)
             {
                 element.Open();
@@ -179,6 +189,11 @@ namespace QuoteFlow.Core.Lucene.Index
             protected override void DoClose(IWriter element)
             {
                 element.Dispose();
+            }
+
+            protected override IWriter DoCreate(UpdateMode mode)
+            {
+                return _writerFactory.Get(mode);
             }
 
             protected override IWriter Open(IWriter element)
@@ -270,16 +285,16 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public abstract class ReferenceHolder<T> : IDisposable
         {
-            private readonly Lazy<T> _reference = new Lazy<T>(); 
+            private readonly AtomicReference<Lazy<T>> _reference = new AtomicReference<Lazy<T>>();
 
             public void Dispose()
             {
-                var supplier = _reference.Value;
+                var supplier = _reference.GetAndSet(null);
                 if (supplier != null)
                 {
                     try
                     {
-                        DoClose(supplier);
+                        DoClose(supplier.Value);
                     }
                     catch (Exception ex)
                     {
@@ -294,15 +309,20 @@ namespace QuoteFlow.Core.Lucene.Index
             {
                 while (true)
                 {
-//                    var reference = _reference;
-//                    if (reference == null)
-//                    {
-//                        reference = new Lazy<T>();
-//                    }
+                    var @ref = _reference.Value;
+                    if (@ref == null)
+                    {
+                        @ref = new Lazy<T>(() => DoCreate(mode));
+
+                        if (!_reference.CompareAndSet(null, @ref))
+                        {
+                            continue;
+                        }
+                    }
 
                     try
                     {
-                        return Open(_reference.Value);
+                        return Open(@ref.Value);
                     }
                     catch (Exception ex)
                     {
@@ -310,6 +330,8 @@ namespace QuoteFlow.Core.Lucene.Index
                     }
                 }
             }
+
+            protected abstract T DoCreate(UpdateMode mode);
 
             protected abstract T Open(T element);
 
@@ -416,13 +438,23 @@ namespace QuoteFlow.Core.Lucene.Index
             }
             finally
             {
-                Commit(writer);
+                Commit(policy, writer);
             }
         }
 
-        private static void Commit(IndexEngine.WriterReference writer)
+        public static void Commit(this IndexEngine.FlushPolicy policy, IndexEngine.WriterReference writer)
         {
-            throw new NotImplementedException();
+            switch (policy)
+            {
+                case IndexEngine.FlushPolicy.Close:
+                    writer.Dispose();
+                    break;
+                case IndexEngine.FlushPolicy.Flush:
+                    writer.Commit();
+                    break;
+                case IndexEngine.FlushPolicy.None:
+                    break;
+            }
         }
     }
 }

@@ -242,12 +242,13 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 
 			public IEnumerable<IClauseHandler> GetSearchHandler(string jqlName)
 			{
-			    var handler = handlerIndex[jqlName.ToLower(CultureInfo.CurrentCulture)];
-			    if (handler == null)
-			    {
-			        return new Collection<IClauseHandler>();
-			    }
-			    return handler;
+			    IList<IClauseHandler> handlers;
+                if (handlerIndex.TryGetValue(jqlName.ToLower(CultureInfo.CurrentCulture), out handlers))
+                {
+                    return handlers ?? new List<IClauseHandler>();
+                }
+
+			    return new List<IClauseHandler>();
 			}
 
 			public virtual ICollection<IClauseHandler> SearchHandlers

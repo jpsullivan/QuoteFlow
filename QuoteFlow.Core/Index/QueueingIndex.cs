@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Core.Lucene.Index;
+using WebBackgrounder;
 
 namespace QuoteFlow.Core.Index
 {
     /// <summary>
     /// Queueing <see cref="IIndex"/> implementation that takes all operations on the queue
-    /// and batches them to the underlying <see cref="Index delegate"/> on the task thread.
+    /// and batches them to the underlying <see cref="IDisposableIndex"/> on the task thread.
     /// 
     /// The created thread is interruptible and dies when interrupted, but will be
     /// recreated if any new index jobs arrive. The initial task thread is not created
@@ -19,19 +24,67 @@ namespace QuoteFlow.Core.Index
         private static readonly BlockingCollection<FutureOperation> queue = new BlockingCollection<FutureOperation>();
         private Task<BlockingCollection<FutureOperation>> task = new Task<BlockingCollection<FutureOperation>>(() => queue);
 
-        public QueueingIndex(string name, Lucene.Index.Index index, long maxQueueSize)
+
+        public QueueingIndex(string name, IDisposableIndex index, long maxQueueSize)
         {
             throw new NotImplementedException();
         }
 
         public IIndexResult Perform(Operation operation)
         {
+            var future = new FutureOperation(operation);
+            try
+            {
+                queue.Add(future);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            //Check();
             throw new NotImplementedException();
         }
 
         public void Dispose()
         {
             throw new NotImplementedException();
+        }
+
+        private class QueueingTask
+        {
+            private readonly BlockingCollection<FutureOperation> _queue;
+
+            public QueueingTask(BlockingCollection<FutureOperation> queue)
+            {
+                if (queue == null) throw new ArgumentNullException("queue");
+                _queue = queue;
+            }
+
+            public void Run()
+            {
+                while (Thread.CurrentThread.ThreadState != ThreadState.WaitSleepJoin)
+                {
+                    try
+                    {
+                        Index();
+                    }
+                    catch (Exception)
+                    {
+                        
+                        throw;
+                    }
+                }
+            }
+
+            private void Index()
+            {
+
+                var ops = new List<FutureOperation>();
+                ops.Add(_queue.Take());
+                _queue.CopyTo(ops.ToArray(), 0);
+                
+            }
         }
 
         /// <summary>
@@ -55,7 +108,7 @@ namespace QuoteFlow.Core.Index
             }
         }
 
-//        internal class CompositeOperation : IndexOperation
+//        internal class CompositeOperation : Operation
 //		{
 //            private readonly IEnumerable<FutureOperation> _operations;
 //
@@ -72,7 +125,7 @@ namespace QuoteFlow.Core.Index
 //				}
 //			}
 //
-//			public override void Perform(IWriter writer)
+//            internal override void Perform(IWriter writer)
 //			{
 //				IEnumerator<FutureOperation> iter = _operations.GetEnumerator();
 //				try
@@ -94,6 +147,12 @@ namespace QuoteFlow.Core.Index
 //				}
 //			}
 //
+//            internal override UpdateMode Mode()
+//            {
+//                //@TODO check size to simply return BATCH
+//                return _operations.Any(future => future.Mode() == UpdateMode.Batch) ? UpdateMode.Batch : UpdateMode.Interactive;
+//            }
+//
 //            private static void CancelTheRest(IEnumerator<FutureOperation> iter, Exception cause)
 //			{
 //				var ce = new CancellationException("Cancelled composite indexing operation due to unhandled exception " + cause);
@@ -103,16 +162,6 @@ namespace QuoteFlow.Core.Index
 //					iter.Current.Exception = ce;
 //				}
 //			}
-//
-//            public override UpdateMode Mode
-//            {
-//                get
-//                {
-//                    //@TODO check size to simply return BATCH
-//                    return _operations.Any(future => future.Mode() == UpdateMode.Batch) ? UpdateMode.Batch : UpdateMode.Interactive;
-//                }
-//                set { throw new NotImplementedException(); }
-//            }
 //		}
     }
 }
