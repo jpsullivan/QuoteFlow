@@ -1,5 +1,6 @@
 ﻿using System;
 using QuoteFlow.Api.Lucene.Index;
+using QuoteFlow.Core.Index;
 
 namespace QuoteFlow.Core.Lucene.Index
 {
@@ -20,7 +21,7 @@ namespace QuoteFlow.Core.Lucene.Index
             Engine = engine;
         }
         
-        public IIndexResult Perform(IndexOperation operation)
+        public IIndexResult Perform(Operation operation)
         {
             if (operation == null)
             {

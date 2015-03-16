@@ -23,6 +23,6 @@ namespace QuoteFlow.Core.Lucene.Index
         /// </summary>
         /// <param name="operation"> the work to do. </param>
         /// <returns> a Result object </returns>
-        IIndexResult Perform(IndexOperation operation);
+        IIndexResult Perform(Operation operation);
     }
 }

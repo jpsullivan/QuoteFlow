@@ -61,8 +61,9 @@ namespace QuoteFlow.Core.Asset.Index
             var builder = new AccumulatingResultBuilder();
             foreach (var manager in _lifecycle)
             {
-                builder.Add(manager.Index.Perform(Operations))
+                builder.Add(manager.Index.Perform(Operations.NewOptimize()));
             }
+            return builder.ToResult();
         }
 
         public void DeleteIndexes()
@@ -198,6 +199,7 @@ namespace QuoteFlow.Core.Asset.Index
                 IDictionary<IndexDirectoryFactoryName, IIndexManager> result = _ref.Value;
                 while (result == null)
                 {
+                    var indexFactory = _factory.Get();
                     //_ref.CompareAndSet(null, _factory.Get());
                     result = _ref.Value;
                 }

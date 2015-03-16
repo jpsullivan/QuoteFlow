@@ -388,7 +388,6 @@
     <Compile Include="Lucene\Index\IndexConfiguration.cs" />
     <Compile Include="Lucene\Index\IndexEngine.cs" />
     <Compile Include="Lucene\Index\IndexingFailureException.cs" />
-    <Compile Include="Lucene\Index\IndexOperation.cs" />
     <Compile Include="Lucene\Index\IWriter.cs" />
     <Compile Include="Lucene\Index\WriterWrapper.cs" />
     <Compile Include="Lucene\PerFieldAnalyzer.cs" />

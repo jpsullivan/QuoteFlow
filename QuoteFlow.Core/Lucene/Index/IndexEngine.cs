@@ -7,6 +7,7 @@ using Lucene.Net.Index;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Api.Util;
+using QuoteFlow.Core.Index;
 
 namespace QuoteFlow.Core.Lucene.Index
 {
@@ -39,7 +40,7 @@ namespace QuoteFlow.Core.Lucene.Index
             _configuration = configuration;
             _searcherFactory = searcherFactory;
             _searcherReference = new SearcherReference(searcherFactory);
-            _writerReference = new WriterReference(new DefaultWriterFactory(Searcher));
+            _writerReference = new WriterReference(writerFactory ?? new DefaultWriterFactory());
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace QuoteFlow.Core.Lucene.Index
             _searcherFactory.Release();
         }
 
-        public void Write(IndexOperation operation)
+        public void Write(Operation operation)
         {
             try
             {
@@ -117,7 +118,11 @@ namespace QuoteFlow.Core.Lucene.Index
         /// </summary>
         private class SearcherReference : ReferenceHolder<DelayCloseSearcher>
         {
-            private readonly ISearcherFactory searcherSupplier;
+            private readonly ISearcherFactory _searcherSupplier;
+
+            public SearcherReference()
+            {
+            }
 
             internal SearcherReference(ISearcherFactory searcherSupplier)
             {
@@ -126,7 +131,7 @@ namespace QuoteFlow.Core.Lucene.Index
                     throw new ArgumentNullException("searcherSupplier");
                 }
 
-                this.searcherSupplier = searcherSupplier;
+                _searcherSupplier = searcherSupplier;
             }
 
 
@@ -148,6 +153,10 @@ namespace QuoteFlow.Core.Lucene.Index
         public class WriterReference : ReferenceHolder<IWriter>
         {
             private readonly IWriter _writerFactory;
+
+            public WriterReference()
+            {
+            }
 
             internal WriterReference(IWriter writerFactory)
             {
@@ -185,6 +194,10 @@ namespace QuoteFlow.Core.Lucene.Index
         private class DefaultWriterFactory : IWriter
         {
             private readonly IndexSearcher _searcher;
+
+            public DefaultWriterFactory()
+            {
+            }
 
             public DefaultWriterFactory(IndexSearcher searcher)
             {
@@ -395,11 +408,11 @@ namespace QuoteFlow.Core.Lucene.Index
 
     public static class FlushPolicyExtensions
     {
-        public static void Perform(this IndexEngine.FlushPolicy policy, IndexOperation operation, IndexEngine.WriterReference writer)
+        public static void Perform(this IndexEngine.FlushPolicy policy, Operation operation, IndexEngine.WriterReference writer)
         {
             try
             {
-                operation.Perform(writer.Get(operation.Mode));
+                operation.Perform(writer.Get(operation.Mode()));
             }
             finally
             {

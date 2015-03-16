@@ -5,6 +5,7 @@ using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Core.Lucene.Index;
+using WebBackgrounder;
 
 namespace QuoteFlow.Core.Index
 {
@@ -12,7 +13,7 @@ namespace QuoteFlow.Core.Index
     {
         private Operations()
         {
-            throw new AssertionError("cannot instantiate!");
+            throw new InvalidOperationException("Do not instantiate!");
         }
 
         public static Operation NewDelete(Term term, UpdateMode mode)
@@ -56,9 +57,9 @@ namespace QuoteFlow.Core.Index
         /// is performed in).
         /// </summary>
         /// <param name="operation">The operation to delegate the actual work to. </param>
-        /// <param name="completionJob">The Runnable instance that is run after the supplied operation completes. </param>
+        /// <param name="completionJob">The Job instance that is run after the supplied operation completes. </param>
         /// <returns>The new composite operation.</returns>
-        public static Operation NewCompletionDelegate(Operation operation, Runnable completionJob)
+        public static Operation NewCompletionDelegate(Operation operation, Job completionJob)
         {
             return new Completion(operation, completionJob);
         }
@@ -193,34 +194,33 @@ namespace QuoteFlow.Core.Index
             }
         }
 
-        internal sealed class Completion : Operation
+        private sealed class Completion : Operation
         {
-            internal readonly Runnable completionJob;
-            internal readonly Operation @delegate;
+            private readonly Job _completionJob;
+            private readonly Operation _delegate;
 
-            public Completion(Operation @delegate, Runnable completionJob)
+            public Completion(Operation @delegate, Job completionJob)
             {
-                this.@delegate = @delegate;
-                this.completionJob = completionJob;
+                _delegate = @delegate;
+                _completionJob = completionJob;
             }
 
             internal override void Perform(IWriter writer)
             {
                 try
                 {
-                    @delegate.perform(writer);
+                    _delegate.Perform(writer);
                 }
                 finally
                 {
-                    completionJob.run();
+                    _completionJob.Execute();
                 }
             }
 
             internal override UpdateMode Mode()
             {
-                return @delegate.Mode();
+                return _delegate.Mode();
             }
         }
-
     }
 }

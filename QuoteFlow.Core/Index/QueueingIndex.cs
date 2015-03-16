@@ -24,7 +24,7 @@ namespace QuoteFlow.Core.Index
             throw new NotImplementedException();
         }
 
-        public IIndexResult Perform(IndexOperation operation)
+        public IIndexResult Perform(Operation operation)
         {
             throw new NotImplementedException();
         }
@@ -40,9 +40,9 @@ namespace QuoteFlow.Core.Index
         /// </summary>
         internal class FutureOperation : TaskCompletionSource<IIndexResult>
         {
-            private readonly IndexOperation _operation;
+            private readonly Operation _operation;
 
-            internal FutureOperation(IndexOperation operation)
+            internal FutureOperation(Operation operation)
             {
                 if (operation == null) throw new ArgumentNullException("operation");
 
@@ -51,7 +51,7 @@ namespace QuoteFlow.Core.Index
 
             internal virtual UpdateMode Mode()
             {
-                return _operation.Mode;
+                return _operation.Mode();
             }
         }
 
