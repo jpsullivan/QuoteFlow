@@ -434,6 +434,7 @@
     <Compile Include="Models\IAsset.cs" />
     <Compile Include="Models\Manufacturer.cs" />
     <Compile Include="Models\ManufacturerLogo.cs" />
+    <Compile Include="Models\PageErrorModel.cs" />
     <Compile Include="Models\QuoteLineItem.cs" />
     <Compile Include="Models\QuoteStatus.cs" />
     <Compile Include="Models\RequestModels\AssetCriteriaQuery.cs" />

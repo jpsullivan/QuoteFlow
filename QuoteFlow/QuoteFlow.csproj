@@ -314,7 +314,7 @@
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Controllers\ErrorsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -399,7 +399,6 @@
     <Compile Include="Views\ViewBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\FilterConfig.cs" />
     <Content Include="App_Code\ViewHelpers.cshtml" />
     <Content Include="Content\compiled\css\app.css" />
     <Content Include="Content\compiled\css\app.min.css" />
@@ -1055,7 +1054,7 @@
     <Content Include="Views\Shared\Partials\Quote\LineItems\Row.cshtml" />
     <Content Include="Views\Quote\ShowBuilder.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\Builder\SplitView.cshtml" />
-    <Content Include="Views\Errors\Error404.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\_NotificationLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
