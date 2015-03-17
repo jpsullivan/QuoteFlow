@@ -11,8 +11,8 @@ namespace QuoteFlow.Core.Lucene.Index
         public sealed class Default
         {
             /// <summary>
-            /// 1million (the lucene default is 10,000).
-            /// at (say) 10chars per token, that is a 10meg limit. Fair enough.
+            /// 1 million (the lucene default is 10,000) at (say) 10chars per token, that is a 10meg limit. 
+            /// Fair enough.
             /// </summary>
             private const int MAX_FIELD_LENGTH = 1000000;
 

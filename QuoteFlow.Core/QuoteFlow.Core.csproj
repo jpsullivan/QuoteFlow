@@ -192,6 +192,7 @@
     <Compile Include="Asset\Index\Indexers\ManufacturerIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\SummaryIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\UserFieldIndexer.cs" />
+    <Compile Include="Configuration\Lucene\IndexingConfiguration.cs" />
     <Compile Include="Index\Indexes.cs" />
     <Compile Include="Asset\Index\SearcherCache.cs" />
     <Compile Include="Asset\Nav\AbstractAssetTableCreator.cs" />

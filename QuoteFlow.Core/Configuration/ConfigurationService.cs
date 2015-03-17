@@ -182,7 +182,7 @@ namespace QuoteFlow.Core.Configuration
             return String.IsNullOrEmpty(cloudValue) ? value : cloudValue;
         }
 
-        public bool _notInCloud = false;
+        private bool _notInCloud;
 
         public virtual string GetCloudSetting(string settingName)
         {
