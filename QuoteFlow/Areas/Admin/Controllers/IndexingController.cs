@@ -18,8 +18,6 @@ namespace QuoteFlow.Areas.Admin.Controllers
             IndexPathManager = indexPathManager;
         }
 
-        
-
         #endregion
 
         [Infrastructure.Attributes.Route("admin/indexing", Name = "Admin-Indexing")]
@@ -30,7 +28,7 @@ namespace QuoteFlow.Areas.Admin.Controllers
             return View(model);
         }
 
-        [Infrastructure.Attributes.Route("admin/doreindex", HttpVerbs.Post, Name = "Admin-DoReindex")]
+        [Infrastructure.Attributes.Route("admin/do-reindex", HttpVerbs.Post, Name = "Admin-DoReindex")]
         public ActionResult DoReindex(ReindexViewModel model)
         {
             return new EmptyResult();

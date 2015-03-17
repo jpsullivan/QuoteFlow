@@ -41,11 +41,6 @@ namespace QuoteFlow.Api.Infrastructure.Lucene
         int Optimize();
 
         /// <summary>
-        /// Shuts down the indexing manager and closes its resources (if any).
-        /// </summary>
-        void Shutdown();
-
-        /// <summary>
         /// Activates search indexes. This will rebuild the indexes.
         /// </summary>
         /// <param name="context">Used to report progress back to the user or to the logs. Must not be null.</param>
@@ -81,10 +76,5 @@ namespace QuoteFlow.Api.Infrastructure.Lucene
 
         /// <returns> a collection of Strings that map to all paths that contain Lucene indexes. Must not be null. </returns>
         ICollection<string> AllIndexPaths { get; }
-
-        /// <returns>
-        /// How many Entities will be re-indexed by <seealso cref="ReIndexAll(Job)"/>
-        /// </returns>
-        int Size();
     }
 }

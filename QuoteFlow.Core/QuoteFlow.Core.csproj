@@ -422,6 +422,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Util\Index\CompositeIndexLifecycleManager.cs" />
     <Compile Include="Util\Lucene\ConstantScorePrefixQuery.cs" />
     <Compile Include="Util\ListOrderedMessageSet.cs" />
     <Compile Include="Util\LuceneUtils.cs" />

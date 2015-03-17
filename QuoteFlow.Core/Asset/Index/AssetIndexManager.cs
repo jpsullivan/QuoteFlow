@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
+using Lucene.Net.Analysis;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Configuration.Lucene;
-using QuoteFlow.Api.Infrastructure.Collect;
 using QuoteFlow.Api.Infrastructure.Extensions;
-using QuoteFlow.Api.Infrastructure.Lucene;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Api.Util;
@@ -35,12 +33,12 @@ namespace QuoteFlow.Core.Asset.Index
 
         #endregion
 
-        public global::Lucene.Net.Analysis.Analyzer AnalyzerForSearching 
+        public Analyzer AnalyzerForSearching 
         { 
             get { return QuoteFlowAnalyzer.AnalyzerForSearching; } 
         }
 
-        public global::Lucene.Net.Analysis.Analyzer AnalyzerForIndexing
+        public Analyzer AnalyzerForIndexing
         {
             get { return QuoteFlowAnalyzer.AnalyzerForIndexing; }
         }
@@ -107,19 +105,28 @@ namespace QuoteFlow.Core.Asset.Index
 
         #endregion
 
-        public ICollection<string> AllIndexPaths { get; private set; }
+        public ICollection<string> AllIndexPaths
+        {
+            get
+            {
+                var paths = new List<string>();
+                paths.AddRange(AssetIndexer.IndexPaths);
+                return paths;
+            }
+        }
 
-        int ISized.Size()
+        public int Size()
         {
             throw new NotImplementedException();
         }
 
-        int IIndexLifecycleManager.Size()
+        public bool IsEmpty
         {
-            throw new NotImplementedException();
+            get
+            {
+                return Size() == 0;
+            }
         }
-
-        public bool IsEmpty { get; private set; }
 
         public int ReIndexAll(Job context)
         {
@@ -141,11 +148,6 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
-        void IIndexLifecycleManager.Shutdown()
-        {
-            throw new NotImplementedException();
-        }
-
         public int Activate(Job context)
         {
             throw new NotImplementedException();
@@ -161,13 +163,16 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
-        public bool IndexAvailable { get; private set; }
-        public bool IndexConsistent { get; private set; }
-
-        void IShutdown.Shutdown()
+        public bool IndexAvailable
         {
-            throw new NotImplementedException();
+            get 
+            { 
+                //return indexConfig.IndexAvailable; 
+                throw new NotImplementedException();
+            }
         }
+
+        public bool IndexConsistent { get; private set; }
 
         public int ReIndexAll()
         {
@@ -326,6 +331,11 @@ namespace QuoteFlow.Core.Asset.Index
             {
                 _lock = @lock;
             }
+        }
+
+        public void Shutdown()
+        {
+            throw new NotImplementedException();
         }
     }
 }
