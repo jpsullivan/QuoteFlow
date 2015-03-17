@@ -12,7 +12,8 @@
     </div>
 </header>
 
-<form class="aui" id="indexing">
+@using (Html.BeginForm("DoReindex", "Indexing", FormMethod.Post, new { @class = "aui" }))
+{
     <fieldset class="group">
         <legend><span>Re-Index Option</span></legend>
         <div class="radio">
@@ -35,4 +36,4 @@
             <input accesskey="s" class="aui-button" id="indexing-submit" name="reindex" title="Press Alt+s to submit this form" type="submit" value="Re-Index">
         </div>
     </div>
-</form>
+}

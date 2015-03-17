@@ -31,6 +31,7 @@ namespace QuoteFlow
 
             ConfigureAuth(config, auth, app);
             ConfigureWebApi(app);
+            ConfigureHangfire(app);
         }
     }
 }
