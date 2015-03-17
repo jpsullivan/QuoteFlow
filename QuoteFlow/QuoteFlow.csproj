@@ -302,7 +302,10 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminControllerBase.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\IndexingController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatusController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Indexing\IndexingViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Indexing\ReindexViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\QuoteStatusViewModels.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\Api\AssetController.cs" />
@@ -965,6 +968,7 @@
     <Content Include="Content\views\quote-builder\results\refresh-results.hbs" />
     <Content Include="Content\views\shifter\dialog.hbs" />
     <Content Include="Content\views\shifter\group-heading.hbs" />
+    <Content Include="Areas\Admin\Views\Indexing\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

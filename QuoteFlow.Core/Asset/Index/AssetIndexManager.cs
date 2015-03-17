@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Configuration.Lucene;
 using QuoteFlow.Api.Infrastructure.Collect;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Infrastructure.Lucene;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
@@ -118,6 +120,7 @@ namespace QuoteFlow.Core.Asset.Index
         }
 
         public bool IsEmpty { get; private set; }
+
         public int ReIndexAll(Job context)
         {
             throw new NotImplementedException();
@@ -217,13 +220,18 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
-        public void DeIndex(IAsset issue)
+        public void DeIndex(IAsset asset)
         {
-            throw new NotImplementedException();
+            DeIndexAssetObjects(new HashSet<IAsset> {asset}, true);
         }
 
         public void DeIndexAssetObjects(ISet<IAsset> issuesToDelete, bool updateReplicatedIndexStore)
         {
+            if (!issuesToDelete.AnySafe())
+            {
+                return;
+            }
+
             throw new NotImplementedException();
         }
 

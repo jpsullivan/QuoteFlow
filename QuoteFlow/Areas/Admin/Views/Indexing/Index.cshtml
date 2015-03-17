@@ -1,0 +1,38 @@
+﻿@model QuoteFlow.Areas.Admin.ViewModels.Indexing.IndexingViewModel
+
+@{
+    ViewBag.Title = "Administration - QuoteFlow";
+}
+
+<header class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h2>Re-Indexing</h2>
+        </div>
+    </div>
+</header>
+
+<form class="aui" id="indexing">
+    <fieldset class="group">
+        <legend><span>Re-Index Option</span></legend>
+        <div class="radio">
+            <input id="reindex-background" type="radio" class="radio" name="indexingStrategy" value="background" checked="">
+            <label for="reindex-background">Background re-index</label>
+            <div class="description">This will take longer but will allow users to access QuoteFlow during the re-index.</div>
+        </div>
+        <div class="radio">
+            <input id="reindex-foreground" type="radio" class="radio" name="indexingStrategy" value="stoptheworld">
+            <label for="reindex-foreground">Lock QuoteFlow and rebuild index</label>
+            <div class="description">QuoteFlow will be unavailable to all users until the re-index is complete. This is faster, but may still take a while depending on the size of your instance and hardware.</div>
+        </div>
+    </fieldset>
+    <div class="field-group">
+        <label>Index Path</label>
+        <div class="field-value"><span id="default-index-path">@Model.IndexPath</span></div>
+    </div>
+    <div class="buttons-container form-footer">
+        <div class="buttons">
+            <input accesskey="s" class="aui-button" id="indexing-submit" name="reindex" title="Press Alt+s to submit this form" type="submit" value="Re-Index">
+        </div>
+    </div>
+</form>

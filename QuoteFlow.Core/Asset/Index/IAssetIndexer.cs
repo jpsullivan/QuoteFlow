@@ -29,9 +29,8 @@ namespace QuoteFlow.Core.Asset.Index
         /// <param name="assets"> An iterable of assets to index. </param>
         /// <param name="context"> for showing the user the current status. </param>
         /// <param name="reIndexComments"> Set to true if you require asset comments to also be reindexed. </param>
-        /// <param name="reIndexChangeHistory"> Set to true if you require asset change history to also be reindexed. </param>
         /// <param name="conditionalUpdate"> set to true to use conditional updates when writing to the index </param>
-        IIndexResult ReIndexAssets(IEnumerable<IAsset> assets, Job context, bool reIndexComments, bool reIndexChangeHistory, bool conditionalUpdate);
+        IIndexResult ReIndexAssets(IEnumerable<IAsset> assets, Job context, bool reIndexComments, bool conditionalUpdate);
 
         /// <summary>
         /// Reindex a collection of asset comments. 
@@ -62,11 +61,6 @@ namespace QuoteFlow.Core.Asset.Index
          * asset searcher has to be closed after doing stuff.
          */
         IndexSearcher OpenCommentSearcher();
-
-        /// <summary>
-        /// asset searcher has to be closed after doing stuff.
-        /// </summary>
-        IndexSearcher OpenChangeHistorySearcher();
 
         IList<string> IndexPaths { get; }
 

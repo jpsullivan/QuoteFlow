@@ -97,7 +97,7 @@ namespace QuoteFlow.Api.Asset.Index
         /// <summary>
         /// Remove an asset from the search index.
         /// </summary>
-        void DeIndex(IAsset issue);
+        void DeIndex(IAsset asset);
 
         /// <summary>
         /// Remove a set of assets from the search index.

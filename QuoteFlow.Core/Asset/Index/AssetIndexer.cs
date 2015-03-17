@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading.Tasks;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
@@ -38,10 +39,27 @@ namespace QuoteFlow.Core.Asset.Index
 
         public IIndexResult DeIndexAssets(IEnumerable<IAsset> assets, Job context)
         {
+            // As per http://stackoverflow.com/a/3894582. The IndexWriter is CPU bound, so we can try and write multiple packages in parallel.
+            // The IndexWriter is thread safe and is primarily CPU-bound.
+            Parallel.ForEach(assets, DeIndexAction);
+
             throw new NotImplementedException();
         }
 
-        public IIndexResult ReIndexAssets(IEnumerable<IAsset> assets, Job context, bool reIndexComments, bool reIndexChangeHistory, bool conditionalUpdate)
+        private void DeIndexAction(IAsset asset)
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
+        public IIndexResult ReIndexAssets(IEnumerable<IAsset> assets, Job context, bool reIndexComments, bool conditionalUpdate)
         {
             throw new NotImplementedException();
         }
@@ -86,11 +104,6 @@ namespace QuoteFlow.Core.Asset.Index
             return _lifecycle.Get(IndexDirectoryFactoryName.Comment).OpenSearcher();
         }
 
-        public IndexSearcher OpenChangeHistorySearcher()
-        {
-            throw new NotImplementedException();
-        }
-
         public IList<string> IndexPaths
         {
             get
@@ -101,9 +114,38 @@ namespace QuoteFlow.Core.Asset.Index
 
         public string IndexRootPath { get; private set; }
 
-        private interface IDocumentCreationStrategy
+        /// <summary>
+        /// Perform an <seealso cref="IndexOperation"/> on some <seealso cref="EnclosedIterable issues"/> using a particular {@link
+        /// IndexingStrategy strategy}. There is a <seealso cref="Context task context"/> that must be updated to provide feedback to
+        /// the user.
+        /// <p/>
+        /// The implementation needs to be thread-safe, as it may be run in parallel and maintain a composite result to
+        /// return to the caller.
+        /// </summary>
+        /// <param name="assets"> the issues to index/deindex/reindex </param>
+        /// <param name="operation"> deindex/reindex/index etc. </param>
+        /// <returns> the <seealso cref="IIndexResult"/> may waited on or not. </returns>
+        private static IIndexResult Perform(IEnumerable<IAsset> assets, Operation operation)
         {
-            Documents Get(IAsset input, bool includeComments);
+            try
+            {
+                if (assets == null) throw new ArgumentNullException("assets");
+
+                // thread-safe handler for the asynchronous Result
+                AccumulatingResultBuilder builder = new AccumulatingResultBuilder();
+                
+                // perform the operation for every asset in the collection
+                foreach (var asset in assets)
+                {
+                    
+                }
+                
+                return builder.ToResult();
+            }
+            finally
+            {
+                //strategy.close();
+            }
         }
 
         private class Documents

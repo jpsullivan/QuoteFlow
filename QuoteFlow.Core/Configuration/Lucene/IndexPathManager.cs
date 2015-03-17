@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Web.Hosting;
 using Lucene.Net.Store;
 using QuoteFlow.Api.Configuration;
@@ -41,7 +42,7 @@ namespace QuoteFlow.Core.Configuration.Lucene
             switch (location)
             {
                 case LuceneIndexLocation.Temp:
-                    return Path.Combine(Path.GetTempPath(), "NuGetGallery", "Lucene");
+                    return Path.Combine(Path.GetTempPath(), "QuoteFlow", "Lucene");
                 default:
                     return HostingEnvironment.MapPath("~/App_Data/Lucene");
             }
@@ -49,7 +50,7 @@ namespace QuoteFlow.Core.Configuration.Lucene
 
         public string IndexRootPath
         {
-            get { throw new NotImplementedException(); }
+            get { return GetIndexLocation(LuceneIndexLocation.AppData); }
             set { throw new NotImplementedException(); }
         }
 

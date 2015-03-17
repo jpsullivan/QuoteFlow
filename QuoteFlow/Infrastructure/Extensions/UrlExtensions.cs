@@ -51,6 +51,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return url.Action("Index", "Status");
         }
 
+        public static string AdminIndexing(this UrlHelper url)
+        {
+            return url.Action("Index", "Indexing");
+        }
+
         #endregion
 
         #region Assets
