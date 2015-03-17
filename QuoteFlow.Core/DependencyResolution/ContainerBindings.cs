@@ -65,6 +65,7 @@ using QuoteFlow.Core.Jql.Validator;
 using QuoteFlow.Core.Jql.Values;
 using QuoteFlow.Core.Lucene.Index;
 using QuoteFlow.Core.Services;
+using QuoteFlow.Core.Util.Index;
 using QuoteFlow.Services;
 using IndexConfiguration = QuoteFlow.Core.Lucene.Index.IndexConfiguration;
 
@@ -259,6 +260,7 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IAssetIndexer>().To<AssetIndexer>().InRequestScope();
             Bind<IAssetIndexManager>().To<AssetIndexManager>().InRequestScope();
             Bind<IIndexDirectoryFactory>().To<IndexDirectoryFactory>().InRequestScope();
+            Bind<IIndexLifecycleManager>().To<CompositeIndexLifecycleManager>().InRequestScope();
             Bind<IIndexManager>().To<DefaultIndexManager>().InRequestScope();
             Bind<IIndexPathManager>().To<IndexPathManager>().InRequestScope();
             Bind<IIndexWriterConfiguration>().To<IndexConfiguration.Default.IndexWriterConfiguration>().InRequestScope();
