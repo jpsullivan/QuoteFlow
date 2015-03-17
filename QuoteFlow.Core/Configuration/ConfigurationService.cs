@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Configuration;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Api.Configuration.Lucene;
+using QuoteFlow.Core.Configuration.Lucene;
 
 namespace QuoteFlow.Core.Configuration
 {
@@ -16,6 +18,7 @@ namespace QuoteFlow.Core.Configuration
     {
         private const string SettingPrefix = "QuoteFlow.";
         private const string IndexPrefix = "Index.";
+        private const string IndexingPrefix = "Indexing.";
         private const string FeaturePrefix = "Feature.";
         private const string AuthPrefix = "Auth.";
 
@@ -31,6 +34,13 @@ namespace QuoteFlow.Core.Configuration
         {
             get { return _indexConfig ?? (_indexConfig = ResolveIndexSettings()); }
             set { _indexConfig = value; }
+        }
+
+        private IIndexingConfiguration _indexingConfig;
+        public virtual IIndexingConfiguration IndexingConfiguration
+        {
+            get { return _indexingConfig ?? (_indexingConfig = ResolveIndexingSettings()); }
+            set { _indexingConfig = value; }
         }
 
         private IAssetTableServiceConfiguration _assetTableConfig;
@@ -62,6 +72,11 @@ namespace QuoteFlow.Core.Configuration
         public virtual IndexConfiguration ResolveIndexSettings()
         {
             return ResolveConfigObject(new IndexConfiguration(), IndexPrefix);
+        }
+
+        public virtual IIndexingConfiguration ResolveIndexingSettings()
+        {
+            return ResolveConfigObject(new IndexingConfiguration(), IndexingPrefix);
         }
 
         public virtual IAssetTableServiceConfiguration ResolveAssetTableSettings()

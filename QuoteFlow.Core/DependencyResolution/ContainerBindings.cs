@@ -79,6 +79,7 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<ConfigurationService>().ToMethod(context => configuration);
             Bind<IAppConfiguration>().ToMethod(context => configuration.Current);
             Bind<IAssetTableServiceConfiguration>().ToMethod(context => configuration.AssetTableConfig);
+            Bind<IIndexingConfiguration>().ToMethod(context => configuration.IndexingConfiguration);
             Bind<IConfigurationSource>().ToMethod(context => configuration);
 
             Bind<Directory>()
