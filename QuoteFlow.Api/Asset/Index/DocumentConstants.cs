@@ -23,6 +23,10 @@
         public const string AssetSortUpdated = LuceneSortFieldPrefix + "updated";
 
         public const string CommentId = "id";
+        public const string CommentBody = "body";
+        public const string CommentAuthor = "comment_author";
+        public const string CommentCreated = "comment_created";
+        public const string CommentUpdated = "comment_updated";
 
         // extra constants
         public const string ChangeDuration ="ch_duration";

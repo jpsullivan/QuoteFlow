@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Lucene.Net.Util;
 
 namespace QuoteFlow.Core.Util
@@ -45,7 +46,7 @@ namespace QuoteFlow.Core.Util
 
         /// <summary>
         /// Turns a given date-time (point in time) value into a String suitable for storing and searching in Lucene.
-        /// <p>
+        /// 
         /// The date-time is stored as the number of seconds.  If the date is null we store the encoded form of Long.MAX_VALUE
         /// which causes nulls to sort to the end.  (This is traditional JIRA behaviour)
         /// </summary>
@@ -53,8 +54,7 @@ namespace QuoteFlow.Core.Util
         /// <returns> a string representing the number of seconds </returns>
         public static string DateToString(DateTime date)
         {
-            long seconds = date.Ticks / 1000;
-            return NumericUtils.LongToPrefixCoded(seconds);
+            return date.Ticks.ToString(CultureInfo.InvariantCulture);
         }
 
         public static DateTime? StringToDate(string s)

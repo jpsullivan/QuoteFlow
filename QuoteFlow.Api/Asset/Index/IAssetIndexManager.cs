@@ -3,7 +3,6 @@ using System.Threading;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Infrastructure.Lucene;
 using QuoteFlow.Api.Models;
-using WebBackgrounder;
 
 namespace QuoteFlow.Api.Asset.Index
 {
@@ -19,13 +18,13 @@ namespace QuoteFlow.Api.Asset.Index
         int ReIndexAll();
 
         /// <summary>
-        /// Reindex all issues. </summary>
-        /// <param name="context"> used to report progress back to the user or to the logs. Must not be null </param>
-        /// <param name="useBackgroundReindexing"> whether to index in the background or not. If the useBackgroundReindexing option is
-        /// set to true, then comments and change history will not be reindexed. </param>
+        /// Reindex all assets.
+        /// </summary>
+        /// <param name="useBackgroundReindexing">Whether to index in the background or not. If the useBackgroundReindexing option is
+        /// set to true, then comments and change history will not be reindexed.</param>
         /// <param name="updateReplicatedIndexStore"> whether to update the replicated index or not </param>
         /// <returns>Reindex time in ms.</returns>
-        int ReIndexAll(Job context, bool useBackgroundReindexing, bool updateReplicatedIndexStore);
+        int ReIndexAll(bool useBackgroundReindexing, bool updateReplicatedIndexStore);
 
         /// <summary>
         /// Reindex all assets.
@@ -35,32 +34,27 @@ namespace QuoteFlow.Api.Asset.Index
         /// system configuration, but not for changes to the indexing language.
         /// If useBackgroundReindexing is set to false, than everything is always reindexed.
         /// </summary>
-        /// <param name="context">Used to report progress back to the user or to the logs. Must not be null.</param>
         /// <param name="useBackgroundReindexing">Whether to index in the background or not.</param>
         /// <param name="reIndexComments">Also reindex all the issue comments. Only relevant for background reindex operations.</param>
-        /// <param name="reIndexChangeHistory">Also reindex the issue change history. Only relevant for background reindex operations.</param>
         /// <param name="updateReplicatedIndexStore">Whether to update the replicated index or not.</param>
         /// <returns>Reindex time in ms.</returns>
-        int ReIndexAll(Job context, bool useBackgroundReindexing, bool reIndexComments, bool reIndexChangeHistory, bool updateReplicatedIndexStore);
+        int ReIndexAll(bool useBackgroundReindexing, bool reIndexComments, bool updateReplicatedIndexStore);
 
         /// <summary>
         /// Reindex a list of assets, passing an optional event that will be set progress
         /// </summary>
         /// <param name="assets">The assets to enumerate.</param>
-        /// <param name="context">Used to report progress back to the user or to the logs. Must not be null.</param>
         /// <returns>Reindex time in ms.</returns>
-        int ReIndexAssets(IEnumerable<IAsset> assets, Job context);
+        int ReIndexAssets(IEnumerable<IAsset> assets);
 
         /// <summary>
         /// Reindex a list of assets, passing an optional event that will be set progress. This method can optionally also
-        /// index the comments and change history.
+        /// index the comments.
         /// </summary>
         /// <param name="assets">The assets to enumerate.</param>
-        /// <param name="context">Used to report progress back to the user or to the logs. Must not be null.</param>
         /// <param name="reIndexComments">A boolean indicating whether to index asset comments.</param>
-        /// <param name="reIndexChangeHistory">A boolean indicating whether to index asset change history.</param>
         /// <returns>Reindex time in ms.</returns>
-        int ReIndexAssets(IEnumerable<IAsset> assets, Job context, bool reIndexComments, bool reIndexChangeHistory);
+        int ReIndexAssets(IEnumerable<IAsset> assets, bool reIndexComments);
 
         /// <summary>
         /// Reindex an asset (eg. after field updates).
@@ -70,7 +64,7 @@ namespace QuoteFlow.Api.Asset.Index
         /// <summary>
         /// Reindex an asset (eg. after field updates).
         /// </summary>
-        void ReIndex(IAsset issue, bool reIndexComments, bool reIndexChangeHistory);
+        void ReIndex(IAsset issue, bool reIndexComments);
 
         /// <summary>
         /// Reindexes a collection of comments.
@@ -82,17 +76,15 @@ namespace QuoteFlow.Api.Asset.Index
         /// Reindexes a collection of comments.
         /// </summary>
         /// <param name="comments">A collection of asset comments.</param>
-        /// <param name="context">Used to report progress back to the user or to the logs. Must not be null.</param>
-        int ReIndexComments(ICollection<AssetComment> comments, Job context);
+        int ReIndexComments(ICollection<AssetComment> comments);
 
 
         /// <summary>
         /// Reindexes a collection of comments.
         /// </summary>
         /// <param name="comments">A collection of asset comments.</param>
-        /// <param name="context">Used to report progress back to the user or to the logs. Must not be null.</param>
         /// <param name="updateReplicatedIndexStore">Whether to update the replicated index or not.</param>
-        int ReIndexComments(ICollection<AssetComment> comments, Job context, bool updateReplicatedIndexStore);
+        int ReIndexComments(ICollection<AssetComment> comments, bool updateReplicatedIndexStore);
 
         /// <summary>
         /// Remove an asset from the search index.
@@ -116,19 +108,17 @@ namespace QuoteFlow.Api.Asset.Index
         /// </summary>
         /// <param name="issueObjects">Set of <seealso cref="IAsset"/>s to reindex.</param>
         /// <param name="reIndexComments"></param>
-        /// <param name="reIndexChangeHistory"></param>
         /// <returns>Reindex time in ms.</returns>
-        int ReIndexAssetObjects<T>(ICollection<T> issueObjects, bool reIndexComments, bool reIndexChangeHistory) where T : IAsset;
+        int ReIndexAssetObjects<T>(ICollection<T> issueObjects, bool reIndexComments) where T : IAsset;
 
         /// <summary>
         /// Reindex a set of issues.
         /// </summary>
         /// <param name="assetObjects">Set of <seealso cref="IAsset"/>s to reindex.</param>
         /// <param name="reIndexComments"> whether to reindex the comments or not.</param>
-        /// <param name="reIndexChangeHistory"> whether to reindex changeHistory or not.</param>
         /// <param name="updateReplicatedIndexStore">Whether to store index operations in the replicated index store.</param>
         /// <returns>Reindex time in ms.</returns>
-        long ReIndexAssetObjects<T>(ICollection<T> assetObjects, bool reIndexComments, bool reIndexChangeHistory, bool updateReplicatedIndexStore) where T : IAsset;
+        long ReIndexAssetObjects<T>(ICollection<T> assetObjects, bool reIndexComments, bool updateReplicatedIndexStore) where T : IAsset;
 
         /// <summary>
         /// Temporarily suspend indexing on this thread.  All index requests will be queued and processed

@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Hangfire;
 using QuoteFlow.Api.Configuration.Lucene;
 using QuoteFlow.Api.Infrastructure.Lucene;
 using QuoteFlow.Areas.Admin.ViewModels.Indexing;
@@ -31,6 +32,11 @@ namespace QuoteFlow.Areas.Admin.Controllers
         [Infrastructure.Attributes.Route("admin/reindex", HttpVerbs.Post, Name = "Admin-DoReindex")]
         public ActionResult DoReindex(ReindexViewModel model)
         {
+            if (model.IndexingStrategy == "background")
+            {
+                //BackgroundJob.Enqueue(() => IndexLifecycleManager.ReIndexAllIssuesInBackground(true));
+                IndexLifecycleManager.ReIndexAllIssuesInBackground(true);
+            }
             return new EmptyResult();
         }
     }

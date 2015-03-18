@@ -13,7 +13,7 @@ namespace QuoteFlow.Api.Services
         /// </summary>
         /// <param name="assetId">The Id of the asset to fetch.</param>
         /// <returns></returns>
-        Api.Models.Asset GetAsset(int assetId);
+        Models.Asset GetAsset(int assetId);
 
         /// <summary>
         /// Creates an <see cref="Asset"/> object for an asset represented by the Lucene document.
@@ -27,14 +27,14 @@ namespace QuoteFlow.Api.Services
         /// </summary>
         /// <param name="catalogId"></param>
         /// <returns></returns>
-        IEnumerable<Api.Models.Asset> GetAssets(int catalogId);
+        IEnumerable<Models.Asset> GetAssets(int catalogId);
 
         /// <summary>
         /// Return a list of all the assets for a given <see cref="Catalog"/>.
         /// </summary>
         /// <param name="catalog">A Catalog object which contains a populated Id field.</param>
         /// <returns></returns>
-        IEnumerable<Api.Models.Asset> GetAssets(Catalog catalog);
+        IEnumerable<Models.Asset> GetAssets(Catalog catalog);
 
         /// <summary>
         /// Creates an <see cref="Asset"/>.
@@ -43,7 +43,7 @@ namespace QuoteFlow.Api.Services
         /// <param name="catalogId"></param>
         /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
         /// <returns></returns>
-        Api.Models.Asset CreateAsset(NewAssetModel model, int catalogId, int userId);
+        Models.Asset CreateAsset(NewAssetModel model, int catalogId, int userId);
 
         /// <summary>
         /// Creates an <see cref="Asset"/>.
@@ -51,7 +51,7 @@ namespace QuoteFlow.Api.Services
         /// <param name="asset">A pre-built <see cref="Asset"/>.</param>
         /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
         /// <returns></returns>
-        Api.Models.Asset CreateAsset(Api.Models.Asset asset, int userId);
+        Models.Asset CreateAsset(Models.Asset asset, int userId);
 
         /// <summary>
         /// Updates an assets details based on a <see cref="Snapshotter"/> diff.

@@ -171,6 +171,7 @@
     <Compile Include="Asset\Index\Analyzer\TokenFilters.cs" />
     <Compile Include="Asset\Index\DocumentConstants.cs" />
     <Compile Include="Asset\Index\IAssetIndexManager.cs" />
+    <Compile Include="Asset\Index\IEntityDocumentBuilder.cs" />
     <Compile Include="Asset\Index\Indexers\FieldIndexerUtil.cs" />
     <Compile Include="Asset\Index\Indexers\IFieldIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\Phrase\PhraseQuerySupportField.cs" />
@@ -406,6 +407,7 @@
     <Compile Include="Jql\Values\IClauseValuesGenerator.cs" />
     <Compile Include="Jql\Values\ISortJqlGenerator.cs" />
     <Compile Include="Jql\Values\IValueGeneratingClauseHandler.cs" />
+    <Compile Include="Lucene\Building\DocumentExtensions.cs" />
     <Compile Include="Lucene\Index\IIndexResult.cs" />
     <Compile Include="Lucene\Index\IndexLocation.cs" />
     <Compile Include="Lucene\Index\LuceneVersion.cs" />

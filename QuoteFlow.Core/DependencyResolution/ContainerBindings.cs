@@ -270,6 +270,12 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<ISearchProviderFactory>().To<SearchProviderFactory>().InRequestScope();
             Bind<ISearchSortUtil>().To<SearchSortUtil>().InRequestScope();
 
+            #region Entity Document Builders
+
+            Bind<IEntityDocumentBuilder<AssetComment>>().To<CommentDocumentBuilder>();
+
+            #endregion
+
             #region All-Text Searching
 
             Bind<AllTextClauseQueryFactory>().ToSelf().InRequestScope();

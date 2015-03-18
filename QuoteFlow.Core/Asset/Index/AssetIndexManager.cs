@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using Lucene.Net.Analysis;
 using Lucene.Net.Search;
+using Ninject;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Configuration.Lucene;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Api.Util;
-using WebBackgrounder;
+using QuoteFlow.Core.DependencyResolution;
+using QuoteFlow.Core.Index;
+using QuoteFlow.Core.Lucene.Index;
 
 namespace QuoteFlow.Core.Asset.Index
 {
@@ -19,12 +23,14 @@ namespace QuoteFlow.Core.Asset.Index
 
         public IAssetIndexer AssetIndexer { get; protected set; }
         public IAssetService AssetService { get; protected set; }
+        public ICatalogService CatalogService { get; protected set; }
         public IIndexPathManager IndexPathManager { get; protected set; }
 
-        public AssetIndexManager(IAssetIndexer assetIndexer, IAssetService assetService, IIndexPathManager indexPathManager)
+        public AssetIndexManager(IAssetIndexer assetIndexer, IAssetService assetService, ICatalogService catalogService, IIndexPathManager indexPathManager)
         {
             AssetIndexer = assetIndexer;
             AssetService = assetService;
+            CatalogService = catalogService;
             IndexPathManager = indexPathManager;
 
             _assetSearcherSupplier = new AssetSearcherSupplierImpl(manager: this);
@@ -122,25 +128,17 @@ namespace QuoteFlow.Core.Asset.Index
 
         public bool IsEmpty
         {
-            get
-            {
-                return Size() == 0;
-            }
+            get { return Size() == 0; }
         }
 
-        public int ReIndexAll(Job context)
+        public int ReIndexAllIssuesInBackground()
         {
-            throw new NotImplementedException();
+            return ReIndexAllIssuesInBackground(false);
         }
 
-        public int ReIndexAllIssuesInBackground(Job context)
+        public int ReIndexAllIssuesInBackground(bool reIndexComments)
         {
-            throw new NotImplementedException();
-        }
-
-        public int ReIndexAllIssuesInBackground(Job context, bool reIndexComments, bool reIndexChangeHistory)
-        {
-            throw new NotImplementedException();
+            return ReIndexAll(true, reIndexComments, true);
         }
 
         public int Optimize()
@@ -148,12 +146,12 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
-        public int Activate(Job context)
+        public int Activate()
         {
             throw new NotImplementedException();
         }
 
-        public int Activate(Job context, bool reindex)
+        public int Activate(bool reindex)
         {
             throw new NotImplementedException();
         }
@@ -176,26 +174,44 @@ namespace QuoteFlow.Core.Asset.Index
 
         public int ReIndexAll()
         {
+            // don't use background indexing by default
+            return ReIndexAll(false);
+        }
+
+        public int ReIndexAll(bool useBackgroundReindexing, bool updateReplicatedIndexStore = true)
+        {
+            return ReIndexAll(useBackgroundReindexing, false, updateReplicatedIndexStore);
+        }
+
+        public int ReIndexAll(bool useBackgroundReindexing, bool reIndexComments, bool updateReplicatedIndexStore)
+        {
+            Debug.WriteLine("Re-indexing all assets.");
+            var stopWatch = Stopwatch.StartNew();
+
+            if (useBackgroundReindexing)
+            {
+                // doesn't delete indexes
+                try
+                {
+                    DoBackgroundReindex(reIndexComments);
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+            }
+
+            stopWatch.Stop();
             throw new NotImplementedException();
         }
 
-        public int ReIndexAll(Job context, bool useBackgroundReindexing, bool updateReplicatedIndexStore)
+        public int ReIndexAssets(IEnumerable<IAsset> assets)
         {
             throw new NotImplementedException();
         }
 
-        public int ReIndexAll(Job context, bool useBackgroundReindexing, bool reIndexComments, bool reIndexChangeHistory,
-            bool updateReplicatedIndexStore)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int ReIndexAssets(IEnumerable<IAsset> assets, Job context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int ReIndexAssets(IEnumerable<IAsset> assets, Job context, bool reIndexComments, bool reIndexChangeHistory)
+        public int ReIndexAssets(IEnumerable<IAsset> assets, bool reIndexComments)
         {
             throw new NotImplementedException();
         }
@@ -205,7 +221,7 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
-        public void ReIndex(IAsset issue, bool reIndexComments, bool reIndexChangeHistory)
+        public void ReIndex(IAsset issue, bool reIndexComments)
         {
             throw new NotImplementedException();
         }
@@ -215,12 +231,12 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
-        public int ReIndexComments(ICollection<AssetComment> comments, Job context)
+        public int ReIndexComments(ICollection<AssetComment> comments)
         {
             throw new NotImplementedException();
         }
 
-        public int ReIndexComments(ICollection<AssetComment> comments, Job context, bool updateReplicatedIndexStore)
+        public int ReIndexComments(ICollection<AssetComment> comments, bool updateReplicatedIndexStore)
         {
             throw new NotImplementedException();
         }
@@ -245,12 +261,12 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
-        public int ReIndexAssetObjects<T>(ICollection<T> issueObjects, bool reIndexComments, bool reIndexChangeHistory) where T : IAsset
+        public int ReIndexAssetObjects<T>(ICollection<T> issueObjects, bool reIndexComments) where T : IAsset
         {
             throw new NotImplementedException();
         }
 
-        public long ReIndexAssetObjects<T>(ICollection<T> assetObjects, bool reIndexComments, bool reIndexChangeHistory, bool updateReplicatedIndexStore) where T : IAsset
+        public long ReIndexAssetObjects<T>(ICollection<T> assetObjects, bool reIndexComments, bool updateReplicatedIndexStore) where T : IAsset
         {
             throw new NotImplementedException();
         }
@@ -336,6 +352,49 @@ namespace QuoteFlow.Core.Asset.Index
         public void Shutdown()
         {
             throw new NotImplementedException();
+        }
+
+        AssetFactory GetAssetFactory()
+        {
+            return Container.Kernel.TryGet<AssetFactory>();
+        }
+
+//        AssetBatcherFactory GetAssetBatcherFactory()
+//        {
+//            return Container.Kernel.TryGet<AssetBatcherFactory>();
+//        }
+
+        private void DoBackgroundReindex(bool reIndexComments)
+        {
+            var stopWatch = Stopwatch.StartNew();
+
+            var assetIndexHelper = new AssetIndexHelper(AssetService, AssetIndexer);
+            var indexedAssets = assetIndexHelper.AllAssetIds;
+
+            //var reconciler = new IndexReconciler(indexedAssets);
+            var resultBuilder = new AccumulatingResultBuilder();
+
+            Debug.WriteLine("Re-indexing {0} assets in the backgruond.", indexedAssets.Length);
+
+//            try
+//            {
+//                // Index the assets one batch at a time. This stops various db drivers sucking
+//                // all assets into memory at once.
+//                var batcher = GetAssetBatcherFactory().Batcher(reconciler);
+//            }
+//            finally
+//            {
+//                
+//            }
+
+            var allCatalogs = CatalogService.GetCatalogs(1);
+            foreach (var catalog in allCatalogs)
+            {
+                var allAssets = AssetService.GetAssets(catalog.Id);
+                AssetIndexer.ReIndexAssets(allAssets);
+            }
+
+            stopWatch.Stop();
         }
     }
 }

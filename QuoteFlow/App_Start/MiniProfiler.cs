@@ -43,6 +43,11 @@ namespace QuoteFlow
 
         public static void PostStart()
         {
+            // Prevent Hangfire from polluting the mini profiler list
+            var paths = MiniProfiler.Settings.IgnoredPaths.ToList();
+            paths.Add("/hangfire/");
+            MiniProfiler.Settings.IgnoredPaths = paths.ToArray();
+
             // Intercept ViewEngines to profile all partial views and regular views.
             // If you prefer to insert your profiling blocks manually you can comment this out
             List<IViewEngine> copy = ViewEngines.Engines.ToList();

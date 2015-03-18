@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using QuoteFlow.Api.Infrastructure.Collect;
 using QuoteFlow.Api.Util;
-using WebBackgrounder;
 
 namespace QuoteFlow.Api.Infrastructure.Lucene
 {
@@ -13,26 +12,22 @@ namespace QuoteFlow.Api.Infrastructure.Lucene
         /// <summary>
         /// Reindex everything.
         /// </summary>
-        /// <param name="context">Used to report progress back to the user or to the logs. Must not be null.</param>
         /// <returns>Reindex time in ms.</returns>
-        int ReIndexAll(Job context);
+        int ReIndexAll();
 
         /// <summary>
         /// Reindex everything, but don't stop the world
-        /// Comments and change history will not be reindexed.
+        /// Comments will not be reindexed.
         /// </summary>
-        /// <param name="context">Used to report progress back to the user or to the logs. Must not be null.</param>
         /// <returns>Reindex time in ms.</returns>
-        int ReIndexAllIssuesInBackground(Job context);
+        int ReIndexAllIssuesInBackground();
 
         /// <summary>
         /// Reindex everything, but don't stop the world
         /// </summary>
-        /// <param name="context"> used to report progress back to the user or to the logs. Must not be null. </param>
-        /// <param name="reIndexComments"> Also reindex all the issue comments. </param>
-        /// <param name="reIndexChangeHistory"> Also reindex the issue change history. </param>
+        /// <param name="reIndexComments"> Also reindex all the asset comments. </param>
         /// <returns>Reindex time in ms.</returns>
-        int ReIndexAllIssuesInBackground(Job context, bool reIndexComments, bool reIndexChangeHistory);
+        int ReIndexAllIssuesInBackground(bool reIndexComments);
 
         /// <summary>
         /// Optimize the underlying indexes. Make the subsequent searching more efficient.
@@ -43,17 +38,15 @@ namespace QuoteFlow.Api.Infrastructure.Lucene
         /// <summary>
         /// Activates search indexes. This will rebuild the indexes.
         /// </summary>
-        /// <param name="context">Used to report progress back to the user or to the logs. Must not be null.</param>
         /// <returns>Reindex time in ms</returns>
-        int Activate(Job context);
+        int Activate();
 
         /// <summary>
         /// Activates search indexes.
         /// </summary>
-        /// <param name="context"> used to report progress back to the user or to the logs. Must not be null. </param>
         /// <param name="reindex"> reindex after activation. </param>
         /// <returns> Reindex time in ms </returns>
-        int Activate(Job context, bool reindex);
+        int Activate(bool reindex);
 
         /// <summary>
         /// De-activates indexing (as happens from the admin page) and removes index directories.

@@ -3,7 +3,6 @@ using Lucene.Net.Search;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Api.Models;
-using WebBackgrounder;
 
 namespace QuoteFlow.Core.Asset.Index
 {
@@ -13,38 +12,33 @@ namespace QuoteFlow.Core.Asset.Index
         /// Add documents for the supplied assets.
         /// </summary>
         /// <param name="assets"> An iterable of assets to index. </param>
-        /// <param name="context"> for showing the user the current status. </param>
-        IIndexResult IndexAssets(IEnumerable<IAsset> assets, Job context);
+        IIndexResult IndexAssets(IEnumerable<IAsset> assets);
 
         /// <summary>
         /// Delete any existing documents for the supplied assets.
         /// </summary>
         /// <param name="assets"> An iterable of assets to index. </param>
-        /// <param name="context"> for showing the user the current status. </param>
-        IIndexResult DeIndexAssets(IEnumerable<IAsset> assets, Job context);
+        IIndexResult DeIndexAssets(IEnumerable<IAsset> assets);
 
         /// <summary>
         /// Re-index the given assets, delete any existing documents and add new ones.
         /// </summary>
         /// <param name="assets"> An iterable of assets to index. </param>
-        /// <param name="context"> for showing the user the current status. </param>
         /// <param name="reIndexComments"> Set to true if you require asset comments to also be reindexed. </param>
         /// <param name="conditionalUpdate"> set to true to use conditional updates when writing to the index </param>
-        IIndexResult ReIndexAssets(IEnumerable<IAsset> assets, Job context, bool reIndexComments, bool conditionalUpdate);
+        IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, bool reIndexComments, bool conditionalUpdate);
 
         /// <summary>
         /// Reindex a collection of asset comments. 
         /// </summary>
         /// <param name="comments"> Comments to be reindexed. </param>
-        /// <param name="context"> for showing the user the current status. </param>
-        IIndexResult ReIndexComments(ICollection<AssetComment> comments, Job context);
+        IIndexResult ReIndexComments(ICollection<AssetComment> comments);
 
         /// <summary>
         /// Index the given assets, use whatever is in your arsenal to do it as FAST as possible.
         /// </summary>
         /// <param name="assets"> An iterable of assets to index. </param>
-        /// <param name="context"> for showing the user the current status. </param>
-        IIndexResult IndexAssetsBatchMode(IEnumerable<IAsset> assets, Job context);
+        IIndexResult IndexAssetsBatchMode(IEnumerable<IAsset> assets);
 
         IIndexResult Optimize();
 

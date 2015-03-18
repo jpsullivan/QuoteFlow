@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
 using System.Threading.Tasks;
-using Lucene.Net.Documents;
-using Lucene.Net.Index;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Infrastructure.Concurrency;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Core.Index;
 using QuoteFlow.Core.Lucene.Index;
-using WebBackgrounder;
 
 namespace QuoteFlow.Core.Asset.Index
 {
@@ -32,12 +27,12 @@ namespace QuoteFlow.Core.Asset.Index
         }
 
 
-        public IIndexResult IndexAssets(IEnumerable<IAsset> assets, Job context)
+        public IIndexResult IndexAssets(IEnumerable<IAsset> assets)
         {
             throw new NotImplementedException();
         }
 
-        public IIndexResult DeIndexAssets(IEnumerable<IAsset> assets, Job context)
+        public IIndexResult DeIndexAssets(IEnumerable<IAsset> assets)
         {
             // As per http://stackoverflow.com/a/3894582. The IndexWriter is CPU bound, so we can try and write multiple packages in parallel.
             // The IndexWriter is thread safe and is primarily CPU-bound.
@@ -59,17 +54,18 @@ namespace QuoteFlow.Core.Asset.Index
             }
         }
 
-        public IIndexResult ReIndexAssets(IEnumerable<IAsset> assets, Job context, bool reIndexComments, bool conditionalUpdate)
+        public IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, bool reIndexComments, bool conditionalUpdate)
+        {
+            var mode = UpdateMode.Interactive;
+            var documents = DocumentCreationStrategy
+        }
+
+        public IIndexResult ReIndexComments(ICollection<AssetComment> comments)
         {
             throw new NotImplementedException();
         }
 
-        public IIndexResult ReIndexComments(ICollection<AssetComment> comments, Job context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IIndexResult IndexAssetsBatchMode(IEnumerable<IAsset> assets, Job context)
+        public IIndexResult IndexAssetsBatchMode(IEnumerable<IAsset> assets)
         {
             throw new NotImplementedException();
         }
@@ -145,57 +141,6 @@ namespace QuoteFlow.Core.Asset.Index
             finally
             {
                 //strategy.close();
-            }
-        }
-
-        private class Documents
-        {
-            private readonly AssetIndexer _outerInstance;
-
-            private readonly Document _assetDocument;
-            private readonly IEnumerable<Document> _comments;
-            private readonly Term _term;
-
-            public Documents(IAsset asset, Document assetDocument, IEnumerable<Document> comments)
-            {
-                if (assetDocument == null)
-                {
-                    throw new ArgumentNullException("assetDocument", "Asset document must be defined");
-                }
-
-                _assetDocument = assetDocument;
-                _comments = LuceneDocumentsBuilder.BuildAll(comments);
-                _term = _outerInstance.AssetDocumentFactory.GetIdentifyingTerm(asset);
-            }
-
-            internal virtual Document Asset
-            {
-                get { return _assetDocument; }
-            }
-
-            internal virtual IEnumerable<Document> Comments
-            {
-                get { return _comments; }
-            }
-
-            internal virtual Term IdentifyingTerm
-            {
-                get { return _term; }
-            }
-
-            private class LuceneDocumentsBuilder
-            {
-                private static readonly ImmutableList<Document>.Builder Builder = ImmutableList.CreateBuilder<Document>();
-
-                public static IEnumerable<Document> BuildAll(IEnumerable<Document> documents)
-                {
-                    foreach (var document in documents)
-                    {
-                        Builder.Add(document);
-                    }
-
-                    return Builder;
-                }
             }
         }
 

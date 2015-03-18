@@ -5,7 +5,6 @@ using System.Linq;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Infrastructure.Elmah;
 using QuoteFlow.Api.Infrastructure.Lucene;
-using WebBackgrounder;
 
 namespace QuoteFlow.Core.Util.Index
 {
@@ -44,7 +43,7 @@ namespace QuoteFlow.Core.Util.Index
             get { return Size() == 0; }
         }
 
-        public int ReIndexAll(Job context)
+        public int ReIndexAll()
         {
             Debug.WriteLine("Reindex All starting...");
 
@@ -53,7 +52,7 @@ namespace QuoteFlow.Core.Util.Index
             {
                 try
                 {
-                    int reIndexAll = @delegate.ReIndexAll(context);
+                    int reIndexAll = @delegate.ReIndexAll();
                     Debug.WriteLine("Reindex took: {0}ms. Indexer: {1}", reIndexAll, @delegate);
                     result += reIndexAll;
                 }
@@ -73,12 +72,12 @@ namespace QuoteFlow.Core.Util.Index
             return result;
         }
 
-        public int ReIndexAllIssuesInBackground(Job context)
+        public int ReIndexAllIssuesInBackground()
         {
-            return ReIndexAllIssuesInBackground(context, false, false);
+            return ReIndexAllIssuesInBackground(false);
         }
 
-        public int ReIndexAllIssuesInBackground(Job context, bool reIndexComments, bool reIndexChangeHistory)
+        public int ReIndexAllIssuesInBackground(bool reIndexComments)
         {
             Debug.WriteLine("Reindex All In Background starting...");
             int result = 0;
@@ -86,7 +85,7 @@ namespace QuoteFlow.Core.Util.Index
             {
                 try
                 {
-                    int reIndexAll = @delegate.ReIndexAllIssuesInBackground(context, reIndexComments, reIndexChangeHistory);
+                    int reIndexAll = @delegate.ReIndexAllIssuesInBackground(reIndexComments);
                     Debug.WriteLine("Reindex took: {0}ms. Indexer: {1}", reIndexAll, @delegate);
                     result += reIndexAll;
                 }
@@ -124,19 +123,14 @@ namespace QuoteFlow.Core.Util.Index
             return result;
         }
 
-        public int Activate(Job context)
+        public int Activate()
         {
-            return Activate(context, true);
+            return Activate(true);
         }
 
-        public int Activate(Job context, bool reindex)
+        public int Activate(bool reindex)
         {
-            int result = 0;
-            foreach (IIndexLifecycleManager @delegate in _delegates)
-            {
-                result += @delegate.Activate(context, reindex);
-            }
-            return result;
+            return _delegates.Sum(@delegate => @delegate.Activate(reindex));
         }
 
         public void Deactivate()
@@ -149,16 +143,12 @@ namespace QuoteFlow.Core.Util.Index
 
         public bool IndexAvailable
         {
-            get
-            {
-                return _delegates[0].IndexAvailable;
-            }
+            get { return _delegates[0].IndexAvailable; }
         }
 
         public bool IndexConsistent
         {
-            get
-            { return _delegates.All(@delegate => @delegate.IndexConsistent); }
+            get { return _delegates.All(@delegate => @delegate.IndexConsistent); }
         }
 
         public void Shutdown()
