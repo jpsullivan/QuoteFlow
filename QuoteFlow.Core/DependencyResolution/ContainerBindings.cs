@@ -40,6 +40,7 @@ using QuoteFlow.Core.Asset;
 using QuoteFlow.Core.Asset.CustomFields.Searchers.Transformer;
 using QuoteFlow.Core.Asset.Fields;
 using QuoteFlow.Core.Asset.Index;
+using QuoteFlow.Core.Asset.Index.Managers;
 using QuoteFlow.Core.Asset.Nav;
 using QuoteFlow.Core.Asset.Search;
 using QuoteFlow.Core.Asset.Search.Handlers;
@@ -259,6 +260,8 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IAssetDocumentFactory>().To<AssetDocumentFactory>().InRequestScope();
             Bind<IAssetIndexer>().To<AssetIndexer>().InRequestScope();
             Bind<IAssetIndexManager>().To<AssetIndexManager>().InRequestScope();
+            Bind<IDocumentCreationStrategy>().To<DocumentCreationStrategy>().InRequestScope();
+            Bind<IFieldIndexerManager>().To<FieldIndexerManager>().InRequestScope();
             Bind<IIndexDirectoryFactory>().To<IndexDirectoryFactory>().InRequestScope();
             Bind<IIndexLifecycleManager>().To<CompositeIndexLifecycleManager>().InRequestScope();
             Bind<IIndexManager>().To<DefaultIndexManager>().InRequestScope();

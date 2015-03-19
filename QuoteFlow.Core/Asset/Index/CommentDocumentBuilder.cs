@@ -23,24 +23,24 @@ namespace QuoteFlow.Core.Asset.Index
 
         #endregion
 
-        public Document Build(AssetComment comment)
+        public Document Build(AssetComment entity)
         {
-            if (comment.Comment == null)
+            if (entity.Comment == null)
             {
                 return null;
             }
 
-            var asset = AssetService.GetAsset(comment.AssetId);
+            var asset = AssetService.GetAsset(entity.AssetId);
 
             var doc = new Document()
                 .AddField(DocumentConstants.CatalogId, asset.CatalogId.ToString(), Field.Store.YES, Field.Index.ANALYZED_NO_NORMS)
                 .AddField(DocumentConstants.AssetId, asset.Id.ToString(), Field.Store.YES, Field.Index.ANALYZED_NO_NORMS)
-                .AddField(DocumentConstants.CommentId, comment.Id.ToString(), Field.Store.YES, Field.Index.ANALYZED_NO_NORMS)
-                .AddField(DocumentConstants.CommentBody, comment.Comment, Field.Store.YES, Field.Index.ANALYZED)
-                .AddField(PhraseQuerySupportField.ForIndexField(DocumentConstants.CommentBody), comment.Comment, Field.Store.YES, Field.Index.ANALYZED)
-                .AddField(DocumentConstants.CommentCreated, LuceneUtils.DateToString(comment.CreatedUtc), Field.Store.YES, Field.Index.ANALYZED_NO_NORMS);
+                .AddField(DocumentConstants.CommentId, entity.Id.ToString(), Field.Store.YES, Field.Index.ANALYZED_NO_NORMS)
+                .AddField(DocumentConstants.CommentBody, entity.Comment, Field.Store.YES, Field.Index.ANALYZED)
+                .AddField(PhraseQuerySupportField.ForIndexField(DocumentConstants.CommentBody), entity.Comment, Field.Store.YES, Field.Index.ANALYZED)
+                .AddField(DocumentConstants.CommentCreated, LuceneUtils.DateToString(entity.CreatedUtc), Field.Store.YES, Field.Index.ANALYZED_NO_NORMS);
 
-            var creator = comment.Creator;
+            var creator = entity.Creator;
             if (creator != null) // can't add null keywords
             {
                 doc.AddField(DocumentConstants.CommentAuthor, creator.Id.ToString(), Field.Store.YES, Field.Index.ANALYZED_NO_NORMS);

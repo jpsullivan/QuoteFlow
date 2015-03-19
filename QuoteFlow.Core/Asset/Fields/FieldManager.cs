@@ -34,12 +34,12 @@ namespace QuoteFlow.Core.Asset.Fields
 
         public bool IsCustomField(string id)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool IsCustomField(IField field)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool IsNavigableField(string id)

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Lucene.Net.Documents;
+using QuoteFlow.Api.Asset.Index.Indexers;
 
 namespace QuoteFlow.Api.Lucene.Building
 {
@@ -90,6 +93,36 @@ namespace QuoteFlow.Api.Lucene.Building
 			return document;
 		}
 
+        public static Document AddAllIndexers(this Document document, Models.Asset asset, IEnumerable<IFieldIndexer> indexers)
+        {
+            var visibleDocumentFieldIds = indexers.Select(indexer => AddIndexer(document, asset, indexer)).ToList();
+
+            foreach (var fieldId in visibleDocumentFieldIds)
+            {
+                document.AddField("visiblefieldids", fieldId, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS);
+            }
+
+            return document;
+        }
+
+        private static string AddIndexer(Document document, Models.Asset asset, IFieldIndexer indexer)
+        {
+            string documentFieldId = null;
+            try
+            {
+                documentFieldId = indexer.DocumentFieldId;
+                indexer.AddIndex(document, asset);
+                if (indexer.IsFieldVisibleAndInScope(asset))
+                {
+                    return documentFieldId;
+                }
+            }
+            catch (Exception re)
+            {
+                //DropField(documentFieldId, indexer, re);
+            }
+        }
+
 		/// <summary>
 		/// Sets up an already existing document with the specified actions
 		/// </summary>
@@ -105,7 +138,7 @@ namespace QuoteFlow.Api.Lucene.Building
 			return document;
 		}
 
-		#region Helpers 
+		#region Helpers
 
 
 		private static Field.Store GetStoreValue(bool store)

@@ -9,7 +9,7 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public abstract class BaseFieldIndexer : IFieldIndexer
     {
-        internal virtual Field.Index Unanalyzed(Api.Models.Asset asset)
+        internal Field.Index Unanalyzed(Api.Models.Asset asset)
         {
             return (IsFieldVisibleAndInScope(asset)) ? Field.Index.NOT_ANALYZED_NO_NORMS : Field.Index.NO;
         }
@@ -20,7 +20,7 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
         /// <param name="indexField"> the document field name to user. </param>
         /// <param name="fieldValue"> the value to index. This value will NOT be folded before adding it to the document. </param>
         /// <param name="asset">The asset that defines the context and contains the value we are indexing. </param>
-        public virtual void IndexKeyword(Document doc, string indexField, string fieldValue, Api.Models.Asset asset)
+        public void IndexKeyword(Document doc, string indexField, string fieldValue, Api.Models.Asset asset)
         {
             if (fieldValue.HasValue())
             {
@@ -33,12 +33,12 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
         /// 
         /// shared with CommentDocumentFactory
         /// </summary>
-        public virtual void IndexKeywordWithDefault(Document doc, string indexField, string fieldValue, string defaultValue, Api.Models.Asset asset)
+        public void IndexKeywordWithDefault(Document doc, string indexField, string fieldValue, string defaultValue, Api.Models.Asset asset)
         {
             FieldIndexerUtil.IndexKeywordWithDefault(doc, indexField, fieldValue, defaultValue, IsFieldVisibleAndInScope(asset));
         }
 
-        public virtual void IndexKeywordWithDefault(Document doc, string indexField, long? aLong, string defaultValue, Api.Models.Asset asset)
+        public void IndexKeywordWithDefault(Document doc, string indexField, long? aLong, string defaultValue, Api.Models.Asset asset)
         {
             string value = aLong != null ? aLong.ToString() : null;
             IndexKeywordWithDefault(doc, indexField, value, defaultValue, asset);
@@ -47,7 +47,7 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
         /// <summary>
         /// Index a single text field
         /// </summary>
-        public virtual void IndexText(Document doc, string indexField, string fieldValue, Api.Models.Asset asset)
+        public void IndexText(Document doc, string indexField, string fieldValue, Api.Models.Asset asset)
         {
             if (fieldValue.HasValue())
             {
@@ -60,7 +60,7 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
         /// <summary>
         /// Index a single keyword field, with a date-time value
         /// </summary>
-        public virtual void IndexDateField(Document doc, string indexField, DateTime date, Api.Models.Asset asset)
+        public void IndexDateField(Document doc, string indexField, DateTime date, Api.Models.Asset asset)
         {
             Field.Index indexType = Unanalyzed(asset);
             doc.Add(new Field(indexField, LuceneUtils.DateToString(date), Field.Store.YES, indexType));
@@ -73,7 +73,7 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
         /// <summary>
         /// Index a single text field
         /// </summary>
-        public virtual void IndexTextForSorting(Document doc, string indexField, string fieldValue, Api.Models.Asset asset)
+        public void IndexTextForSorting(Document doc, string indexField, string fieldValue, Api.Models.Asset asset)
         {
             string sortingValue = FieldIndexerUtil.GetValueForSorting(fieldValue);
             if (sortingValue.HasValue() && IsFieldVisibleAndInScope(asset))
