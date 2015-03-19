@@ -278,6 +278,7 @@
     <Compile Include="Diagnostics\TraceDiagnosticsSource.cs" />
     <Compile Include="Index\AssetIndexHelper.cs" />
     <Compile Include="Index\DefaultIndexManager.cs" />
+    <Compile Include="Index\ISearchExtractorRegistrationManager.cs" />
     <Compile Include="Index\Operation.cs" />
     <Compile Include="Index\Operations.cs" />
     <Compile Include="Index\QueueingIndex.cs" />

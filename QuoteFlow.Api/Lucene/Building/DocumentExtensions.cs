@@ -121,6 +121,8 @@ namespace QuoteFlow.Api.Lucene.Building
             {
                 //DropField(documentFieldId, indexer, re);
             }
+
+            return null;
         }
 
 		/// <summary>

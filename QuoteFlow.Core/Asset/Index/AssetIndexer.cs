@@ -14,16 +14,19 @@ namespace QuoteFlow.Core.Asset.Index
     public class AssetIndexer : IAssetIndexer
     {
         public IAssetDocumentFactory AssetDocumentFactory { get; protected set; }
+        public IDocumentCreationStrategy DocumentCreationStrategy { get; protected set; }
 
         private readonly Lifecycle _lifecycle;
 
         // simple indexing strategy just asks the operation for its result
         private readonly SimpleIndexingStrategy _simpleIndexingStrategy = new SimpleIndexingStrategy();
 
-        public AssetIndexer(IIndexDirectoryFactory indexDirectoryFactory, IAssetDocumentFactory assetDocumentFactory)
+        public AssetIndexer(IIndexDirectoryFactory indexDirectoryFactory, 
+            IAssetDocumentFactory assetDocumentFactory, IDocumentCreationStrategy documentCreationStrategy)
         {
             _lifecycle = new Lifecycle(indexDirectoryFactory);
             AssetDocumentFactory = assetDocumentFactory;
+            DocumentCreationStrategy = documentCreationStrategy;
         }
 
 
@@ -57,7 +60,22 @@ namespace QuoteFlow.Core.Asset.Index
         public IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, bool reIndexComments, bool conditionalUpdate)
         {
             var mode = UpdateMode.Interactive;
-            var documents = DocumentCreationStrategy
+
+            foreach (var asset in assets)
+            {
+                var documents = DocumentCreationStrategy.Get(asset, reIndexComments);
+                var assetTerm = documents.IdentifyingTerm;
+
+                Operation update;
+                if (conditionalUpdate)
+                {
+                    // do a conditional update using "updated" as the optimistic lock
+                }
+                else
+                {
+                    
+                }
+            }
         }
 
         public IIndexResult ReIndexComments(ICollection<AssetComment> comments)
