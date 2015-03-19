@@ -391,7 +391,7 @@ namespace QuoteFlow.Core.Asset.Index
             foreach (var catalog in allCatalogs)
             {
                 var allAssets = AssetService.GetAssets(catalog.Id);
-                AssetIndexer.ReIndexAssets(allAssets);
+                AssetIndexer.ReIndexAssets(allAssets, reIndexComments, false);
             }
 
             stopWatch.Stop();

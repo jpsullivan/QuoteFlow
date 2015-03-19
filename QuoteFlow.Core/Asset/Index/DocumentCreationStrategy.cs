@@ -22,7 +22,7 @@ namespace QuoteFlow.Core.Asset.Index
         public Documents Get(IAsset asset, bool includeComments)
         {
             var comments = includeComments ? CommentDocumentBuilder.Build(asset.Comments) : new List<Document>();
-            return new Documents(asset, AssetDocumentFactory.);
+            return new Documents(asset, AssetDocumentFactory.Apply(asset), comments);
         }
     }
 }

@@ -9,6 +9,8 @@ namespace QuoteFlow.Core.Asset.Index
     /// </summary>
     public interface IAssetDocumentFactory
     {
+        Document Apply(IAsset asset);
+
         Term GetIdentifyingTerm(IAsset asset);
     }
 }

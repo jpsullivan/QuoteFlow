@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Lucene.Net.Documents;
 using QuoteFlow.Api.Asset.Index.Indexers;
+using QuoteFlow.Api.Models;
 
 namespace QuoteFlow.Api.Lucene.Building
 {
@@ -93,7 +94,7 @@ namespace QuoteFlow.Api.Lucene.Building
 			return document;
 		}
 
-        public static Document AddAllIndexers(this Document document, Models.Asset asset, IEnumerable<IFieldIndexer> indexers)
+        public static Document AddAllIndexers(this Document document, IAsset asset, IEnumerable<IFieldIndexer> indexers)
         {
             var visibleDocumentFieldIds = indexers.Select(indexer => AddIndexer(document, asset, indexer)).ToList();
 
@@ -105,14 +106,15 @@ namespace QuoteFlow.Api.Lucene.Building
             return document;
         }
 
-        private static string AddIndexer(Document document, Models.Asset asset, IFieldIndexer indexer)
+        private static string AddIndexer(Document document, IAsset asset, IFieldIndexer indexer)
         {
             string documentFieldId = null;
+            var resolvedAsset = (Models.Asset) asset;
             try
             {
                 documentFieldId = indexer.DocumentFieldId;
-                indexer.AddIndex(document, asset);
-                if (indexer.IsFieldVisibleAndInScope(asset))
+                indexer.AddIndex(document, resolvedAsset);
+                if (indexer.IsFieldVisibleAndInScope(resolvedAsset))
                 {
                     return documentFieldId;
                 }

@@ -269,12 +269,14 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IIndexWriterConfiguration>().To<IndexConfiguration.Default.IndexWriterConfiguration>().InRequestScope();
             Bind<ILuceneQueryBuilder>().To<LuceneQueryBuilder>().InRequestScope();
             Bind<ILuceneQueryModifier>().To<LuceneQueryModifier>().InRequestScope();
+            Bind<ISearchExtractorRegistrationManager>().To<SearchExtractorRegistrationManager>().InRequestScope();
             Bind<ISearchProvider>().To<LuceneSearchService>().InRequestScope();
             Bind<ISearchProviderFactory>().To<SearchProviderFactory>().InRequestScope();
             Bind<ISearchSortUtil>().To<SearchSortUtil>().InRequestScope();
 
             #region Entity Document Builders
 
+            Bind<IEntityDocumentBuilder<IAsset>>().To<AssetDocumentBuilder>();
             Bind<IEntityDocumentBuilder<AssetComment>>().To<CommentDocumentBuilder>();
 
             #endregion

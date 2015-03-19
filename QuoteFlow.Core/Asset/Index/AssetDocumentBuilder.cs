@@ -3,12 +3,13 @@ using System.Linq;
 using Lucene.Net.Documents;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Lucene.Building;
+using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.Index.Managers;
 
 namespace QuoteFlow.Core.Asset.Index
 {
-    public class AssetDocumentBuilder : IEntityDocumentBuilder<Api.Models.Asset>
+    public class AssetDocumentBuilder : IEntityDocumentBuilder<IAsset>
     {
         #region DI
 
@@ -23,7 +24,7 @@ namespace QuoteFlow.Core.Asset.Index
 
         #endregion
 
-        public Document Build(Api.Models.Asset entity)
+        public Document Build(IAsset entity)
         {
             var doc = new Document()
                 .AddAllIndexers(entity, FieldIndexerManager.AllAssetIndexers);
@@ -31,7 +32,7 @@ namespace QuoteFlow.Core.Asset.Index
             return doc;
         }
 
-        public IEnumerable<Document> Build(IEnumerable<Api.Models.Asset> entities)
+        public IEnumerable<Document> Build(IEnumerable<IAsset> entities)
         {
             return entities.Select(Build).ToList();
         }

@@ -76,6 +76,9 @@ namespace QuoteFlow.Core.Asset.Index
                     
                 }
             }
+
+            var result = new AccumulatingResultBuilder();
+            return result.ToResult();
         }
 
         public IIndexResult ReIndexComments(ICollection<AssetComment> comments)

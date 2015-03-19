@@ -14,7 +14,7 @@ namespace QuoteFlow.Core.Index
         /// </summary>
         /// <param name="entityClass">Class object to search for extractors.</param>
         /// <returns>List of extractors.</returns>
-        IEnumerable<IEntitySearchExtractor<T>> findExtractorsForEntity<T>(Type entityClass);
+        IEnumerable<IEntitySearchExtractor<T>> FindExtractorsForEntity<T>(Type entityClass);
 
         /// <summary>
         /// Registers extractor as capable o processing documents of specified class
