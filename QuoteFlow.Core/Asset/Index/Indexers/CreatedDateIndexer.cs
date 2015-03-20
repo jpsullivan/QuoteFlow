@@ -5,12 +5,12 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public class CreatedDateIndexer : BaseFieldIndexer
     {
-        public string Id
+        public override string Id
         {
             get { return SystemSearchConstants.ForCreatedDate().FieldId; }
         }
 
-        public string DocumentFieldId
+        public override string DocumentFieldId
         {
             get { return SystemSearchConstants.ForCreatedDate().IndexField; }
         }

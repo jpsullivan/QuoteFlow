@@ -30,8 +30,8 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
         private const string TOKEN_TYPE_EXCEPTION = "EXCEPTION";
 
         //private CharTermAttribute termAttribute;
-        private PositionIncrementAttribute incrementAttribute;
-        private TypeAttribute typeAttribute;
+        private IPositionIncrementAttribute incrementAttribute;
+        private ITypeAttribute typeAttribute;
 
         private State current;
         private string nextType;
@@ -40,9 +40,10 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
         public SubtokenFilter(TokenStream tokenStream)
             : base(tokenStream)
         {
+            // todo: lucene upgrade
             //termAttribute = AddAttribute<CharTermAttribute>();
-            incrementAttribute = AddAttribute<PositionIncrementAttribute>();
-            AddAttribute<TypeAttribute>();
+            incrementAttribute = AddAttribute<IPositionIncrementAttribute>();
+            typeAttribute = AddAttribute<ITypeAttribute>();
         }
 
         public override bool IncrementToken()

@@ -1,7 +1,5 @@
 ﻿using System.IO;
 using Lucene.Net.Analysis;
-using Lucene.Net.Documents;
-using QuoteFlow.Api.Infrastructure.Lucene;
 
 namespace QuoteFlow.Api.Asset.Index.Analyzer
 {
@@ -12,20 +10,12 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
     /// </summary>
     public abstract class TextAnalyzer : global::Lucene.Net.Analysis.Analyzer
     {
-        private readonly bool indexing; //or searching
-
         public TextAnalyzer(bool indexing)
         {
-            this.indexing = indexing;
+            Indexing = indexing;
         }
 
-        public virtual bool Indexing
-        {
-            get
-            {
-                return indexing;
-            }
-        }
+        public bool Indexing { get; private set; }
 
         /// <summary>
         /// Applies a <seealso cref="SubtokenFilter"/> to the input token stream at document indexing time.
@@ -33,7 +23,7 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
         /// <param name="input"> token stream </param>
         /// <returns> A TokenStream filtered by the sub-token filter during indexing, otherwise the input token stream is
         /// returned. </returns>
-        protected internal virtual TokenStream WrapStreamForIndexing(TokenStream input)
+        protected TokenStream WrapStreamForIndexing(TokenStream input)
         {
             if (Indexing)
             {
@@ -50,12 +40,13 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
         /// <param name="input"> token stream </param>
         /// <returns> A TokenStream filtered by the sub-token filter during indexing, otherwise the input token stream is
         /// returned. </returns>
-        protected internal virtual TokenStream WrapStreamForWilcardSearchSupport(TokenStream input)
+        protected TokenStream WrapStreamForWilcardSearchSupport(TokenStream input)
         {
-            if (Indexing)
-            {
-                return new KeywordRepeatFilter(input);
-            }
+            // todo: lucene upgrade
+//            if (Indexing)
+//            {
+//                return new KeywordRepeatFilter(input);
+//            }
             return input;
         }
 

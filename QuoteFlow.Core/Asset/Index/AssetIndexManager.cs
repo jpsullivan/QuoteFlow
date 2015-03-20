@@ -39,6 +39,8 @@ namespace QuoteFlow.Core.Asset.Index
 
         #endregion
 
+        private static readonly object IndexReaderLock = new object();
+
         public Analyzer AnalyzerForSearching 
         { 
             get { return QuoteFlowAnalyzer.AnalyzerForSearching; } 
@@ -191,15 +193,12 @@ namespace QuoteFlow.Core.Asset.Index
             if (useBackgroundReindexing)
             {
                 // doesn't delete indexes
-                try
+                lock (IndexReaderLock)
                 {
                     DoBackgroundReindex(reIndexComments);
                 }
-                catch (Exception)
-                {
-                    
-                    throw;
-                }
+
+                FlushThreadLocalSearchers();
             }
 
             stopWatch.Stop();
@@ -395,6 +394,18 @@ namespace QuoteFlow.Core.Asset.Index
             }
 
             stopWatch.Stop();
+        }
+
+        public static void FlushThreadLocalSearchers()
+        {
+            try
+            {
+                SearcherCache.ThreadLocalCache.CloseSearchers();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

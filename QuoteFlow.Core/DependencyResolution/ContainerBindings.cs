@@ -257,7 +257,7 @@ namespace QuoteFlow.Core.DependencyResolution
 
         private void ConfigureSearch()
         {
-            Bind<IAssetDocumentFactory>().To<AssetDocumentFactory>().InRequestScope();
+            Bind<IAssetDocumentFactory>().To<AssetDocumentFactory>();
             Bind<IAssetIndexer>().To<AssetIndexer>().InRequestScope();
             Bind<IAssetIndexManager>().To<AssetIndexManager>().InRequestScope();
             Bind<IDocumentCreationStrategy>().To<DocumentCreationStrategy>().InRequestScope();

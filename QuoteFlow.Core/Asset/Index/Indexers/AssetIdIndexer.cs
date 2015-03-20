@@ -5,12 +5,12 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public class AssetIdIndexer : BaseFieldIndexer
     {
-        public string Id
+        public override string Id
         {
             get { return SystemSearchConstants.ForAssetId().FieldId; }
         }
 
-        public string DocumentFieldId
+        public override string DocumentFieldId
         {
             get { return SystemSearchConstants.ForAssetId().IndexField; }
         }

@@ -82,8 +82,8 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
             }
         }
 
-        public string Id { get; private set; }
-        public string DocumentFieldId { get; private set; }
+        public virtual string Id { get; private set; }
+        public virtual string DocumentFieldId { get; private set; }
 
         public abstract void AddIndex(Document doc, Api.Models.Asset asset);
 

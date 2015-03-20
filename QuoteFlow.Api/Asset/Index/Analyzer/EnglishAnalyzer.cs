@@ -6,9 +6,9 @@ using Version = Lucene.Net.Util.Version;
 
 namespace QuoteFlow.Api.Asset.Index.Analyzer
 {
-    /*
-	 * Note: checked for Lucene 2.9 compatibility.
-	 */
+    /// <summary>
+    /// Note: checked for Lucene 2.9 compatibility.
+    /// </summary>
     public class EnglishAnalyzer : TextAnalyzer
     {
         private readonly Version version;

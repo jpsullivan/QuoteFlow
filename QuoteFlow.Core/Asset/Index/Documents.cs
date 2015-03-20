@@ -3,6 +3,7 @@ using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Ninject;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Core.DependencyResolution;
 using QuoteFlow.Core.Lucene;
 
 namespace QuoteFlow.Core.Asset.Index
@@ -18,9 +19,11 @@ namespace QuoteFlow.Core.Asset.Index
 
         public Documents(IAsset asset, Document issueDocument, IEnumerable<Document> comments)
         {
+            var assetDocumentFactory = Container.Kernel.TryGet<AssetDocumentFactory>();
+
             Asset = issueDocument;
             Comments = LuceneDocumentsBuilder.BuildAll(comments);
-            IdentifyingTerm = AssetDocumentFactory.GetIdentifyingTerm(asset);
+            IdentifyingTerm = assetDocumentFactory.GetIdentifyingTerm(asset);
         }
     }
 }

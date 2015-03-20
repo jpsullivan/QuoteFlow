@@ -41,7 +41,7 @@ namespace QuoteFlow.Core.Index
             return new ConditionalUpdate(term, document, mode, optimisticLockField);
         }
 
-        public static Operation NewUpdate(Term term, ICollection<Document> documents, UpdateMode mode)
+        public static Operation NewUpdate(Term term, IEnumerable<Document> documents, UpdateMode mode)
         {
             return new Update(term, documents, mode);
         }
@@ -98,8 +98,6 @@ namespace QuoteFlow.Core.Index
             public IEnumerable<Document> Documents { get; private set; } 
             private readonly UpdateMode _mode;
 
-            //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-            //ORIGINAL LINE: Create(@Nonnull final org.apache.lucene.document.Document document, @Nonnull final com.atlassian.jira.index.Index.UpdateMode mode)
             internal Create(Document document, UpdateMode mode)
             {
                 if (document == null) throw new ArgumentNullException("document");
@@ -108,9 +106,7 @@ namespace QuoteFlow.Core.Index
                 _mode = mode;
             }
 
-            //JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-            //ORIGINAL LINE: Create(@Nonnull final java.util.Collection<org.apache.lucene.document.Document> documents, @Nonnull final com.atlassian.jira.index.Index.UpdateMode mode)
-            internal Create(ICollection<Document> documents, UpdateMode mode)
+            internal Create(IEnumerable<Document> documents, UpdateMode mode)
             {
                 if (documents == null) throw new ArgumentNullException("documents");
 
@@ -140,7 +136,7 @@ namespace QuoteFlow.Core.Index
                 _create = new Create(document, mode);
             }
 
-            internal Update(Term term, ICollection<Document> documents, UpdateMode mode)
+            internal Update(Term term, IEnumerable<Document> documents, UpdateMode mode)
             {
                 _delete = new Delete(term, mode);
                 _create = new Create(documents, mode);
@@ -213,7 +209,10 @@ namespace QuoteFlow.Core.Index
                 }
                 finally
                 {
-                    _completionJob.Execute();
+                    if (_completionJob != null)
+                    {
+                        _completionJob.Execute();
+                    }
                 }
             }
 

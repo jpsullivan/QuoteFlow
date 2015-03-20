@@ -8,12 +8,12 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
     /// </summary>
     public class CreatorIndexer : UserFieldIndexer
     {
-        public virtual string Id
+        public override string Id
         {
             get { return SystemSearchConstants.ForCreator().FieldId; }
         }
 
-        public virtual string DocumentFieldId
+        public override string DocumentFieldId 
         {
             get { return SystemSearchConstants.ForCreator().IndexField; }
         }

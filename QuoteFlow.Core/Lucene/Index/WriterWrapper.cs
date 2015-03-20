@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
@@ -83,7 +84,7 @@ namespace QuoteFlow.Core.Lucene.Index
             if (documents.Count() == 1)
             {
                 documents.GetEnumerator().MoveNext();
-                _writer.UpdateDocument(identifyingTerm, documents.GetEnumerator().Current);
+                _writer.UpdateDocument(identifyingTerm, documents.First());
             }
             else
             {
@@ -134,7 +135,7 @@ namespace QuoteFlow.Core.Lucene.Index
             {
                 _writer.Commit();
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                 throw ex;
             }

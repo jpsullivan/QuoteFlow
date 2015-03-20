@@ -7,12 +7,12 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public class CatalogIdIndexer : BaseFieldIndexer
     {
-        public virtual string Id
+        public override string Id
 		{
 			get { return SystemSearchConstants.ForCatalog().FieldId; }
 		}
 
-		public virtual string DocumentFieldId
+        public override string DocumentFieldId
 		{
 			get { return SystemSearchConstants.ForCatalog().IndexField; }
 		}

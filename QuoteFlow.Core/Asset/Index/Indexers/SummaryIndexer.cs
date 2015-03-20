@@ -12,17 +12,17 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
     /// </summary>
     public class SummaryIndexer : BaseFieldIndexer
     {
-        public virtual string Id
+        public override string Id
         {
             get { return SystemSearchConstants.ForSummary().FieldId; }
         }
 
-        public virtual string DocumentFieldId
+        public override string DocumentFieldId
         {
             get { return SystemSearchConstants.ForSummary().IndexField; }
         }
 
-        public bool IsFieldVisibleAndInScope(Api.Models.Asset issue)
+        public override bool IsFieldVisibleAndInScope(Api.Models.Asset issue)
         {
             return true;
         }

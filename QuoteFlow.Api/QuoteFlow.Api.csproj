@@ -279,7 +279,6 @@
     <Compile Include="Infrastructure\Lucene\IIndexLifecycleManager.cs" />
     <Compile Include="Infrastructure\Lucene\IKeywordAttribute.cs" />
     <Compile Include="Infrastructure\Lucene\ILuceneQueryModifier.cs" />
-    <Compile Include="Infrastructure\Lucene\KeywordRepeatFilter.cs" />
     <Compile Include="Infrastructure\Lucene\PerFieldIndexingAnalyzer.cs" />
     <Compile Include="Infrastructure\Paging\AssetPage.cs" />
     <Compile Include="Infrastructure\Paging\IAssetPage.cs" />

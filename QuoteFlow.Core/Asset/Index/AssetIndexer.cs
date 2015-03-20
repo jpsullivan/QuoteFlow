@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lucene.Net.Search;
+using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Infrastructure.Concurrency;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Api.Models;
@@ -59,6 +60,7 @@ namespace QuoteFlow.Core.Asset.Index
 
         public IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, bool reIndexComments, bool conditionalUpdate)
         {
+            var results = new AccumulatingResultBuilder();
             var mode = UpdateMode.Interactive;
 
             foreach (var asset in assets)
@@ -70,15 +72,25 @@ namespace QuoteFlow.Core.Asset.Index
                 if (conditionalUpdate)
                 {
                     // do a conditional update using "updated" as the optimistic lock
+                    update = Operations.NewConditionalUpdate(assetTerm, documents.Asset, mode, AssetFieldConstants.Updated);
                 }
                 else
                 {
-                    
+                    update = Operations.NewUpdate(assetTerm, documents.Asset, mode);
+                }
+
+                //var onCompletion = Operations.NewCompletionDelegate()
+                var onCompletion = Operations.NewCompletionDelegate(update, null);
+                results.Add("Asset", asset.Id, _lifecycle.AssetIndex.Perform(onCompletion));
+
+                if (reIndexComments)
+                {
+                    results.Add("Comment for Asset", asset.Id,
+                        _lifecycle.CommentIndex.Perform(Operations.NewUpdate(assetTerm, documents.Comments, mode)));
                 }
             }
 
-            var result = new AccumulatingResultBuilder();
-            return result.ToResult();
+            return results.ToResult();
         }
 
         public IIndexResult ReIndexComments(ICollection<AssetComment> comments)

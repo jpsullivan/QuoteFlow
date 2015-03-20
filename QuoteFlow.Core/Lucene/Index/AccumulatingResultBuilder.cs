@@ -47,6 +47,22 @@ namespace QuoteFlow.Core.Lucene.Index
             return this;
         }
 
+        public AccumulatingResultBuilder Add(string indexName, int identifier, IIndexResult result)
+        {
+            if (result == null) throw new ArgumentNullException("result");
+
+            if (result is CompositeResult)
+            {
+                Add(result);
+            }
+            else
+            {
+                AddInternal(indexName, identifier, result);
+            }
+
+            return this;
+        }
+
         private void AddInternal(InFlightResult ifr)
         {
             CheckCompleted();

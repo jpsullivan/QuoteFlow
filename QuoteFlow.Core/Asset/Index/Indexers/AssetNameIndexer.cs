@@ -12,12 +12,12 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
     /// </summary>
     public class AssetNameIndexer : BaseFieldIndexer
     {
-		public virtual string Id
+        public override string Id
 		{
 			get { return SystemSearchConstants.ForSummary().FieldId; }
 		}
 
-		public virtual string DocumentFieldId
+        public override string DocumentFieldId
 		{
 			get { return SystemSearchConstants.ForSummary().IndexField; }
 		}
