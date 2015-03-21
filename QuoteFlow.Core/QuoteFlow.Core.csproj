@@ -183,11 +183,13 @@
     <Compile Include="Asset\Index\AssetDocumentAndIdCollector.cs" />
     <Compile Include="Asset\Index\AssetDocumentBuilder.cs" />
     <Compile Include="Asset\Index\AssetDocumentFactory.cs" />
+    <Compile Include="Asset\Index\AssetIdBatcher.cs" />
     <Compile Include="Asset\Index\AssetIndexer.cs" />
     <Compile Include="Asset\Index\AssetIndexManager.cs" />
     <Compile Include="Asset\Index\CommentDocumentBuilder.cs" />
     <Compile Include="Asset\Index\DocumentCreationStrategy.cs" />
     <Compile Include="Asset\Index\Documents.cs" />
+    <Compile Include="Asset\Index\IAssetsBatcher.cs" />
     <Compile Include="Asset\Index\IAssetBatcherFactory.cs" />
     <Compile Include="Asset\Index\IAssetDocumentFactory.cs" />
     <Compile Include="Asset\Index\IAssetIndexer.cs" />

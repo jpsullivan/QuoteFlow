@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
@@ -120,7 +121,8 @@ namespace QuoteFlow.Core.Index
                 try
                 {
                     int i = 0;
-                    var assetIds = new int[indexReader.NumDocs()];
+                    //var assetIds = new int[indexReader.NumDocs()];
+                    var assetIds = new List<int>();
                     do
                     {
                         Term term = termEnum.Term;
@@ -130,14 +132,15 @@ namespace QuoteFlow.Core.Index
                             // No assets. May happen
                             break;
                         }
-                        string issueId = term.Text;
-                        assetIds = EnsureCapacity(assetIds, i);
-                        assetIds[i] = Convert.ToInt32(issueId);
+                        string assetId = term.Text;
+                        //assetIds = EnsureCapacity(assetIds, i);
+                        //assetIds[i] = Convert.ToInt32(issueId);
+                        assetIds.Add(Convert.ToInt32(assetId));
                         i++;
                     }
                     while (termEnum.Next());
 
-                    return assetIds;
+                    return assetIds.ToArray();
                 }
                 finally
                 {
