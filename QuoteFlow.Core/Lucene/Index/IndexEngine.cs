@@ -13,7 +13,7 @@ using QuoteFlow.Core.Index;
 namespace QuoteFlow.Core.Lucene.Index
 {
     /// <summary>
-    /// Thread-safe container that manages our current <see cref="IndexSearcher"/> and <see cref="Writer"/>.
+    /// Thread-safe container that manages our current <see cref="IndexSearcher"/> and <see cref="IWriter"/>.
     /// 
     /// Gets passed searcher and writer factories that create new instances of these when required.
     /// </summary>
@@ -24,6 +24,11 @@ namespace QuoteFlow.Core.Lucene.Index
         private readonly SearcherReference _searcherReference;
         private static FlushPolicy _writePolicy;
         private static IIndexConfiguration _configuration;
+
+        // for tests only
+        public IndexEngine()
+        {
+        }
 
         /// <summary>
         /// Production constructor.
@@ -47,7 +52,7 @@ namespace QuoteFlow.Core.Lucene.Index
         /// <summary>
         /// Wait until any open Searchers are closed and then close the connection.
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             _writerReference.Dispose();
             _searcherReference.Dispose();
@@ -66,7 +71,7 @@ namespace QuoteFlow.Core.Lucene.Index
             }
         }
 
-        public IndexSearcher Searcher
+        public virtual IndexSearcher Searcher
         {
             get
             {
@@ -75,7 +80,7 @@ namespace QuoteFlow.Core.Lucene.Index
             }
         }
 
-        public void Clean()
+        public virtual void Clean()
         {
             Dispose();
             try
