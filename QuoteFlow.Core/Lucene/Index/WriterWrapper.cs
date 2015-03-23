@@ -14,19 +14,19 @@ namespace QuoteFlow.Core.Lucene.Index
     /// <summary>
     /// <see cref="IWriter"/> implementation that actually writes to an <seealso cref="IndexWriter"/>.
     /// </summary>
-    internal class WriterWrapper : IWriter
+    public class WriterWrapper : IWriter
     {
         private readonly IndexWriter _writer;
         private readonly ISupplier<IndexSearcher> _indexSearchSupplier;
 
         // for testing, can't make this accept an IndexWriter without making main constructor throw IOException
-        internal WriterWrapper(ISupplier<IndexWriter> writerFactory, ISupplier<IndexSearcher> indexSearcherSupplier)
+        public WriterWrapper(ISupplier<IndexWriter> writerFactory, ISupplier<IndexSearcher> indexSearcherSupplier)
         {
             _writer = writerFactory.Get();
             _indexSearchSupplier = indexSearcherSupplier;
         }
 
-        internal WriterWrapper(IIndexConfiguration configuration, UpdateMode mode,
+        public WriterWrapper(IIndexConfiguration configuration, UpdateMode mode,
             ISupplier<IndexSearcher> indexSearcherSupplier) : this(new ConfiguredIndexWriter(configuration, mode), indexSearcherSupplier)
         {
         }

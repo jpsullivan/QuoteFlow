@@ -358,10 +358,10 @@ namespace QuoteFlow.Core.Asset.Index
             return Container.Kernel.TryGet<AssetFactory>();
         }
 
-//        AssetBatcherFactory GetAssetBatcherFactory()
-//        {
-//            return Container.Kernel.TryGet<AssetBatcherFactory>();
-//        }
+        AssetBatcherFactory GetAssetBatcherFactory()
+        {
+            return Container.Kernel.TryGet<AssetBatcherFactory>();
+        }
 
         private void DoBackgroundReindex(bool reIndexComments)
         {
@@ -379,13 +379,18 @@ namespace QuoteFlow.Core.Asset.Index
 //            {
 //                // Index the assets one batch at a time. This stops various db drivers sucking
 //                // all assets into memory at once.
-//                var batcher = GetAssetBatcherFactory().Batcher(reconciler);
+//                IAssetsBatcher batcher = GetAssetBatcherFactory().GetBatcher(reconciler);
+//                foreach (var batchOfAssets in batcher)
+//                {
+//                    resultBuilder.Add(AssetIndexer.ReIndexAssets(batchOfAssets, reIndexComments, false));
+//                }
 //            }
 //            finally
 //            {
 //                
 //            }
 
+            // fuck it, lets do it live
             var allCatalogs = CatalogService.GetCatalogs(1);
             foreach (var catalog in allCatalogs)
             {

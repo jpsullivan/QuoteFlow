@@ -28,7 +28,7 @@ namespace QuoteFlow.Core.Asset.Index
             _maxIdNextBatch = SelectMaxId();
         }
 
-        public IEnumerator<IAsset> GetEnumerator()
+        public IEnumerator<IEnumerable<Api.Models.Asset>> GetEnumerator()
         {
             throw new NotImplementedException();
         }

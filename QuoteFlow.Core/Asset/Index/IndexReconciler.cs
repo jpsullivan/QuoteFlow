@@ -14,13 +14,13 @@ namespace QuoteFlow.Core.Asset.Index
     {
         public virtual IList<long?> Unindexed { get; private set; }
 
-        private readonly long[] _indexedIssues;
+        private readonly int[] _indexedIssues;
         private readonly BitArray _matched;
 
         /// <summary>
         /// Construct a new Reconciler. </summary>
         /// <param name="indexedIssues"> An array of issues known to be in the index. </param>
-        public IndexReconciler(long[] indexedIssues)
+        public IndexReconciler(int[] indexedIssues)
         {
             Unindexed = new List<long?>();
             _indexedIssues = indexedIssues;
@@ -42,11 +42,11 @@ namespace QuoteFlow.Core.Asset.Index
             }
         }
 
-        protected virtual IList<long?> Orphans
+        protected virtual IEnumerable<int?> Orphans
         {
             get
             {
-                IList<long?> orphans = new List<long?>();
+                var orphans = new List<int?>();
                 for (int i = _matched.NextClearBit(0); i >= 0; i = _matched.NextClearBit(i + 1))
                 {
                     if (i >= _indexedIssues.Length)

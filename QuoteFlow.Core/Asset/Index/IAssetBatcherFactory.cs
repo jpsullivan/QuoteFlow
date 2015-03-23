@@ -2,6 +2,10 @@
 {
     public interface IAssetBatcherFactory
     {
-         
+        IAssetsBatcher GetBatcher();
+
+        IAssetsBatcher GetBatcher(AssetIdBatcher.ISpy spy);
+
+        IAssetsBatcher GetBatcher(AssetIdBatcher.ISpy spy, int batchSize);
     }
 }

@@ -180,6 +180,7 @@
     <Compile Include="Asset\Fields\FieldManager.cs" />
     <Compile Include="Asset\Fields\ManufacturerSystemField.cs" />
     <Compile Include="Asset\Fields\SummarySystemField.cs" />
+    <Compile Include="Asset\Index\AssetBatcherFactory.cs" />
     <Compile Include="Asset\Index\AssetDocumentAndIdCollector.cs" />
     <Compile Include="Asset\Index\AssetDocumentBuilder.cs" />
     <Compile Include="Asset\Index\AssetDocumentFactory.cs" />
