@@ -16,7 +16,7 @@ namespace QuoteFlow.Core.Index
         {
         }
 
-        internal abstract void Perform(IWriter writer);
+        public abstract void Perform(IWriter writer);
 
         internal abstract UpdateMode Mode();
     }

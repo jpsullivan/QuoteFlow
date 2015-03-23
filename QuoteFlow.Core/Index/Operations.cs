@@ -79,7 +79,7 @@ namespace QuoteFlow.Core.Index
                 _mode = mode;
             }
 
-            internal override void Perform(IWriter writer)
+            public override void Perform(IWriter writer)
             {
                 writer.DeleteDocuments(Term);
             }
@@ -114,7 +114,7 @@ namespace QuoteFlow.Core.Index
                 _mode = mode;
             }
 
-            internal override void Perform(IWriter writer)
+            public override void Perform(IWriter writer)
             {
                 writer.AddDocuments(Documents);
             }
@@ -142,7 +142,7 @@ namespace QuoteFlow.Core.Index
                 _create = new Create(documents, mode);
             }
 
-            internal override void Perform(IWriter writer)
+            public override void Perform(IWriter writer)
             {
                 writer.UpdateDocuments(_delete.Term, _create.Documents);
             }
@@ -166,7 +166,7 @@ namespace QuoteFlow.Core.Index
                 _delete = new Delete(term, mode);
             }
 
-            internal override void Perform(IWriter writer)
+            public override void Perform(IWriter writer)
             {
                 writer.UpdateDocumentConditionally(_delete.Term, _create.Documents.First(), _optimisticLockField);
             }
@@ -179,7 +179,7 @@ namespace QuoteFlow.Core.Index
 
         private sealed class Optimize : Operation
         {
-            internal override void Perform(IWriter writer)
+            public override void Perform(IWriter writer)
             {
                 writer.Optimize();
             }
@@ -201,7 +201,7 @@ namespace QuoteFlow.Core.Index
                 _completionJob = completionJob;
             }
 
-            internal override void Perform(IWriter writer)
+            public override void Perform(IWriter writer)
             {
                 try
                 {
