@@ -20,12 +20,12 @@ namespace QuoteFlow.Core.Asset.Index
         /// </summary>
         private int _maxIdNextBatch;
 
-        public AssetIdBatcher(int maxIdNextBatch, IAssetFactory assetFactory, int batchSize, ISpy spy)
+        public AssetIdBatcher(IAssetFactory assetFactory, int batchSize, ISpy spy)
         {
             AssetFactory = assetFactory;
             BatchSize = batchSize;
             Spy = spy;
-            _maxIdNextBatch = maxIdNextBatch;
+            _maxIdNextBatch = SelectMaxId();
         }
 
         public IEnumerator<IAsset> GetEnumerator()

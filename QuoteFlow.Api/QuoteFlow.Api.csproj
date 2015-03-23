@@ -514,6 +514,7 @@
     <Compile Include="Util\MessageSet.cs" />
     <Compile Include="Util\ParameterUtils.cs" />
     <Compile Include="Util\QueryString.cs" />
+    <Compile Include="Util\Support\BitSetSupport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
