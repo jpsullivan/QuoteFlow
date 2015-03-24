@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reactive.Disposables;
 using Lucene.Net.Search;
 
@@ -6,70 +7,74 @@ namespace QuoteFlow.Core.Lucene.Index
 {
     internal class DelayCloseSearcher : DelegateSearcher, IDelayDisposable
     {
-        private readonly DelayDisposableHelper helper;
+        private readonly DelayDisposableHelper _helper;
 
         internal DelayCloseSearcher(IndexSearcher searcher) : base(searcher)
         {
-            helper = new DelayDisposableHelper(new SearcherCloser(searcher));
+            _helper = new DelayDisposableHelper(new SearcherCloser(searcher));
         }
 
         internal DelayCloseSearcher(IndexSearcher searcher, IDisposable closeAction) : base(searcher)
         {
-            helper = new DelayDisposableHelper(new CompositeDisposable(closeAction, new SearcherCloser(searcher)));
+            _helper = new DelayDisposableHelper(new CompositeDisposable(closeAction, new SearcherCloser(searcher)));
         }
 
         public void Open()
         {
-            helper.Open();
+            _helper.Open();
         }
 
         public void CloseWhenDone()
         {
-            helper.CloseWhenDone();
+            _helper.CloseWhenDone();
         }
 
         public bool IsClosed
         {
-            get { return helper.IsClosed; }
+            get { return _helper.IsClosed; }
         }
 
-        public new void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            helper.Dispose();
+            _helper.Dispose();
         }
 
-        private class SearcherCloser : IDisposable
+        /// <summary>
+        /// Simple IDisposable adaptor for a Searcher.
+        /// </summary>
+        private sealed class SearcherCloser : IDisposable
         {
-            internal readonly IndexSearcher Searcher;
+            private readonly IndexSearcher _searcher;
 
             internal SearcherCloser(IndexSearcher searcher)
             {
-                Searcher = searcher;
+                _searcher = searcher;
+                IncReaderRef();
             }
 
             public void Dispose()
             {
                 try
                 {
-                    Searcher.Dispose();
-                    IncReaderRef();
+                    _searcher.Dispose();
+                    DecReaderRef();
                 }
-                catch (Exception ex)
+                catch (IOException ex)
                 {
                     throw ex;
                 }
             }
 
-            protected virtual void IncReaderRef()
+            private void IncReaderRef()
             {
-                Searcher.IndexReader.IncRef();
+                _searcher.IndexReader.IncRef();
 //                Counter searcherLuceneOpenInstrument = Instrumentation.pullCounter(InstrumentationName.SEARCHER_LUCENE_OPEN);
 //                searcherLuceneOpenInstrument.IncrementAndGet();
             }
 
-            protected virtual void DecReaderRef()
+            private void DecReaderRef()
             {
-                Searcher.IndexReader.DecRef();
+                _searcher.IndexReader.DecRef();
 //                Counter searcherLuceneCloseInstrument = Instrumentation.pullCounter(InstrumentationName.SEARCHER_LUCENE_CLOSE);
 //                searcherLuceneCloseInstrument.IncrementAndGet();
             }

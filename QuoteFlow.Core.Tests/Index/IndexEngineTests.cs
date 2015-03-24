@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
@@ -9,7 +8,6 @@ using Moq;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Api.Util;
 using QuoteFlow.Api.Util.Support;
-using QuoteFlow.Core.Configuration.Lucene;
 using QuoteFlow.Core.Index;
 using QuoteFlow.Core.Lucene.Index;
 using QuoteFlow.Core.Tests.Jql.Util.Searchers;
@@ -22,12 +20,15 @@ namespace QuoteFlow.Core.Tests.Index
         private static ISupplier<IndexSearcher> _indexSearcherSupplier;
 
         [Fact]
-        public void TestSearcherClosed()
+        public void TestSearcherDisposed()
         {
             var configuration = new IndexConfiguration(new RAMDirectory(), new StandardAnalyzer(LuceneVersion.Get()));
 
-            _indexSearcherSupplier = new SimpleEngine();
-            var searcherFactory = ToFactory(new SimpleEngine());
+            var mockSupplier = new Mock<ISupplier<IndexSearcher>>();
+            mockSupplier.Setup(x => x.Get()).Returns(MockSearcherFactory.GetCleanSearcher);
+
+            _indexSearcherSupplier = mockSupplier.Object;
+            var searcherFactory = ToFactory(mockSupplier.Object);
 
             var writer = new Mock<IWriter>();
             writer.Setup(x => x.Get(UpdateMode.Interactive))
@@ -44,14 +45,6 @@ namespace QuoteFlow.Core.Tests.Index
             Assert.NotSame(searcher, newSearcher);
         }
 
-        private class SimpleEngine : ISupplier<IndexSearcher>
-        {
-            public IndexSearcher Get()
-            {
-                return MockSearcherFactory.GetCleanSearcher();
-            }
-        }
-
         [Fact]
         public void TestWriterNotFlushedForWritePolicyNone()
         {
@@ -62,6 +55,28 @@ namespace QuoteFlow.Core.Tests.Index
 
             Touch(engine);
         }
+
+        #region Dummy WriterWrapper helper
+
+        private class DummyWriterWrapper : WriterWrapper
+        {
+            public DummyWriterWrapper(IIndexConfiguration configuration, ISupplier<IndexSearcher> indexSearcherSupplier)
+                : base(configuration, UpdateMode.Interactive, indexSearcherSupplier)
+            {
+            }
+
+            public override void Dispose()
+            {
+                Assert.True(false, "should not dispose!");
+            }
+
+            public override void Commit()
+            {
+                Assert.True(false, "should not commit!");
+            }
+        }
+
+        #endregion
 
         [Fact]
         public void TestWriterClosedForWritePolicyClose()
@@ -77,49 +92,87 @@ namespace QuoteFlow.Core.Tests.Index
             Assert.Equal(1, writerWrapper.CloseCount);
         }
 
-        [Fact]
-        public void TestOldReaderDisposed_When_SearcherDisposedBeforeEngine()
+        public class TheDisposeMethod
         {
-            var engine = GetRamDirectory();
-            var searcher = engine.Searcher;
-            var reader = searcher.IndexReader;
-            AssertReaderOpen(reader);
-            engine.Dispose();
-            AssertReaderOpen(reader);
-
-            searcher.Dispose();
-            AssertReaderClosed(reader);
-        }
-
-        [Fact]
-        public void TestOldReaderClosed_When_SearcherClosedAfterEngine()
-        {
-            var engine = GetRamDirectory();
-            var searcher = engine.Searcher;
-            var reader = searcher.IndexReader;
-            AssertReaderOpen(reader);
-            searcher.Dispose();
-            AssertReaderOpen(reader);
-
-            engine.Dispose();
-            AssertReaderClosed(reader);
-        }
-
-        private class DummyWriterWrapper : WriterWrapper
-        {
-            public DummyWriterWrapper(IIndexConfiguration configuration, ISupplier<IndexSearcher> indexSearcherSupplier) 
-                : base(configuration, UpdateMode.Interactive, indexSearcherSupplier)
+            [Fact]
+            public void TestOldReaderDisposed_When_SearcherDisposedBeforeEngine()
             {
+                var engine = GetRamDirectory();
+                var searcher = engine.Searcher;
+                var reader = searcher.IndexReader;
+                AssertReaderOpen(reader);
+                engine.Dispose();
+                AssertReaderOpen(reader);
+
+                searcher.Dispose();
+                AssertReaderClosed(reader);
             }
 
-            public override void Dispose()
+            [Fact]
+            public void TestOldReaderClosed_When_SearcherClosedAfterEngine()
             {
-                Assert.True(false, "should not dispose!");
+                var engine = GetRamDirectory();
+                var searcher = engine.Searcher;
+                var reader = searcher.IndexReader;
+                AssertReaderOpen(reader);
+                searcher.Dispose();
+                AssertReaderOpen(reader);
+
+                engine.Dispose();
+                AssertReaderClosed(reader);
             }
 
-            public override void Commit()
+            private static readonly AtomicInteger SearcherDisposeCount = new AtomicInteger();
+
+            [Fact]
+            public void TestWriterAndSearcherDisposedWhenDisposed()
             {
-                Assert.True(false, "should not commit!");
+                var directory = new RAMDirectory();
+                var configuration = new IndexConfiguration(directory, new StandardAnalyzer(LuceneVersion.Get()));
+                var writerWrapper = new DisposeCountingWriterWrapper(configuration, _indexSearcherSupplier);
+
+                // instead of create helper classes, lets just mock the neceessary functionality to count disposals
+                var mockSupplier = new Mock<ISupplier<IndexSearcher>>();
+                mockSupplier.Setup(x => x.Get()).Returns(new DisposalCounterIndexSearcher(directory));
+
+                var mockWriter = new Mock<IWriter>();
+                mockWriter.Setup(x => x.Get(It.IsAny<UpdateMode>())).Returns(writerWrapper);
+
+                _indexSearcherSupplier = mockSupplier.Object;
+                var searcherFactory = ToFactory(mockSupplier.Object);
+
+                var engine = new IndexEngine(searcherFactory, mockWriter.Object, configuration, IndexEngine.FlushPolicy.Close);
+
+                Touch(engine);
+
+                Assert.Equal(1, writerWrapper.CloseCount);
+                Assert.Equal(0, SearcherDisposeCount.Get());
+
+                var searcher = engine.Searcher;
+                searcher.Dispose(); // todo: this not disposing on the DelayCloseSearcher
+                searcher.Dispose();
+//                engine.Searcher.Dispose();
+//                engine.Searcher.Dispose();
+                Assert.Equal(2, writerWrapper.CloseCount);
+                Assert.Equal(0, SearcherDisposeCount.Get());
+
+                engine.Dispose();
+                Assert.Equal(2, writerWrapper.CloseCount);
+                Assert.Equal(1, SearcherDisposeCount.Get());
+            }
+
+            private class DisposalCounterIndexSearcher : IndexSearcher
+            {
+                public DisposalCounterIndexSearcher(Directory path)
+                    : base(path)
+                {
+                }
+
+                protected override void Dispose(bool disposing)
+                {
+                    SearcherDisposeCount.IncrementAndGet();
+                    base.Dispose(disposing);
+                }
             }
         }
 
@@ -159,7 +212,7 @@ namespace QuoteFlow.Core.Tests.Index
 
         #region Lucene reader / document helpers
 
-        private void AssertReaderClosed(IndexReader reader)
+        private static void AssertReaderClosed(IndexReader reader)
         {
             // if the reader is closed, flush will throw an AlreadyClosedException
             try
@@ -173,7 +226,7 @@ namespace QuoteFlow.Core.Tests.Index
             }
         }
 
-        private void AssertReaderOpen(IndexReader reader)
+        private static void AssertReaderOpen(IndexReader reader)
         {
             // if the reader is closed, flush will throw an AlreadyClosedException
             try
@@ -194,7 +247,7 @@ namespace QuoteFlow.Core.Tests.Index
             engine.Write(Operations.NewCreate(doc, UpdateMode.Interactive));
         }
 
-        private IndexEngine GetRamDirectory()
+        private static IndexEngine GetRamDirectory()
         {
             var directory = new RAMDirectory();
             // todo: lucene 4.8
