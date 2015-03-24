@@ -149,10 +149,8 @@ namespace QuoteFlow.Core.Tests.Index
                 Assert.Equal(0, SearcherDisposeCount.Get());
 
                 var searcher = engine.Searcher;
-                searcher.Dispose(); // todo: this not disposing on the DelayCloseSearcher
                 searcher.Dispose();
-//                engine.Searcher.Dispose();
-//                engine.Searcher.Dispose();
+                searcher.Dispose();
                 Assert.Equal(2, writerWrapper.CloseCount);
                 Assert.Equal(0, SearcherDisposeCount.Get());
 
@@ -173,6 +171,33 @@ namespace QuoteFlow.Core.Tests.Index
                     SearcherDisposeCount.IncrementAndGet();
                     base.Dispose(disposing);
                 }
+            }
+        }
+
+        public class TheCleanMethod
+        {
+            [Fact]
+            public void TestDirectoryCleaned()
+            {
+                var directory = new RAMDirectory();
+                var analyzer = new StandardAnalyzer(LuceneVersion.Get());
+
+                {
+                    // todo: lucene 4.8
+                    //var conf = new IndexWriterConfig(LuceneVersion.Get(), analyzer);
+                    IndexWriter writer = new IndexWriter(directory, analyzer, true, new IndexWriter.MaxFieldLength(1000));
+                    writer.AddDocument(new Document());
+                    writer.Dispose();
+                }
+
+                var configuration = new IndexConfiguration(directory, analyzer);
+                var mockWriterWrapper = new Mock<IWriter>();
+                mockWriterWrapper.Setup(x => x.Get(It.IsAny<UpdateMode>())).Callback(() => Assert.True(false, "no writer required"));
+                var engine = new IndexEngine(new DummySearcherFactory(), mockWriterWrapper.Object, configuration, IndexEngine.FlushPolicy.None);
+
+                Assert.Equal(1, new IndexSearcher(directory).IndexReader.NumDocs());
+                engine.Clean();
+                Assert.Equal(0, new IndexSearcher(directory).IndexReader.NumDocs());
             }
         }
 
@@ -254,7 +279,7 @@ namespace QuoteFlow.Core.Tests.Index
 //            IndexWriterConfig conf = new IndexWriterConfig(LuceneVersion.get(), new StandardAnalyzer(LuceneVersion.get()));
 //            conf.OpenMode = IndexWriterConfig.OpenMode.CREATE;
 //            (new IndexWriter(directory, conf)).close();
-            (new IndexWriter(directory, new StandardAnalyzer(LuceneVersion.Get()), new IndexWriter.MaxFieldLength(1000))).Dispose();
+            (new IndexWriter(directory, new StandardAnalyzer(LuceneVersion.Get()), true, new IndexWriter.MaxFieldLength(1000))).Dispose();
             var configuration = new IndexConfiguration(directory, new StandardAnalyzer(LuceneVersion.Get()));
             return new IndexEngine(configuration, IndexEngine.FlushPolicy.Flush);
         }

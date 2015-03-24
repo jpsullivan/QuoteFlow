@@ -114,7 +114,7 @@ namespace QuoteFlow.Core.Lucene.Index
             _searcher.Search(query, filter, results);
         }
 
-        // todo: uncomment until lucene 4.8
+        // todo: lucene 4.8
 //        public override TopFieldDocs Search(Query query, int i, Sort sort)
 //        {
 //            return _searcher.Search(query, i, sort);
