@@ -129,7 +129,7 @@ namespace QuoteFlow.Core.Lucene.Index
             _writer.Optimize();
         }
 
-        public void Commit()
+        public virtual void Commit()
         {
             try
             {
@@ -154,7 +154,7 @@ namespace QuoteFlow.Core.Lucene.Index
             }
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             try
             {

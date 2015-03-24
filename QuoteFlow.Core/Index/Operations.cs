@@ -84,7 +84,7 @@ namespace QuoteFlow.Core.Index
                 writer.DeleteDocuments(Term);
             }
 
-            internal override UpdateMode Mode()
+            public override UpdateMode Mode()
             {
                 return _mode;
             }
@@ -119,7 +119,7 @@ namespace QuoteFlow.Core.Index
                 writer.AddDocuments(Documents);
             }
 
-            internal override UpdateMode Mode()
+            public override UpdateMode Mode()
             {
                 return _mode;
             }
@@ -147,7 +147,7 @@ namespace QuoteFlow.Core.Index
                 writer.UpdateDocuments(_delete.Term, _create.Documents);
             }
 
-            internal override UpdateMode Mode()
+            public override UpdateMode Mode()
             {
                 return _delete.Mode();
             }
@@ -171,7 +171,7 @@ namespace QuoteFlow.Core.Index
                 writer.UpdateDocumentConditionally(_delete.Term, _create.Documents.First(), _optimisticLockField);
             }
 
-            internal override UpdateMode Mode()
+            public override UpdateMode Mode()
             {
                 return _create.Mode();
             }
@@ -184,7 +184,7 @@ namespace QuoteFlow.Core.Index
                 writer.Optimize();
             }
 
-            internal override UpdateMode Mode()
+            public override UpdateMode Mode()
             {
                 return UpdateMode.Batch;
             }
@@ -216,7 +216,7 @@ namespace QuoteFlow.Core.Index
                 }
             }
 
-            internal override UpdateMode Mode()
+            public override UpdateMode Mode()
             {
                 return _delegate.Mode();
             }

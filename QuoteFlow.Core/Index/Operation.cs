@@ -12,12 +12,12 @@ namespace QuoteFlow.Core.Index
     /// </summary>
     public abstract class Operation
     {
-        internal Operation()
+        public Operation()
         {
         }
 
         public abstract void Perform(IWriter writer);
 
-        internal abstract UpdateMode Mode();
+        public abstract UpdateMode Mode();
     }
 }

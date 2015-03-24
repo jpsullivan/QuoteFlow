@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="Asset\Index\SearcherCacheTests.cs" />
     <Compile Include="Asset\Search\Managers\SearchHandlerManagerTests.cs" />
+    <Compile Include="Index\IndexEngineTests.cs" />
     <Compile Include="Index\IndexesTests.cs" />
     <Compile Include="Index\OperationsTests.cs" />
     <Compile Include="Jql\Parser\Antlr\AntlrPositionTests.cs" />
