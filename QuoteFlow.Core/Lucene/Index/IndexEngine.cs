@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using Lucene.Net.Analysis;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
@@ -22,7 +21,7 @@ namespace QuoteFlow.Core.Lucene.Index
     {
         private static WriterReference _writerReference;
         private readonly ISearcherFactory _searcherFactory;
-        private readonly SearcherReference _searcherReference;
+        private static SearcherReference _searcherReference;
         private static FlushPolicy _writePolicy;
         private static IIndexConfiguration _configuration;
 
@@ -215,26 +214,10 @@ namespace QuoteFlow.Core.Lucene.Index
 
         private class DefaultWriterFactory : IWriter
         {
-            private readonly IndexSearcher _searcher;
-
-            public DefaultWriterFactory()
-            {
-            }
-
-            public DefaultWriterFactory(IndexSearcher searcher)
-            {
-                _searcher = searcher;
-            }
-
             public IWriter Get(UpdateMode mode)
             {
-                // be default, create a writer wrapper that has access to this engines searcher.
-                return new WriterWrapper(_configuration, mode, new WriterFactorySupplier(_searcher));
-            }
-
-            public void Dispose()
-            {
-                throw new NotImplementedException();
+                // by default, create a writer wrapper that has access to this engine's searcher
+                return new WriterWrapper(_configuration, mode, new WriterFactorySupplier());
             }
 
             public void AddDocuments(IEnumerable<Document> documents)
@@ -271,20 +254,18 @@ namespace QuoteFlow.Core.Lucene.Index
             {
                 throw new NotImplementedException();
             }
+
+            public void Dispose()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private class WriterFactorySupplier : ISupplier<IndexSearcher>
         {
-            private readonly IndexSearcher _searcher;
-
-            public WriterFactorySupplier(IndexSearcher searcher)
-            {
-                _searcher = searcher;
-            }
-
             public IndexSearcher Get()
             {
-                return _searcher;
+                return _searcherReference.Get(UpdateMode.Interactive);
             }
         }
 
@@ -441,7 +422,8 @@ namespace QuoteFlow.Core.Lucene.Index
         {
             try
             {
-                operation.Perform(writer.Get(operation.Mode()));
+                var theWriter = writer.Get(operation.Mode());
+                operation.Perform(theWriter);
             }
             finally
             {
