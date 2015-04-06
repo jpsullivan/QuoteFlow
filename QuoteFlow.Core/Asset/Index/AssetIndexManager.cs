@@ -200,9 +200,14 @@ namespace QuoteFlow.Core.Asset.Index
 
                 FlushThreadLocalSearchers();
             }
+            else
+            {
+                DoStopTheWorldReindex();
+            }
 
             stopWatch.Stop();
-            throw new NotImplementedException();
+
+            return stopWatch.Elapsed.Seconds;
         }
 
         public int ReIndexAssets(IEnumerable<IAsset> assets)
@@ -397,6 +402,24 @@ namespace QuoteFlow.Core.Asset.Index
                 var allAssets = AssetService.GetAssets(catalog.Id);
                 AssetIndexer.ReIndexAssets(allAssets, reIndexComments, false);
             }
+
+            stopWatch.Stop();
+        }
+
+        private void DoStopTheWorldReindex()
+        {
+            var stopWatch = Stopwatch.StartNew();
+
+            AssetIndexer.DeleteIndexes();
+
+            var allCatalogs = CatalogService.GetCatalogs(1);
+            foreach (var catalog in allCatalogs)
+            {
+                var allAssets = AssetService.GetAssets(catalog.Id);
+                AssetIndexer.IndexAssetsBatchMode(allAssets);
+            }
+
+            AssetIndexer.Optimize();
 
             stopWatch.Stop();
         }

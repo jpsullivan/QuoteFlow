@@ -50,7 +50,8 @@ namespace QuoteFlow.Core.Lucene.Index
                     // todo: lucene 4.8
                     //var luceneConfig = writerSettings.GetWriterConfiguration(_configuration.Analyzer);
                     //return new IndexWriter(_configuration.Directory, luceneConfig);
-                    return new IndexWriter(_configuration.Directory, _configuration.Analyzer, new IndexWriter.MaxFieldLength(writerSettings.MaxFieldLength));
+                    return new IndexWriter(_configuration.Directory, _configuration.Analyzer, true,
+                        new IndexWriter.MaxFieldLength(writerSettings.MaxFieldLength));
                 }
                 catch (Exception ex)
                 {
