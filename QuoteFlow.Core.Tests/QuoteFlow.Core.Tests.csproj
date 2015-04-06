@@ -98,6 +98,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Asset\Index\Indexers\FieldIndexerUtilTests.cs" />
     <Compile Include="Asset\Index\SearcherCacheTests.cs" />
     <Compile Include="Asset\Search\Managers\SearchHandlerManagerTests.cs" />
     <Compile Include="Index\IndexEngineTests.cs" />

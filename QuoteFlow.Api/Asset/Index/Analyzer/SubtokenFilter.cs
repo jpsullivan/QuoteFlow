@@ -40,7 +40,7 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
         public SubtokenFilter(TokenStream tokenStream)
             : base(tokenStream)
         {
-            // todo: lucene upgrade
+            // todo: lucene 4.8 upgrade
             //termAttribute = AddAttribute<CharTermAttribute>();
             incrementAttribute = AddAttribute<IPositionIncrementAttribute>();
             typeAttribute = AddAttribute<ITypeAttribute>();
