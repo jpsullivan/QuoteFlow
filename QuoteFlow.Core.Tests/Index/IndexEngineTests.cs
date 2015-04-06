@@ -270,6 +270,61 @@ namespace QuoteFlow.Core.Tests.Index
             AssertReaderOpen(newReader);
         }
 
+        [Fact]
+        public void TestMultipleWritesBetweenSearcherDisposes()
+        {
+            // test the old reader is still open until all searchers using it are disposed
+            // test the old reader is still open until all searchers using it are disposed
+            var engine = GetRamDirectory();
+
+            var oldSearcher1 = engine.Searcher;
+            var oldSearcher2 = engine.Searcher;
+            Assert.Same(oldSearcher1, oldSearcher2); // should be same until something is written.
+
+            WriteTestDocument(engine);
+            WriteTestDocument(engine);
+            WriteTestDocument(engine);
+            WriteTestDocument(engine);
+
+            var oldSearcher3 = engine.Searcher;
+            Assert.NotSame(oldSearcher1, oldSearcher3);
+
+            WriteTestDocument(engine);
+            WriteTestDocument(engine);
+
+            var oldSearcher4 = engine.Searcher;
+            var oldSearcher5 = engine.Searcher;
+            Assert.NotSame(oldSearcher1, oldSearcher4);
+            Assert.NotSame(oldSearcher3, oldSearcher4);
+            Assert.Same(oldSearcher4, oldSearcher5);
+
+            AssertReaderOpen(oldSearcher1.IndexReader);
+            AssertReaderOpen(oldSearcher2.IndexReader);
+            AssertReaderOpen(oldSearcher3.IndexReader);
+            AssertReaderOpen(oldSearcher4.IndexReader);
+            AssertReaderOpen(oldSearcher5.IndexReader);
+
+            oldSearcher1.Dispose();
+            oldSearcher2.Dispose();
+            oldSearcher3.Dispose();
+            oldSearcher4.Dispose();
+            oldSearcher5.Dispose();
+
+            AssertReaderClosed(oldSearcher1.IndexReader);
+            AssertReaderClosed(oldSearcher2.IndexReader);
+            AssertReaderClosed(oldSearcher3.IndexReader);
+            AssertReaderOpen(oldSearcher4.IndexReader);
+            AssertReaderOpen(oldSearcher5.IndexReader);
+
+            WriteTestDocument(engine);
+            AssertReaderOpen(oldSearcher4.IndexReader);
+
+            // getting a new searcher -> gets a new reader -> disposes the old reader
+            var oldSearcher6 = engine.Searcher;
+            AssertReaderClosed(oldSearcher4.IndexReader);
+            AssertReaderClosed(oldSearcher5.IndexReader);
+        }
+
         private class DisposeCountingWriterWrapper : WriterWrapper
         {
             private AtomicInteger _count = new AtomicInteger();
