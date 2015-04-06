@@ -201,6 +201,75 @@ namespace QuoteFlow.Core.Tests.Index
             }
         }
 
+        [Fact]
+        public void TestSimpleFlowReaderIsClosed()
+        {
+            // test the simple flow of a get searcher / writer / dispose searcher / openSearcher
+            // correctly gets a new reader and disposes the old reader.
+            var engine = GetRamDirectory();
+
+            var searcher = engine.Searcher;
+            var reader = searcher.IndexReader;
+            WriteTestDocument(engine);
+            searcher.Dispose();
+
+            var newSearcher = engine.Searcher;
+            Assert.NotSame(searcher, newSearcher);
+            var newReader = newSearcher.IndexReader;
+            Assert.NotSame(reader, newReader);
+
+            AssertReaderClosed(reader);
+            AssertReaderOpen(newReader);
+        }
+
+        [Fact]
+        public void TestMultipleSearchersWithoutWrites()
+        {
+            // test to just get the same searcher and reader when there are no writes
+            var engine = GetRamDirectory();
+
+            var searcher = engine.Searcher;
+            var reader = searcher.IndexReader;
+            searcher.Dispose();
+
+            var newSearcher = engine.Searcher;
+            Assert.Same(searcher, newSearcher);
+            var newReader = newSearcher.IndexReader;
+            Assert.Same(reader, newReader);
+            AssertReaderOpen(reader);
+        }
+
+        [Fact]
+        public void TestOldReaderStillOpenTillAllSearchersDisposed()
+        {
+            // test the old reader is still open until all searchers using it are disposed
+            var engine = GetRamDirectory();
+
+            var oldSearcher1 = engine.Searcher;
+            var oldSearcher2 = engine.Searcher;
+            var oldSearcher3 = engine.Searcher;
+            var reader = oldSearcher1.IndexReader;
+            Assert.Same(oldSearcher1, oldSearcher2); // should be same until something is written
+            Assert.Same(oldSearcher1, oldSearcher3); // should be same until something is written
+
+            WriteTestDocument(engine);
+
+            oldSearcher1.Dispose();
+
+            var newSearcher = engine.Searcher;
+            Assert.NotSame(oldSearcher1, newSearcher);
+            var newReader = newSearcher.IndexReader;
+            Assert.NotSame(reader, newReader);
+
+            AssertReaderOpen(reader);
+            AssertReaderOpen(newReader);
+            oldSearcher2.Dispose();
+            AssertReaderOpen(reader);
+            oldSearcher3.Dispose();
+            AssertReaderClosed(reader);
+            AssertReaderOpen(newReader);
+        }
+
         private class DisposeCountingWriterWrapper : WriterWrapper
         {
             private AtomicInteger _count = new AtomicInteger();
