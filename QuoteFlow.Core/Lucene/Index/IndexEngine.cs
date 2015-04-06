@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using Lucene.Net.Analysis;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
@@ -304,7 +305,7 @@ namespace QuoteFlow.Core.Lucene.Index
                     }
                     catch (Exception ex)
                     {
-                        throw ex;
+                        // swallow the exception
                     }
                 }
             }
@@ -332,7 +333,7 @@ namespace QuoteFlow.Core.Lucene.Index
                     }
                     catch (Exception ex)
                     {
-                        throw ex;
+                        // swallow the exception
                     }
                 }
             }
