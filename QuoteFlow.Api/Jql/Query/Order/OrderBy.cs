@@ -44,7 +44,7 @@ namespace QuoteFlow.Api.Jql.Query.Order
 
 			var orderBy = (OrderBy) o;
 
-			if (!SearchSorts.Equals(orderBy.SearchSorts))
+            if (!SearchSorts.SequenceEqual(orderBy.SearchSorts))
 			{
 				return false;
 			}
@@ -56,6 +56,5 @@ namespace QuoteFlow.Api.Jql.Query.Order
 		{
 			return SearchSorts.GetHashCode();
 		}
-
     }
 }

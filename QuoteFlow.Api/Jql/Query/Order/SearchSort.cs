@@ -14,7 +14,7 @@ namespace QuoteFlow.Api.Jql.Query.Order
     [Serializable]
     public class SearchSort
     {
-        public SortOrder? Order;
+        public readonly SortOrder? Order;
         public string Field { get; private set; }
         public readonly IEnumerable<Property> Property;
 
@@ -75,13 +75,48 @@ namespace QuoteFlow.Api.Jql.Query.Order
         {
             var sb = new StringBuilder(Field);
 
-            foreach (var prop in Property)
+            if (Property != null)
             {
-                sb.Append(prop);
+                foreach (var prop in Property)
+                {
+                    sb.Append(prop);
+                }
             }
 
             return sb.ToString();
         }
-    }
 
+        public override bool Equals(object o)
+        {
+            if (this == o)
+            {
+                return true;
+            }
+            if (o == null || GetType() != o.GetType())
+            {
+                return false;
+            }
+
+            SearchSort that = (SearchSort)o;
+
+            if (!Field.Equals(that.Field))
+            {
+                return false;
+            }
+            if (Order != that.Order)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            int result = Order != null ? Order.GetHashCode() : 0;
+            result = 31 * result + Field.GetHashCode();
+            return result;
+        }
+
+    }
 }

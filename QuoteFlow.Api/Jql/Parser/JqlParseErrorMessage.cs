@@ -44,7 +44,7 @@ namespace QuoteFlow.Api.Jql.Parser
 			{
 				return true;
 			}
-			if (o == null || this.GetType() != o.GetType())
+			if (o == null || GetType() != o.GetType())
 			{
 				return false;
 			}

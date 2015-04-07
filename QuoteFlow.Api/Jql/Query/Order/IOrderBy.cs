@@ -16,5 +16,4 @@ namespace QuoteFlow.Api.Jql.Query.Order
         /// </returns>
         List<SearchSort> SearchSorts { get; }
     }
-
 }

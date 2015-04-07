@@ -53,5 +53,42 @@ namespace QuoteFlow.Api.Jql.Query
 
 			return builder.ToString();
 		}
+
+        public override bool Equals(object o)
+        {
+            if (this == o)
+            {
+                return true;
+            }
+            if (o == null || this.GetType() != o.GetType())
+            {
+                return false;
+            }
+
+            Query that = (Query) o;
+
+            if (OrderByClause != null ? !OrderByClause.Equals(that.OrderByClause) : that.OrderByClause != null)
+            {
+                return false;
+            }
+            if (QueryString != null ? !QueryString.Equals(that.QueryString) : that.QueryString != null)
+            {
+                return false;
+            }
+            if (WhereClause != null ? !WhereClause.Equals(that.WhereClause) : that.WhereClause != null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            int result = WhereClause != null ? WhereClause.GetHashCode() : 0;
+            result = 31 * result + (OrderByClause != null ? OrderByClause.GetHashCode() : 0);
+            result = 31 * result + (QueryString != null ? QueryString.GetHashCode() : 0);
+            return result;
+        }
     }
 }

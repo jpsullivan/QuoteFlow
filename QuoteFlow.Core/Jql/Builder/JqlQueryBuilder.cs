@@ -18,8 +18,8 @@ namespace QuoteFlow.Core.Jql.Builder
     /// </summary>
     public class JqlQueryBuilder
     {
-        private readonly JqlOrderByBuilder jqlOrderByBuilder;
-        private readonly IJqlClauseBuilder jqlClauseBuilder;
+        private readonly JqlOrderByBuilder _jqlOrderByBuilder;
+        private readonly IJqlClauseBuilder _jqlClauseBuilder;
 
         /// <summary>
         /// 
@@ -107,8 +107,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
         private JqlQueryBuilder()
         {
-            jqlOrderByBuilder = CreateOrderByBuilder(this, null);
-            jqlClauseBuilder = CreateClauseBuilder(this, null);
+            _jqlOrderByBuilder = CreateOrderByBuilder(this, null);
+            _jqlClauseBuilder = CreateClauseBuilder(this, null);
         }
 
         private JqlQueryBuilder(IQuery existingQuery)
@@ -122,8 +122,8 @@ namespace QuoteFlow.Core.Jql.Builder
                 exisitngOrderBy = existingQuery.OrderByClause;
             }
 
-            jqlClauseBuilder = CreateClauseBuilder(this, exisitingClause);
-            jqlOrderByBuilder = CreateOrderByBuilder(this, exisitngOrderBy);
+            _jqlClauseBuilder = CreateClauseBuilder(this, exisitingClause);
+            _jqlOrderByBuilder = CreateOrderByBuilder(this, exisitngOrderBy);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns>An OrderBy builder associated with the <seealso cref="JqlQueryBuilder"/> instance.</returns>
         public virtual JqlOrderByBuilder OrderBy()
         {
-            return jqlOrderByBuilder;
+            return _jqlOrderByBuilder;
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns>A WhereClause builder associated with the <seealso cref="JqlQueryBuilder"/> instance.</returns>
         public virtual IJqlClauseBuilder Where()
         {
-            return jqlClauseBuilder;
+            return _jqlClauseBuilder;
         }
 
         /// <summary>
@@ -157,8 +157,8 @@ namespace QuoteFlow.Core.Jql.Builder
         public virtual IQuery BuildQuery()
         {
             // Create the query from our configured data
-            IClause whereClause = jqlClauseBuilder.BuildClause();
-            IOrderBy orderByClause = jqlOrderByBuilder.BuildOrderBy();
+            IClause whereClause = _jqlClauseBuilder.BuildClause();
+            IOrderBy orderByClause = _jqlOrderByBuilder.BuildOrderBy();
             return new Api.Jql.Query.Query(whereClause, orderByClause, null);
         }
 
