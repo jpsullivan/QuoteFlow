@@ -282,32 +282,43 @@ namespace QuoteFlow.Core.Jql.Builder
                     StringBuilder stringBuilder = new StringBuilder();
 
                     bool start = true;
-                    operatorIterator.MoveNext();
-                    BuilderOperator op = operatorIterator.Current;
+
+                    BuilderOperator op = BuilderOperator.None;
+                    if (operatorIterator.MoveNext())
+                    {
+                         op = operatorIterator.Current;
+                    }
+
                     while (op != BuilderOperator.None)
                     {
                         switch (op)
                         {
                             case BuilderOperator.LPAREN:
                                 AddString(stringBuilder, "(");
-                                operatorIterator.MoveNext();
-                                op = operatorIterator.Current;
-                                start = true;
+                                if (operatorIterator.MoveNext())
+                                {
+                                    op = operatorIterator.Current;
+                                    start = true;
+                                }
                                 break;
                             case BuilderOperator.RPAREN:
                                 // just append these where seen.
                                 stringBuilder.Append(")");
-                                operatorIterator.MoveNext();
-                                op = operatorIterator.Current;
-                                start = false;
+                                if (operatorIterator.MoveNext())
+                                {
+                                    op = operatorIterator.Current;
+                                    start = false;
+                                }
                                 break;
                             case BuilderOperator.AND:
                             case BuilderOperator.OR:
                                 // do we need to add the starting operand for this operator. We only do this for new expressions.
                                 if (start)
                                 {
-                                    clauseIterator.MoveNext();
-                                    AddString(stringBuilder, ClauseToString(clauseIterator.Current, op));
+                                    if (clauseIterator.MoveNext())
+                                    {
+                                        AddString(stringBuilder, ClauseToString(clauseIterator.Current, op));
+                                    }
                                 }
 
                                 // Fall through here on purpose.
@@ -315,30 +326,41 @@ namespace QuoteFlow.Core.Jql.Builder
                             case BuilderOperator.NOT:
                                 AddString(stringBuilder, op.ToString());
 
-                                operatorIterator.MoveNext();
-                                BuilderOperator nextOperator = operatorIterator.Current;
-
-                                // We don't want to print the next operand yet for these two operators.
-                                if (nextOperator != BuilderOperator.LPAREN && nextOperator != BuilderOperator.NOT)
+                                BuilderOperator nextOperator = BuilderOperator.None;
+                                if (operatorIterator.MoveNext())
                                 {
-                                    clauseIterator.MoveNext();
-                                    AddString(stringBuilder, ClauseToString(clauseIterator.Current, op));
+                                    nextOperator = operatorIterator.Current;
+
+                                    // We don't want to print the next operand yet for these two operators.
+                                    if (nextOperator != BuilderOperator.LPAREN && nextOperator != BuilderOperator.NOT)
+                                    {
+                                        if (clauseIterator.MoveNext())
+                                        {
+                                            AddString(stringBuilder, ClauseToString(clauseIterator.Current, op));
+                                        }
+                                    }
                                 }
 
                                 start = false;
                                 op = nextOperator;
+
                                 break;
                         }
                     }
 
                     // Loop through any remaining operands and add them. There should only ever be one.
-                    operatorIterator.MoveNext();
-                    IMutableClause clause = clauseIterator.Current;
-                    while (clause != null)
+                    if (operatorIterator.MoveNext())
                     {
-                        AddString(stringBuilder, ClauseToString(clause, BuilderOperator.None));
-                        operatorIterator.MoveNext();
-                        clause = clauseIterator.Current;
+                        IMutableClause clause = clauseIterator.Current;
+                        while (clause != null)
+                        {
+                            AddString(stringBuilder, ClauseToString(clause, BuilderOperator.None));
+
+                            if (operatorIterator.MoveNext())
+                            {
+                                clause = clauseIterator.Current;
+                            }
+                        }
                     }
 
                     return stringBuilder.ToString();
