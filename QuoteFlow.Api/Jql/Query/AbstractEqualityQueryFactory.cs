@@ -127,7 +127,7 @@ namespace QuoteFlow.Api.Jql.Query
         /// </summary>
         /// <param name="fieldName"> the field to search on empty. </param>
         /// <returns> a lucene Query, possibly combined with a visibility query </returns>
-        internal abstract global::Lucene.Net.Search.Query GetIsEmptyQuery(string fieldName);
+        public abstract global::Lucene.Net.Search.Query GetIsEmptyQuery(string fieldName);
 
         /// <summary>
         /// Get the query for the concrete impl class that means "give me all results for this field that are not empty".
@@ -137,6 +137,6 @@ namespace QuoteFlow.Api.Jql.Query
         /// </summary>
         /// <param name="fieldName"> the field to search on empty. </param>
         /// <returns> a lucene Query, possibly combined with a visibility query </returns>
-        internal abstract global::Lucene.Net.Search.Query GetIsNotEmptyQuery(string fieldName);
+        public abstract global::Lucene.Net.Search.Query GetIsNotEmptyQuery(string fieldName);
     }
 }

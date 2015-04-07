@@ -28,7 +28,7 @@ namespace QuoteFlow.Api.Jql.Query
             return QueryFactoryResult.CreateFalseResult();
         }
 
-        internal override global::Lucene.Net.Search.Query GetIsEmptyQuery(string fieldName)
+        public override global::Lucene.Net.Search.Query GetIsEmptyQuery(string fieldName)
         {
             // We are returning a query that will include empties by specifying a MUST_NOT occurrance.
             // We should add the visibility query so that we exclude documents which don't have fieldName indexed.
@@ -36,7 +36,7 @@ namespace QuoteFlow.Api.Jql.Query
             return QueryFactoryResult.WrapWithVisibilityQuery(fieldName, result).LuceneQuery;
         }
 
-        internal override global::Lucene.Net.Search.Query GetIsNotEmptyQuery(string fieldName)
+        public override global::Lucene.Net.Search.Query GetIsNotEmptyQuery(string fieldName)
         {
             return TermQueryFactory.NonEmptyQuery(fieldName);
         }

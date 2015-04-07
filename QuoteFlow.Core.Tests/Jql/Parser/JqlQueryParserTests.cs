@@ -3,6 +3,7 @@ using System.Linq;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Operand;
+using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Core.Jql.Parser;
 using Xunit;
 using Xunit.Extensions;

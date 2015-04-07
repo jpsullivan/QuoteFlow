@@ -115,6 +115,7 @@
     <Compile Include="Jql\Query\Clause\PropertyTests.cs" />
     <Compile Include="Jql\Query\Clause\TerminalClauseTests.cs" />
     <Compile Include="Jql\Query\Clause\WasClauseTests.cs" />
+    <Compile Include="Jql\Query\EqualityQueryFactoryTests.cs" />
     <Compile Include="Jql\Query\LikeQueryFactoryTests.cs" />
     <Compile Include="Jql\Query\Operand\FunctionOperandTests.cs" />
     <Compile Include="Jql\Query\Operand\SimpleLiteralFactory.cs" />
