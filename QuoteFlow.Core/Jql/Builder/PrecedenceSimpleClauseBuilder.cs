@@ -188,10 +188,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
             private IMutableClause PopClause()
             {
-                if (!Operands.Any()) return null;
-
                 var op = Operands.First();
-                Operands.Remove(op);
+                Operands.RemoveFirst();
                 return op;
             }
 
@@ -235,8 +233,7 @@ namespace QuoteFlow.Core.Jql.Builder
                             leftOperand = PopClause();
                         }
 
-                        //Execute the operator and add the result to the top of the stack as the argument for the next
-                        //operator.
+                        //Execute the operator and add the result to the top of the stack as the argument for the next operator.
                         PushOperand(leftOperand.Combine(currentTop, rightOperand));
 
                         currentTop = HasOperator() ? PeekOperator() : BuilderOperator.None;
