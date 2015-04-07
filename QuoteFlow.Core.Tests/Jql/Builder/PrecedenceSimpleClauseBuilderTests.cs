@@ -1,6 +1,7 @@
 ﻿using System;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
+using QuoteFlow.Api.Jql.Query.Operand;
 using QuoteFlow.Core.Jql.Builder;
 using Xunit;
 
@@ -147,6 +148,49 @@ namespace QuoteFlow.Core.Tests.Jql.Builder
 
             builder.Sub().Clause(expectedClause).Or().Clause(expectedClause2).Endsub();
             Assert.Equal(new NotClause(new NotClause(new OrClause(expectedClause, expectedClause2))), builder.Build());
+        }
+
+        [Fact]
+        public void TestSingleClause()
+        {
+            var expectedClause = new TerminalClause("test", Operator.EQUALS, "pass");
+            var builder = new PrecedenceSimpleClauseBuilder();
+
+            Assert.Same(builder, builder.Clause(expectedClause));
+            Assert.Equal(expectedClause, builder.Build());
+            Assert.Equal("{test = \"pass\"}", builder.ToString());
+
+            try
+            {
+                builder.Not();
+                Assert.True(false, "Expected exception");
+            }
+            catch (Exception ex)
+            {
+                // expected
+            }
+
+            try
+            {
+                builder.Clause(new TerminalClause("test2", Operator.IS, "ERROR"));
+                Assert.True(false, "Expected exception");
+            }
+            catch (Exception ex)
+            {
+                // expected
+            }
+
+            try
+            {
+                builder.Endsub();
+                Assert.True(false, "Expected exception");
+            }
+            catch (Exception ex)
+            {
+                // expected
+            }
+
+            Assert.Same(builder, builder.And());
         }
     }
 }

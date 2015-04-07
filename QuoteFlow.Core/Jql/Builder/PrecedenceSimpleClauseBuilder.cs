@@ -349,17 +349,14 @@ namespace QuoteFlow.Core.Jql.Builder
                     }
 
                     // Loop through any remaining operands and add them. There should only ever be one.
-                    if (operatorIterator.MoveNext())
+                    if (clauseIterator.MoveNext())
                     {
                         IMutableClause clause = clauseIterator.Current;
                         while (clause != null)
                         {
                             AddString(stringBuilder, ClauseToString(clause, BuilderOperator.None));
 
-                            if (operatorIterator.MoveNext())
-                            {
-                                clause = clauseIterator.Current;
-                            }
+                            clause = operatorIterator.MoveNext() ? clauseIterator.Current : null;
                         }
                     }
 
