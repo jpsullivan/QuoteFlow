@@ -14,7 +14,7 @@ namespace QuoteFlow.Core.Jql.Builder
         OR,
         AND,
         NOT,
-        None = 0,
+        None,
     }
 
     public static class BuilderOperatorExtensions

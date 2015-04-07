@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Moq;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
+using QuoteFlow.Api.Jql.Query.Operand;
+using QuoteFlow.Core.Index;
 using QuoteFlow.Core.Jql.Builder;
 using QuoteFlow.Core.Jql.Util;
 using Xunit;
@@ -308,6 +310,24 @@ namespace QuoteFlow.Core.Tests.Jql.Parser
                 IQuery query = new Api.Jql.Query.Query(builder.BuildClause(), "ignore = me");
 
                 Assert.Equal("qwerty = \"\" OR description = \"foo\"", support.GenerateJqlString(query));
+
+                mockParser.Verify();
+            }
+
+            [Fact]
+            public void WithClauseNoSorts()
+            {
+                var mockParser = new Mock<IJqlQueryParser>();
+                mockParser.Setup(x => x.IsValidFieldName(It.IsAny<string>())).Returns(true);
+
+                var support = new JqlStringSupport(mockParser.Object);
+                var builder = JqlQueryBuilder.NewBuilder().Where().DefaultAnd();
+                builder.AddStringCondition("field", "value1", "value2", "value3");
+                builder.AddCondition("field2", Operator.LESS_THAN, new FunctionOperand("funcName", "arg1", "arg2", "arg3"));
+
+                var query = new Api.Jql.Query.Query(builder.BuildClause(), "ignore = me");
+
+                Assert.Equal("field in (\"value1\", \"value2\", \"value3\") AND field2 < \"funcName\"(\"arg1\", \"arg2\", \"arg3\")", support.GenerateJqlString(query));
 
                 mockParser.Verify();
             }

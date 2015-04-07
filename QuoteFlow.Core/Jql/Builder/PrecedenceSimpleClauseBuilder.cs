@@ -164,7 +164,7 @@ namespace QuoteFlow.Core.Jql.Builder
             private BuilderOperator PopOperator()
             {
                 BuilderOperator builderOperator = Operators.First();
-                Operators.Remove(0);
+                Operators.RemoveFirst();
                 if (builderOperator == BuilderOperator.LPAREN)
                 {
                     Level = Level - 1;
@@ -179,7 +179,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
             private bool HasOperator()
             {
-                return Operators.Count > 0;
+                return Operators.Any();
             }
 
             internal void PushOperand(IMutableClause operand)
