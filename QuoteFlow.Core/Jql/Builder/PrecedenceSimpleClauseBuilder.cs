@@ -295,20 +295,14 @@ namespace QuoteFlow.Core.Jql.Builder
                         {
                             case BuilderOperator.LPAREN:
                                 AddString(stringBuilder, "(");
-                                if (operatorIterator.MoveNext())
-                                {
-                                    op = operatorIterator.Current;
-                                    start = true;
-                                }
+                                op = operatorIterator.MoveNext() ? operatorIterator.Current : BuilderOperator.None;
+                                start = true;
                                 break;
                             case BuilderOperator.RPAREN:
                                 // just append these where seen.
                                 stringBuilder.Append(")");
-                                if (operatorIterator.MoveNext())
-                                {
-                                    op = operatorIterator.Current;
-                                    start = false;
-                                }
+                                op = operatorIterator.MoveNext() ? operatorIterator.Current : BuilderOperator.None;
+                                start = false;
                                 break;
                             case BuilderOperator.AND:
                             case BuilderOperator.OR:
@@ -326,7 +320,7 @@ namespace QuoteFlow.Core.Jql.Builder
                             case BuilderOperator.NOT:
                                 AddString(stringBuilder, op.ToString());
 
-                                BuilderOperator nextOperator = BuilderOperator.None;
+                                var nextOperator = BuilderOperator.None;
                                 if (operatorIterator.MoveNext())
                                 {
                                     nextOperator = operatorIterator.Current;
@@ -631,7 +625,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
             public virtual IBuilderState Not(Stacks stacks, BuilderOperator defaultOperator)
             {
-                if (defaultOperator == null)
+                if (defaultOperator == BuilderOperator.None)
                 {
                     throw new InvalidOperationException("Trying to combine JQL expressions using the 'NOT' operator. The current JQL is '" + stacks.DisplayString + "'.");
                 }
@@ -675,7 +669,7 @@ namespace QuoteFlow.Core.Jql.Builder
             /// <returns>The next state for the builder.</returns>
             public virtual IBuilderState Add(Stacks stacks, IMutableClause clause, BuilderOperator defaultOperator)
             {
-                if (defaultOperator == null)
+                if (defaultOperator == BuilderOperator.None)
                 {
                     throw new InvalidOperationException("Trying to combine JQL expressions without logical operator. The current JQL is '" + stacks.DisplayString + "'.");
                 }
@@ -687,7 +681,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
             public virtual IBuilderState Group(Stacks stacks, BuilderOperator defaultOperator)
             {
-                if (defaultOperator == null)
+                if (defaultOperator == BuilderOperator.None)
                 {
                     throw new InvalidOperationException("Trying to combine JQL expressions without logical operator. The current JQL is '" + stacks.DisplayString + "'.");
                 }
@@ -745,11 +739,11 @@ namespace QuoteFlow.Core.Jql.Builder
         /// </summary>
         private class ClauseState : IBuilderState
         {
-            internal readonly BuilderOperator lastOperator;
+            private readonly BuilderOperator _lastOperator;
 
             public ClauseState(BuilderOperator lastOperator)
             {
-                this.lastOperator = lastOperator;
+                _lastOperator = lastOperator;
             }
 
             public virtual IBuilderState Enter(Stacks stacks)
@@ -771,12 +765,12 @@ namespace QuoteFlow.Core.Jql.Builder
 
             public virtual IBuilderState And(Stacks stacks)
             {
-                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", lastOperator, BuilderOperator.AND, stacks.DisplayString));
+                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", _lastOperator, BuilderOperator.AND, stacks.DisplayString));
             }
 
             public virtual IBuilderState Or(Stacks stacks)
             {
-                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", lastOperator, BuilderOperator.OR, stacks.DisplayString));
+                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", _lastOperator, BuilderOperator.OR, stacks.DisplayString));
             }
 
             /// <summary>
@@ -806,12 +800,12 @@ namespace QuoteFlow.Core.Jql.Builder
 
             public virtual IBuilderState Endgroup(Stacks stacks)
             {
-                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", lastOperator, BuilderOperator.RPAREN, stacks.DisplayString));
+                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", _lastOperator, BuilderOperator.RPAREN, stacks.DisplayString));
             }
 
             public virtual IClause Build(Stacks stacks)
             {
-                throw new InvalidOperationException(string.Format("Trying end the JQL expression with operator '{0}'. Current JQL is '{1}'.", lastOperator, stacks.DisplayString));
+                throw new InvalidOperationException(string.Format("Trying end the JQL expression with operator '{0}'. Current JQL is '{1}'.", _lastOperator, stacks.DisplayString));
             }
 
             public virtual IBuilderState Copy(Stacks stacks)

@@ -1,7 +1,6 @@
 ﻿using System;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
-using QuoteFlow.Api.Jql.Query.Operand;
 using QuoteFlow.Core.Jql.Builder;
 using Xunit;
 
@@ -191,6 +190,110 @@ namespace QuoteFlow.Core.Tests.Jql.Builder
             }
 
             Assert.Same(builder, builder.And());
+        }
+
+        [Fact]
+        public void TestOperatorState()
+        {
+            var termClause1 = new TerminalClause("test1", Operator.EQUALS, "pass1");
+            var termClause2 = new TerminalClause("test2", Operator.EQUALS, "pass2");
+            var termClause3 = new TerminalClause("test3", Operator.EQUALS, "pass3");
+
+            PrecedenceSimpleClauseBuilder builder = new PrecedenceSimpleClauseBuilder();
+
+            Assert.Same(builder, builder.Clause(termClause1));
+
+            try
+            {
+                builder.Not();
+                Assert.True(false, "Expected exception.");
+            }
+            catch (InvalidOperationException e)
+            {
+                //expected.
+            }
+
+            try
+            {
+                builder.Sub();
+                Assert.True(false, "Expected exception.");
+            }
+            catch (InvalidOperationException e)
+            {
+                //expected.
+            }
+
+            try
+            {
+                builder.Clause(termClause2);
+                Assert.True(false, "Expected exception.");
+            }
+            catch (InvalidOperationException e)
+            {
+                //expected.
+            }
+
+            try
+            {
+                builder.Endsub();
+                Assert.True(false, "Expected exception.");
+            }
+            catch (InvalidOperationException e)
+            {
+                //expected.
+            }
+
+            Assert.Equal(termClause1, builder.Build());
+            Assert.Equal(new AndClause(termClause1, termClause2), builder.Copy().And().Clause(termClause2).Build());
+            Assert.Equal(new OrClause(termClause1, termClause2), builder.Copy().Or().Clause(termClause2).Build());
+
+            //We now have a sub-clause in the expected state.
+            builder.And().Sub().Clause(termClause2);
+
+            try
+            {
+                builder.Not();
+                Assert.True(false, "Expected exception.");
+            }
+            catch (InvalidOperationException e)
+            {
+                //expected.
+            }
+
+            try
+            {
+                builder.Sub();
+                Assert.True(false, "Expected exception.");
+            }
+            catch (InvalidOperationException e)
+            {
+                //expected.
+            }
+
+            try
+            {
+                builder.Clause(termClause2);
+                Assert.True(false, "Expected exception.");
+            }
+            catch (InvalidOperationException e)
+            {
+                //expected.
+            }
+
+            try
+            {
+                builder.Build();
+                Assert.True(false, "Expected exception.");
+            }
+            catch (InvalidOperationException e)
+            {
+                //expected.
+            }
+
+            builder.Endsub();
+
+            Assert.Equal(new AndClause(termClause1, termClause2), builder.Build());
+            Assert.Equal(new AndClause(termClause1, termClause2, termClause3), builder.And().Clause(termClause3).Build());
         }
     }
 }
