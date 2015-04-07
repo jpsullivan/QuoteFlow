@@ -161,12 +161,15 @@ namespace QuoteFlow.Core.Jql.Util
                 {
                     builder.Append(EncodeFieldName(searchSort.Field));
 
-                    foreach (var property in searchSort.Property)
+                    if (searchSort.Property != null)
                     {
-                        builder.Append("[")
-                            .Append(EncodeFieldName(property.KeysAsString()))
-                            .Append("].")
-                            .Append(EncodeFieldName(property.ObjectReferencesAsString()));
+                        foreach (var property in searchSort.Property)
+                        {
+                            builder.Append("[")
+                                .Append(EncodeFieldName(property.KeysAsString()))
+                                .Append("].")
+                                .Append(EncodeFieldName(property.ObjectReferencesAsString()));
+                        }
                     }
 
                     if (searchSort.Order != SortOrder.None)

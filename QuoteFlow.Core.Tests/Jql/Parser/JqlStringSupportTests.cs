@@ -4,6 +4,7 @@ using Moq;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Operand;
+using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Core.Index;
 using QuoteFlow.Core.Jql.Builder;
 using QuoteFlow.Core.Jql.Util;
@@ -328,6 +329,68 @@ namespace QuoteFlow.Core.Tests.Jql.Parser
                 var query = new Api.Jql.Query.Query(builder.BuildClause(), "ignore = me");
 
                 Assert.Equal("field in (\"value1\", \"value2\", \"value3\") AND field2 < \"funcName\"(\"arg1\", \"arg2\", \"arg3\")", support.GenerateJqlString(query));
+
+                mockParser.Verify();
+            }
+
+            [Fact]
+            public void NoClauseWithSorts()
+            {
+                var mockParser = new Mock<IJqlQueryParser>();
+                mockParser.Setup(x => x.IsValidFieldName(It.IsAny<string>())).Returns(false);
+
+                var support = new JqlStringSupport(mockParser.Object);
+                var query = new Api.Jql.Query.Query(null, new OrderBy(new SearchSort("qwerty", SortOrder.DESC), new SearchSort("blah\" qq")), null);
+
+                Assert.Equal("ORDER BY \"qwerty\" DESC, \"blah\\\" qq\"", support.GenerateJqlString(query));
+
+                mockParser.Verify();
+            }
+
+            [Fact]
+            public void WithClauseAndSorts()
+            {
+                var mockParser = new Mock<IJqlQueryParser>();
+                mockParser.Setup(x => x.IsValidFieldName(It.IsAny<string>())).Returns(true);
+
+                var support = new JqlStringSupport(mockParser.Object);
+
+                var builder = JqlQueryBuilder.NewBuilder().Where();
+                builder.AddStringCondition("field", "value1", "value2", "value3");
+
+                var orderBy = new OrderBy(new SearchSort("qwerty", SortOrder.ASC), new SearchSort("gOOd"));
+                var query = new Api.Jql.Query.Query(builder.BuildClause(), orderBy, "ignore = me");
+
+                Assert.Equal("field in (\"value1\", \"value2\", \"value3\") ORDER BY qwerty ASC, gOOd", support.GenerateJqlString(query));
+
+                mockParser.Verify();
+            }
+
+            [Fact]
+            public void NoClauseOrSorts()
+            {
+                var mockParser = new Mock<IJqlQueryParser>();
+
+                var support = new JqlStringSupport(mockParser.Object);
+                var query = new Api.Jql.Query.Query();
+                
+                Assert.Equal(String.Empty, support.GenerateJqlString(query));
+
+                mockParser.Verify();
+            }
+
+            [Fact]
+            public void StringClause()
+            {
+                var mockParser = new Mock<IJqlQueryParser>();
+                mockParser.Setup(x => x.IsValidFieldName(It.IsAny<string>())).Returns(true);
+
+                var support = new JqlStringSupport(mockParser.Object);
+                var builder = JqlQueryBuilder.NewBuilder().Where().DefaultAnd();
+                builder.AddStringCondition("field", "value1", "value2", "value3");
+                builder.AddCondition("field2", Operator.LESS_THAN, new FunctionOperand("funcName", "arg1", "arg2", "arg3"));
+
+                Assert.Equal("field in (\"value1\", \"value2\", \"value3\") AND field2 < \"funcName\"(\"arg1\", \"arg2\", \"arg3\")", support.GenerateJqlString(builder.BuildClause()));
 
                 mockParser.Verify();
             }

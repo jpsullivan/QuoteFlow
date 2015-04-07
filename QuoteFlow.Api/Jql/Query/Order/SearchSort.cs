@@ -15,15 +15,15 @@ namespace QuoteFlow.Api.Jql.Query.Order
     public class SearchSort
     {
         public SortOrder? Order;
-        public string Field { get; set; }
-        public IEnumerable<Property> Property;
+        public string Field { get; private set; }
+        public readonly IEnumerable<Property> Property;
 
         /// <summary>
         /// Used to construct a search sort for a field with a direction.
         /// </summary>
         /// <param name="field">The field to sort by.</param>
         /// <param name="order">The order direction to sort by, if null the default order for the field will be used.</param>
-        public SearchSort(string field, SortOrder order = SortOrder.ASC)
+        public SearchSort(string field, SortOrder order = SortOrder.None)
             : this(field, null, order)
         {
         }
