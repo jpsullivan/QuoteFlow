@@ -104,6 +104,7 @@
     <Compile Include="Index\IndexEngineTests.cs" />
     <Compile Include="Index\IndexesTests.cs" />
     <Compile Include="Index\OperationsTests.cs" />
+    <Compile Include="Jql\Builder\PrecedenceSimpleClauseBuilderTests.cs" />
     <Compile Include="Jql\Parser\Antlr\AntlrPositionTests.cs" />
     <Compile Include="Jql\Parser\Antlr\LexerErrorHelperTests.cs" />
     <Compile Include="Jql\Parser\JqlQueryParserTests.cs" />
