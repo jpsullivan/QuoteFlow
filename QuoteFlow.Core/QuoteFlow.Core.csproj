@@ -357,6 +357,7 @@
     <Compile Include="Jql\Query\LuceneQueryBuilder.cs" />
     <Compile Include="Jql\Query\Lucene\Parsing\LuceneQueryParserFactory.cs" />
     <Compile Include="Jql\Query\ManufacturerClauseQueryFactory.cs" />
+    <Compile Include="Jql\Query\Operand\Operands.cs" />
     <Compile Include="Jql\Query\Order\OrderByUtil.cs" />
     <Compile Include="Jql\Query\QueryRegistry.cs" />
     <Compile Include="Jql\Query\QueryVisitor.cs" />
@@ -470,7 +471,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Jql\Query\Operand\" />
     <Folder Include="Jql\Query\Operator\" />
   </ItemGroup>
   <ItemGroup>

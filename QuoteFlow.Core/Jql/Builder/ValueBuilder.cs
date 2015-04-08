@@ -13,13 +13,13 @@ namespace QuoteFlow.Core.Jql.Builder
     /// 
     /// @since v4.0
     /// </summary>
-    internal class DefaultValueBuilder : IValueBuilder
+    public class ValueBuilder : IValueBuilder
     {
         private readonly IJqlClauseBuilder _builder;
         private readonly string _clauseName;
         private readonly Operator _operator;
 
-        internal DefaultValueBuilder(IJqlClauseBuilder builder, string clauseName, Operator @operator)
+        public ValueBuilder(IJqlClauseBuilder builder, string clauseName, Operator @operator)
         {
             if (builder == null) throw new ArgumentNullException("builder");
             if (clauseName == null) throw new ArgumentNullException("clauseName");

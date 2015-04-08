@@ -24,7 +24,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder Eq()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.EQUALS);
+            return new ValueBuilder(_builder, _clauseName, Operator.EQUALS);
         }
 
         public virtual IJqlClauseBuilder Eq(string value)
@@ -69,7 +69,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder NotEq()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.NOT_EQUALS);
+            return new ValueBuilder(_builder, _clauseName, Operator.NOT_EQUALS);
         }
 
         public virtual IJqlClauseBuilder NotEq(string value)
@@ -114,7 +114,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder Like()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.LIKE);
+            return new ValueBuilder(_builder, _clauseName, Operator.LIKE);
         }
 
         public virtual IJqlClauseBuilder Like(string value)
@@ -154,7 +154,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder NotLike()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.NOT_LIKE);
+            return new ValueBuilder(_builder, _clauseName, Operator.NOT_LIKE);
         }
 
         public virtual IJqlClauseBuilder NotLike(string value)
@@ -194,7 +194,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder Is()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.IS);
+            return new ValueBuilder(_builder, _clauseName, Operator.IS);
         }
 
         public virtual IJqlClauseBuilder Empty
@@ -204,7 +204,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder IsNot()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.IS_NOT);
+            return new ValueBuilder(_builder, _clauseName, Operator.IS_NOT);
         }
 
         public virtual IJqlClauseBuilder NotEmpty
@@ -214,7 +214,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder Lt()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.LESS_THAN);
+            return new ValueBuilder(_builder, _clauseName, Operator.LESS_THAN);
         }
 
         public virtual IJqlClauseBuilder Lt(string value)
@@ -254,7 +254,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder LtEq()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.LESS_THAN_EQUALS);
+            return new ValueBuilder(_builder, _clauseName, Operator.LESS_THAN_EQUALS);
         }
 
         public virtual IJqlClauseBuilder LtEq(string value)
@@ -294,7 +294,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder Gt()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.GREATER_THAN);
+            return new ValueBuilder(_builder, _clauseName, Operator.GREATER_THAN);
         }
 
         public virtual IJqlClauseBuilder Gt(string value)
@@ -334,7 +334,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder GtEq()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.GREATER_THAN_EQUALS);
+            return new ValueBuilder(_builder, _clauseName, Operator.GREATER_THAN_EQUALS);
         }
 
         public virtual IJqlClauseBuilder GtEq(string value)
@@ -374,7 +374,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder In()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.IN);
+            return new ValueBuilder(_builder, _clauseName, Operator.IN);
         }
 
         public virtual IJqlClauseBuilder In(params string[] values)
@@ -434,7 +434,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IValueBuilder NotIn()
         {
-            return new DefaultValueBuilder(_builder, _clauseName, Operator.NOT_IN);
+            return new ValueBuilder(_builder, _clauseName, Operator.NOT_IN);
         }
 
         public virtual IJqlClauseBuilder NotIn(params string[] values)
