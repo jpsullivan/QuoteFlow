@@ -74,5 +74,37 @@ namespace QuoteFlow.Core.Tests.Jql.Builder
             mutableClause = new MultiMutableClause<IMutableClause>(BuilderOperator.AND, clause3, clause2, clause);
             Assert.Equal(new AndClause(lessMe, whoCaresClause), mutableClause.AsClause());
         }
+
+        [Fact]
+        public void TestCopyWithAnd()
+        {
+            MockMutableClause stringClause1 = new MockMutableClause(null);
+            var clause1 = new Mock<IMutableClause>();
+            clause1.Setup(x => x.Copy()).Returns(stringClause1);
+
+            MockMutableClause stringClause2 = new MockMutableClause(null);
+            var clause2 = new Mock<IMutableClause>();
+            clause2.Setup(x => x.Copy()).Returns(stringClause2);
+
+            MockMutableClause stringClause3 = new MockMutableClause(null);
+            var clause3 = new Mock<IMutableClause>();
+            clause3.Setup(x => x.Copy()).Returns(stringClause3);
+            
+            var multiClause = new MultiMutableClause<IMutableClause>(BuilderOperator.AND, clause1.Object, clause2.Object, clause3.Object);
+            IMutableClause actualCopy = multiClause.Copy();
+            IMutableClause expectedCopy = new MultiMutableClause<IMutableClause>(BuilderOperator.AND, stringClause1, stringClause2, stringClause3);
+
+            Assert.Equal(expectedCopy, actualCopy);
+
+            multiClause = new MultiMutableClause<IMutableClause>(BuilderOperator.OR, clause1.Object);
+            actualCopy = multiClause.Copy();
+            expectedCopy = new MultiMutableClause<IMutableClause>(BuilderOperator.OR, stringClause1);
+
+            Assert.Equal(expectedCopy, actualCopy);
+
+            clause1.Verify();
+            clause2.Verify();
+            clause3.Verify();
+        }
     }
 }

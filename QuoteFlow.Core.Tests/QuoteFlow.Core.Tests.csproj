@@ -106,6 +106,8 @@
     <Compile Include="Index\OperationsTests.cs" />
     <Compile Include="Jql\Builder\BuilderOperatorTests.cs" />
     <Compile Include="Jql\Builder\ConditionBuilderTests.cs" />
+    <Compile Include="Jql\Builder\JqlClauseBuilderTests.cs" />
+    <Compile Include="Jql\Builder\JqlOrderByBuilderTests.cs" />
     <Compile Include="Jql\Builder\JqlQueryBuilderTests.cs" />
     <Compile Include="Jql\Builder\MockMutableClause.cs" />
     <Compile Include="Jql\Builder\MultiMutableClauseTests.cs" />

@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ninject;
+using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
+using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Infrastructure.Extensions;
+using QuoteFlow.Api.Infrastructure.IoC;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Order;
+using QuoteFlow.Core.Asset.Search.Managers;
+using QuoteFlow.Core.DependencyResolution;
 
 namespace QuoteFlow.Core.Jql.Builder
 {
@@ -23,13 +29,13 @@ namespace QuoteFlow.Core.Jql.Builder
     /// </summary>
     public class JqlOrderByBuilder
     {
-        private List<SearchSort> searchSorts;
-        private readonly JqlQueryBuilder parentBuilder;
+        private List<SearchSort> _searchSorts;
+        private readonly JqlQueryBuilder _parentBuilder;
 
-        internal JqlOrderByBuilder(JqlQueryBuilder parentBuilder)
+        public JqlOrderByBuilder(JqlQueryBuilder parentBuilder)
         {
-            this.parentBuilder = parentBuilder;
-            searchSorts = new List<SearchSort>();
+            _parentBuilder = parentBuilder;
+            _searchSorts = new List<SearchSort>();
         }
 
         /// <summary>
@@ -44,7 +50,7 @@ namespace QuoteFlow.Core.Jql.Builder
                 throw new ArgumentNullException("newSorts");
             }
 
-            searchSorts = new List<SearchSort>(newSorts);
+            _searchSorts = new List<SearchSort>(newSorts);
             return this;
         }
 
@@ -57,7 +63,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if (existingOrderBy != null)
             {
-                this.searchSorts = existingOrderBy.SearchSorts;
+                _searchSorts = existingOrderBy.SearchSorts;
             }
 
             return this;
@@ -72,10 +78,10 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns>The newly generated query.</returns>
         public virtual IQuery BuildQuery()
         {
-            if (parentBuilder != null)
+            if (_parentBuilder != null)
             {
                 // Create the query from our configured data
-                return parentBuilder.BuildQuery();
+                return _parentBuilder.BuildQuery();
             }
             return new Api.Jql.Query.Query(null, BuildOrderBy(), null);
         }
@@ -87,7 +93,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns>the <seealso cref="OrderBy"/> that is defined by the state of the builder.</returns>
         public virtual IOrderBy BuildOrderBy()
         {
-            return new OrderBy(searchSorts.ToList());
+            return new OrderBy(_searchSorts.ToList());
         }
 
         /// <summary>
@@ -96,7 +102,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> the query builder who created this order by builder. May be null if there is no associated <seealso cref="JqlQueryBuilder"/>. </returns>
         public virtual JqlQueryBuilder EndOrderBy()
         {
-            return parentBuilder;
+            return _parentBuilder;
         }
 
         /// <summary>
@@ -105,41 +111,46 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns>The builder in its empty state.</returns>
         public virtual JqlOrderByBuilder Clear()
         {
-            searchSorts = new List<SearchSort>();
+            _searchSorts = new List<SearchSort>();
             return this;
         }
 
-//        /// <summary>
-//        /// Add a search sort with the fieldName and the specified sort to the order by. This is a convienience method that
-//        /// trys to lookup the primary JQL clause name for the provided field name.
-//        /// 
-//        /// If we are unable to find the associated clause name then the sort will be added with the provided field name and
-//        /// will likely not pass JQL validation.
-//        /// </summary>
-//        /// <param name="fieldName">The field name used to lookup the JQL clause name via {@link SearchHandlerManager#getJqlClauseNames(String)} method.</param>
-//        /// <param name="order">The order, ASC, or DESC.</param>
-//        /// <param name="makePrimarySort">If true this will be added to the beginning of the sorts, otherwise it will be added to the end.</param>
-//        /// <returns>The current builder.</returns>
-//        public virtual JqlOrderByBuilder AddSortForFieldName(string fieldName, SortOrder order, bool makePrimarySort)
-//        {
-//            if (fieldName == null)
-//            {
-//                throw new ArgumentNullException("fieldName");
-//            }
-//
-//            ISearchHandlerManager searchHandlerManager = ComponentAccessor.getComponent(typeof(SearchHandlerManager));
-//            ICollection<ClauseNames> clauseNames = searchHandlerManager.getJqlClauseNames(fieldName);
-//            string sortName = fieldName;
-//            if (clauseNames.Count > 0)
-//            {
-//                sortName = clauseNames.GetEnumerator().next().PrimaryName;
-//            }
-//            else
-//            {
-//                log.debug("Unable to find a JQL clause name for field name '" + fieldName + "', adding sort anyway.");
-//            }
-//            return this.Add(sortName, order, makePrimarySort);
-//        }
+        /// <summary>
+        /// Add a search sort with the fieldName and the specified sort to the order by. This is a convienience method that
+        /// trys to lookup the primary JQL clause name for the provided field name.
+        /// 
+        /// If we are unable to find the associated clause name then the sort will be added with the provided field name and
+        /// will likely not pass JQL validation.
+        /// </summary>
+        /// <param name="fieldName">The field name used to lookup the JQL clause name via {@link SearchHandlerManager#getJqlClauseNames(String)} method.</param>
+        /// <param name="order">The order, ASC, or DESC.</param>
+        /// <param name="makePrimarySort">If true this will be added to the beginning of the sorts, otherwise it will be added to the end.</param>
+        /// <returns>The current builder.</returns>
+        public virtual JqlOrderByBuilder AddSortForFieldName(string fieldName, SortOrder order, bool makePrimarySort)
+        {
+            if (fieldName == null)
+            {
+                throw new ArgumentNullException("fieldName");
+            }
+
+            ISearchHandlerManager searchHandlerManager = Container.Kernel.TryGet<SearchHandlerManager>();
+            ICollection<ClauseNames> clauseNames = searchHandlerManager.GetJqlClauseNames(fieldName);
+            string sortName = fieldName;
+            if (clauseNames.Count > 0)
+            {
+                var nameEnumerator = clauseNames.GetEnumerator();
+                if (nameEnumerator.MoveNext())
+                {
+                    sortName = nameEnumerator.Current.PrimaryName;
+                }
+            }
+            else
+            {
+                //log.debug("Unable to find a JQL clause name for field name '" + fieldName + "', adding sort anyway.");
+            }
+
+            return Add(sortName, order, makePrimarySort);
+        }
 
         /// <summary>
         /// Add a search sort with the jqlClauseName and the specified sort to the order by. No validation is done in this
@@ -158,11 +169,11 @@ namespace QuoteFlow.Core.Jql.Builder
 
             if (makePrimarySort)
             {
-                searchSorts.Insert(0, new SearchSort(jqlClauseName, order));
+                _searchSorts.Insert(0, new SearchSort(jqlClauseName, order));
             }
             else
             {
-                searchSorts.Add(new SearchSort(jqlClauseName, order));
+                _searchSorts.Add(new SearchSort(jqlClauseName, order));
             }
             return this;
         }
@@ -192,7 +203,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> the current builder. </returns>
         public virtual JqlOrderByBuilder Add(string jqlClauseName)
         {
-            return Add(jqlClauseName, SortOrder.ASC, false);
+            return Add(jqlClauseName, SortOrder.None, false);
         }
 
 //        public virtual JqlOrderByBuilder priority(SortOrder order, bool makePrimarySort)
