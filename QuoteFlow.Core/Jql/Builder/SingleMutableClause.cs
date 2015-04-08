@@ -6,17 +6,18 @@ namespace QuoteFlow.Core.Jql.Builder
     /// <summary>
     /// A <see cref="IMutableClause"/> that holds one JQL clause.
     /// </summary>
-    internal class SingleMutableClause : IMutableClause
+    public class SingleMutableClause : IMutableClause
     {
-        private readonly IClause clause;
+        private readonly IClause _clause;
 
-        internal SingleMutableClause(IClause clause)
+        public SingleMutableClause(IClause clause)
         {
             if (clause == null)
             {
                 throw new ArgumentNullException("clause");
             }
-            this.clause = clause;
+
+            _clause = clause;
         }
 
         public virtual IMutableClause Combine(BuilderOperator logicalOperator, IMutableClause otherClause)
@@ -31,7 +32,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IClause AsClause()
         {
-            return clause;
+            return _clause;
         }
 
         public virtual IMutableClause Copy()
@@ -52,7 +53,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
             SingleMutableClause that = (SingleMutableClause) obj;
 
-            if (!clause.Equals(that.clause))
+            if (!_clause.Equals(that._clause))
             {
                 return false;
             }
@@ -62,12 +63,12 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public override int GetHashCode()
         {
-            return clause.GetHashCode();
+            return _clause.GetHashCode();
         }
 
         public override string ToString()
         {
-            return clause.ToString();
+            return _clause.ToString();
         }
     }
 }

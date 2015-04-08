@@ -8,18 +8,18 @@ namespace QuoteFlow.Core.Jql.Builder
     /// <summary>
     /// Default implementation of <see cref="IConditionBuilder"/>.
     /// </summary>
-    internal class ConditionBuilder : IConditionBuilder
+    public class ConditionBuilder : IConditionBuilder
     {
         private readonly IJqlClauseBuilder _builder;
         private readonly string _clauseName;
 
-        internal ConditionBuilder(string clauseName, IJqlClauseBuilder builder)
+        public ConditionBuilder(string clauseName, IJqlClauseBuilder builder)
         {
             if (clauseName == null) throw new ArgumentNullException("clauseName");
             if (builder == null) throw new ArgumentNullException("builder");
 
-            this._builder = builder;
-            this._clauseName = clauseName;
+            _builder = builder;
+            _clauseName = clauseName;
         }
 
         public virtual IValueBuilder Eq()
@@ -202,9 +202,9 @@ namespace QuoteFlow.Core.Jql.Builder
             get { return _builder.AddCondition(_clauseName, Operator.IS, EmptyOperand.Empty); }
         }
 
-        public virtual IValueBuilder Not
+        public virtual IValueBuilder IsNot()
         {
-            get { return new DefaultValueBuilder(_builder, _clauseName, Operator.IS_NOT); }
+            return new DefaultValueBuilder(_builder, _clauseName, Operator.IS_NOT);
         }
 
         public virtual IJqlClauseBuilder NotEmpty

@@ -1,5 +1,4 @@
-﻿using System;
-using QuoteFlow.Api.Jql.Query;
+﻿using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Core.Jql.Builder;

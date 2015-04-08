@@ -326,7 +326,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// the condition can be specified using the returned <seealso cref="IValueBuilder"/>.
         /// </summary>
         /// <returns> a builder that can be used to specify the value of the condition. </returns>
-        IValueBuilder Not { get; }
+        IValueBuilder IsNot();
 
         /// <summary>
         /// Create the JQL condition with the <seealso cref="QuoteFlow.Api.Jql.Operator#IS_NOT is not operator"/> and the
