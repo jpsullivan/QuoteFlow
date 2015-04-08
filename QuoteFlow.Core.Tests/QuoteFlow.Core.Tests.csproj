@@ -107,6 +107,9 @@
     <Compile Include="Jql\Builder\BuilderOperatorTests.cs" />
     <Compile Include="Jql\Builder\ConditionBuilderTests.cs" />
     <Compile Include="Jql\Builder\JqlQueryBuilderTests.cs" />
+    <Compile Include="Jql\Builder\MockMutableClause.cs" />
+    <Compile Include="Jql\Builder\MultiMutableClauseTests.cs" />
+    <Compile Include="Jql\Builder\NotMutableClauseTests.cs" />
     <Compile Include="Jql\Builder\PrecedenceSimpleClauseBuilderTests.cs" />
     <Compile Include="Jql\Parser\Antlr\AntlrPositionTests.cs" />
     <Compile Include="Jql\Parser\Antlr\LexerErrorHelperTests.cs" />
