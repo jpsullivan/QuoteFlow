@@ -14,16 +14,16 @@ namespace QuoteFlow.Core.Asset.Search
 {
     public class QueryCache : IQueryCache
     {
-        #region IoC
-
-        public ICacheService CacheService { get; protected set; }
-
-        public QueryCache(ICacheService cacheService)
-        {
-            CacheService = cacheService;
-        }
-
-        #endregion
+//        #region IoC
+//
+//        public ICacheService CacheService { get; protected set; }
+//
+//        public QueryCache(ICacheService cacheService)
+//        {
+//            CacheService = cacheService;
+//        }
+//
+//        #endregion
 
         public bool? GetDoesQueryFitFilterFormCache(User searcher, IQuery query)
         {
@@ -44,7 +44,7 @@ namespace QuoteFlow.Core.Asset.Search
         {
             var queryContextCache = GetQueryCache();
             queryContextCache.Add(new QueryCacheKey(searcher, query), queryContext);
-            CacheService.SetItem(RequestCacheKeys.QueryContextCache, queryContextCache, TimeSpan.FromMinutes(1));
+            //CacheService.SetItem(RequestCacheKeys.QueryContextCache, queryContextCache, TimeSpan.FromMinutes(1));
         }
 
         public IQueryContext GetSimpleQueryContextCache(User searcher, IQuery query)
@@ -58,25 +58,21 @@ namespace QuoteFlow.Core.Asset.Search
         {
             var explicitCache = GetExplicitQueryCache();
             explicitCache.Add(new QueryCacheKey(searcher, query), queryContext);
-            CacheService.SetItem(RequestCacheKeys.SimpleQueryContextCache, explicitCache, TimeSpan.FromMinutes(1));
+            //CacheService.SetItem(RequestCacheKeys.SimpleQueryContextCache, explicitCache, TimeSpan.FromMinutes(1));
         }
 
         public List<IClauseHandler> GetClauseHandlers(User searcher, string jqlClauseName)
         {
-            object handlers = CacheService.GetItem(RequestCacheKeys.JqlClauseHandlerCache);
-            if (handlers == null)
-            {
-                return null;
-            }
-
-            return handlers as List<IClauseHandler>;
+            //object handlers = CacheService.GetItem(RequestCacheKeys.JqlClauseHandlerCache);
+            //return handlers as List<IClauseHandler>;
+            return new List<IClauseHandler>();
         }
 
         public void SetClauseHandlers(User searcher, string jqlClauseName, ICollection<IClauseHandler> clauseHandlers)
         {
             var handlerCache = GetClauseHandlerCache();
             handlerCache.Add(new QueryCacheClauseHandlerKey(searcher, jqlClauseName), clauseHandlers);
-            CacheService.SetItem(RequestCacheKeys.JqlClauseHandlerCache, handlerCache, TimeSpan.FromMinutes(1));
+            //CacheService.SetItem(RequestCacheKeys.JqlClauseHandlerCache, handlerCache, TimeSpan.FromMinutes(1));
         }
 
         public IList<QueryLiteral> GetValues(IQueryCreationContext context, IOperand operand, ITerminalClause jqlClause)
@@ -90,12 +86,13 @@ namespace QuoteFlow.Core.Asset.Search
         {
             var valueCache = GetValueCache();
             valueCache.Add(new QueryCacheLiteralsKey(context, operand, jqlClause), values);
-            CacheService.SetItem(RequestCacheKeys.QueryLiteralsCache, valueCache, TimeSpan.FromMinutes(1));
+            //CacheService.SetItem(RequestCacheKeys.QueryLiteralsCache, valueCache, TimeSpan.FromMinutes(1));
         }
 
         IDictionary<QueryCacheKey, IQueryContext> GetQueryCache()
         {
-            object queryCache = CacheService.GetItem(RequestCacheKeys.QueryContextCache);
+            //object queryCache = CacheService.GetItem(RequestCacheKeys.QueryContextCache);
+            object queryCache = null;
             if (queryCache == null)
             {
                 return new Dictionary<QueryCacheKey, IQueryContext>();
@@ -106,7 +103,8 @@ namespace QuoteFlow.Core.Asset.Search
 
         private IDictionary<QueryCacheKey, IQueryContext> GetExplicitQueryCache()
         {
-            object explicitCache = CacheService.GetItem(RequestCacheKeys.SimpleQueryContextCache);
+            //object explicitCache = CacheService.GetItem(RequestCacheKeys.SimpleQueryContextCache);
+            object explicitCache = null;
             if (explicitCache == null)
             {
                 return new Dictionary<QueryCacheKey, IQueryContext>();
@@ -117,7 +115,8 @@ namespace QuoteFlow.Core.Asset.Search
 
         private IDictionary<QueryCacheClauseHandlerKey, IEnumerable<IClauseHandler>> GetClauseHandlerCache()
         {
-            object handlerCache = CacheService.GetItem(RequestCacheKeys.JqlClauseHandlerCache);
+            //object handlerCache = CacheService.GetItem(RequestCacheKeys.JqlClauseHandlerCache);
+            object handlerCache = null;
             if (handlerCache == null)
             {
                 return new Dictionary<QueryCacheClauseHandlerKey, IEnumerable<IClauseHandler>>();
@@ -128,7 +127,8 @@ namespace QuoteFlow.Core.Asset.Search
 
         private IDictionary<QueryCacheLiteralsKey, List<QueryLiteral>> GetValueCache()
         {
-            object valueCache = CacheService.GetItem(RequestCacheKeys.QueryLiteralsCache);
+            //object valueCache = CacheService.GetItem(RequestCacheKeys.QueryLiteralsCache);
+            object valueCache = null;
             if (valueCache == null)
             {
                 return new Dictionary<QueryCacheLiteralsKey, List<QueryLiteral>>();
@@ -204,8 +204,8 @@ namespace QuoteFlow.Core.Asset.Search
 			        throw new ArgumentNullException("jqlClauseName");
 			    }
 
-				this._searcher = searcher;
-				this._jqlClauseName = jqlClauseName;
+				_searcher = searcher;
+				_jqlClauseName = jqlClauseName;
 			}
 
 			public override bool Equals(object o)
@@ -214,7 +214,7 @@ namespace QuoteFlow.Core.Asset.Search
 				{
 					return true;
 				}
-				if ((o == null) || (this.GetType() != o.GetType()))
+				if ((o == null) || (GetType() != o.GetType()))
 				{
 					return false;
 				}
@@ -267,9 +267,9 @@ namespace QuoteFlow.Core.Asset.Search
 			        throw new ArgumentNullException("jqlClause");
 			    }
 
-				this._context = context;
-				this._operand = operand;
-				this._jqlClause = jqlClause;
+				_context = context;
+				_operand = operand;
+				_jqlClause = jqlClause;
 			}
 
 			public override bool Equals(object o)
@@ -278,7 +278,7 @@ namespace QuoteFlow.Core.Asset.Search
 				{
 					return true;
 				}
-				if ((o == null) || (this.GetType() != o.GetType()))
+				if ((o == null) || (GetType() != o.GetType()))
 				{
 					return false;
 				}

@@ -11,7 +11,6 @@ using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Models;
-using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.Search.Handlers;
 using QuoteFlow.Core.Asset.Search.Searchers;
 using QuoteFlow.Core.DependencyResolution;
@@ -21,13 +20,12 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 {
     public class SearchHandlerManager : ISearchHandlerManager
     {
-        public ICacheService CacheService { get; protected set; }
-        private readonly IFieldManager fieldManager;
-        private readonly ISystemClauseHandlerFactory systemClauseHandlerFactory;
-        private readonly IQueryCache queryCache;
-        private readonly Lazy<Helper> helperResettableLazyReference;
+        private readonly IFieldManager _fieldManager;
+        private readonly ISystemClauseHandlerFactory _systemClauseHandlerFactory;
+        private readonly IQueryCache _queryCache;
+        private readonly Lazy<Helper> _helperResettableLazyReference;
 
-        public SearchHandlerManager(ICacheService cacheService, IFieldManager fieldManager, ISystemClauseHandlerFactory systemClauseHandlerFactory, IQueryCache queryCache)
+        public SearchHandlerManager(IFieldManager fieldManager, ISystemClauseHandlerFactory systemClauseHandlerFactory, IQueryCache queryCache)
         {
             if (fieldManager == null)
             {
@@ -39,10 +37,10 @@ namespace QuoteFlow.Core.Asset.Search.Managers
                 throw new ArgumentNullException("systemClauseHandlerFactory");
             }
 
-            this.queryCache = queryCache;
-            this.fieldManager = fieldManager;
-            this.systemClauseHandlerFactory = systemClauseHandlerFactory;
-            helperResettableLazyReference = new Lazy<Helper>(CreateHelper);
+            _queryCache = queryCache;
+            _fieldManager = fieldManager;
+            _systemClauseHandlerFactory = systemClauseHandlerFactory;
+            _helperResettableLazyReference = new Lazy<Helper>(CreateHelper);
         }
 
         public ICollection<IAssetSearcher<ISearchableField>> GetSearchers(User searcher, ISearchContext context)
@@ -80,7 +78,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
             // We must process all the system fields first to ensure that we don't overwrite custom fields with
             // the system fields.
             var indexer = new SearchHandlerIndexer();
-            var allSearchableFields = fieldManager.SystemSearchableFields;
+            var allSearchableFields = _fieldManager.SystemSearchableFields;
             foreach (ISearchableField field in allSearchableFields)
             {
                 indexer.IndexSystemField(field);
@@ -94,7 +92,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
             }
 
             // Process all the system clause handlers, the JQL clause elements that are not associated with fields
-            indexer.IndexSystemClauseHandlers(systemClauseHandlerFactory.GetSystemClauseSearchHandlers());
+            indexer.IndexSystemClauseHandlers(_systemClauseHandlerFactory.GetSystemClauseSearchHandlers());
 
 //            var customField = CustomFieldManager.CustomFieldObjects;
 //            foreach (var field in customField)
@@ -107,7 +105,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 
         private Helper GetHelper()
         {
-            return helperResettableLazyReference.Value;
+            return _helperResettableLazyReference.Value;
         }
 
         public void Refresh()
@@ -118,7 +116,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 
         public IEnumerable<IClauseHandler> GetClauseHandler(User user, string jqlClauseName)
         {
-            var clauseHandler = queryCache.GetClauseHandlers(user, jqlClauseName);
+            var clauseHandler = _queryCache.GetClauseHandlers(user, jqlClauseName);
             if (clauseHandler == null)
             {
                 var filteredHandlers = new List<IClauseHandler>();
@@ -132,7 +130,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
                     filteredHandlers.Add(handler);
                 }
                 clauseHandler = new List<IClauseHandler>(filteredHandlers);
-                queryCache.SetClauseHandlers(user, jqlClauseName, clauseHandler);
+                _queryCache.SetClauseHandlers(user, jqlClauseName, clauseHandler);
             }
 
             return clauseHandler;

@@ -211,6 +211,8 @@
     <Compile Include="Asset\Index\Managers\FieldIndexerManager.cs" />
     <Compile Include="Asset\Index\Managers\IFieldIndexerManager.cs" />
     <Compile Include="Configuration\Lucene\IndexingConfiguration.cs" />
+    <Compile Include="DependencyResolution\HangfireContainer.cs" />
+    <Compile Include="DependencyResolution\ServiceBindings.cs" />
     <Compile Include="Index\Indexes.cs" />
     <Compile Include="Asset\Index\SearcherCache.cs" />
     <Compile Include="Asset\Nav\AbstractAssetTableCreator.cs" />
