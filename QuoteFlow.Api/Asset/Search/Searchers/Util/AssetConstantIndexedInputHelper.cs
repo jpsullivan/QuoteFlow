@@ -25,7 +25,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
             this.assetConstantResolver = assetConstantResolver;
         }
 
-        protected internal override SingleValueOperand CreateSingleValueOperandFromId(string stringValue)
+        protected override SingleValueOperand CreateSingleValueOperandFromId(string stringValue)
         {
             int issueConstantId;
             try

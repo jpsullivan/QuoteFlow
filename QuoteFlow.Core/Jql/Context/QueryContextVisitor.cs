@@ -177,18 +177,7 @@ namespace QuoteFlow.Core.Jql.Context
                 return ClauseContext.CreateGlobalClauseContext();
             }
 
-            IClauseContext returnContext;
-            if (contexts.Count() == 1)
-            {
-//                contexts.GetEnumerator().MoveNext();
-//                returnContext = contexts.GetEnumerator().Current;
-                returnContext = contexts.First();
-            }
-            else
-            {
-                returnContext = contexts.Union();
-            }
-
+            var returnContext = contexts.Count() == 1 ? contexts.First() : contexts.Union();
             return (!returnContext.Contexts.Any()) ? ClauseContext.CreateGlobalClauseContext() : returnContext;
         }
 
@@ -199,18 +188,7 @@ namespace QuoteFlow.Core.Jql.Context
                 return ClauseContext.CreateGlobalClauseContext();
             }
 
-            IClauseContext returnContext;
-            if (contexts.Count() == 1)
-            {
-//                contexts.GetEnumerator().MoveNext();
-//                returnContext = contexts.GetEnumerator().Current;
-                returnContext = contexts.First();
-            }
-            else
-            {
-                returnContext = contexts.Intersect();
-            }
-
+            var returnContext = contexts.Count() == 1 ? contexts.First() : contexts.Intersect();
             return (!returnContext.Contexts.Any()) ? ClauseContext.CreateGlobalClauseContext() : returnContext;
         }
 

@@ -67,16 +67,18 @@ namespace QuoteFlow.Api.Asset.Search.Util
                     convertedSorts.Add(newSort);
                     continue;
                 }
-                newHandlers.GetEnumerator().MoveNext();
-                IClauseHandler newHandler = newHandlers.GetEnumerator().Current;
 
+                if (!newHandlers.GetEnumerator().MoveNext()) continue;
+
+                IClauseHandler newHandler = newHandlers.GetEnumerator().Current;
                 SearchSort convertedSort = newSort;
                 foreach (SearchSort oldSort in oldSorts)
                 {
                     var oldHandlers = SearchHandlerManager.GetClauseHandler(user, oldSort.Field).ToList();
                     if (oldHandlers.Count != 1) continue;
 
-                    oldHandlers.GetEnumerator().MoveNext();
+                    if (!oldHandlers.GetEnumerator().MoveNext()) continue;
+
                     IClauseHandler handler = oldHandlers.GetEnumerator().Current;
                     if (handler == null) continue;
                     if (newHandler.Information.JqlClauseNames.Equals(handler.Information.JqlClauseNames))
@@ -158,7 +160,7 @@ namespace QuoteFlow.Api.Asset.Search.Util
                     {
                         if (FieldManager.IsNavigableField(field))
                         {
-                            matchingClauseNames.GetEnumerator().MoveNext();
+                            if (!matchingClauseNames.GetEnumerator().MoveNext()) continue;
                             var names = matchingClauseNames.GetEnumerator().Current;
                             searchSorts.Add(new SearchSort(order, names.PrimaryName));
                         }

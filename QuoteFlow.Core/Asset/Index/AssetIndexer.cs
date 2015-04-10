@@ -7,6 +7,7 @@ using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Infrastructure.Concurrency;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Util;
 using QuoteFlow.Core.Index;
 using QuoteFlow.Core.Lucene.Index;
 
@@ -15,9 +16,9 @@ namespace QuoteFlow.Core.Asset.Index
     public class AssetIndexer : IAssetIndexer
     {
         public IAssetDocumentFactory AssetDocumentFactory { get; protected set; }
-        public IDocumentCreationStrategy DocumentCreationStrategy { get; protected set; }
+        public static IDocumentCreationStrategy DocumentCreationStrategy { get; protected set; }
 
-        private readonly Lifecycle _lifecycle;
+        private static Lifecycle _lifecycle;
 
         // simple indexing strategy just asks the operation for its result
         private readonly SimpleIndexingStrategy _simpleIndexingStrategy = new SimpleIndexingStrategy();
@@ -60,37 +61,59 @@ namespace QuoteFlow.Core.Asset.Index
 
         public IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, bool reIndexComments, bool conditionalUpdate)
         {
-            var results = new AccumulatingResultBuilder();
-            var mode = UpdateMode.Interactive;
+            var operation = new ReIndexAssetsOperation(reIndexComments, conditionalUpdate);
+            return Perform(assets, _simpleIndexingStrategy, operation);
+        }
 
-            foreach (var asset in assets)
+        private class ReIndexAssetsOperation : IIndexOperation
+        {
+            private readonly bool _reIndexComments;
+            private readonly bool _conditionalUpdate;
+
+            public ReIndexAssetsOperation(bool reIndexComments, bool conditionalUpdate)
             {
-                var documents = DocumentCreationStrategy.Get(asset, reIndexComments);
-                var assetTerm = documents.IdentifyingTerm;
-
-                Operation update;
-                if (conditionalUpdate)
-                {
-                    // do a conditional update using "updated" as the optimistic lock
-                    update = Operations.NewConditionalUpdate(assetTerm, documents.Asset, mode, AssetFieldConstants.Updated);
-                }
-                else
-                {
-                    update = Operations.NewUpdate(assetTerm, documents.Asset, mode);
-                }
-
-                //var onCompletion = Operations.NewCompletionDelegate()
-                var onCompletion = Operations.NewCompletionDelegate(update, null);
-                results.Add("Asset", asset.Id, _lifecycle.AssetIndex.Perform(onCompletion));
-
-                if (reIndexComments)
-                {
-                    results.Add("Comment for Asset", asset.Id,
-                        _lifecycle.CommentIndex.Perform(Operations.NewUpdate(assetTerm, documents.Comments, mode)));
-                }
+                _reIndexComments = reIndexComments;
+                _conditionalUpdate = conditionalUpdate;
             }
 
-            return results.ToResult();
+            public IIndexResult Perform(IAsset asset)
+            {
+                try
+                {
+                    var mode = UpdateMode.Interactive;
+                    var documents = DocumentCreationStrategy.Get(asset, _reIndexComments);
+                    var assetTerm = documents.IdentifyingTerm;
+
+                    Operation update;
+                    if (_conditionalUpdate)
+                    {
+                        // do a conditional update using "updated" as the optimistic lock
+                        update = Operations.NewConditionalUpdate(assetTerm, documents.Asset, mode, AssetFieldConstants.Updated);
+                    }
+                    else
+                    {
+                        update = Operations.NewUpdate(assetTerm, documents.Asset, mode);
+                    }
+
+                    var results = new AccumulatingResultBuilder();
+
+                    //var onCompletion = Operations.NewCompletionDelegate()
+                    var onCompletion = Operations.NewCompletionDelegate(update, null);
+                    results.Add("Asset", asset.Id, _lifecycle.AssetIndex.Perform(onCompletion));
+
+                    if (_reIndexComments)
+                    {
+                        results.Add("Comment for Asset", asset.Id,
+                            _lifecycle.CommentIndex.Perform(Operations.NewUpdate(assetTerm, documents.Comments, mode)));
+                    }
+
+                    return results.ToResult();
+                }
+                catch (Exception ex)
+                {
+                    return new Lucene.Index.Index.Failure(ex);
+                }
+            }
         }
 
         public IIndexResult ReIndexComments(ICollection<AssetComment> comments)
@@ -144,17 +167,16 @@ namespace QuoteFlow.Core.Asset.Index
         public string IndexRootPath { get; private set; }
 
         /// <summary>
-        /// Perform an <seealso cref="IndexOperation"/> on some <seealso cref="EnclosedIterable issues"/> using a particular {@link
-        /// IndexingStrategy strategy}. There is a <seealso cref="Context task context"/> that must be updated to provide feedback to
-        /// the user.
-        /// <p/>
-        /// The implementation needs to be thread-safe, as it may be run in parallel and maintain a composite result to
-        /// return to the caller.
+        /// Perform an <see cref="Operation"/> on some assets using a particular <see cref="IIndexingStrategy"/>. 
+        /// There is a task context that must be updated to provide feedback to the user.
+        /// The implementation needs to be thread-safe, as it may be run in parallel and maintain 
+        /// a composite result to return to the caller.
         /// </summary>
-        /// <param name="assets"> the issues to index/deindex/reindex </param>
-        /// <param name="operation"> deindex/reindex/index etc. </param>
-        /// <returns> the <seealso cref="IIndexResult"/> may waited on or not. </returns>
-        private static IIndexResult Perform(IEnumerable<IAsset> assets, Operation operation)
+        /// <param name="assets">The assets to index/deindex/reindex.</param>
+        /// <param name="strategy">Single or Multi-Threaded</param>
+        /// <param name="operation">Deindex/reindex/index etc.</param>
+        /// <returns>The <seealso cref="IIndexResult"/> may waited on or not.</returns>
+        private static IIndexResult Perform(IEnumerable<IAsset> assets, IIndexingStrategy strategy, IIndexOperation operation)
         {
             try
             {
@@ -166,14 +188,33 @@ namespace QuoteFlow.Core.Asset.Index
                 // perform the operation for every asset in the collection
                 foreach (var asset in assets)
                 {
-                    
+                    var supplier = new PerformSupplier(operation, asset);
+                    var result = strategy.Get(supplier);
+                    builder.Add("Asset", asset.Id, result);
                 }
                 
                 return builder.ToResult();
             }
             finally
             {
-                //strategy.close();
+                strategy.Dispose();
+            }
+        }
+
+        private class PerformSupplier : ISupplier<IIndexResult>
+        {
+            private readonly IIndexOperation _operation;
+            private readonly IAsset _asset;
+
+            public PerformSupplier(IIndexOperation operation, IAsset asset)
+            {
+                _operation = operation;
+                _asset = asset;
+            }
+
+            public IIndexResult Get()
+            {
+                return _operation.Perform(_asset);
             }
         }
 
@@ -255,6 +296,15 @@ namespace QuoteFlow.Core.Asset.Index
             {
                 set { _factory.IndexingMode = value; }
             }
+        }
+
+        /// <summary>
+        /// An <see cref="IIndexOperation"/> performs the actual update to the index for a 
+        /// specific <see cref="IAsset"/>.
+        /// </summary>
+        private interface IIndexOperation
+        {
+            IIndexResult Perform(IAsset asset);
         }
     }
 }

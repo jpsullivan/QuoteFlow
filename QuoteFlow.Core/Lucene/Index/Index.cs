@@ -47,7 +47,7 @@ namespace QuoteFlow.Core.Lucene.Index
         /// <summary>
         /// Indicate that an operation completed successfully.
         /// </summary>
-        private sealed class Success : IIndexResult
+        public sealed class Success : IIndexResult
         {
             public void Await()
             {
@@ -62,7 +62,7 @@ namespace QuoteFlow.Core.Lucene.Index
         /// <summary>
         /// Indicate that an operation failed.
         /// </summary>
-        private sealed class Failure : IIndexResult
+        public sealed class Failure : IIndexResult
         {
             private readonly Exception _failure;
 

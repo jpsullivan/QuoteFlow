@@ -20,14 +20,14 @@ namespace QuoteFlow.Api.Infrastructure.Lucene
         /// Comments will not be reindexed.
         /// </summary>
         /// <returns>Reindex time in ms.</returns>
-        int ReIndexAllIssuesInBackground();
+        int ReIndexAllAssetsInBackground();
 
         /// <summary>
         /// Reindex everything, but don't stop the world
         /// </summary>
         /// <param name="reIndexComments"> Also reindex all the asset comments. </param>
         /// <returns>Reindex time in ms.</returns>
-        int ReIndexAllIssuesInBackground(bool reIndexComments);
+        int ReIndexAllAssetsInBackground(bool reIndexComments);
 
         /// <summary>
         /// Optimize the underlying indexes. Make the subsequent searching more efficient.

@@ -34,7 +34,8 @@ namespace QuoteFlow.Areas.Admin.Controllers
         {
             if (model.IndexingStrategy == "background")
             {
-                BackgroundJob.Enqueue(() => IndexLifecycleManager.ReIndexAllIssuesInBackground(true));
+                //BackgroundJob.Enqueue(() => IndexLifecycleManager.ReIndexAllAssetsInBackground(true));
+                IndexLifecycleManager.ReIndexAllAssetsInBackground(true);
             }
             else
             {

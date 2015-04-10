@@ -84,7 +84,6 @@ namespace QuoteFlow.Core.Lucene.Index
 
             if (documents.Count() == 1)
             {
-                documents.GetEnumerator().MoveNext();
                 _writer.UpdateDocument(identifyingTerm, documents.First());
             }
             else

@@ -290,8 +290,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if ((dates != null) && (dates.Count == 1))
             {
-                dates.GetEnumerator().MoveNext();
-                return AddDateCondition(clauseName, Operator.EQUALS, dates.GetEnumerator().Current);
+                return AddDateCondition(clauseName, Operator.EQUALS, dates.First());
             }
             
             return AddDateCondition(clauseName, Operator.IN, dates);
@@ -400,8 +399,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if ((clauseValues != null) && (clauseValues.Count == 1))
             {
-                clauseValues.GetEnumerator().MoveNext();
-                return AddStringCondition(clauseName, Operator.EQUALS, clauseValues.GetEnumerator().Current);
+                return AddStringCondition(clauseName, Operator.EQUALS, clauseValues.First());
             }
             
             return AddStringCondition(clauseName, Operator.IN, clauseValues);
@@ -478,8 +476,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if ((clauseValues != null) && (clauseValues.Count == 1))
             {
-                clauseValues.GetEnumerator().MoveNext();
-                return AddNumberCondition(clauseName, Operator.EQUALS, clauseValues.GetEnumerator().Current);
+                return AddNumberCondition(clauseName, Operator.EQUALS, clauseValues.First());
             }
             
             return AddNumberCondition(clauseName, Operator.IN, clauseValues);

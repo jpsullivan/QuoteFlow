@@ -196,6 +196,7 @@
     <Compile Include="Asset\Index\IAssetIndexer.cs" />
     <Compile Include="Asset\Index\IDocumentCreationStrategy.cs" />
     <Compile Include="Asset\Index\IIndexDirectoryFactory.cs" />
+    <Compile Include="Asset\Index\IIndexingStrategy.cs" />
     <Compile Include="Asset\Index\IndexDirectoryFactory.cs" />
     <Compile Include="Asset\Index\Indexers\AssetIdIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\AssetNameIndexer.cs" />

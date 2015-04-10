@@ -12,13 +12,13 @@ namespace QuoteFlow.Core.Index
 {
     public class AssetIndexHelper
     {
-        private readonly IAssetService issueManager;
-		private readonly IAssetIndexer issueIndexer;
+        private readonly IAssetService _issueManager;
+		private readonly IAssetIndexer _assetIndexer;
 
-        public AssetIndexHelper(IAssetService issueManager, IAssetIndexer issueIndexer)
+        public AssetIndexHelper(IAssetService issueManager, IAssetIndexer assetIndexer)
 		{
-			this.issueManager = issueManager;
-			this.issueIndexer = issueIndexer;
+			_issueManager = issueManager;
+			_assetIndexer = assetIndexer;
 		}
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace QuoteFlow.Core.Index
         {
             try
             {
-                IndexSearcher issueSearcher = issueIndexer.OpenAssetSearcher();
+                IndexSearcher issueSearcher = _assetIndexer.OpenAssetSearcher();
                 try
                 {
                     T result = searcherFunc.Apply(issueSearcher);

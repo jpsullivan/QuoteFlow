@@ -72,12 +72,12 @@ namespace QuoteFlow.Core.Util.Index
             return result;
         }
 
-        public int ReIndexAllIssuesInBackground()
+        public int ReIndexAllAssetsInBackground()
         {
-            return ReIndexAllIssuesInBackground(false);
+            return ReIndexAllAssetsInBackground(false);
         }
 
-        public int ReIndexAllIssuesInBackground(bool reIndexComments)
+        public int ReIndexAllAssetsInBackground(bool reIndexComments)
         {
             Debug.WriteLine("Reindex All In Background starting...");
             int result = 0;
@@ -85,7 +85,7 @@ namespace QuoteFlow.Core.Util.Index
             {
                 try
                 {
-                    int reIndexAll = @delegate.ReIndexAllIssuesInBackground(reIndexComments);
+                    int reIndexAll = @delegate.ReIndexAllAssetsInBackground(reIndexComments);
                     Debug.WriteLine("Reindex took: {0}ms. Indexer: {1}", reIndexAll, @delegate);
                     result += reIndexAll;
                 }

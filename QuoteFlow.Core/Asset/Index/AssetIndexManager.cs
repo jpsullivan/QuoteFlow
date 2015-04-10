@@ -133,12 +133,12 @@ namespace QuoteFlow.Core.Asset.Index
             get { return Size() == 0; }
         }
 
-        public int ReIndexAllIssuesInBackground()
+        public int ReIndexAllAssetsInBackground()
         {
-            return ReIndexAllIssuesInBackground(false);
+            return ReIndexAllAssetsInBackground(false);
         }
 
-        public int ReIndexAllIssuesInBackground(bool reIndexComments)
+        public int ReIndexAllAssetsInBackground(bool reIndexComments)
         {
             return ReIndexAll(true, reIndexComments, true);
         }
@@ -400,7 +400,7 @@ namespace QuoteFlow.Core.Asset.Index
             foreach (var catalog in allCatalogs)
             {
                 var allAssets = AssetService.GetAssets(catalog.Id);
-                AssetIndexer.ReIndexAssets(allAssets, reIndexComments, false);
+                resultBuilder.Add(AssetIndexer.ReIndexAssets(allAssets, reIndexComments, false));
             }
 
             stopWatch.Stop();

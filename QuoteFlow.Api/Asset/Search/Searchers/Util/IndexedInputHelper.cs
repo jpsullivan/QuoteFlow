@@ -98,13 +98,14 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
 
             if (operandValues.Count() == 1)
             {
-                operandValues.GetEnumerator().MoveNext();
-                return new TerminalClause(clauseName, containsList ? Operator.IN : Operator.EQUALS, operandValues.GetEnumerator().Current);
+                return new TerminalClause(clauseName, containsList ? Operator.IN : Operator.EQUALS, operandValues.First());
             }
+
             if (operandValues.Count() > 1)
             {
                 return new TerminalClause(clauseName, Operator.IN, new MultiValueOperand(operandValues));
             }
+            
             return null;
         }
 
@@ -115,7 +116,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
         /// </summary>
         /// <param name="stringValue"> the navigator value as a string e.g. <code>123</code> </param>
         /// <returns> the operand which best represents this navigator value - either a string name or the id or whatever. </returns>
-        protected internal virtual IOperand CreateOperand(string stringValue)
+        private IOperand CreateOperand(string stringValue)
         {
             return CreateSingleValueOperandFromId(stringValue);
         }
@@ -126,7 +127,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
         /// </summary>
         /// <param name="stringValue"> the navigator value as a string e.g. <code>123</code> </param>
         /// <returns> the operand which best represents this navigator value - either a string name or the id or whatever. </returns>
-        protected internal virtual SingleValueOperand CreateSingleValueOperandFromId(string stringValue)
+        protected virtual SingleValueOperand CreateSingleValueOperandFromId(string stringValue)
         {
             // if Long doesn't parse, then assume bad input but create clause anyway
             SingleValueOperand o;
@@ -146,11 +147,16 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
             return o;
         }
 
-        /*
-         * This method is used to implement {@link IndexedInputHelper#getAllNavigatorValuesForMatchingClauses} and must follow
-         * the contract as defined by {@link IndexedInputHelper#getAllNavigatorValues}.
-         */
-        internal virtual IEnumerable<string> GetAllNavigatorValues(User searcher, string fieldName, IOperand operand, ITerminalClause clause)
+        /// <summary>
+        /// This method is used to implement <see cref="IIndexedInputHelper.GetAllNavigatorValuesForMatchingClauses"/>
+        /// and must follow the contract as defined by <see cref="IIndexedInputHelper.GetAlNavigatorValues"/>.
+        /// </summary>
+        /// <param name="searcher"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="operand"></param>
+        /// <param name="clause"></param>
+        /// <returns></returns>
+        private IEnumerable<string> GetAllNavigatorValues(User searcher, string fieldName, IOperand operand, ITerminalClause clause)
         {
             // if we have a way to represent this operand as a navigator-specific flag, do it
             ISet<string> flags = fieldFlagOperandRegistry.GetFlagForOperand(fieldName, operand);
@@ -164,12 +170,9 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
                 var multiValueOperand = (MultiValueOperand) operand;
                 ISet<string> values = new HashSet<string>();
 
-                foreach (IOperand subOperand in multiValueOperand.Values)
+                foreach (var navigatorValue in multiValueOperand.Values.SelectMany(sub => GetAllNavigatorValues(searcher, fieldName, sub, clause)))
                 {
-                    foreach (var navigatorValue in GetAllNavigatorValues(searcher, fieldName, subOperand, clause))
-                    {
-                        values.Add(navigatorValue);
-                    }
+                    values.Add(navigatorValue);
                 }
                 return values;
             }
