@@ -1,5 +1,4 @@
 ﻿using Hangfire;
-using Hangfire.SqlServer;
 using Owin;
 using QuoteFlow.Core.DependencyResolution;
 
@@ -9,12 +8,12 @@ namespace QuoteFlow
     {
         public void ConfigureHangfire(IAppBuilder app)
         {
-            app.UseHangfire(config =>
-            {
-                config.UseSqlServerStorage("QuoteFlow.SqlServer");
-                config.UseNinjectActivator(HangfireContainer.Kernel);
-                config.UseServer();
-            });
+            GlobalConfiguration.Configuration.UseNinjectActivator(HangfireContainer.Kernel);
+            GlobalConfiguration.Configuration.UseSqlServerStorage("QuoteFlow.SqlServer");
+            GlobalConfiguration.Configuration.UseElmahLogProvider();
+
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
         }
     }
-}
+} 
