@@ -14,6 +14,8 @@ using QuoteFlow.Api.Models.CatalogImport;
 using QuoteFlow.Api.Models.ViewModels;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Api.Upload;
+using QuoteFlow.Api.UserTracking;
+using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.AsyncFileUpload;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
@@ -31,24 +33,28 @@ namespace QuoteFlow.Controllers
         public ICatalogImportSummaryRecordsService CatalogImportSummaryService { get; set; }
         public ICatalogImportService CatalogImportService { get; protected set; }
         public IOrganizationService OrganizationService { get; protected set; }
-        public IUserService UserService { get; protected set; }
         public IUploadFileService UploadFileService { get; protected set; }
+        public IUserService UserService { get; protected set; }
+        public IUserTrackingService UserTrackingService { get; protected set; }
         public ICacheService CacheService { get; protected set; }
 
-        public CatalogController() { }
+        public CatalogController()
+        {
+        }
 
         public CatalogController(IAssetService assetService, ICatalogService catalogService, 
             ICatalogImportService catalogImportService, ICatalogImportSummaryRecordsService catalogImportSummaryService,
-            IOrganizationService organizationService, IUserService userService,
-            IUploadFileService uploadFileService, ICacheService cacheService)
+            IOrganizationService organizationService, IUploadFileService uploadFileService, 
+            IUserService userService, IUserTrackingService userTrackingService, ICacheService cacheService)
         {
             AssetService = assetService;
             CatalogService = catalogService;
             CatalogImportService = catalogImportService;
             CatalogImportSummaryService = catalogImportSummaryService;
             OrganizationService = organizationService;
-            UserService = userService;
             UploadFileService = uploadFileService;
+            UserService = userService;
+            UserTrackingService = userTrackingService;
             CacheService = cacheService;
         }
 
@@ -95,7 +101,7 @@ namespace QuoteFlow.Controllers
             return Redirect("~/catalog/" + newCatalog.Id + "/" + newCatalog.Name.UrlFriendly());
         }
 
-        [Route("catalog/{catalogId:INT}/{catalogName}")]
+        [Route("catalog/{catalogId:INT}/{catalogName}", Name = RouteNames.CatalogShow)]
         public virtual ActionResult Show(int catalogId, string catalogName)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
@@ -103,6 +109,9 @@ namespace QuoteFlow.Controllers
             {
                 return PageNotFound();
             }
+
+            // track that this catalog has been visited
+            UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Catalog, catalog.Id, catalog.Name);
 
             var creator = UserService.GetUser(catalog.CreatorId);
             var assets = AssetService.GetAssets(catalog);
@@ -121,9 +130,13 @@ namespace QuoteFlow.Controllers
         public virtual ActionResult ShowAssets(int catalogId, string catalogName, int? page)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
-            if (catalog == null) {
+            if (catalog == null) 
+            {
                 return PageNotFound();
             }
+
+            // track that this catalog has been visited
+            UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Catalog, catalog.Id, catalog.Name);
 
             const int perPage = 50;
             var currentPage = Math.Max(page ?? 1, 1);
@@ -149,9 +162,13 @@ namespace QuoteFlow.Controllers
         public virtual async Task<ActionResult> ShowImportSummary(int catalogId, string catalogName, string filter, int? page)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
-            if (catalog == null) {
+            if (catalog == null) 
+            {
                 return PageNotFound();
             }
+
+            // track that this catalog has been visited
+            UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Catalog, catalog.Id, catalog.Name);
 
             const int perPage = 50;
             var currentPage = Math.Max(page ?? 1, 1);
@@ -204,7 +221,6 @@ namespace QuoteFlow.Controllers
         public virtual ActionResult Admin(int catalogId, string catalogName)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
-
             if (catalog == null)
             {
                 return PageNotFound();

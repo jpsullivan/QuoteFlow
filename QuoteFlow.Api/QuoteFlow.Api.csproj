@@ -506,7 +506,10 @@
     <Compile Include="Services\ISearchService.cs" />
     <Compile Include="Services\IUploadFileService.cs" />
     <Compile Include="Services\IUserService.cs" />
+    <Compile Include="UserTracking\IUserTrackingService.cs" />
     <Compile Include="Upload\UploadType.cs" />
+    <Compile Include="UserTracking\PageType.cs" />
+    <Compile Include="UserTracking\RecentLink.cs" />
     <Compile Include="Util\AbstractMessageSet.cs" />
     <Compile Include="Util\IMessageSet.cs" />
     <Compile Include="Util\IShutdown.cs" />
@@ -523,7 +526,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\CustomFields\Converters\" />
-    <Folder Include="Models\AssetNavigator\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

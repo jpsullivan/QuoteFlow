@@ -6,6 +6,7 @@ using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Infrastructure.Helpers;
 using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Api.UserTracking;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
@@ -27,28 +28,24 @@ namespace QuoteFlow.Controllers
         public IQuoteService QuoteService { get; protected set; }
         public IQuoteStatusService QuoteStatusService { get; protected set; }
         public IUserService UserService { get; protected set; }
+        public IUserTrackingService UserTrackingService { get; protected set; }
 
-        public QuoteController() { }
+        public QuoteController()
+        {
+        }
 
-        public QuoteController(IAssetService assetService,
-            IAssetTableService assetTableService,
-            IAssetTableServiceConfiguration configuration,
-            ICatalogService catalogService,
-            IManufacturerService manufacturerService,
-            IQuoteLineItemService quoteLineItemService,
-            IQuoteService quoteService, 
-            IQuoteStatusService quoteStatusService,
-            IUserService userService)
+        public QuoteController(IAssetService assetService, IAssetTableService assetTableService, IAssetTableServiceConfiguration assetTableServiceConfiguration, ICatalogService catalogService, IManufacturerService manufacturerService, IQuoteLineItemService quoteLineItemService, IQuoteService quoteService, IQuoteStatusService quoteStatusService, IUserService userService, IUserTrackingService userTrackingService)
         {
             AssetService = assetService;
             AssetTableService = assetTableService;
-            AssetTableServiceConfiguration = configuration;
+            AssetTableServiceConfiguration = assetTableServiceConfiguration;
             CatalogService = catalogService;
             ManufacturerService = manufacturerService;
-            QuoteService = quoteService;
             QuoteLineItemService = quoteLineItemService;
+            QuoteService = quoteService;
             QuoteStatusService = quoteStatusService;
             UserService = userService;
+            UserTrackingService = userTrackingService;
         }
 
         #endregion
@@ -103,6 +100,9 @@ namespace QuoteFlow.Controllers
                 return PageNotFound();
             }
 
+            // track that this quote has been visited
+            UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Quote, quote.Id, quote.Name);
+
             var creator = UserService.GetUser(quote.CreatorId);
             var statuses = QuoteStatusService.GetStatuses(CurrentOrganization.Id);
 
@@ -118,6 +118,9 @@ namespace QuoteFlow.Controllers
             {
                 return PageNotFound();
             }
+
+            // track that this quote has been visited
+            UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Quote, quote.Id, quote.Name);
 
             const int perPage = 50;
             var currentPage = Math.Max(page ?? 1, 1);
@@ -140,6 +143,9 @@ namespace QuoteFlow.Controllers
                 return PageNotFound();
             }
 
+            // track that this quote has been visited
+            UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Quote, quote.Id, quote.Name);
+
             var creator = UserService.GetUser(quote.CreatorId);
 
             var model = new QuoteShowModel(quote, creator);
@@ -155,6 +161,9 @@ namespace QuoteFlow.Controllers
                 return PageNotFound();
             }
 
+            // track that this quote has been visited
+            UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Quote, quote.Id, quote.Name);
+
             var creator = UserService.GetUser(quote.CreatorId);
 
             var model = new QuoteShowModel(quote, creator);
@@ -168,6 +177,9 @@ namespace QuoteFlow.Controllers
             var catalogs = CatalogService.GetCatalogs(CurrentOrganization.Id);
             var manufacturers = ManufacturerService.GetManufacturers(CurrentOrganization.Id);
             var creators = UserService.GetUsers(CurrentOrganization.Id);
+
+            // track that this quote has been visited
+            UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Quote, quote.Id, quote.Name);
 
             var assetTable = AssetTableService.GetIssueTableFromFilterWithJql(GetCurrentUser(), String.Empty, String.Empty,
                 AssetTableServiceConfiguration, true);

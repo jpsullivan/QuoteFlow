@@ -86,7 +86,7 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         public static string Catalog(this UrlHelper url, int catalogId, string catalogName)
         {
-            return string.Format("/catalog/{0}/{1}", catalogId, catalogName);
+            return url.RouteUrl(RouteNames.CatalogShow, new { catalogId, catalogName = catalogName.UrlFriendly() });
         }
 
         public static string CatalogAssets(this UrlHelper url, int catalogId, string catalogName)

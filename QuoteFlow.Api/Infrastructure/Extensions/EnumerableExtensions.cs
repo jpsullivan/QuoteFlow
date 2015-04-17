@@ -26,6 +26,18 @@ namespace QuoteFlow.Api.Infrastructure.Extensions
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
+        /// <param name="N"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> TakeLast<T>(this IEnumerable<T> source, int N)
+        {
+            return source.Skip(Math.Max(0, source.Count() - N));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
         /// <returns></returns>
         public static IList<T> AsSingletonList<T>(this IEnumerable<T> source)
         {

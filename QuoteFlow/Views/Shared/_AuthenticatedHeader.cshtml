@@ -1,7 +1,16 @@
-﻿@using QuoteFlow.Infrastructure.Extensions
+﻿@using Ninject
+@using QuoteFlow.Api.UserTracking
+@using QuoteFlow.Core.DependencyResolution
+@using QuoteFlow.Core.UserTracking
+@using QuoteFlow.Infrastructure.Extensions
+@using QuoteFlow.Api.Infrastructure.Extensions
 
 @{
     var currentEmailAddress = CurrentUser.UnconfirmedEmailAddress ?? CurrentUser.EmailAddress;
+    var userTrackingService = Container.Kernel.TryGet<UserTrackingService>();
+
+    var catalogLinks = userTrackingService.GetRecentLinks(CurrentUser.Id, PageType.Catalog).ToList();
+    var quoteLinks = userTrackingService.GetRecentLinks(CurrentUser.Id, PageType.Quote).ToList();
 }
 
 <header id="header" role="banner">
@@ -17,19 +26,30 @@
                     <li>
                         <a href="#" aria-haspopup="true" class="aui-dropdown2-trigger aui-alignment-element-attached-top aui-alignment-element-attached-left" aria-controls="dropdown2-qf-catalogs" aria-expanded="false">Catalogs</a>
                         <div class="aui-dropdown2 aui-style-default aui-dropdown2-in-header aui-layer aui-alignment-side-bottom aui-alignment-snap-left aui-alignment-element-attached-top aui-alignment-element-attached-left aui-alignment-side-bottom aui-alignment-snap-left aui-alignment-side-bottom aui-alignment-snap-left" id="dropdown2-qf-catalogs" aria-hidden="true" data-aui-alignment="bottom auto" data-aui-alignment-static="true">
-                            <div class="aui-dropdown2-section">
-                                <strong>Current Catalog</strong>
-                                <ul>
-                                    <li><a href="#">Test Catalog 123 (4 members)</a></li>
-                                </ul>
-                            </div>
-                            <div class="aui-dropdown2-section">
-                                <strong>Recent Catalogs</strong>
-                                <ul>
-                                    <li><a href="http://example.com/">Item 6</a></li>
-                                    <li><a href="http://example.com/">Item 7</a></li>
-                                </ul>
-                            </div>
+                            @if (catalogLinks.Any())
+                            {
+                                var currentCatalog = catalogLinks.First();
+                                var recentCatalogs = catalogLinks.Skip(1).Take(4).ToList();
+
+                                <div class="aui-dropdown2-section">
+                                    <strong>Current Catalog</strong>
+                                    <ul>
+                                        <li><a href="@Url.Catalog(currentCatalog.PageId, currentCatalog.PageName)">@currentCatalog.PageName</a></li>
+                                    </ul>
+                                </div>
+                                if (recentCatalogs.Any())
+                                {
+                                    <div class="aui-dropdown2-section">
+                                        <strong>Recent Catalogs</strong>
+                                        <ul class="aui-list-truncate">
+                                            @foreach (var catalog in recentCatalogs)
+                                            {
+                                                <li><a href="@Url.Catalog(catalog.PageId, catalog.PageName)">@catalog.PageName</a></li>
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                            }
                             <div class="aui-dropdown2-section">
                                 <ul class="aui-list-truncate">
                                     <li>
@@ -42,14 +62,30 @@
                     <li>
                         <a href="#" aria-haspopup="true" class="aui-dropdown2-trigger aui-alignment-element-attached-top aui-alignment-element-attached-left" aria-controls="dropdown2-qf-quotes" aria-expanded="false">Quotes</a>
                         <div class="aui-dropdown2 aui-style-default aui-dropdown2-in-header aui-layer aui-alignment-side-bottom aui-alignment-snap-left aui-alignment-element-attached-top aui-alignment-element-attached-left aui-alignment-side-bottom aui-alignment-snap-left aui-alignment-side-bottom aui-alignment-snap-left" id="dropdown2-qf-quotes" aria-hidden="true" data-aui-alignment="bottom auto" data-aui-alignment-static="true">
-                            <div class="aui-dropdown2-section">
-                                <strong>Recent Quotes</strong>
-                                <ul class="aui-list-truncate">
-                                    <li><a href="http://example.com/">IDIQ ABC</a></li>
-                                    <li><a href="http://example.com/">Quote 123 Test</a></li>
-                                    <li><a href="http://example.com/">This is going to be a really, really long name</a></li>
-                                </ul>
-                            </div>
+                            @if (quoteLinks.Any())
+                            {
+                                var currentQuote = quoteLinks.First();
+                                var recentQuotes = quoteLinks.Skip(1).Take(4).ToList();
+
+                                <div class="aui-dropdown2-section">
+                                    <strong>Current Quote</strong>
+                                    <ul>
+                                        <li><a href="@Url.Quote(currentQuote.PageId, currentQuote.PageName)">@currentQuote.PageName</a></li>
+                                    </ul>
+                                </div>
+                                if (recentQuotes.Any())
+                                {
+                                    <div class="aui-dropdown2-section">
+                                        <strong>Recent Quotes</strong>
+                                        <ul class="aui-list-truncate">
+                                            @foreach (var quote in recentQuotes)
+                                            {
+                                                <li><a href="@Url.Quote(quote.PageId, quote.PageName)">@quote.PageName</a></li>
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                            }
                             <div class="aui-dropdown2-section">
                                 <ul class="aui-list-truncate">
                                     <li>

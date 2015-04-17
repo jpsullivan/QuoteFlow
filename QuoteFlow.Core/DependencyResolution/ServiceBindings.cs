@@ -22,6 +22,7 @@ using QuoteFlow.Api.Jql.Validator;
 using QuoteFlow.Api.Jql.Values;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Api.UserTracking;
 using QuoteFlow.Core.Asset;
 using QuoteFlow.Core.Asset.CustomFields.Searchers.Transformer;
 using QuoteFlow.Core.Asset.Fields;
@@ -49,6 +50,7 @@ using QuoteFlow.Core.Jql.Validator;
 using QuoteFlow.Core.Jql.Values;
 using QuoteFlow.Core.Lucene.Index;
 using QuoteFlow.Core.Services;
+using QuoteFlow.Core.UserTracking;
 using QuoteFlow.Core.Util.Index;
 using QuoteFlow.Services;
 
@@ -75,6 +77,7 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IQuoteStatusService>().To<QuoteStatusService>().InRequestScope();
             Bind<ISearchService>().To<SearchService>().InRequestScope();
             Bind<IUserService>().To<UserService>().InRequestScope();
+            Bind<IUserTrackingService>().To<UserTrackingService>().InRequestScope();
 
             Bind<IFileSystemService>().To<FileSystemService>().InSingletonScope();
             Bind<IUploadFileService>().To<UploadFileService>();
