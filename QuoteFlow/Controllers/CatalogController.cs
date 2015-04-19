@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using CsvHelper;
 using Jil;
+using QuoteFlow.Api.Auditing;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Infrastructure.Helpers;
 using QuoteFlow.Api.Models;
@@ -29,6 +30,8 @@ namespace QuoteFlow.Controllers
         #region DI
 
         public IAssetService AssetService { get; protected set; }
+        public IAuditService AuditService { get; protected set; }
+        public ICacheService CacheService { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
         public ICatalogImportSummaryRecordsService CatalogImportSummaryService { get; set; }
         public ICatalogImportService CatalogImportService { get; protected set; }
@@ -36,26 +39,23 @@ namespace QuoteFlow.Controllers
         public IUploadFileService UploadFileService { get; protected set; }
         public IUserService UserService { get; protected set; }
         public IUserTrackingService UserTrackingService { get; protected set; }
-        public ICacheService CacheService { get; protected set; }
 
         public CatalogController()
         {
         }
 
-        public CatalogController(IAssetService assetService, ICatalogService catalogService, 
-            ICatalogImportService catalogImportService, ICatalogImportSummaryRecordsService catalogImportSummaryService,
-            IOrganizationService organizationService, IUploadFileService uploadFileService, 
-            IUserService userService, IUserTrackingService userTrackingService, ICacheService cacheService)
+        public CatalogController(IAssetService assetService, IAuditService auditService, ICacheService cacheService, ICatalogService catalogService, ICatalogImportSummaryRecordsService catalogImportSummaryService, ICatalogImportService catalogImportService, IOrganizationService organizationService, IUploadFileService uploadFileService, IUserService userService, IUserTrackingService userTrackingService)
         {
             AssetService = assetService;
+            AuditService = auditService;
+            CacheService = cacheService;
             CatalogService = catalogService;
-            CatalogImportService = catalogImportService;
             CatalogImportSummaryService = catalogImportSummaryService;
+            CatalogImportService = catalogImportService;
             OrganizationService = organizationService;
             UploadFileService = uploadFileService;
             UserService = userService;
             UserTrackingService = userTrackingService;
-            CacheService = cacheService;
         }
 
         #endregion
@@ -96,6 +96,9 @@ namespace QuoteFlow.Controllers
             }
 
             var newCatalog = CatalogService.CreateCatalog(model, currentUser.Id);
+
+            // log this event
+            AuditService.SaveCatalogAuditRecord(AuditEvent.CatalogCreated, currentUser.Id);
 
             // there has to be a better way to do this...
             return Redirect("~/catalog/" + newCatalog.Id + "/" + newCatalog.Name.UrlFriendly());

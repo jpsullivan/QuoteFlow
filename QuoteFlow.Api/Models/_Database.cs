@@ -1,4 +1,5 @@
-﻿using QuoteFlow.Api.Models.CatalogImport;
+﻿using QuoteFlow.Api.Auditing;
+using QuoteFlow.Api.Models.CatalogImport;
 using QuoteFlow.Api.UserTracking;
 
 namespace QuoteFlow.Api.Models
@@ -8,7 +9,8 @@ namespace QuoteFlow.Api.Models
         public Table<Asset> Assets { get; private set; }
         public Table<AssetComment> AssetComments { get; private set; } 
         public Table<AssetVar> AssetVars { get; private set; }
-        public Table<AssetVarValue> AssetVarValues { get; private set; } 
+        public Table<AssetVarValue> AssetVarValues { get; private set; }
+        public Table<AuditLogRecord> AuditLog { get; private set; } 
         public Table<Catalog> Catalogs { get; private set; }
         public Table<CatalogImportSummaryRecord> CatalogImportSummaryRecords { get; private set; }
         public Table<Contact> Contacts { get; private set; }
