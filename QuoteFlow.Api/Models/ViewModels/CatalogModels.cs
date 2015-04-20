@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using QuoteFlow.Api.Auditing;
 using QuoteFlow.Api.Infrastructure.Helpers;
 using QuoteFlow.Api.Models.CatalogImport;
 
@@ -11,6 +12,7 @@ namespace QuoteFlow.Api.Models.ViewModels
         public IEnumerable<Asset> Assets { get; set; }
         public Catalog Catalog { get; set; }
         public User CatalogCreator { get; set; }
+        public IEnumerable<AuditLogRecord> ActivityHistory { get; set; } 
     }
 
     public class NewCatalogModel

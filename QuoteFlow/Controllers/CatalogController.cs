@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using CsvHelper;
 using Jil;
 using QuoteFlow.Api.Auditing;
+using QuoteFlow.Api.Auditing.DetailResolvers.Catalog;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Infrastructure.Helpers;
 using QuoteFlow.Api.Models;
@@ -98,7 +99,7 @@ namespace QuoteFlow.Controllers
             var newCatalog = CatalogService.CreateCatalog(model, currentUser.Id);
 
             // log this event
-            AuditService.SaveCatalogAuditRecord(AuditEvent.CatalogCreated, currentUser.Id);
+            AuditService.SaveCatalogAuditRecord(AuditEvent.CatalogCreated, currentUser.Id, newCatalog.Id);
 
             // there has to be a better way to do this...
             return Redirect("~/catalog/" + newCatalog.Id + "/" + newCatalog.Name.UrlFriendly());
@@ -118,12 +119,14 @@ namespace QuoteFlow.Controllers
 
             var creator = UserService.GetUser(catalog.CreatorId);
             var assets = AssetService.GetAssets(catalog);
+            var activity = AuditService.GetCatalogAuditLogs(catalog.Id);
 
             var model = new CatalogShowModel
             {
                 Assets = assets,
                 Catalog = catalog,
-                CatalogCreator = creator
+                CatalogCreator = creator,
+                ActivityHistory = activity
             };
 
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);

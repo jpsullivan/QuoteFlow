@@ -686,6 +686,12 @@
     <Content Include="Content\less\header.min.css">
       <DependentUpon>header.css</DependentUpon>
     </Content>
+    <Content Include="Content\less\history-feed.css">
+      <DependentUpon>history-feed.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\history-feed.min.css">
+      <DependentUpon>history-feed.css</DependentUpon>
+    </Content>
     <Content Include="Content\less\intro-message.css">
       <DependentUpon>intro-message.less</DependentUpon>
     </Content>
@@ -988,6 +994,10 @@
     <Content Include="Content\views\shifter\group-heading.hbs" />
     <Content Include="Areas\Admin\Views\Indexing\Index.cshtml" />
     <Compile Include="App_Start\Startup.Hangfire.cs" />
+    <Content Include="Content\less\history-feed.less" />
+    <Content Include="Content\less\history-feed.css.map">
+      <DependentUpon>history-feed.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1079,6 +1089,8 @@
     <Content Include="Views\Shared\Partials\Quote\Builder\SplitView.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\_NotificationLayout.cshtml" />
+    <Content Include="Views\Shared\Partials\Catalog\ActivityFeed.cshtml" />
+    <Content Include="Views\Shared\Partials\Auditing\Catalog\Created.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

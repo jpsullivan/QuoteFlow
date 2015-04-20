@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Dapper;
 using QuoteFlow.Api.Models;
 
 namespace QuoteFlow.Api.Auditing
@@ -15,7 +17,7 @@ namespace QuoteFlow.Api.Auditing
             Category = category;
             Event = @event;
             UserId = userId;
-            Details = details;
+            RawDetails = details;
             CreatedUtc = createdUtc;
         }
 
@@ -45,11 +47,31 @@ namespace QuoteFlow.Api.Auditing
         public User User { get; set; }
 
         /// <summary>
+        /// The ID of whatever has been created/updated/deleted.
+        /// For example, creating a new Catalog would populate this with
+        /// the new catalog ID.
+        /// </summary>
+        public int? ActorId { get; set; }
+
+        /// <summary>
+        /// The ID of whatever the "parent" member to the actor is.
+        /// For example, modifying an asset would populate this with
+        /// whatever the assets catalog ID is.
+        /// </summary>
+        public int? ParentActorId { get; set; }
+
+        /// <summary>
         /// A JSON-serialized representation of any extra details that this
         /// record may provide. Useful for giving before/after details of a change.
         /// e.g. OldCustomerName = "company abc", NewCustomerName = "company 123"
         /// </summary>
-        public string Details { get; set; }
+        public string RawDetails { get; set; }
+
+        /// <summary>
+        /// Key-value representation of the <see cref="RawDetails"/> property.
+        /// </summary>
+        [IgnoreProperty(true)]
+        public IDictionary<string, string> Details { get; set; } 
 
         /// <summary>
         /// When this record was created.

@@ -61,7 +61,8 @@
                                 <p>@Model.Catalog.Description</p>
                             </div>
                             <div class="module">
-                                <p>Lorem ipsum</p>
+                                <h2>Activity</h2>
+                                @Html.Partial("Partials/Catalog/ActivityFeed", Model.ActivityHistory)
                             </div>
                         </div>
                     </div>

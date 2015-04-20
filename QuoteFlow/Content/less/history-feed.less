@@ -1,0 +1,48 @@
+﻿.history-data-block { 
+    border-bottom: 1px solid #ccc; padding: 10px; 
+
+    &:hover {
+        background-color: #f5f5f5;
+        border-left: 5px solid #3572b0;
+        padding-left: 5px;
+    }
+
+    .focused { 
+        background-color: #e0f0ff; 
+    }
+
+    &:after { 
+        content: "."; 
+        display: block; 
+        height: 0; 
+        clear: both; 
+        visibility: hidden; 
+    }
+}
+
+.actionContainer .subText { font-size: 1em; }
+.actionContainer .action-links { visibility: hidden; }
+.actionContainer ul.item-details dl dt { width: 19%; }
+.actionContainer ul.item-details dl dd { width: 79%; }
+.history-data-block:hover .actionContainer .action-links,
+.history-data-block.focused .actionContainer .action-links { visibility: visible; }
+
+.action-body { 
+    overflow: auto; 
+    overflow-y: hidden; 
+    margin: 10px 0 0 15px;
+}
+.action-body blockquote { color: #333; }
+.action-body .item-details { margin-top: 0.5em; }
+
+.action-details { 
+    line-height: 1.5; 
+    margin-left: 5px;
+    text-align: left; 
+
+    .date { 
+        float: right;
+        color: #aeaeae;
+    }
+}
+.focused .action-details { text-align: left; }

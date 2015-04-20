@@ -15,7 +15,9 @@ namespace QuoteFlow.Migrations
                 .WithColumn("Category").AsInt32().NotNullable()
                 .WithColumn("Event").AsInt32().NotNullable()
                 .WithColumn("UserId").AsInt32().NotNullable()
-                .WithColumn("Details").AsMaxString().Nullable()
+                .WithColumn("ActorId").AsInt32().Nullable()
+                .WithColumn("ParentActorId").AsInt32().Nullable()
+                .WithColumn("RawDetails").AsMaxString().Nullable()
                 .WithColumn("CreatedUtc").AsDateTime().Nullable().WithDefault(SystemMethods.CurrentUTCDateTime);
 
             Create.ForeignKey("FK_AuditLog_Users_UserId")

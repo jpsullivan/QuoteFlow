@@ -1,0 +1,17 @@
+﻿@using QuoteFlow.Api.Auditing
+@model IEnumerable<AuditLogRecord>
+
+<div class="activity-feed-container">
+    @foreach (var record in Model)
+    {
+        string viewName = String.Empty;
+        var name = Enum.GetName(typeof (AuditEvent), record.Event);
+        if (!string.IsNullOrEmpty(name))
+        {
+            viewName = name.Replace(record.Category.ToString(), "");
+        }
+        
+        var viewPath = string.Format("Partials/Auditing/{0}/{1}", record.Category, viewName);
+        Html.RenderPartial(viewPath, record);
+    }
+</div>
