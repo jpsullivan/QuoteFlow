@@ -58,7 +58,8 @@ namespace QuoteFlow.Api.Services
         /// </summary>
         /// <param name="assetId">The asset id to update.</param>
         /// <param name="diff">The <see cref="Snapshotter"/> diff.</param>
-        void UpdateAsset(int assetId, DynamicParameters diff);
+        /// <param name="userId">The ID of the user updating this asset.</param>
+        void UpdateAsset(int assetId, DynamicParameters diff, int userId);
 
         /// <summary>
         /// Retrieves a collection of <see cref="AssetComment"/>s relative to

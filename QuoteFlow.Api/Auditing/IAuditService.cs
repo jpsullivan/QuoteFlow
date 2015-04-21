@@ -115,6 +115,16 @@ namespace QuoteFlow.Api.Auditing
         void SaveAssetAuditRecord(AuditEvent @event, int userId, int assetId, int catalogId, string details);
 
         /// <summary>
+        /// Saves an audit record to the database.
+        /// </summary>
+        /// <param name="event"></param>
+        /// <param name="userId"></param>
+        /// <param name="assetId"></param>
+        /// <param name="catalogId"></param>
+        /// <param name="details"></param>
+        void SaveAssetAuditRecord(AuditEvent @event, int userId, int assetId, int catalogId, IDetailResolver details);
+
+        /// <summary>
         /// Saves a manufacturer with no details to the database.
         /// </summary>
         /// <param name="event"></param>

@@ -46,3 +46,13 @@
     }
 }
 .focused .action-details { text-align: left; }
+
+/* Change History Stuff */
+.changehistory th,
+.changehistory td {vertical-align:top;padding:0.166em 0.5em 0.166em 0;}
+/* Conditional Overrides */
+.action-body.changehistory {margin:0;}/* Changehistory may have headers inside the actionbody, which require 0px margin. */
+
+.activity-name { color: #666; min-width: 150px; }
+.activity-old-val,
+.activity-new-val { min-width: 250px; }

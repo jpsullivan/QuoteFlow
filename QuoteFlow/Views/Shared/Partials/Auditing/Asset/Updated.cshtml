@@ -1,0 +1,51 @@
+﻿@using Jil
+@using Ninject
+@using QuoteFlow.Api.Auditing.DetailResolvers.Asset
+@using QuoteFlow.Api.Infrastructure.Extensions
+@using QuoteFlow.Core.DependencyResolution
+@using QuoteFlow.Core.Services
+@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Api.Auditing.AuditLogRecord
+
+@{
+    var details = JSON.Deserialize<AssetUpdated>(Model.RawDetails);
+    var assetService = Container.Kernel.TryGet<AssetService>();
+    var asset = assetService.GetAsset((int) Model.ActorId);
+}
+
+<div class="history-data-block">
+    <div class="action-container">
+        <div class="action-details">
+            <span class="date" title="@Model.CreatedUtc.ToLocalTime().ToString("g")">@Model.CreatedUtc.ToLocalTime().ToRelativeTime()</span>
+            <a class="user-avatar" rel="@Model.User.Username" href="@Url.UserProfile(Model.User.Username)">
+                <span class="aui-avatar aui-avatar-xsmall">
+                    <span class="aui-avatar-inner">
+                        @Html.Gravatar(Model.User.EmailAddress, 16)
+                    </span>
+                </span> @Model.User.FullName
+            </a>
+            made changes to the an <a href="@Url.Asset(asset.Id, asset.Name)">asset</a>.
+        </div>
+        <div class="action-body changehistory">
+            <table class="aui">
+                <thead>
+                    <tr>
+                        <th width="20%">Field</th>
+                        <th width="40%">Original Value</th>
+                        <th width="40%">New Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var field in details.ChangedParameters)
+                    {
+                        <tr>
+                            <td width="20%" class="activity-name">@field.Key</td>
+                            <td width="40%" class="activity-old-val">@field.Value[0]</td>
+                            <td width="40%" class="activity-new-val">@field.Value[1]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -170,6 +170,11 @@ namespace QuoteFlow.Core.Auditing
             SaveAuditRecord(AuditCategory.Asset, @event, userId, assetId, catalogId, details);
         }
 
+        public void SaveAssetAuditRecord(AuditEvent @event, int userId, int assetId, int catalogId, IDetailResolver details)
+        {
+            SaveAuditRecord(AuditCategory.Asset, @event, userId, assetId, catalogId, details.Serialize());
+        }
+
         public void SaveManufacturerAuditRecord(AuditEvent @event, int userId, int manufacturerId)
         {
             SaveAuditRecord(AuditCategory.Manufacturer, @event, userId, manufacturerId, null, null);

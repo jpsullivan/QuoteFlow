@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using QuoteFlow.Api.Auditing;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels;
 using QuoteFlow.Api.Services;
@@ -11,13 +12,17 @@ namespace QuoteFlow.Core.Services
     {
         #region IoC
 
+        private IAuditService AuditService { get; set; }
         private ICatalogImportSummaryRecordsService CatalogSummaryService { get; set; }
         private IManufacturerService ManufacturerService { get; set; }
 
-        public CatalogService() { }
-
-        public CatalogService(ICatalogImportSummaryRecordsService catalogSummaryService, IManufacturerService manufacturerService)
+        public CatalogService()
         {
+        }
+
+        public CatalogService(IAuditService auditService, ICatalogImportSummaryRecordsService catalogSummaryService, IManufacturerService manufacturerService)
+        {
+            AuditService = auditService;
             CatalogSummaryService = catalogSummaryService;
             ManufacturerService = manufacturerService;
         }
@@ -97,6 +102,8 @@ namespace QuoteFlow.Core.Services
             {
                 catalog.Id = insert.Value;
             }
+
+            AuditService.SaveCatalogAuditRecord(AuditEvent.CatalogCreated, userId, catalog.Id);
 
             return catalog;
         }

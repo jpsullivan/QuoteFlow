@@ -98,9 +98,6 @@ namespace QuoteFlow.Controllers
 
             var newCatalog = CatalogService.CreateCatalog(model, currentUser.Id);
 
-            // log this event
-            AuditService.SaveCatalogAuditRecord(AuditEvent.CatalogCreated, currentUser.Id, newCatalog.Id);
-
             // there has to be a better way to do this...
             return Redirect("~/catalog/" + newCatalog.Id + "/" + newCatalog.Name.UrlFriendly());
         }
@@ -447,9 +444,6 @@ namespace QuoteFlow.Controllers
             var id = CatalogImportService.ImportCatalog(model, currentUser.Id, CurrentOrganization.Id);
 
             await UploadFileService.DeleteUploadFileAsync(currentUser.Id);
-
-            // log that this catalog was created from the import
-            AuditService.SaveCatalogAuditRecord(AuditEvent.CatalogCreated, currentUser.Id, id);
 
             // log that these assets were imported
             int totalSuccess = CatalogImportSummaryService.GetImportSummaryRecords(id).Count(s => s.Result == CatalogSummaryResult.Success);

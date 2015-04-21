@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Dapper;
 using QuoteFlow.Api.Asset.Search.Managers;
+using QuoteFlow.Api.Auditing;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels.Assets;
 using QuoteFlow.Api.Services;
@@ -13,29 +14,28 @@ using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 namespace QuoteFlow.Controllers
 {
     [Authorize]
-    public partial class AssetController : AppController
+    public class AssetController : AppController
     {
         #region IoC
 
         public IAssetService AssetService { get; protected set; }
         public IAssetSearcherManager AssetSearcherManager { get; protected set; }
         public IAssetVarService AssetVarService { get; protected set; }
+        public IAuditService AuditService { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
         public IManufacturerService ManufacturerService { get; protected set; }
         public IUserService UserService { get; protected set; }
 
-        public AssetController() { }
+        public AssetController()
+        {
+        }
 
-        public AssetController(IAssetService assetService, 
-            IAssetSearcherManager assetSearchService,
-            IAssetVarService assetVarService,
-            ICatalogService catalogService, 
-            IManufacturerService manufacturerService,
-            IUserService userService)
+        public AssetController(IAssetService assetService, IAssetSearcherManager assetSearcherManager, IAssetVarService assetVarService, IAuditService auditService, ICatalogService catalogService, IManufacturerService manufacturerService, IUserService userService)
         {
             AssetService = assetService;
-            AssetSearcherManager = assetSearchService;
+            AssetSearcherManager = assetSearcherManager;
             AssetVarService = assetVarService;
+            AuditService = auditService;
             CatalogService = catalogService;
             ManufacturerService = manufacturerService;
             UserService = userService;
@@ -126,7 +126,7 @@ namespace QuoteFlow.Controllers
             var diff = snapshot.Diff();
             if (diff.ParameterNames.Any())
             {
-                AssetService.UpdateAsset(asset.Id, diff);
+                AssetService.UpdateAsset(asset.Id, diff, GetCurrentUser().Id);
             }
 
             foreach (var assetVarValue in form.AssetVarValuesData)

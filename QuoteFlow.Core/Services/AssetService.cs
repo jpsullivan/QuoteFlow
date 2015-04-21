@@ -4,6 +4,8 @@ using System.Linq;
 using Dapper;
 using Lucene.Net.Documents;
 using QuoteFlow.Api.Asset.Fields;
+using QuoteFlow.Api.Auditing;
+using QuoteFlow.Api.Auditing.DetailResolvers.Asset;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels.Assets;
@@ -19,17 +21,18 @@ namespace QuoteFlow.Core.Services
         #region IoC
 
         public IAssetVarService AssetVarService { get; protected set; }
+        public IAuditService AuditService { get; protected set; }
         public IFieldManager FieldManager { get; protected set; }
         private IManufacturerService ManufacturerService { get; set; }
 
-        public AssetService() { }
+        public AssetService()
+        {
+        }
 
-        public AssetService(
-            IAssetVarService assetVarService,
-            IFieldManager fieldManager,
-            IManufacturerService manufacturerService)
+        public AssetService(IAssetVarService assetVarService, IAuditService auditService, IFieldManager fieldManager, IManufacturerService manufacturerService)
         {
             AssetVarService = assetVarService;
+            AuditService = auditService;
             FieldManager = fieldManager;
             ManufacturerService = manufacturerService;
         }
@@ -219,13 +222,20 @@ namespace QuoteFlow.Core.Services
         /// </summary>
         /// <param name="assetId">The asset id to update.</param>
         /// <param name="diff">The <see cref="Snapshotter"/> diff.</param>
-        public void UpdateAsset(int assetId, DynamicParameters diff)
+        /// <param name="userId">The ID of the user updating this asset.</param>
+        public void UpdateAsset(int assetId, DynamicParameters diff, int userId)
         {
-            if (assetId == 0) {
+            if (assetId == 0) 
+            {
                 throw new ArgumentException("Asset ID must be greater than zero.", "assetId");
             }
+
+            var asset = GetAsset(assetId);
             
             Current.DB.Assets.Update(assetId, diff);
+
+            // track that this asset was updated
+            AuditService.SaveAssetAuditRecord(AuditEvent.AssetUpdated, userId, assetId, asset.CatalogId, new AssetUpdated(asset, diff));
         }
 
         /// <summary>
