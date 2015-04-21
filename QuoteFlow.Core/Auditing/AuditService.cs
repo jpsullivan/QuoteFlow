@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using QuoteFlow.Api.Auditing;
+using QuoteFlow.Api.Auditing.DetailResolvers;
 using QuoteFlow.Api.Models;
 
 namespace QuoteFlow.Core.Auditing
@@ -152,6 +153,11 @@ namespace QuoteFlow.Core.Auditing
         public void SaveCatalogAuditRecord(AuditEvent @event, int userId, int catalogId, string details)
         {
             SaveAuditRecord(AuditCategory.Catalog, @event, userId, catalogId, null, details);
+        }
+
+        public void SaveCatalogAuditRecord(AuditEvent @event, int userId, int catalogId, IDetailResolver details)
+        {
+            SaveAuditRecord(AuditCategory.Catalog, @event, userId, catalogId, null, details.Serialize());
         }
 
         public void SaveAssetAuditRecord(AuditEvent @event, int userId, int assetId, int catalogId)

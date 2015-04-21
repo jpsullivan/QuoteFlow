@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QuoteFlow.Api.Auditing.DetailResolvers;
 using QuoteFlow.Api.Models;
 
 namespace QuoteFlow.Api.Auditing
@@ -84,6 +85,15 @@ namespace QuoteFlow.Api.Auditing
         /// <param name="catalogId"></param>
         /// <param name="details"></param>
         void SaveCatalogAuditRecord(AuditEvent @event, int userId, int catalogId, string details);
+
+        /// <summary>
+        /// Saves a catalog audit record to the database.
+        /// </summary>
+        /// <param name="event"></param>
+        /// <param name="userId"></param>
+        /// <param name="catalogId"></param>
+        /// <param name="details"></param>
+        void SaveCatalogAuditRecord(AuditEvent @event, int userId, int catalogId, IDetailResolver details);
 
         /// <summary>
         /// Saves an asset audit record with no details to the database.

@@ -62,7 +62,19 @@
                             </div>
                             <div class="module">
                                 <h2>Activity</h2>
-                                @Html.Partial("Partials/Catalog/ActivityFeed", Model.ActivityHistory)
+                                @if (Model.ActivityHistory.Any())
+                                {
+                                    @Html.Partial("Partials/Catalog/ActivityFeed", Model.ActivityHistory)
+                                }
+                                else
+                                {
+                                    <div class="blank-message">
+                                        <h2>No recent activities found</h2>
+                                        <p>
+                                            There have been no activites related to this catalog.
+                                        </p>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>

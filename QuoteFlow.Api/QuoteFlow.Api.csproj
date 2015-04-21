@@ -252,6 +252,7 @@
     <Compile Include="Auditing\AuditCategory.cs" />
     <Compile Include="Auditing\AuditEvent.cs" />
     <Compile Include="Auditing\AuditLogRecord.cs" />
+    <Compile Include="Auditing\DetailResolvers\Catalog\CatalogAssetsImported.cs" />
     <Compile Include="Auditing\DetailResolvers\Catalog\CatalogCreated.cs" />
     <Compile Include="Auditing\DetailResolvers\IDetailResolver.cs" />
     <Compile Include="Auditing\IAuditService.cs" />

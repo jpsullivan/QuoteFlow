@@ -1091,6 +1091,7 @@
     <Content Include="Views\Shared\_NotificationLayout.cshtml" />
     <Content Include="Views\Shared\Partials\Catalog\ActivityFeed.cshtml" />
     <Content Include="Views\Shared\Partials\Auditing\Catalog\Created.cshtml" />
+    <Content Include="Views\Shared\Partials\Auditing\Catalog\AssetsImported.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

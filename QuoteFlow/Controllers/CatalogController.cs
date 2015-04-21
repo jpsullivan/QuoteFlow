@@ -448,6 +448,13 @@ namespace QuoteFlow.Controllers
 
             await UploadFileService.DeleteUploadFileAsync(currentUser.Id);
 
+            // log that this catalog was created from the import
+            AuditService.SaveCatalogAuditRecord(AuditEvent.CatalogCreated, currentUser.Id, id);
+
+            // log that these assets were imported
+            int totalSuccess = CatalogImportSummaryService.GetImportSummaryRecords(id).Count(s => s.Result == CatalogSummaryResult.Success);
+            AuditService.SaveCatalogAuditRecord(AuditEvent.CatalogAssetsImported, currentUser.Id, id, new CatalogAssetsImported(totalSuccess));
+
             var url = Url.CatalogImportResults(id, CatalogService.GetCatalog(id).Name.UrlFriendly());
             return Redirect(url);
         }
