@@ -27,6 +27,15 @@ namespace QuoteFlow.Api.Auditing
         IEnumerable<AuditLogRecord> GetAuditLogs(params AuditCategory[] categories);
 
         /// <summary>
+        /// Fetches the audit logs for a specific set of <see cref="AuditCategory"/> objects,
+        /// excluding a specific type of event from being returned.
+        /// </summary>
+        /// <param name="excludedEvent"></param>
+        /// <param name="categories"></param>
+        /// <returns></returns>
+        IEnumerable<AuditLogRecord> GetAuditLogs(AuditEvent excludedEvent, params AuditCategory[] categories);
+
+        /// <summary>
         /// Fetches the audit logs for a specific set of <see cref="AuditCategory"/> objects.
         /// </summary>
         /// <param name="actorId"></param>

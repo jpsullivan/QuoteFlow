@@ -133,7 +133,7 @@ namespace QuoteFlow.Core.Services
                     newAsset.Markup = Decimal.Zero;
                 }
 
-                asset = AssetService.CreateAsset(newAsset, currentUserId);
+                asset = AssetService.CreateAsset(newAsset, currentUserId, true);
 
                 // forceful failure if for some reason asset is null
                 if (asset == null)

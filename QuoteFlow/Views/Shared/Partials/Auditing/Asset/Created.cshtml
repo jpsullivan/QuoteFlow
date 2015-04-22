@@ -1,0 +1,19 @@
+﻿@using QuoteFlow.Api.Infrastructure.Extensions
+@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Api.Auditing.AuditLogRecord
+
+<div class="history-data-block">
+    <div class="action-container">
+        <div class="action-details">
+            <span class="date" title="@Model.CreatedUtc.ToLocalTime().ToString("g")">@Model.CreatedUtc.ToLocalTime().ToRelativeTime()</span>
+            <a class="user-avatar" rel="@Model.User.Username" href="@Url.UserProfile(Model.User.Username)">
+                <span class="aui-avatar aui-avatar-xsmall">
+                    <span class="aui-avatar-inner">
+                        @Html.Gravatar(Model.User.EmailAddress, 16)
+                    </span>
+                </span> @Model.User.FullName
+            </a>
+            created asset
+        </div>
+    </div>
+</div>

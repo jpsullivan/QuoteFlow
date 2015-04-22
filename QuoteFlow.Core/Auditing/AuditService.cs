@@ -56,6 +56,22 @@ namespace QuoteFlow.Core.Auditing
             }, new { categories });
         }
 
+        public IEnumerable<AuditLogRecord> GetAuditLogs(AuditEvent excludedEvent, params AuditCategory[] categories)
+        {
+            const string sql = @"
+                select * from AuditLog log 
+                left join Users u on u.Id = log.UserId
+                where log.Category in @categories and Event != @excludedEvent
+                order by log.CreatedUtc DESC
+            ";
+
+            return Current.DB.Query<AuditLogRecord, User, AuditLogRecord>(sql, (ch, user) =>
+            {
+                ch.User = user;
+                return ch;
+            }, new { categories, excludedEvent });
+        }
+
         public IEnumerable<AuditLogRecord> GetAuditLogs(int actorId, int? parentActorId, params AuditCategory[] categories)
         {
             var builder = new SqlBuilder();
@@ -134,7 +150,7 @@ namespace QuoteFlow.Core.Auditing
         public IEnumerable<AuditLogRecord> GetCatalogAuditLogs(int catalogId)
         {
             var logs = new List<AuditLogRecord>();
-            var allLogs = GetAuditLogs(AuditCategory.Asset, AuditCategory.Catalog);
+            var allLogs = GetAuditLogs(AuditEvent.AssetImported, AuditCategory.Asset, AuditCategory.Catalog);
             foreach (var log in allLogs)
             {
                 if (log.Category == AuditCategory.Catalog)

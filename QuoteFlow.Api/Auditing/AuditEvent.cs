@@ -21,6 +21,7 @@
         AssetCommentAdded = 203,
         AssetCommentEdited = 204,
         AssetCommentDeleted = 205,
+        AssetImported = 206,
 
         ManufacturerAdded = 300,
         ManufacturerUpdated = 301,

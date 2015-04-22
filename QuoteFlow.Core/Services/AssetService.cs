@@ -139,33 +139,14 @@ namespace QuoteFlow.Core.Services
                 Description = model.Description,
                 Type = "Asset",
                 CatalogId = catalogId,
-                CreatorId = userId,
-                CreationDate = DateTime.UtcNow,
-                LastUpdated = DateTime.UtcNow
+                CreatorId = userId
             };
 
             // Fetch the manufacturer id
             Manufacturer manufacturer = ManufacturerService.GetManufacturer(model.Manufacturer, true);
             asset.ManufacturerId = manufacturer.Id;
 
-            int? insert = Current.DB.Assets.Insert(new
-            {
-                asset.Name,
-                asset.Description,
-                asset.Type,
-                asset.ManufacturerId,
-                asset.CatalogId,
-                asset.CreatorId,
-                asset.CreationDate,
-                asset.LastUpdated
-            });
-
-            if (insert != null)
-            {
-                asset.Id = insert.Value;
-            }
-
-            return asset;
+            return CreateAsset(asset, userId, false);
         }
 
         /// <summary>
@@ -173,14 +154,17 @@ namespace QuoteFlow.Core.Services
         /// </summary>
         /// <param name="asset">A pre-built <see cref="QuoteFlow.Core.Asset"/>.</param>
         /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
+        /// <param name="imported">True if an audit should not be created for this creation</param>
         /// <returns></returns>
-        public Api.Models.Asset CreateAsset(Api.Models.Asset asset, int userId)
+        public Api.Models.Asset CreateAsset(Api.Models.Asset asset, int userId, bool imported)
         {
-            if (asset == null) {
+            if (asset == null) 
+            {
                 throw new ArgumentNullException("asset");
             }
 
-            if (userId == 0) {
+            if (userId == 0) 
+            {
                 throw new ArgumentException("User Id must be greater than zero.", "userId");
             }
 
@@ -213,6 +197,10 @@ namespace QuoteFlow.Core.Services
             if (insert != null) {
                 asset.Id = insert.Value;
             }
+
+            // track that this asset was created
+            var assetEvent = imported ? AuditEvent.AssetImported : AuditEvent.AssetCreated;
+            AuditService.SaveAssetAuditRecord(assetEvent, userId, asset.Id, asset.CatalogId);
 
             return asset;
         }

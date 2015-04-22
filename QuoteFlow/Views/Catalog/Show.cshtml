@@ -64,7 +64,7 @@
                                 <h2>Activity</h2>
                                 @if (Model.ActivityHistory.Any())
                                 {
-                                    @Html.Partial("Partials/Catalog/ActivityFeed", Model.ActivityHistory)
+                                    @Html.Partial("Partials/Auditing/ActivityFeed", Model.ActivityHistory)
                                 }
                                 else
                                 {

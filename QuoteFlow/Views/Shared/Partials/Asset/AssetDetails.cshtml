@@ -152,7 +152,7 @@
                                 <div id="asset_tab_all" class="tabs-pane">
                                     @if (Model.AssetHistory.Any())
                                     {
-                                        @Html.Partial("Partials/Catalog/ActivityFeed", Model.AssetHistory)
+                                        @Html.Partial("Partials/Auditing/ActivityFeed", Model.AssetHistory)
                                     }
                                     else
                                     {

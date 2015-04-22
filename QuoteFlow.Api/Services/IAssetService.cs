@@ -50,8 +50,9 @@ namespace QuoteFlow.Api.Services
         /// </summary>
         /// <param name="asset">A pre-built <see cref="Asset"/>.</param>
         /// <param name="userId">The identifier of the <see cref="User"/> who is creating this asset.</param>
+        /// <param name="imported">True if an audit should not be created for this creation</param>
         /// <returns></returns>
-        Models.Asset CreateAsset(Models.Asset asset, int userId);
+        Models.Asset CreateAsset(Models.Asset asset, int userId, bool imported);
 
         /// <summary>
         /// Updates an assets details based on a <see cref="Snapshotter"/> diff.
