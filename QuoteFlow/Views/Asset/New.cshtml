@@ -21,29 +21,48 @@
             @Html.EnumDropDownListFor(m => m.AssetType, Model.AssetTypeChoices, "Choose an asset type")
             @Html.ValidationMessageFor(m => m.AssetType)
         </div>
+
+        <h4>Asset Details</h4>
+
         <div class="field-group">
             @Html.LabelFor(m => m.Name)
-            @Html.TextBoxFor(m => m.Name, new { @class = "text" })
+            @Html.TextBoxFor(m => m.Name, new {@class = "text"})
             <div class="error">@Html.ValidationMessageFor(m => m.Name)</div>
         </div>
         <div class="field-group">
+            @Html.LabelFor(m => m.SKU)
+            @Html.TextBoxFor(m => m.SKU, new {@class = "text medium-field"})
+            <div class="error">@Html.ValidationMessageFor(m => m.SKU)</div>
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Manufacturer)
+            @Html.TextBoxFor(m => m.Manufacturer, new {@class = "text"})
+            <div class="error">@Html.ValidationMessageFor(m => m.Manufacturer)</div>
+        </div>
+        <div class="field-group">
             @Html.LabelFor(m => m.Description)
-            @Html.TextAreaFor(m => m.Description, new { @class = "textarea long-field" })
+            @Html.TextAreaFor(m => m.Description, new {@class = "textarea long-field"})
+        </div>
+
+        <h4>Pricing Details</h4>
+
+        <div class="field-group">
+            @Html.LabelFor(m => m.Cost)
+            @Html.TextBoxFor(m => m.Cost, new {@class = "text medium-field"})
+            <div class="error">@Html.ValidationMessageFor(m => m.Cost)</div>
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.Markup)
+            @Html.TextBoxFor(m => m.Markup, new {@class = "text short-field"})
+            <div class="description">A percentage</div>
+            <div class="error">@Html.ValidationMessageFor(m => m.Markup)</div>
         </div>
     </fieldset>
 
     <div class="buttons-container">
         <div class="buttons">
-            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Create">
+            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Create asset">
             <a id="cancel" class="aui-button aui-button-link" name="cancel" accesskey="c" href="#">Cancel</a>
         </div>
     </div>
-}
-
-@section secondaryScripts {
-    <script type="text/javascript">
-        AJS.$(document).ready(function() {
-            AJS.$('#catalog_expiration_date').datePicker({ 'overrideBrowserDefault': true });
-        });
-    </script>
 }

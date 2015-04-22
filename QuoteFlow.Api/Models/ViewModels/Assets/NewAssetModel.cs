@@ -15,6 +15,10 @@ namespace QuoteFlow.Api.Models.ViewModels.Assets
         [Display(Name = "Name")]
         public string Name { get; set; }
 
+        [Required]
+        [Display(Name = "SKU")]
+        public string SKU { get; set; }
+
         [Display(Name = "Cost")]
         public decimal Cost { get; set; }
 
@@ -30,6 +34,8 @@ namespace QuoteFlow.Api.Models.ViewModels.Assets
         [Display(Name = "Manufacturer")]
         public string Manufacturer { get; set; }
 
+        public IEnumerable<Manufacturer> Manufacturers { get; set; }
+            
         [Display(Name = "Product Images")]
         public List<AssetImage> AssetImages { get; set; }
 

@@ -19,6 +19,8 @@
 
         public const string Dashboard = "Dashboard";
 
+        public const string AssetNew = "Asset-New";
+
         public const string CatalogShow = "Catalog-Show";
 
         public const string QuoteAccessControl = "Quote-AccessControl";

@@ -7,6 +7,7 @@ using QuoteFlow.Api.Auditing;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels.Assets;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
 using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
@@ -145,39 +146,71 @@ namespace QuoteFlow.Controllers
             AssetType.Kit
         };
 
-        [Route("asset/new")]
-        public virtual ActionResult New()
+        [Route("asset/new", Name = RouteNames.AssetNew)]
+        public virtual ActionResult New(int? catalogId)
         {
             var currentUser = GetCurrentUser();
+
             var catalogs = UserService.GetCatalogs(currentUser);
+            var manufacturers = ManufacturerService.GetManufacturers(1); // todo organization fix
 
             var model = new NewAssetModel
             {
                 AssetTypeChoices = AssetTypeChoices,
-                Catalogs = catalogs.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).OrderBy(s => s.Text)
+                Catalogs = catalogs.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).OrderBy(s => s.Text),
+                Manufacturers = manufacturers
             };
+
+            if (catalogId.HasValue)
+            {
+                model.CatalogId = (int) catalogId;
+            }
 
             return View(model);
         }
 
-        [Route("{catalogId:INT}/{catalogName}/asset/create", HttpVerbs.Post)]
-        public virtual ActionResult CreateAsset(int catalogId, string catalogName, NewAssetModel model)
+        [Route("asset/create", HttpVerbs.Post)]
+        public virtual ActionResult CreateAsset(NewAssetModel model)
         {
             // Do some server-side validation before we begin
-            if (AssetService.AssetExists(model.Name, catalogId))
+            if (AssetService.AssetExists(model.Name, model.CatalogId))
             {
                 // TODO: Return saying that the org name already exists
                 return RedirectToAction("New", "Asset");
             }
 
-            var newAsset = AssetService.CreateAsset(model, catalogId, GetCurrentUser().Id);
+            var currentUser = GetCurrentUser();
 
-            //            return RedirectToRoute("catalog", new {
-            //                catalogName = newCatalog.Name
-            //            });
+            // check if the mfg exists, if not then add it
+            int manufacturerId;
+            var manufacturer = ManufacturerService.GetManufacturer(model.Manufacturer, true);
+            if (manufacturer == null)
+            {
+                var createdMfg = ManufacturerService.CreateManufacturer(model.Manufacturer, 1); // todo organization fix
+                manufacturerId = createdMfg.Id;
 
-            // there has to be a better way to do this...
-            return Redirect("~/" + catalogId + "/" + catalogName + "/asset/" + newAsset.Id + "/" + newAsset.Name.UrlFriendly());
+            }
+            else
+            {
+                manufacturerId = manufacturer.Id;
+            }
+            
+            var asset = new Asset
+            {
+                Name = model.Name,
+                SKU = model.SKU,
+                Description = model.Description,
+                CatalogId = model.CatalogId,
+                ManufacturerId = manufacturerId,
+                Type = "Asset",
+                Cost = model.Cost,
+                Markup = (model.Markup / 100),
+                CreatorId = currentUser.Id
+            };
+
+            var newAsset = AssetService.CreateAsset(asset, GetCurrentUser().Id, false);
+
+            return SafeRedirect(Url.Asset(newAsset.Id, newAsset.Name));
         }
 
         [ValidateAntiForgeryToken]

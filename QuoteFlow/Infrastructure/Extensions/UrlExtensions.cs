@@ -62,7 +62,12 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         public static string NewAsset(this UrlHelper url)
         {
-            return url.Action("New", "Asset");
+            return url.RouteUrl(RouteNames.AssetNew);
+        }
+
+        public static string NewAsset(this UrlHelper url, int catalogId)
+        {
+            return url.RouteUrl(RouteNames.AssetNew, new { catalogId });
         }
 
         public static string Asset(this UrlHelper url, int assetId, string assetName)
