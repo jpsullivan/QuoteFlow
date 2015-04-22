@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using QuoteFlow.Api.Auditing;
 using QuoteFlow.Api.Auditing.DetailResolvers;
 using QuoteFlow.Api.Models;
+using StackExchange.Profiling.Helpers.Dapper;
 
 namespace QuoteFlow.Core.Auditing
 {
@@ -57,16 +58,27 @@ namespace QuoteFlow.Core.Auditing
 
         public IEnumerable<AuditLogRecord> GetAuditLogs(int actorId, int? parentActorId, params AuditCategory[] categories)
         {
-            const string sql = @"
+            var builder = new SqlBuilder();
+            var tmpl = builder.AddTemplate(@"
                 select * from AuditLog log 
                 left join Users u on u.Id = log.UserId
-                where log.Category in @categories 
-                    and log.ActorId = @actorId
-                    and log.ParentActorId = @parentActorId
-                order by log.CreatedUtc DESC
-            ";
+                /**where**/
+                order by log.CreatedUtc DESC"
+            );
 
-            return Current.DB.Query<AuditLogRecord, User, AuditLogRecord>(sql, (ch, user) =>
+            if (parentActorId.HasValue)
+            {
+                builder.Where("log.Category in @categories");
+                builder.Where("log.ActorId = @actorId");
+                builder.Where("log.ParentActorId = @parentActorId");
+            }
+            else
+            {
+                builder.Where("log.Category in @categories");
+                builder.Where("log.ActorId = @actorId");
+            }
+
+            return Current.DB.Query<AuditLogRecord, User, AuditLogRecord>(tmpl.RawSql, (ch, user) =>
             {
                 ch.User = user;
                 return ch;
@@ -158,6 +170,11 @@ namespace QuoteFlow.Core.Auditing
         public void SaveCatalogAuditRecord(AuditEvent @event, int userId, int catalogId, IDetailResolver details)
         {
             SaveAuditRecord(AuditCategory.Catalog, @event, userId, catalogId, null, details.Serialize());
+        }
+
+        public IEnumerable<AuditLogRecord> GetAssetAuditLogs(int assetId)
+        {
+            return GetAuditLogs(assetId, null, AuditCategory.Asset);
         }
 
         public void SaveAssetAuditRecord(AuditEvent @event, int userId, int assetId, int catalogId)

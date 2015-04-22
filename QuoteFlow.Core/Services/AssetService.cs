@@ -231,11 +231,16 @@ namespace QuoteFlow.Core.Services
             }
 
             var asset = GetAsset(assetId);
-            
-            Current.DB.Assets.Update(assetId, diff);
 
-            // track that this asset was updated
-            AuditService.SaveAssetAuditRecord(AuditEvent.AssetUpdated, userId, assetId, asset.CatalogId, new AssetUpdated(asset, diff));
+            try
+            {
+                Current.DB.Assets.Update(assetId, diff);
+            }
+            finally
+            {
+                // track that this asset was updated
+                AuditService.SaveAssetAuditRecord(AuditEvent.AssetUpdated, userId, assetId, asset.CatalogId, new AssetUpdated(asset, diff));
+            }
         }
 
         /// <summary>

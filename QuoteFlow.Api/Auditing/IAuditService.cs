@@ -96,6 +96,13 @@ namespace QuoteFlow.Api.Auditing
         void SaveCatalogAuditRecord(AuditEvent @event, int userId, int catalogId, IDetailResolver details);
 
         /// <summary>
+        /// Fetches the activity history for a specific asset.
+        /// </summary>
+        /// <param name="assetId"></param>
+        /// <returns></returns>
+        IEnumerable<AuditLogRecord> GetAssetAuditLogs(int assetId); 
+
+        /// <summary>
         /// Saves an asset audit record with no details to the database.
         /// </summary>
         /// <param name="event"></param>

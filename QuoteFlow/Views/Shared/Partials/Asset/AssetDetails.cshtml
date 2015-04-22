@@ -149,7 +149,21 @@
                                         <a href="#asset_tab_activity"><strong>Activity</strong></a>
                                     </li>
                                 </ul>
-                                <div id="asset_tab_all" class="tabs-pane"></div>
+                                <div id="asset_tab_all" class="tabs-pane">
+                                    @if (Model.AssetHistory.Any())
+                                    {
+                                        @Html.Partial("Partials/Catalog/ActivityFeed", Model.AssetHistory)
+                                    }
+                                    else
+                                    {
+                                        <div class="blank-message">
+                                            <h2>No recent activities found</h2>
+                                            <p>
+                                                There have been no activites related to this asset.
+                                            </p>
+                                        </div>
+                                    }
+                                </div>
                                 <div id="asset_tab_comments" class="tabs-pane active-pane">
                                     @Html.Partial("Partials/Asset/AssetComments", Model.Asset.Comments)
                                 </div>

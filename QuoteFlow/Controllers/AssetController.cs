@@ -47,12 +47,15 @@ namespace QuoteFlow.Controllers
         public virtual ActionResult Show(int assetId, string assetName)
         {
             var asset = AssetService.GetAsset(assetId);
+            var history = AuditService.GetAssetAuditLogs(assetId);
 
             // Ensure that the user has access to the asset
             if (!UserService.CanViewAsset(GetCurrentUser(), asset))
+            {
                 return PageNotFound();
+            }
 
-            var viewModel = new AssetDetailsModel(asset, false);
+            var viewModel = new AssetDetailsModel(asset, history, false);
 
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
         }
