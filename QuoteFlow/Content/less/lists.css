@@ -83,4 +83,29 @@ dl.meta-list dt {
 dl.meta-list dd {
   margin: 5px 0 0 0;
 }
+dl.catalog-attrs {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 10px;
+}
+dl.catalog-attrs dl {
+  margin: 5px 0;
+  padding-left: 120px;
+}
+dl.catalog-attrs dt {
+  float: left;
+  font-weight: bold;
+  padding: 0 0 8px 15px;
+  text-align: right;
+  width: 120px;
+}
+dl.catalog-attrs dd {
+  margin: 0;
+  padding: 0 0 8px 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: auto;
+}
 /*# sourceMappingURL=lists.css.map */

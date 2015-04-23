@@ -12,7 +12,8 @@ namespace QuoteFlow.Api.Models.ViewModels
         public IEnumerable<Asset> Assets { get; set; }
         public Catalog Catalog { get; set; }
         public User CatalogCreator { get; set; }
-        public IEnumerable<AuditLogRecord> ActivityHistory { get; set; } 
+        public IEnumerable<AuditLogRecord> ActivityHistory { get; set; }
+        public int TotalAssets { get; set; }
     }
 
     public class NewCatalogModel

@@ -115,7 +115,7 @@ namespace QuoteFlow.Controllers
             UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Catalog, catalog.Id, catalog.Name);
 
             var creator = UserService.GetUser(catalog.CreatorId);
-            var assets = AssetService.GetAssets(catalog);
+            var assets = AssetService.GetAssets(catalog).ToList();
             var activity = AuditService.GetCatalogAuditLogs(catalog.Id);
 
             var model = new CatalogShowModel
@@ -123,7 +123,8 @@ namespace QuoteFlow.Controllers
                 Assets = assets,
                 Catalog = catalog,
                 CatalogCreator = creator,
-                ActivityHistory = activity
+                ActivityHistory = activity,
+                TotalAssets = assets.Count()
             };
 
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
