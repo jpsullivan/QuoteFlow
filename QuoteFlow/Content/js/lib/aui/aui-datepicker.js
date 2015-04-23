@@ -2217,44 +2217,44 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "ar-DZ": {
-            "dayNames": ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
-            "dayNamesMin": ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+            "dayNames": ["Ø§Ù„Ø£Ø­Ø¯", "Ø§Ù„Ø§Ø«Ù†ÙŠÙ†", "Ø§Ù„Ø«Ù„Ø§Ø«Ø§Ø¡", "Ø§Ù„Ø£Ø±Ø¨Ø¹Ø§Ø¡", "Ø§Ù„Ø®Ù…ÙŠØ³", "Ø§Ù„Ø¬Ù…Ø¹Ø©", "Ø§Ù„Ø³Ø¨Øª"],
+            "dayNamesMin": ["Ø§Ù„Ø£Ø­Ø¯", "Ø§Ù„Ø§Ø«Ù†ÙŠÙ†", "Ø§Ù„Ø«Ù„Ø§Ø«Ø§Ø¡", "Ø§Ù„Ø£Ø±Ø¨Ø¹Ø§Ø¡", "Ø§Ù„Ø®Ù…ÙŠØ³", "Ø§Ù„Ø¬Ù…Ø¹Ø©", "Ø§Ù„Ø³Ø¨Øª"],
             "firstDay": 6,
             "isRTL": true,
-            "monthNames": ["جانفي", "فيفري", "مارس", "أفريل", "ماي", "جوان", "جويلية", "أوت", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
+            "monthNames": ["Ø¬Ø§Ù†ÙÙŠ", "ÙÙŠÙØ±ÙŠ", "Ù…Ø§Ø±Ø³", "Ø£ÙØ±ÙŠÙ„", "Ù…Ø§ÙŠ", "Ø¬ÙˆØ§Ù†", "Ø¬ÙˆÙŠÙ„ÙŠØ©", "Ø£ÙˆØª", "Ø³Ø¨ØªÙ…Ø¨Ø±", "Ø£ÙƒØªÙˆØ¨Ø±", "Ù†ÙˆÙÙ…Ø¨Ø±", "Ø¯ÙŠØ³Ù…Ø¨Ø±"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "ar": {
-            "dayNames": ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
-            "dayNamesMin": ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+            "dayNames": ["Ø§Ù„Ø£Ø­Ø¯", "Ø§Ù„Ø§Ø«Ù†ÙŠÙ†", "Ø§Ù„Ø«Ù„Ø§Ø«Ø§Ø¡", "Ø§Ù„Ø£Ø±Ø¨Ø¹Ø§Ø¡", "Ø§Ù„Ø®Ù…ÙŠØ³", "Ø§Ù„Ø¬Ù…Ø¹Ø©", "Ø§Ù„Ø³Ø¨Øª"],
+            "dayNamesMin": ["Ø§Ù„Ø£Ø­Ø¯", "Ø§Ù„Ø§Ø«Ù†ÙŠÙ†", "Ø§Ù„Ø«Ù„Ø§Ø«Ø§Ø¡", "Ø§Ù„Ø£Ø±Ø¨Ø¹Ø§Ø¡", "Ø§Ù„Ø®Ù…ÙŠØ³", "Ø§Ù„Ø¬Ù…Ø¹Ø©", "Ø§Ù„Ø³Ø¨Øª"],
             "firstDay": 6,
             "isRTL": true,
-            "monthNames": ["كانون الثاني", "شباط", "آذار", "نيسان", "مايو", "حزيران", "تموز", "آب", "أيلول", "تشرين الأول", "تشرين الثاني", "كانون الأول"],
+            "monthNames": ["ÙƒØ§Ù†ÙˆÙ† Ø§Ù„Ø«Ø§Ù†ÙŠ", "Ø´Ø¨Ø§Ø·", "Ø¢Ø°Ø§Ø±", "Ù†ÙŠØ³Ø§Ù†", "Ù…Ø§ÙŠÙˆ", "Ø­Ø²ÙŠØ±Ø§Ù†", "ØªÙ…ÙˆØ²", "Ø¢Ø¨", "Ø£ÙŠÙ„ÙˆÙ„", "ØªØ´Ø±ÙŠÙ† Ø§Ù„Ø£ÙˆÙ„", "ØªØ´Ø±ÙŠÙ† Ø§Ù„Ø«Ø§Ù†ÙŠ", "ÙƒØ§Ù†ÙˆÙ† Ø§Ù„Ø£ÙˆÙ„"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "az": {
-            "dayNames": ["Bazar", "Bazar ertəsi", "Çərşənbə axşamı", "Çərşənbə", "Cümə axşamı", "Cümə", "Şənbə"],
-            "dayNamesMin": ["B", "Be", "Ça", "Ç", "Ca", "C", "Ş"],
+            "dayNames": ["Bazar", "Bazar ertÉ™si", "Ã‡É™rÅŸÉ™nbÉ™ axÅŸamÄ±", "Ã‡É™rÅŸÉ™nbÉ™", "CÃ¼mÉ™ axÅŸamÄ±", "CÃ¼mÉ™", "ÅžÉ™nbÉ™"],
+            "dayNamesMin": ["B", "Be", "Ã‡a", "Ã‡", "Ca", "C", "Åž"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun", "İyul", "Avqust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"],
+            "monthNames": ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Ä°yun", "Ä°yul", "Avqust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "bg": {
-            "dayNames": ["Неделя", "Понеделник", "Вторник", "Сряда", "Четвъртък", "Петък", "Събота"],
-            "dayNamesMin": ["Нед", "Пон", "Вто", "Сря", "Чет", "Пет", "Съб"],
+            "dayNames": ["ÐÐµÐ´ÐµÐ»Ñ", "ÐŸÐ¾Ð½ÐµÐ´ÐµÐ»Ð½Ð¸Ðº", "Ð’Ñ‚Ð¾Ñ€Ð½Ð¸Ðº", "Ð¡Ñ€ÑÐ´Ð°", "Ð§ÐµÑ‚Ð²ÑŠÑ€Ñ‚ÑŠÐº", "ÐŸÐµÑ‚ÑŠÐº", "Ð¡ÑŠÐ±Ð¾Ñ‚Ð°"],
+            "dayNamesMin": ["ÐÐµÐ´", "ÐŸÐ¾Ð½", "Ð’Ñ‚Ð¾", "Ð¡Ñ€Ñ", "Ð§ÐµÑ‚", "ÐŸÐµÑ‚", "Ð¡ÑŠÐ±"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември"],
+            "monthNames": ["Ð¯Ð½ÑƒÐ°Ñ€Ð¸", "Ð¤ÐµÐ²Ñ€ÑƒÐ°Ñ€Ð¸", "ÐœÐ°Ñ€Ñ‚", "ÐÐ¿Ñ€Ð¸Ð»", "ÐœÐ°Ð¹", "Ð®Ð½Ð¸", "Ð®Ð»Ð¸", "ÐÐ²Ð³ÑƒÑÑ‚", "Ð¡ÐµÐ¿Ñ‚ÐµÐ¼Ð²Ñ€Ð¸", "ÐžÐºÑ‚Ð¾Ð¼Ð²Ñ€Ð¸", "ÐÐ¾ÐµÐ¼Ð²Ñ€Ð¸", "Ð”ÐµÐºÐµÐ¼Ð²Ñ€Ð¸"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "bs": {
-            "dayNames": ["Nedelja", "Ponedeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"],
-            "dayNamesMin": ["Ned", "Pon", "Uto", "Sri", "Čet", "Pet", "Sub"],
+            "dayNames": ["Nedelja", "Ponedeljak", "Utorak", "Srijeda", "ÄŒetvrtak", "Petak", "Subota"],
+            "dayNamesMin": ["Ned", "Pon", "Uto", "Sri", "ÄŒet", "Pet", "Sub"],
             "firstDay": 1,
             "isRTL": false,
             "monthNames": ["Januar", "Februar", "Mart", "April", "Maj", "Juni", "Juli", "August", "Septembar", "Oktobar", "Novembar", "Decembar"],
@@ -2271,17 +2271,17 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "cs": {
-            "dayNames": ["neděle", "pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota"],
-            "dayNamesMin": ["ne", "po", "út", "st", "čt", "pá", "so"],
+            "dayNames": ["nedÄ›le", "pondÄ›lÃ­", "ÃºterÃ½", "stÅ™eda", "Ätvrtek", "pÃ¡tek", "sobota"],
+            "dayNamesMin": ["ne", "po", "Ãºt", "st", "Ät", "pÃ¡", "so"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec"],
+            "monthNames": ["leden", "Ãºnor", "bÅ™ezen", "duben", "kvÄ›ten", "Äerven", "Äervenec", "srpen", "zÃ¡Å™Ã­", "Å™Ã­jen", "listopad", "prosinec"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "da": {
-            "dayNames": ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"],
-            "dayNamesMin": ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør"],
+            "dayNames": ["SÃ¸ndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "LÃ¸rdag"],
+            "dayNamesMin": ["SÃ¸n", "Man", "Tir", "Ons", "Tor", "Fre", "LÃ¸r"],
             "firstDay": 1,
             "isRTL": false,
             "monthNames": ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"],
@@ -2293,16 +2293,16 @@ window['DP_jQuery_' + dpuuid] = $;
             "dayNamesMin": ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+            "monthNames": ["Januar", "Februar", "MÃ¤rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "el": {
-            "dayNames": ["Κυριακή", "Δευτέρα", "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββατο"],
-            "dayNamesMin": ["Κυρ", "Δευ", "Τρι", "Τετ", "Πεμ", "Παρ", "Σαβ"],
+            "dayNames": ["ÎšÏ…ÏÎ¹Î±ÎºÎ®", "Î”ÎµÏ…Ï„Î­ÏÎ±", "Î¤ÏÎ¯Ï„Î·", "Î¤ÎµÏ„Î¬ÏÏ„Î·", "Î Î­Î¼Ï€Ï„Î·", "Î Î±ÏÎ±ÏƒÎºÎµÏ…Î®", "Î£Î¬Î²Î²Î±Ï„Î¿"],
+            "dayNamesMin": ["ÎšÏ…Ï", "Î”ÎµÏ…", "Î¤ÏÎ¹", "Î¤ÎµÏ„", "Î ÎµÎ¼", "Î Î±Ï", "Î£Î±Î²"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος"],
+            "monthNames": ["Î™Î±Î½Î¿Ï…Î¬ÏÎ¹Î¿Ï‚", "Î¦ÎµÎ²ÏÎ¿Ï…Î¬ÏÎ¹Î¿Ï‚", "ÎœÎ¬ÏÏ„Î¹Î¿Ï‚", "Î‘Ï€ÏÎ¯Î»Î¹Î¿Ï‚", "ÎœÎ¬Î¹Î¿Ï‚", "Î™Î¿ÏÎ½Î¹Î¿Ï‚", "Î™Î¿ÏÎ»Î¹Î¿Ï‚", "Î‘ÏÎ³Î¿Ï…ÏƒÏ„Î¿Ï‚", "Î£ÎµÏ€Ï„Î­Î¼Î²ÏÎ¹Î¿Ï‚", "ÎŸÎºÏ„ÏŽÎ²ÏÎ¹Î¿Ï‚", "ÎÎ¿Î­Î¼Î²ÏÎ¹Î¿Ï‚", "Î”ÎµÎºÎ­Î¼Î²ÏÎ¹Î¿Ï‚"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
@@ -2334,11 +2334,11 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "eo": {
-            "dayNames": ["Dimanĉo", "Lundo", "Mardo", "Merkredo", "Ĵaŭdo", "Vendredo", "Sabato"],
-            "dayNamesMin": ["Dim", "Lun", "Mar", "Mer", "Ĵaŭ", "Ven", "Sab"],
+            "dayNames": ["DimanÄ‰o", "Lundo", "Mardo", "Merkredo", "Ä´aÅ­do", "Vendredo", "Sabato"],
+            "dayNamesMin": ["Dim", "Lun", "Mar", "Mer", "Ä´aÅ­", "Ven", "Sab"],
             "firstDay": 0,
             "isRTL": false,
-            "monthNames": ["Januaro", "Februaro", "Marto", "Aprilo", "Majo", "Junio", "Julio", "Aŭgusto", "Septembro", "Oktobro", "Novembro", "Decembro"],
+            "monthNames": ["Januaro", "Februaro", "Marto", "Aprilo", "Majo", "Junio", "Julio", "AÅ­gusto", "Septembro", "Oktobro", "Novembro", "Decembro"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
@@ -2352,11 +2352,11 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "et": {
-            "dayNames": ["Pühapäev", "Esmaspäev", "Teisipäev", "Kolmapäev", "Neljapäev", "Reede", "Laupäev"],
-            "dayNamesMin": ["Pühap", "Esmasp", "Teisip", "Kolmap", "Neljap", "Reede", "Laup"],
+            "dayNames": ["PÃ¼hapÃ¤ev", "EsmaspÃ¤ev", "TeisipÃ¤ev", "KolmapÃ¤ev", "NeljapÃ¤ev", "Reede", "LaupÃ¤ev"],
+            "dayNamesMin": ["PÃ¼hap", "Esmasp", "Teisip", "Kolmap", "Neljap", "Reede", "Laup"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Jaanuar", "Veebruar", "Märts", "Aprill", "Mai", "Juuni", "Juuli", "August", "September", "Oktoober", "November", "Detsember"],
+            "monthNames": ["Jaanuar", "Veebruar", "MÃ¤rts", "Aprill", "Mai", "Juuni", "Juuli", "August", "September", "Oktoober", "November", "Detsember"],
             "showMonthAfterYear": false,
             "yearSuffix": "",
             "size": "large"
@@ -2371,11 +2371,11 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "fa": {
-            "dayNames": ["يکشنبه", "دوشنبه", "سهشنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"],
-            "dayNamesMin": ["ي", "د", "س", "چ", "پ", "ج", "ش"],
+            "dayNames": ["ÙŠÚ©Ø´Ù†Ø¨Ù‡", "Ø¯ÙˆØ´Ù†Ø¨Ù‡", "Ø³Ù‡Ø´Ù†Ø¨Ù‡", "Ú†Ù‡Ø§Ø±Ø´Ù†Ø¨Ù‡", "Ù¾Ù†Ø¬Ø´Ù†Ø¨Ù‡", "Ø¬Ù…Ø¹Ù‡", "Ø´Ù†Ø¨Ù‡"],
+            "dayNamesMin": ["ÙŠ", "Ø¯", "Ø³", "Ú†", "Ù¾", "Ø¬", "Ø´"],
             "firstDay": 6,
             "isRTL": true,
-            "monthNames": ["فروردين", "ارديبهشت", "خرداد", "تير", "مرداد", "شهريور", "مهر", "آبان", "آذر", "دي", "بهمن", "اسفند"],
+            "monthNames": ["ÙØ±ÙˆØ±Ø¯ÙŠÙ†", "Ø§Ø±Ø¯ÙŠØ¨Ù‡Ø´Øª", "Ø®Ø±Ø¯Ø§Ø¯", "ØªÙŠØ±", "Ù…Ø±Ø¯Ø§Ø¯", "Ø´Ù‡Ø±ÙŠÙˆØ±", "Ù…Ù‡Ø±", "Ø¢Ø¨Ø§Ù†", "Ø¢Ø°Ø±", "Ø¯ÙŠ", "Ø¨Ù‡Ù…Ù†", "Ø§Ø³ÙÙ†Ø¯"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
@@ -2389,11 +2389,11 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "fo": {
-            "dayNames": ["Sunnudagur", "Mánadagur", "Týsdagur", "Mikudagur", "Hósdagur", "Fríggjadagur", "Leyardagur"],
-            "dayNamesMin": ["Sun", "Mán", "Týs", "Mik", "Hós", "Frí", "Ley"],
+            "dayNames": ["Sunnudagur", "MÃ¡nadagur", "TÃ½sdagur", "Mikudagur", "HÃ³sdagur", "FrÃ­ggjadagur", "Leyardagur"],
+            "dayNamesMin": ["Sun", "MÃ¡n", "TÃ½s", "Mik", "HÃ³s", "FrÃ­", "Ley"],
             "firstDay": 0,
             "isRTL": false,
-            "monthNames": ["Januar", "Februar", "Mars", "Apríl", "Mei", "Juni", "Juli", "August", "September", "Oktober", "November", "Desember"],
+            "monthNames": ["Januar", "Februar", "Mars", "AprÃ­l", "Mei", "Juni", "Juli", "August", "September", "Oktober", "November", "Desember"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
@@ -2402,7 +2402,7 @@ window['DP_jQuery_' + dpuuid] = $;
             "dayNamesMin": ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+            "monthNames": ["Janvier", "FÃ©vrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "AoÃ»t", "Septembre", "Octobre", "Novembre", "DÃ©cembre"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
@@ -2411,7 +2411,7 @@ window['DP_jQuery_' + dpuuid] = $;
             "dayNamesMin": ["Dim.", "Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam."],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+            "monthNames": ["Janvier", "FÃ©vrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "AoÃ»t", "Septembre", "Octobre", "Novembre", "DÃ©cembre"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
@@ -2420,43 +2420,43 @@ window['DP_jQuery_' + dpuuid] = $;
             "dayNamesMin": ["Dom", "Lun", "Mar", "M&eacute;r", "Xov", "Ven", "S&aacute;b"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Xaneiro", "Febreiro", "Marzo", "Abril", "Maio", "Xuño", "Xullo", "Agosto", "Setembro", "Outubro", "Novembro", "Decembro"],
+            "monthNames": ["Xaneiro", "Febreiro", "Marzo", "Abril", "Maio", "XuÃ±o", "Xullo", "Agosto", "Setembro", "Outubro", "Novembro", "Decembro"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "he": {
-            "dayNames": ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"],
-            "dayNamesMin": ["א'", "ב'", "ג'", "ד'", "ה'", "ו'", "שבת"],
+            "dayNames": ["×¨××©×•×Ÿ", "×©× ×™", "×©×œ×™×©×™", "×¨×‘×™×¢×™", "×—×ž×™×©×™", "×©×™×©×™", "×©×‘×ª"],
+            "dayNamesMin": ["×'", "×‘'", "×’'", "×“'", "×”'", "×•'", "×©×‘×ª"],
             "firstDay": 0,
             "isRTL": true,
-            "monthNames": ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"],
+            "monthNames": ["×™× ×•××¨", "×¤×‘×¨×•××¨", "×ž×¨×¥", "××¤×¨×™×œ", "×ž××™", "×™×•× ×™", "×™×•×œ×™", "××•×’×•×¡×˜", "×¡×¤×˜×ž×‘×¨", "××•×§×˜×•×‘×¨", "× ×•×‘×ž×‘×¨", "×“×¦×ž×‘×¨"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "hr": {
-            "dayNames": ["Nedjelja", "Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"],
-            "dayNamesMin": ["Ned", "Pon", "Uto", "Sri", "Čet", "Pet", "Sub"],
+            "dayNames": ["Nedjelja", "Ponedjeljak", "Utorak", "Srijeda", "ÄŒetvrtak", "Petak", "Subota"],
+            "dayNamesMin": ["Ned", "Pon", "Uto", "Sri", "ÄŒet", "Pet", "Sub"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj", "Srpanj", "Kolovoz", "Rujan", "Listopad", "Studeni", "Prosinac"],
+            "monthNames": ["SijeÄanj", "VeljaÄa", "OÅ¾ujak", "Travanj", "Svibanj", "Lipanj", "Srpanj", "Kolovoz", "Rujan", "Listopad", "Studeni", "Prosinac"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "hu": {
-            "dayNames": ["Vasárnap", "Hétfö", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"],
-            "dayNamesMin": ["Vas", "Hét", "Ked", "Sze", "Csü", "Pén", "Szo"],
+            "dayNames": ["VasÃ¡rnap", "HÃ©tfÃ¶", "Kedd", "Szerda", "CsÃ¼tÃ¶rtÃ¶k", "PÃ©ntek", "Szombat"],
+            "dayNamesMin": ["Vas", "HÃ©t", "Ked", "Sze", "CsÃ¼", "PÃ©n", "Szo"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"],
+            "monthNames": ["JanuÃ¡r", "FebruÃ¡r", "MÃ¡rcius", "Ãprilis", "MÃ¡jus", "JÃºnius", "JÃºlius", "Augusztus", "Szeptember", "OktÃ³ber", "November", "December"],
             "showMonthAfterYear": true,
             "yearSuffix": ""
         },
         "hy": {
-            "dayNames": ["կիրակի", "եկուշաբթի", "երեքշաբթի", "չորեքշաբթի", "հինգշաբթի", "ուրբաթ", "շաբաթ"],
-            "dayNamesMin": ["կիր", "երկ", "երք", "չրք", "հնգ", "ուրբ", "շբթ"],
+            "dayNames": ["Õ¯Õ«Ö€Õ¡Õ¯Õ«", "Õ¥Õ¯Õ¸Ö‚Õ·Õ¡Õ¢Õ©Õ«", "Õ¥Ö€Õ¥Ö„Õ·Õ¡Õ¢Õ©Õ«", "Õ¹Õ¸Ö€Õ¥Ö„Õ·Õ¡Õ¢Õ©Õ«", "Õ°Õ«Õ¶Õ£Õ·Õ¡Õ¢Õ©Õ«", "Õ¸Ö‚Ö€Õ¢Õ¡Õ©", "Õ·Õ¡Õ¢Õ¡Õ©"],
+            "dayNamesMin": ["Õ¯Õ«Ö€", "Õ¥Ö€Õ¯", "Õ¥Ö€Ö„", "Õ¹Ö€Ö„", "Õ°Õ¶Õ£", "Õ¸Ö‚Ö€Õ¢", "Õ·Õ¢Õ©"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Հունվար", "Փետրվար", "Մարտ", "Ապրիլ", "Մայիս", "Հունիս", "Հուլիս", "Օգոստոս", "Սեպտեմբեր", "Հոկտեմբեր", "Նոյեմբեր", "Դեկտեմբեր"],
+            "monthNames": ["Õ€Õ¸Ö‚Õ¶Õ¾Õ¡Ö€", "Õ“Õ¥Õ¿Ö€Õ¾Õ¡Ö€", "Õ„Õ¡Ö€Õ¿", "Ô±ÕºÖ€Õ«Õ¬", "Õ„Õ¡ÕµÕ«Õ½", "Õ€Õ¸Ö‚Õ¶Õ«Õ½", "Õ€Õ¸Ö‚Õ¬Õ«Õ½", "Õ•Õ£Õ¸Õ½Õ¿Õ¸Õ½", "ÕÕ¥ÕºÕ¿Õ¥Õ´Õ¢Õ¥Ö€", "Õ€Õ¸Õ¯Õ¿Õ¥Õ´Õ¢Õ¥Ö€", "Õ†Õ¸ÕµÕ¥Õ´Õ¢Õ¥Ö€", "Ô´Õ¥Õ¯Õ¿Õ¥Õ´Õ¢Õ¥Ö€"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
@@ -2488,56 +2488,56 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "ja": {
-            "dayNames": ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"],
-            "dayNamesMin": ["日", "月", "火", "水", "木", "金", "土"],
+            "dayNames": ["æ—¥æ›œæ—¥", "æœˆæ›œæ—¥", "ç«æ›œæ—¥", "æ°´æ›œæ—¥", "æœ¨æ›œæ—¥", "é‡‘æ›œæ—¥", "åœŸæ›œæ—¥"],
+            "dayNamesMin": ["æ—¥", "æœˆ", "ç«", "æ°´", "æœ¨", "é‡‘", "åœŸ"],
             "firstDay": 0,
             "isRTL": false,
-            "monthNames": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+            "monthNames": ["1æœˆ", "2æœˆ", "3æœˆ", "4æœˆ", "5æœˆ", "6æœˆ", "7æœˆ", "8æœˆ", "9æœˆ", "10æœˆ", "11æœˆ", "12æœˆ"],
             "showMonthAfterYear": true,
-            "yearSuffix": "年"
+            "yearSuffix": "å¹´"
         },
         "ko": {
-            "dayNames": ["일", "월", "화", "수", "목", "금", "토"],
-            "dayNamesMin": ["일", "월", "화", "수", "목", "금", "토"],
+            "dayNames": ["ì¼", "ì›”", "í™”", "ìˆ˜", "ëª©", "ê¸ˆ", "í† "],
+            "dayNamesMin": ["ì¼", "ì›”", "í™”", "ìˆ˜", "ëª©", "ê¸ˆ", "í† "],
             "firstDay": 0,
             "isRTL": false,
-            "monthNames": ["1월(JAN)", "2월(FEB)", "3월(MAR)", "4월(APR)", "5월(MAY)", "6월(JUN)", "7월(JUL)", "8월(AUG)", "9월(SEP)", "10월(OCT)", "11월(NOV)", "12월(DEC)"],
+            "monthNames": ["1ì›”(JAN)", "2ì›”(FEB)", "3ì›”(MAR)", "4ì›”(APR)", "5ì›”(MAY)", "6ì›”(JUN)", "7ì›”(JUL)", "8ì›”(AUG)", "9ì›”(SEP)", "10ì›”(OCT)", "11ì›”(NOV)", "12ì›”(DEC)"],
             "showMonthAfterYear": false,
-            "yearSuffix": "년"
+            "yearSuffix": "ë…„"
         },
         "kz": {
-            "dayNames": ["Жексенбі", "Дүйсенбі", "Сейсенбі", "Сәрсенбі", "Бейсенбі", "Жұма", "Сенбі"],
-            "dayNamesMin": ["жкс", "дсн", "ссн", "срс", "бсн", "жма", "снб"],
+            "dayNames": ["Ð–ÐµÐºÑÐµÐ½Ð±Ñ–", "Ð”Ò¯Ð¹ÑÐµÐ½Ð±Ñ–", "Ð¡ÐµÐ¹ÑÐµÐ½Ð±Ñ–", "Ð¡Ó™Ñ€ÑÐµÐ½Ð±Ñ–", "Ð‘ÐµÐ¹ÑÐµÐ½Ð±Ñ–", "Ð–Ò±Ð¼Ð°", "Ð¡ÐµÐ½Ð±Ñ–"],
+            "dayNamesMin": ["Ð¶ÐºÑ", "Ð´ÑÐ½", "ÑÑÐ½", "ÑÑ€Ñ", "Ð±ÑÐ½", "Ð¶Ð¼Ð°", "ÑÐ½Ð±"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Қаңтар", "Ақпан", "Наурыз", "Сәуір", "Мамыр", "Маусым", "Шілде", "Тамыз", "Қыркүйек", "Қазан", "Қараша", "Желтоқсан"],
+            "monthNames": ["ÒšÐ°Ò£Ñ‚Ð°Ñ€", "ÐÒ›Ð¿Ð°Ð½", "ÐÐ°ÑƒÑ€Ñ‹Ð·", "Ð¡Ó™ÑƒÑ–Ñ€", "ÐœÐ°Ð¼Ñ‹Ñ€", "ÐœÐ°ÑƒÑÑ‹Ð¼", "Ð¨Ñ–Ð»Ð´Ðµ", "Ð¢Ð°Ð¼Ñ‹Ð·", "ÒšÑ‹Ñ€ÐºÒ¯Ð¹ÐµÐº", "ÒšÐ°Ð·Ð°Ð½", "ÒšÐ°Ñ€Ð°ÑˆÐ°", "Ð–ÐµÐ»Ñ‚Ð¾Ò›ÑÐ°Ð½"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "lt": {
-            "dayNames": ["sekmadienis", "pirmadienis", "antradienis", "trečiadienis", "ketvirtadienis", "penktadienis", "šeštadienis"],
-            "dayNamesMin": ["sek", "pir", "ant", "tre", "ket", "pen", "šeš"],
+            "dayNames": ["sekmadienis", "pirmadienis", "antradienis", "treÄiadienis", "ketvirtadienis", "penktadienis", "Å¡eÅ¡tadienis"],
+            "dayNamesMin": ["sek", "pir", "ant", "tre", "ket", "pen", "Å¡eÅ¡"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa", "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"],
+            "monthNames": ["Sausis", "Vasaris", "Kovas", "Balandis", "GeguÅ¾Ä—", "BirÅ¾elis", "Liepa", "RugpjÅ«tis", "RugsÄ—jis", "Spalis", "Lapkritis", "Gruodis"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "lv": {
-            "dayNames": ["svētdiena", "pirmdiena", "otrdiena", "trešdiena", "ceturtdiena", "piektdiena", "sestdiena"],
+            "dayNames": ["svÄ“tdiena", "pirmdiena", "otrdiena", "treÅ¡diena", "ceturtdiena", "piektdiena", "sestdiena"],
             "dayNamesMin": ["svt", "prm", "otr", "tre", "ctr", "pkt", "sst"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Janvāris", "Februāris", "Marts", "Aprīlis", "Maijs", "Jūnijs", "Jūlijs", "Augusts", "Septembris", "Oktobris", "Novembris", "Decembris"],
+            "monthNames": ["JanvÄris", "FebruÄris", "Marts", "AprÄ«lis", "Maijs", "JÅ«nijs", "JÅ«lijs", "Augusts", "Septembris", "Oktobris", "Novembris", "Decembris"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "ml": {
-            "dayNames": ["ഞായര്", "തിങ്കള്", "ചൊവ്വ", "ബുധന്", "വ്യാഴം", "വെള്ളി", "ശനി"],
-            "dayNamesMin": ["ഞായ", "തിങ്ക", "ചൊവ്വ", "ബുധ", "വ്യാഴം", "വെള്ളി", "ശനി"],
+            "dayNames": ["à´žà´¾à´¯à´°àµ", "à´¤à´¿à´™àµà´•à´³àµ", "à´šàµŠà´µàµà´µ", "à´¬àµà´§à´¨àµ", "à´µàµà´¯à´¾à´´à´‚", "à´µàµ†à´³àµà´³à´¿", "à´¶à´¨à´¿"],
+            "dayNamesMin": ["à´žà´¾à´¯", "à´¤à´¿à´™àµà´•", "à´šàµŠà´µàµà´µ", "à´¬àµà´§", "à´µàµà´¯à´¾à´´à´‚", "à´µàµ†à´³àµà´³à´¿", "à´¶à´¨à´¿"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["ജനുവരി", "ഫെബ്രുവരി", "മാര്ച്ച്", "ഏപ്രില്", "മേയ്", "ജൂണ്", "ജൂലൈ", "ആഗസ്റ്റ്", "സെപ്റ്റംബര്", "ഒക്ടോബര്", "നവംബര്", "ഡിസംബര്"],
+            "monthNames": ["à´œà´¨àµà´µà´°à´¿", "à´«àµ†à´¬àµà´°àµà´µà´°à´¿", "à´®à´¾à´°àµà´šàµà´šàµ", "à´à´ªàµà´°à´¿à´²àµ", "à´®àµ‡à´¯àµ", "à´œàµ‚à´£àµ", "à´œàµ‚à´²àµˆ", "à´†à´—à´¸àµà´±àµà´±àµ", "à´¸àµ†à´ªàµà´±àµà´±à´‚à´¬à´°àµ", "à´’à´•àµà´Ÿàµ‹à´¬à´°àµ", "à´¨à´µà´‚à´¬à´°àµ", "à´¡à´¿à´¸à´‚à´¬à´°àµ"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
@@ -2560,8 +2560,8 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "no": {
-            "dayNames": ["søndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag"],
-            "dayNamesMin": ["søn", "man", "tir", "ons", "tor", "fre", "lør"],
+            "dayNames": ["sÃ¸ndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lÃ¸rdag"],
+            "dayNamesMin": ["sÃ¸n", "man", "tir", "ons", "tor", "fre", "lÃ¸r"],
             "firstDay": 1,
             "isRTL": false,
             "monthNames": ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"],
@@ -2569,11 +2569,11 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "pl": {
-            "dayNames": ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
-            "dayNamesMin": ["Nie", "Pn", "Wt", "Śr", "Czw", "Pt", "So"],
+            "dayNames": ["Niedziela", "PoniedziaÅ‚ek", "Wtorek", "Åšroda", "Czwartek", "PiÄ…tek", "Sobota"],
+            "dayNamesMin": ["Nie", "Pn", "Wt", "Åšr", "Czw", "Pt", "So"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"],
+            "monthNames": ["StyczeÅ„", "Luty", "Marzec", "KwiecieÅ„", "Maj", "Czerwiec", "Lipiec", "SierpieÅ„", "WrzesieÅ„", "PaÅºdziernik", "Listopad", "GrudzieÅ„"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
@@ -2605,8 +2605,8 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "ro": {
-            "dayNames": ["Duminică", "Luni", "Marţi", "Miercuri", "Joi", "Vineri", "Sâmbătă"],
-            "dayNamesMin": ["Dum", "Lun", "Mar", "Mie", "Joi", "Vin", "Sâm"],
+            "dayNames": ["DuminicÄƒ", "Luni", "MarÅ£i", "Miercuri", "Joi", "Vineri", "SÃ¢mbÄƒtÄƒ"],
+            "dayNamesMin": ["Dum", "Lun", "Mar", "Mie", "Joi", "Vin", "SÃ¢m"],
             "firstDay": 1,
             "isRTL": false,
             "monthNames": ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"],
@@ -2614,20 +2614,20 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "ru": {
-            "dayNames": ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"],
-            "dayNamesMin": ["вск", "пнд", "втр", "срд", "чтв", "птн", "сбт"],
+            "dayNames": ["Ð²Ð¾ÑÐºÑ€ÐµÑÐµÐ½ÑŒÐµ", "Ð¿Ð¾Ð½ÐµÐ´ÐµÐ»ÑŒÐ½Ð¸Ðº", "Ð²Ñ‚Ð¾Ñ€Ð½Ð¸Ðº", "ÑÑ€ÐµÐ´Ð°", "Ñ‡ÐµÑ‚Ð²ÐµÑ€Ð³", "Ð¿ÑÑ‚Ð½Ð¸Ñ†Ð°", "ÑÑƒÐ±Ð±Ð¾Ñ‚Ð°"],
+            "dayNamesMin": ["Ð²ÑÐº", "Ð¿Ð½Ð´", "Ð²Ñ‚Ñ€", "ÑÑ€Ð´", "Ñ‡Ñ‚Ð²", "Ð¿Ñ‚Ð½", "ÑÐ±Ñ‚"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+            "monthNames": ["Ð¯Ð½Ð²Ð°Ñ€ÑŒ", "Ð¤ÐµÐ²Ñ€Ð°Ð»ÑŒ", "ÐœÐ°Ñ€Ñ‚", "ÐÐ¿Ñ€ÐµÐ»ÑŒ", "ÐœÐ°Ð¹", "Ð˜ÑŽÐ½ÑŒ", "Ð˜ÑŽÐ»ÑŒ", "ÐÐ²Ð³ÑƒÑÑ‚", "Ð¡ÐµÐ½Ñ‚ÑÐ±Ñ€ÑŒ", "ÐžÐºÑ‚ÑÐ±Ñ€ÑŒ", "ÐÐ¾ÑÐ±Ñ€ÑŒ", "Ð”ÐµÐºÐ°Ð±Ñ€ÑŒ"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "sk": {
-            "dayNames": ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"],
-            "dayNamesMin": ["Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob"],
+            "dayNames": ["NedeÄ¾a", "Pondelok", "Utorok", "Streda", "Å tvrtok", "Piatok", "Sobota"],
+            "dayNamesMin": ["Ned", "Pon", "Uto", "Str", "Å tv", "Pia", "Sob"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December"],
+            "monthNames": ["JanuÃ¡r", "FebruÃ¡r", "Marec", "AprÃ­l", "MÃ¡j", "JÃºn", "JÃºl", "August", "September", "OktÃ³ber", "November", "December"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
@@ -2641,17 +2641,17 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "sq": {
-            "dayNames": ["E Diel", "E Hënë", "E Martë", "E Mërkurë", "E Enjte", "E Premte", "E Shtune"],
-            "dayNamesMin": ["Di", "Hë", "Ma", "Më", "En", "Pr", "Sh"],
+            "dayNames": ["E Diel", "E HÃ«nÃ«", "E MartÃ«", "E MÃ«rkurÃ«", "E Enjte", "E Premte", "E Shtune"],
+            "dayNamesMin": ["Di", "HÃ«", "Ma", "MÃ«", "En", "Pr", "Sh"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Janar", "Shkurt", "Mars", "Prill", "Maj", "Qershor", "Korrik", "Gusht", "Shtator", "Tetor", "Nëntor", "Dhjetor"],
+            "monthNames": ["Janar", "Shkurt", "Mars", "Prill", "Maj", "Qershor", "Korrik", "Gusht", "Shtator", "Tetor", "NÃ«ntor", "Dhjetor"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "sr-SR": {
-            "dayNames": ["Nedelja", "Ponedeljak", "Utorak", "Sreda", "Četvrtak", "Petak", "Subota"],
-            "dayNamesMin": ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"],
+            "dayNames": ["Nedelja", "Ponedeljak", "Utorak", "Sreda", "ÄŒetvrtak", "Petak", "Subota"],
+            "dayNamesMin": ["Ned", "Pon", "Uto", "Sre", "ÄŒet", "Pet", "Sub"],
             "firstDay": 1,
             "isRTL": false,
             "monthNames": ["Januar", "Februar", "Mart", "April", "Maj", "Jun", "Jul", "Avgust", "Septembar", "Oktobar", "Novembar", "Decembar"],
@@ -2659,17 +2659,17 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "sr": {
-            "dayNames": ["Недеља", "Понедељак", "Уторак", "Среда", "Четвртак", "Петак", "Субота"],
-            "dayNamesMin": ["Нед", "Пон", "Уто", "Сре", "Чет", "Пет", "Суб"],
+            "dayNames": ["ÐÐµÐ´ÐµÑ™Ð°", "ÐŸÐ¾Ð½ÐµÐ´ÐµÑ™Ð°Ðº", "Ð£Ñ‚Ð¾Ñ€Ð°Ðº", "Ð¡Ñ€ÐµÐ´Ð°", "Ð§ÐµÑ‚Ð²Ñ€Ñ‚Ð°Ðº", "ÐŸÐµÑ‚Ð°Ðº", "Ð¡ÑƒÐ±Ð¾Ñ‚Ð°"],
+            "dayNamesMin": ["ÐÐµÐ´", "ÐŸÐ¾Ð½", "Ð£Ñ‚Ð¾", "Ð¡Ñ€Ðµ", "Ð§ÐµÑ‚", "ÐŸÐµÑ‚", "Ð¡ÑƒÐ±"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Јануар", "Фебруар", "Март", "Април", "Мај", "Јун", "Јул", "Август", "Септембар", "Октобар", "Новембар", "Децембар"],
+            "monthNames": ["ÐˆÐ°Ð½ÑƒÐ°Ñ€", "Ð¤ÐµÐ±Ñ€ÑƒÐ°Ñ€", "ÐœÐ°Ñ€Ñ‚", "ÐÐ¿Ñ€Ð¸Ð»", "ÐœÐ°Ñ˜", "ÐˆÑƒÐ½", "ÐˆÑƒÐ»", "ÐÐ²Ð³ÑƒÑÑ‚", "Ð¡ÐµÐ¿Ñ‚ÐµÐ¼Ð±Ð°Ñ€", "ÐžÐºÑ‚Ð¾Ð±Ð°Ñ€", "ÐÐ¾Ð²ÐµÐ¼Ð±Ð°Ñ€", "Ð”ÐµÑ†ÐµÐ¼Ð±Ð°Ñ€"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "sv": {
-            "dayNames": ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"],
-            "dayNamesMin": ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"],
+            "dayNames": ["SÃ¶ndag", "MÃ¥ndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "LÃ¶rdag"],
+            "dayNamesMin": ["SÃ¶n", "MÃ¥n", "Tis", "Ons", "Tor", "Fre", "LÃ¶r"],
             "firstDay": 1,
             "isRTL": false,
             "monthNames": ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"],
@@ -2677,85 +2677,85 @@ window['DP_jQuery_' + dpuuid] = $;
             "yearSuffix": ""
         },
         "ta": {
-            "dayNames": ["ஞாயிற்றுக்கிழமை", "திங்கட்கிழமை", "செவ்வாய்க்கிழமை", "புதன்கிழமை", "வியாழக்கிழமை", "வெள்ளிக்கிழமை", "சனிக்கிழமை"],
-            "dayNamesMin": ["ஞாயிறு", "திங்கள்", "செவ்வாய்", "புதன்", "வியாழன்", "வெள்ளி", "சனி"],
+            "dayNames": ["à®žà®¾à®¯à®¿à®±à¯à®±à¯à®•à¯à®•à®¿à®´à®®à¯ˆ", "à®¤à®¿à®™à¯à®•à®Ÿà¯à®•à®¿à®´à®®à¯ˆ", "à®šà¯†à®µà¯à®µà®¾à®¯à¯à®•à¯à®•à®¿à®´à®®à¯ˆ", "à®ªà¯à®¤à®©à¯à®•à®¿à®´à®®à¯ˆ", "à®µà®¿à®¯à®¾à®´à®•à¯à®•à®¿à®´à®®à¯ˆ", "à®µà¯†à®³à¯à®³à®¿à®•à¯à®•à®¿à®´à®®à¯ˆ", "à®šà®©à®¿à®•à¯à®•à®¿à®´à®®à¯ˆ"],
+            "dayNamesMin": ["à®žà®¾à®¯à®¿à®±à¯", "à®¤à®¿à®™à¯à®•à®³à¯", "à®šà¯†à®µà¯à®µà®¾à®¯à¯", "à®ªà¯à®¤à®©à¯", "à®µà®¿à®¯à®¾à®´à®©à¯", "à®µà¯†à®³à¯à®³à®¿", "à®šà®©à®¿"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["தை", "மாசி", "பங்குனி", "சித்திரை", "வைகாசி", "ஆனி", "ஆடி", "ஆவணி", "புரட்டாசி", "ஐப்பசி", "கார்த்திகை", "மார்கழி"],
+            "monthNames": ["à®¤à¯ˆ", "à®®à®¾à®šà®¿", "à®ªà®™à¯à®•à¯à®©à®¿", "à®šà®¿à®¤à¯à®¤à®¿à®°à¯ˆ", "à®µà¯ˆà®•à®¾à®šà®¿", "à®†à®©à®¿", "à®†à®Ÿà®¿", "à®†à®µà®£à®¿", "à®ªà¯à®°à®Ÿà¯à®Ÿà®¾à®šà®¿", "à®à®ªà¯à®ªà®šà®¿", "à®•à®¾à®°à¯à®¤à¯à®¤à®¿à®•à¯ˆ", "à®®à®¾à®°à¯à®•à®´à®¿"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "th": {
-            "dayNames": ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"],
-            "dayNamesMin": ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."],
+            "dayNames": ["à¸­à¸²à¸—à¸´à¸•à¸¢à¹Œ", "à¸ˆà¸±à¸™à¸—à¸£à¹Œ", "à¸­à¸±à¸‡à¸„à¸²à¸£", "à¸žà¸¸à¸˜", "à¸žà¸¤à¸«à¸±à¸ªà¸šà¸”à¸µ", "à¸¨à¸¸à¸à¸£à¹Œ", "à¹€à¸ªà¸²à¸£à¹Œ"],
+            "dayNamesMin": ["à¸­à¸².", "à¸ˆ.", "à¸­.", "à¸ž.", "à¸žà¸¤.", "à¸¨.", "à¸ª."],
             "firstDay": 0,
             "isRTL": false,
-            "monthNames": ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"],
+            "monthNames": ["à¸¡à¸à¸£à¸²à¸„à¸¡", "à¸à¸¸à¸¡à¸ à¸²à¸žà¸±à¸™à¸˜à¹Œ", "à¸¡à¸µà¸™à¸²à¸„à¸¡", "à¹€à¸¡à¸©à¸²à¸¢à¸™", "à¸žà¸¤à¸©à¸ à¸²à¸„à¸¡", "à¸¡à¸´à¸–à¸¸à¸™à¸²à¸¢à¸™", "à¸à¸£à¸à¸Žà¸²à¸„à¸¡", "à¸ªà¸´à¸‡à¸«à¸²à¸„à¸¡", "à¸à¸±à¸™à¸¢à¸²à¸¢à¸™", "à¸•à¸¸à¸¥à¸²à¸„à¸¡", "à¸žà¸¤à¸¨à¸ˆà¸´à¸à¸²à¸¢à¸™", "à¸˜à¸±à¸™à¸§à¸²à¸„à¸¡"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "tj": {
-            "dayNames": ["якшанбе", "душанбе", "сешанбе", "чоршанбе", "панҷшанбе", "ҷумъа", "шанбе"],
-            "dayNamesMin": ["якш", "душ", "сеш", "чор", "пан", "ҷум", "шан"],
+            "dayNames": ["ÑÐºÑˆÐ°Ð½Ð±Ðµ", "Ð´ÑƒÑˆÐ°Ð½Ð±Ðµ", "ÑÐµÑˆÐ°Ð½Ð±Ðµ", "Ñ‡Ð¾Ñ€ÑˆÐ°Ð½Ð±Ðµ", "Ð¿Ð°Ð½Ò·ÑˆÐ°Ð½Ð±Ðµ", "Ò·ÑƒÐ¼ÑŠÐ°", "ÑˆÐ°Ð½Ð±Ðµ"],
+            "dayNamesMin": ["ÑÐºÑˆ", "Ð´ÑƒÑˆ", "ÑÐµÑˆ", "Ñ‡Ð¾Ñ€", "Ð¿Ð°Ð½", "Ò·ÑƒÐ¼", "ÑˆÐ°Ð½"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Январ", "Феврал", "Март", "Апрел", "Май", "Июн", "Июл", "Август", "Сентябр", "Октябр", "Ноябр", "Декабр"],
+            "monthNames": ["Ð¯Ð½Ð²Ð°Ñ€", "Ð¤ÐµÐ²Ñ€Ð°Ð»", "ÐœÐ°Ñ€Ñ‚", "ÐÐ¿Ñ€ÐµÐ»", "ÐœÐ°Ð¹", "Ð˜ÑŽÐ½", "Ð˜ÑŽÐ»", "ÐÐ²Ð³ÑƒÑÑ‚", "Ð¡ÐµÐ½Ñ‚ÑÐ±Ñ€", "ÐžÐºÑ‚ÑÐ±Ñ€", "ÐÐ¾ÑÐ±Ñ€", "Ð”ÐµÐºÐ°Ð±Ñ€"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "tr": {
-            "dayNames": ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"],
-            "dayNamesMin": ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
+            "dayNames": ["Pazar", "Pazartesi", "SalÄ±", "Ã‡arÅŸamba", "PerÅŸembe", "Cuma", "Cumartesi"],
+            "dayNamesMin": ["Pz", "Pt", "Sa", "Ã‡a", "Pe", "Cu", "Ct"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+            "monthNames": ["Ocak", "Åžubat", "Mart", "Nisan", "MayÄ±s", "Haziran", "Temmuz", "AÄŸustos", "EylÃ¼l", "Ekim", "KasÄ±m", "AralÄ±k"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "uk": {
-            "dayNames": ["неділя", "понеділок", "вівторок", "середа", "четвер", "п’ятниця", "субота"],
-            "dayNamesMin": ["нед", "пнд", "вів", "срд", "чтв", "птн", "сбт"],
+            "dayNames": ["Ð½ÐµÐ´Ñ–Ð»Ñ", "Ð¿Ð¾Ð½ÐµÐ´Ñ–Ð»Ð¾Ðº", "Ð²Ñ–Ð²Ñ‚Ð¾Ñ€Ð¾Ðº", "ÑÐµÑ€ÐµÐ´Ð°", "Ñ‡ÐµÑ‚Ð²ÐµÑ€", "Ð¿â€™ÑÑ‚Ð½Ð¸Ñ†Ñ", "ÑÑƒÐ±Ð¾Ñ‚Ð°"],
+            "dayNamesMin": ["Ð½ÐµÐ´", "Ð¿Ð½Ð´", "Ð²Ñ–Ð²", "ÑÑ€Ð´", "Ñ‡Ñ‚Ð²", "Ð¿Ñ‚Ð½", "ÑÐ±Ñ‚"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"],
+            "monthNames": ["Ð¡Ñ–Ñ‡ÐµÐ½ÑŒ", "Ð›ÑŽÑ‚Ð¸Ð¹", "Ð‘ÐµÑ€ÐµÐ·ÐµÐ½ÑŒ", "ÐšÐ²Ñ–Ñ‚ÐµÐ½ÑŒ", "Ð¢Ñ€Ð°Ð²ÐµÐ½ÑŒ", "Ð§ÐµÑ€Ð²ÐµÐ½ÑŒ", "Ð›Ð¸Ð¿ÐµÐ½ÑŒ", "Ð¡ÐµÑ€Ð¿ÐµÐ½ÑŒ", "Ð’ÐµÑ€ÐµÑÐµÐ½ÑŒ", "Ð–Ð¾Ð²Ñ‚ÐµÐ½ÑŒ", "Ð›Ð¸ÑÑ‚Ð¾Ð¿Ð°Ð´", "Ð“Ñ€ÑƒÐ´ÐµÐ½ÑŒ"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "vi": {
-            "dayNames": ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"],
+            "dayNames": ["Chá»§ Nháº­t", "Thá»© Hai", "Thá»© Ba", "Thá»© TÆ°", "Thá»© NÄƒm", "Thá»© SÃ¡u", "Thá»© Báº£y"],
             "dayNamesMin": ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
             "firstDay": 0,
             "isRTL": false,
-            "monthNames": ["Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu", "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai"],
+            "monthNames": ["ThÃ¡ng Má»™t", "ThÃ¡ng Hai", "ThÃ¡ng Ba", "ThÃ¡ng TÆ°", "ThÃ¡ng NÄƒm", "ThÃ¡ng SÃ¡u", "ThÃ¡ng Báº£y", "ThÃ¡ng TÃ¡m", "ThÃ¡ng ChÃ­n", "ThÃ¡ng MÆ°á»i", "ThÃ¡ng MÆ°á»i Má»™t", "ThÃ¡ng MÆ°á»i Hai"],
             "showMonthAfterYear": false,
             "yearSuffix": ""
         },
         "zh-CN": {
-            "dayNames": ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-            "dayNamesMin": ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+            "dayNames": ["æ˜ŸæœŸæ—¥", "æ˜ŸæœŸä¸€", "æ˜ŸæœŸäºŒ", "æ˜ŸæœŸä¸‰", "æ˜ŸæœŸå››", "æ˜ŸæœŸäº”", "æ˜ŸæœŸå…­"],
+            "dayNamesMin": ["å‘¨æ—¥", "å‘¨ä¸€", "å‘¨äºŒ", "å‘¨ä¸‰", "å‘¨å››", "å‘¨äº”", "å‘¨å…­"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            "monthNames": ["ä¸€æœˆ", "äºŒæœˆ", "ä¸‰æœˆ", "å››æœˆ", "äº”æœˆ", "å…­æœˆ", "ä¸ƒæœˆ", "å…«æœˆ", "ä¹æœˆ", "åæœˆ", "åä¸€æœˆ", "åäºŒæœˆ"],
             "showMonthAfterYear": true,
-            "yearSuffix": "年"
+            "yearSuffix": "å¹´"
         },
         "zh-HK": {
-            "dayNames": ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-            "dayNamesMin": ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+            "dayNames": ["æ˜ŸæœŸæ—¥", "æ˜ŸæœŸä¸€", "æ˜ŸæœŸäºŒ", "æ˜ŸæœŸä¸‰", "æ˜ŸæœŸå››", "æ˜ŸæœŸäº”", "æ˜ŸæœŸå…­"],
+            "dayNamesMin": ["å‘¨æ—¥", "å‘¨ä¸€", "å‘¨äºŒ", "å‘¨ä¸‰", "å‘¨å››", "å‘¨äº”", "å‘¨å…­"],
             "firstDay": 0,
             "isRTL": false,
-            "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            "monthNames": ["ä¸€æœˆ", "äºŒæœˆ", "ä¸‰æœˆ", "å››æœˆ", "äº”æœˆ", "å…­æœˆ", "ä¸ƒæœˆ", "å…«æœˆ", "ä¹æœˆ", "åæœˆ", "åä¸€æœˆ", "åäºŒæœˆ"],
             "showMonthAfterYear": true,
-            "yearSuffix": "年"
+            "yearSuffix": "å¹´"
         },
         "zh-TW": {
-            "dayNames": ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-            "dayNamesMin": ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+            "dayNames": ["æ˜ŸæœŸæ—¥", "æ˜ŸæœŸä¸€", "æ˜ŸæœŸäºŒ", "æ˜ŸæœŸä¸‰", "æ˜ŸæœŸå››", "æ˜ŸæœŸäº”", "æ˜ŸæœŸå…­"],
+            "dayNamesMin": ["å‘¨æ—¥", "å‘¨ä¸€", "å‘¨äºŒ", "å‘¨ä¸‰", "å‘¨å››", "å‘¨äº”", "å‘¨å…­"],
             "firstDay": 1,
             "isRTL": false,
-            "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            "monthNames": ["ä¸€æœˆ", "äºŒæœˆ", "ä¸‰æœˆ", "å››æœˆ", "äº”æœˆ", "å…­æœˆ", "ä¸ƒæœˆ", "å…«æœˆ", "ä¹æœˆ", "åæœˆ", "åä¸€æœˆ", "åäºŒæœˆ"],
             "showMonthAfterYear": true,
-            "yearSuffix": "年"
+            "yearSuffix": "å¹´"
         }
     };
 
@@ -2768,4 +2768,3 @@ window['DP_jQuery_' + dpuuid] = $;
     };
 
 }(jQuery));
-

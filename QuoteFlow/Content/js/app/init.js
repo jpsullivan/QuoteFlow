@@ -2,7 +2,8 @@
 
 window.$ = window.jQuery = require('jquery');
 var aui = require('aui');
-//var auiExperimental = require('aui-experimental');
+var Define = require('define');
+var auiExperimental = require('aui-experimental');
 var App = require('./app');
 
 $(document).ready(function () {

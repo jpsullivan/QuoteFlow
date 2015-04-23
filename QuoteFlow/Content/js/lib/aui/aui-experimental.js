@@ -1923,20 +1923,20 @@
 
             // used when replacing accented characters during sorting
             ts.characterEquivalents = {
-                "a" : "\u00e1\u00e0\u00e2\u00e3\u00e4\u0105\u00e5", // áàâãäąå
-                "A" : "\u00c1\u00c0\u00c2\u00c3\u00c4\u0104\u00c5", // ÁÀÂÃÄĄÅ
-                "c" : "\u00e7\u0107\u010d", // çćč
-                "C" : "\u00c7\u0106\u010c", // ÇĆČ
-                "e" : "\u00e9\u00e8\u00ea\u00eb\u011b\u0119", // éèêëěę
-                "E" : "\u00c9\u00c8\u00ca\u00cb\u011a\u0118", // ÉÈÊËĚĘ
-                "i" : "\u00ed\u00ec\u0130\u00ee\u00ef\u0131", // íìİîïı
-                "I" : "\u00cd\u00cc\u0130\u00ce\u00cf", // ÍÌİÎÏ
-                "o" : "\u00f3\u00f2\u00f4\u00f5\u00f6", // óòôõö
-                "O" : "\u00d3\u00d2\u00d4\u00d5\u00d6", // ÓÒÔÕÖ
-                "ss": "\u00df", // ß (s sharp)
-                "SS": "\u1e9e", // ẞ (Capital sharp s)
-                "u" : "\u00fa\u00f9\u00fb\u00fc\u016f", // úùûüů
-                "U" : "\u00da\u00d9\u00db\u00dc\u016e" // ÚÙÛÜŮ
+                "a" : "\u00e1\u00e0\u00e2\u00e3\u00e4\u0105\u00e5", // Ã¡Ã Ã¢Ã£Ã¤Ä…Ã¥
+                "A" : "\u00c1\u00c0\u00c2\u00c3\u00c4\u0104\u00c5", // ÃÃ€Ã‚ÃƒÃ„Ä„Ã…
+                "c" : "\u00e7\u0107\u010d", // Ã§Ä‡Ä
+                "C" : "\u00c7\u0106\u010c", // Ã‡Ä†ÄŒ
+                "e" : "\u00e9\u00e8\u00ea\u00eb\u011b\u0119", // Ã©Ã¨ÃªÃ«Ä›Ä™
+                "E" : "\u00c9\u00c8\u00ca\u00cb\u011a\u0118", // Ã‰ÃˆÃŠÃ‹ÄšÄ˜
+                "i" : "\u00ed\u00ec\u0130\u00ee\u00ef\u0131", // Ã­Ã¬Ä°Ã®Ã¯Ä±
+                "I" : "\u00cd\u00cc\u0130\u00ce\u00cf", // ÃÃŒÄ°ÃŽÃ
+                "o" : "\u00f3\u00f2\u00f4\u00f5\u00f6", // Ã³Ã²Ã´ÃµÃ¶
+                "O" : "\u00d3\u00d2\u00d4\u00d5\u00d6", // Ã“Ã’Ã”Ã•Ã–
+                "ss": "\u00df", // ÃŸ (s sharp)
+                "SS": "\u1e9e", // áºž (Capital sharp s)
+                "u" : "\u00fa\u00f9\u00fb\u00fc\u016f", // ÃºÃ¹Ã»Ã¼Å¯
+                "U" : "\u00da\u00d9\u00db\u00dc\u016e" // ÃšÃ™Ã›ÃœÅ®
             };
             ts.replaceAccents = function(s) {
                 var a, acc = '[', eq = ts.characterEquivalents;
@@ -2196,7 +2196,7 @@
     ts.addParser({
         id: "currency",
         is: function(s) {
-            return (/^\(?\d+[\u00a3$\u20ac\u00a4\u00a5\u00a2?.]|[\u00a3$\u20ac\u00a4\u00a5\u00a2?.]\d+\)?$/).test((s || '').replace(/[+\-,. ]/g,'')); // £$€¤¥¢
+            return (/^\(?\d+[\u00a3$\u20ac\u00a4\u00a5\u00a2?.]|[\u00a3$\u20ac\u00a4\u00a5\u00a2?.]\d+\)?$/).test((s || '').replace(/[+\-,. ]/g,'')); // Â£$â‚¬Â¤Â¥Â¢
         },
         format: function(s, table) {
             var n = ts.formatFloat((s || '').replace(/[^\w,. \-()]/g, ""), table);
@@ -3228,7 +3228,7 @@ define('aui/form-validation/validator-register',[], function() {
         var defaults = {
             'when': 'change'
         };
-        var optionValue = $field.data(ATTRIBUTE_VALIDATION_OPTION_PREFIX + option);
+        var optionValue = $field.attr('data-' + ATTRIBUTE_VALIDATION_OPTION_PREFIX + option);
         if (!optionValue) {
             optionValue = defaults[option];
         }
@@ -3301,7 +3301,7 @@ define('aui/form-validation/validator-register',[], function() {
 
     function createArgumentAccessorFunction($field) {
         return function(arg) {
-            return $field.data(ATTRIBUTE_VALIDATION_OPTION_PREFIX + arg);
+            return $field.attr('data-' + ATTRIBUTE_VALIDATION_OPTION_PREFIX + arg);
         };
     }
 
@@ -7312,6 +7312,10 @@ define('aui/button',['aui/internal/spinner', 'aui/internal/state'], function (Sp
 })(function ($, skate) {
     'use strict';
 
+    function isNestedAnchor(trigger, target) {
+        var $closestAnchor = $(target).closest('a[href]', trigger);
+        return !!$closestAnchor.length && $closestAnchor[0] !== trigger;
+    }
 
     function findControlled(trigger) {
         return document.getElementById(trigger.getAttribute('aria-controls'));
@@ -7330,8 +7334,10 @@ define('aui/button',['aui/internal/spinner', 'aui/internal/state'], function (Sp
         type: skate.types.ATTR,
         events: {
             click: function(trigger, e) {
-                triggerMessage(trigger, e);
-                e.preventDefault();
+                if (!isNestedAnchor(trigger, e.target)) {
+                    triggerMessage(trigger, e);
+                    e.preventDefault();
+                }
             },
             mouseenter: function(trigger, e) {
                 triggerMessage(trigger, e);
@@ -7668,7 +7674,7 @@ define('aui/button',['aui/internal/spinner', 'aui/internal/state'], function (Sp
  * raf.js
  * https://github.com/ngryman/raf.js
  *
- * original requestAnimationFrame polyfill by Erik Möller
+ * original requestAnimationFrame polyfill by Erik MÃ¶ller
  * inspired from paul_irish gist and post
  *
  * Copyright (c) 2013 ngryman
@@ -8249,17 +8255,19 @@ window.Modernizr = (function( window, document, undefined ) {
         // Header height needs to be checked because in Stash it changes when the CSS "transform: translate3d" is changed.
         // If you called reflow() after this change then nothing happened because the scrollTop and viewportHeight hadn't changed.
         var offsetTop = sidebarOffset(this.$el);
+        var isInitialPageLoad = this._previousViewportWidth === null;
 
         if (!(scrollTop === this._previousScrollTop && viewportHeight === this._previousViewportHeight && offsetTop === this._previousOffsetTop)) {
-          if (!this.$body.hasClass('aui-page-sidebar-touch') && scrollTop <= scrollHeight - viewportHeight) {
-            this.setHeight(scrollTop, viewportHeight, offsetTop);
-            this.setPosition(scrollTop);
-          }
+            var isTouch = this.$body.hasClass('aui-page-sidebar-touch');
+            var isTrackpadBounce = scrollTop < 0 || scrollTop + viewportHeight > scrollHeight;
+            if (!isTouch && (isInitialPageLoad || !isTrackpadBounce)) {
+              this.setHeight(scrollTop, viewportHeight, offsetTop);
+              this.setPosition(scrollTop);
+            }
         }
 
         var isResponsive = this.$el.attr('data-aui-responsive') !== 'false';
         if (isResponsive) {
-            var isInitialPageLoad = this._previousViewportWidth === null;
             if (isInitialPageLoad) {
                 if (!this.isCollapsed() && this.isViewportNarrow(viewportWidth)) {
                     var isAnimated = this.isAnimated();
@@ -9134,7 +9142,7 @@ window.Modernizr = (function( window, document, undefined ) {
     };
 
     // Shuffle an array, using the modern version of the
-    // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisherâ€“Yates_shuffle).
+    // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/FisherÃ¢â‚¬â€œYates_shuffle).
     _.shuffle = function(obj) {
         var rand;
         var index = 0;
