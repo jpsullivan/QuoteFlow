@@ -561,6 +561,8 @@
     <Content Include="Content\js\app\modules\asset-nav\search\search-module.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\search-results.js" />
     <Content Include="Content\js\app\modules\asset-nav\util\async-data.js" />
+    <Content Include="Content\js\app\modules\asset\controller.js" />
+    <Content Include="Content\js\app\modules\asset\module.js" />
     <Content Include="Content\js\app\modules\asset\queries\basic_query.js" />
     <Content Include="Content\js\app\modules\asset\queries\query.js" />
     <Content Include="Content\js\app\modules\asset\queries\jql_query.js" />
@@ -571,6 +573,7 @@
     <Content Include="Content\js\app\modules\asset-nav\split-view\layout.js" />
     <Content Include="Content\js\app\modules\asset-nav\split-view\list-view.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-nav-creator.js" />
+    <Content Include="Content\js\app\modules\asset\router.js" />
     <Content Include="Content\js\app\modules\catalog\controller.js" />
     <Content Include="Content\js\app\modules\catalog\module.js" />
     <Content Include="Content\js\app\modules\catalog\router.js" />

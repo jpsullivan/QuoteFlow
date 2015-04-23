@@ -9,6 +9,7 @@ Backbone.$ = $;
 
 var Marionette = require('backbone.marionette');
 
+var AssetModule = require('./modules/asset/module');
 var AssetTableModule = require('./modules/asset-nav/module');
 var CatalogModule = require('./modules/catalog/module');
 
@@ -173,6 +174,7 @@ QuoteFlow.application.on("start", function (options) {
     ApplicationHelpers.initialize();
 });
 
+QuoteFlow.application.module("asset", AssetModule);
 QuoteFlow.application.module("asset-table", AssetTableModule);
 QuoteFlow.application.module("catalog", CatalogModule);
 

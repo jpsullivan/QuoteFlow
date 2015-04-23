@@ -22,6 +22,7 @@ Backbone.$ = $;
 
 var Marionette = require('backbone.marionette');
 
+var AssetModule = require('./modules/asset/module');
 var AssetTableModule = require('./modules/asset-nav/module');
 var CatalogModule = require('./modules/catalog/module');
 
@@ -186,12 +187,13 @@ QuoteFlow.application.on("start", function (options) {
     ApplicationHelpers.initialize();
 });
 
+QuoteFlow.application.module("asset", AssetModule);
 QuoteFlow.application.module("asset-table", AssetTableModule);
 QuoteFlow.application.module("catalog", CatalogModule);
 
 module.exports = QuoteFlow.application;
 
-},{"./helpers/application_helpers":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\helpers\\application_helpers.js","./modules/asset-nav/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\module.js","./modules/catalog/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\module.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\router.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","jquery.browser":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery.browser\\dist\\jquery.browser.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js":[function(require,module,exports){
+},{"./helpers/application_helpers":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\helpers\\application_helpers.js","./modules/asset-nav/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset-nav\\module.js","./modules/asset/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\module.js","./modules/catalog/module":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\module.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\router.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","jquery.browser":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery.browser\\dist\\jquery.browser.min.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\collections\\asset\\searcher.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -8567,7 +8569,50 @@ var AsyncData = Brace.Evented.extend({
 });
 
 module.exports = AsyncData;
-},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\basic_query.js":[function(require,module,exports){
+},{"backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\controller.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+/**
+ * Contains callbacks for the catalog module router.
+ */
+var AssetController = Marionette.Controller.extend({
+
+    create: function () {
+        debugger;
+        AJS.$('select').auiSelect2();
+    }
+});
+
+module.exports = AssetController;
+
+},{"backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\module.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+
+var AssetController = require('./controller');
+var AssetRouter = require('./router');
+
+/**
+ * 
+ */
+var AssetModule = Marionette.Module.extend({
+
+    onStart: function (options) {
+        return this.startMediator();
+    },
+
+    startMediator: function() {
+        this.controller = new AssetController();
+
+        return new AssetRouter({ controller: this.controller });
+    }
+});
+
+module.exports = AssetModule;
+},{"./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\controller.js","./router":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\router.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\basic_query.js":[function(require,module,exports){
 "use strict";
 
 var $ = require('jquery');
@@ -8965,7 +9010,24 @@ var AssetQueryModule = Brace.Evented.extend({
 });
 
 module.exports = AssetQueryModule;
-},{"./basic_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\basic_query.js","./jql_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\jql_query.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js":[function(require,module,exports){
+},{"./basic_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\basic_query.js","./jql_query":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\queries\\jql_query.js","backbone":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone\\backbone.js","backbone-brace":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\lib\\backbone-brace.min.js","jquery":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\jquery\\dist\\jquery.js","underscore":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\underscore\\underscore.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\router.js":[function(require,module,exports){
+"use strict";
+
+var Marionette = require('backbone.marionette');
+var CatalogController = require('./controller');
+
+/**
+ * 
+ */
+var AssetRouter = Marionette.AppRouter.extend({
+    appRoutes: {
+        "asset/new": "create"
+    }
+});
+
+module.exports = AssetRouter;
+
+},{"./controller":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\asset\\controller.js","backbone.marionette":"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\node_modules\\backbone.marionette\\lib\\core\\backbone.marionette.js"}],"C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow\\Content\\js\\app\\modules\\catalog\\controller.js":[function(require,module,exports){
 "use strict";
 
 var Marionette = require('backbone.marionette');
