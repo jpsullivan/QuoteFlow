@@ -6,15 +6,11 @@ var uglify      = require('gulp-uglify');
 var handlebars  = require('gulp-handlebars');
 var declare     = require('gulp-declare');
 var wrap        = require('gulp-wrap');
-
-var paths = {
-    templates:  ['QuoteFlow/Content/views/**/*.hbs'],
-    jsCompiled: 'QuoteFlow/Content/compiled/js',
-};
+var config      = require('../config').templates;
 
 // JST's (should always be minified)
 gulp.task('templates', function () {
-    return gulp.src(paths.templates)
+    return gulp.src(config.src)
         //.pipe(newer(paths.jsCompiled + '/templates.min.js'))
         .pipe(handlebars({
           // outputType: 'bare',
@@ -50,5 +46,5 @@ gulp.task('templates', function () {
         .pipe(bytediff.start())
         .pipe(uglify())
         .pipe(bytediff.stop())
-        .pipe(gulp.dest(paths.jsCompiled))
+        .pipe(gulp.dest(paths.dest))
 });

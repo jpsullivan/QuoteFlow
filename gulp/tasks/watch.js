@@ -4,11 +4,12 @@
    - gulp/tasks/browserSync.js watches and reloads compiled files
 */
 
-var gulp = require('gulp');
+var gulp    = require('gulp');
+var config  = require('../config');
 
-gulp.task('watch', ['setWatch', 'build'], function () {
+gulp.task('watch', ['watchify'], function () {
   if(global.isWatching) {
-    gulp.watch('./QuoteFlow/Content/less/**/*.less', ['less']);
-    gulp.watch('./QuoteFlow/Content/views/**/*.{handlebars, hbs}', ['templates']);
+    gulp.watch(config.less.src, ['less']);
+    gulp.watch(config.templates.src, ['templates']);
   }
 });
