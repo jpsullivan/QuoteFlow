@@ -2,86 +2,89 @@
    ---------------
    Bundle javascripty things with browserify!
 
-   If the watch task is running, this uses watchify instead
-   of browserify for faster bundling using caching.
+   This task is set up to generate multiple separate bundles, from
+   different sources, and to use Watchify when run from the default task.
+
+   See browserify.bundleConfigs in gulp/config.js
 */
 
-var browserify    = require('browserify');
-var watchify      = require('watchify');
-var bundleLogger  = require('../util/bundleLogger');
-var gulp          = require('gulp');
-var debug         = require('gulp-debug');
-var bytediff      = require('gulp-bytediff');
-var handleErrors  = require('../util/handleErrors');
-var source        = require('vinyl-source-stream');
-var buffer        = require('vinyl-buffer');
-var gutil         = require('gulp-util');
-var uglify        = require('gulp-uglify');
-var sourcemaps    = require('gulp-sourcemaps');
-var notify        = require("gulp-notify");
+var browserify   = require('browserify');
+var browserSync  = require('browser-sync');
+var watchify     = require('watchify');
+var mergeStream  = require('merge-stream');
+var bundleLogger = require('../util/bundleLogger');
+var gulp         = require('gulp');
+var handleErrors = require('../util/handleErrors');
+var source       = require('vinyl-source-stream');
+var config       = require('../config').browserify;
+var _            = require('underscore');
 
-var cache = {};
-var pkgCache = {};
+var browserifyTask = function(devMode) {
 
-var entryPoint = '../../QuoteFlow/Content/js/app/init.js';
-var watchifyEntryPoint = './QuoteFlow/Content/js/app/init.js';
+  var browserifyThis = function(bundleConfig) {
 
-gulp.task('browserify', function() {
-  var isProduction = gutil.env.type === 'production';
+    if(devMode) {
+      // Add watchify args and debug (sourcemaps) option
+      _.extend(bundleConfig, watchify.args, { debug: true });
+      // A watchify require/external bug that prevents proper recompiling,
+      // so (for now) we'll ignore these options during development. Running
+      // `gulp browserify` directly will properly require and externalize.
+      bundleConfig = _.omit(bundleConfig, ['external', 'require']);
+    }
 
-  var bundler = browserify({
-    basedir: __dirname,
-    // Required watchify args
-    cache: cache, packageCache: pkgCache, fullPaths: false,
-    // Specify the entry point of your app
-    entries: [entryPoint],
-    // Add file extentions to make optional in your requires
-    extensions: ['.js'],
-    // Don't parse massive libs like jquery to make bundling much faster
-    //noparse: ['jquery', 'jquery-ui', 'backbone'],
-    // Ignore __dirname__, __filename__, etc. Speeds up builds
-    //insertGlobals : true,
-    // Enable source maps!
-    debug: !isProduction
-  });
+    // set the output name based on whether this is dev mode
+    bundleConfig.outputName = devMode ? "bundle.min.js" : "bundle.js";
 
-  var bundle = function() {
-    // Log when bundling starts
-    bundleLogger.start();
+    var b = browserify(bundleConfig);
 
-    return bundler
-      .bundle()
-      // Report compile errors
-      .on('error', handleErrors)
+    var bundle = function() {
+      // Log when bundling starts
+      bundleLogger.start(bundleConfig.outputName);
 
-      // Use vinyl-source-stream to make the
-      // stream gulp compatible. Specifiy the
-      // desired output filename here.
-      .pipe(isProduction ? source('bundle.min.js') : source('bundle.js'))
-      .pipe(buffer())
-      .pipe(sourcemaps.init({loadMaps: true}))
+      return b
+        .bundle()
+        // Report compile errors
+        .on('error', handleErrors)
+        // Use vinyl-source-stream to make the
+        // stream gulp compatible. Specify the
+        // desired output filename here.
+        .pipe(source(bundleConfig.outputName))
+        // Specify the output destination
+        .pipe(gulp.dest(bundleConfig.dest))
 
-      // Only display debug info when in dev mode
-      .pipe(!isProduction ? debug({verbose: false}) : gutil.noop())
+        // .pipe(browserSync.reload({
+        //   stream: true
+        // }));
 
-      // bytediff the stream output after minifying
-      .pipe(bytediff.start())
-      // Add transformation tasks to the pipeline here.
-      .pipe(isProduction ? uglify({ preserveComments: "some"}) : gutil.noop())
-      .pipe(bytediff.stop())
+        // Log when bundling completes!
+        .on('end', bundleLogger.end);
+    };
 
-      //.pipe(sourcemaps.write('./QuoteFlow/Content/compiled/js'))
-      .pipe(gulp.dest('./QuoteFlow/Content/compiled/js'))
+    if(devMode) {
+      // Wrap with watchify and rebundle on changes
+      b = watchify(b);
+      // Rebundle on update
+      b.on('update', bundle);
+      bundleLogger.watch(bundleConfig.outputName);
+    } else {
+      // Sort out shared dependencies.
+      // b.require exposes modules externally
+      if(bundleConfig.require) b.require(bundleConfig.require);
+      // b.external excludes modules from the bundle, and expects
+      // they'll be available externally
+      if(bundleConfig.external) b.external(bundleConfig.external);
+    }
 
-      // Log when bundling completes!
-      .on('end', bundleLogger.end);
+    return bundle();
   };
 
-  if(global.isWatching) {
-    bundler = watchify(browserify(watchifyEntryPoint, watchify.args));
-    // Rebundle with watchify on changes.
-    bundler.on('update', bundle);
-  }
+  // Start bundling with Browserify for each bundleConfig specified
+  return mergeStream.apply(gulp, _.map(config.bundleConfigs, browserifyThis));
+};
 
-  return bundle();
+gulp.task('browserify', function() {
+  return browserifyTask()
 });
+
+// Exporting the task so we can call it directly in our watch task, with the 'devMode' option
+module.exports = browserifyTask;
