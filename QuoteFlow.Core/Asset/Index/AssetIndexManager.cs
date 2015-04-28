@@ -373,7 +373,7 @@ namespace QuoteFlow.Core.Asset.Index
             var stopWatch = Stopwatch.StartNew();
 
             var assetIndexHelper = new AssetIndexHelper(AssetService, AssetIndexer);
-            var indexedAssets = assetIndexHelper.AllAssetIds;
+            var indexedAssets = assetIndexHelper.GetAllAssetIds();
 
             //var reconciler = new IndexReconciler(indexedAssets);
             var resultBuilder = new AccumulatingResultBuilder();

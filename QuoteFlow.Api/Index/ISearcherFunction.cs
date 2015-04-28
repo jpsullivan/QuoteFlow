@@ -4,6 +4,6 @@ namespace QuoteFlow.Api.Index
 {
     public interface ISearcherFunction<T>
     {
-        T Apply(IndexSearcher reader);
+        T Apply(IndexSearcher assetSearcher);
     }
 }

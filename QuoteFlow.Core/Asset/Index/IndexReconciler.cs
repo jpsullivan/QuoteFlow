@@ -42,7 +42,7 @@ namespace QuoteFlow.Core.Asset.Index
             }
         }
 
-        protected virtual IEnumerable<int?> Orphans
+        public virtual IEnumerable<int?> Orphans
         {
             get
             {

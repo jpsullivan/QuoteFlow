@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using Elmah.Assertions;
+using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Index;
+using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.Index;
+using QuoteFlow.Core.Lucene.Index;
+using WebBackgrounder;
 
 namespace QuoteFlow.Core.Index
 {
@@ -22,12 +29,13 @@ namespace QuoteFlow.Core.Index
 		}
 
         /// <summary>
-        /// Get all the asset ids known that are present in the index. The asset ids are returned in a Sorted array.
+        /// Get all the asset ids known that are present in the index. 
+        /// The asset ids are returned in a Sorted array.
         /// </summary>
         /// <returns>Array of asset ids.</returns>
-        public virtual int[] AllAssetIds
+        public int[] GetAllAssetIds()
         {
-            get { return WithAssetSearcher(new AssetIdsHelper(this)); }
+            return WithAssetSearcher(new AssetIdsHelper(this));
         }
 
         /// <summary>
@@ -86,23 +94,117 @@ namespace QuoteFlow.Core.Index
 //            resultBuilder.toResult().@await();
 //        }
 //
-//        public virtual void FixupIndexCorruptions(AccumulatingResultBuilder resultBuilder, IndexReconciler reconciler)
-//        {
-//            // Get issue that were found in the database but not in the index, They need to be reindexed again
-//            // if they still exist in the database and if they are still not in the index.
-//            // If they are in the database, then they have been indexed since we began the reindex and so all is well.
-//            safelyAddMissing(resultBuilder, reconciler.Unindexed);
-//            resultBuilder.toResult().@await();
-//
-//            log.debug("" + reconciler.Unindexed.size() + " missing issues add to the index.");
-//
-//            // These issue were not found in the database but were in the index, They need to be removed
-//            // if they still do not exist in the database.
-//            safelyRemoveOrphans(resultBuilder, reconciler.Orphans);
-//            resultBuilder.toResult().@await();
-//
-//            log.debug("" + reconciler.Orphans.size() + " deleted issues removed from the index.");
-//        }
+        public virtual void FixupIndexCorruptions(AccumulatingResultBuilder resultBuilder, IndexReconciler reconciler)
+        {
+            // Get issue that were found in the database but not in the index, They need to be reindexed again
+            // if they still exist in the database and if they are still not in the index.
+            // If they are in the database, then they have been indexed since we began the reindex and so all is well.
+            SafelyAddMissing(resultBuilder, reconciler.Unindexed);
+            resultBuilder.ToResult().Await();
+
+            Debug.WriteLine("{0} missing assets added to the index.", reconciler.Unindexed.Count());
+
+            // These issue were not found in the database but were in the index, They need to be removed
+            // if they still do not exist in the database.
+            SafelyRemoveOrphans(resultBuilder, reconciler.Orphans);
+            resultBuilder.ToResult().Await();
+
+            Debug.WriteLine("{0} deleted assets from the index.", reconciler.Orphans.Count());
+        }
+
+        public void SafelyAddMissing(AccumulatingResultBuilder resultBuilder, IEnumerable<long?> unindexed)
+        {
+            WithAssetSearcher(new SafelyAddMissingHelper(this, resultBuilder, unindexed));
+        }
+
+        private sealed class SafelyAddMissingHelper : ISearcherFunction<object>
+        {
+            private readonly AssetIndexHelper _outerInstance;
+
+            private readonly AccumulatingResultBuilder _resultBuilder;
+            private readonly IEnumerable<long?> _unindexed;
+
+            public SafelyAddMissingHelper(AssetIndexHelper outerInstance, AccumulatingResultBuilder resultBuilder, IEnumerable<long?> unindexed)
+            {
+                _outerInstance = outerInstance;
+                _resultBuilder = resultBuilder;
+                _unindexed = unindexed;
+            }
+
+            public object Apply(IndexSearcher assetSearcher)
+            {
+                foreach (long? assetId in _unindexed)
+                {
+                    try
+                    {
+                        var asset = _outerInstance._issueManager.GetAsset((int)assetId);
+                        if (asset == null) continue;
+
+                        TermQuery query = new TermQuery(new Term(DocumentConstants.AssetId, Convert.ToString(assetId)));
+                        TopDocs topDocs = assetSearcher.Search(query, 1);
+                        if (topDocs.TotalHits == 0)
+                        {
+                            var assets = new List<Api.Models.Asset> { asset };
+                            _resultBuilder.Add(_outerInstance._assetIndexer.ReIndexAssets(assets, true, false));
+                        }
+                    }
+                    catch (IOException e)
+                    {
+                        _resultBuilder.Add(new Lucene.Index.Index.Failure(e));
+                    }
+                }
+
+                return null;
+            }
+        }
+
+        public void SafelyRemoveOrphans(AccumulatingResultBuilder resultBuilder, IEnumerable<int?> orphans)
+        {
+            WithAssetSearcher(new SafelyRemoveOrphansHelper(this, resultBuilder, orphans));
+        }
+
+        private sealed class SafelyRemoveOrphansHelper : ISearcherFunction<object>
+        {
+            private readonly AssetIndexHelper _outerInstance;
+
+			private readonly AccumulatingResultBuilder _resultBuilder;
+			private readonly IEnumerable<int?> _orphans;
+
+			public SafelyRemoveOrphansHelper(AssetIndexHelper outerInstance, AccumulatingResultBuilder resultBuilder, IEnumerable<int?> orphans)
+			{
+				_outerInstance = outerInstance;
+				_resultBuilder = resultBuilder;
+				_orphans = orphans;
+			}
+
+			public object Apply(IndexSearcher assetSearcher)
+			{
+				foreach (long? assetId in _orphans)
+				{
+					try
+					{
+						var asset = _outerInstance._issueManager.GetAsset((int) assetId);
+					    if (asset != null) continue;
+
+					    TermQuery query = new TermQuery(new Term(DocumentConstants.AssetId, Convert.ToString(assetId)));
+					    TopDocs topDocs = assetSearcher.Search(query, 1);
+					    foreach (ScoreDoc scoreDoc in topDocs.ScoreDocs)
+					    {
+					        Document doc = assetSearcher.Doc(scoreDoc.Doc);
+					        var assetToDelete = _outerInstance._issueManager.GetAsset(doc);
+					        var assets = new List<IAsset> {assetToDelete};
+					        _resultBuilder.Add(_outerInstance._assetIndexer.DeIndexAssets(assets));
+					    }
+					}
+					catch (IOException e)
+					{
+						_resultBuilder.Add(new Lucene.Index.Index.Failure(e));
+					}
+				}
+				return null;
+			}
+
+        }
 
         private class AssetIdsHelper : ISearcherFunction<int[]>
         {
