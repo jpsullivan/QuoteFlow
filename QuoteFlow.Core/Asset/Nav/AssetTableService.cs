@@ -42,8 +42,7 @@ namespace QuoteFlow.Core.Asset.Nav
 
         #endregion
 
-        public AssetTableViewModel GetIssueTableFromFilterWithJql(User user, string filterId, string jql, IAssetTableServiceConfiguration config,
-            bool isStableSearchFirstHit)
+        public AssetTableViewModel GetIssueTableFromFilterWithJql(User user, string filterId, string jql, IAssetTableServiceConfiguration config, bool isStableSearchFirstHit)
         {
             if (filterId == null)
             {
