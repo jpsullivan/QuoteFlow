@@ -18,11 +18,11 @@ namespace QuoteFlow.Core.Asset.Search
         {
             if (SearchProviderTypes.AssetIndex.Equals(searcherName))
             {
-                return AssetIndexManager.AssetSearcher;
+                return AssetIndexManager.GetAssetSearcher();
             }
             if (SearchProviderTypes.COMMENT_INDEX.Equals(searcherName))
             {
-                return AssetIndexManager.CommentSearcher;
+                return AssetIndexManager.GetCommentSearcher();
             }
 
             throw new NotSupportedException("Only asset, comment and change history indexes are catered for currently");

@@ -143,7 +143,7 @@ namespace QuoteFlow.Api.Asset.Index
         /// really call <seealso cref="SearchProviderFactory.GetSearcher(string)"/> passing in <seealso cref="SearchProviderFactory.ISSUE_INDEX"/> as it is a managed searcher
         /// and all the closing semantics are handled for you.
         /// </summary>
-        IndexSearcher AssetSearcher { get; }
+        IndexSearcher GetAssetSearcher();
 
         /// <summary>
         /// Get an <seealso cref="IndexSearcher"/> that can be used to search the comment index.
@@ -152,7 +152,7 @@ namespace QuoteFlow.Api.Asset.Index
         /// really call <seealso cref="SearchProviderFactory#getSearcher(String))"/> passing in <seealso cref="SearchProviderFactory#COMMENT_INDEX"/> as it is a managed
         /// searcher and all the closing semantics are handled for you.
         /// </summary>
-        IndexSearcher CommentSearcher { get; }
+        IndexSearcher GetCommentSearcher();
 
         /// <summary>
         /// Returns an <seealso cref="Analyzer"/> for searching.

@@ -287,25 +287,19 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
-        public IndexSearcher AssetSearcher
+        public IndexSearcher GetAssetSearcher()
         {
-            get
+            lock (IndexLocks.ReaderLock)
             {
-                lock (IndexLocks.ReaderLock)
-                {
-                    return SearcherCache.ThreadLocalCache.RetrieveAssetSearcher(_assetSearcherSupplier);
-                }
+                return SearcherCache.ThreadLocalCache.RetrieveAssetSearcher(_assetSearcherSupplier);
             }
         }
 
-        public IndexSearcher CommentSearcher
+        public IndexSearcher GetCommentSearcher()
         {
-            get
+            lock (IndexLocks.ReaderLock)
             {
-                lock (IndexLocks.ReaderLock)
-                {
-                    return SearcherCache.ThreadLocalCache.RetrieveCommentSearcher(_commentSearcherSupplier);
-                }
+                return SearcherCache.ThreadLocalCache.RetrieveCommentSearcher(_commentSearcherSupplier);
             }
         }
 

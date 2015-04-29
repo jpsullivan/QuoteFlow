@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using Lucene.Net.Documents;
 using Lucene.Net.Search;
@@ -361,10 +362,11 @@ namespace QuoteFlow.Core.Services
 
         private TopDocs RunSearch(IndexSearcher searcher, Query query, Filter filter, SortField[] sortFields, string searchQueryString, IPagerFilter pager)
         {
+            Debug.WriteLine("Lucene boolean query: {0}", query.ToString(""));
+
             TopDocs hits;
             try
             {
-
                 int maxHits;
                 if (pager != null && pager.End > 0)
                 {
