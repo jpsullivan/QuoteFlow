@@ -11,8 +11,9 @@ namespace QuoteFlow.Core.Jql.Query
     /// </summary>
     public sealed class SummaryClauseQueryFactory : IClauseQueryFactory
     {
-        internal const int SummaryBoostFactor = 9;
-        private readonly ClauseQueryFactory _delegateClauseQueryFactory;
+        private const int SummaryBoostFactor = 9;
+
+        private readonly IClauseQueryFactory _delegateClauseQueryFactory;
 
         public SummaryClauseQueryFactory(IJqlOperandResolver operandResolver)
         {
@@ -30,10 +31,9 @@ namespace QuoteFlow.Core.Jql.Query
             return queryFactoryResult;
         }
 
-        private static ClauseQueryFactory GetDelegate(IJqlOperandResolver operandResolver)
+        private static IClauseQueryFactory GetDelegate(IJqlOperandResolver operandResolver)
         {
-            var operatorFactories = new List<IOperatorSpecificQueryFactory>();
-            operatorFactories.Add(new LikeQueryFactory());
+            var operatorFactories = new List<IOperatorSpecificQueryFactory> {new LikeQueryFactory()};
             return new GenericClauseQueryFactory(SystemSearchConstants.ForSummary(), operatorFactories, operandResolver);
         }
     }

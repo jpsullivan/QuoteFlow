@@ -15,7 +15,7 @@ namespace QuoteFlow.Core.Jql.Query
     /// </summary>
     public class ManufacturerClauseQueryFactory : ClauseQueryFactory
     {
-        private readonly ClauseQueryFactory delegateClauseQueryFactory;
+        private readonly IClauseQueryFactory delegateClauseQueryFactory;
 
         public ManufacturerClauseQueryFactory(ManufacturerResolver issueTypeResolver, IJqlOperandResolver operandResolver)
         {

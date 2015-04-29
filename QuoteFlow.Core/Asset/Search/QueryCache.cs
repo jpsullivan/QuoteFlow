@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Operand;
@@ -14,16 +15,16 @@ namespace QuoteFlow.Core.Asset.Search
 {
     public class QueryCache : IQueryCache
     {
-//        #region IoC
-//
-//        public ICacheService CacheService { get; protected set; }
-//
-//        public QueryCache(ICacheService cacheService)
-//        {
-//            CacheService = cacheService;
-//        }
-//
-//        #endregion
+        #region DI
+
+        public ICacheService CacheService { get; protected set; }
+
+        public QueryCache(ICacheService cacheService)
+        {
+            CacheService = cacheService;
+        }
+
+        #endregion
 
         public bool? GetDoesQueryFitFilterFormCache(User searcher, IQuery query)
         {
@@ -58,21 +59,25 @@ namespace QuoteFlow.Core.Asset.Search
         {
             var explicitCache = GetExplicitQueryCache();
             explicitCache.Add(new QueryCacheKey(searcher, query), queryContext);
-            //CacheService.SetItem(RequestCacheKeys.SimpleQueryContextCache, explicitCache, TimeSpan.FromMinutes(1));
+            CacheService.SetItem(RequestCacheKeys.SimpleQueryContextCache, explicitCache, TimeSpan.FromMinutes(1));
         }
 
         public List<IClauseHandler> GetClauseHandlers(User searcher, string jqlClauseName)
         {
-            //object handlers = CacheService.GetItem(RequestCacheKeys.JqlClauseHandlerCache);
-            //return handlers as List<IClauseHandler>;
-            return new List<IClauseHandler>();
+            IEnumerable<IClauseHandler> handlers;
+            if (GetClauseHandlerCache().TryGetValue(new QueryCacheClauseHandlerKey(searcher, jqlClauseName), out handlers))
+            {
+                return handlers.ToList();
+            }
+
+            return null;
         }
 
         public void SetClauseHandlers(User searcher, string jqlClauseName, ICollection<IClauseHandler> clauseHandlers)
         {
             var handlerCache = GetClauseHandlerCache();
             handlerCache.Add(new QueryCacheClauseHandlerKey(searcher, jqlClauseName), clauseHandlers);
-            //CacheService.SetItem(RequestCacheKeys.JqlClauseHandlerCache, handlerCache, TimeSpan.FromMinutes(1));
+            CacheService.SetItem(RequestCacheKeys.JqlClauseHandlerCache, handlerCache, TimeSpan.FromHours(1)); // todo cache check
         }
 
         public IList<QueryLiteral> GetValues(IQueryCreationContext context, IOperand operand, ITerminalClause jqlClause)
@@ -91,8 +96,7 @@ namespace QuoteFlow.Core.Asset.Search
 
         IDictionary<QueryCacheKey, IQueryContext> GetQueryCache()
         {
-            //object queryCache = CacheService.GetItem(RequestCacheKeys.QueryContextCache);
-            object queryCache = null;
+            object queryCache = CacheService.GetItem(RequestCacheKeys.QueryContextCache);
             if (queryCache == null)
             {
                 return new Dictionary<QueryCacheKey, IQueryContext>();
@@ -103,8 +107,7 @@ namespace QuoteFlow.Core.Asset.Search
 
         private IDictionary<QueryCacheKey, IQueryContext> GetExplicitQueryCache()
         {
-            //object explicitCache = CacheService.GetItem(RequestCacheKeys.SimpleQueryContextCache);
-            object explicitCache = null;
+            object explicitCache = CacheService.GetItem(RequestCacheKeys.SimpleQueryContextCache);
             if (explicitCache == null)
             {
                 return new Dictionary<QueryCacheKey, IQueryContext>();
@@ -115,8 +118,7 @@ namespace QuoteFlow.Core.Asset.Search
 
         private IDictionary<QueryCacheClauseHandlerKey, IEnumerable<IClauseHandler>> GetClauseHandlerCache()
         {
-            //object handlerCache = CacheService.GetItem(RequestCacheKeys.JqlClauseHandlerCache);
-            object handlerCache = null;
+            object handlerCache = CacheService.GetItem(RequestCacheKeys.JqlClauseHandlerCache);
             if (handlerCache == null)
             {
                 return new Dictionary<QueryCacheClauseHandlerKey, IEnumerable<IClauseHandler>>();
@@ -127,8 +129,7 @@ namespace QuoteFlow.Core.Asset.Search
 
         private IDictionary<QueryCacheLiteralsKey, List<QueryLiteral>> GetValueCache()
         {
-            //object valueCache = CacheService.GetItem(RequestCacheKeys.QueryLiteralsCache);
-            object valueCache = null;
+            object valueCache = CacheService.GetItem(RequestCacheKeys.QueryLiteralsCache);
             if (valueCache == null)
             {
                 return new Dictionary<QueryCacheLiteralsKey, List<QueryLiteral>>();

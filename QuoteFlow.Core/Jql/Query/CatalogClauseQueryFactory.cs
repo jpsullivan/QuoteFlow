@@ -13,7 +13,7 @@ namespace QuoteFlow.Core.Jql.Query
     /// </summary>
     public class CatalogClauseQueryFactory : IClauseQueryFactory
     {
-        private readonly ClauseQueryFactory delegateClauseQueryFactory;
+        private readonly IClauseQueryFactory delegateClauseQueryFactory;
 
         public CatalogClauseQueryFactory(CatalogResolver catalogResolver, IJqlOperandResolver operandResolver)
 		{

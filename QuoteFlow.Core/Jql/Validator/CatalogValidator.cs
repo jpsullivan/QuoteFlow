@@ -11,21 +11,21 @@ namespace QuoteFlow.Core.Jql.Validator
 {
     public class CatalogValidator : IClauseValidator
     {
-        private ValuesExistValidator catalogValuesExistValidator;
-        private SupportedOperatorsValidator supportedOperatorsValidator;
+        private readonly ValuesExistValidator _catalogValuesExistValidator;
+        private readonly SupportedOperatorsValidator _supportedOperatorsValidator;
 
         public CatalogValidator(CatalogResolver catalogResolver, JqlOperandResolver operandResolver, ICatalogService catalogService)
         {
-            this.catalogValuesExistValidator = GetValuesValidator(catalogResolver, operandResolver, catalogService);
-            this.supportedOperatorsValidator = GetSupportedOperatorsValidator();
+            _catalogValuesExistValidator = GetValuesValidator(catalogResolver, operandResolver, catalogService);
+            _supportedOperatorsValidator = GetSupportedOperatorsValidator();
         }
 
         public IMessageSet Validate(User searcher, ITerminalClause terminalClause)
         {
-            var messageSet = supportedOperatorsValidator.Validate(searcher, terminalClause);
+            var messageSet = _supportedOperatorsValidator.Validate(searcher, terminalClause);
             if (!messageSet.HasAnyErrors())
             {
-                messageSet.AddMessageSet(catalogValuesExistValidator.Validate(searcher, terminalClause));
+                messageSet.AddMessageSet(_catalogValuesExistValidator.Validate(searcher, terminalClause));
             }
             return messageSet;
         }

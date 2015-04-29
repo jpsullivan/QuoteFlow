@@ -10,7 +10,7 @@ namespace QuoteFlow.Core.Jql.Query
     /// </summary>
     public sealed class FreeTextClauseQueryFactory : IClauseQueryFactory
     {
-        private readonly ClauseQueryFactory _delegateClauseQueryFactory;
+        private readonly IClauseQueryFactory _delegateClauseQueryFactory;
 
         public FreeTextClauseQueryFactory(IJqlOperandResolver operandResolver, string documentConstant)
         {
@@ -22,7 +22,7 @@ namespace QuoteFlow.Core.Jql.Query
             return _delegateClauseQueryFactory.GetQuery(queryCreationContext, terminalClause);
         }
 
-        private static ClauseQueryFactory GetDelegate(IJqlOperandResolver operandResolver, string documentConstant)
+        private static IClauseQueryFactory GetDelegate(IJqlOperandResolver operandResolver, string documentConstant)
         {
             var operatorFactories = new List<IOperatorSpecificQueryFactory>();
             operatorFactories.Add(new LikeQueryFactory());

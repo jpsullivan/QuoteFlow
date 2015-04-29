@@ -11,7 +11,7 @@ namespace QuoteFlow.Api.Jql.Query
     /// <summary>
     /// Can generate queries for issue constant clauses.
     /// </summary>
-    public class GenericClauseQueryFactory : ClauseQueryFactory
+    public class GenericClauseQueryFactory : IClauseQueryFactory
     {
         private readonly IJqlOperandResolver operandResolver;
         private readonly IList<IOperatorSpecificQueryFactory> operatorQueryFactories;
