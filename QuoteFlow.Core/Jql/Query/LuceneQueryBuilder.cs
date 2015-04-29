@@ -49,7 +49,7 @@ namespace QuoteFlow.Core.Jql.Query
             }
         }
 
-		internal virtual QueryVisitor CreateQueryVisitor(IQueryCreationContext context)
+        public virtual QueryVisitor CreateQueryVisitor(IQueryCreationContext context)
 		{
 			return new QueryVisitor(_queryRegistry, context, _wasClauseQueryFactory, _changedClauseQueryFactory);
 		}

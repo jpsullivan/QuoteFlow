@@ -359,7 +359,6 @@
     <Compile Include="Jql\Query\IQuery.cs" />
     <Compile Include="Jql\Query\IQueryCreationContext.cs" />
     <Compile Include="Jql\Query\IQueryRegistry.cs" />
-    <Compile Include="Jql\Query\Lucene\Parsing\ExtendedQueryParser.cs" />
     <Compile Include="Jql\Query\Lucene\Parsing\ILuceneQueryParserFactory.cs" />
     <Compile Include="Jql\Query\Lucene\Parsing\LuceneQueryParser.cs" />
     <Compile Include="Jql\Query\Operand\EmptyOperand.cs" />

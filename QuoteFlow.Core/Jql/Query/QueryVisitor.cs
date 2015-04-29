@@ -184,9 +184,9 @@ namespace QuoteFlow.Core.Jql.Query
         /// This exception is thrown when the JQL Query is to complex to be generated into an Lucene Query.
         /// It is caught in <seealso cref="LuceneQueryBuilder"/> and converted into a <seealso cref="ClauseTooComplexSearchException"/>.
         /// </summary>
-        internal class JqlTooComplex : Exception
+        public class JqlTooComplex : Exception
         {
-            internal JqlTooComplex(IClause clause)
+            public JqlTooComplex(IClause clause)
             {
                 Clause = clause;
             }

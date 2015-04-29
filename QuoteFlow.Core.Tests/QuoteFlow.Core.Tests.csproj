@@ -101,6 +101,7 @@
     <Compile Include="Asset\Index\Indexers\FieldIndexerUtilTests.cs" />
     <Compile Include="Asset\Index\SearcherCacheTests.cs" />
     <Compile Include="Asset\Search\Managers\SearchHandlerManagerTests.cs" />
+    <Compile Include="Asset\Search\Util\LuceneQueryModifierTests.cs" />
     <Compile Include="Index\IndexEngineTests.cs" />
     <Compile Include="Index\IndexesTests.cs" />
     <Compile Include="Index\OperationsTests.cs" />
@@ -128,10 +129,12 @@
     <Compile Include="Jql\Query\Clause\WasClauseTests.cs" />
     <Compile Include="Jql\Query\EqualityQueryFactoryTests.cs" />
     <Compile Include="Jql\Query\LikeQueryFactoryTests.cs" />
+    <Compile Include="Jql\Query\LuceneQueryBuilderTests.cs" />
     <Compile Include="Jql\Query\Operand\FunctionOperandTests.cs" />
     <Compile Include="Jql\Query\Operand\SimpleLiteralFactory.cs" />
     <Compile Include="Jql\Query\Operand\SingleValueOperandTests.cs" />
     <Compile Include="Jql\Query\QueryFactoryResultTests.cs" />
+    <Compile Include="Jql\Query\QueryRegistryTests.cs" />
     <Compile Include="Jql\Query\QueryVisitorTests.cs" />
     <Compile Include="Jql\Query\WasClauseQueryFactoryTests.cs" />
     <Compile Include="Jql\Util\Searchers\MockSearcherFactory.cs" />
