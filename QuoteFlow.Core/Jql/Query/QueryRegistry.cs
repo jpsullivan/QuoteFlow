@@ -13,16 +13,14 @@ namespace QuoteFlow.Core.Jql.Query
     /// </summary>
     public class QueryRegistry : IQueryRegistry
     {
-        private readonly ISearchHandlerManager manager;
+        private readonly ISearchHandlerManager _manager;
 
         public QueryRegistry(ISearchHandlerManager manager)
-		{
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
-			this.manager = manager;
-		}
+        {
+            if (manager == null) throw new ArgumentNullException("manager");
+
+            _manager = manager;
+        }
 
         public ICollection<IClauseQueryFactory> GetClauseQueryFactory(IQueryCreationContext queryCreationContext, ITerminalClause clause)
         {
@@ -34,11 +32,11 @@ namespace QuoteFlow.Core.Jql.Query
             ICollection<IClauseHandler> handlers;
             if (!queryCreationContext.SecurityOverriden)
             {
-                handlers = manager.GetClauseHandler(queryCreationContext.User, clause.Name).ToList();
+                handlers = _manager.GetClauseHandler(queryCreationContext.User, clause.Name).ToList();
             }
             else
             {
-                handlers = manager.GetClauseHandler(clause.Name).ToList();
+                handlers = _manager.GetClauseHandler(clause.Name).ToList();
             }
 
             var clauseQueryFactories = new List<IClauseQueryFactory>(handlers.Count);

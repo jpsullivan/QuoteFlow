@@ -13,21 +13,21 @@ namespace QuoteFlow.Core.Jql.Query
     /// Clause query factory that creates the clauses for the issue type field.
     /// Only supports equality operators.
     /// </summary>
-    public class ManufacturerClauseQueryFactory : ClauseQueryFactory
+    public class ManufacturerClauseQueryFactory : IClauseQueryFactory
     {
-        private readonly IClauseQueryFactory delegateClauseQueryFactory;
+        private readonly IClauseQueryFactory _delegateClauseQueryFactory;
 
         public ManufacturerClauseQueryFactory(ManufacturerResolver issueTypeResolver, IJqlOperandResolver operandResolver)
         {
             var operatorFactories = new List<IOperatorSpecificQueryFactory>();
             IIndexInfoResolver<Manufacturer> indexInfoResolver = new AssetConstantInfoResolver<Manufacturer>(issueTypeResolver);
             operatorFactories.Add(new EqualityQueryFactory<Manufacturer>(indexInfoResolver));
-            delegateClauseQueryFactory = new GenericClauseQueryFactory(SystemSearchConstants.ForManufacturer(), operatorFactories, operandResolver);
+            _delegateClauseQueryFactory = new GenericClauseQueryFactory(SystemSearchConstants.ForManufacturer(), operatorFactories, operandResolver);
         }
 
-        public virtual QueryFactoryResult GetQuery(IQueryCreationContext queryCreationContext, ITerminalClause terminalClause)
+        public QueryFactoryResult GetQuery(IQueryCreationContext queryCreationContext, ITerminalClause terminalClause)
         {
-            return delegateClauseQueryFactory.GetQuery(queryCreationContext, terminalClause);
+            return _delegateClauseQueryFactory.GetQuery(queryCreationContext, terminalClause);
         }
     }
 }
