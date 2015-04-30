@@ -2,6 +2,7 @@
 using Lucene.Net.Documents;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
 
 namespace QuoteFlow.Core.Asset.Index
 {
@@ -12,16 +13,24 @@ namespace QuoteFlow.Core.Asset.Index
     {
         public IAssetDocumentFactory AssetDocumentFactory { get; protected set; }
         public IEntityDocumentBuilder<AssetComment> CommentDocumentBuilder { get; protected set; }
+        public IAssetService AssetService { get; protected set; }
 
-        public DocumentCreationStrategy(IAssetDocumentFactory assetDocumentFactory, IEntityDocumentBuilder<AssetComment> commentDocumentBuilder)
+        public DocumentCreationStrategy(IAssetDocumentFactory assetDocumentFactory, IEntityDocumentBuilder<AssetComment> commentDocumentBuilder, IAssetService assetService)
         {
             AssetDocumentFactory = assetDocumentFactory;
             CommentDocumentBuilder = commentDocumentBuilder;
+            AssetService = assetService;
         }
 
         public Documents Get(IAsset asset, bool includeComments)
         {
-            var comments = includeComments ? CommentDocumentBuilder.Build(asset.Comments) : new List<Document>();
+            var comments = new List<Document>();
+            if (includeComments)
+            {
+                var assetComments = AssetService.GetAssetComments(asset.Id);
+                CommentDocumentBuilder.Build(assetComments);
+            }
+
             return new Documents(asset, AssetDocumentFactory.Apply(asset), comments);
         }
     }

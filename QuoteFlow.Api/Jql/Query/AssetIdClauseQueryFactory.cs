@@ -10,6 +10,7 @@ using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Operand;
 using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
 
 namespace QuoteFlow.Api.Jql.Query
 {
@@ -20,21 +21,17 @@ namespace QuoteFlow.Api.Jql.Query
     {
         private readonly IJqlOperandResolver _operandResolver;
 		private readonly IJqlAssetSupport _assetSupport;
+        private readonly ICatalogService _catalogService;
 
-        public AssetIdClauseQueryFactory(IJqlOperandResolver operandResolver, IJqlAssetSupport assetSupport)
+        public AssetIdClauseQueryFactory(IJqlOperandResolver operandResolver, IJqlAssetSupport assetSupport, ICatalogService catalogService)
 		{
-            if (assetSupport == null)
-            {
-                throw new ArgumentNullException("assetSupport");
-            }
-
-            if (operandResolver == null)
-            {
-                throw new ArgumentNullException("operandResolver");
-            }
+            if (operandResolver == null) throw new ArgumentNullException("operandResolver");
+            if (assetSupport == null) throw new ArgumentNullException("assetSupport");
+            if (catalogService == null) throw new ArgumentNullException("catalogService");
 
             _assetSupport = assetSupport;
 			_operandResolver = operandResolver;
+            _catalogService = catalogService;
 		}
 
         public QueryFactoryResult GetQuery(IQueryCreationContext queryCreationContext, ITerminalClause terminalClause)
@@ -114,7 +111,7 @@ namespace QuoteFlow.Api.Jql.Query
                 var subQuery = new BooleanQuery
                 {
                     {rangeQueryGenerator.Get(currentCount), Occur.MUST},
-                    {CreateCatalogQuery(asset.Catalog), Occur.MUST}
+                    {CreateCatalogQuery(_catalogService.GetCatalog(asset.CatalogId)), Occur.MUST}
                 };
 
                 return new QueryFactoryResult(subQuery);
