@@ -21,7 +21,6 @@ using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.AsyncFileUpload;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
@@ -61,13 +60,13 @@ namespace QuoteFlow.Controllers
 
         #endregion
 
-        [Route("catalogs")]
+        [QuoteFlowRoute("catalogs")]
         public virtual ActionResult Index()
         {
             return View();
         }
 
-        [Route("catalog/new", HttpVerbs.Get)]
+        [QuoteFlowRoute("catalog/new", HttpVerbs.Get)]
         public virtual ActionResult New()
         {
             // if user has more than one organization, get them
@@ -77,7 +76,7 @@ namespace QuoteFlow.Controllers
             return View();
         }
 
-        [Route("catalog/create", HttpVerbs.Post)]
+        [QuoteFlowRoute("catalog/create", HttpVerbs.Post)]
         public virtual ActionResult CreateCatalog(NewCatalogModel model)
         {
             var currentUser = GetCurrentUser();
@@ -102,7 +101,7 @@ namespace QuoteFlow.Controllers
             return Redirect("~/catalog/" + newCatalog.Id + "/" + newCatalog.Name.UrlFriendly());
         }
 
-        [Route("catalog/{catalogId:INT}/{catalogName}", Name = RouteNames.CatalogShow)]
+        [QuoteFlowRoute("catalog/{catalogId:INT}/{catalogName}", Name = RouteNames.CatalogShow)]
         public virtual ActionResult Show(int catalogId, string catalogName)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
@@ -130,7 +129,7 @@ namespace QuoteFlow.Controllers
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
         }
 
-        [Route("catalog/{catalogId:INT}/{catalogName}/assets")]
+        [QuoteFlowRoute("catalog/{catalogId:INT}/{catalogName}/assets")]
         public virtual ActionResult ShowAssets(int catalogId, string catalogName, int? page)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
@@ -162,7 +161,7 @@ namespace QuoteFlow.Controllers
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
         }
 
-        [Route("catalog/{catalogId:INT}/{catalogName}/import-results/{filter?}")]
+        [QuoteFlowRoute("catalog/{catalogId:INT}/{catalogName}/import-results/{filter?}")]
         public virtual async Task<ActionResult> ShowImportSummary(int catalogId, string catalogName, string filter, int? page)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
@@ -221,7 +220,7 @@ namespace QuoteFlow.Controllers
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(model);
         }
 
-        [Route("catalog/{catalogId:INT}/{catalogName}/admin")]
+        [QuoteFlowRoute("catalog/{catalogId:INT}/{catalogName}/admin")]
         public virtual ActionResult Admin(int catalogId, string catalogName)
         {
             var catalog = CatalogService.GetCatalog(catalogId);
@@ -242,7 +241,7 @@ namespace QuoteFlow.Controllers
             return catalog.Name.UrlFriendly() != catalogName ? PageNotFound() : View(catalog);
         }
 
-        [Route("catalog/import", HttpVerbs.Get)]
+        [QuoteFlowRoute("catalog/import", HttpVerbs.Get)]
         public async virtual Task<ActionResult> Import()
         {
             var currentUser = GetCurrentUser();
@@ -257,7 +256,7 @@ namespace QuoteFlow.Controllers
             return View();
         }
 
-        [Route("catalog/import", HttpVerbs.Post)]
+        [QuoteFlowRoute("catalog/import", HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual async Task<ActionResult> Import(HttpPostedFileBase uploadFile)
         {
@@ -298,13 +297,13 @@ namespace QuoteFlow.Controllers
             return Json(progress, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("catalog/importCatalogDetails", HttpVerbs.Get)]
+        [QuoteFlowRoute("catalog/importCatalogDetails", HttpVerbs.Get)]
         public virtual async Task<ActionResult> SetImportCatalogDetails()
         {
             return View();
         }
 
-        [Route("catalog/importCatalogDetails", HttpVerbs.Post)]
+        [QuoteFlowRoute("catalog/importCatalogDetails", HttpVerbs.Post)]
         public virtual async Task<ActionResult> SetImportCatalogDetails(NewCatalogModel catalogDetails)
         {
             TempData["CatalogDetails"] = catalogDetails;
@@ -312,7 +311,7 @@ namespace QuoteFlow.Controllers
             return RedirectToAction("VerifyImport");
         }
 
-        [Route("catalog/verify", HttpVerbs.Get)]
+        [QuoteFlowRoute("catalog/verify", HttpVerbs.Get)]
         public virtual async Task<ActionResult> VerifyImport()
         {
             var catalogDetails = (NewCatalogModel) TempData["CatalogDetails"];
@@ -349,7 +348,7 @@ namespace QuoteFlow.Controllers
             return View(model);
         }
 
-        [Route("catalog/verify", HttpVerbs.Post)]
+        [QuoteFlowRoute("catalog/verify", HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual async Task<ActionResult> VerifyImport(VerifyCatalogImportViewModel formData)
         {
@@ -372,7 +371,7 @@ namespace QuoteFlow.Controllers
             return RedirectToAction("VerifyImportSecondary", slimVerifyModel);
         }
 
-        [Route("catalog/verifyOther", HttpVerbs.Get)]
+        [QuoteFlowRoute("catalog/verifyOther", HttpVerbs.Get)]
         public virtual async Task<ActionResult> VerifyImportSecondary()
         {
             var slimVerifyModel = (VerifyCatalogImportViewModel)TempData["VerifyModel"];
@@ -400,7 +399,7 @@ namespace QuoteFlow.Controllers
             return View(model);
         }
 
-        [Route("catalog/verifyOther", HttpVerbs.Post)]
+        [QuoteFlowRoute("catalog/verifyOther", HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual async Task<ActionResult> VerifyImportSecondary(FormCollection form)
         {
@@ -454,7 +453,7 @@ namespace QuoteFlow.Controllers
             return Redirect(url);
         }
 
-        [Route("catalog/cancelImport")]
+        [QuoteFlowRoute("catalog/cancelImport")]
         public virtual async Task<ActionResult> CancelImport()
         {
             var currentUser = GetCurrentUser();

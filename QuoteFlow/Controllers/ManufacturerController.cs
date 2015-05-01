@@ -10,8 +10,6 @@ using QuoteFlow.Api.Services;
 using QuoteFlow.Api.Upload;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using QuoteFlow.Services;
-using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
@@ -38,7 +36,7 @@ namespace QuoteFlow.Controllers
 
         #endregion
 
-        [Route("manufacturer/{id:INT}/{name}", Name = "Manufacturer-Show")]
+        [QuoteFlowRoute("manufacturer/{id:INT}/{name}", Name = "Manufacturer-Show")]
         public virtual ActionResult Show(int id, string name)
         {
             var manufacturer = ManufacturerService.GetManufacturer(id);
@@ -55,7 +53,7 @@ namespace QuoteFlow.Controllers
             return manufacturer.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
 
-        [Route("manufacturer/{id:INT}/{manufacturerName}/edit", HttpVerbs.Get)]
+        [QuoteFlowRoute("manufacturer/{id:INT}/{manufacturerName}/edit", HttpVerbs.Get)]
         public virtual ActionResult Edit(int id, string manufacturerName)
         {
             var manufacturer = ManufacturerService.GetManufacturer(id);
@@ -74,7 +72,7 @@ namespace QuoteFlow.Controllers
             return manufacturer.Name.UrlFriendly() != manufacturerName? PageNotFound() : View(viewModel);
         }
 
-        [Route("manufacturer/{id:INT}/{manufacturerName}/edit", HttpVerbs.Post)]
+        [QuoteFlowRoute("manufacturer/{id:INT}/{manufacturerName}/edit", HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public virtual async Task<ActionResult> Edit(int id, string manufacturerName, EditManufacturerRequest form, string returnUrl)
         {
@@ -126,7 +124,7 @@ namespace QuoteFlow.Controllers
             return SafeRedirect(returnUrl ?? Url.Manufacturer(id, manufacturerName));
         }
 
-        [Route("manufacturer/{id:INT}/{manufacturerName}/logo", HttpVerbs.Get, RoutePriority.Default, RouteHandler.ManufacturerLogo)]
+        [QuoteFlowRoute("manufacturer/{id:INT}/{manufacturerName}/logo", HttpVerbs.Get, RoutePriority.Default, RouteHandler.ManufacturerLogo)]
         public void GetManufacturerLogo(int id, string manufacturerName)
         {
         }

@@ -16,7 +16,7 @@ namespace QuoteFlow.Infrastructure.Attributes
     /// Allows MVC routing urls to be declared on the action they map to.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public class RouteAttribute : ActionMethodSelectorAttribute, IComparable<RouteAttribute>
+    public class QuoteFlowRouteAttribute : ActionMethodSelectorAttribute, IComparable<QuoteFlowRouteAttribute>
     {
 
         /// <summary>
@@ -39,20 +39,20 @@ namespace QuoteFlow.Infrastructure.Attributes
             var decoratedMethods = from t in assemblyToSearch.GetTypes()
                                    where t.IsSubclassOf(typeof(Controller))
                                    from m in t.GetMethods()
-                                   where m.IsDefined(typeof(RouteAttribute), false)
+                                   where m.IsDefined(typeof(QuoteFlowRouteAttribute), false)
                                    select m;
 
             var methodInfos = decoratedMethods as IList<MethodInfo> ?? decoratedMethods.ToList();
             Debug.WriteLine("MapDecoratedRoutes - found {0} methods decorated with RouteAttribute", methodInfos.Count().ToString());
 
-            var methodsToRegister = new SortedDictionary<RouteAttribute, MethodInfo>(); // sort urls alphabetically via RouteAttribute's IComparable implementation
+            var methodsToRegister = new SortedDictionary<QuoteFlowRouteAttribute, MethodInfo>(); // sort urls alphabetically via RouteAttribute's IComparable implementation
 
             // first, collect all the methods decorated with our RouteAttribute
             foreach (var method in methodInfos)
             {
-                foreach (var attr in method.GetCustomAttributes(typeof(RouteAttribute), false))
+                foreach (var attr in method.GetCustomAttributes(typeof(QuoteFlowRouteAttribute), false))
                 {
-                    var ra = (RouteAttribute)attr;
+                    var ra = (QuoteFlowRouteAttribute)attr;
                     if (!methodsToRegister.Any(p => p.Key.Url.Equals(ra.Url)))
                         methodsToRegister.Add(ra, method);
                     else
@@ -103,33 +103,33 @@ namespace QuoteFlow.Infrastructure.Attributes
         }
 
 
-        public RouteAttribute(string url)
+        public QuoteFlowRouteAttribute(string url)
             : this(url, "", null, RoutePriority.Default, RouteHandler.Mvc)
         {
         }
 
-        public RouteAttribute(string url, HttpVerbs verbs)
+        public QuoteFlowRouteAttribute(string url, HttpVerbs verbs)
             : this(url, "", verbs, RoutePriority.Default, RouteHandler.Mvc)
         {
         }
 
-        public RouteAttribute(string url, RoutePriority priority)
+        public QuoteFlowRouteAttribute(string url, RoutePriority priority)
             : this(url, "", null, priority, RouteHandler.Mvc)
         {
         }
 
-        public RouteAttribute(string url, HttpVerbs verbs, RoutePriority priority)
+        public QuoteFlowRouteAttribute(string url, HttpVerbs verbs, RoutePriority priority)
             : this(url, "", verbs, priority, RouteHandler.Mvc)
         {
         }
 
-        public RouteAttribute(string url, HttpVerbs verbs, RoutePriority priority, RouteHandler handler)
+        public QuoteFlowRouteAttribute(string url, HttpVerbs verbs, RoutePriority priority, RouteHandler handler)
             : this(url, "", verbs, priority, handler)
         {
             
         }
 
-        private RouteAttribute(string url, string name, HttpVerbs? verbs, RoutePriority priority, RouteHandler handler)
+        private QuoteFlowRouteAttribute(string url, string name, HttpVerbs? verbs, RoutePriority priority, RouteHandler handler)
         {
             Url = url.ToLower();
             Name = name;
@@ -221,7 +221,7 @@ namespace QuoteFlow.Infrastructure.Attributes
             return (AcceptVerbs.HasValue ? AcceptVerbs.Value.ToString().ToUpper() + " " : "") + Url;
         }
 
-        public int CompareTo(RouteAttribute other)
+        public int CompareTo(QuoteFlowRouteAttribute other)
         {
             var result = other.Priority.CompareTo(Priority);
 

@@ -13,9 +13,7 @@ using QuoteFlow.Core.Authentication;
 using QuoteFlow.Core.Infrastructure.Auth;
 using QuoteFlow.Core.Infrastructure.Exceptions;
 using QuoteFlow.Infrastructure.Attributes;
-using QuoteFlow.Infrastructure.Exceptions;
 using QuoteFlow.Infrastructure.Extensions;
-using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
@@ -48,7 +46,7 @@ namespace QuoteFlow.Controllers
         /// Sign In\Register view
         /// </summary>
         [RequireSsl]
-        [Route("account/logon")]
+        [QuoteFlowRoute("account/logon")]
         public virtual ActionResult LogOn(string returnUrl)
         {
             // I think it should be obvious why we don't want the current URL to be the return URL here ;)
@@ -65,7 +63,7 @@ namespace QuoteFlow.Controllers
 
         [RequireSsl]
         [ValidateAntiForgeryToken]
-        [Route("account/signin"), AcceptVerbs(HttpVerbs.Post)]
+        [QuoteFlowRoute("account/signin"), AcceptVerbs(HttpVerbs.Post)]
         public virtual async Task<ActionResult> SignIn(LogOnViewModel model, string returnUrl, bool linkingAccount)
         {
             // I think it should be obvious why we don't want the current URL to be the return URL here ;)
@@ -109,7 +107,7 @@ namespace QuoteFlow.Controllers
         }
 
         [RequireSsl]
-        [Route("account/register"), AcceptVerbs(HttpVerbs.Get)]
+        [QuoteFlowRoute("account/register"), AcceptVerbs(HttpVerbs.Get)]
         public virtual ActionResult Register(string returnUrl) 
         {
             // I think it should be obvious why we don't want the current URL to be the return URL here ;)
@@ -126,7 +124,7 @@ namespace QuoteFlow.Controllers
 
         [RequireSsl]
         [ValidateAntiForgeryToken]
-        [Route("account/registeruser"), AcceptVerbs(HttpVerbs.Post)]
+        [QuoteFlowRoute("account/registeruser"), AcceptVerbs(HttpVerbs.Post)]
         public async virtual Task<ActionResult> RegisterUser(LogOnViewModel model, string returnUrl, bool linkingAccount)
         {
             // I think it should be obvious why we don't want the current URL to be the return URL here ;)
@@ -198,14 +196,14 @@ namespace QuoteFlow.Controllers
             return RedirectFromRegister(returnUrl);
         }
 
-        [Route("account/logoff")]
+        [QuoteFlowRoute("account/logoff")]
         public virtual ActionResult LogOff(string returnUrl)
         {
             OwinContext.Authentication.SignOut();
             return SafeRedirect(returnUrl);
         }
 
-        [Route("users/account/authenticate/{provider}")]
+        [QuoteFlowRoute("users/account/authenticate/{provider}")]
         public virtual ActionResult Authenticate(string returnUrl, string provider)
         {
             return AuthService.Challenge(
@@ -213,7 +211,7 @@ namespace QuoteFlow.Controllers
                 Url.Action("LinkExternalAccount", "Authentication", new { ReturnUrl = returnUrl }));
         }
 
-        [Route("users/account/authenticate/return")]
+        [QuoteFlowRoute("users/account/authenticate/return")]
         public async virtual Task<ActionResult> LinkExternalAccount(string returnUrl)
         {
             // Extract the external login info

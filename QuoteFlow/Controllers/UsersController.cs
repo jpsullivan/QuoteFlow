@@ -11,9 +11,7 @@ using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Authentication;
 using QuoteFlow.Core.Infrastructure.Exceptions;
 using QuoteFlow.Infrastructure.Attributes;
-using QuoteFlow.Infrastructure.Exceptions;
 using QuoteFlow.Infrastructure.Extensions;
-using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
@@ -69,7 +67,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Authorize]
-        [Route("account")]
+        [QuoteFlowRoute("account")]
         public virtual ActionResult Account()
         {
             return AccountView(new AccountViewModel());
@@ -77,7 +75,7 @@ namespace QuoteFlow.Controllers
 
         [Authorize]
         [ValidateAntiForgeryToken]
-        [Route("account/subscribe"), AcceptVerbs(HttpVerbs.Post)]
+        [QuoteFlowRoute("account/subscribe"), AcceptVerbs(HttpVerbs.Post)]
         public virtual ActionResult ChangeEmailSubscription(bool subscribe)
         {
             var user = GetCurrentUser();
@@ -91,7 +89,7 @@ namespace QuoteFlow.Controllers
             return RedirectToAction("Account");
         }
 
-        [Route("account/thanks")]
+        [QuoteFlowRoute("account/thanks")]
         public virtual ActionResult Thanks()
         {
             // No need to redirect here after someone logs in...
@@ -155,7 +153,7 @@ namespace QuoteFlow.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("account/forgotpassword/{username}/{token}")]
+        [QuoteFlowRoute("account/forgotpassword/{username}/{token}")]
         public virtual async Task<ActionResult> ResetPassword(string username, string token, PasswordResetViewModel model, bool forgot)
         {
             // We don't want Login to have us as a return URL
@@ -182,7 +180,7 @@ namespace QuoteFlow.Controllers
         }
 
         [Authorize]
-        [Route("account/confirm/{username}/{token}")]
+        [QuoteFlowRoute("account/confirm/{username}/{token}")]
         public virtual async Task<ActionResult> Confirm(string username, string token)
         {
             // We don't want Login to have us as a return URL
@@ -237,7 +235,7 @@ namespace QuoteFlow.Controllers
             return View(model);
         }
 
-        [Route("users/profile/{username}", Name = "User-Profile")]
+        [QuoteFlowRoute("users/profile/{username}", Name = "User-Profile")]
         public virtual ActionResult UserProfile(string username)
         {
             var user = UserService.GetUser(username, null);
@@ -347,7 +345,7 @@ namespace QuoteFlow.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        [Route("account/RemoveCredential/password")]
+        [QuoteFlowRoute("account/RemoveCredential/password")]
         public virtual Task<ActionResult> RemovePassword()
         {
             var user = GetCurrentUser();
@@ -360,7 +358,7 @@ namespace QuoteFlow.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        [Route("account/RemoveCredential/{credentialType}")]
+        [QuoteFlowRoute("account/RemoveCredential/{credentialType}")]
         public virtual Task<ActionResult> RemoveCredential(string credentialType)
         {
             var user = GetCurrentUser();

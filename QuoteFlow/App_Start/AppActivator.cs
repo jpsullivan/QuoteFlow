@@ -15,7 +15,6 @@ using QuoteFlow.Core.DependencyResolution;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.ModelBinders.Asset;
 using WebActivatorEx;
-using RouteAttribute = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 [assembly: PreApplicationStartMethod(typeof(AppActivator), "PreStart")]
 [assembly: PostApplicationStartMethod(typeof(AppActivator), "PostStart")]
@@ -95,7 +94,7 @@ namespace QuoteFlow
             routes.IgnoreRoute("favicon.ico");
             routes.IgnoreRoute("favicon.png");
 
-            RouteAttribute.MapDecoratedRoutes(routes);
+            QuoteFlowRouteAttribute.MapDecoratedRoutes(routes);
 
             // MUST be the last route as a catch-all!
             //routes.MapRoute(name: "404-PageNotFound", url: "{*url}", defaults: new { controller = "Errors", action = "PageNotFound" });

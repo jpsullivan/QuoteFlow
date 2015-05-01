@@ -3,6 +3,7 @@ using Hangfire;
 using QuoteFlow.Api.Configuration.Lucene;
 using QuoteFlow.Api.Infrastructure.Lucene;
 using QuoteFlow.Areas.Admin.ViewModels.Indexing;
+using QuoteFlow.Infrastructure.Attributes;
 
 namespace QuoteFlow.Areas.Admin.Controllers
 {
@@ -21,7 +22,7 @@ namespace QuoteFlow.Areas.Admin.Controllers
 
         #endregion
 
-        [Infrastructure.Attributes.Route("admin/indexing", Name = "Admin-Indexing")]
+        [QuoteFlowRoute("admin/indexing", Name = "Admin-Indexing")]
         public ActionResult Index()
         {
             var indexLocation = IndexPathManager.IndexRootPath;
@@ -29,7 +30,7 @@ namespace QuoteFlow.Areas.Admin.Controllers
             return View(model);
         }
 
-        [Infrastructure.Attributes.Route("admin/reindex", HttpVerbs.Post, Name = "Admin-DoReindex")]
+        [QuoteFlowRoute("admin/reindex", HttpVerbs.Post, Name = "Admin-DoReindex")]
         public ActionResult DoReindex(ReindexViewModel model)
         {
             if (model.IndexingStrategy == "background")

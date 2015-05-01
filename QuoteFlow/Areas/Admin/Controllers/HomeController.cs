@@ -1,10 +1,11 @@
 ﻿using System.Web.Mvc;
+using QuoteFlow.Infrastructure.Attributes;
 
 namespace QuoteFlow.Areas.Admin.Controllers
 {
     public class HomeController : AdminControllerBase
     {
-        [Infrastructure.Attributes.Route("admin")]
+        [QuoteFlowRoute("admin")]
         public ActionResult Index()
         {
             return View();

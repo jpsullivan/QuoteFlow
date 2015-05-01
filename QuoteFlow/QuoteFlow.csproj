@@ -365,7 +365,7 @@
     <Compile Include="Infrastructure\Extensions\HttpContextExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\UrlExtensions.cs" />
     <Compile Include="Infrastructure\Handlers\ManufacturerLogoRouteHandler.cs" />
-    <Compile Include="Infrastructure\Attributes\RouteAttribute.cs" />
+    <Compile Include="Infrastructure\Attributes\QuoteFlowRouteAttribute.cs" />
     <Compile Include="Infrastructure\Helpers\EnumHelpers.cs" />
     <Compile Include="Infrastructure\Helpers\UIHelpers.cs" />
     <Compile Include="Infrastructure\Helpers\UrlHelpers.cs" />

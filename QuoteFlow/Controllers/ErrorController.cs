@@ -12,7 +12,7 @@ namespace QuoteFlow.Controllers
         /// </summary>
         /// <returns></returns>
         [OutputCache(CacheProfile = "NotFound")]
-        [Infrastructure.Attributes.Route("error/notfound")]
+        [Infrastructure.Attributes.QuoteFlowRoute("error/notfound")]
         public ActionResult NotFound()
         {
             return GetErrorView(HttpStatusCode.NotFound, "NotFound");

@@ -10,7 +10,6 @@ using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
@@ -44,7 +43,7 @@ namespace QuoteFlow.Controllers
 
         #endregion
 
-        [Route("asset/{assetId:INT}/{assetName}")]
+        [QuoteFlowRoute("asset/{assetId:INT}/{assetName}")]
         public virtual ActionResult Show(int assetId, string assetName)
         {
             var asset = AssetService.GetAsset(assetId);
@@ -61,7 +60,7 @@ namespace QuoteFlow.Controllers
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
         }
 
-        [Route("asset/{assetId:INT}/{assetName}/edit", HttpVerbs.Get)]
+        [QuoteFlowRoute("asset/{assetId:INT}/{assetName}/edit", HttpVerbs.Get)]
         public virtual ActionResult Edit(int assetId, string assetName)
         {
             var asset = AssetService.GetAsset(assetId);
@@ -101,7 +100,7 @@ namespace QuoteFlow.Controllers
             return asset.Name.UrlFriendly() != assetName ? PageNotFound() : View(viewModel);
         }
 
-        [Route("asset/{assetId:INT}/{assetName}/edit", HttpVerbs.Post)]
+        [QuoteFlowRoute("asset/{assetId:INT}/{assetName}/edit", HttpVerbs.Post)]
         public virtual ActionResult Edit(int assetId, string assetName, EditAssetRequest form, string returnUrl)
         {
             var asset = AssetService.GetAsset(assetId);
@@ -146,7 +145,7 @@ namespace QuoteFlow.Controllers
             AssetType.Kit
         };
 
-        [Route("asset/new", Name = RouteNames.AssetNew)]
+        [QuoteFlowRoute("asset/new", Name = RouteNames.AssetNew)]
         public virtual ActionResult New(int? catalogId)
         {
             var currentUser = GetCurrentUser();
@@ -169,7 +168,7 @@ namespace QuoteFlow.Controllers
             return View(model);
         }
 
-        [Route("asset/create", HttpVerbs.Post)]
+        [QuoteFlowRoute("asset/create", HttpVerbs.Post)]
         public virtual ActionResult CreateAsset(NewAssetModel model)
         {
             // Do some server-side validation before we begin
@@ -214,7 +213,7 @@ namespace QuoteFlow.Controllers
         }
 
         [ValidateAntiForgeryToken]
-        [Route("asset/{assetId:INT}/{assetName}/addcomment", HttpVerbs.Post)]
+        [QuoteFlowRoute("asset/{assetId:INT}/{assetName}/addcomment", HttpVerbs.Post)]
         public virtual ActionResult AddComment(NewAssetCommentViewModel model, int assetId, string assetName)
         {
             if (assetId != model.AssetId)

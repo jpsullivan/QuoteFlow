@@ -4,7 +4,6 @@ using QuoteFlow.Api.Models.ViewModels;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Attributes;
-using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
@@ -24,7 +23,7 @@ namespace QuoteFlow.Controllers
         #endregion
 
         [Authorize]
-        [Route("", Name = RouteNames.Dashboard)]
+        [QuoteFlowRoute("", Name = RouteNames.Dashboard)]
         public virtual ActionResult Index(int? skipGettingStarted)
         {
             var model = new DashboardViewModel();
@@ -58,7 +57,7 @@ namespace QuoteFlow.Controllers
             return View(model);
         }
 
-        [Route("getting-started")]
+        [QuoteFlowRoute("getting-started")]
         public virtual ActionResult GettingStarted()
         {
             return View();

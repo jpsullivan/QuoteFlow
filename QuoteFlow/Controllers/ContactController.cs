@@ -4,7 +4,6 @@ using QuoteFlow.Api.Models.ViewModels;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
@@ -23,21 +22,21 @@ namespace QuoteFlow.Controllers
 
         #endregion
 
-        [Route("contacts")]
+        [QuoteFlowRoute("contacts")]
         public virtual ActionResult Index()
         {
             var contacts = ContactService.GetContactsByOrganizationId(CurrentOrganization.Id);
             return View(contacts);
         }
 
-        [Route("contact/new", HttpVerbs.Get)]
+        [QuoteFlowRoute("contact/new", HttpVerbs.Get)]
         [LayoutInjector("_LayoutWorkflow")]
         public virtual ActionResult New()
         {
             return View();
         }
 
-        [Route("contact/create", HttpVerbs.Post)]
+        [QuoteFlowRoute("contact/create", HttpVerbs.Post)]
         public virtual ActionResult CreateContact(NewContactModel model)
         {
             if (ContactService.ContactExists(model.FirstName, model.LastName, model.Email, CurrentOrganization.Id))
@@ -71,7 +70,7 @@ namespace QuoteFlow.Controllers
             return Redirect("~/contact/" + newContact.Id + "/" + newContact.FullName.UrlFriendly());
         }
 
-        [Route("contact/{contactId}/{contactNameSlug}")]
+        [QuoteFlowRoute("contact/{contactId}/{contactNameSlug}")]
         public virtual ActionResult Show(int contactId, string contactNameSlug)
         {
             var contact = ContactService.GetContact(contactId);

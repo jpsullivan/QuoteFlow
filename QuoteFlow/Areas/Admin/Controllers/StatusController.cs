@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Areas.Admin.ViewModels;
+using QuoteFlow.Infrastructure.Attributes;
 
 namespace QuoteFlow.Areas.Admin.Controllers
 {
@@ -17,7 +18,7 @@ namespace QuoteFlow.Areas.Admin.Controllers
 
         #endregion
 
-        [Infrastructure.Attributes.Route("admin/statuses", Name = "Admin-Statuses")]
+        [QuoteFlowRoute("admin/statuses", Name = "Admin-Statuses")]
         public ActionResult Index()
         {
             var statuses = QuoteStatusService.GetStatuses(1); // todo remove organization hardcode

@@ -10,7 +10,6 @@ using QuoteFlow.Api.UserTracking;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
-using Route = QuoteFlow.Infrastructure.Attributes.RouteAttribute;
 
 namespace QuoteFlow.Controllers
 {
@@ -50,7 +49,7 @@ namespace QuoteFlow.Controllers
 
         #endregion
 
-        [Route("quotes", Name = RouteNames.QuoteIndex)]
+        [QuoteFlowRoute("quotes", Name = RouteNames.QuoteIndex)]
         public virtual ActionResult Index()
         {
             var quotes = QuoteService.GetQuotesFromOrganization(CurrentOrganization.Id);
@@ -58,14 +57,14 @@ namespace QuoteFlow.Controllers
             return View(model);
         }
 
-        [Route("quote/new")]
+        [QuoteFlowRoute("quote/new")]
         public virtual ActionResult New()
         {
             return View();
         }
 
         [ValidateAntiForgeryToken]
-        [Route("quote/create", HttpVerbs.Post)]
+        [QuoteFlowRoute("quote/create", HttpVerbs.Post)]
         public virtual ActionResult CreateQuote(NewQuoteModel model)
         {
             var currentUser = GetCurrentUser();
@@ -91,7 +90,7 @@ namespace QuoteFlow.Controllers
             return Redirect("~/quote/" + newQuote.Id + "/" + newQuote.Name.UrlFriendly());
         }
 
-        [Route("quote/{id:INT}/{name}", Name = RouteNames.QuoteShow)]
+        [QuoteFlowRoute("quote/{id:INT}/{name}", Name = RouteNames.QuoteShow)]
         public virtual ActionResult Show(int id, string name)
         {
             var quote = QuoteService.GetQuote(id);
@@ -110,7 +109,7 @@ namespace QuoteFlow.Controllers
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
 
-        [Route("quote/{id:INT}/{name}/line-items", Name = RouteNames.QuoteLineItems)]
+        [QuoteFlowRoute("quote/{id:INT}/{name}/line-items", Name = RouteNames.QuoteLineItems)]
         public virtual ActionResult LineItems(int id, string name, int? page)
         {
             var quote = QuoteService.GetQuote(id);
@@ -134,7 +133,7 @@ namespace QuoteFlow.Controllers
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
 
-        [Route("quote/{id:INT}/{name}/change-history", Name = RouteNames.QuoteChangeHistory)]
+        [QuoteFlowRoute("quote/{id:INT}/{name}/change-history", Name = RouteNames.QuoteChangeHistory)]
         public virtual ActionResult ChangeHistory(int id, string name)
         {
             var quote = QuoteService.GetQuote(id);
@@ -152,7 +151,7 @@ namespace QuoteFlow.Controllers
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
 
-        [Route("quote/{id:INT}/{name}/access", Name = RouteNames.QuoteAccessControl)]
+        [QuoteFlowRoute("quote/{id:INT}/{name}/access", Name = RouteNames.QuoteAccessControl)]
         public virtual ActionResult AccessControl(int id, string name)
         {
             var quote = QuoteService.GetQuote(id);
@@ -170,7 +169,7 @@ namespace QuoteFlow.Controllers
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }
 
-        [Route("quote/{id:INT}/{name}/builder", Name = RouteNames.QuoteBuilder)]
+        [QuoteFlowRoute("quote/{id:INT}/{name}/builder", Name = RouteNames.QuoteBuilder)]
         public virtual ActionResult ShowBuilder(int id, string name)
         {
             var quote = QuoteService.GetQuote(id);
