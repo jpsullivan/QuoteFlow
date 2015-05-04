@@ -4,7 +4,7 @@ using QuoteFlow.Api.Jql.Query.Clause;
 namespace QuoteFlow.Api.Jql.Query
 {
     /// <summary>
-    /// Used to map a <seealso cref="ITerminalClause"/> to its associated<see cref="IClauseQueryFactory"/>s.
+    /// Used to map a <see cref="ITerminalClause"/> to its associated<see cref="IClauseQueryFactory"/>s.
     /// </summary>
     public interface IQueryRegistry
     {

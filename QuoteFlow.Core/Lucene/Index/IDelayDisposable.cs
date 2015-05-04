@@ -96,7 +96,7 @@ namespace QuoteFlow.Core.Lucene.Index
             /// <summary>
             /// The number of open() calls minus the number of close() calls. If
             /// this drops to zero and closeWhenDone() is true,
-            /// <seealso cref="Closeable#close()"/> is called.
+            /// <see cref="Closeable#close()"/> is called.
             /// </summary>
             private int _count;
 

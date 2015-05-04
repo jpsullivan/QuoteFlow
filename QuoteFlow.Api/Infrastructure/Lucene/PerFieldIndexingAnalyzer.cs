@@ -6,7 +6,7 @@ using QuoteFlow.Api.Asset.Index.Indexers.Phrase;
 namespace QuoteFlow.Api.Infrastructure.Lucene
 {
     /// <summary>
-    /// An <see cref="Analyzer"/> that delegates analysis tasks to the appropriate <seealso cref="QuoteFlowAnalyzer"/>
+    /// An <see cref="Analyzer"/> that delegates analysis tasks to the appropriate <see cref="QuoteFlowAnalyzer"/>
     /// instance depending on whether it is a standard text field or a phrase query support text field.
     /// </summary>
     public class PerFieldIndexingAnalyzer : Analyzer

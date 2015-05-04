@@ -9,7 +9,7 @@ using QuoteFlow.Core.Jql.Function;
 namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
-    /// Default implementation of <seealso cref="ValueBuilder"/>.
+    /// Default implementation of <see cref="ValueBuilder"/>.
     /// 
     /// @since v4.0
     /// </summary>

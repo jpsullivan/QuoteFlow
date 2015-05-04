@@ -103,8 +103,8 @@ namespace QuoteFlow.Api.Jql.Context
 			return results;
 		}
 
-		/// <param name="contextProjectMap">The map containing sets of <seealso cref="ICatalogManufacturerContext"/> 
-		/// keyed by <seealso cref="ICatalogContext"/></param>
+		/// <param name="contextProjectMap">The map containing sets of <see cref="ICatalogManufacturerContext"/> 
+		/// keyed by <see cref="ICatalogContext"/></param>
 		/// <returns>A set that represents IMPLICIT type contexts that have been replaced by EXPLICIT type contexts.
 		/// 
 		/// The rules are as follows

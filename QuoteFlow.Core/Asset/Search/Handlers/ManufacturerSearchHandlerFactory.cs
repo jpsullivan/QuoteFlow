@@ -17,7 +17,7 @@ using QuoteFlow.Core.Jql.Values;
 namespace QuoteFlow.Core.Asset.Search.Handlers
 {
     /// <summary>
-    /// Class to create the <seealso cref="SearchHandler"/> for the <see cref="ManufacturerSystemField"/>.
+    /// Class to create the <see cref="SearchHandler"/> for the <see cref="ManufacturerSystemField"/>.
     /// 
     /// @since v4.0
     /// </summary>

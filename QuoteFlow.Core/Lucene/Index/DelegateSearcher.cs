@@ -8,7 +8,7 @@ using QuoteFlow.Api.Util;
 namespace QuoteFlow.Core.Lucene.Index
 {
     /// <summary>
-    /// Override all searcher methods and delegate to another <seealso cref="IndexSearcher"/>.
+    /// Override all searcher methods and delegate to another <see cref="IndexSearcher"/>.
     /// 
     /// Note, this is a fragile extension. We need to check each time we update Lucene that new superclass
     /// methods have been added and override them too!

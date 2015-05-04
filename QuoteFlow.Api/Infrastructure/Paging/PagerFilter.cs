@@ -17,7 +17,7 @@ namespace QuoteFlow.Api.Infrastructure.Paging
         private int _start;
 
         /// <summary>
-        /// A collection of <seealso cref="AssetPage"/> objects
+        /// A collection of <see cref="AssetPage"/> objects
         /// </summary>
         [Obsolete("Use GetPages() rather than access pages directory.")]
         internal List<AssetPage> Pages;
@@ -46,7 +46,7 @@ namespace QuoteFlow.Api.Infrastructure.Paging
         /// <summary>
         /// A pager that will return unlimited number of objects.
         /// </summary>
-        /// <returns> A PagerFilter with a max set to <seealso cref="Int32.MaxValue"/> </returns>
+        /// <returns> A PagerFilter with a max set to <see cref="Int32.MaxValue"/> </returns>
         public static PagerFilter<T> UnlimitedFilter
         {
             get { return new PagerFilter<T>(int.MaxValue); }
@@ -136,7 +136,7 @@ namespace QuoteFlow.Api.Infrastructure.Paging
         /// <summary>
         /// Restrict the pagers to a certain number of pages on either side of the current page.
         /// <p/>
-        /// The number of pages to list is stored in <seealso cref="#PAGES_TO_LIST"/>.
+        /// The number of pages to list is stored in <see cref="#PAGES_TO_LIST"/>.
         /// </summary>
         public IList<AssetPage> RestrictPages(List<AssetPage> assetPages, int size)
         {

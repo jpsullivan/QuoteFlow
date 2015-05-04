@@ -12,7 +12,7 @@ using QuoteFlow.Api.Util;
 namespace QuoteFlow.Core.Lucene.Index
 {
     /// <summary>
-    /// <see cref="IWriter"/> implementation that actually writes to an <seealso cref="IndexWriter"/>.
+    /// <see cref="IWriter"/> implementation that actually writes to an <see cref="IndexWriter"/>.
     /// </summary>
     public class WriterWrapper : IWriter
     {

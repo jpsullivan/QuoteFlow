@@ -175,7 +175,7 @@ namespace QuoteFlow.Core.Asset.Index
         /// <param name="assets">The assets to index/deindex/reindex.</param>
         /// <param name="strategy">Single or Multi-Threaded</param>
         /// <param name="operation">Deindex/reindex/index etc.</param>
-        /// <returns>The <seealso cref="IIndexResult"/> may waited on or not.</returns>
+        /// <returns>The <see cref="IIndexResult"/> may waited on or not.</returns>
         private static IIndexResult Perform(IEnumerable<IAsset> assets, IIndexingStrategy strategy, IIndexOperation operation)
         {
             try

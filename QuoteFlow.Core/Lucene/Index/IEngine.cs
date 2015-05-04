@@ -6,7 +6,7 @@ namespace QuoteFlow.Core.Lucene.Index
 {
     /// <summary>
     /// An <see cref="IEngine"/> maintains the lifecycle of a <see cref="IWriter"/> while allowing 
-    /// access to it via a <seealso cref="Function"/> that is used to add and delete documents to it.
+    /// access to it via a <see cref="Function"/> that is used to add and delete documents to it.
     /// </summary>
     public interface IEngine : IDisposable
     {

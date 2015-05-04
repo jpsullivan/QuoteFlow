@@ -39,7 +39,7 @@ namespace QuoteFlow.Api.Jql.Operand
         /// <param name="user"> the user who is validating. May be null. </param>
         /// <param name="operand"> the operand to be validated. Must not be null. </param>
         /// <param name="terminalClause"> the terminal clause that contained the operand </param>
-        /// <returns> a <seealso cref="com.atlassian.jira.util.MessageSet"/> containing any errors reported. Note: if the operand is
+        /// <returns> a <see cref="com.atlassian.jira.util.MessageSet"/> containing any errors reported. Note: if the operand is
         /// unknown, an error message will be added to the message set returned. Never null. </returns>
         IMessageSet Validate(User user, IOperand operand, ITerminalClause terminalClause);
 
@@ -87,10 +87,10 @@ namespace QuoteFlow.Api.Jql.Operand
         /// Returns true if the operand is one which is known about. This is:
         /// 
         /// <ul>
-        /// <li><seealso cref="SingleValueOperand"/>s
-        /// <li><seealso cref="MultiValueOperand"/>s
-        /// <li><seealso cref="EmptyOperand"/>s
-        /// <li><seealso cref="FunctionOperand"/>s registered as <seealso cref="JqlFunction"/>s
+        /// <li><see cref="SingleValueOperand"/>s
+        /// <li><see cref="MultiValueOperand"/>s
+        /// <li><see cref="EmptyOperand"/>s
+        /// <li><see cref="FunctionOperand"/>s registered as <see cref="JqlFunction"/>s
         /// </ul>
         /// </summary>
         /// <param name="operand"> the operand; cannot be null. </param>

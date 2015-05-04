@@ -12,15 +12,15 @@ namespace QuoteFlow.Api.Jql.Operand
     /// need to be resolved into ids. For example, issue keys or project names are represented 
     /// using a String.
     /// 
-    /// When writing <seealso cref="JqlFunction"/>s that must return QueryLiterals, try to
+    /// When writing <see cref="JqlFunction"/>s that must return QueryLiterals, try to
     /// return the more specific QueryLiteral where possible, to avoid unnecessary resolving. 
     /// "More specific" here means the form that is used by the index (if applicable), as this 
     /// value can then be used directly when constructing index queries.
     /// 
-    /// QueryLiterals contain an operand source, this is the <seealso cref="IOperand"/> of the JQL that
+    /// QueryLiterals contain an operand source, this is the <see cref="IOperand"/> of the JQL that
     /// produced the QueryLiteral. For instance in the JQL query {@code project = HSP} the "HSP" 
-    /// QueryLiteral will have the operand source of a <seealso cref="SingleValueOperand"/> with value "HSP". 
-    /// Notably QueryLiterals produced by <seealso cref="JqlFunction"/>s must set the <seealso cref="FunctionOperand"/> 
+    /// QueryLiteral will have the operand source of a <see cref="SingleValueOperand"/> with value "HSP". 
+    /// Notably QueryLiterals produced by <see cref="JqlFunction"/>s must set the <see cref="FunctionOperand"/> 
     /// as the operand source.
     /// </summary>
     public class QueryLiteral

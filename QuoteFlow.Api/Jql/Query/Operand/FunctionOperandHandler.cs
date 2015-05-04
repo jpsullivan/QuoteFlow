@@ -9,8 +9,8 @@ using QuoteFlow.Api.Util;
 namespace QuoteFlow.Api.Jql.Query.Operand
 {
     /// <summary>
-    /// Adapter to convert the plugin point <seealso cref="JqlFunction"/> into
-    /// <seealso cref="OperandHandler"/>.
+    /// Adapter to convert the plugin point <see cref="JqlFunction"/> into
+    /// <see cref="OperandHandler"/>.
     /// </summary>
     public class FunctionOperandHandler : IOperandHandler<IOperand>
 	{

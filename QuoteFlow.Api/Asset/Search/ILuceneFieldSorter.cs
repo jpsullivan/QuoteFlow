@@ -7,20 +7,20 @@ namespace QuoteFlow.Api.Asset.Search
     /// <p/>
     /// <strong>NOTE</strong>: instances of this interface are <strong>cached</strong> by Lucene and are
     /// <strong>REUSED</strong> to sort multiple Lucene search results. The Comparator returned by the
-    /// <seealso cref="Comparator"/> method could be used by Lucene from multiple threads at once.
+    /// <see cref="Comparator"/> method could be used by Lucene from multiple threads at once.
     /// <p/>
-    /// Therefore, the implementations of this interface <strong>MUST</strong> implement the <seealso cref="object#equals(Object)"/>
-    /// and <seealso cref="GetHashCode"/> methods correctly to ensure that Lucene can find the implementations of this class
+    /// Therefore, the implementations of this interface <strong>MUST</strong> implement the <see cref="object#equals(Object)"/>
+    /// and <see cref="GetHashCode"/> methods correctly to ensure that Lucene can find the implementations of this class
     /// in its cache and reuse it, rather than make the cache grow indefinitely. (Unfortunately the Lucene cache is rather
     /// primitive at the moment, and is not bound).
     /// <p/>
-    /// Also, ensure that the <seealso cref="Comparator"/> returned by the <seealso cref="Comparator()"/> method is <strong>thread
+    /// Also, ensure that the <see cref="Comparator"/> returned by the <see cref="Comparator()"/> method is <strong>thread
     /// safe</strong>.
     /// <p/>
-    /// As instances of this and the <seealso cref="Comparator"/> returned by this object are cached and reused by Lucene to sort
+    /// As instances of this and the <see cref="Comparator"/> returned by this object are cached and reused by Lucene to sort
     /// multiple search results, the best thing to do is to ensure the implementations of this interface and the
-    /// <seealso cref="Comparator"/> that is returned <strong>are immutable</strong> and that the <seealso cref="Equals(object)"/> and
-    /// <seealso cref="GetHashCode()"/> methods respect the state of the object.
+    /// <see cref="Comparator"/> that is returned <strong>are immutable</strong> and that the <see cref="Equals(object)"/> and
+    /// <see cref="GetHashCode()"/> methods respect the state of the object.
     /// </summary>
     public interface ILuceneFieldSorter<T>
     {
@@ -35,11 +35,11 @@ namespace QuoteFlow.Api.Asset.Search
         /// eg. '1000' -> Version 1.
         /// </para>
         /// <para>
-        /// This does the reverse of what <seealso cref="IssueDocument"/> does.
+        /// This does the reverse of what <see cref="IssueDocument"/> does.
         /// </para>
         /// <para>
         /// For custom fields, the return value will be passed to
-        /// <seealso cref="CustomFieldSearcherModuleDescriptor#StatHtml(ICustomField, Object, String)"/>
+        /// <see cref="CustomFieldSearcherModuleDescriptor#StatHtml(ICustomField, Object, String)"/>
         /// 
         /// </para>
         /// </summary>
@@ -48,7 +48,7 @@ namespace QuoteFlow.Api.Asset.Search
         T GetValueFromLuceneField(string documentValue);
 
         /// <summary>
-        /// A comparator that can be used to order objects returned by <seealso cref="#getValueFromLuceneField(String)"/>.
+        /// A comparator that can be used to order objects returned by <see cref="#getValueFromLuceneField(String)"/>.
         /// <p/>
         /// The Comparator <strong>must</strong> be reentrant as it could be used by Lucene from multiple threads at once.
         /// </summary>

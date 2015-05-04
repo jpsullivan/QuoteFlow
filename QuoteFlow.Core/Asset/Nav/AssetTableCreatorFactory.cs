@@ -59,10 +59,10 @@ namespace QuoteFlow.Core.Asset.Nav
         }
 
         /// <summary>
-        /// Attempt to create an <seealso cref="AssetTableCreator"/>.
+        /// Attempt to create an <see cref="AssetTableCreator"/>.
         /// </summary>
-        /// <returns>A new <seealso cref="AssetTableCreator"/> instance, initialised with the given arguments.</returns>
-        /// <exception cref="IllegalArgumentException"> If no <seealso cref="AssetTableCreator"/> corresponds to {@code layoutKey}. </exception>
+        /// <returns>A new <see cref="AssetTableCreator"/> instance, initialised with the given arguments.</returns>
+        /// <exception cref="IllegalArgumentException"> If no <see cref="AssetTableCreator"/> corresponds to {@code layoutKey}. </exception>
         /// <exception cref="RuntimeException"> If creating the instance fails. </exception>
         private AbstractAssetTableCreator CreateAssetTableCreator(User user, IAssetTableServiceConfiguration configuration, bool fromIssueIds, IList<int?> assetIds, IQuery query, bool returnAssetIds, SearchRequest searchRequest)
         {

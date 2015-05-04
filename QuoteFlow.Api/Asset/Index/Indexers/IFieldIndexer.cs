@@ -14,8 +14,8 @@ namespace QuoteFlow.Api.Asset.Index.Indexers
         string Id { get; }
 
         /// <returns> the String representation of the primary field id that will be added to the
-        /// <seealso cref="Document"/> as a result of a successful call to the
-        /// <seealso cref="AddIndex(Document, Asset)"/> method. </returns>
+        /// <see cref="Document"/> as a result of a successful call to the
+        /// <see cref="AddIndex(Document, Asset)"/> method. </returns>
         string DocumentFieldId { get; }
 
         /// <summary>
@@ -44,11 +44,11 @@ namespace QuoteFlow.Api.Asset.Index.Indexers
         /// enable or disable a field (such as enable votes flag), and must check, if the field is a custom field, if
         /// the custom field is relevant for this issue.
         /// 
-        /// All these checks should take into account the <seealso cref="AssetContext"/> as defined by
+        /// All these checks should take into account the <see cref="AssetContext"/> as defined by
         /// the passed in issue.
         /// 
         /// If this method returns false then the FieldIndexer, when performing addIndex, should make sure to make the
-        /// indexed values have an Indexed type of <seealso cref="Field.Index.NO"/>.
+        /// indexed values have an Indexed type of <see cref="Field.Index.NO"/>.
         /// 
         /// The result of this method is used to determine the correct values that should be returned when performing
         /// an empty search.

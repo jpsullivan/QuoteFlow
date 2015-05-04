@@ -65,11 +65,11 @@ namespace QuoteFlow.Core.Asset.Search
         }
 
         /// <summary>
-        /// Converts a <seealso cref="IQueryContext"/> into a <seealso cref="ISearchContext"/>.
+        /// Converts a <see cref="IQueryContext"/> into a <see cref="ISearchContext"/>.
         /// If the conversion does not make sense, null is returned.
         /// 
         /// If you would like to know if this method will correctly generate a SearchContext you should call
-        /// <seealso cref="SearchService.DoesQueryFitFilterForm(User, IQuery)"/>.
+        /// <see cref="SearchService.DoesQueryFitFilterForm(User, IQuery)"/>.
         /// </summary>
         /// <param name="queryContext">The QueryContext to convert into a SearchContext, if null then a null SearchContext is returned.</param>
         /// <returns>The SearchContext generated from the QueryContext, this will be null if we are unable to correctly generate a SearchContext.</returns>

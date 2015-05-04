@@ -25,8 +25,8 @@ namespace QuoteFlow.Api.Jql.Query.Operand
         }
 
         /// <summary>
-        /// Note: cannot accept an empty <seealso cref="QueryLiteral"/>.
-        /// Use <seealso cref="EmptyOperand"/> instead.
+        /// Note: cannot accept an empty <see cref="QueryLiteral"/>.
+        /// Use <see cref="EmptyOperand"/> instead.
         /// </summary>
         /// <param name="literal">The query literal to convert to an operand; must not be null or empty.</param>
         public SingleValueOperand(QueryLiteral literal)

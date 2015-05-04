@@ -11,8 +11,8 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         /// <summary>
         /// Retrieves the operand associated with a field and navigator flag value pair.
         /// For example the issuetype field has the -2 navigator flag value which maps to the
-        /// <seealso cref="FunctionOperand"/> corresponding to the
-        /// <seealso cref="AllStandardAssetTypesFunction"/>
+        /// <see cref="FunctionOperand"/> corresponding to the
+        /// <see cref="AllStandardAssetTypesFunction"/>
         /// </summary>
         /// <param name="fieldName"> The name of the field </param>
         /// <param name="flagValue"> The navigator flag value </param>
@@ -23,7 +23,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         /// Retrieves the navigator flag values associated with the field name and operand pair.
         /// </summary>
         /// <param name="fieldName"> The name of the field </param>
-        /// <param name="operand"> the <seealso cref="IOperand"/> </param>
+        /// <param name="operand"> the <see cref="IOperand"/> </param>
         /// <returns> The navigator flag value associated with the field name and operand pair; null if there is none </returns>
         ISet<string> GetFlagForOperand(string fieldName, IOperand operand);
     }

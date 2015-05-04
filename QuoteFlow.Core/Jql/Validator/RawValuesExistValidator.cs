@@ -7,7 +7,7 @@ namespace QuoteFlow.Core.Jql.Validator
 {
     /// <summary>
     /// A clause validator that can be used for multiple constant (priority, status, resolution) clause types that uses the
-    /// <seealso cref="IIndexInfoResolver{T}"/> to determine if the value exists. 
+    /// <see cref="IIndexInfoResolver{T}"/> to determine if the value exists. 
     /// </summary>
     internal class RawValuesExistValidator<T> : ValuesExistValidator
     {

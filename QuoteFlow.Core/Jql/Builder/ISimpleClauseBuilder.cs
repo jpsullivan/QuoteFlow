@@ -10,14 +10,14 @@ namespace QuoteFlow.Core.Jql.Builder
     /// can be build using {@code new BasicJqlBuilder().add(clause1).and().add(clause2).or().add(clause3).build()}.
     /// 
     /// It is the caller's responsibility to ensure that they call the methods in an order that will generate valid JQL. The
-    /// builder will throw an <seealso cref="IllegalStateException"/> if an attempt is made to generate invalid JQL. For example, a call to
+    /// builder will throw an <see cref="IllegalStateException"/> if an attempt is made to generate invalid JQL. For example, a call to
     /// {@code builder.clause(clause1).clause(clause2)} will fail since there was no operator placed between the
     /// clauses.
     /// 
-    /// The builder can be told to inject automatically either an "AND" (<seealso cref="#defaultAnd()"/>) or an "OR" (<seealso cref="#defaultOr()"/>)
+    /// The builder can be told to inject automatically either an "AND" (<see cref="#defaultAnd()"/>) or an "OR" (<see cref="#defaultOr()"/>)
     /// between clauses when no operator have been specified. For example, a call to {@code builder.defaultAnd().clause(clause1).clause(clause2).build()}
     /// will actually generate the JQL {@code clause1 AND clause2}. The affect of calling either {@code defaultAnd()} or {@code defaultOr()} will
-    /// remain in place on the builder until one of <seealso cref="#defaultNone()"/>, {@code defaultAnd()}, {@code defaultOr()} or <seealso cref="#clear()"/> is called.
+    /// remain in place on the builder until one of <see cref="#defaultNone()"/>, {@code defaultAnd()}, {@code defaultOr()} or <see cref="#clear()"/> is called.
     /// 
     /// The builder may handle the precedence in JQL in different ways. For instance, {@code
     /// builder.clause(clause1).or().clause(clause2).and().clause(clause3).build()} could create a JQL expression
@@ -71,7 +71,7 @@ namespace QuoteFlow.Core.Jql.Builder
         ISimpleClauseBuilder Endsub();
 
         /// <summary>
-        /// Create a new <seealso cref="QuoteFlow.Core.Jql.Clause"/> for the JQL the builder has been constructing. A <code>null</code> value may be
+        /// Create a new <see cref="QuoteFlow.Core.Jql.Clause"/> for the JQL the builder has been constructing. A <code>null</code> value may be
         /// returned to indicate that there is no condition is generate.
         /// <p/>
         /// A call to build is non destructive and the builder may continue to be used after it is called.
@@ -87,22 +87,22 @@ namespace QuoteFlow.Core.Jql.Builder
 
         /// <summary>
         /// Tell the builder to combine clauses using the "AND" JQL condition when none has been specified. Normally the
-        /// caller must ensure that a call to either <seealso cref="#and()"/> or <seealso cref="#or()"/> is placed between calls to {@link
+        /// caller must ensure that a call to either <see cref="#and()"/> or <see cref="#or()"/> is placed between calls to {@link
         /// #clause(com.atlassian.query.clause.Clause)} to ensure that valid JQL is built (and that no {@link
         /// IllegalStateException} is thrown). Calling this method on the builder tells it to automatically add a JQL "AND"
         /// between JQL clauses when no calls to either {@code and} or {@code or} have been made. This mode will remain
-        /// active until one of <seealso cref="#defaultNone()"/>, {@code defaultOr()} or <seealso cref="#clear()"/> is called.
+        /// active until one of <see cref="#defaultNone()"/>, {@code defaultOr()} or <see cref="#clear()"/> is called.
         /// </summary>
         /// <returns> a builder that can be used to further extends the current JQL expression. </returns>
         ISimpleClauseBuilder DefaultAnd();
 
         /// <summary>
         /// Tell the builder to combine clauses using the "OR" JQL condition when none has been specified. Normally the
-        /// caller must ensure that a call to either <seealso cref="#and()"/> or <seealso cref="#or()"/> is placed between calls to {@link
+        /// caller must ensure that a call to either <see cref="#and()"/> or <see cref="#or()"/> is placed between calls to {@link
         /// #clause(com.atlassian.query.clause.Clause)} to ensure that valid JQL is built (and that no {@link
         /// IllegalStateException} is thrown). Calling this method on the builder tells it to automatically add a JQL "OR"
         /// between JQL clauses when no calls to either {@code and} or {@code or} have been made. This mode will remain
-        /// active until one of <seealso cref="#defaultNone()"/>, {@code defaultAnd()} or <seealso cref="#clear()"/> is called.
+        /// active until one of <see cref="#defaultNone()"/>, {@code defaultAnd()} or <see cref="#clear()"/> is called.
         /// </summary>
         /// <returns> a builder that can be used to further extends the current JQL expression. </returns>
         ISimpleClauseBuilder DefaultOr();
@@ -110,7 +110,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <summary>
         /// Tell the builder to stop injecting JQL "AND" or "OR" operators automatically between calls to {@link
         /// #clause(com.atlassian.query.clause.Clause)}. This essentially turns off the behaviour started by calling either
-        /// <seealso cref="#defaultAnd()"/> or <seealso cref="#defaultOr()"/>.
+        /// <see cref="#defaultAnd()"/> or <see cref="#defaultOr()"/>.
         /// </summary>
         /// <returns> a builder that can be used to further extends the current JQL expression. </returns>
         ISimpleClauseBuilder DefaultNone();

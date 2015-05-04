@@ -3,7 +3,7 @@
 namespace QuoteFlow.Api.Jql.Query.Lucene.Parsing
 {
     /// <summary>
-    /// A factory to obtain a Lucene <seealso cref="QueryParser"/> instance.
+    /// A factory to obtain a Lucene <see cref="QueryParser"/> instance.
     /// </summary>
     public interface ILuceneQueryParserFactory
     {

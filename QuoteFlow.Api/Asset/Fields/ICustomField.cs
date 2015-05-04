@@ -9,10 +9,10 @@ namespace QuoteFlow.Api.Asset.Fields
     /// <summary>
     /// Custom Field interface.
     /// <p/>
-    /// Typically one obtains a CustomField using <seealso cref="CustomFieldManager"/>,
+    /// Typically one obtains a CustomField using <see cref="CustomFieldManager"/>,
     /// eg. <see cref="CustomFieldManager.GetCustomFieldObjectByName(String)"/>
     /// <p/>
-    /// To create or update an instance of a CustomField for an issue use <seealso cref="CreateValue(Asset,Object)"/>
+    /// To create or update an instance of a CustomField for an issue use <see cref="CreateValue(Asset,Object)"/>
     /// or <see cref="OrderableField.UpdateValue(FieldLayoutItem,ModifiedValue,AssetChangeHolder)"/>.
     /// </summary>
     public interface ICustomField : INavigableField, IOrderableField
@@ -38,11 +38,11 @@ namespace QuoteFlow.Api.Asset.Fields
         /// If the project is null, then it is treated as <tt>any project</tt>.
         /// If the issueTypeIds list is null or an empty list, then it is treated as <tt>any issue type</tt>.
         /// 
-        /// If the passed project is <tt>any project</tt>, this method will search in all the <seealso cref="FieldConfigScheme"/>
+        /// If the passed project is <tt>any project</tt>, this method will search in all the <see cref="FieldConfigScheme"/>
         /// of this custom field, ignoring the projects that they apply to (since the given project is <tt>any</tt>)
         /// and looking for at least one of them that applies to at least one of the given issue type ids.
         /// 
-        /// If the passed list of issue types is <tt>any issue type</tt>, this method will search for at least one <seealso cref="FieldConfigScheme"/>
+        /// If the passed list of issue types is <tt>any issue type</tt>, this method will search for at least one <see cref="FieldConfigScheme"/>
         /// that applies to the given project, ignoring the issue types that it applies to (since the given issue type ids are <tt>any</tt>).
         /// 
         /// If both the project and issue types are <tt>any</tt>, the question being asked is "is this custom field
@@ -68,17 +68,17 @@ namespace QuoteFlow.Api.Asset.Fields
 //        /// Get the custom field string values that are relevant to this particular custom field
 //        /// </summary>
 //        /// <param name="customFieldValuesHolder"> containing all params </param>
-//        /// <returns> a <seealso cref="CustomFieldParams"/> of <seealso cref="String"/> objects </returns>
+//        /// <returns> a <see cref="CustomFieldParams"/> of <see cref="String"/> objects </returns>
 //        ICustomFieldParams GetCustomFieldValues(IDictionary customFieldValuesHolder);
 
         /// <summary>
         /// Retrieves and returns the Object representing the this CustomField value for the given issue.
-        /// See <seealso cref="CustomFieldType#getValueFromIssue(CustomField,Issue)"/>.
+        /// See <see cref="CustomFieldType#getValueFromIssue(CustomField,Issue)"/>.
         /// This is only used to communicate with the 'view' JSP. Multiselects will return a list, dates a date, etc.
         /// </summary>
         /// <param name="issue"> issue to retrieve the value from </param>
         /// <returns> Object representing the this CustomField value for the given issue </returns>
-        /// <seealso cref= #getValueFromParams(java.util.Map) </seealso>
+        /// <see cref= #getValueFromParams(java.util.Map) </seealso>
         object GetValue(Models.Asset issue);
 
         /// <summary>
@@ -90,13 +90,13 @@ namespace QuoteFlow.Api.Asset.Fields
 
 //        /// <summary>
 //        /// Returns options for this custom field if it is
-//        /// of <seealso cref="com.atlassian.jira.issue.customfields.MultipleCustomFieldType"/> type. Otherwise returns null.
+//        /// of <see cref="com.atlassian.jira.issue.customfields.MultipleCustomFieldType"/> type. Otherwise returns null.
 //        /// <p/>
 //        /// As this is just used by the view layer, it can be a list of objects
 //        /// </summary>
 //        /// <param name="key">             not used </param>
 //        /// <param name="jiraContextNode"> JIRA context node </param>
-//        /// <returns> options for this custom field if it is of <seealso cref="com.atlassian.jira.issue.customfields.MultipleCustomFieldType"/> type, null otherwise </returns>
+//        /// <returns> options for this custom field if it is of <see cref="com.atlassian.jira.issue.customfields.MultipleCustomFieldType"/> type, null otherwise </returns>
 //        Options getOptions(string key, JiraContextNode jiraContextNode);
 
         /// <summary>
@@ -107,13 +107,13 @@ namespace QuoteFlow.Api.Asset.Fields
 
         /// <summary>
         /// Returns the 1i8n'ed description of this custom field. To render views for the custom field description, prefer
-        /// <seealso cref="#getDescriptionProperty()"/>.
+        /// <see cref="#getDescriptionProperty()"/>.
         /// </summary>
         /// <returns> the description of this custom field </returns>
         string Description { get; set; }
 
         /// <summary>
-        /// Returns the description of this custom field by reading <seealso cref="#ENTITY_DESCRIPTION"/> of the underlying generic value.
+        /// Returns the description of this custom field by reading <see cref="#ENTITY_DESCRIPTION"/> of the underlying generic value.
         /// </summary>
         /// <returns> the description of this custom field </returns>
         string UntranslatedDescription { get; }
@@ -125,20 +125,20 @@ namespace QuoteFlow.Api.Asset.Fields
         string FieldName { get; }
 
         /// <summary>
-        /// Returns the name of this custom field by reading <seealso cref="#ENTITY_NAME"/> of the underlying generic value.
+        /// Returns the name of this custom field by reading <see cref="#ENTITY_NAME"/> of the underlying generic value.
         /// </summary>
         /// <returns> the name of this custom field </returns>
         string UntranslatedName { get; }
 
         /// <summary>
-        /// Returns true if all configuration schemes returned by <seealso cref="#getConfigurationSchemes()"/> are enabled.
+        /// Returns true if all configuration schemes returned by <see cref="#getConfigurationSchemes()"/> are enabled.
         /// </summary>
         /// <returns> true if all configuration schemes are enabled, false otherwise </returns>
         bool Enabled { get; }
 
 //        /// <summary>
-//        /// Looks up the <seealso cref="ICustomFieldType"/>. It can return null if the custom
-//        /// field type cannot be found in the <seealso cref="CustomFieldManager"/>.
+//        /// Looks up the <see cref="ICustomFieldType"/>. It can return null if the custom
+//        /// field type cannot be found in the <see cref="CustomFieldManager"/>.
 //        /// </summary>
 //        /// <returns> custom field type </returns>
 //        ICustomFieldType CustomFieldType { get; }

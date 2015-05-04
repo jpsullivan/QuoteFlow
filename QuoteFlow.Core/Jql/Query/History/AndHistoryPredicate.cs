@@ -5,7 +5,7 @@ using QuoteFlow.Api.Jql.Query.History;
 namespace QuoteFlow.Core.Jql.Query.History
 {
     /// <summary>
-    /// Represents a sequence of <seealso cref="HistoryPredicate HistoryPredicates"/> composed with AND operators such that the
+    /// Represents a sequence of <see cref="HistoryPredicate HistoryPredicates"/> composed with AND operators such that the
     /// resulting predicate is true only if All of the composed predicates are true.
 
     /// </summary>

@@ -18,7 +18,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
 	public interface IIndexedInputHelper
 	{
 		/// <summary>
-		/// Retrieves the index values for the clauses in the <seealso cref="SearchRequest"/>. Function Operands are expanded to their
+		/// Retrieves the index values for the clauses in the <see cref="SearchRequest"/>. Function Operands are expanded to their
 		/// values.
 		/// </summary>
 		/// <param name="searcher"> the user running the search </param>

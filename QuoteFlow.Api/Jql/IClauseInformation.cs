@@ -24,18 +24,18 @@ namespace QuoteFlow.Api.Jql
         string FieldId { get; }
 
         /// <summary>
-        /// Provides a set of the supported <seealso cref="Operator"/>'s that this custom field searcher
+        /// Provides a set of the supported <see cref="Operator"/>'s that this custom field searcher
         /// can handle for its searching.
         /// </summary>
         /// <returns>A set of supported operators.</returns>
         Set<Query.Operator> SupportedOperators { get; }
 
         /// <summary>
-        /// Provides the <seealso cref="com.atlassian.jira.JiraDataType"/> that this clause handles and searches on. This allows us
+        /// Provides the <see cref="com.atlassian.jira.JiraDataType"/> that this clause handles and searches on. This allows us
         /// to infer some information about how the search will behave and how it will interact with other elements in
         /// the system.
         /// 
-        /// For example, if this returns <seealso cref="com.atlassian.jira.JiraDataTypes#DATE"/> then we know that we could provide
+        /// For example, if this returns <see cref="com.atlassian.jira.JiraDataTypes#DATE"/> then we know that we could provide
         /// users with a date picker for an input field, and we know that this clause should only be used by functions
         /// that also specify dates.
         /// </summary>

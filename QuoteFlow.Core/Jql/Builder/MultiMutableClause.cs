@@ -7,8 +7,8 @@ using QuoteFlow.Api.Jql.Query.Clause;
 namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
-	/// A <seealso cref="IMutableClause"/> that represents a collection of MutableClauses joined by
-	/// either an <seealso cref="BuilderOperator.AND"/> or an {@link
+	/// A <see cref="IMutableClause"/> that represents a collection of MutableClauses joined by
+	/// either an <see cref="BuilderOperator.AND"/> or an {@link
 	/// BuilderOperator#OR}.
 	/// </summary>
     public class MultiMutableClause<T> : IMutableClause where T : IMutableClause

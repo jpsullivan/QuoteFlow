@@ -5,7 +5,7 @@ using QuoteFlow.Api.Util;
 namespace QuoteFlow.Api.Jql.Validator
 {
     /// <summary>
-    /// Performs global validation about where it is appropriate to use an <seealso cref="Operator"/>. 
+    /// Performs global validation about where it is appropriate to use an <see cref="Operator"/>. 
     /// This does checks to see that list operators are not used with non-lists and vice-versa.
     /// </summary>
     public interface IOperatorUsageValidator

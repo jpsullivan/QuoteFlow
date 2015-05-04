@@ -3,12 +3,12 @@
 namespace QuoteFlow.Api.Asset.Search.Parameters.Lucene.Sort
 {
     /// <summary>
-    /// Allows <seealso cref="QuoteFlowLuceneFieldFinder"/> to handle matched terms in a customized way.
+    /// Allows <see cref="QuoteFlowLuceneFieldFinder"/> to handle matched terms in a customized way.
     /// </summary>
     public interface IMatchHandler
     {
         /// <summary>
-        /// Invoked by <seealso cref="QuoteFlowLuceneFieldFinder.GetMatches(IndexReader, string, IMatchHandler)"/>
+        /// Invoked by <see cref="QuoteFlowLuceneFieldFinder.GetMatches(IndexReader, string, IMatchHandler)"/>
         /// for each field value for each document.  The calls will be made in
         /// order of increasing term values, with the document identifiers supplied
         /// in an arbitrary order.

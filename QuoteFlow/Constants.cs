@@ -34,22 +34,22 @@
         public const string ALL_ISSUE_TYPES = "-4";
 
         /// <summary>
-        /// Used in the generic <seealso cref="#getConstantObject(String, String)"/> method
+        /// Used in the generic <see cref="#getConstantObject(String, String)"/> method
         /// </summary>
         public const string PRIORITY_CONSTANT_TYPE = "Priority";
         
         /// <summary>
-        /// Used in the generic <seealso cref="#getConstantObject(String, String)"/> method
+        /// Used in the generic <see cref="#getConstantObject(String, String)"/> method
         /// </summary>
         public const string STATUS_CONSTANT_TYPE = "Status";
         
         /// <summary>
-        /// Used in the generic <seealso cref="#getConstantObject(String, String)"/> method
+        /// Used in the generic <see cref="#getConstantObject(String, String)"/> method
         /// </summary>
         public const string RESOLUTION_CONSTANT_TYPE = "Resolution";
         
         /// <summary>
-        /// Used in the generic <seealso cref="#getConstantObject(String, String)"/> method
+        /// Used in the generic <see cref="#getConstantObject(String, String)"/> method
         /// </summary>
         public const string ISSUE_TYPE_CONSTANT_TYPE = "IssueType";
 

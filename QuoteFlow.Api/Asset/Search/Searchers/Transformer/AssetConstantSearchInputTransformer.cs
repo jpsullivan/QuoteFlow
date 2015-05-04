@@ -6,7 +6,7 @@ using QuoteFlow.Api.Jql.Resolver;
 namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
 {
     /// <summary>
-    /// An assset-constant-specific <seealso cref="IdIndexedSearchInputTransformer"/>.
+    /// An assset-constant-specific <see cref="IdIndexedSearchInputTransformer"/>.
     /// </summary>
     public class AssetConstantSearchInputTransformer<T> : IdIndexedSearchInputTransformer<T> where T : IAssetConstant
     {

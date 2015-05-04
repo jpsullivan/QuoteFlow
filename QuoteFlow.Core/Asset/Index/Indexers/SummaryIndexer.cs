@@ -7,8 +7,8 @@ using QuoteFlow.Api.Models;
 namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     /// <summary>
-    /// Responsible for populating a <seealso cref="Document lucene document"/> with the information held in
-    /// the &quot;Summary&quot; field of the <seealso cref="Asset asset"/>
+    /// Responsible for populating a <see cref="Document lucene document"/> with the information held in
+    /// the &quot;Summary&quot; field of the <see cref="Asset asset"/>
     /// </summary>
     public class SummaryIndexer : BaseFieldIndexer
     {

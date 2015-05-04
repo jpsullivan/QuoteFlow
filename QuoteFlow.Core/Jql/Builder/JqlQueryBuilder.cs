@@ -7,14 +7,14 @@ using QuoteFlow.Core.DependencyResolution;
 namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
-    /// Used to build <seealso cref="IQuery"/>'s that can be used to perform issue searching in JIRA.
+    /// Used to build <see cref="IQuery"/>'s that can be used to perform issue searching in JIRA.
     /// <p/>
-    /// This gives you access to a <seealso cref="IJqlClauseBuilder"/> which can be used to build up the
-    /// where clause of the JQL and also a <seealso cref="JqlOrderByBuilder"/> which can be used to build
+    /// This gives you access to a <see cref="IJqlClauseBuilder"/> which can be used to build up the
+    /// where clause of the JQL and also a <see cref="JqlOrderByBuilder"/> which can be used to build
     /// up the order by clause of the JQL.
     /// <p/>
-    /// This object can also be used as a factory for <seealso cref="IJqlClauseBuilder"/> and
-    /// <seealso cref="JqlOrderByBuilder"/> instances.
+    /// This object can also be used as a factory for <see cref="IJqlClauseBuilder"/> and
+    /// <see cref="JqlOrderByBuilder"/> instances.
     /// </summary>
     public class JqlQueryBuilder
     {
@@ -42,8 +42,8 @@ namespace QuoteFlow.Core.Jql.Builder
         }
 
         /// <summary>
-        /// Build a new <seealso cref="JqlClauseBuilder"/>. The returned builder will have no associated
-        /// <seealso cref="JqlQueryBuilder"/>.
+        /// Build a new <see cref="JqlClauseBuilder"/>. The returned builder will have no associated
+        /// <see cref="JqlQueryBuilder"/>.
         /// </summary>
         /// <returns>The new clause builder.</returns>
         public static IJqlClauseBuilder NewClauseBuilder()
@@ -52,8 +52,8 @@ namespace QuoteFlow.Core.Jql.Builder
         }
 
         /// <summary>
-        /// Build a new <seealso cref="IJqlClauseBuilder"/> and initialise it with the passed clause.
-        /// The returned builder will have no associated <seealso cref="JqlQueryBuilder"/>.
+        /// Build a new <see cref="IJqlClauseBuilder"/> and initialise it with the passed clause.
+        /// The returned builder will have no associated <see cref="JqlQueryBuilder"/>.
         /// </summary>
         /// <param name="copy"> the claue to Add to the new builder. Can be null. </param>
         /// <returns> the new clause builder. </returns>
@@ -63,8 +63,8 @@ namespace QuoteFlow.Core.Jql.Builder
         }
 
         /// <summary>
-        /// Build a new <seealso cref="IJqlClauseBuilder"/> and initialise it with the clause from the
-        /// passed query. The returned builder will have no associated <seealso cref="JqlQueryBuilder"/>.
+        /// Build a new <see cref="IJqlClauseBuilder"/> and initialise it with the clause from the
+        /// passed query. The returned builder will have no associated <see cref="JqlQueryBuilder"/>.
         /// </summary>
         /// <param name="query">The query whose where clause will be copied into the new builder. Can be null.</param>
         /// <returns>The new clause builder.</returns>
@@ -74,8 +74,8 @@ namespace QuoteFlow.Core.Jql.Builder
         }
 
         /// <summary>
-        /// Build a new <seealso cref="JqlOrderByBuilder"/>. The returned builder will have no associated
-        /// <seealso cref="JqlQueryBuilder"/>.
+        /// Build a new <see cref="JqlOrderByBuilder"/>. The returned builder will have no associated
+        /// <see cref="JqlQueryBuilder"/>.
         /// </summary>
         /// <returns> the new clause builder. </returns>
         public static JqlOrderByBuilder NewOrderByBuilder()
@@ -84,8 +84,8 @@ namespace QuoteFlow.Core.Jql.Builder
         }
 
         /// <summary>
-        /// Build a new <seealso cref="JqlOrderByBuilder"/> and initialise it with the passed order. The returned builder will have
-        /// no associated <seealso cref="JqlQueryBuilder"/>.
+        /// Build a new <see cref="JqlOrderByBuilder"/> and initialise it with the passed order. The returned builder will have
+        /// no associated <see cref="JqlQueryBuilder"/>.
         /// </summary>
         /// <param name="copy"> the order to copy. Can be null. </param>
         /// <returns> the new clause builder. </returns>
@@ -95,8 +95,8 @@ namespace QuoteFlow.Core.Jql.Builder
         }
 
         /// <summary>
-        /// Build a new <seealso cref="JqlOrderByBuilder"/> and initialise it with the order from the passed query. The returned builder will have
-        /// no associated <seealso cref="JqlQueryBuilder"/>.
+        /// Build a new <see cref="JqlOrderByBuilder"/> and initialise it with the order from the passed query. The returned builder will have
+        /// no associated <see cref="JqlQueryBuilder"/>.
         /// </summary>
         /// <param name="query"> the query whose order will be copied into the new builder. Can be null. </param>
         /// <returns> the new clause builder. </returns>
@@ -127,27 +127,27 @@ namespace QuoteFlow.Core.Jql.Builder
         }
 
         /// <summary>
-        /// Creates an <seealso cref="JqlOrderByBuilder"/> that can be used to modify the order by
-        /// statements of the <seealso cref="JqlQueryBuilder"/> instance.
+        /// Creates an <see cref="JqlOrderByBuilder"/> that can be used to modify the order by
+        /// statements of the <see cref="JqlQueryBuilder"/> instance.
         /// </summary>
-        /// <returns>An OrderBy builder associated with the <seealso cref="JqlQueryBuilder"/> instance.</returns>
+        /// <returns>An OrderBy builder associated with the <see cref="JqlQueryBuilder"/> instance.</returns>
         public virtual JqlOrderByBuilder OrderBy()
         {
             return _jqlOrderByBuilder;
         }
 
         /// <summary>
-        /// Creates an <seealso cref="IJqlClauseBuilder"/> which is used to modify the where clause portion
-        /// of the <seealso cref="JqlQueryBuilder"/> instance.
+        /// Creates an <see cref="IJqlClauseBuilder"/> which is used to modify the where clause portion
+        /// of the <see cref="JqlQueryBuilder"/> instance.
         /// </summary>
-        /// <returns>A WhereClause builder associated with the <seealso cref="JqlQueryBuilder"/> instance.</returns>
+        /// <returns>A WhereClause builder associated with the <see cref="JqlQueryBuilder"/> instance.</returns>
         public virtual IJqlClauseBuilder Where()
         {
             return _jqlClauseBuilder;
         }
 
         /// <summary>
-        /// This will find the root of the clause tree and build a <seealso cref="IQuery"/> whos where clause will
+        /// This will find the root of the clause tree and build a <see cref="IQuery"/> whos where clause will
         /// return the generated clause and Order By clause will return the generated search order.
         /// <p/>
         /// NOTE: Calling this method does not change the state of the builder, there are no limitations on the number of

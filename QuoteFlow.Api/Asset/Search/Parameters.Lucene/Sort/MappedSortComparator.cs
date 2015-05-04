@@ -191,8 +191,8 @@ namespace QuoteFlow.Api.Asset.Search.Parameters.Lucene.Sort
 		/// <param name="termtext"> The textual value of the term. </param>
 		/// <returns> An object representing <code>termtext</code> that can be sorted by {@link
 		///         LuceneFieldSorter#getComparator()} </returns>
-		/// <seealso cref= Comparable </seealso>
-		/// <seealso cref= FieldComparator </seealso>
+		/// <see cref= Comparable </seealso>
+		/// <see cref= FieldComparator </seealso>
 		public virtual object GetComparable(string termtext)
 		{
 			return sorter.GetValueFromLuceneField(termtext);

@@ -45,7 +45,7 @@ namespace QuoteFlow.Core.Jql.Query
         /// not).
         /// 
         /// NOTE: This visitor will push all instances of the <see cref="NotClause"/> out of the tree
-        /// by using the <seealso cref="DeMorgansVisitor"/> so that the terminal clauses will handle
+        /// by using the <see cref="DeMorgansVisitor"/> so that the terminal clauses will handle
         /// all the negation logic and the visitor does not need to deal with NOT's.
         /// </summary>
         /// <param name="clause"> the clause to process. </param>
@@ -182,7 +182,7 @@ namespace QuoteFlow.Core.Jql.Query
 
         /// <summary>
         /// This exception is thrown when the JQL Query is to complex to be generated into an Lucene Query.
-        /// It is caught in <seealso cref="LuceneQueryBuilder"/> and converted into a <seealso cref="ClauseTooComplexSearchException"/>.
+        /// It is caught in <see cref="LuceneQueryBuilder"/> and converted into a <see cref="ClauseTooComplexSearchException"/>.
         /// </summary>
         public class JqlTooComplex : Exception
         {

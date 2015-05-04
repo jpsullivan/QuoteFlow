@@ -10,7 +10,7 @@ namespace QuoteFlow.Api.Asset.Transport
     {
         /// <summary>
         /// Return all values of all keys, flattened into a single collection.
-        /// Use <seealso cref="#getValuesForNullKey()"/> instead if, for example, you just need the values of the custom field.
+        /// Use <see cref="#getValuesForNullKey()"/> instead if, for example, you just need the values of the custom field.
         /// </summary>
         ICollection AllValues { get; }
 
@@ -20,7 +20,7 @@ namespace QuoteFlow.Api.Asset.Transport
         /// The values associated with the null key represents the values of the custom field.
         /// For example, the user selected in a single user picker, or the list of users selected in a multiple user picker.
         /// <p/>
-        /// Note that unlike <seealso cref="#getAllValues()"/>, this method does not return values associated with other non-null keys.
+        /// Note that unlike <see cref="#getAllValues()"/>, this method does not return values associated with other non-null keys.
         /// </summary>
         ICollection ValuesForNullKey { get; }
 

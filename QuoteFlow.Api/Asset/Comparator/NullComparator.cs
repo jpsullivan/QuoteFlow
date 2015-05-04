@@ -14,13 +14,13 @@ namespace QuoteFlow.Api.Asset.Comparator
         /// returns the result of o1.compareTo(o2) as long as o1 implements
         /// Comparable, otherwise returns 0.
         /// <br/>
-        /// Note that if o1 is an instance of <seealso cref="Comparable"/> and o2 is not of
+        /// Note that if o1 is an instance of <see cref="Comparable"/> and o2 is not of
         /// the same type may result in <see cref="ClassCastException"/>.
         /// </summary>
         /// <param name="o1"> object to compare </param>
         /// <param name="o2"> object to compare </param>
         /// <returns> result of comparison </returns>
-        /// <exception cref="ClassCastException"> if o1 is an instance of <seealso cref="Comparable"/> and o2 is not of the same type </exception>
+        /// <exception cref="ClassCastException"> if o1 is an instance of <see cref="Comparable"/> and o2 is not of the same type </exception>
         public virtual int Compare(object o1, object o2)
         {
             if (o1 == null && o2 == null)

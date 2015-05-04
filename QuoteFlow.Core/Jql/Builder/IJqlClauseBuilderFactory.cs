@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// Factory for creating new instances of JqlClauseBuilder.
-    /// You normally wouldn't call this directly, it is used inside <seealso cref="JqlQueryBuilder"/>.
+    /// You normally wouldn't call this directly, it is used inside <see cref="JqlQueryBuilder"/>.
     /// </summary>
     public interface IJqlClauseBuilderFactory
     {

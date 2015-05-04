@@ -66,7 +66,7 @@ namespace QuoteFlow.Core.Jql.Operand.Registry
 //
 //        /// <summary>
 //        /// Resets the cache. It will be populated again when
-//        /// <seealso cref="#getOperandHandler(com.atlassian.query.operand.FunctionOperand)"/> or <seealso cref="#getAllFunctionNames()"/>
+//        /// <see cref="#getOperandHandler(com.atlassian.query.operand.FunctionOperand)"/> or <see cref="#getAllFunctionNames()"/>
 //        /// gets called.
 //        /// </summary>
 //        internal virtual void Reset()

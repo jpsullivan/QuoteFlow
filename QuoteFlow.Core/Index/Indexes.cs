@@ -6,8 +6,8 @@ using QuoteFlow.Core.Lucene.Index;
 namespace QuoteFlow.Core.Index
 {
     /// <summary>
-    /// Static factory class for creating <seealso cref="IIndex"/> and 
-    /// <seealso cref="IIndexManager"/> instances.
+    /// Static factory class for creating <see cref="IIndex"/> and 
+    /// <see cref="IIndexManager"/> instances.
     /// </summary>
     public class Indexes
     {
@@ -20,7 +20,7 @@ namespace QuoteFlow.Core.Index
         /// <param name="name">Used to name the background thread.</param>
         /// <param name="config">Holds the <see cref="Directory"/> and <see cref="Analyzer"/> used for indexing and searching.</param>
         /// <param name="maxQueueSize"></param>
-        /// <returns>A <seealso cref="IIndexManager"/> that has an index configured for queued operations.</returns>
+        /// <returns>A <see cref="IIndexManager"/> that has an index configured for queued operations.</returns>
         public static IIndexManager CreateQueuedIndexManager(string name, IIndexConfiguration config, long maxQueueSize)
         {
             // writePolicy is that the IndexWriter is committed after every write
@@ -37,8 +37,8 @@ namespace QuoteFlow.Core.Index
         /// The Index write policy is that flushes will only occur if a Searcher is requested, when the 
         /// IndexWriter decides to according to its internal buffering policy, or when the index is closed.
         /// </summary>
-        /// <param name="config">Holds the <seealso cref="Directory"/> and <seealso cref="Analyzer"/> used for indexing and searching.</param>
-        /// <returns>A <seealso cref="IIndexManager"/> that has an index configured for direct operations.</returns>
+        /// <param name="config">Holds the <see cref="Directory"/> and <see cref="Analyzer"/> used for indexing and searching.</param>
+        /// <returns>A <see cref="IIndexManager"/> that has an index configured for direct operations.</returns>
         public static IIndexManager CreateSimpleIndexManager(IIndexConfiguration config)
         {
             var engine = new IndexEngine(config, IndexEngine.FlushPolicy.None);

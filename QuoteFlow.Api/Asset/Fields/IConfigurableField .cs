@@ -4,7 +4,7 @@ using QuoteFlow.Api.Models;
 namespace QuoteFlow.Api.Asset.Fields
 {
     /// <summary>
-    /// ConfigurableField are fields which have <seealso cref="FieldConfigItemType"/> that can be stored.
+    /// ConfigurableField are fields which have <see cref="FieldConfigItemType"/> that can be stored.
     /// </summary>
     public interface IConfigurableField : IOrderableField
     {

@@ -15,7 +15,7 @@ using QuoteFlow.Core.DependencyResolution;
 namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
-    /// Used to create <seealso cref="OrderBy"/> clauses to be included in {@link
+    /// Used to create <see cref="OrderBy"/> clauses to be included in {@link
     /// com.atlassian.query.Query}'s.
     /// 
     /// The OrderBy portion of a JQL query is made up of zero of more order clauses. Each clause composes of a field
@@ -71,7 +71,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         /// 
         /// <summary>
-        /// Call this method to build a <seealso cref="QuoteFlow.Api.Jql.Query"/> using the current builder. When <seealso cref="#EndOrderBy()"/> is not null, this
+        /// Call this method to build a <see cref="QuoteFlow.Api.Jql.Query"/> using the current builder. When <see cref="#EndOrderBy()"/> is not null, this
         /// equates to calling {@code EndOrderBy().BuildQuery()}. When {@code EndOrderBy()} is null, this equates to calling
         /// {@code new QueryImpl(null, BuildOrderBy(), null)}.
         /// </summary>
@@ -90,7 +90,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// NOTE: Calling this method does not change the state of the builder, 
         /// there are no limitations on the number of times this method can be invoked. 
         /// </summary>
-        /// <returns>the <seealso cref="OrderBy"/> that is defined by the state of the builder.</returns>
+        /// <returns>the <see cref="OrderBy"/> that is defined by the state of the builder.</returns>
         public virtual IOrderBy BuildOrderBy()
         {
             return new OrderBy(_searchSorts.ToList());
@@ -99,7 +99,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <summary>
         /// Call this to return to the parent JqlQueryBuilder.
         /// </summary>
-        /// <returns> the query builder who created this order by builder. May be null if there is no associated <seealso cref="JqlQueryBuilder"/>. </returns>
+        /// <returns> the query builder who created this order by builder. May be null if there is no associated <see cref="JqlQueryBuilder"/>. </returns>
         public virtual JqlQueryBuilder EndOrderBy()
         {
             return _parentBuilder;
@@ -182,7 +182,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add a search sort with the jqlClauseName and the specified sort to the end of the sort list in the order by. No
         /// validation is done in this builder so you must make sure you create valid sorts.
         /// <p/>
-        /// This is the same as calling <seealso cref="#Add(String, com.atlassian.query.order.SortOrder, boolean)"/> with false.
+        /// This is the same as calling <see cref="#Add(String, com.atlassian.query.order.SortOrder, boolean)"/> with false.
         /// </summary>
         /// <param name="jqlClauseName"> the JQL clause name to sort by. </param>
         /// <param name="order"> the order, ASC, or DESC. </param>
@@ -196,7 +196,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add a search sort with the jqlClauseName and use the claues default sort to the end of the sort list in the order
         /// by. No validation is done in this builder so you must make sure you create valid sorts.
         /// <p/>
-        /// This is the same as calling <seealso cref="#Add(String, com.atlassian.query.order.SortOrder, boolean)"/> with null and
+        /// This is the same as calling <see cref="#Add(String, com.atlassian.query.order.SortOrder, boolean)"/> with null and
         /// false.
         /// </summary>
         /// <param name="jqlClauseName"> the JQL clause name to sort by. </param>

@@ -126,10 +126,10 @@ namespace QuoteFlow.Core.Asset.Nav
         }
 
         /// <summary>
-        /// Create an <seealso cref="AssetTable"/> via an <seealso cref="AssetTableCreator"/> and handle any errors.
+        /// Create an <see cref="AssetTable"/> via an <see cref="AssetTableCreator"/> and handle any errors.
         /// </summary>
-        /// <param name="creator"> The object that validates the request and creates the <seealso cref="AssetTable"/>. </param>
-        /// <returns> the result of attempting to create an <seealso cref="AssetTable"/> via {@code creator}. </returns>
+        /// <param name="creator"> The object that validates the request and creates the <see cref="AssetTable"/>. </param>
+        /// <returns> the result of attempting to create an <see cref="AssetTable"/> via {@code creator}. </returns>
         protected virtual AssetTableViewModel CreateAssetTableFromCreator(AssetTableCreator creator)
         {
             //ErrorCollection errorCollection = new SimpleErrorCollection();

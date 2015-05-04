@@ -38,7 +38,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         }
 
         /// <summary>
-        /// Populates a <seealso cref="FieldValuesHolder"/> with <seealso cref="ActionParams"/>.
+        /// Populates a <see cref="FieldValuesHolder"/> with <see cref="ActionParams"/>.
         /// 
         /// Values that start with "user:" refer to users, values that start with
         /// "group:" refers to groups, and "empty" refers to empty values.
@@ -116,7 +116,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         }
 
         /// <summary>
-        /// Populates a <seealso cref="FieldValuesHolder"/> from a <seealso cref="IQuery"/>.
+        /// Populates a <see cref="FieldValuesHolder"/> from a <see cref="IQuery"/>.
         /// </summary>
         public override void PopulateFromQuery(User user, IFieldValuesHolder fieldValuesHolder, IQuery query, ISearchContext searchContext)
         {
@@ -214,7 +214,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         }
 
         /// <summary>
-        /// Checks whether a <seealso cref="TerminalClause"/> can be represented in basic mode.
+        /// Checks whether a <see cref="TerminalClause"/> can be represented in basic mode.
         /// </summary>
         /// <param name="clause"> The clause. </param>
         /// <param name="user"> The user executing the search. </param>
@@ -243,7 +243,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         }
 
         /// <summary>
-        /// Checks whether a <seealso cref="TerminalClause"/> with a <seealso cref="SingleValueOperand"/>
+        /// Checks whether a <see cref="TerminalClause"/> with a <see cref="SingleValueOperand"/>
         /// can be represented in basic mode.
         /// </summary>
         private bool CheckSingleValueClause(Operator @operator, SingleValueOperand operand)
@@ -261,7 +261,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         }
 
         /// <summary>
-        /// Checks whether a <seealso cref="TerminalClause"/> with a <seealso cref="FunctionOperand"/>
+        /// Checks whether a <see cref="TerminalClause"/> with a <see cref="FunctionOperand"/>
         /// can be represented in basic mode.
         /// </summary>
         private bool CheckFunctionClause(Operator @operator, FunctionOperand operand, User user)
@@ -280,7 +280,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         }
 
         /// <summary>
-        /// Checks whether a <seealso cref="TerminalClause"/> with a <seealso cref="MultiValueOperand"/>
+        /// Checks whether a <see cref="TerminalClause"/> with a <see cref="MultiValueOperand"/>
         /// can be represented in basic mode.
         /// </summary>
         private bool CheckMultiValueClause(Operator @operator, MultiValueOperand operand, User user)
@@ -347,7 +347,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         }
 
         /// <summary>
-        /// Extract the value (e.g. user) referenced in a <seealso cref="SingleValueOperand"/>.
+        /// Extract the value (e.g. user) referenced in a <see cref="SingleValueOperand"/>.
         /// </summary>
         /// <param name="operand"> The operand from which the value is to be extracted. </param>
         /// <param name="values"> The collection to add the extracted value to. </param>
@@ -368,7 +368,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
 
         /// <summary>
         /// Extract the value (e.g. group/user) referenced in a
-        /// <seealso cref="FunctionOperand"/>.
+        /// <see cref="FunctionOperand"/>.
         /// </summary>
         /// <param name="operand"> The operand from which the value is extracted. </param>
         /// <param name="values"> The collection to add the extracted value to. </param>
@@ -385,7 +385,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         }
 
         /// <summary>
-        /// Determines whether a <seealso cref="FunctionOperand"/> represents a valid
+        /// Determines whether a <see cref="FunctionOperand"/> represents a valid
         /// "currentUser()" function.
         /// </summary>
         private bool IsCurrentUser(FunctionOperand operand)
@@ -395,7 +395,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         }
 
         /// <summary>
-        /// Determines whether a <seealso cref="FunctionOperand"/> represents a valid
+        /// Determines whether a <see cref="FunctionOperand"/> represents a valid
         /// "membersOf(group)" function.
         /// </summary>
         private bool IsMembersOf(FunctionOperand operand)

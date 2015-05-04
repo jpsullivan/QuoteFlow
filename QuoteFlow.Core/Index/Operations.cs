@@ -65,7 +65,7 @@ namespace QuoteFlow.Core.Index
         }
 
         /// <summary>
-        /// Holds a an identifying <seealso cref="Term"/> so we can delete pre-existing documents.
+        /// Holds a an identifying <see cref="Term"/> so we can delete pre-existing documents.
         /// </summary>
         internal sealed class Delete : Operation
         {
@@ -91,7 +91,7 @@ namespace QuoteFlow.Core.Index
         }
 
         /// <summary>
-        /// Holds <seealso cref="Document"/> to be created.
+        /// Holds <see cref="Document"/> to be created.
         /// </summary>
         internal sealed class Create : Operation
         {

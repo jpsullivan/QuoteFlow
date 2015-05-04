@@ -8,8 +8,8 @@ namespace QuoteFlow.Api.Jql.Query.Order
     /// <summary>
     /// A simple data bean representing a portion of the sort order (related to a clause) for a search query.
     /// 
-    /// Together via the <seealso cref="OrderBy"/> these will determine the sorting order of the results
-    /// returned by a <seealso cref="Query"/>.
+    /// Together via the <see cref="OrderBy"/> these will determine the sorting order of the results
+    /// returned by a <see cref="Query"/>.
     /// </summary>
     [Serializable]
     public class SearchSort
@@ -47,7 +47,7 @@ namespace QuoteFlow.Api.Jql.Query.Order
         /// @deprecated use <see cref="#SearchSort(String, SortOrder)"/> instead.
         /// 
         /// <param name="order">The order of the sort, if null, will be the default order for the system, if not one of
-        /// <see cref="SortOrder#ASC"/> or <seealso cref="SortOrder#DESC"/> it will default to <seealso cref="SortOrder#ASC"/>.</param>
+        /// <see cref="SortOrder#ASC"/> or <see cref="SortOrder#DESC"/> it will default to <see cref="SortOrder#ASC"/>.</param>
         /// <param name="field">To sort by.</param>
         public SearchSort(string order, string field)
             : this(field, null, SortOrderHelpers.ParseString(order))

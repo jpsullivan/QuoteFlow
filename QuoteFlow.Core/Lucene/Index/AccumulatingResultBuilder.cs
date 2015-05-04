@@ -8,7 +8,7 @@ using QuoteFlow.Api.Lucene.Index;
 namespace QuoteFlow.Core.Lucene.Index
 {
     /// <summary>
-    /// Used to build a <seealso cref="IIndexResult"/> implementation that accumulates results from
+    /// Used to build a <see cref="IIndexResult"/> implementation that accumulates results from
     /// other operations and awaits on them all.
     /// 
     /// For operations that are complete it just aggregates their results.

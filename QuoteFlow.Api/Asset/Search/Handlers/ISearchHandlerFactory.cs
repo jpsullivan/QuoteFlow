@@ -3,7 +3,7 @@
 namespace QuoteFlow.Api.Asset.Search.Handlers
 {
     /// <summary>
-    /// Factory to create <seealso cref="SearchHandler"/> instances.
+    /// Factory to create <see cref="SearchHandler"/> instances.
     /// </summary>
     public interface ISearchHandlerFactory
     {

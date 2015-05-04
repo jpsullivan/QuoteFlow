@@ -16,15 +16,15 @@ namespace QuoteFlow.Api.Asset.Fields
         /// <summary>
         /// The order in which to sort the field when it is sorted for the first time.
         /// </summary>
-        /// <returns>  Either <seealso cref="#ORDER_ASCENDING"/> or <seealso cref="#ORDER_DESCENDING"/> </returns>
+        /// <returns>  Either <see cref="#ORDER_ASCENDING"/> or <see cref="#ORDER_DESCENDING"/> </returns>
         string DefaultSortOrder { get; }
 
         /// <summary>
         /// A sortComparatorSource object to be used for sorting columns in a table.  In most cases this will use a
-        /// <seealso cref="com.atlassian.jira.issue.search.parameters.lucene.sort.MappedSortComparator"/> using the <seealso cref="#getSorter()"/>
+        /// <see cref="com.atlassian.jira.issue.search.parameters.lucene.sort.MappedSortComparator"/> using the <see cref="#getSorter()"/>
         /// method.  However, fields can provide any sorting mechanism that they wish.
         /// 
-        /// If a field can be sorted directly using terms in the Lucene index then the field should implement <seealso cref="#getSortFields(boolean sortOrder)"/>
+        /// If a field can be sorted directly using terms in the Lucene index then the field should implement <see cref="#getSortFields(boolean sortOrder)"/>
         /// rather than this method.
         /// 
         /// In large installations custom sorting may incur a maor performance penalty.
@@ -41,9 +41,9 @@ namespace QuoteFlow.Api.Asset.Fields
         /// {@code return Collections.singletonList(new SortField(fieldName, sortOrder));  }
         /// </para>
         /// 
-        /// The default implementation builds this using the FieldComparatorSource returned by <seealso cref="#getSortComparatorSource()"/>
+        /// The default implementation builds this using the FieldComparatorSource returned by <see cref="#getSortComparatorSource()"/>
         /// 
-        /// If you implement this method there is no need to implement <seealso cref="#getSortComparatorSource()"/>.
+        /// If you implement this method there is no need to implement <see cref="#getSortComparatorSource()"/>.
         /// </summary>
         /// <returns>The name of the indexed term to be used for native Lucene sorting.</returns>
         IEnumerable<SortField> GetSortFields(bool sortOrder);

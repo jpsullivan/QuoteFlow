@@ -6,8 +6,8 @@ namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
     /// A builder used during the construction of JQL conditions for a particular JQL field in a fluent programming style. It is used
-    /// to specify the value or values of a JQL condition whose operator has already been specified using a <seealso cref="ConditionBuilder"/>. For example,
-    /// a call to <seealso cref="IConditionBuilder.eq()"/> will return a ValueBuilder that can be used to specify which value should be matched
+    /// to specify the value or values of a JQL condition whose operator has already been specified using a <see cref="ConditionBuilder"/>. For example,
+    /// a call to <see cref="IConditionBuilder.eq()"/> will return a ValueBuilder that can be used to specify which value should be matched
     /// by the equals operator.
     /// <p> Each JQL condition is essentially structured as {@code name operator operand}. When this object is created, it has an
     /// implied "name" and "operator". This object can be used to complete the current JQL condition by creating the operand. For example,
@@ -15,9 +15,9 @@ namespace QuoteFlow.Core.Jql.Builder
     /// is "=" that can used to complete the JQL condition by filling in the operand.
     /// <p>Generally, it is not possible to passs nulls, empty collections, empty arrays, collections that contain nulls, or arrays
     /// that contain nulls to the methods on this interface. Any exceptions to these argument conditions are documented on the method concerned.
-    /// Passing a method a bad argument will result in a <seealso cref="IllegalArgumentException"/>.
+    /// Passing a method a bad argument will result in a <see cref="IllegalArgumentException"/>.
     /// <p/>
-    /// JQL values are of two types <seealso cref="string"/> and <seealso cref="Long"/>. For fields that are resolvable by both Id's and Names (e.g.
+    /// JQL values are of two types <see cref="string"/> and <see cref="Long"/>. For fields that are resolvable by both Id's and Names (e.g.
     /// projects, versions, issue types, components, options etc), the order of resolution depends on the value type. If the JQL
     /// value type is long, QuoteFlow will first attempt to find the domain object by Id, if that fails, it will attempt to find
     /// the domain object by name with the string value of the long. If the JQL value type is a String, QuoteFlow will first try to find

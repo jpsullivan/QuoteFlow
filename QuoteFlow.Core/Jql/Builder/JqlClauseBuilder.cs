@@ -11,7 +11,7 @@ using QuoteFlow.Api.Jql.Util;
 namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
-    /// Default implementation of <seealso cref="IJqlClauseBuilder"/>.
+    /// Default implementation of <see cref="IJqlClauseBuilder"/>.
     /// </summary>
     public class JqlClauseBuilder : IJqlClauseBuilder
     {

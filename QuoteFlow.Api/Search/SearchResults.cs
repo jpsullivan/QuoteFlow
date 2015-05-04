@@ -20,7 +20,7 @@ namespace QuoteFlow.Api.Search
         private readonly IList<IAsset> assets;
 
         /// <summary>
-        /// Construct searchResults using a list of assets.  The assets returned by <seealso cref="#getIssues()"/> will
+        /// Construct searchResults using a list of assets.  The assets returned by <see cref="#getIssues()"/> will
         /// be a subset of the assets passed in.
         /// </summary>
         /// <param name="assets">A list of <see cref="Asset"/> objects.</param>
@@ -63,7 +63,7 @@ namespace QuoteFlow.Api.Search
         /// This is used when we do a stable search and want to return a max of the selected page's length, not the
         /// stable search limit.
         /// </summary>
-        /// <param name="assetsInPage">A list of <seealso cref="Asset"/> objects.</param>
+        /// <param name="assetsInPage">A list of <see cref="Asset"/> objects.</param>
         /// <param name="totalIssueCount">The count of the number of assets returned.</param>
         /// <param name="maxIssueCount">The maximum number of assets to include in the search.</param>
         /// <param name="startIndex">The index of the first issue in the search.</param>
@@ -170,7 +170,7 @@ namespace QuoteFlow.Api.Search
         /// <summary>
         /// Restrict the pagers to a certain number of pages on either side of the current page.
         /// <p/>
-        /// The number of pages to list is stored in <seealso cref="#PAGES_TO_LIST"/>.
+        /// The number of pages to list is stored in <see cref="#PAGES_TO_LIST"/>.
         /// </summary>
         internal virtual IList<Page> RestrictPages(IEnumerable<Page> pages, int size)
         {

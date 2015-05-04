@@ -15,23 +15,23 @@ namespace QuoteFlow.Api.Jql.Function
     /// <tt>assignee in membersOf("myGroup")</tt> returns all issues assigned to a member of the JIRA group "myGroup". This
     /// is very powerful, as it removes the need to enumerate over all the members of the group manually.
     /// 
-    /// Implementations of JQL functions need to know how to validate a <seealso cref="FunctionOperand"/>
-    /// (which contains their arguments), and also need to know how to produce <seealso cref="QueryLiteral"/>
+    /// Implementations of JQL functions need to know how to validate a <see cref="FunctionOperand"/>
+    /// (which contains their arguments), and also need to know how to produce <see cref="QueryLiteral"/>
     /// values from that operand. They must also specify whether or not the function produces a list of values or a single
     /// value.
     /// 
-    /// The validate and GetValues method take the <seealso cref="ITerminalClause"/> that contained the
-    /// <seealso cref="FunctionOperand"/> on its left-hand side. This can be used to create advanced functionality,
+    /// The validate and GetValues method take the <see cref="ITerminalClause"/> that contained the
+    /// <see cref="FunctionOperand"/> on its left-hand side. This can be used to create advanced functionality,
     /// such as adjusting the functions result or validation based on the clauses right-hand side value or operator.
     /// 
     /// For plugin developers wishing to write their own JQL functions - you may find it useful to extend from our
-    /// provided <seealso cref="AbstractJqlFunction"/>. In addition to implementing this
+    /// provided <see cref="AbstractJqlFunction"/>. In addition to implementing this
     /// interface, you must also provide an XML descriptor for your function. For an example, see {@link
     /// com.atlassian.jira.plugin.jql.function.JqlFunctionModuleDescriptor}.
     /// 
-    /// <seealso cref="QueryLiteral"/>s returned by the {@link #GetValues(com.atlassian.jira.jql.query.QueryCreationContext,
+    /// <see cref="QueryLiteral"/>s returned by the {@link #GetValues(com.atlassian.jira.jql.query.QueryCreationContext,
     /// com.atlassian.query.operand.FunctionOperand, com.atlassian.query.clause.TerminalClause)} method must have the operand
-    /// source of the passed in <seealso cref="FunctionOperand"/>.
+    /// source of the passed in <see cref="FunctionOperand"/>.
     /// 
     /// The function must be thread safe. Only one instance of the function is created to service all JQL queries. As a
     /// result the function may have multiple threads calling it at the same time.
@@ -96,10 +96,10 @@ namespace QuoteFlow.Api.Jql.Function
         string FunctionName { get; }
 
         /// <summary>
-        /// Provides the <seealso cref="IQuoteFlowDataType"/> that this function handles and creates values for. This
+        /// Provides the <see cref="IQuoteFlowDataType"/> that this function handles and creates values for. This
         /// allows us to infer some information about how it will interact with other elements in the system.
         /// 
-        /// For example, if this returns <seealso cref="QuoteFlowDataTypes.Date"/> then we know that we can provide
+        /// For example, if this returns <see cref="QuoteFlowDataTypes.Date"/> then we know that we can provide
         /// values for any clauses that also specify a data type of DATE.
         /// </summary>
         /// <returns>The QuoteFlow data type that this function produces values for. Cannot be null.</returns>

@@ -25,7 +25,7 @@ namespace QuoteFlow.Api.Asset.Fields.Layout.Column
         string GetHtml(IDictionary displayParams, IAsset asset);
 
         /// <summary>
-        /// Return some text for the Column Header. By default this calls <seealso cref="NavigableField#getColumnHeadingKey"/> but
+        /// Return some text for the Column Header. By default this calls <see cref="NavigableField#getColumnHeadingKey"/> but
         /// implementations can override this to provide different column headings as appropriate
         /// </summary>
         string ColumnHeadingKey { get; }

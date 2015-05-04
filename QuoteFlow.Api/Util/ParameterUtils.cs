@@ -9,7 +9,7 @@ namespace QuoteFlow.Api.Util
 {
     /// <summary>
     /// This class can be used to "parse" values from a map of parameters.  This is really intended to be used in {@link
-    /// webwork.action.Action} code that needs to read input parameters from <seealso cref="webwork.action.ActionContext#getParameters()"/>
+    /// webwork.action.Action} code that needs to read input parameters from <see cref="webwork.action.ActionContext#getParameters()"/>
     /// </summary>
     public class ParameterUtils
     {

@@ -12,9 +12,9 @@ using QuoteFlow.Api.Models;
 namespace QuoteFlow.Api.Asset.Search.Searchers.Util
 {
     /// <summary>
-    /// The default implementation for the <seealso cref="IndexedInputHelper"/>.
+    /// The default implementation for the <see cref="IndexedInputHelper"/>.
     /// <p/>
-    /// This class should be constructed as needed and not injected, as the <seealso cref="IndexInfoResolver"/> is only relevant to
+    /// This class should be constructed as needed and not injected, as the <see cref="IndexInfoResolver"/> is only relevant to
     /// specific field(s).
     /// 
     /// @since v4.0
@@ -112,7 +112,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
         /// <summary>
         /// Resolve this string representation of a navigator value (known not to be a field flag) into an operand to be used
         /// in a clause. Override this to provide domain-specific resolution (e.g. resolve version ids to names). Default implementation
-        /// delegates to <seealso cref="#createSingleValueOperandFromId"/>
+        /// delegates to <see cref="#createSingleValueOperandFromId"/>
         /// </summary>
         /// <param name="stringValue"> the navigator value as a string e.g. <code>123</code> </param>
         /// <returns> the operand which best represents this navigator value - either a string name or the id or whatever. </returns>

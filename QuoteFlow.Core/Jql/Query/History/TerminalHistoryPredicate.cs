@@ -8,7 +8,7 @@ namespace QuoteFlow.Core.Jql.Query.History
     /// <summary>
     /// Represents an assertion about a change history, namely that the expression of combining the prefix operator with
     /// the operand. The result of evaluating the expression must be true or false. For example the operator may be
-    /// <seealso cref="Operator.BEFORE"/> and the operator (which should be a datetime).
+    /// <see cref="Operator.BEFORE"/> and the operator (which should be a datetime).
     /// </summary>
     public class TerminalHistoryPredicate : IHistoryPredicate
     {

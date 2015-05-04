@@ -27,7 +27,7 @@ namespace QuoteFlow.Api.Asset.Fields
         /// Get a CustomField by its text key (eg 'customfield_10000'). 
         /// </summary>
         /// <param name="id"> Eg. 'customfield_10000' </param>
-        /// <returns>The <seealso cref="CustomField"/> or null if not found.</returns>
+        /// <returns>The <see cref="CustomField"/> or null if not found.</returns>
         ICustomField GetCustomField(string id);
 
         ISet<IOrderableField> OrderableFields { get; }

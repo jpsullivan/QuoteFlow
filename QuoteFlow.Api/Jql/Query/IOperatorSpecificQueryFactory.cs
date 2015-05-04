@@ -36,7 +36,7 @@ namespace QuoteFlow.Api.Jql.Query
         /// <returns> the queryFactoryResult that contains the query and the metadata.
         /// </returns>
         /// <exception cref="com.atlassian.query.operator.OperatorDoesNotSupportOperand"> if the method is passed an operator that it
-        /// can not handle. In this case the <seealso cref="#handlesOperator(com.atlassian.query.operator.Operator)"/> call will have
+        /// can not handle. In this case the <see cref="#handlesOperator(com.atlassian.query.operator.Operator)"/> call will have
         /// returned false. </exception>
         /// <exception cref="com.atlassian.query.operator.OperatorDoesNotSupportMultiValueOperand"> if the implementation does not support
         /// the operator for multiple values. </exception>

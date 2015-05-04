@@ -7,11 +7,11 @@ using QuoteFlow.Api.Jql.Query.Operand;
 namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
-    /// A builder used to construct the Where <seealso cref="IClause"/> portion of a JQL <seealso cref="IQuery"/> in a fluent programming
+    /// A builder used to construct the Where <see cref="IClause"/> portion of a JQL <see cref="IQuery"/> in a fluent programming
     /// structure. JQL queries can be defined as one or more terminal clauses, seperated by logical operators, where terminal clauses
     /// define value conditions on specific fields.
     /// <p/>
-    /// This builder provided methods to build terminal clauses specific to system fields (e.g. <seealso cref="#reporter()"/>)
+    /// This builder provided methods to build terminal clauses specific to system fields (e.g. <see cref="#reporter()"/>)
     /// and short cuts for common terminal clauses  (e.g. {@link #unresolved() which produce the terminal clause {@code resolution = Unresolved}.
     /// But also allows the programmer to define his terminal clause components manually, for example
     /// {@code builder.field("cf[100]").in().strings("jql", "rocks").buildQuery()}, this is useful for custom fields.
@@ -22,20 +22,20 @@ namespace QuoteFlow.Core.Jql.Builder
     /// {@code builder.defaultAnd().project("HSP").issueType("bug").buildQuery()}. Not defining the operator, such as
     /// {@code builder.project("HSP").issueType("bug").buildQuery()} will cause an illegal state exception.
     /// <p/>
-    /// Different logical operators can be specified by the programmer by using the <seealso cref="IConditionBuilder"/> returned by the field
-    /// level methods such as <seealso cref="#project()"/>. For instance to create the terminal clause {@code component != searching} the programmer would use
+    /// Different logical operators can be specified by the programmer by using the <see cref="IConditionBuilder"/> returned by the field
+    /// level methods such as <see cref="#project()"/>. For instance to create the terminal clause {@code component != searching} the programmer would use
     /// the builder as such {@code builder.component().notEq().string("searching")}.
     /// <p/>
     /// By default the builder uses the standard order of precedence. However if the programmer wishes to define their own order,
-    /// they can make use of the <seealso cref="#sub()"/> and <seealso cref="#endsub()"/> methods, which effectively add opening and closing parenthesis to
+    /// they can make use of the <see cref="#sub()"/> and <see cref="#endsub()"/> methods, which effectively add opening and closing parenthesis to
     /// the JQL respectively. For instance to create the JQL {@code (resolution is unresolved and assignee is empty) or resolution = fixed}
     /// the programmer would use the builder as such {@code builder.sub().field("resolution").and.assigneeIsEmpty().endsub().or().resolution().eq("fixed")}
     /// <p/>
     /// Generally, it is not possible to passs nulls, empty collections, empty arrays, collections that contain nulls, or arrays
     /// that contain nulls to the method on the interface. Any exceptions to these argument conditions are documented on the method concern.
-    /// Passing a method a bad argument will result in a <seealso cref="IllegalArgumentException"/>.
+    /// Passing a method a bad argument will result in a <see cref="IllegalArgumentException"/>.
     /// <p/>
-    /// JQL values are of two types <seealso cref="string"/> and <seealso cref="Long"/>. For fields that are resolvable by both Id's and Names (e.g.
+    /// JQL values are of two types <see cref="string"/> and <see cref="Long"/>. For fields that are resolvable by both Id's and Names (e.g.
     /// projects, versions, issue types, components, options etc), the order of resolution depends on the value type. If the JQL
     /// value type is long, JIRA will first attempt to find the domain object by Id, if that fails, it will attempt to find
     /// the domain object by name with the string value of the long. If the JQL value type is a String, JIRA will first try to find
@@ -45,14 +45,14 @@ namespace QuoteFlow.Core.Jql.Builder
     public interface IJqlClauseBuilder
     {
         /// <summary>
-        /// Call this to get a handle on the associated <seealso cref="JqlQueryBuilder"/>.
+        /// Call this to get a handle on the associated <see cref="JqlQueryBuilder"/>.
         /// </summary>
-        /// <returns> the associated <seealso cref="JqlQueryBuilder"/>. Null may be returned to indicate
+        /// <returns> the associated <see cref="JqlQueryBuilder"/>. Null may be returned to indicate
         /// there is no associated builder. </returns>
         JqlQueryBuilder EndWhere();
 
         /// <summary>
-        /// Call this method to build a <seealso cref="QuoteFlow.Api.Jql.Query"/> using the current builder. When <seealso cref="#endWhere()"/> is not null, this
+        /// Call this method to build a <see cref="QuoteFlow.Api.Jql.Query"/> using the current builder. When <see cref="#endWhere()"/> is not null, this
         /// equates to calling {@code endWhere().buildQuery()}. When {@code endWhere()} is null, this equates to calling
         /// {@code new QueryImpl(buildClause())}.
         /// </summary>
@@ -68,10 +68,10 @@ namespace QuoteFlow.Core.Jql.Builder
 
         /// <summary>
         /// Tell the builder to combine JQL conditions using the "AND" operator when none has been specified. Normally the
-        /// caller must ensure that a call to either <seealso cref="#and()"/> or <seealso cref="#or()"/> is placed between calls to create JQL
+        /// caller must ensure that a call to either <see cref="#and()"/> or <see cref="#or()"/> is placed between calls to create JQL
         /// conditions. Calling this method on the builder tells it to automatically add a JQL "AND"
         /// between JQL conditions when no calls to either {@code and} or {@code or} have been made. This mode will remain
-        /// active until one of <seealso cref="#defaultNone()"/>, {@code defaultOr()} or <seealso cref="#clear()"/> is called.
+        /// active until one of <see cref="#defaultNone()"/>, {@code defaultOr()} or <see cref="#clear()"/> is called.
         /// <p/>
         /// While in this mode it is still possible to explicitly call {@code and} or {@code or} to overide the default
         /// operator for the current condition.
@@ -84,10 +84,10 @@ namespace QuoteFlow.Core.Jql.Builder
 
         /// <summary>
         /// Tell the builder to combine JQL conditions using the "OR" operator when none has been specified. Normally the
-        /// caller must ensure that a call to either <seealso cref="#and()"/> or <seealso cref="#or()"/> is placed between calls to create JQL
+        /// caller must ensure that a call to either <see cref="#and()"/> or <see cref="#or()"/> is placed between calls to create JQL
         /// conditions. Calling this method on the builder tells it to automatically add a JQL "OR"
         /// between JQL conditions when no calls to either {@code and} or {@code or} have been made. This mode will remain
-        /// active until one of <seealso cref="#defaultNone()"/>, {@code defaultAnd()} or <seealso cref="#clear()"/> is called.
+        /// active until one of <see cref="#defaultNone()"/>, {@code defaultAnd()} or <see cref="#clear()"/> is called.
         /// <p/>
         /// While in this mode it is still possible to explicitly call {@code and} or {@code or} to overide the default
         /// operator for the current condition.
@@ -101,7 +101,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <summary>
         /// Tell the builder to stop injecting JQL "AND" or "OR" operators automatically between the generated JQL
         /// conditions. This essentially turns off the behaviour started by calling either
-        /// <seealso cref="#defaultAnd()"/> or <seealso cref="#defaultOr()"/>.
+        /// <see cref="#defaultAnd()"/> or <see cref="#defaultOr()"/>.
         /// </summary>
         /// <returns> a builder that can be used to further extends the current JQL expression. </returns>
         IJqlClauseBuilder DefaultNone();
@@ -109,7 +109,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <summary>
         /// Add the JQL "AND" operator to the JQL expression currently being built. The builder takes into account operator
         /// precendence when generating the JQL expression, and as such, the caller may need to group JQL conditions using
-        /// the <seealso cref="#sub()"/> and <seealso cref="#endsub()"/> calls. For example, {@code builder.not().affectedVersion("11").and().effectedVersion("12")}
+        /// the <see cref="#sub()"/> and <see cref="#endsub()"/> calls. For example, {@code builder.not().affectedVersion("11").and().effectedVersion("12")}
         /// produces the JQL {@code NOT (affectedVersion = "11") and affectedVersion = "12"} as the {@link #not() "NOT"
         /// operator} has a higher precedence than "AND". On the other hand, {@code builder.not().sub().affectedVersion("11").and().effectedVersion("12").endsub()}
         /// produces the JQL {@code NOT(affectedVersion = "11" andaffectedVersion = "12")}.
@@ -122,7 +122,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <summary>
         /// Add the JQL "OR" operator to the JQL expression currently being built. The builder takes into account operator
         /// precendence when generating the JQL expression, and as such, the caller may need to group JQL conditions using
-        /// the <seealso cref="#sub()"/> and <seealso cref="#endsub()"/> calls. For example, {@code builder.issueType("bug").and().affectedVersion("11").or().affectedVersion("12")}
+        /// the <see cref="#sub()"/> and <see cref="#endsub()"/> calls. For example, {@code builder.issueType("bug").and().affectedVersion("11").or().affectedVersion("12")}
         /// produces the JQL {@code (issueType = "bug" andaffectedVersion = "11") or affectedVersion = "12"} as the {@link
         /// #and() "AND" operator} has a higher precedence than "OR". On the other hand, {@code
         /// builder.issueType("bug").and().sub().affectedVersion("11").or().affectedVersion("12").endsub()} produces the JQL
@@ -134,8 +134,8 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <summary>
         /// Add the JQL "NOT" operator to the JQL expression currently being built. The builder takes into account operator
         /// precendence when generating the JQL expression, and as such, the caller may need to group JQL conditions using
-        /// the <seealso cref="#sub()"/> and <seealso cref="#endsub()"/> calls. For example, {@code builder.not().affectedVersion("11").and().effectedVersion("12")}
-        /// produces the JQL {@code NOT (affectedVersion = "11") and affectedVersion = "12"} as the <seealso cref="#and()"/> "AND"
+        /// the <see cref="#sub()"/> and <see cref="#endsub()"/> calls. For example, {@code builder.not().affectedVersion("11").and().effectedVersion("12")}
+        /// produces the JQL {@code NOT (affectedVersion = "11") and affectedVersion = "12"} as the <see cref="#and()"/> "AND"
         /// operator} has a lower precedence than "NOT". On the other hand, {@code builder.not().sub().affectedVersion("11").and().effectedVersion("12").endsub()}
         /// produces the JQL {@code NOT(affectedVersion = "11" andaffectedVersion = "12")}.
         /// </summary>
@@ -144,7 +144,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         /// <summary>
         /// Create a new sub expression in the current JQL. This essentialy opens a bracket in the JQL query such that all
-        /// the JQL expressions from now until the next matching <seealso cref="#endsub() close bracket"/> are grouped together. This
+        /// the JQL expressions from now until the next matching <see cref="#endsub() close bracket"/> are grouped together. This
         /// can be used to override JQL's precedence rules. For example, {@code builder.sub().affectedVersion("12").or().affectedVersion("11").endsub().and().issueType("bug")}
         /// will produce the JQL query {@code (affectedVersion = "12" oraffectedVersion = "12") and type = "bug"}.
         /// </summary>
@@ -168,7 +168,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Manufacturer(params string[] types);
 
         /// <summary>
-        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for
+        /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL condition for
         /// issue types.
         /// </summary>
         /// <returns> a reference to a IConditionBuilder for issue types. </returns>
@@ -194,7 +194,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder DescriptionIsEmpty();
 
         /// <summary>
-        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for
+        /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL condition for
         /// issue descriptions.
         /// </summary>
         /// <returns> a reference to a IConditionBuilder for issue descriptions. </returns>
@@ -311,7 +311,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder CreatedBetween(string startDateString, string endDateString);
 
         /// <summary>
-        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for
+        /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL condition for
         /// issue's creation date.
         /// </summary>
         /// <returns> a reference to a IConditionBuilder for created date. </returns>
@@ -364,7 +364,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder UpdatedBetween(string startDateString, string endDateString);
 
         /// <summary>
-        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for
+        /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL condition for
         /// issue's updated date.
         /// </summary>
         /// <returns> a reference to a IConditionBuilder for updated date. </returns>
@@ -379,7 +379,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Asset(params string[] assetIds);
 
         /// <summary>
-        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for the asset's id or key.
+        /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL condition for the asset's id or key.
         /// </summary>
         /// <returns>A reference to a IConditionBuilder for issue id or key.</returns>
         IConditionBuilder Asset();
@@ -409,7 +409,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clausename operator date} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="date"> the date for the condition. Must not be null. </param>
         /// <returns> a reference to the current builder. Never null. </returns>
         IJqlClauseBuilder AddDateCondition(string clauseName, Operator @operator, DateTime date);
@@ -426,7 +426,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="dates"> date values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         IJqlClauseBuilder AddDateCondition(string clauseName, Operator @operator, params DateTime[] dates);
@@ -445,7 +445,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="dates"> date values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
@@ -505,7 +505,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator functionName()} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="functionName"> name of the function to call. Must not be null. </param>
         /// <returns> a reference to the current builder. Never null. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
@@ -517,7 +517,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="functionName"> name of the function to call. Must not be null. </param>
         /// <param name="args"> the arguments to add to the function. Must not be null or contain any null values. </param>
         /// <returns> a reference to the current builder. Never null. </returns>
@@ -530,7 +530,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="functionName"> name of the function to call. Must not be null. </param>
         /// <param name="args"> the arguments to add to the function. Must not be null or contain any null values. </param>
         /// <returns> a reference to the current builder. Never null. </returns>
@@ -572,7 +572,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator "clauseValue"} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValue"> string value for the condition. Must not be null. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
@@ -583,7 +583,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValues"> string values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
@@ -594,7 +594,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValues"> string values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
@@ -653,7 +653,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator clauseValue} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValue"> long value for the condition. Must not be null. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
@@ -664,7 +664,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValues"> long values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
@@ -675,7 +675,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="clauseValues"> long values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
@@ -698,7 +698,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder AddNumberRangeCondition(string clauseName, int? start, int? end);
 
         /// <summary>
-        /// Return a <seealso cref="IConditionBuilder"/> that can be used to build a JQL condition for
+        /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL condition for
         /// the passed JQL name.
         /// </summary>
         /// <param name="clauseName"> the name of the JQL condition to add. </param>
@@ -733,7 +733,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator operand} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator">One of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator">One of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="operand">Defines an operand that will serve as the clause value. Must not be null. </param>
         /// <returns>A reference to the current builder.</returns>
         IJqlClauseBuilder AddCondition(string clauseName, Operator @operator, IOperand operand);
@@ -742,7 +742,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator (operands)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="operands"> values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         IJqlClauseBuilder AddCondition(string clauseName, Operator @operator, params IOperand[] operands);
@@ -751,7 +751,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// Add the JQL condition {@code clauseName operator (operands)} to the query being built.
         /// </summary>
         /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
-        /// <param name="operator"> one of the enumerated <seealso cref="Operator"/>s. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
         /// <param name="operands"> values for the condition. Must not be null, empty or contain any null values. </param>
         /// <returns> a reference to the current builder. </returns>
         IJqlClauseBuilder AddCondition<T>(string clauseName, Operator @operator, ICollection<T> operands) where T : IOperand;

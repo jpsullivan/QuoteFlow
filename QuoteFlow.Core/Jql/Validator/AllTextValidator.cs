@@ -9,12 +9,12 @@ namespace QuoteFlow.Core.Jql.Validator
 {
     /// <summary>
     /// Validation for the "all text fields" clause. Since this clause does not support searching on EMPTY, we can just
-    /// reuse the <seealso cref="CommentValidator"/>.
+    /// reuse the <see cref="CommentValidator"/>.
     /// 
     /// "All text" clause only supports the LIKE operator - NOT LIKE is too hard due to field visibility calculations, and we
     /// couldn't decide whether or not aggregate results should be ORed or ANDed together.
     /// 
-    /// All free text fields ultimately validate in the same way, using <seealso cref="FreeTextFieldValidator"/>, so we only do one
+    /// All free text fields ultimately validate in the same way, using <see cref="FreeTextFieldValidator"/>, so we only do one
     /// validation as opposed to going through each field and validating.
     /// </summary>
     public sealed class AllTextValidator : IClauseValidator

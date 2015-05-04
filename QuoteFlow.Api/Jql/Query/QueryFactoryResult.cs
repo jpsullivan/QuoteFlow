@@ -67,7 +67,7 @@ namespace QuoteFlow.Api.Jql.Query
         /// <param name="results">A list of results you want to merge; must not be null or contain nulls</param>
         /// <returns>
         /// non-false results merged in a new boolean query with SHOULD. The result should never need negation, i.e.
-        /// <seealso cref="MustNotOccur"/> will always be false.
+        /// <see cref="MustNotOccur"/> will always be false.
         /// </returns>
         public static QueryFactoryResult MergeResultsWithShould(IEnumerable<QueryFactoryResult> results)
         {

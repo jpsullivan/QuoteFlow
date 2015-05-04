@@ -13,22 +13,22 @@ namespace QuoteFlow.Api.Asset.CustomFields.Searchers
     public interface ICustomFieldSearcherClauseHandler
     {
         /// <summary>
-        /// Provides a validator for <seealso cref="TerminalClause"/>'s created by this searcher.
+        /// Provides a validator for <see cref="TerminalClause"/>'s created by this searcher.
         /// </summary>
-        /// <returns> a validator for <seealso cref="TerminalClause"/>'s created by this searcher. </returns>
+        /// <returns> a validator for <see cref="TerminalClause"/>'s created by this searcher. </returns>
         IClauseValidator ClauseValidator { get; }
 
         /// <summary>
-        /// Provides a lucene query generator for <seealso cref="TerminalClause"/>'s created by this searcher.
+        /// Provides a lucene query generator for <see cref="TerminalClause"/>'s created by this searcher.
         /// </summary>
-        /// <returns> a lucene query generator for <seealso cref="TerminalClause"/>'s created by this searcher. </returns>
+        /// <returns> a lucene query generator for <see cref="TerminalClause"/>'s created by this searcher. </returns>
         IClauseQueryFactory ClauseQueryFactory { get; }
 
         /// <summary>
-        /// Provides a set of the supported <seealso cref="Operator"/>'s that this custom field searcher
+        /// Provides a set of the supported <see cref="Operator"/>'s that this custom field searcher
         /// can handle for its searching.
         /// 
-        /// This will be used to populate the <seealso cref="IClauseInformation.SupportedOperators"/>.
+        /// This will be used to populate the <see cref="IClauseInformation.SupportedOperators"/>.
         /// </summary>
         /// <returns> a set of supported operators. </returns>
         Set<Operator> SupportedOperators { get; }
@@ -38,7 +38,7 @@ namespace QuoteFlow.Api.Asset.CustomFields.Searchers
         /// to infer some information about how the search will behave and how it will interact with other elements in
         /// the system.
         /// 
-        /// This will be used to populate the <seealso cref="ClauseInformation.DataType"/>.
+        /// This will be used to populate the <see cref="ClauseInformation.DataType"/>.
         /// </summary>
         /// <returns>The QuoteFlowDataType that this clause can handle.</returns>
         IQuoteFlowDataType DataType { get; }

@@ -4,7 +4,7 @@ using Lucene.Net.Search;
 namespace QuoteFlow.Core.Lucene.Index
 {
     /// <summary>
-    /// Management of an <seealso cref="Index"/>
+    /// Management of an <see cref="Index"/>
     /// </summary>
     public interface IIndexManager : IDisposable
     {
@@ -16,12 +16,12 @@ namespace QuoteFlow.Core.Lucene.Index
         IIndex Index { get; }
 
         /// <summary>
-        /// Get the current <seealso cref="IndexSearcher"/> from the <seealso cref="Index"/>.
+        /// Get the current <see cref="IndexSearcher"/> from the <see cref="Index"/>.
         /// 
-        /// You must call the <seealso cref="IndexSearcher#close() close"/> method in a
+        /// You must call the <see cref="IndexSearcher#close() close"/> method in a
         /// finally block once the searcher is no longer needed.
         /// </summary>
-        /// <returns> the current <seealso cref="IndexSearcher"/></returns>
+        /// <returns> the current <see cref="IndexSearcher"/></returns>
         IndexSearcher OpenSearcher();
 
         /// <summary>

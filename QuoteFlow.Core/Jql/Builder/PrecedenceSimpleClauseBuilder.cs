@@ -456,7 +456,7 @@ namespace QuoteFlow.Core.Jql.Builder
             }
 
             /// <summary>
-            /// When NOT is called we transition to the <seealso cref="PrecedenceSimpleClauseBuilder.NotState"/> expecting a NOT clause
+            /// When NOT is called we transition to the <see cref="PrecedenceSimpleClauseBuilder.NotState"/> expecting a NOT clause
             /// to be added.
             /// </summary>
             /// <param name="stacks"> current stacks for the builder. </param>
@@ -731,8 +731,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
         /// <summary>
         /// This is the state of the builder when it is expecting a clause, sub-clause or a NOT clause. This is slightly
-        /// different from the <seealso cref="PrecedenceSimpleClauseBuilder.StartState"/> as building is illegal and that this must
-        /// happen after the bulider was in the <seealso cref="PrecedenceSimpleClauseBuilder.OperatorState"/>.
+        /// different from the <see cref="PrecedenceSimpleClauseBuilder.StartState"/> as building is illegal and that this must
+        /// happen after the bulider was in the <see cref="PrecedenceSimpleClauseBuilder.OperatorState"/>.
         /// </summary>
         private class ClauseState : IBuilderState
         {
@@ -839,7 +839,7 @@ namespace QuoteFlow.Core.Jql.Builder
             }
 
             /// <summary>
-            /// Starting a NOT clause will put us in the <seealso cref="PrecedenceSimpleClauseBuilder.NotState"/>.
+            /// Starting a NOT clause will put us in the <see cref="PrecedenceSimpleClauseBuilder.NotState"/>.
             /// </summary>
             /// <param name="stacks"> current stacks for the builder. </param>
             /// <param name="defaultOperator"> the default combining operator. </param>

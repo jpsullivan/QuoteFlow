@@ -12,9 +12,9 @@ using QuoteFlow.Core.Util;
 namespace QuoteFlow.Core.Jql.Validator
 {
     /// <summary>
-    /// Used to perform validation over a <seealso cref="IQuery"/>. Uses
-    /// <seealso cref="IClauseValidator"/>'s to validate the individual clauses and
-    /// <seealso cref="OperandHandler.Validate(User, IOperand, TerminalClause)"/>
+    /// Used to perform validation over a <see cref="IQuery"/>. Uses
+    /// <see cref="IClauseValidator"/>'s to validate the individual clauses and
+    /// <see cref="OperandHandler.Validate(User, IOperand, TerminalClause)"/>
     /// to validate the operands.
     /// </summary>
     public class ValidatorVisitor : IClauseVisitor<IMessageSet>

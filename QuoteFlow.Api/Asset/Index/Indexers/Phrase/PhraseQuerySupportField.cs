@@ -3,7 +3,7 @@
 namespace QuoteFlow.Api.Asset.Index.Indexers.Phrase
 {
     /// <summary>
-    /// Encapsulates the information to create a special purpose <seealso cref="Field"/> to be used for quoted phrase 
+    /// Encapsulates the information to create a special purpose <see cref="Field"/> to be used for quoted phrase 
     /// query searches for a given QuoteFlow text field.
     /// </summary>
     public class PhraseQuerySupportField

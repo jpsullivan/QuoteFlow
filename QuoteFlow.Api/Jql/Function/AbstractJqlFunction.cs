@@ -11,9 +11,9 @@ using QuoteFlow.Api.Util;
 namespace QuoteFlow.Api.Jql.Function
 {
     /// <summary>
-    /// A useful base implementation of the <seealso cref="IJqlFunction"/> interface, that
-    /// provides sensible default behaviour for the <seealso cref="#init(JqlFunctionModuleDescriptor)"/>, <seealso cref="GetFunctionName()"/>
-    /// and <seealso cref="IsList()"/> methods. You should not need to override these methods in your implementation.
+    /// A useful base implementation of the <see cref="IJqlFunction"/> interface, that
+    /// provides sensible default behaviour for the <see cref="#init(JqlFunctionModuleDescriptor)"/>, <see cref="GetFunctionName()"/>
+    /// and <see cref="IsList()"/> methods. You should not need to override these methods in your implementation.
     /// </summary>
     public abstract class AbstractJqlFunction : IJqlFunction
     {

@@ -291,7 +291,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 		}
 
         /// <summary>
-		/// Class that is used by the manager to build its state from <seealso cref="SearchHandler"/>s.
+		/// Class that is used by the manager to build its state from <see cref="SearchHandler"/>s.
 		/// </summary>
         private class SearchHandlerIndexer
 		{

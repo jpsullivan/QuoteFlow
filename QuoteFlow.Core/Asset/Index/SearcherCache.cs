@@ -9,7 +9,7 @@ namespace QuoteFlow.Core.Asset.Index
 {
     /// <summary>
     /// This class manages the searcher thread local cache. The actual searchers themselves are
-    /// stored in this object, which is stored in a <seealso cref="ThreadLocal{T}"/>.
+    /// stored in this object, which is stored in a <see cref="ThreadLocal{T}"/>.
     /// </summary>
     public class SearcherCache
     {

@@ -20,7 +20,7 @@ namespace QuoteFlow.Core.Asset.CustomFields.Searchers.Information
         }
 
         /// <summary>
-        /// Regular <seealso cref="IAssetSearcher"/>s get their <seealso cref="IFieldIndexer"/>s
+        /// Regular <see cref="IAssetSearcher"/>s get their <see cref="IFieldIndexer"/>s
         /// by instantiating the class objects passed to them. However, Custom Fields work differently because they
         /// have their indexers instantiated elsewhere for them.
         /// </summary>

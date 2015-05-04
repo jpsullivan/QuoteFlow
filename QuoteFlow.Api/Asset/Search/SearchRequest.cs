@@ -95,7 +95,7 @@ namespace QuoteFlow.Api.Asset.Search
         }
 
         /// <summary>
-        /// Creates a SearchRequest with the specified <seealso cref="IQuery"/> and no other attributes.
+        /// Creates a SearchRequest with the specified <see cref="IQuery"/> and no other attributes.
         /// This can be used to create a programtic SearchRequest that can be used to perform a search but is not ready to
         /// be saved.
         /// </summary>

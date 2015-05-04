@@ -19,7 +19,7 @@ namespace QuoteFlow.Core.Util
         }
 
 //        /// <summary>
-//        /// Turns a given <seealso cref="LocalDate"/> value into a String suitable for storing and searching in Lucene.
+//        /// Turns a given <see cref="LocalDate"/> value into a String suitable for storing and searching in Lucene.
 //        /// <p>
 //        /// The date  is stored as "YYYYMMDD".  If the date is null we store "99999999"
 //        /// which causes nulls to sort to the end.  (This is traditional JIRA behaviour)

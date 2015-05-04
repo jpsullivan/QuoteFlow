@@ -132,7 +132,7 @@ namespace QuoteFlow.Api.Asset.Search.Parameters.Lucene.Sort
 
         /// <summary>
         /// For each document in the index, it returns an array of string collections for each matching term.
-        /// Uses the <seealso cref="DefaultMatchHandler"/>.
+        /// Uses the <see cref="DefaultMatchHandler"/>.
         /// </summary>
         /// <param name="reader">The index to read.</param>
         /// <param name="field">The field to check the documents for.</param>
@@ -148,7 +148,7 @@ namespace QuoteFlow.Api.Asset.Search.Parameters.Lucene.Sort
 
         /// <summary>
         /// For each document in the index, it returns an array of string collections for each matching term.
-        /// Uses the <seealso cref="SingleValueMatchHandler"/>, so any collections that are returned are guaranteed
+        /// Uses the <see cref="SingleValueMatchHandler"/>, so any collections that are returned are guaranteed
         /// to contain exactly one (possibly <tt>null</tt>) value in them.
         /// </summary>
         /// <param name="reader">The index to read.</param>
@@ -165,7 +165,7 @@ namespace QuoteFlow.Api.Asset.Search.Parameters.Lucene.Sort
 
         /// <summary>
         /// For each document that has at least one value defined for the specified field,
-        /// invokes <seealso cref="MatchHandler.HandleMatchedDocument(int, String)"/> with the document
+        /// invokes <see cref="MatchHandler.HandleMatchedDocument(int, String)"/> with the document
         /// index and the field value as the argument.
         /// </summary>
         /// <param name="reader">The index to read.</param>

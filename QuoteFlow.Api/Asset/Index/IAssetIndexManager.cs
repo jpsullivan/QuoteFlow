@@ -99,14 +99,14 @@ namespace QuoteFlow.Api.Asset.Index
         /// <summary>
         /// Reindex a set of assets.
         /// </summary>
-        /// <param name="issueObjects"> Set of <seealso cref="IAsset"/>s to reindex.</param>
+        /// <param name="issueObjects"> Set of <see cref="IAsset"/>s to reindex.</param>
         /// <returns>Reindex time in ms.</returns>
         int ReIndexAssetObjects<T>(ICollection<T> issueObjects) where T : IAsset;
 
         /// <summary>
         /// Reindex a set of assets.
         /// </summary>
-        /// <param name="issueObjects">Set of <seealso cref="IAsset"/>s to reindex.</param>
+        /// <param name="issueObjects">Set of <see cref="IAsset"/>s to reindex.</param>
         /// <param name="reIndexComments"></param>
         /// <returns>Reindex time in ms.</returns>
         int ReIndexAssetObjects<T>(ICollection<T> issueObjects, bool reIndexComments) where T : IAsset;
@@ -114,7 +114,7 @@ namespace QuoteFlow.Api.Asset.Index
         /// <summary>
         /// Reindex a set of issues.
         /// </summary>
-        /// <param name="assetObjects">Set of <seealso cref="IAsset"/>s to reindex.</param>
+        /// <param name="assetObjects">Set of <see cref="IAsset"/>s to reindex.</param>
         /// <param name="reIndexComments"> whether to reindex the comments or not.</param>
         /// <param name="updateReplicatedIndexStore">Whether to store index operations in the replicated index store.</param>
         /// <returns>Reindex time in ms.</returns>
@@ -137,31 +137,31 @@ namespace QuoteFlow.Api.Asset.Index
         long Release();
 
         /// <summary>
-        /// Get an <seealso cref="IndexSearcher"/> that can be used to search the issue index.
+        /// Get an <see cref="IndexSearcher"/> that can be used to search the issue index.
         /// <p />
-        /// Note: This is an unmanaged IndexSearcher. You MUST call <seealso cref="IndexSearcher#close()"/> when you are done with it. Alternatively you should
-        /// really call <seealso cref="SearchProviderFactory.GetSearcher(string)"/> passing in <seealso cref="SearchProviderFactory.ISSUE_INDEX"/> as it is a managed searcher
+        /// Note: This is an unmanaged IndexSearcher. You MUST call <see cref="IndexSearcher#close()"/> when you are done with it. Alternatively you should
+        /// really call <see cref="SearchProviderFactory.GetSearcher(string)"/> passing in <see cref="SearchProviderFactory.ISSUE_INDEX"/> as it is a managed searcher
         /// and all the closing semantics are handled for you.
         /// </summary>
         IndexSearcher GetAssetSearcher();
 
         /// <summary>
-        /// Get an <seealso cref="IndexSearcher"/> that can be used to search the comment index.
+        /// Get an <see cref="IndexSearcher"/> that can be used to search the comment index.
         /// <p />
-        /// Note: This is an unmanaged IndexSearcher. You MUST call <seealso cref="IndexSearcher#close()"/> when you are done with it. Alternatively you should
-        /// really call <seealso cref="SearchProviderFactory#getSearcher(String))"/> passing in <seealso cref="SearchProviderFactory#COMMENT_INDEX"/> as it is a managed
+        /// Note: This is an unmanaged IndexSearcher. You MUST call <see cref="IndexSearcher#close()"/> when you are done with it. Alternatively you should
+        /// really call <see cref="SearchProviderFactory#getSearcher(String))"/> passing in <see cref="SearchProviderFactory#COMMENT_INDEX"/> as it is a managed
         /// searcher and all the closing semantics are handled for you.
         /// </summary>
         IndexSearcher GetCommentSearcher();
 
         /// <summary>
-        /// Returns an <seealso cref="Analyzer"/> for searching.
+        /// Returns an <see cref="Analyzer"/> for searching.
         /// </summary>
         /// <returns>An analyzer for searching.</returns>
         global::Lucene.Net.Analysis.Analyzer AnalyzerForSearching { get; }
 
         /// <summary>
-        /// Returns an <seealso cref="Analyzer"/> for indexing.
+        /// Returns an <see cref="Analyzer"/> for indexing.
         /// </summary>
         /// <returns>An analyzer for indexing.</returns>
         global::Lucene.Net.Analysis.Analyzer AnalyzerForIndexing { get; }

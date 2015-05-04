@@ -12,7 +12,7 @@ namespace QuoteFlow.Core.Jql.Validator
     {
         /// <summary>
         /// Fetches the associated ClauseValidators for the provided TerminalClause. The returned value is based on
-        /// the clause's name and the <seealso cref="com.atlassian.query.operator.Operator"/> that is associated with the
+        /// the clause's name and the <see cref="com.atlassian.query.operator.Operator"/> that is associated with the
         /// provided clause. Multiple values may be returned for custom fields.
         /// </summary>
         /// <param name="searcher"> the user who is performing the search. </param>
@@ -23,7 +23,7 @@ namespace QuoteFlow.Core.Jql.Validator
 
         /// <summary>
         /// Fetches the associated ClauseValidators for the provided WasClause. The returned value is based on
-        /// the clause's name and the <seealso cref="com.atlassian.query.operator.Operator"/> that is associated with the
+        /// the clause's name and the <see cref="com.atlassian.query.operator.Operator"/> that is associated with the
         /// provided clause. Multiple values may be returned for custom fields.
         /// </summary>
         /// <param name="searcher"> the user who is performing the search. </param>

@@ -20,7 +20,7 @@ namespace QuoteFlow.Api.Jql.Query.Clause
 
 		/// <summary>
 		/// Creates a terminal clause with the specified name, operator and turns the string value into a
-		/// <seealso cref="SingleValueOperand"/> populated with a string value.
+		/// <see cref="SingleValueOperand"/> populated with a string value.
 		/// </summary>
 		/// <param name="name"> the name for the clause. </param>
         /// <param name="oprator"> the operator for the clause. </param>
@@ -68,12 +68,12 @@ namespace QuoteFlow.Api.Jql.Query.Clause
 		}
 
 		/// <summary>
-		/// A convienience constructor that will create a clause with the <seealso cref="Operator#EQUALS"/>
-		/// operator if there is only one value in the array and with the <seealso cref="Operator#IN"/>
+		/// A convienience constructor that will create a clause with the <see cref="Operator#EQUALS"/>
+		/// operator if there is only one value in the array and with the <see cref="Operator#IN"/>
 		/// operator if there are more than one value in the array.
 		/// </summary>
 		/// <param name="name"> the name for the clause. </param>
-		/// <param name="values"> the string values that will be turned into <seealso cref="SingleValueOperand"/>'s
+		/// <param name="values"> the string values that will be turned into <see cref="SingleValueOperand"/>'s
 		/// containing a string value. </param>
         public TerminalClause(string name, params string[] values)
 		{
@@ -92,12 +92,12 @@ namespace QuoteFlow.Api.Jql.Query.Clause
 		}
 
 		/// <summary>
-		/// A convienience constructor that will create a clause with the <seealso cref="Operator#EQUALS"/>
-		/// operator if there is only one value in the array and with the <seealso cref="Operator#IN"/>
+		/// A convienience constructor that will create a clause with the <see cref="Operator#EQUALS"/>
+		/// operator if there is only one value in the array and with the <see cref="Operator#IN"/>
 		/// operator if there are more than one value in the array.
 		/// </summary>
 		/// <param name="name">The name for the clause.</param>
-		/// <param name="values">The long values that will be turned into <seealso cref="SingleValueOperand"/>'s
+		/// <param name="values">The long values that will be turned into <see cref="SingleValueOperand"/>'s
 		/// containing a long value.</param>
         public TerminalClause(string name, params int?[] values)
 		{

@@ -9,11 +9,11 @@ namespace QuoteFlow.Api.Asset.Search.Searchers
 {
     /// <summary>
     /// The interface defines an object responsible for all search related activities in the Asset Navigator.
-    /// The interface operates similar to the <seealso cref="Field"/> objects (e.g. <seealso cref="OrderableField"/>. 
-    /// It is responsible for populating itself from <seealso cref="ActionParams"/> and <seealso cref="SearchRequest"/> 
+    /// The interface operates similar to the <see cref="Field"/> objects (e.g. <see cref="OrderableField"/>. 
+    /// It is responsible for populating itself from <see cref="ActionParams"/> and <see cref="SearchRequest"/> 
     /// as well as all rendering related activities.
     /// 
-    /// <seealso cref="CustomField"/>Searchers should still extend the sub-interface <seealso cref="CustomFieldSearcher"/>.
+    /// <see cref="CustomField"/>Searchers should still extend the sub-interface <see cref="CustomFieldSearcher"/>.
     /// </summary>
     public interface IAssetSearcher<T> where T : ISearchableField
     {
@@ -31,7 +31,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers
 
         /// <summary>
         /// Provides an object that will allow you to transform raw request parameters to field holder values and
-        /// field holder values to <seealso cref="IClause"/> search representations.
+        /// field holder values to <see cref="IClause"/> search representations.
         /// </summary>
         /// <returns> the search input handler for this searcher. </returns>
         ISearchInputTransformer SearchInputTransformer { get; }

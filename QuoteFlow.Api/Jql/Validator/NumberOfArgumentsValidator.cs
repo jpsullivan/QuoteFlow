@@ -7,7 +7,7 @@ namespace QuoteFlow.Api.Jql.Validator
 {
     /// <summary>
     /// Simple Function Operand Validator that validates the number of arguments in the
-    /// <seealso cref="FunctionOperand"/>.
+    /// <see cref="FunctionOperand"/>.
     /// </summary>
     public class NumberOfArgumentsValidator
     {

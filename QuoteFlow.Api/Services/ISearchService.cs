@@ -35,7 +35,7 @@ namespace QuoteFlow.Api.Services
         /// <param name="searcher">The user performing the search, which will be used to create a permission filter that filters out
         /// any of the results the user is not able to see and will be used to provide context for the search.</param>
         /// <param name="pager">Pager filter (use <see cref="PagerFilter{T}#getUnlimitedFilter()"/> to get all assets).</param>
-        /// <returns>A <seealso cref="SearchResults"/> containing the resulting issues.</returns>
+        /// <returns>A <see cref="SearchResults"/> containing the resulting issues.</returns>
         SearchResults Search(User searcher, IQuery query, IPagerFilter pager);
 
         /// <summary>
@@ -94,11 +94,11 @@ namespace QuoteFlow.Api.Services
         IQueryContext GetQueryContext(User searcher, IQuery query);
 
         /// <summary>
-        /// Generates a simple QueryContext for the specified <seealso cref="IQuery"/> for the searching user.
+        /// Generates a simple QueryContext for the specified <see cref="IQuery"/> for the searching user.
         /// The simple QueryContext contains only the explicit projects and issue types specified in the Query. If none were
         /// specified, it will be the Global context.
         /// For a better explanation of the differences between the full and simple QueryContexts, see
-        /// <seealso cref="QueryContextVisitor"/>.
+        /// <see cref="QueryContextVisitor"/>.
         /// </summary>
         /// <param name="searcher">The user performing the search</param>
         /// <param name="query">The search query to generate the context for.</param>
@@ -109,10 +109,10 @@ namespace QuoteFlow.Api.Services
         /// This produces an old-style <see cref="SearchContext"/> based on the passed in
         /// search query and the user that is performing the search.
         /// 
-        /// This will only make sense if the query returns true for <seealso cref="#doesQueryFitFilterForm(com.atlassian.crowd.embedded.api.User, com.atlassian.query.Query)"/>
+        /// This will only make sense if the query returns true for <see cref="#doesQueryFitFilterForm(com.atlassian.crowd.embedded.api.User, com.atlassian.query.Query)"/>
         /// since SearchContext is only relevant for simple queries.
         /// 
-        /// The more acurate context can be gotten by calling <seealso cref="#getQueryContext(com.atlassian.crowd.embedded.api.User, com.atlassian.query.Query)"/>.
+        /// The more acurate context can be gotten by calling <see cref="#getQueryContext(com.atlassian.crowd.embedded.api.User, com.atlassian.query.Query)"/>.
         /// 
         /// If the query will not fit in the simple issue navigator then the generated SearchContext will be empty. This
         /// method never returns a null SearchContext, even when passed a null SearchQuery.
@@ -124,7 +124,7 @@ namespace QuoteFlow.Api.Services
         ISearchContext GetSearchContext(User searcher, IQuery query);
 
         /// <summary>
-        /// Gets the JQL string representation for the passed query. Returns the string from <seealso cref="com.atlassian.query.Query#getQueryString()"/>
+        /// Gets the JQL string representation for the passed query. Returns the string from <see cref="com.atlassian.query.Query#getQueryString()"/>
         /// if it exists or generates one if it does not. Equilavent to:
         /// <pre>
         ///  if (query.getQueryString() != null)
@@ -139,7 +139,7 @@ namespace QuoteFlow.Api.Services
         string GetJqlString(IQuery query);
 
         /// <summary>
-        /// Generates a JQL string representation for the passed query. The JQL string is always generated, that is, <seealso cref="com.atlassian.query.Query#getQueryString()"/>
+        /// Generates a JQL string representation for the passed query. The JQL string is always generated, that is, <see cref="com.atlassian.query.Query#getQueryString()"/>
         /// is completely ignored if it exists. The returned JQL is automatically escaped as necessary.
         /// </summary>
         /// <param name="query"> the query. Cannot be null. </param>

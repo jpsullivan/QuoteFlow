@@ -10,7 +10,7 @@ using QuoteFlow.Models.Jql.AntlrGen;
 namespace QuoteFlow.Core.Jql.Parser
 {
 	/// <summary>
-	/// Factory for <seealso cref="JqlParseErrorMessage"/> objects.
+	/// Factory for <see cref="JqlParseErrorMessage"/> objects.
 	/// 
 	/// @since v4.0
 	/// </summary>

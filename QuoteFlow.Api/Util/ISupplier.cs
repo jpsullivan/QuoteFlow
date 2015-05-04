@@ -5,7 +5,7 @@
     /// Factory, Generator, Builder, Closure, Producer or something else entirely. No
     /// guarantees are implied by this interface. Implementations may return null if
     /// no objects are available, can optionally block until elements are available
-    /// or throw <seealso cref="NoSuchElementException"/>.
+    /// or throw <see cref="NoSuchElementException"/>.
     /// 
     /// Thread safety of a Supplier is not mandated by this interface, although
     /// serious care and consideration should be taken with any implementations that

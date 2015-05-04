@@ -6,16 +6,16 @@ using QuoteFlow.Api.Models;
 namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
 {
     /// <summary>
-    /// Used to convert input parameters as submitted by a <seealso cref="SearchRenderer"/>
+    /// Used to convert input parameters as submitted by a <see cref="SearchRenderer"/>
     /// into the intermediate form, as stored in a <see cref="IFieldValuesHolder"/> and then
     /// from a FieldValuesHolder into an object form that is stored in the
-    /// <seealso cref="ISearchRequest"/> that is used to execute a search in QuoteFlow.
+    /// <see cref="ISearchRequest"/> that is used to execute a search in QuoteFlow.
     /// </summary>
     public interface ISearchInputTransformer
     {
         /// <summary>
-        /// Populate <seealso cref="FieldValuesHolder"/> object with whatever values the searcher is interested in from the
-        /// <seealso cref="ActionParams"/>. This transforms the "raw" request parameters
+        /// Populate <see cref="FieldValuesHolder"/> object with whatever values the searcher is interested in from the
+        /// <see cref="ActionParams"/>. This transforms the "raw" request parameters
         /// into a form that the other processing methods can handle (usually a mapping of the fields name as the key
         /// and a list of the values as the value).
         /// </summary>
@@ -41,7 +41,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         /// populate the <see cref="IFieldValuesHolder"/> from the a query information in the
         /// query.
         /// The query elements that are considered "relevant" to this method would be those that are produced by the
-        /// <seealso cref="GetSearchClause(User, IFieldValuesHolder)"/> method.
+        /// <see cref="GetSearchClause(User, IFieldValuesHolder)"/> method.
         /// </summary>
         /// <param name="searcher">The user performing the action.</param>
         /// <param name="fieldValuesHolder">Is the object that should have its values set by this method and that will contain
@@ -69,7 +69,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         /// </summary>
         /// <param name="searcher">The user performing this action.</param>
         /// <param name="fieldValuesHolder"> contains values populated by the searchers </param>
-        /// <returns> a <seealso cref="IClause"/> that represents the users search based on the fieldValuesHolder;
+        /// <returns> a <see cref="IClause"/> that represents the users search based on the fieldValuesHolder;
         /// null if this searcher has no responsibility in the given input. </returns>
         IClause GetSearchClause(User searcher, IFieldValuesHolder fieldValuesHolder);
     }

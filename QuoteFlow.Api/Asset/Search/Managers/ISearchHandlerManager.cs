@@ -30,7 +30,7 @@ namespace QuoteFlow.Api.Asset.Search.Managers
 
 		/// <summary>
 		/// Get all searcher groups. Note that the <see cref="SearcherGroup"/> will
-		/// still appear even if no <seealso cref="IAssetSearcher"/> are shown for the group.
+		/// still appear even if no <see cref="IAssetSearcher"/> are shown for the group.
 		/// </summary>
 		/// <returns>Collection of <see cref="SearcherGroup"/> </returns>
 		ICollection<SearcherGroup> SearcherGroups {get;}
@@ -43,7 +43,7 @@ namespace QuoteFlow.Api.Asset.Search.Managers
         IAssetSearcher<ISearchableField> GetSearcher(string id);
 
 		/// <summary>
-		/// Refreshes the <seealso cref="SearchHandlerManager"/>.
+		/// Refreshes the <see cref="SearchHandlerManager"/>.
 		/// </summary>
 		void Refresh();
 

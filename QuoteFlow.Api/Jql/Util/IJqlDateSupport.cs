@@ -12,7 +12,7 @@ namespace QuoteFlow.Api.Jql.Util
 		/// when parsing the date string.
 		/// </summary>
 		/// <param name="dateString"> the string to parse. Cannot be null. </param>
-		/// <returns> the parsed date or null if it cant be parsed.  You did call <seealso cref="Validate(String)"/> right? </returns>
+		/// <returns> the parsed date or null if it cant be parsed.  You did call <see cref="Validate(String)"/> right? </returns>
 		/// <exception cref="IllegalArgumentException"> if the passed dateString is null. </exception>
 		DateTime ConvertToDate(string dateString);
 
@@ -40,7 +40,7 @@ namespace QuoteFlow.Api.Jql.Util
 		/// </summary>
 		/// <param name="dateString"> the string to parse. Cannot be null. </param>
 		/// <returns> the parsed datetime as a range using the implied precision.  Or null if the date cant be parsed. You did
-		///         call <seealso cref="Validate(String)"/> right? </returns>
+		///         call <see cref="Validate(String)"/> right? </returns>
 		/// <exception cref="IllegalArgumentException"> if the passed dateString is null. </exception>
 		DateRange ConvertToDateRangeWithImpliedPrecision(string dateString);
 

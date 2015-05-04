@@ -12,7 +12,7 @@ namespace QuoteFlow.Api.Jql.Query.Clause
         IOperand Operand { get; }
 
         /// <summary>
-        /// Returns the operator used by the clause <seealso cref="Operator"/>.
+        /// Returns the operator used by the clause <see cref="Operator"/>.
         /// </summary>
         Operator Operator { get; }
 
