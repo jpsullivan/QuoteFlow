@@ -108,10 +108,7 @@ namespace QuoteFlow.Core.Asset.Search
                 foreach (var catalogId in catalogIds)
                 {
                     var manufacturerIds = (ManufacturerIds.AnySafe() ? ManufacturerIds : AllManufacturers);
-                    foreach (var manufacturerId in manufacturerIds)
-                    {
-                        contexts.Add(new AssetContext(catalogId, manufacturerId));
-                    }
+                    contexts.AddRange(manufacturerIds.Select(id => new AssetContext(catalogId, id)));
                 }
 
                 return catalogIds.Select(catalogId => new AssetContext(catalogId));
@@ -152,6 +149,33 @@ namespace QuoteFlow.Core.Asset.Search
                 return _manufacturers ?? (_manufacturers = ManufacturerIds.Select(id => ManufacturerService.GetManufacturer(id)));
             }
             set { _manufacturers = value; }
+        }
+
+        private bool Equals(ISearchContext other)
+        {
+            if ((_catalogIds == null && other.CatalogIds == null) && (_manufacturerIds == null && other.ManufacturerIds == null))
+            {
+                return true;
+            }
+
+            return _catalogIds.SequenceEqual(other.CatalogIds) && _manufacturerIds.SequenceEqual(other.ManufacturerIds);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((SearchContext) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((_catalogIds != null ? _catalogIds.GetHashCode() : 0)*397) ^
+                       (_manufacturerIds != null ? _manufacturerIds.GetHashCode() : 0);
+            }
         }
 
         public override string ToString()
