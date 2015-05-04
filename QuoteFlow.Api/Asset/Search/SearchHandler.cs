@@ -9,13 +9,13 @@ namespace QuoteFlow.Api.Asset.Search
 {
     /// <summary>
     /// Object used by the field to indicate how it can be searched and indexed. 
-    /// The field controls how QuoteFlow indexes an issue by specifying a list of <seealso cref="IFieldIndexer"/>s. 
-    /// Each JQL clause in QuoteFlow is represented by a <seealso cref="ClauseRegistration"/>.
-    /// It consists of a set of JQL names and the <seealso cref="IClauseHandler"/> that can be used to process
+    /// The field controls how QuoteFlow indexes an asset by specifying a list of <see cref="IFieldIndexer"/>s. 
+    /// Each JQL clause in QuoteFlow is represented by a <see cref="ClauseRegistration"/>.
+    /// It consists of a set of JQL names and the <see cref="IClauseHandler"/> that can be used to process
     /// those JQL names in a query.
     /// 
-    /// Each field *may* have one <seealso cref="IAssetSearcher{T}"/> that uses a list of JQL
-    /// clauses to create a JQL search. This is specified in the <seealso cref="SearcherRegistration"/>
+    /// Each field *may* have one <see cref="IAssetSearcher{T}"/> that uses a list of JQL
+    /// clauses to create a JQL search. This is specified in the <see cref="SearcherRegistration"/>
     /// on the SearchHandler. QuoteFlow will keep the association between the AssetSearcher 
     /// and JQL clauses (ClauseHandler) to perform the mapping from JQL to the GUI version of 
     /// Asset Navigator. Listing ClauseHandlers in the SearcherRegistration that are not related to 
@@ -63,7 +63,7 @@ namespace QuoteFlow.Api.Asset.Search
         }
 
         /// <summary>
-        /// Create a new handler with the passed <seealso cref="IFieldIndexer"/>s and <see cref="SearcherRegistration"/>.
+        /// Create a new handler with the passed <see cref="IFieldIndexer"/>s and <see cref="SearcherRegistration"/>.
         /// Same as calling {@code this(fieldIndexers, searcherRegistration,Collections.<ClauseRegistration>emptyList());}
         /// </summary>
         /// <param name="fieldIndexers">The indexers to associate with the handler.</param>
@@ -74,8 +74,8 @@ namespace QuoteFlow.Api.Asset.Search
         }
 
         /// <summary>
-        /// Holds the link between an <seealso cref="AssetSearcher"/> and the JQL clauses (as
-        /// <seealso cref="ClauseRegistration"/>s) that it uses in the background to implement searching. 
+        /// Holds the link between an <see cref="AssetSearcher"/> and the JQL clauses (as
+        /// <see cref="ClauseRegistration"/>s) that it uses in the background to implement searching. 
         /// This relationship is kept within QuoteFlow so that is can perform the JQL to Asset navigator
         /// translation.
         /// </summary>
