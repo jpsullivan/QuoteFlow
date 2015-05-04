@@ -36,12 +36,15 @@ namespace QuoteFlow.Api.Asset.Index
 
 		public QuoteFlowAnalyzer(bool indexing, Stemming stemming, StopWordRemoval stopWordRemoval)
 		{
-			this._indexing = indexing;
-			this._stemming = stemming;
-			this._stopWordRemoval = stopWordRemoval;
+			_indexing = indexing;
+			_stemming = stemming;
+			_stopWordRemoval = stopWordRemoval;
 		    _fallbackAnalyzer = new SimpleAnalyzer();
             Analyzers.Add("english", MakeAnalyzer());
-		    //fallbackAnalyzer = new SimpleAnalyzer(LuceneVersion.Get(), this.indexing);
+            
+            // todo lucene 4.8
+            //_fallbackAnalyzer = new SimpleAnalyzer(LuceneVersion.Get(), this.indexing);
+		    _fallbackAnalyzer = new SimpleAnalyzer();
 		}
 
         internal global::Lucene.Net.Analysis.Analyzer MakeAnalyzer()

@@ -1104,7 +1104,6 @@
     <Folder Include="Content\fonts\" />
     <Folder Include="Infrastructure\Exceptions\Antlr\" />
     <Folder Include="Infrastructure\Exceptions\Search\" />
-    <Folder Include="Infrastructure\Lucene\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
