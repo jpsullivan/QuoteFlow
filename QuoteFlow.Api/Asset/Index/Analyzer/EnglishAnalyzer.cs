@@ -11,16 +11,16 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
     /// </summary>
     public class EnglishAnalyzer : TextAnalyzer
     {
-        private readonly Version version;
-        private readonly Func<TokenStream, TokenStream> stemmingAlgorithm;
-        private readonly Func<TokenStream, TokenStream> stopWordFilter;
+        private readonly Version _version;
+        private readonly Func<TokenStream, TokenStream> _stemmingAlgorithm;
+        private readonly Func<TokenStream, TokenStream> _stopWordFilter;
 
         public EnglishAnalyzer(Version version, bool indexing, Func<TokenStream, TokenStream> stemmingStrategy, Func<TokenStream, TokenStream> stopWordFilter)
             : base(indexing)
         {
-            this.stemmingAlgorithm = stemmingStrategy;
-            this.stopWordFilter = stopWordFilter;
-            this.version = version;
+            _stemmingAlgorithm = stemmingStrategy;
+            _stopWordFilter = stopWordFilter;
+            _version = version;
         }
 
         /// <summary>
@@ -31,15 +31,15 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
         /// <returns></returns>
         public override TokenStream TokenStream(string fieldname, TextReader reader)
         {
-            TokenStream result = new StandardTokenizer(version, reader);
+            TokenStream result = new StandardTokenizer(_version, reader);
             result = new StandardFilter(result);
             result = WrapStreamForIndexing(result);
 
             result = new LowerCaseFilter(result);
-            result = stopWordFilter.Invoke(result);
+            result = _stopWordFilter.Invoke(result);
 
             result = WrapStreamForWilcardSearchSupport(result);
-            result = stemmingAlgorithm.Invoke(result);
+            result = _stemmingAlgorithm.Invoke(result);
 
             return result;
         }

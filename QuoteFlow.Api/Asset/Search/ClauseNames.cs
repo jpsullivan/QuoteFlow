@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Wintellect.PowerCollections;
+using QuoteFlow.Api.Infrastructure.Extensions;
 
 namespace QuoteFlow.Api.Asset.Search
 {
@@ -11,7 +11,7 @@ namespace QuoteFlow.Api.Asset.Search
     /// </summary>
     public sealed class ClauseNames
     {
-        public Set<string> JqlFieldNames { get; set; }
+        public List<string> JqlFieldNames { get; set; }
         public string PrimaryName { get; set; }
 
         public ClauseNames(string primaryName)
@@ -20,23 +20,56 @@ namespace QuoteFlow.Api.Asset.Search
         }
 
         public ClauseNames(string primaryName, params string[] names)
-            : this(primaryName, new HashSet<string>(names))
+            : this(primaryName, new List<string>(names))
         {
         }
 
         public ClauseNames(string primaryName, IEnumerable<string> names)
         {
             var newNames = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            // ensure that the primary name isn't empty
+            if (primaryName.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentNullException("primaryName");
+            }
+
+            // ensure that names doesn't contain any empty elements
+            if (names.Any(name => name.IsNullOrWhiteSpace()))
+            {
+                throw new ArgumentNullException("names");
+            }
+
             newNames.UnionWith(names);
             PrimaryName = primaryName;
             // Always make sure the names contains the primary name as well
             newNames.Add(PrimaryName);
-            JqlFieldNames = new Set<string>(newNames);
+            JqlFieldNames = new List<string>(newNames);
         }
 
         public bool Contains(string name)
         {
             return JqlFieldNames.Contains(name);
+        }
+
+        private bool Equals(ClauseNames other)
+        {
+            return JqlFieldNames.SequenceEqual(other.JqlFieldNames) && string.Equals(PrimaryName, other.PrimaryName);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj is ClauseNames && Equals((ClauseNames) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((JqlFieldNames != null ? JqlFieldNames.GetHashCode() : 0)*397) ^ (PrimaryName != null ? PrimaryName.GetHashCode() : 0);
+            }
         }
     }
 }

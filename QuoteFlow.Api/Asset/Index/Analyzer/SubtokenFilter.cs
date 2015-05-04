@@ -29,6 +29,7 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
         private static readonly string TOKEN_TYPE_NUM = StandardTokenizer.TOKEN_TYPES[StandardTokenizer.NUM];
         private const string TOKEN_TYPE_EXCEPTION = "EXCEPTION";
 
+        // todo lucene 4.8
         //private CharTermAttribute termAttribute;
         private IPositionIncrementAttribute incrementAttribute;
         private ITypeAttribute typeAttribute;
@@ -81,6 +82,7 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
 
         private void AddSubtokensToStack(char separatorChar, string newTokenType)
         {
+            // todo lucene 4.8
 //            char[] termBuffer = termAttribute.Buffer();
 //            int termLength = termAttribute.Length;
 //            int offset = 0;

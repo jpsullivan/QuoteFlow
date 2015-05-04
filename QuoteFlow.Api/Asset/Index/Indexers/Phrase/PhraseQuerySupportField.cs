@@ -8,7 +8,7 @@ namespace QuoteFlow.Api.Asset.Index.Indexers.Phrase
     /// </summary>
     public class PhraseQuerySupportField
     {
-        private const string PHRASE_QUERY_SUPPORT_FIELD_PREFIX = "pq_support_";
+        private const string PhraseQuerySupportFieldPrefix = "pq_support_";
 
         /// <summary>
         /// Returns the name of the phrase query support field to build for a given field.
@@ -18,7 +18,7 @@ namespace QuoteFlow.Api.Asset.Index.Indexers.Phrase
         /// <returns> A {@code String} containing the name of the phrase query support field. </returns>
         public static string ForIndexField(string indexFieldName)
         {
-            return PHRASE_QUERY_SUPPORT_FIELD_PREFIX + indexFieldName;
+            return PhraseQuerySupportFieldPrefix + indexFieldName;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace QuoteFlow.Api.Asset.Index.Indexers.Phrase
         /// <returns> {@code true} if the passed in field is a phrase query support field; otherwise, {@code false}. </returns>
         public static bool IsPhraseQuerySupportField(string indexFieldName)
         {
-            return indexFieldName.StartsWith(PHRASE_QUERY_SUPPORT_FIELD_PREFIX);
+            return indexFieldName.StartsWith(PhraseQuerySupportFieldPrefix);
         }
     }
 }

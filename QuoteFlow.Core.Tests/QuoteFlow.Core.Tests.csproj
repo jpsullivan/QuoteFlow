@@ -103,6 +103,7 @@
     <Compile Include="Asset\Index\Indexers\FieldIndexerUtilTests.cs" />
     <Compile Include="Asset\Index\QuoteFlowAnalyzerTests.cs" />
     <Compile Include="Asset\Index\SearcherCacheTests.cs" />
+    <Compile Include="Asset\Index\Search\ClauseNamesTests.cs" />
     <Compile Include="Asset\Search\Managers\SearchHandlerManagerTests.cs" />
     <Compile Include="Asset\Search\Util\LuceneQueryModifierTests.cs" />
     <Compile Include="Index\IndexEngineTests.cs" />

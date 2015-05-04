@@ -47,7 +47,7 @@ namespace QuoteFlow.Core.Lucene
 
         class DescriptionAnalyzer : Analyzer
         {
-            private static ISet<string> stopWords = new HashSet<string> 
+            private static readonly ISet<string> StopWords = new HashSet<string> 
             {
                 "a", "an", "and", "are", "as", "at", "be", "but", "by", "for", 
                 "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such",
@@ -55,13 +55,13 @@ namespace QuoteFlow.Core.Lucene
                 "was", "will", "with"
             };
 
-            private static readonly WhitespaceAnalyzer whitespaceAnalyzer = new WhitespaceAnalyzer();
+            private static readonly WhitespaceAnalyzer WhitespaceAnalyzer = new WhitespaceAnalyzer();
 
             public override TokenStream TokenStream(string fieldName, TextReader reader)
             {
-                TokenStream result = whitespaceAnalyzer.TokenStream(fieldName, reader);
+                TokenStream result = WhitespaceAnalyzer.TokenStream(fieldName, reader);
                 result = new LowerCaseFilter(result);
-                result = new StopFilter(true, result, stopWords);
+                result = new StopFilter(true, result, StopWords);
                 return result;
             }
         }

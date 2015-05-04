@@ -26,6 +26,7 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
             {
                 public static readonly Func<TokenStream, SnowballFilter> Aggressive = stream => new SnowballFilter(stream, new EnglishStemmer());
 
+                // todo lucene 4.8 upgrade
 //                public static Func<TokenStream, TokenStream> Moderate = stream => new KStemFilter(stream);
 //
 //                public static Func<TokenStream, TokenStream> Minimal = stream => new EnglishMinimalStemFilter(stream); 

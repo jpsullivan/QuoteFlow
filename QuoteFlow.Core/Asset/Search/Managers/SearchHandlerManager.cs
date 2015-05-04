@@ -443,7 +443,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 
             protected virtual void indexClauseHandlerByJqlName(IField field, SearchHandler.ClauseRegistration registration, bool system)
 			{
-				Set<string> names = GetClauseNames.Invoke(registration.Handler).JqlFieldNames;
+				List<string> names = GetClauseNames.Invoke(registration.Handler).JqlFieldNames;
 				foreach (string name in names)
 				{
 					// We always want to look for a match in lowercase since that is how we cache it

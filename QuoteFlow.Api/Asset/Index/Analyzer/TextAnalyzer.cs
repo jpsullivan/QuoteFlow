@@ -42,7 +42,7 @@ namespace QuoteFlow.Api.Asset.Index.Analyzer
         /// returned. </returns>
         protected TokenStream WrapStreamForWilcardSearchSupport(TokenStream input)
         {
-            // todo: lucene upgrade
+            // todo: lucene 4.8 upgrade
 //            if (Indexing)
 //            {
 //                return new KeywordRepeatFilter(input);
