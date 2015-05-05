@@ -37,7 +37,7 @@ module.exports = {
     }
   },
   templates: {
-    src: src + "/views/**/*.{handlebars, hbs}",
+    src: src + "/views/**/*.{hbs, handlebars}",
     dest: dest + "/js"
   },
   browserify: {

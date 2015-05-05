@@ -62,7 +62,7 @@ var _rootUrl, _applicationPath, _currentOrganizationId, _currentUserId;
 var Application = Marionette.Application.extend({
 
     /**
-     * 
+     *
      */
     initialize: function (options) {
         var parsedOrgId = parseInt(options.currentOrgId, 10);
@@ -83,7 +83,7 @@ var Application = Marionette.Application.extend({
     },
 
     /**
-     * 
+     *
      */
     buildRootUrl: function (context) {
         if (context === "/") {
@@ -98,7 +98,7 @@ var Application = Marionette.Application.extend({
     },
 
     /**
-     * 
+     *
      */
     mapProperties: function () {
         Object.defineProperty(QuoteFlow, 'RootUrl', {

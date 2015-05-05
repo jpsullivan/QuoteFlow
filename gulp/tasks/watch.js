@@ -8,8 +8,6 @@ var gulp    = require('gulp');
 var config  = require('../config');
 
 gulp.task('watch', ['watchify'], function () {
-  if(global.isWatching) {
-    gulp.watch(config.less.src, ['less']);
-    gulp.watch(config.templates.src, ['templates']);
-  }
+  gulp.watch(config.less.src, ['less']);
+  gulp.watch(config.templates.src, ['templates']);
 });

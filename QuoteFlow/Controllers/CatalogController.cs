@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -107,7 +108,8 @@ namespace QuoteFlow.Controllers
             var catalog = CatalogService.GetCatalog(catalogId);
             if (catalog == null)
             {
-                return PageNotFound();
+                Response.StatusCode = (int) HttpStatusCode.NotFound;
+                return View("NotFound");
             }
 
             // track that this catalog has been visited

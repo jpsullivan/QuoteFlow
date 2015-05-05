@@ -21,56 +21,64 @@
     @Html.RenderCssBundle("app.css", BundleOptions.BuildConfigDependent)
 </head>
 <body class="aui-layout ajax-issue-search-and-view @bodyClass">
-    <div id="page">
-        @(User.Identity.IsAuthenticated ? Html.Partial("_AuthenticatedHeader") : Html.Partial("_UnauthenticatedHeader"))
+<div id="page">
+    @(User.Identity.IsAuthenticated ? Html.Partial("_AuthenticatedHeader") : Html.Partial("_UnauthenticatedHeader"))
 
-        <section id="content" role="main">
-            <div class="navigator-container">
-                <div class="navigator-sidebar" id="navigator_sidebar"></div>
-                <div class="navigator-body">
-                    <div class="contained-content">
-                        <header class="saved-search-selector">
-                            <div class="saved-search-operations">
-                                <ul class="operations">
-                                    <li class="aui-dd-parent"><a href="#" class="header-views header-operations aui-dropdown-trigger aui-dd-link" role="button" original-title="Export this filter in another format"><span>Export</span></a></li>
-                                    <li class="aui-dd-parent"><a href="#" class="header-tools header-operations aui-dropdown-trigger aui-dd-link" role="button" original-title="Select operations that can be completed"><span>Tools</span></a></li>
+    <section id="content" role="main">
+        <div class="navigator-container">
+            <div class="navigator-sidebar" id="navigator_sidebar"></div>
+            <div class="navigator-body">
+                <div class="contained-content">
+                    <header class="saved-search-selector">
+                        <div class="saved-search-operations">
+                            <ul class="operations">
+                                <li class="aui-dd-parent"><a href="#" class="header-views header-operations aui-dropdown-trigger aui-dd-link" role="button" original-title="Export this filter in another format"><span>Export</span></a></li>
+                                <li class="aui-dd-parent"><a href="#" class="header-tools header-operations aui-dropdown-trigger aui-dd-link" role="button" original-title="Select operations that can be completed"><span>Tools</span></a></li>
+                            </ul>
+                        </div>
+                        <div id="search-header-view">
+                            <div class="header-section-primary">
+                                <h1 class="search-title" title="Search">@Model.Quote.Name</h1>
+                                <ul class="filter-operations">
+                                    <li><a href="@Url.NewAsset()" class="aui-button aui-button-light" title="">Create new asset</a></li>
                                 </ul>
                             </div>
-                            <div id="search-header-view">
-                                <div class="header-section-primary">
-                                    <h1 class="search-title" title="Search">@Model.Quote.Name</h1>
-                                    <ul class="filter-operations">
-                                        <li><a href="@Url.NewAsset()" class="aui-button aui-button-light" title="">Create new asset</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </header>
+                        </div>
+                    </header>
 
-                        <form class="navigator-search"></form>
+                    <form class="navigator-search"></form>
 
-                        <div class="navigator-group">
-                            <div class="results-panel navigator-item">
-                                <div class="navigator-content"
-                                     data-issue-table-model-state="@JSON.Serialize(Model.AssetTable, new Options(true))"
-                                     data-session-search-state=""
-                                     data-selected-issue="">
-                                    @Html.Partial("Partials/Quote/Builder/SplitView")
-                                </div>
+                    <div class="navigator-group">
+                        <div class="results-panel navigator-item">
+                            <div class="navigator-content"
+                                 data-issue-table-model-state="@JSON.Serialize(Model.AssetTable, new Options(true))"
+                                 data-session-search-state=""
+                                 data-selected-issue="">
+                                @Html.Partial("Partials/Quote/Builder/SplitView")
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="issue-container"></div>
+        <div class="issue-container"></div>
 
-            @RenderBody()
-        </section>
+        @RenderBody()
+    </section>
 
-        @Html.Partial("_Footer")
-    </div>
+    @Html.Partial("_Footer")
+</div>
 
-    <script>
+@*    <!--  AUI Core -->*@
+@*    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>*@
+@*    <script src="//aui-cdn.atlassian.com/aui-adg/5.8.9/js/aui.js"></script>*@
+@**@
+@*    <!-- AUI Experimental components -->*@
+@*    <script src="//cdn.rawgit.com/jrburke/almond/0.3.0/almond.js"></script>*@
+@*    <script src="//aui-cdn.atlassian.com/aui-adg/5.8.9/js/aui-experimental.js"></script>*@
+
+<script>
         // set the global application vars
         window.rootUrl = '@Url.SiteRoot()';
         window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
@@ -88,6 +96,6 @@
     @Html.RenderJsBundle("bundle.js", BundleOptions.BuildConfigDependent)
     @RenderSection("secondaryScripts", false)
 
-    @MiniProfiler.RenderIncludes()
+@MiniProfiler.RenderIncludes()
 </body>
 </html>

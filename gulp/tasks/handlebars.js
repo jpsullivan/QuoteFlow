@@ -9,7 +9,7 @@ var wrap        = require('gulp-wrap');
 var config      = require('../config').templates;
 
 // JST's (should always be minified)
-gulp.task('templates', function () {
+gulp.task('templates', function () {  
     return gulp.src(config.src)
         //.pipe(newer(paths.jsCompiled + '/templates.min.js'))
         .pipe(handlebars({
@@ -46,5 +46,5 @@ gulp.task('templates', function () {
         .pipe(bytediff.start())
         .pipe(uglify())
         .pipe(bytediff.stop())
-        .pipe(gulp.dest(paths.dest))
+        .pipe(gulp.dest(config.dest))
 });

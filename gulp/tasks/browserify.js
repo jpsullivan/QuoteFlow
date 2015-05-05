@@ -33,7 +33,7 @@ var browserifyTask = function(devMode) {
     }
 
     // set the output name based on whether this is dev mode
-    bundleConfig.outputName = devMode ? "bundle.min.js" : "bundle.js";
+    bundleConfig.outputName = devMode ? "bundle.js" : "bundle.min.js";
 
     var b = browserify(bundleConfig);
 

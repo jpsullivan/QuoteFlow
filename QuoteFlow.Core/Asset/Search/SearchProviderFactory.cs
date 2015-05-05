@@ -25,7 +25,7 @@ namespace QuoteFlow.Core.Asset.Search
                 return AssetIndexManager.GetCommentSearcher();
             }
 
-            throw new NotSupportedException("Only asset, comment and change history indexes are catered for currently");
+            throw new NotSupportedException("Only asset and comment indexes are catered for currently");
         }
     }
 }
