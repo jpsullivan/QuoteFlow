@@ -46,11 +46,11 @@ var AssetNavController = Marionette.Controller.extend({
 
 //        // Trigger the event on page load to make sure the controls are visible.
 //        AJS.$(document).trigger("resultsWidthChanged");
-//        
+//
 //        JIRA.Issues.onVerticalResize(function () {
 //            jQuery.event.trigger("updateOffsets.popout");
 //        });
-//        
+//
 //        // When switching layouts we need to update the height of sidebar
 //        JIRA.bind(JIRA.Events.LAYOUT_RENDERED, function () {
 //            _.defer(function () {
@@ -75,11 +75,12 @@ var AssetNavController = Marionette.Controller.extend({
          * JSON. It also prevents us needing to ensure there are no XSS vulnerabilities in the JSON HTML string.
          */
         var initialIssueTableState = $navigatorContent.data("issue-table-model-state");
-        if (initialIssueTableState && !initialIssueTableState.Table) {
+        if (initialIssueTableState && !initialIssueTableState.table) {
             var wrapper = AJS.$("<div></div>").append($navigatorContent.children().clone());
-            initialIssueTableState.Table = wrapper.html();
+            initialIssueTableState.table = wrapper.html();
         }
 
+        debugger;
         var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
         var selectedIssue = $navigatorContent.data("selected-issue");
 
@@ -103,4 +104,3 @@ var AssetNavController = Marionette.Controller.extend({
 });
 
 module.exports = AssetNavController;
-

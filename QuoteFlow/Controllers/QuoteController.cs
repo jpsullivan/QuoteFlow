@@ -185,6 +185,7 @@ namespace QuoteFlow.Controllers
             var assetTable = AssetTableService.GetIssueTableFromFilterWithJql(GetCurrentUser(), string.Empty, jql,
                 AssetTableServiceConfiguration, true);
 
+
             var model = new QuoteBuilderViewModel(quote, catalogs, manufacturers, creators, assetTable.AssetTable);
 
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);

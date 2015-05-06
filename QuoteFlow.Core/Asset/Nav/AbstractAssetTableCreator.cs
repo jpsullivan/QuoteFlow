@@ -30,8 +30,6 @@ namespace QuoteFlow.Core.Asset.Nav
     /// </summary>
     public abstract class AbstractAssetTableCreator : AssetTableCreator
     {
-//        private readonly ApplicationProperties _applicationProperties;
-//		private readonly DisplayedColumnsHelper _searchColumnsFinder;
 		private IDictionary<string, string> _columnSortJql;
 		private SortBy _sortBy;
         private readonly IAssetTableServiceConfiguration _configuration;
@@ -53,11 +51,12 @@ namespace QuoteFlow.Core.Asset.Nav
 		private readonly IFieldManager _fieldManager;
 		private IOrderByUtil _orderByUtil;
 
+        public ICatalogService CatalogService { get; set; }
+        public IAssetService AssetService { get; set; }
+
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="applicationProperties"></param>
-		/// <param name="columnLayoutManager"></param>
 		/// <param name="configuration"></param>
         /// <param name="fromAssetIds">Whether we are executing a search from issue IDs (stable update).</param>
 		/// <param name="assetFactory"></param>
@@ -87,7 +86,9 @@ namespace QuoteFlow.Core.Asset.Nav
             ISearchService searchService, 
             User user, 
             IFieldManager fieldManager, 
-            IOrderByUtil orderByUtil)
+            IOrderByUtil orderByUtil,
+            ICatalogService catalogService,
+            IAssetService assetService)
 		{
 			_configuration = configuration;
 			_fromAssetIds = fromAssetIds;
@@ -104,6 +105,10 @@ namespace QuoteFlow.Core.Asset.Nav
 			_user = user;
 			_fieldManager = fieldManager;
 			_orderByUtil = orderByUtil;
+
+            // todo remove this dependency after lucene 4.8 upgrade
+		    CatalogService = catalogService;
+		    AssetService = assetService;
 
 			// query and searchRequest aren't provided as we're searching by ID. They're used
 			// frequently while constructing the table, so set them here to make them available.
@@ -150,16 +155,10 @@ namespace QuoteFlow.Core.Asset.Nav
         /// </summary>
         /// <param name="assetDocuments">The documents to convert.</param>
         /// <returns></returns>
-        private List<IAsset> ConvertDocumentsToAssets(IList<Document> assetDocuments)
+        private List<IAsset> ConvertDocumentsToAssets(IEnumerable<Document> assetDocuments)
         {
-            var assets = new List<IAsset>();
-            foreach (var document in assetDocuments)
-            {
-                assets.Add(_assetFactory.GetAsset(document));
-            }
-
-            return assets;
-        } 
+            return assetDocuments.Select(document => _assetFactory.GetAsset(document)).ToList();
+        }
 
         public override AssetTable Create()
         {
@@ -179,7 +178,7 @@ namespace QuoteFlow.Core.Asset.Nav
 
             return new AssetTable()
             {
-                Table = Table,
+                Table = GetTable(),
                 Displayed = SearchResults.Assets.Count(),
                 Total = SearchResults.Total,
                 StartIndex = SearchResults.Start,
@@ -211,10 +210,17 @@ namespace QuoteFlow.Core.Asset.Nav
                 var idCollector = CollectAssets(selectedAssetKey);
                 AssetDocumentAndIdCollector.Result collectedResult = idCollector.ComputeResult();
 
-                _assetIds = collectedResult.AssetIds;
+                // todo remove this fake data after lucene 4.8 upgrade
+                var firstCatalog = CatalogService.GetCatalogs(1).First();
+                var fakeAssets = AssetService.GetAssets(firstCatalog.Id).Take(3).ToList();
+                var fakeAssetIds = fakeAssets.Select(asset => asset.Id).Select(dummy => (int?) dummy).ToList();
+
+                //_assetIds = collectedResult.AssetIds;
+                _assetIds = fakeAssetIds;
                 _assetKeys = collectedResult.IssueKeys;
                 SearchResults = new SearchResults(
-                    ConvertDocumentsToAssets(collectedResult.Documents),
+                    //ConvertDocumentsToAssets(collectedResult.Documents),
+                    fakeAssets,
                     collectedResult.Total,
                     _configuration.NumberToShow,
                     collectedResult.Start
@@ -329,7 +335,7 @@ namespace QuoteFlow.Core.Asset.Nav
             return _configuration.Start;
         }
 
-        public abstract object Table { get; }
+        protected abstract IEnumerable<AssetTableRow> GetTable();
 
         /// <summary>
         /// Validate the issue table request.

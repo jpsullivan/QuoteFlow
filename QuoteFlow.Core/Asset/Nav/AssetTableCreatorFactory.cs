@@ -29,7 +29,10 @@ namespace QuoteFlow.Core.Asset.Nav
         public IOrderByUtil OrderByUtil { get; protected set; }
         public IDictionary<string, Type> AssetTableCreators { get; set; }
 
-        public AssetTableCreatorFactory(IAssetFactory assetFactory, ISortJqlGenerator sortJqlGenerator, ISearchHandlerManager searchHandlerManager, ISearchProvider searchProvider, ISearchProviderFactory searchProviderFactory, ISearchService searchService, IFieldManager fieldManager, IOrderByUtil orderByUtil)
+        public ICatalogService CatalogService { get; set; }
+        public IAssetService AssetService { get; set; }
+
+        public AssetTableCreatorFactory(IAssetFactory assetFactory, ISortJqlGenerator sortJqlGenerator, ISearchHandlerManager searchHandlerManager, ISearchProvider searchProvider, ISearchProviderFactory searchProviderFactory, ISearchService searchService, IFieldManager fieldManager, IOrderByUtil orderByUtil, ICatalogService catalogService, IAssetService assetService)
         {
             AssetFactory = assetFactory;
             SortJqlGenerator = sortJqlGenerator;
@@ -39,6 +42,10 @@ namespace QuoteFlow.Core.Asset.Nav
             SearchService = searchService;
             FieldManager = fieldManager;
             OrderByUtil = orderByUtil;
+
+            // todo remove these after lucene 4.8 upgrade
+            CatalogService = catalogService;
+            AssetService = assetService;
 
             AssetTableCreators = new Dictionary<string, Type>
             {
@@ -103,7 +110,9 @@ namespace QuoteFlow.Core.Asset.Nav
                     SearchService,
                     user,
                     FieldManager,
-                    OrderByUtil
+                    OrderByUtil,
+                    CatalogService, // todo remove these after lucene 4.8 upgrade
+                    AssetService
                 };
 
                 return (AbstractAssetTableCreator)Activator.CreateInstance(clazz, 
@@ -121,7 +130,9 @@ namespace QuoteFlow.Core.Asset.Nav
                     SearchService,
                     user,
                     FieldManager,
-                    OrderByUtil);
+                    OrderByUtil,
+                    CatalogService,
+                    AssetService);
             }
             catch (IndexOutOfRangeException e)
             {

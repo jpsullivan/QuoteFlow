@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Dapper;
+using Jil;
 
 namespace QuoteFlow.Api.Models
 {
@@ -49,5 +50,20 @@ namespace QuoteFlow.Api.Models
         public IEnumerable<AssetVar> AssetVars { get; set; } 
 
         public IEnumerable<AssetComment> Comments { get; set; }
+    }
+
+    public class AssetTableRow
+    {
+        [JilDirective("id")]
+        public int Id { get; set; }
+
+        [JilDirective("name")]
+        public string Name { get; set; }
+
+        [JilDirective("sku")]
+        public string SKU { get; set; }
+
+        [JilDirective("cost")]
+        public decimal Cost { get; set; }
     }
 }

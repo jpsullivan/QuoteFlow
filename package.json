@@ -8,6 +8,9 @@
     "email": "jaysche.sullivan@gmail.com"
   },
   "browser": {
+    "aui": "./QuoteFlow/Content/js/lib/aui/aui.min.js",
+    "aui-datepicker": "./QuoteFlow/Content/js/lib/aui/aui-datepicker.min.js",
+    "aui-experimental": "./QuoteFlow/Content/js/lib/aui/aui-experimental.js",
     "backbone-brace": "./QuoteFlow/Content/js/lib/backbone-brace.min.js",
     "html-sanitizer": "./QuoteFlow/Content/js/lib/html-sanitizer-bundle.js",
     "jquery.browser": "./node_modules/jquery.browser/dist/jquery.browser.min.js",
@@ -19,6 +22,22 @@
     "transform": []
   },
   "browserify-shim": {
+    "aui": {
+      "depends": [
+        "jquery:jQuery"
+      ]
+    },
+    "aui-datepicker": {
+      "depends": [
+        "jquery:$",
+        "aui"
+      ]
+    },
+    "aui-experimental": {
+      "depends": [
+        "aui"
+      ]
+    },
     "backbone-brace": {
       "depends": [
         "backbone:Backbone"

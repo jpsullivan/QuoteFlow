@@ -254,23 +254,23 @@ namespace QuoteFlow.Core.Services
 
             try
             {
-                List<IAsset> matches;
+                List<Api.Models.Asset> matches;
                 int totalIssueCount = luceneMatches == null ? 0 : luceneMatches.TotalHits;
                 if ((luceneMatches != null) && (luceneMatches.TotalHits >= pager.Start))
                 {
                     int end = Math.Min(pager.End, luceneMatches.TotalHits);
-                    matches = new List<IAsset>();
+                    matches = new List<Api.Models.Asset>();
                     for (int i = pager.Start; i < end; i++)
                     {
                         Document doc = issueSearcher.Doc(luceneMatches.ScoreDocs[i].Doc);
-                        matches.Add(_asssetService.GetAsset(doc));
+                        matches.Add((Api.Models.Asset) _asssetService.GetAsset(doc));
                     }
                 }
                 else
                 {
                     //if there were no lucene-matches, or the length of the matches is less than the page start index
                     //return an empty list of issues.
-                    matches = new List<IAsset>();
+                    matches = new List<Api.Models.Asset>();
                 }
 
                 return new SearchResults(matches, totalIssueCount, pager);

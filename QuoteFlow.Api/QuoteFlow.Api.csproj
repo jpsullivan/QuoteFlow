@@ -275,6 +275,7 @@
     <Compile Include="Infrastructure\Collect\ISized.cs" />
     <Compile Include="Infrastructure\Concurrency\AtomicReference.cs" />
     <Compile Include="Infrastructure\Elmah\QuietLog.cs" />
+    <Compile Include="Infrastructure\Extensions\AssetExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\DateExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\DictionaryExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\EnumerableExtensions.cs" />
