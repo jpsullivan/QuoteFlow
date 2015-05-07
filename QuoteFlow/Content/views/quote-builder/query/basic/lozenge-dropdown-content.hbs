@@ -1,0 +1,16 @@
+<form id="issue-filter" action="#" class="searchfilter aui top-label aui-popup-content">
+	<div class="form-body">
+	</div>
+	{{#if displayBackButton}}
+	<a href="#" class="back">Back</a>
+	{{/if}}
+
+	{{#if displayUpdateCancel}}
+	<div class="buttons-container form-footer">
+		<div class="buttons">
+			<input type="submit" name="filter" class="aui-button filter" value="Update" />
+			<a href="#" class="aui-button aui-button-link cancel-update">Close</a>
+		</div>
+	</div>
+	{{/if}}
+</form>

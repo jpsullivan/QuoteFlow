@@ -286,6 +286,7 @@
     <Compile Include="Infrastructure\Helpers\PageNumber.cs" />
     <Compile Include="Infrastructure\Helpers\PageSizer.cs" />
     <Compile Include="Infrastructure\IoC\ComponentAccessor.cs" />
+    <Compile Include="Infrastructure\Services\IServiceOutcome.cs" />
     <Compile Include="Infrastructure\Lucene\IIndexLifecycleManager.cs" />
     <Compile Include="Infrastructure\Lucene\IKeywordAttribute.cs" />
     <Compile Include="Infrastructure\Lucene\ILuceneQueryModifier.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Infrastructure\Paging\IAssetPage.cs" />
     <Compile Include="Infrastructure\Paging\IPagerFilter.cs" />
     <Compile Include="Infrastructure\Paging\PagerFilter.cs" />
+    <Compile Include="Infrastructure\Services\IServiceResult.cs" />
     <Compile Include="IQuoteFlowDataType.cs" />
     <Compile Include="Jql\Context\AllCatalogsContext.cs" />
     <Compile Include="Jql\Context\AllManufacturersContext.cs" />
@@ -520,6 +522,7 @@
     <Compile Include="UserTracking\PageType.cs" />
     <Compile Include="UserTracking\RecentLink.cs" />
     <Compile Include="Util\AbstractMessageSet.cs" />
+    <Compile Include="Util\IErrorCollection.cs" />
     <Compile Include="Util\IMessageSet.cs" />
     <Compile Include="Util\IShutdown.cs" />
     <Compile Include="Util\ISupplier.cs" />

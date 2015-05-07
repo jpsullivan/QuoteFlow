@@ -24,8 +24,6 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @param {jQuery} options.searchContainer The element in which search results are to be rendered.
      */
     initialize: function (options) {
-        debugger;
-
         _.bindAll(this,
             "_adjustHeight",
             "_adjustNoResultsMessageHeight",
@@ -377,7 +375,6 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @return {SplitScreenLayout} <tt>this</tt>
      */
     render: function () {
-        debugger;
         var hasIssues = this.searchResults.hasAssets(),
             isInitialRender = this._isInitialRender();
 

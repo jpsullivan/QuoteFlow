@@ -12,7 +12,6 @@ var AssetNavCreator = require('./search/asset-nav-creator');
 var AssetNavController = Marionette.Controller.extend({
 
     builder: function () {
-        debugger;
         var options = this.initOptions();
         var creator = AssetNavCreator.create(AJS.$(document), {
             initialIssueTableState: options.initialIssueTableState,
@@ -80,7 +79,7 @@ var AssetNavController = Marionette.Controller.extend({
             var wrapper = AJS.$("<div></div>").append($navigatorContent.children().clone());
             initialIssueTableState.table = wrapper.html();
         }
-        
+
         var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
         var selectedIssue = $navigatorContent.data("selected-issue");
 

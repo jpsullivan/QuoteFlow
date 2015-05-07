@@ -4,6 +4,7 @@ using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using System.Web.Http.Routing;
 using Elmah.Contrib.WebApi;
+using Newtonsoft.Json.Serialization;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using QuoteFlow.Infrastructure;
@@ -25,7 +26,10 @@ namespace QuoteFlow
             config.Routes.MapHttpRoute("ApiWithDoubleParamDelete", "Api/{controller}/{id}/{secondaryId}", new { action = "Delete" }, new { httpMethod = new HttpMethodConstraint(HttpMethod.Delete) });
 
             // only use json for webapi output
-            var jsonFormatter = new JsonMediaTypeFormatter();
+            var jsonFormatter = new JsonMediaTypeFormatter
+            {
+                SerializerSettings = {ContractResolver = new CamelCasePropertyNamesContractResolver()}
+            };
             config.Services.Replace(typeof(IContentNegotiator), new JsonContentNegotiator(jsonFormatter));
 
             // enable elmah

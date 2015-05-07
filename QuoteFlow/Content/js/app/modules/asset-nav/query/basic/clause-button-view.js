@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var Brace = require('backbone-brace');
 var InlineLayer = require('../../../../components/layer/inline-layer');
+var Reasons = require('../../util/reasons');
 var SearcherGroupListDialogView = require('./searcher-group-list-dialog-view');
 
 /**

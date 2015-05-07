@@ -127,8 +127,6 @@ var AssetNavCreator = {
         //searchHeaderModule.createToolsView(issueNavToolsElement);
 
         // Router
-
-        debugger;
         var issueNavRouter = this.assetNavRouter = new AssetNavCustomRouter({
             searchPageModule: searchPageModule,
             initialSessionSearchState: options.initialSessionSearchState
@@ -137,7 +135,6 @@ var AssetNavCreator = {
         searchPageModule.registerIssueNavRouter(issueNavRouter);
 
         // Overrides
-
         EnhanceLinks.toIssueNav({
             searchPageModule: searchPageModule
         });
@@ -182,8 +179,6 @@ var AssetNavCreator = {
 //                return searchPageModule.updateAsset(issueUpdate);
 //            }
 //        });
-
-        debugger;
 
         // Keyboard shortcuts ?
 

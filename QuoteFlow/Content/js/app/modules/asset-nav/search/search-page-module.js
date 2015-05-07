@@ -7,6 +7,7 @@ var Utilities = require('../../../components/utilities');
 
 var ColumnPicker = require('../../../components/table/column-picker');
 var FullScreenLayout = require('./full-screen-controller');
+var InlineLayer = require('../../../components/layer/inline-layer');
 var SimpleAsset = require('./asset/simple-asset');
 var SplitScreenLayout = require('../split-view/layout');
 var UrlSerializer = require('../../../util/url-serializer');
@@ -94,7 +95,6 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     getActiveLayout: function () {
-        debugger;
         return this.getLayouts()["split-view"];
     },
 
@@ -109,8 +109,6 @@ var SearchPageModule = Brace.Model.extend({
      * @param {boolean} [options.render=true] Whether to render the new layout.
      */
     changeLayout: function (key, options) {
-        debugger;
-
         var layout = this.getLayout(key),
             newLayout,
             previousLayout = this.getCurrentLayout();
@@ -701,8 +699,6 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     _applyState: function (state, isReset, options) {
-        debugger;
-
         options = options || {};
         var prevState = _.extend(this.toJSON(), this.search.getResults().toJSON());
         var stateToApply = _.pick(state, this.properties);
@@ -757,13 +753,11 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     _navigateToState: function (state, isReset, options) {
-        debugger;
-
         options = options || {};
 
-        if (!QuoteFlow.application.request("assetEditor:canDismissComment")) {
+        if (!QuoteFlow.application.request("issueEditor:canDismissComment")) {
             this.queryModule.queryChanged();
-            AJS.InlineLayer.current && AJS.InlineLayer.current.hide();
+            InlineLayer.current && InlineLayer.current.hide();
             return null;
         }
 
@@ -836,14 +830,11 @@ var SearchPageModule = Brace.Model.extend({
         }
 
         jQuery.when(filterRequest).always(_.bind(function () {
-            debugger;
             this._applyState(state, isReset, options);
         }, this));
     },
 
     updateFromRouter: function (state) {
-        debugger;
-
         if (this.search.isStandAloneAsset(state)) {
             this.resetToStandaloneIssue(state);
         } else {
@@ -1024,7 +1015,7 @@ var SearchPageModule = Brace.Model.extend({
         }
 
         // Don't allow up/down navigation if dropdowns are open.
-        if (AJS.InlineLayer.current || AJS.Dropdown.current || JIRA.Dialog.current || AJS.$(".aui-dropdown2:visible").length > 0) {
+        if (InlineLayer.current || AJS.Dropdown.current || JIRA.Dialog.current || AJS.$(".aui-dropdown2:visible").length > 0) {
             return false;
         }
 

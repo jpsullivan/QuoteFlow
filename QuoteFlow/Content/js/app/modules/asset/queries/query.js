@@ -9,6 +9,7 @@ Backbone.$ = $;
 var BasicQueryModule = require('./basic_query');
 var JqlQueryModule = require('./jql_query');
 var QueryView = require('../../asset-nav/query/query-view');
+var SearcherDialog = require('../../asset-nav/query/basic/searcher-dialog');
 
 /**
  * Module for basic query mode
@@ -33,9 +34,9 @@ var AssetQueryModule = Brace.Evented.extend({
             this.triggerChangedPreferredSearchMode(this._queryStateModel.getPreferredSearchMode());
         }, this));
 
-//        JIRA.Issues.SearcherDialog.initialize({
-//            queryStateModel: this._queryStateModel
-//        });
+       SearcherDialog.initialize({
+           queryStateModel: this._queryStateModel
+       });
 
         this._jqlQueryModule = new JqlQueryModule({
             queryStateModel: this._queryStateModel

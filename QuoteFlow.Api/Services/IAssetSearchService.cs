@@ -8,6 +8,6 @@ namespace QuoteFlow.Api.Services
     {
         QuerySearchResults Search(User user, MultiDictionary<string, string[]> paramMap, long filterId);
 
-        QuerySearchResults SearchWithJql(User user, string paramString, long filterId);
+        QuerySearchResults SearchWithJql(User user, string jqlContext, long filterId);
     }
 }

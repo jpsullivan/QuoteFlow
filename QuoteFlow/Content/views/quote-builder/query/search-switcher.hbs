@@ -1,5 +1,7 @@
+{{debug}}
 {{#each items}}
-	<a href="#" class="switcher-item {{#if isActive}}active{{/if}}" data-id="{{id}}"
+
+	<a href="#" class="switcher-item {{#compare id ../selectedId}}active{{/compare}}" data-id="{{id}}"
 			title="
 					{{#compare id 'basic'}}
 					Switch to advanced search using JQL
@@ -7,9 +9,9 @@
 					Switch to basic search
 					{{/compare}}">
 			{{#compare id 'basic'}}
-			Switch to advanced search using JQL
+			Advanced
 			{{else}}
-				Switch to basic search
+			Basic
 			{{/compare}}
 	</a>
 {{/each}}

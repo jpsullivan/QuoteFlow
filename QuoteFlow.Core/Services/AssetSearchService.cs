@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Lucene.Net.Support;
@@ -16,7 +15,6 @@ using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
-using QuoteFlow.Core.Asset.Search;
 using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Core.Services
@@ -52,12 +50,17 @@ namespace QuoteFlow.Core.Services
             var searchContext = SearchService.GetSearchContext(user, query);
             var searchResults = GetSearchResults(true, user, searchers, clauses, query, searchContext);
             
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return GetSearchResults(true, user, searchers, clauses, query, searchContext);
         }
 
-        public QuerySearchResults SearchWithJql(User user, string paramString, long filterId)
+        public QuerySearchResults SearchWithJql(User user, string jqlContext, long filterId)
         {
-            throw new NotImplementedException();
+            var parseResult = SearchService.ParseQuery(user, jqlContext);
+            if (!parseResult.IsValid())
+            {
+                
+            }
         }
 
         private QuerySearchResults GetSearchResults(bool includePrimes, User user, ICollection<IAssetSearcher<ISearchableField>> searchers, IDictionary<string, SearchRendererHolder> clauses, IQuery query, ISearchContext searchContext)
@@ -146,7 +149,7 @@ namespace QuoteFlow.Core.Services
 
         private IDictionary<string, String[]> GetJqlParameters(IEnumerable<KeyValuePair<string, ICollection<string[]>>> paramMap)
         {
-            var jqlParams = new HashMap<string, String[]>();
+            var jqlParams = new HashMap<string, string[]>();
             foreach (KeyValuePair<string, ICollection<string[]>> entry in paramMap)
             {
                 if (entry.Key.StartsWith("__jql_"))
@@ -208,11 +211,8 @@ namespace QuoteFlow.Core.Services
 			    FilteredSearcherGroup group;
 			    if (!searcherGroups.TryGetValue(searcher.ToString(), out group))
 			    {
-                    group = new FilteredSearcherGroup(searcher.SearchInformation.NameKey);
-//					if (panel.TitleKey != null)
-//					{
-//						group.Title = i18nHelper.getText(panel.TitleKey);
-//					}
+			        group = new FilteredSearcherGroup(searcher.SearchInformation.NameKey);
+			        group.Title = searcher.SearchInformation.Id;
                     searcherGroups.Add(searcher.ToString(), group);
 			    }
 				
@@ -232,9 +232,11 @@ namespace QuoteFlow.Core.Services
 
                     fieldKey = field.NameKey;
 				}
+
 				string searcherId = searcherInfo.Id;
 				group.AddSearcher(new Searcher(searcherId, searcherInfo.NameKey, fieldKey, true, 0));
 			}
+
 			Searchers searchers = new Searchers();
 			searchers.AddGroups(searcherGroups.Values);
 			return searchers;

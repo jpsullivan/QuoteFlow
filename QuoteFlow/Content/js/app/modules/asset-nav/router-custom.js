@@ -62,7 +62,6 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
      * @private
      */
     _route: function (path, query) {
-        debugger;
         // Re-encode back to a full fragment, since we do our own parsing in JIRA.Issues.URLSerializer
         var fragment = this.toFragment(path, query);
 

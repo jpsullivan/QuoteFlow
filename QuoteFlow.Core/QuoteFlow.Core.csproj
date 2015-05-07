@@ -299,6 +299,8 @@
     <Compile Include="Infrastructure\Exceptions\EntityException.cs" />
     <Compile Include="Infrastructure\Helpers\DisposableAction.cs" />
     <Compile Include="Infrastructure\Mvc\QuoteFlowControllerFactory.cs" />
+    <Compile Include="Infrastructure\Services\ServiceOutcome.cs" />
+    <Compile Include="Infrastructure\Services\ServiceResult.cs" />
     <Compile Include="Jql\AntlrGen\JqlLexer.cs" />
     <Compile Include="Jql\AntlrGen\JqlParser.cs" />
     <Compile Include="Jql\Builder\BuilderOperator.cs" />
@@ -454,6 +456,7 @@
     <Compile Include="Util\Lucene\ConstantScorePrefixQuery.cs" />
     <Compile Include="Util\ListOrderedMessageSet.cs" />
     <Compile Include="Util\LuceneUtils.cs" />
+    <Compile Include="Util\SimpleErrorCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Jql\Parser\Antlr\Jql.g">

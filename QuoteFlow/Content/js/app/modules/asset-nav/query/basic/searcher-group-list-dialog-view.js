@@ -4,6 +4,8 @@ var _ = require('underscore');
 var Brace = require('backbone-brace');
 var CheckboxMultiSelectSuggestHandler = require('../../../../components/select/checkbox-multi-select-suggest-handler');
 var GroupDescriptor = require('../../../../components/list/group-descriptor');
+var Reasons = require('../../util/reasons');
+var SearcherDialog = require('./searcher-dialog');
 var SuggestHelper = require('../../../../components/select/suggest-helper');
 
 var $moreCriteriaFooter;
@@ -89,8 +91,8 @@ var SearcherGroupListDialogView = Brace.View.extend({
     _searcherSelected: function(e, descriptor) {
         var searcher = this.searcherCollection.getSearcher(descriptor.properties.value);
         searcher.select();
-        JIRA.Issues.SearcherDialog.instance.hide();
-        JIRA.Issues.SearcherDialog.instance.show(searcher);
+        SearcherDialog.instance.hide();
+        SearcherDialog.instance.show(searcher);
     },
 
     _keyPressed: function (event) {

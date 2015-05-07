@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using QuoteFlow.Api.Asset.Nav;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Infrastructure.Helpers;
+using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Api.UserTracking;
@@ -19,9 +21,11 @@ namespace QuoteFlow.Controllers
         #region DI
 
         public IAssetService AssetService { get; protected set; }
+        public IAssetSearchService AssetSearchService { get; protected set; }
         public IAssetTableService AssetTableService { get; protected set; }
         public IAssetTableServiceConfiguration AssetTableServiceConfiguration { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
+        public IJqlStringSupport JqlStringSupport { get; protected set; }
         public IManufacturerService ManufacturerService { get; protected set; }
         public IQuoteLineItemService QuoteLineItemService { get; protected set; }
         public IQuoteService QuoteService { get; protected set; }
@@ -33,12 +37,14 @@ namespace QuoteFlow.Controllers
         {
         }
 
-        public QuoteController(IAssetService assetService, IAssetTableService assetTableService, IAssetTableServiceConfiguration assetTableServiceConfiguration, ICatalogService catalogService, IManufacturerService manufacturerService, IQuoteLineItemService quoteLineItemService, IQuoteService quoteService, IQuoteStatusService quoteStatusService, IUserService userService, IUserTrackingService userTrackingService)
+        public QuoteController(IAssetService assetService, IAssetSearchService assetSearchService, IAssetTableService assetTableService, IAssetTableServiceConfiguration assetTableServiceConfiguration, ICatalogService catalogService, IJqlStringSupport jqlStringSupport, IManufacturerService manufacturerService, IQuoteLineItemService quoteLineItemService, IQuoteService quoteService, IQuoteStatusService quoteStatusService, IUserService userService, IUserTrackingService userTrackingService)
         {
             AssetService = assetService;
+            AssetSearchService = assetSearchService;
             AssetTableService = assetTableService;
             AssetTableServiceConfiguration = assetTableServiceConfiguration;
             CatalogService = catalogService;
+            JqlStringSupport = jqlStringSupport;
             ManufacturerService = manufacturerService;
             QuoteLineItemService = quoteLineItemService;
             QuoteService = quoteService;
@@ -173,20 +179,20 @@ namespace QuoteFlow.Controllers
         public virtual ActionResult ShowBuilder(int id, string name)
         {
             var quote = QuoteService.GetQuote(id);
-            var catalogs = CatalogService.GetCatalogs(CurrentOrganization.Id);
-            var manufacturers = ManufacturerService.GetManufacturers(CurrentOrganization.Id);
-            var creators = UserService.GetUsers(CurrentOrganization.Id);
 
             // track that this quote has been visited
             UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Quote, quote.Id, quote.Name);
 
             var jql = "catalog = MSA";
 
-            var assetTable = AssetTableService.GetIssueTableFromFilterWithJql(GetCurrentUser(), string.Empty, jql,
-                AssetTableServiceConfiguration, true);
+            var assetTable = AssetTableService.GetIssueTableFromFilterWithJql(GetCurrentUser(), string.Empty, jql, AssetTableServiceConfiguration, true);
+            var visibleFieldNames = new List<string>();
+            var visibleFunctionNames = new List<string>();
+            var jqlReservedWords = JqlStringSupport.GetJqlReservedWords();
 
+            var searchOutcome = AssetSearchService.SearchWithJql(GetCurrentUser(), jql, 0);
 
-            var model = new QuoteBuilderViewModel(quote, catalogs, manufacturers, creators, assetTable.AssetTable);
+            var model = new QuoteBuilderViewModel(quote, assetTable.AssetTable, visibleFieldNames, visibleFunctionNames, jqlReservedWords);
 
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }

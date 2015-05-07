@@ -15,7 +15,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width"/>
     <title>@ViewBag.Title</title>
-    
+
     <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui.min.css")" media="all">
     <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui-experimental.min.css")" media="all">
     @Html.RenderCssBundle("app.css", BundleOptions.BuildConfigDependent)
@@ -70,31 +70,29 @@
     @Html.Partial("_Footer")
 </div>
 
-@*    <!--  AUI Core -->*@
-@*    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>*@
-@*    <script src="//aui-cdn.atlassian.com/aui-adg/5.8.9/js/aui.js"></script>*@
-@**@
-@*    <!-- AUI Experimental components -->*@
-@*    <script src="//cdn.rawgit.com/jrburke/almond/0.3.0/almond.js"></script>*@
-@*    <script src="//aui-cdn.atlassian.com/aui-adg/5.8.9/js/aui-experimental.js"></script>*@
+<div id="jqlFieldz" style="display:none;"></div>
+<div id="jqlFunctionNamez" style="display:none;"></div>
+<div id="jqlReservedWordz" style="display:none;"></div>
+<div id="criteriaJson" style="display:none;"></div>
+<div id="systemFiltersJson" style="display:none;"></div>
 
 <script>
-        // set the global application vars
-        window.rootUrl = '@Url.SiteRoot()';
-        window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
-        @if (Request.IsAuthenticated)
-        {
-            <text>window.currentOrganization = '@CurrentOrganization.Id.ToString()';</text>
-            <text>window.currentUser = @ViewHelpers.JsEncode(CurrentUser);</text>
-        }
-    </script>
+    // set the global application vars
+    window.rootUrl = '@Url.SiteRoot()';
+    window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
+    @if (Request.IsAuthenticated)
+    {
+        <text>window.currentOrganization = '@CurrentOrganization.Id.ToString()';</text>
+        <text>window.currentUser = @ViewHelpers.JsEncode(CurrentUser);</text>
+    }
+</script>
 
-    <script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>
-    @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
-    @RenderSection("scripts", false)
-    @RenderSection("bootstrap", false)
-    @Html.RenderJsBundle("bundle.js", BundleOptions.BuildConfigDependent)
-    @RenderSection("secondaryScripts", false)
+<script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>
+@Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
+@RenderSection("scripts", false)
+@RenderSection("bootstrap", false)
+@Html.RenderJsBundle("bundle.js", BundleOptions.BuildConfigDependent)
+@RenderSection("secondaryScripts", false)
 
 @MiniProfiler.RenderIncludes()
 </body>

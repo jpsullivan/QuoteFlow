@@ -1,6 +1,8 @@
 ﻿"use strict";
 
 var Brace = require('backbone-brace');
+var Reasons = require('../../util/reasons');
+var SearcherDialog = require('../../query/basic/searcher-dialog');
 
 /**
  * Creates a shifter group factory for search criteria.
@@ -38,7 +40,7 @@ var SearchShifter = Brace.Evented.extend({
 
         // toggle closes the dialog if it's open, so ensure that's not the case.
         if (!currentSearcher || currentSearcher.getId() !== searcher.getId()) {
-            JIRA.Issues.SearcherDialog.instance.toggle(searcher);
+            SearcherDialog.instance.toggle(searcher);
         }
     },
 

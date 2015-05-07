@@ -413,7 +413,6 @@ var QueryableDropdownSelect = Marionette.ItemView.extend({
     },
 
     _deactivate: function () {
-        debugger;
         this.hideSuggestions();
     },
 

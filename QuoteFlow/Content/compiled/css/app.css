@@ -2667,6 +2667,512 @@ form.aui .form-description {
 .query-component.navigator-search .search-container[data-mode="advanced"] .search-options-container {
   width: 1%;
 }
+.query-component {
+  /* Search area for both basic & advanced modes */
+  /* Option area for both basic & advanced modes. Things like "switch to basic" */
+  /* Notifications (errors) area underneath search */
+  /* Basic mode styling */
+  /* Advanced mode styling */
+  /* criteria lozenges */
+  /* override default aui styling for disabled state */
+}
+.query-component .search-container {
+  display: table;
+  width: auto;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.query-component .search-container .search-field-container {
+  display: table-cell;
+}
+.query-component .search-container .search-options-container {
+  overflow: hidden;
+  display: table-cell;
+  vertical-align: top;
+  line-height: 30px;
+  white-space: nowrap;
+}
+.query-component .search-container .search-options-container .mode-switcher {
+  margin: 0 8px;
+}
+.query-component .search-container .search-button {
+  width: 3em;
+}
+.query-component .search-container .search-button .aui-icon-small:before {
+  font-size: 14px;
+  margin-top: -8px;
+}
+.query-component .search-container .search-button.aui-button-subtle {
+  color: #3b73af;
+}
+.query-component .search-container .search-button.aui-button-subtle:hover,
+.query-component .search-container .search-button.aui-button-subtle:focus,
+.query-component .search-container .search-button.aui-button-subtle:active {
+  color: #3b73af;
+}
+.query-component .search-options-container .mode-switcher > .switcher-item {
+  display: none;
+}
+.query-component .search-options-container .mode-switcher > .switcher-item.active {
+  display: inline;
+}
+.query-component .notifications > .aui-message {
+  margin-top: 2px;
+  margin-left: 0;
+}
+.query-component .search-container[data-mode="basic"] {
+  /* Search area for both basic */
+}
+.query-component .search-container[data-mode="basic"] .search-field-container {
+  /* Order by dropdown, if specified */
+}
+.query-component .search-container[data-mode="basic"] .search-field-container .list-ordering-container {
+  float: right;
+}
+.query-component .search-container[data-mode="basic"] .search-field-container .list-ordering-container .list-ordering {
+  max-width: 200px;
+  margin-top: 3px;
+}
+.query-component .search-container[data-mode="basic"] .search-field-container .list-ordering-container .list-ordering .order-by {
+  max-width: 180px;
+}
+.query-component .search-container[data-mode="basic"] .search-entry {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  min-height: 30px;
+  padding: 0 6px 0 6px;
+  width: 120px;
+  margin: 0;
+  overflow: hidden;
+  font-family: inherit;
+  font-size: 14px;
+  display: inline;
+}
+.query-component .search-container[data-mode="basic"] .search-entry:disabled {
+  color: #969696;
+}
+.query-component .search-container[data-mode="basic"] .search-entry:focus {
+  border-color: #666;
+}
+.query-component .search-container[data-mode="advanced"] {
+  margin-left: 0;
+  /* some overrides for the old shitty jql autocomplete */
+  /* overrides for jql help icon */
+}
+.query-component .search-container[data-mode="advanced"] .search-button {
+  margin-left: 5px;
+}
+.query-component .search-container[data-mode="advanced"] .atlassian-autocomplete {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: inherit;
+}
+.query-component .search-container[data-mode="advanced"] .atlassian-autocomplete label[for="advanced-search"] {
+  /* resets in case of being inside aui form */
+  margin: 0;
+  padding: 0;
+}
+.query-component .search-container[data-mode="advanced"] .atlassian-autocomplete label[for="advanced-search"] .icon {
+  position: absolute;
+  top: 7px;
+  left: 6px;
+}
+.query-component .search-container[data-mode="advanced"] .atlassian-autocomplete label[for="advanced-search"] .jql-label {
+  border: 1px solid #cccccc;
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  margin-bottom: -1px;
+  background-color: #fff;
+  padding: 2px 5px;
+  border-bottom-color: transparent;
+}
+.query-component .search-container[data-mode="advanced"] .atlassian-autocomplete label[for="advanced-search"] .jql-label #jqlcolrowcount > span {
+  margin: 0 4px;
+}
+.query-component .search-container[data-mode="advanced"] .atlassian-autocomplete label[for="advanced-search"]:hover .jql-label {
+  display: block;
+}
+.query-component .search-container[data-mode="advanced"] .atlassian-autocomplete .search-entry {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.66666666666667;
+  padding: 4px 35px 4px 26px;
+  margin-bottom: 0;
+  resize: none;
+  height: 30px;
+  width: 100%;
+  display: block;
+}
+.query-component .search-container[data-mode="advanced"] .atlassian-autocomplete .search-entry.jql-autocomplete-disabled {
+  padding-left: 8px;
+}
+.query-component .search-container[data-mode="advanced"] .atlassian-autocomplete .suggestions ul li {
+  padding: 5px 10px;
+}
+.query-component .search-container[data-mode="advanced"].loading .jqlgood,
+.query-component .search-container[data-mode="advanced"].loading .jqlerror {
+  background-image: url("images/wait.gif");
+}
+.query-component .search-container[data-mode="advanced"] .atlassian-autocomplete > .syntax-help,
+.query-component .search-container[data-mode="advanced"] .atlassian-autocomplete > .syntax-help:hover {
+  position: absolute;
+  color: #707070;
+  right: 5px;
+  top: 6px;
+}
+.query-component .aui-button {
+  margin: 0;
+}
+.query-component .aui-button[disabled]:focus,
+.query-component .aui-button[disabled]:active,
+.query-component .aui-button[aria-disabled="true"],
+.query-component .aui-button[aria-disabled="true"]:hover,
+.query-component .aui-button[aria-disabled="true"]:hover,
+.query-component .aui-button [aria-disabled="true"]:focus,
+.query-component .aui-button [aria-disabled="true"]:active {
+  border-color: transparent;
+  background: transparent;
+}
+.query-component .disabled {
+  opacity: .5;
+}
+.query-component a.disabled:hover,
+.query-component .disabled a:hover {
+  cursor: default;
+  text-decoration: none;
+}
+.query-component .criteria-list {
+  position: static;
+}
+.query-component .criteria-list .remove-filter {
+  color: #bbb;
+}
+.query-component .criteria-list li {
+  position: relative;
+  margin-bottom: 0;
+}
+/**
+* Special styling for when the query component is being used as a field. e.g in queues for service desk.
+*/
+.query-component.field-styled .search-field-options {
+  width: 1%;
+}
+.query-component.field-styled .search-criteria,
+.query-component.field-styled .search-criteria-extended {
+  display: inline-block;
+}
+.query-component.field-styled .criteria-actions {
+  float: left;
+}
+.query-component.field-styled .search-container {
+  width: 100%;
+}
+.query-component.field-styled .search-container .search-field-container {
+  width: auto;
+}
+.query-component.field-styled .search-container .search-options-container {
+  width: 1%;
+  line-height: 38px;
+}
+.query-component.field-styled .search-container[data-mode="basic"] .search-field-container {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 3.01px;
+  box-shadow: inset 0 1px 3px #ccc;
+  background: #fff;
+  padding: 3px 4px;
+}
+.query-component.field-styled .search-container[data-mode="basic"] .search-options-container .criteria-actions {
+  float: left;
+}
+.query-component.field-styled .search-container[data-mode="advanced"] .search-entry {
+  line-height: 28px;
+}
+.query-component.field-styled .search-container[data-mode="advanced"] label[for="advanced-search"] .icon {
+  top: 11px;
+}
+.query-component.field-styled .search-container[data-mode="advanced"] .syntax-help,
+.query-component.field-styled .search-container[data-mode="advanced"] .syntax-help:hover {
+  top: 9px;
+  right: 10px;
+}
+/*
+ For IE we need to put the border around the parent element so can fake putting the search icon inside of the field.
+  We cannot actually put it inside the field as msie does not respect padding-right for text inputs.
+*/
+.msie .search-container .text-query-container {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  display: inline-block;
+}
+.msie .search-container .text-query-container .search-entry {
+  min-height: 28px;
+  line-height: 24px;
+  padding-right: 0;
+  border: none;
+}
+/* Criteria list (lozenges) */
+.criteria-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+.criteria-list > li {
+  display: inline-block;
+  margin: 0 6px 2px 0;
+  vertical-align: top;
+}
+.criteria-list .aui-button {
+  padding: 5px 8px 6px;
+}
+.criteria-list .aui-button.active {
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+}
+.criteria-list .fieldLabel {
+  color: #666;
+}
+.criteria-list [aria-disabled] .fieldLabel {
+  color: #999;
+}
+.criteria-list .criteria-actions > a {
+  margin-right: 8px;
+}
+/* drop arrow */
+.criteria-list .drop-arrow,
+.view-selector .drop-arrow {
+  padding-right: 20px;
+  position: relative;
+}
+.criteria-list .drop-arrow:after,
+.view-selector .drop-arrow:after {
+  border: 4px solid transparent;
+  border-top-color: #111;
+  content: "";
+  height: 0;
+  position: absolute;
+  right: 8px;
+  top: 13px;
+  width: 0;
+}
+.criteria-list [aria-disabled].drop-arrow:after,
+.view-selector [aria-disabled].drop-arrow:after {
+  border-top-color: #999;
+}
+/* criteria selector */
+.criteria-selector.aui-button {
+  text-align: left;
+  /* center align causes the text to shift slightly when overflow: ellipsis is active */
+  margin: 0;
+}
+.criteria-selector > .criteria-wrap {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 200px;
+}
+.criteria-selector .searcherValue {
+  display: inline;
+}
+.criteria-list .aui-message {
+  padding: 5px 8px 4px;
+}
+.criteria-list .remove-filter {
+  color: #bbb;
+  right: 3px;
+  top: 6px;
+  position: absolute;
+}
+.criteria-list .remove-filter:hover {
+  color: inherit;
+}
+.search-criteria-extended .criteria-selector,
+.invalid-searcher .criteria-selector {
+  padding-right: 40px;
+}
+.search-criteria-extended .criteria-list .drop-arrow:after,
+.invalid-searcher .criteria-selector.drop-arrow:after {
+  right: 28px;
+}
+.searcher-no-edit-content {
+  margin: 10px;
+}
+.invalid-searcher .criteria-selector,
+.invalid-searcher .criteria-selector:focus,
+.invalid-searcher .criteria-selector:hover {
+  box-shadow: 0 0 2px #d04437;
+}
+.invalid-searcher .criteria-selector.aui-button:focus {
+  box-shadow: 0 0 2px 2px #d04437;
+}
+.msie .invalid-searcher .criteria-selector,
+.msie .invalid-searcher .criteria-selector:focus,
+.msie .invalid-searcher .criteria-selector:hover {
+  box-shadow: none;
+}
+.msie .invalid-searcher .criteria-selector.aui-button + .aui-button,
+.msie .invalid-searcher .criteria-selector:hover.aui-button + .aui-button {
+  border: 1px solid #d04437;
+}
+/* partial invalid searches */
+.partial-invalid-searcher .searcherValue {
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  padding: 0 0 1px 19px;
+}
+.invalid-searcher .criteria-selector.aui-button-subtle {
+  border-bottom: 1px dotted #d04437;
+  border-radius: 3.01px 3.01px 0 0;
+}
+.invalid-searcher .criteria-selector.aui-button-subtle:before {
+  border-bottom: 1px dotted #d04437;
+  bottom: 0;
+  content: "";
+  display: block;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+.mozilla .invalid-searcher .criteria-selector.aui-button-subtle:before {
+  left: 1px;
+}
+/* JRADEV-15424: for some reason, custom-styled buttons (buttons with a custom border/border-radius) do not show the typical box-shadow outline */
+.criteria-list .aui-button:focus,
+.criteria-list .search-entry:focus {
+  outline: none;
+  box-shadow: 0 0 2px 2px rgba(103, 150, 224, 0.8);
+}
+/* JRADEV-15424 IE Wierdness */
+.msie .criteria-list .aui-button:focus {
+  border-collapse: separate;
+  box-shadow: 0 0 3px 3px #6796E0;
+}
+.msie .criteria-list .search-entry:focus {
+  box-shadow: none;
+}
+.layout-switcher-item .aui-icon {
+  margin-right: 6px;
+  color: #707070;
+}
+.layout-switcher-item.active .aui-icon {
+  color: #e9e9e9;
+}
+/* Sparkler, Inlne dialog stuff */
+.searchfilter {
+  padding: 0;
+}
+.check-list-item .item-label .invalid-item,
+.partial-invalid-searcher .searcherValue {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA00lEQVR42qWTXQqCUBCFe+oHaiMm+qDSBlpf+qBga4n20INktI16yDDqDJwLwyAXzIEPnDM/zL13nFm77HcBOIAWvMiVWqBzbeEclOADvkMwVoPVUPFJJR5BBpYko+biZ6nRDSoG7iB2uitQ/hbcqJda7ClGotkGRoup91IrQu7GlgRvA5o6Ti5OSycd0SBlrBWno7MY0WDBWPdvgw1jD98RfDuTsKaZeomFOOHIZ4zUM4a+RbJmF6nyrXINEuprftd2lSf+TP4xC476Bk/QUAtt/g8cmyvPgMzXPwAAAABJRU5ErkJggg==);
+}
+.check-list-item.has-invalid-item .item-label {
+  padding-right: 25px;
+}
+.more-criteria-footer {
+  padding: 5px 10px 3px;
+  color: #444;
+  border-top: 1px solid #bbb;
+  font-style: italic;
+}
+.checkboxmultiselect-container .description {
+  border-top: 1px solid #ddd;
+  padding: 5px 10px 3px;
+}
+.check-list-item .item-label .invalid-item {
+  display: block;
+  height: 20px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 20px;
+  display: none;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.check-list-item:hover .item-label .invalid-item,
+.check-list-item.invalid_sel .item-label .invalid-item {
+  display: block;
+}
+.ajs-layer .aui-list .aui-list-item .disabled {
+  opacity: 0.5;
+  background: none;
+  color: #333;
+}
+.searchfilter {
+  padding: 0;
+}
+.searchfilter .form-body {
+  padding: 10px;
+}
+.form-body.checkboxmultiselect-container {
+  padding: 0;
+}
+.text-query-container {
+  height: 30px;
+}
+.text-query.hidden {
+  display: none;
+}
+form.aui .form-description {
+  margin-bottom: 13px;
+  padding: 5px 8px;
+}
+form#issue-filter.searchfilter {
+  min-width: 250px;
+}
+form#issue-filter.searchfilter .text,
+form#issue-filter.searchfilter .textarea {
+  width: 100%;
+  min-width: 200px;
+}
+form#issue-filter.searchfilter .searchfilter-not-found {
+  text-align: center;
+}
+#issue-filter .buttons-container {
+  margin-top: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  clear: both;
+  margin: 1px 0 0 0;
+  position: relative;
+  width: 100%;
+}
+#issue-filter .buttons-container .buttons {
+  margin: 0;
+}
+#issue-filter .buttons-container .aui-button {
+  margin-top: 0;
+}
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.navigator-search.query-component > .notifications {
+  margin-bottom: 0;
+  padding-left: 0;
+}
+.query-component.navigator-search .search-container[data-mode="advanced"] {
+  width: 100%;
+}
+.query-component.navigator-search .search-container[data-mode="advanced"] .search-options-container {
+  width: 1%;
+}
 .page-type-split {
   overflow-y: hidden;
   /**

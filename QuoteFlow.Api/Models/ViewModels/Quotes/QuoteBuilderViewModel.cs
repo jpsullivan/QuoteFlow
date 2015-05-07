@@ -5,20 +5,21 @@ namespace QuoteFlow.Api.Models.ViewModels.Quotes
 {
     public class QuoteBuilderViewModel
     {
-        public QuoteBuilderViewModel(Quote quote, IEnumerable<Catalog> catalogs, IEnumerable<Manufacturer> manufacturers, 
-            IEnumerable<User> creators, AssetTable assetTable)
+        public QuoteBuilderViewModel(Quote quote, AssetTable assetTable, IEnumerable<string> visibleFieldNames, IEnumerable<string> visibleFunctionNames, IEnumerable<string> jqlReservedWords)
         {
             Quote = quote;
-            Catalogs = catalogs;
-            Manufacturers = manufacturers;
-            Creators = creators;
             AssetTable = assetTable;
+            VisibleFieldNames = visibleFieldNames;
+            VisibleFunctionNames = visibleFunctionNames;
+            JqlReservedWords = jqlReservedWords;
         }
 
         public Quote Quote { get; set; }
-        public IEnumerable<Catalog> Catalogs { get; set; }
-        public IEnumerable<Manufacturer> Manufacturers { get; set; }
-        public IEnumerable<User> Creators { get; set; }
         public AssetTable AssetTable { get; set; }
+
+        public IEnumerable<string> VisibleFieldNames { get; set; }
+        public IEnumerable<string> VisibleFunctionNames { get; set; } 
+        public IEnumerable<string> JqlReservedWords { get; set; } 
+
     }
 }

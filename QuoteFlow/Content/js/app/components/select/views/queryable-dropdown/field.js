@@ -32,7 +32,6 @@ var Field = Marionette.ItemView.extend({
 
     handleBlur: function() {
         if (!this.ignoreBlurEvent) {
-            debugger;
             this.trigger("deactivate");
         } else {
             this.ignoreBlurEvent = false;

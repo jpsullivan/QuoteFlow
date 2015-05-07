@@ -1,6 +1,8 @@
 "use strict";
 
+var _ = require('underscore');
 var Brace = require('backbone-brace');
+var SearcherDialog = require('./searcher-dialog');
 
 var CriteriaView = Brace.View.extend({
 
@@ -24,8 +26,8 @@ var CriteriaView = Brace.View.extend({
         this.searcherCollection.onInteractiveChanged(this._handleInteractiveChanged, this);
         this.searcherCollection.bind('change:isSelected', this._onCriteriaSelectionChanged, this);
 
-        // JIRA.Issues.SearcherDialog.instance.onHide(_.bind(this._addTooltip, this));
-        // JIRA.Issues.SearcherDialog.instance.onShow(_.bind(this._onCriteriaDialogShow, this));
+        SearcherDialog.instance.onHide(_.bind(this._addTooltip, this));
+        SearcherDialog.instance.onShow(_.bind(this._onCriteriaDialogShow, this));
     },
 
     /**
@@ -121,7 +123,7 @@ var CriteriaView = Brace.View.extend({
 
     _showDialog: function() {
         if (this.searcherCollection.isInteractive() && this._getSearcher() && this._isValidSearcher()) {
-            JIRA.Issues.SearcherDialog.instance.show(this._getSearcher());
+            SearcherDialog.instance.show(this._getSearcher());
         }
     },
 
@@ -192,8 +194,9 @@ var CriteriaView = Brace.View.extend({
     },
 
     _onClickCriteriaSelector: function(event) {
+        debugger;
         if (this.searcherCollection.isInteractive() && this._getSearcher() && this._isValidSearcher()) {
-            JIRA.Issues.SearcherDialog.instance.toggle(this._getSearcher());
+            SearcherDialog.instance.toggle(this._getSearcher());
         }
         event.preventDefault();
     },
@@ -226,12 +229,12 @@ var CriteriaView = Brace.View.extend({
     /**
      * Remove the searcher's tooltip if its dialog is showing.
      * <p/>
-     * Called when JIRA.Issues.SearcherDialog is shown.
+     * Called when SearcherDialog is shown.
      *
      * @private
      */
     _onCriteriaDialogShow: function () {
-        var currentSearcher = JIRA.Issues.SearcherDialog.instance.getCurrentSearcher();
+        var currentSearcher = SearcherDialog.instance.getCurrentSearcher();
         if (currentSearcher == this._getSearcher()) {
             this.tipsy && this.tipsy.remove();
         }

@@ -1,3 +1,14 @@
 <div class="criteria-wrap">
-  Search all
+  {{#if extended}}
+    <span class="fieldLabel">{{name}}:</span>&nbsp;
+  {{else}}
+    {{#unless viewHtml}}
+    <span class="fieldLabel">{{name}}:</span>&nbsp;
+    {{/unless}}
+  {{/if}}
+  {{#if viewHtml}}
+    {{{viewHtml}}}
+  {{else}}
+    All
+  {{/if}}
 </div>
