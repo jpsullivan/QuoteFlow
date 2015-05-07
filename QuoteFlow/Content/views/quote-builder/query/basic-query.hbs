@@ -1,0 +1,33 @@
+<div class="search-field-container">
+		{{#if hasOrderBy}}
+    <div class="list-ordering-container">
+        <div class="list-ordering">
+        </div>
+    </div>
+    {{/if}}
+    <div class="search-criteria-container">
+        <div class="search-criteria">
+            <ul class="criteria-list">
+                <li class="text-query hidden">
+                    <div class="text-query-container"><input class="search-entry text ajs-dirty-warning-exempt" id="searcher-query" type="text" name="text" placeholder="" /></div>
+                </li>
+                <li class="criteria-actions"></li>
+                {{#if hasSearchButton}}
+                <li>
+                    <button class="aui-button aui-button-subtle search-button" type="button" title="">
+                        <span class="aui-icon aui-icon-small aui-iconfont-search">
+                            Search
+                        </span>
+                    </button>
+                </li>
+                {{/if}}
+            </ul>
+        </div>
+        <div class="search-criteria-extended">
+            <ul class="criteria-list"></ul>
+        </div>
+    </div>
+</div>
+<div class="search-options-container">
+    <div class="mode-switcher"></div>
+</div>

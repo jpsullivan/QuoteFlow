@@ -548,6 +548,11 @@
     <Content Include="Content\js\app\models\asset_var_value.js" />
     <Content Include="Content\js\app\modules\asset-nav\controller.js" />
     <Content Include="Content\js\app\modules\asset-nav\module.js" />
+    <Content Include="Content\js\app\modules\asset-nav\orderby\model.js" />
+    <Content Include="Content\js\app\modules\asset-nav\orderby\component.js" />
+    <Content Include="Content\js\app\modules\asset-nav\orderby\view.js" />
+    <Content Include="Content\js\app\modules\asset-nav\query\jql-autocomplete-view.js" />
+    <Content Include="Content\js\app\modules\asset-nav\query\jql-query-view.js" />
     <Content Include="Content\js\app\modules\asset-nav\router-custom.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-api.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-navigator-api.js" />
@@ -602,6 +607,8 @@
     <Content Include="Content\js\app\modules\catalog\views\select_asset_var_modal.js" />
     <Content Include="Content\js\app\ui\common\panel-table.js" />
     <Content Include="Content\js\app\util\dialog-cleanup.js" />
+    <Content Include="Content\js\app\util\jquery\RecurringPromise.js" />
+    <Content Include="Content\js\app\util\meta.js" />
     <Content Include="Content\js\app\util\navigator.js" />
     <Content Include="Content\js\app\util\url-serializer.js" />
     <Content Include="Content\js\app\util\utils.js" />
@@ -1001,6 +1008,10 @@
     <Content Include="Content\less\history-feed.css.map">
       <DependentUpon>history-feed.css</DependentUpon>
     </Content>
+    <Content Include="Content\views\quote-builder\split-view\orderby.hbs" />
+    <Content Include="Content\js\lib\jquery.scroll-into-view.js" />
+    <Content Include="Content\views\quote-builder\query\jql-query-view.hbs" />
+    <Content Include="Content\js\lib\jquery.expand-on-input.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

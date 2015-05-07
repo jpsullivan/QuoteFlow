@@ -1,7 +1,9 @@
 ﻿"use strict";
 
+var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
+var recurringPromise = require('jquery-recurring-promise');
 var Utilities = require('../../../components/utilities');
 
 /**
@@ -34,9 +36,9 @@ var SplitScreenListView = Marionette.ItemView.extend({
         this.searchResults = options.search.getResults();
         this.serverRendered = !!options.serverRendered && this._assetsRendered(options);
 
-        this.addListener(this.searchResults, "highlightedAssetChange", this._onHighlightedAssetChange, this);
-        this.addListener(this.searchResults, "assetUpdated", this._onAssetUpdated, this);
-        this.addListener(this.searchResults, "startIndexChange", this.render, this);
+        this.listenTo(this.searchResults, "highlightedAssetChange", this._onHighlightedAssetChange, this);
+        this.listenTo(this.searchResults, "assetUpdated", this._onAssetUpdated, this);
+        this.listenTo(this.searchResults, "startIndexChange", this.render, this);
     },
 
     _assetsRendered: function (options) {

@@ -8,7 +8,7 @@ var Marionette = require('backbone.marionette');
 var UrlSerializer = require('../../util/url-serializer');
 
 /**
- * A mostly-custom router for handling routes that are used within the 
+ * A mostly-custom router for handling routes that are used within the
  * asset table module.
  */
 var AssetNavCustomRouter = Marionette.AppRouter.extend({
@@ -27,7 +27,7 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
      * Overwrite Marionette.AppRouter, now it fires an event each time the URL changes
      */
     navigate: function () {
-        this.searchPageModule.removeOpenTipsies();
+        //this.searchPageModule.removeOpenTipsies();
         this.trigger("navigate");
         Marionette.AppRouter.prototype.navigate.apply(this, arguments);
     },
@@ -62,10 +62,11 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
      * @private
      */
     _route: function (path, query) {
+        debugger;
         // Re-encode back to a full fragment, since we do our own parsing in JIRA.Issues.URLSerializer
         var fragment = this.toFragment(path, query);
 
-        if (JIRA.Issues.ignorePopState) {
+        if (QuoteFlow.application.ignorePopState) {
             // Workaround for Chrome bug firing a null popstate event on page load.
             // Backbone should fix this!
             // @see http://code.google.com/p/chromium/issues/detail?id=63040
@@ -82,42 +83,46 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
     },
 
     _navigateToLoginIfNeeded: function (state, history) {
-        if (!this.usePushState(history) && state.selectedAssetKey && !JIRA.Issues.LoginUtils.isLoggedIn()) {
-            var instance = this;
-
-            var requestParams = {};
-            if (state.filter != null) {
-                requestParams.filterId = state.filter;
-            }
-
-            jQuery.ajax({
-                url: AJS.contextPath() + "/rest/issueNav/1/issueNav/anonymousAccess/" + state.selectedAssetKey,
-                headers: { 'X-SITEMESH-OFF': true },
-                data: requestParams,
-                success: function () {
-                    instance._navigateUsingState(state);
-                },
-                error: function (xhr) {
-                    if (xhr.status === 401) {
-                        instance._redirectToLogin(state);
-                    } else {
-                        instance._navigateUsingState(state);
-                    }
-                }
-            });
-
-            return true;
-        }
+        // if (!this.usePushState(history) && state.selectedAssetKey && !JIRA.Issues.LoginUtils.isLoggedIn()) {
+        //     var instance = this;
+        //
+        //     var requestParams = {};
+        //     if (state.filter != null) {
+        //         requestParams.filterId = state.filter;
+        //     }
+        //
+        //     jQuery.ajax({
+        //         url: AJS.contextPath() + "/rest/issueNav/1/issueNav/anonymousAccess/" + state.selectedAssetKey,
+        //         headers: { 'X-SITEMESH-OFF': true },
+        //         data: requestParams,
+        //         success: function () {
+        //             instance._navigateUsingState(state);
+        //         },
+        //         error: function (xhr) {
+        //             if (xhr.status === 401) {
+        //                 instance._redirectToLogin(state);
+        //             } else {
+        //                 instance._navigateUsingState(state);
+        //             }
+        //         }
+        //     });
+        //
+        //     return true;
+        // }
 
         return false;
     },
 
     _navigateUsingState: function (state) {
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
-            this._setStatePermalink(state);
-            this.navigate(UrlSerializer.getURLFromState(state), { replace: true, trigger: false });
-            this.searchPageModule.updateFromRouter(state);
-        }
+        // if (QuoteFlow.application.request("issueEditor:canDismissComment")) {
+        //     this._setStatePermalink(state);
+        //     this.navigate(UrlSerializer.getURLFromState(state), { replace: true, trigger: false });
+        //     this.searchPageModule.updateFromRouter(state);
+        // }
+
+        this._setStatePermalink(state);
+        this.navigate(UrlSerializer.getURLFromState(state), { replace: true, trigger: false });
+        this.searchPageModule.updateFromRouter(state);
     },
 
     _redirectToLogin: function (state) {
@@ -131,19 +136,19 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
      * Set the permalink for a given state into AJS.Meta to be rendered by the share plugin
      */
     _setStatePermalink: function (state) {
-        var viewIssueState = _.pick(state, "selectedIssueKey");
-        var baseUrl = AJS.Meta.get("jira-base-url");
-        if (!_.isEmpty(viewIssueState)) {
-            AJS.Meta.set("viewissue-permlink",
-                baseUrl + "/" + UrlSerializer.getURLFromState(viewIssueState)
-            );
-        }
-        var issueNavState = _.omit(state, "selectedIssueKey");
-        if (!_.isEmpty(issueNavState)) {
-            AJS.Meta.set("issuenav-permlink",
-                baseUrl + "/" + UrlSerializer.getURLFromState(issueNavState)
-            );
-        }
+        // var viewIssueState = _.pick(state, "selectedIssueKey");
+        // var baseUrl = AJS.Meta.get("jira-base-url");
+        // if (!_.isEmpty(viewIssueState)) {
+        //     AJS.Meta.set("viewissue-permlink",
+        //         baseUrl + "/" + UrlSerializer.getURLFromState(viewIssueState)
+        //     );
+        // }
+        // var issueNavState = _.omit(state, "selectedIssueKey");
+        // if (!_.isEmpty(issueNavState)) {
+        //     AJS.Meta.set("issuenav-permlink",
+        //         baseUrl + "/" + UrlSerializer.getURLFromState(issueNavState)
+        //     );
+        // }
     }
 });
 

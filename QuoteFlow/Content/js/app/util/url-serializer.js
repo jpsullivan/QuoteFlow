@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 var BASE_BROWSE = "browse/",
-    BASE_ASSETS = "assets/";
+    BASE_ASSETS = "quote/2/quote-numero-uno/builder/";
 
 var returnAsIs = function(x) {
     return x;
@@ -13,6 +13,8 @@ var returnAsNumber = function(x) {
     }
     return x;
 };
+
+var _ = require('underscore');
 
 /**
  * An object describing the state of the issue navigator.

@@ -9,7 +9,7 @@ Backbone.$ = $;
 var AssetSearcherModel = require('../../models/asset/searcher');
 
 /**
- * 
+ *
  */
 var AssetSearcherCollection = Brace.Collection.extend({
     model: AssetSearcherModel,
@@ -310,7 +310,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
 
         } else {
             var response = AJS.$.ajax({
-                url: AJS.contextPath() + "/secure/QueryComponent!Jql.jspa",
+                url: QuoteFlow.RootUrl + "/api/asset/QueryComponent",
                 headers: { 'X-SITEMESH-OFF': true },
                 data: requestData,
                 type: "POST"
@@ -339,7 +339,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
             }, this));
 
             response.always(function () {
-                JIRA.trace("jira.search.searchers.updated");
+              console.log('quoteflow.search.searchers.updated');
             });
 
             return response;

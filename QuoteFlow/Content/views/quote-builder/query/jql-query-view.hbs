@@ -1,0 +1,19 @@
+﻿<div class="search-field-container">
+    <div class="atlassian-autocomplete">
+        <label for="advanced-search">
+            <span id="jqlerrormsg" class="icon jqlgood"><span>{getText('issues.components.query.search.parse')}</span></span> <span class="jql-label">{getText('navigator.advanced.query.label')} <span id="jqlcolrowcount">{getText('navigator.advanced.query.line')}:<span id="jqlrownum">0</span>{getText('navigator.advanced.query.character')}:<span id="jqlcolumnnum">0</span></span></span>
+        </label>
+        <textarea id="advanced-search"
+                  class="search-entry advanced-search ajs-dirty-warning-exempt"
+                  name="jql"></textarea>
+        <a class="syntax-help" href="{$helpUrl}" title="{getText('navigator.advanced.query.syntax')}" target="_jirahelp" tabindex="-1"><span class="aui-icon aui-icon-small aui-iconfont-help">{getText('navigator.advanced.query.syntax')}</span></a>
+    </div>
+</div>
+<div class="search-options-container">
+    {{#if $hasSearchButton}}
+    <button class="aui-item aui-button aui-button-subtle search-button" type="button" title="">
+        <span class="aui-icon aui-icon-small aui-iconfont-search">Search</span>
+    </button>
+    {{/if}}
+    <span class="mode-switcher"></span>
+</div>

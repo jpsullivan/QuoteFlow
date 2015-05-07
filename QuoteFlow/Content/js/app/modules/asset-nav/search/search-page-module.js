@@ -12,7 +12,7 @@ var SplitScreenLayout = require('../split-view/layout');
 var UrlSerializer = require('../../../util/url-serializer');
 
 /**
- * 
+ *
  */
 var SearchPageModule = Brace.Model.extend({
     namedEvents: ["changeFilterProps"],
@@ -94,6 +94,7 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     getActiveLayout: function () {
+        debugger;
         return this.getLayouts()["split-view"];
     },
 
@@ -108,11 +109,13 @@ var SearchPageModule = Brace.Model.extend({
      * @param {boolean} [options.render=true] Whether to render the new layout.
      */
     changeLayout: function (key, options) {
+        debugger;
+
         var layout = this.getLayout(key),
             newLayout,
             previousLayout = this.getCurrentLayout();
 
-        JIRA.Issues.changingLayout = true;
+        QuoteFlow.application.changingLayout = true;
 
         // JRADEV-20786 - Scroll to top of page before changing layouts.
         jQuery("body, html").scrollTop(0);
@@ -135,7 +138,7 @@ var SearchPageModule = Brace.Model.extend({
                 this.searchResults.unselectAsset({ replace: true });
             }
 
-            JIRA.Issues.LayoutPreferenceManager.setPreferredLayoutKey(key, options);
+            //JIRA.Issues.LayoutPreferenceManager.setPreferredLayoutKey(key, options);
 
             newLayout = new layout.view({
                 fullScreenAsset: this.fullScreenAsset,
@@ -169,7 +172,8 @@ var SearchPageModule = Brace.Model.extend({
     createLayout: function () {
         if (!this.getCurrentLayout()) {
             this.changeLayout("split-view", { render: false });
-            this.fullScreenAsset.deactivate();
+            //this.fullScreenAsset.deactivate();
+            this.fullScreenAsset.destroy();
         }
     },
 
@@ -366,7 +370,7 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     /**
-     * @param {element} options.issueContainer The element in which issues are to be rendered.
+     * @param {element} options.assetContainer The element in which assets are to be rendered.
      * @param {element} options.searchContainer The element in which search results are to be rendered.
      */
     registerViewContainers: function (options) {
@@ -686,17 +690,19 @@ var SearchPageModule = Brace.Model.extend({
             return;
         }
 
-        var filter = model,
-            navigatorTitle = AJS.format('{0} - {1}', AJS.I18n.getText('navigator.title'), JIRA.Settings.ApplicationTitle.get());
-
-        if (filter && filter.getIsValid()) {
-            document.title = "[" + filter.getName() + "] " + navigatorTitle;
-        } else {
-            document.title = navigatorTitle;
-        }
+        // var filter = model,
+        //     navigatorTitle = AJS.format('{0} - {1}', AJS.I18n.getText('navigator.title'), JIRA.Settings.ApplicationTitle.get());
+        //
+        // if (filter && filter.getIsValid()) {
+        //     document.title = "[" + filter.getName() + "] " + navigatorTitle;
+        // } else {
+        //     document.title = navigatorTitle;
+        // }
     },
 
     _applyState: function (state, isReset, options) {
+        debugger;
+
         options = options || {};
         var prevState = _.extend(this.toJSON(), this.search.getResults().toJSON());
         var stateToApply = _.pick(state, this.properties);
@@ -751,6 +757,7 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     _navigateToState: function (state, isReset, options) {
+        debugger;
 
         options = options || {};
 
@@ -809,12 +816,13 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     applyState: function (state, isReset, options) {
-        var filterRequest,
-            shouldFetchFilter = state.filter && !(state.filter instanceof JIRA.Components.Filters.Models.Filter),
-            systemFiltersRequest = this.initSystemFilters();
+        var filterRequest;
 
         QuoteFlow.application.execute("assetEditor:abortPending");
         this.createLayout();
+
+        console.warn('todo: remove false constant');
+        var shouldFetchFilter = false;
 
         if (shouldFetchFilter) {
             // Wait for the system filters request to finish as state.filter may refer to a system filter.
@@ -827,12 +835,15 @@ var SearchPageModule = Brace.Model.extend({
             }, this));
         }
 
-        jQuery.when(filterRequest, systemFiltersRequest).always(_.bind(function () {
+        jQuery.when(filterRequest).always(_.bind(function () {
+            debugger;
             this._applyState(state, isReset, options);
         }, this));
     },
 
     updateFromRouter: function (state) {
+        debugger;
+
         if (this.search.isStandAloneAsset(state)) {
             this.resetToStandaloneIssue(state);
         } else {

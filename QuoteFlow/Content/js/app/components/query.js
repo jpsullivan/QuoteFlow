@@ -67,9 +67,9 @@ var QueryComponent = function () {
                 searchers: options.searchers
             });
 
-//            jQuery(options.el).addClass("query-component " + options.style + "-styled");
-//
-//            queryModule.createAndRenderView(options.el);
+            jQuery(options.el).addClass("query-component " + options.style + "-styled");
+
+            queryModule.createAndRenderView(options.el);
 
             if (options.jql || options.jql === "") {
                 queryModule.resetToQuery(options.jql).always(function () {

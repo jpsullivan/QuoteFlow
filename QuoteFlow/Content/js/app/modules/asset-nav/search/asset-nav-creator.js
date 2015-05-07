@@ -19,16 +19,16 @@ var SearchModule = require('./search-module');
 var SearchPageModule = require('./search-page-module');
 
 /**
- * 
+ *
  */
 var AssetNavCreator = {
 
     create: function($el, options) {
         var searchPageModule = this.searchPageModule = new SearchPageModule({}, {
-            initialAssetTableState: options.initialAssetTableState
+          initialIssueTableState: options.initialIssueTableState
         });
         searchPageModule.registerViewContainers({
-            assetContainer: $(".asset-container"),
+            assetContainer: $(".issue-container"),
             searchContainer: $(".navigator-container")
         });
 
@@ -58,22 +58,23 @@ var AssetNavCreator = {
 //            }
 //        });
 
-//        this.layoutSwitcherView = new LayoutSwitcherView({ searchPageModule: searchPageModule });
-//        this.layoutSwitcherView.setElement($el.find("#layout-switcher-toggle")).render();
+      //  this.layoutSwitcherView = new LayoutSwitcherView({ searchPageModule: searchPageModule });
+      //  this.layoutSwitcherView.setElement($el.find("#layout-switcher-toggle")).render();
 
         var issueModule = QuoteFlow.application.request("issueEditor");
-        QuoteFlow.application.vent.on("issueEditor:render", function (regions) {
+
+        QuoteFlow.application.vent.on("assetEditor:render", function (regions) {
             QuoteFlow.application.execute("pager:render", regions.pager);
         });
         QuoteFlow.application.commands.setHandler("returnToSearch", function () {
-            QuoteFlow.application.execute("issueEditor:close");
+            QuoteFlow.application.execute("assetEditor:close");
         });
 
         // Initialize event bubbling
-        QuoteFlow.application.vent.on("issueEditor:saveSuccess", function (props) {
+        QuoteFlow.application.vent.on("assetEditor:saveSuccess", function (props) {
             QuoteFlow.application.vent.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
         });
-        QuoteFlow.application.vent.on("issueEditor:saveError", function (props) {
+        QuoteFlow.application.vent.on("assetEditor:saveError", function (props) {
             if (!props.deferred) {
                 QuoteFlow.application.vent.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
             }
@@ -82,7 +83,7 @@ var AssetNavCreator = {
         //FocusShifter.init();
 
         var issueSearchManager = new AssetSearchManager({
-            initialAssetTableState: options.initialAssetTableState,
+            initialIssueTableState: options.initialIssueTableState,
             initialAssetIds: options.initialAssetIds
         });
 
@@ -120,13 +121,14 @@ var AssetNavCreator = {
         searchPageModule.registerFullScreenAsset(fullScreenIssue);
         searchPageModule.registerIssueSearchManager(issueSearchManager);
         searchPageModule.registerIssueCacheManager(issueCacheManager);
-        searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
+        //searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
 
         searchHeaderModule.registerSearch(searchModule);
         //searchHeaderModule.createToolsView(issueNavToolsElement);
 
         // Router
 
+        debugger;
         var issueNavRouter = this.assetNavRouter = new AssetNavCustomRouter({
             searchPageModule: searchPageModule,
             initialSessionSearchState: options.initialSessionSearchState
@@ -181,6 +183,8 @@ var AssetNavCreator = {
 //            }
 //        });
 
+        debugger;
+
         // Keyboard shortcuts ?
 
         $(document).keydown(function (e) {
@@ -229,8 +233,8 @@ var AssetNavCreator = {
      * change the login url to the current state.
      */
     changeLoginUrl: function() {
-        var url = JIRA.Issues.LoginUtils.redirectUrlToCurrent();
-        $('.login-link').attr('href', url);
+        // var url = JIRA.Issues.LoginUtils.redirectUrlToCurrent();
+        // $('.login-link').attr('href', url);
     }
 };
 

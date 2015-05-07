@@ -1,8 +1,12 @@
 ﻿"use strict";
 
+var _ = require('underscore');
+var ScrollIntoView = require('jquery-scroll-into-view');
+
 var Marionette = require('backbone.marionette');
 
 var EmptyResultsView = require('../../../components/asset-table/views/empty-results');
+var OrderByComponent = require('../orderby/component');
 var SplitScreenDetailView = require('./detail-view');
 var SplitScreenListView = require('./list-view');
 var Utilities = require('../../../components/utilities');
@@ -50,7 +54,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this.detailsView = new SplitScreenDetailView(options);
         this.listView = new SplitScreenListView(options);
 
-        this.orderBy = JIRA.Components.OrderBy.create();
+        this.orderBy = OrderByComponent.create();
         this.orderBy.onSort(this._handleSort, this);
 
         Utilities.initializeResizeHooks();
@@ -59,15 +63,16 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         QuoteFlow.Interactive.onVerticalResize(this._adjustNoResultsMessageHeight);
         QuoteFlow.Interactive.onHorizontalResize(this._updateSidebarPosition);
         QuoteFlow.Interactive.onVerticalResize(this._updateSidebarPosition);
-        this.addListener(options.search, "beforeSearch", this._showPending, this);
-        this.addListener(this.searchResults, "issueDeleted", this._onAssetDeleted, this);
-        this.addListener(this.searchResults, "newPayload", this._hidePending, this);
-        this.addListener(this.searchResults, "newPayload", this._updateSortBy, this);
-        this.addListener(this.searchResults, "newPayload", this.render, this);
-        this.addListener(this.searchResults, "startIndexChange", this._onStartIndexChange, this);
-        this.addListener(this.searchResults, "highlightedIssueChange", this._onHighlightedAssetChange, this);
-        this.addListener(this.searchResults, "selectedIssueChange", this._onSelectedIssueChange, this);
-        this.addListener(this.searchResults, "startIndexChange", this._renderEverythingExceptListView, this);
+
+        this.listenTo(options.search, "beforeSearch", this._showPending, this);
+        this.listenTo(this.searchResults, "issueDeleted", this._onAssetDeleted, this);
+        this.listenTo(this.searchResults, "newPayload", this._hidePending, this);
+        this.listenTo(this.searchResults, "newPayload", this._updateSortBy, this);
+        this.listenTo(this.searchResults, "newPayload", this.render, this);
+        this.listenTo(this.searchResults, "startIndexChange", this._onStartIndexChange, this);
+        this.listenTo(this.searchResults, "highlightedIssueChange", this._onHighlightedAssetChange, this);
+        this.listenTo(this.searchResults, "selectedIssueChange", this._onSelectedIssueChange, this);
+        this.listenTo(this.searchResults, "startIndexChange", this._renderEverythingExceptListView, this);
         this.search.onSearchError(this._onSearchFail, this);
 
         QuoteFlow.application.on("assetEditor:loadError", this._onIssueLoadError, this);
@@ -76,7 +81,8 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         }, this));
 
         this.fullScreenAsset.hide();
-        JIRA.Issues.overrideScrollIntoViewForSplit();
+        //JIRA.Issues.overrideScrollIntoViewForSplit();
+        $.fn.scrollIntoViewForAuto();
 
         this.setElement(this.navigatorContent);
         if (options.serverRendered) {
@@ -371,6 +377,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @return {SplitScreenLayout} <tt>this</tt>
      */
     render: function () {
+        debugger;
         var hasIssues = this.searchResults.hasAssets(),
             isInitialRender = this._isInitialRender();
 
@@ -477,7 +484,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @private
      */
     _setIssueModuleContainer: function () {
-        JIRA.Issues.Application.execute("issueEditor:setContainer", this.$(".split-view .detail-panel > div"));
+        QuoteFlow.application.execute("issueEditor:setContainer", this.$(".split-view .detail-panel > div"));
     },
 
     _showPending: function () {

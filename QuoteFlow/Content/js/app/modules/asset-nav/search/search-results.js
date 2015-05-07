@@ -1,11 +1,12 @@
 ﻿"use strict";
 
+var _ = require('underscore');
 var Brace = require('backbone-brace');
 
 var SimpleAsset = require('./asset/simple-asset');
 
 /**
- * 
+ *
  */
 var SearchResults = Brace.Model.extend({
     defaults: {
@@ -68,9 +69,9 @@ var SearchResults = Brace.Model.extend({
     },
 
     getPager: function () {
-        if (this.hasAsset(this.getSelectedAsset().getId())) {
+        if (this.hasAsset(this.getSelectedAsset().get("id"))) {
             var assetIds = this.getAssetIds();
-            var selectedId = this.getSelectedAsset().getId();
+            var selectedId = this.getSelectedAsset().get("id");
             var position = _.indexOf(assetIds, selectedId);
             var resultCount = this.getTotal();
             var stableSearchLimit = assetIds.length;
@@ -119,7 +120,7 @@ var SearchResults = Brace.Model.extend({
         id = parseInt(id, 10);
 
         var isFirstAsset = this.getAssetIds()[0] === id,
-            isHighlighted = this.getHighlightedAsset().getId() === id,
+            isHighlighted = this.getHighlightedAsset().get("id") === id,
             isLastAsset = _.last(this.getAssetIds()) === id;
 
         if (isHighlighted) {
@@ -143,7 +144,7 @@ var SearchResults = Brace.Model.extend({
             return false;
         }
 
-        return this.getHighlightedAsset().getId() === this.getAssetIds()[0];
+        return this.getHighlightedAsset().get("id") === this.getAssetIds()[0];
     },
 
     updateAssetById: function (assetUpdateObject, options) {
@@ -199,7 +200,7 @@ var SearchResults = Brace.Model.extend({
 
         // if used filter is system filter we don't want to get results based off him
         if (filter && !filter.getIsSystem()) {
-            options = _.extend({ filterId: filter.getId() }, options);
+            options = _.extend({ filterId: filter.get("id") }, options);
         }
         return this._assetSearchManager.getRowsForIds([id], options);
     },
@@ -208,7 +209,7 @@ var SearchResults = Brace.Model.extend({
         if (!this.hasHighlightedAsset()) {
             return null;
         }
-        return !this._assetSearchManager.assetKeys.hasError(this.getHighlightedAsset().getId());
+        return !this._assetSearchManager.assetKeys.hasError(this.getHighlightedAsset().get("id"));
     },
 
     getDisplayableTotal: function () {
@@ -227,8 +228,7 @@ var SearchResults = Brace.Model.extend({
             this._unhighlightAsset();
 
             this.getSelectedAsset().set({
-                id: -1,
-                key: key
+                id: -1
             });
 
             this.triggerAssetDoesNotExist();
@@ -239,8 +239,7 @@ var SearchResults = Brace.Model.extend({
 
     _unhighlightAsset: function () {
         this.getHighlightedAsset().set({
-            id: null,
-            key: null
+            id: null
         });
     },
 
@@ -259,7 +258,7 @@ var SearchResults = Brace.Model.extend({
     },
 
     /**
-     * Returns the position in the search results of the last asset on the current page 
+     * Returns the position in the search results of the last asset on the current page
      * (e.g. if the page size is 5 and we are on the first page this returns 5).
      *
      * @return {Number}
@@ -284,11 +283,10 @@ var SearchResults = Brace.Model.extend({
     },
 
     _selectExistingAssetById: function (id, options) {
-        if (id !== this.getSelectedAsset().getId() && JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+        if (id !== this.getSelectedAsset().get("id")) {
             id = id ? parseInt(id, 10) : null;
             this.getSelectedAsset().set({
-                id: id,
-                key: id ? this._getAssetKeyForId(id) : null
+                id: id
             }, options);
             this.highlightAssetById(id);
         }
@@ -307,11 +305,10 @@ var SearchResults = Brace.Model.extend({
             replace: false
         });
 
-        if (id && id !== this.getHighlightedAsset().getId()) {
+        if (id && id !== this.getHighlightedAsset().get("id")) {
             id = id ? parseInt(id, 10) : null;
             this.getHighlightedAsset().set({
-                id: id,
-                key: id ? this._getAssetKeyForId(id) : null
+                id: id
             }, options);
             if (id) {
                 this.setStartIndex(this._getStartIndexForAssetId(id));
@@ -321,7 +318,7 @@ var SearchResults = Brace.Model.extend({
 
     getState: function () {
         return {
-            selectedAssetKey: this.getSelectedAsset().getKey(),
+            selectedAssetId: this.getSelectedAsset().get("id"),
             startIndex: this.getStartIndex()
         };
     },
@@ -336,7 +333,7 @@ var SearchResults = Brace.Model.extend({
      */
     resetFromSearch: function (state) {
         state.resultsId = _.uniqueId();
-        this.getSelectedAsset().set({ id: null, key: null });
+        this.getSelectedAsset().set({ id: null });
         this.set({ sortBy: null });
         this.set("startIndex", state.startIndex, { silent: true });
         this.set(_.pick(state, this.properties));
@@ -346,7 +343,7 @@ var SearchResults = Brace.Model.extend({
             if (this.hasAssets()) {
                 this.highlightFirstInPage();
             } else {
-                this.getHighlightedAsset().set({ id: null, key: null });
+                this.getHighlightedAsset().set({ id: null });
             }
         }
     },
@@ -360,9 +357,9 @@ var SearchResults = Brace.Model.extend({
     },
 
     isFirstAssetSelected: function () {
-        if (this.hasAsset(this.getSelectedAsset().getId())) {
+        if (this.hasAsset(this.getSelectedAsset().get("id"))) {
             var assetIds = this.getAssetIds();
-            var selectedId = this.getSelectedAsset().getId();
+            var selectedId = this.getSelectedAsset().get("id");
             var position = _.indexOf(assetIds, selectedId);
             return position === 0;
         }
@@ -425,20 +422,19 @@ var SearchResults = Brace.Model.extend({
 
     unselectAsset: function (options) {
         var selectedAsset = this.getSelectedAsset();
-        if (selectedAsset.getId() && JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+        if (selectedAsset.get("id")) {
             selectedAsset.set({
-                id: null,
-                key: null
+                id: null
             }, options);
         }
     },
 
     hasSelectedAsset: function () {
-        return !!this.getSelectedAsset().getId();
+        return !!this.getSelectedAsset().get("id");
     },
 
     hasHighlightedAsset: function () {
-        return !!this.getHighlightedAsset().getId();
+        return !!this.getHighlightedAsset().get("id");
     },
 
     getPageAssetIds: function () {
@@ -452,7 +448,7 @@ var SearchResults = Brace.Model.extend({
     getPageAssets: function () {
         // return ids and keys
         return _.map(this.getPageAssetIds(), function (id) {
-            return { id: id, key: this._getAssetKeyForId(id) };
+            return { id: id };
         }, this);
     },
 
@@ -481,8 +477,8 @@ var SearchResults = Brace.Model.extend({
     },
 
     /**
-     * (Async) Selects the next asset in the search results if possible. Clients can register a 
-     * callback using onSelectedAssetChange() to subscribe to selected asset change events, 
+     * (Async) Selects the next asset in the search results if possible. Clients can register a
+     * callback using onSelectedAssetChange() to subscribe to selected asset change events,
      * or alternatively use the promise that this method returns.
      *
      * @return {jQuery.Promise} a promise with the id of the selected asset if successful
@@ -492,15 +488,15 @@ var SearchResults = Brace.Model.extend({
             return $.Deferred().reject().promise();
         }
 
-        var nextId = this._getNextAssetId(this.getSelectedAsset().getId());
+        var nextId = this._getNextAssetId(this.getSelectedAsset().get("id"));
         this._triggerNextAssetSelectedEvent(nextId);
 
         return this._selectAsset(nextId, options);
     },
 
     /**
-     * (Async) Selects the previous asset in the search results if possible. Clients can register a 
-     * callback using onSelectedAssetChange() to subscribe to selected asset change events, 
+     * (Async) Selects the previous asset in the search results if possible. Clients can register a
+     * callback using onSelectedAssetChange() to subscribe to selected asset change events,
      * or alternatively use the promise that this method returns.
      *
      * @return {jQuery.Promise} a promise with the id of the selected asset if successful
@@ -510,7 +506,7 @@ var SearchResults = Brace.Model.extend({
             return $.Deferred().reject().promise();
         }
 
-        var prevId = this._getPrevAssetId(this.getSelectedAsset().getId());
+        var prevId = this._getPrevAssetId(this.getSelectedAsset().get("id"));
         this._triggerPrevAssetSelectedEvent(prevId);
 
         return this._selectAsset(prevId, options);
@@ -522,8 +518,8 @@ var SearchResults = Brace.Model.extend({
     },
 
     /**
-     * (Async) Highlights the previous asset in the search results if possible. Clients can register a 
-     * callback using onHighlightedAssetChange() to subscribe to selected asset highlighted events, 
+     * (Async) Highlights the previous asset in the search results if possible. Clients can register a
+     * callback using onHighlightedAssetChange() to subscribe to selected asset highlighted events,
      * or alternatively use the promise that this method returns.
      *
      * @param {object} [options]
@@ -537,15 +533,15 @@ var SearchResults = Brace.Model.extend({
 
         // this is always synchronous in stable search but it is async when we are going across page boundaries
         // in dynamic search (we need to get the set of assets in the next page at this point)
-        var nextId = this._getNextAssetId(this.getHighlightedAsset().getId());
+        var nextId = this._getNextAssetId(this.getHighlightedAsset().get("id"));
         this.highlightAssetById(nextId, options);
 
         return $.Deferred().resolve(nextId).promise();
     },
 
     /**
-     * (Async) Highlights the next asset in the search results if possible. Clients can register a 
-     * callback using onHighlightedAssetChange() to subscribe to selected asset highlighted events, 
+     * (Async) Highlights the next asset in the search results if possible. Clients can register a
+     * callback using onHighlightedAssetChange() to subscribe to selected asset highlighted events,
      * or alternatively use the promise that this method returns.
      *
      * @param {object} [options]
@@ -559,7 +555,7 @@ var SearchResults = Brace.Model.extend({
 
         // this is always synchronous in stable search but it is async when we are going across page boundaries
         // in dynamic search (we need to get the set of assets in the next page at this point)
-        var prevId = this._getPrevAssetId(this.getHighlightedAsset().getId());
+        var prevId = this._getPrevAssetId(this.getHighlightedAsset().get("id"));
         this.highlightAssetById(prevId, options);
 
         return $.Deferred().resolve(prevId).promise();
@@ -671,11 +667,11 @@ var SearchResults = Brace.Model.extend({
 
     getNextAssetForId: function (id) {
         var nextId = this._getNextAssetId(id);
-        return { id: nextId, key: this._getAssetKeyForId(nextId) }
+        return { id: nextId }
     },
 
     getNextAssetForSelectedAsset: function () {
-        return this.getNextAssetForId(this.getSelectedAsset().getId());
+        return this.getNextAssetForId(this.getSelectedAsset().get("id"));
     },
 
     _getPrevAssetId: function (id) {
@@ -754,7 +750,7 @@ var SearchResults = Brace.Model.extend({
     },
 
     _triggerPrevAssetSelectedEvent: function (prevId) {
-        if (prevId !== this.getSelectedAsset().getId()) {
+        if (prevId !== this.getSelectedAsset().get("id")) {
             var prevPrevId = this._getPrevAssetId(prevId);
 
             this.trigger("prevAssetSelected", {
@@ -765,7 +761,7 @@ var SearchResults = Brace.Model.extend({
     },
 
     _triggerNextAssetSelectedEvent: function (nextId) {
-        if (nextId !== this.getSelectedAsset().getId()) {
+        if (nextId !== this.getSelectedAsset().get("id")) {
             var nextNextId = this._getNextAssetId(nextId);
 
             this.trigger("nextAssetSelected", {

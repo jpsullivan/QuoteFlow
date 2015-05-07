@@ -1,0 +1,15 @@
+{{#each items}}
+	<a href="#" class="switcher-item {{#if isActive}}active{{/if}}" data-id="{{id}}"
+			title="
+					{{#ifCond id 'basic'}}
+					Switch to advanced search using JQL
+					{{else}}
+					Switch to basic search
+					{{/ifCond}}">
+			{{#ifCond id 'basic'}}
+			Switch to advanced search using JQL
+			{{else}}
+				Switch to basic search
+			{{/ifCond}}
+	</a>
+{{/each}}

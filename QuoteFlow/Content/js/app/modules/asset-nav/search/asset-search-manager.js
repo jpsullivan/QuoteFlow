@@ -23,7 +23,7 @@ var AssetSearchManager = Brace.Evented.extend({
 
     /**
      * @param {object} options
-     * @param {object} options.initialAssetTableState The asset table's initial state.
+     * @param {object} options.initialIssueTableState The asset table's initial state.
      */
     initialize: function (options) {
         _.extend(this, options);
@@ -34,7 +34,7 @@ var AssetSearchManager = Brace.Evented.extend({
      * @return {boolean} whether the next search request will return the initial search without making an AJAX request.
      */
     hasInitialSearch: function () {
-        return !!this.initialAssetTableState;
+        return !!this.initialIssueTableState;
     },
 
     /**
@@ -73,9 +73,9 @@ var AssetSearchManager = Brace.Evented.extend({
 
         // Initial asset search state is included in the page to avoid making an AJAX request.
         if (this.hasInitialSearch()) {
-            deferred = jQuery.Deferred().resolve(this.initialAssetTableState);
+            deferred = jQuery.Deferred().resolve(this.initialIssueTableState);
             traceKey = "quoteflow.search.finished.initial";
-            this.initialAssetTableState = null;
+            this.initialIssueTableState = null;
             this.initialAssetIds = null;
         } else {
             deferred = this.activeResultsReq = this._doSearch(data);

@@ -9,10 +9,6 @@ Backbone.$ = $;
 
 var Marionette = require('backbone.marionette');
 
-var AssetModule = require('./modules/asset/module');
-var AssetTableModule = require('./modules/asset-nav/module');
-var CatalogModule = require('./modules/catalog/module');
-
 // QuoteFlow Namespace (hold-over from non CommonJS method)
 var QuoteFlow = {
     application: {},
@@ -21,12 +17,13 @@ var QuoteFlow = {
     Collection: {
         Asset: {}
     },
+    Components: {},
     Debug: {
         Collections: {},
         Models: {},
         Views: {}
     },
-    Components: {},
+    Events: {},
     Interactive: {},
     Model: {
         Asset: {}
@@ -49,6 +46,10 @@ var QuoteFlow = {
 };
 
 window.QuoteFlow = QuoteFlow;
+
+var AssetModule = require('./modules/asset/module');
+var AssetTableModule = require('./modules/asset-nav/module');
+var CatalogModule = require('./modules/catalog/module');
 
 // App Dependencies
 var jquery_browser = require('jquery.browser'); // so that aui works

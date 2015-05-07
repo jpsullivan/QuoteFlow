@@ -1,5 +1,6 @@
 ﻿"use strict";
 
+var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var Utilities = require('../../../components/utilities');
@@ -29,8 +30,8 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
         this.search = options.search;
         this.searchResults = options.search.getResults();
 
-//        JIRA.Issues.Application.on("issueEditor:fieldSubmitted", this.focus, this);
-//        JIRA.Issues.Application.on("issueEditor:replacedFocusedPanel", this.focus, this);
+        QuoteFlow.application.on("issueEditor:fieldSubmitted", this.focus, this);
+        QuoteFlow.application.on("issueEditor:replacedFocusedPanel", this.focus, this);
         this.adjustHeight = _.debounce(this.adjustHeight, options.easeOff);
     },
 
@@ -80,22 +81,22 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
             instance.focused = false;
         });
 
-        this.addListener(this.searchResults, "selectedAssetChange", this.render, this);
-        this.addListener(this.searchResults, "assetUpdated", this.onAssetUpdated, this);
-        this.addListener(this.searchResults, "assetDoesNotExist", this._onAssetDoesNotExist, this);
+        this.listenTo(this.searchResults, "selectedIssueChange", this.render, this);
+        this.listenTo(this.searchResults, "issueUpdated", this.onAssetUpdated, this);
+        this.listenTo(this.searchResults, "issueDoesNotExist", this._onAssetDoesNotExist, this);
 
         //JIRA.bind(JIRA.Events.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
 
         QuoteFlow.Interactive.onVerticalResize(this.adjustHeight);
-        //JIRA.Issues.Application.on("issueEditor:loadComplete", this.adjustHeight, this);
+        QuoteFlow.application.on("issueEditor:loadComplete", this.adjustHeight, this);
         this.isActive = true;
         return this;
     },
 
     onBeforeDestroy: function () {
-        //JIRA.Issues.Application.execute("issueEditor:abortPending");
+        QuoteFlow.application.execute("issueEditor:abortPending");
         QuoteFlow.Interactive.offVerticalResize(this.adjustHeight);
-        //JIRA.Issues.Application.off("issueEditor:loadComplete", this.adjustHeight);
+        QuoteFlow.application.off("issueEditor:loadComplete", this.adjustHeight);
         //JIRA.unbind(JIRA.Events.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
         //JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
         this.isActive = false;
@@ -126,7 +127,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
 
     onAssetUpdated: function (id, entity, reason) {
         if (reason.action !== JIRA.Issues.Actions.INLINE_EDIT && reason.action !== JIRA.Issues.Actions.ROW_UPDATE) {
-            return JIRA.Issues.Application.request("issueEditor:refreshIssue", reason);
+            return QuoteFlow.application.request("issueEditor:refreshIssue", reason);
         } else {
             return jQuery.Deferred().resolve();
         }
@@ -136,7 +137,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
         options = options || {};
         if (this.searchResults.hasAssets() && !this.search.isStandAloneAsset() && options.reason !== "issueLoaded") {
             if (this.searchResults.hasSelectedAsset()) {
-                JIRA.Issues.Application.execute("issueEditor:abortPending");
+                QuoteFlow.application.execute("issueEditor:abortPending");
                 JIRA.Issues.Utils.debounce(this, "_renderAsset", this.searchResults.getSelectedAsset());
             } else {
                 this._renderNoAsset();
@@ -146,13 +147,13 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
         return this;
     },
 
-    _renderAsset: function (selectedAsset) {
-        JIRA.Issues.Application.request("issueEditor:loadIssue", {
+    _renderIssue: function (selectedAsset) {
+        QuoteFlow.application.request("issueEditor:loadIssue", {
             id: selectedAsset.get("id"),
             key: selectedAsset.get("key"),
             detailView: true
         }).always(_.bind(function () {
-            JIRA.Issues.Application.execute("pager:update", _.extend({}, this.searchResults.getPager(), { isSplitView: true }));
+            QuoteFlow.application.execute("pager:update", _.extend({}, this.searchResults.getPager(), { isSplitView: true }));
             // when the first asset is selected, prefetch the second one
             if (this.searchResults.isFirstAssetSelected() && this.searchResults.getDisplayableTotal() > 1) {
                 this.assetCacheManager.scheduleAssetToBePrefetched(this.searchResults.getNextAssetForSelectedAsset());
@@ -175,7 +176,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
 
     _onAssetDoesNotExist: function () {
         this._renderNoAsset();
-        JIRA.Issues.Application.execute("issueEditor:setContainer", this.$el);
+        QuoteFlow.application.execute("issueEditor:setContainer", this.$el);
         this.render();
     },
 

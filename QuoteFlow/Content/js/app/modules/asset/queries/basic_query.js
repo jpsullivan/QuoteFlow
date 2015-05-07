@@ -7,6 +7,7 @@ var Brace = require('backbone-brace');
 Backbone.$ = $;
 
 var SearcherCollection = require('../../../collections/asset/searcher');
+var BasicQueryView = require('../../asset-nav/query/basic-query-view');
 
 /**
  * Module for basic query mode.
@@ -22,12 +23,12 @@ var AssetBasicQueryModule = Brace.Evented.extend({
             initData: options.initialSearcherCollectionState
         });
 
-//        this.view = new JIRA.Issues.BasicQueryView({
-//                queryStateModel: a.queryStateModel,
-//                searcherCollection: this.searcherCollection
-//            })
-//            .onVerticalResize(this.triggerVerticalResize, this)
-//            .onSearchRequested(this.triggerSearchRequested, this);
+        this.view = new BasicQueryView({
+           queryStateModel: options.queryStateModel,
+           searcherCollection: this.searcherCollection
+        })
+        .onVerticalResize(this.triggerVerticalResize, this)
+        .onSearchRequested(this.triggerSearchRequested, this);
 
         this.searcherCollection.onSearchRequested(_.bind(function(jql) {
             this.triggerBasicModeCriteriaCountWhenSearching({
@@ -72,6 +73,10 @@ var AssetBasicQueryModule = Brace.Evented.extend({
      */
     searchersReady: function () {
         return this.searcherCollection.searchersReady();
+    },
+
+    createView: function() {
+        return this.view;
     },
 
     getSelectedCriteria: function () {

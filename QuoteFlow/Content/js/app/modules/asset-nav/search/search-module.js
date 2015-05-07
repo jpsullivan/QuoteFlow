@@ -5,7 +5,7 @@ var Brace = require('backbone-brace');
 var SearchResults = require('./search-results');
 
 /**
- * 
+ *
  */
 var SearchModule = Brace.Evented.extend({
     initialize: function (options) {
@@ -103,7 +103,8 @@ var SearchModule = Brace.Evented.extend({
      * @param {object} context The context in which to execute.
      */
     onSearchError: function (callback, context) {
-        this._assetSearchManager.bindSearchError(callback, context);
+        this._assetSearchManager.on('searchError', callback, context);
+        //this._assetSearchManager.bindSearchError(callback, context);
     },
 
     /**
@@ -113,7 +114,8 @@ var SearchModule = Brace.Evented.extend({
      * @param {object} context The callback's context.
      */
     offSearchError: function (callback, context) {
-        this._assetSearchManager.unbindSearchError(callback, context);
+        this._assetSearchManager.off('searchError', callback, context);
+        //this._assetSearchManager.unbindSearchError(callback, context);
     },
 
     refresh: function () {
@@ -122,8 +124,8 @@ var SearchModule = Brace.Evented.extend({
 
     /**
      * Triggers the StableUpdate event. It will force a new search.
-     * 
-     * @param {Object} [opts] Config object with custom options 
+     *
+     * @param {Object} [opts] Config object with custom options
      */
     stableUpdate: function (opts) {
         this._searchResults.triggerStableUpdate(_.extend({
@@ -133,4 +135,3 @@ var SearchModule = Brace.Evented.extend({
 });
 
 module.exports = SearchModule;
-

@@ -61,10 +61,10 @@ var AssetNavigator = BaseView.extend({
          * This prevents us from having to populate the HTML twice in the dom. Once in the HTML and another time in the
          * JSON. It also prevents us needing to ensure there are no XSS vulnerabilities in the JSON HTML string.
          */
-        var initialAssetTableState = this.$el.data("asset-table-model-state");
-        if (initialAssetTableState && !initialAssetTableState.table) {
+        var initialIssueTableState = this.$el.data("asset-table-model-state");
+        if (initialIssueTableState && !initialIssueTableState.table) {
             var wrapper = AJS.$("<div></div>").append(this.$el.children().clone());
-            initialAssetTableState.assetTable.table = wrapper.html();
+            initialIssueTableState.assetTable.table = wrapper.html();
         }
 
         var initialIssueIds = AJS.$('#stableSearchIds').data('ids');

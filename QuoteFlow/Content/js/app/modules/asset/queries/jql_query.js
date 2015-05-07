@@ -6,6 +6,8 @@ var Backbone = require('backbone');
 var Brace = require('backbone-brace');
 Backbone.$ = $;
 
+var JqlQueryView = require('../../asset-nav/query/jql-query-view');
+
 /**
  * Module for JQL query mode
  */
@@ -14,24 +16,24 @@ var AssetJqlQueryModule = Brace.Evented.extend({
 
     initialize: function(options) {
         this._queryStateModel = options.queryStateModel;
-//        this.view = new JIRA.Issues.JqlQueryView({
-//            queryStateModel: options.queryStateModel
-//        })
-//        .onVerticalResize(this.triggerVerticalResize, this)
-//        .onSearchRequested(this.triggerSearchRequested, this);
-//
-//        /* Absolute hack to prevent DESK-1623 - after return to search, the jql box is thin cause issue nav is hidden when
-//           rendered so height calculation is wrong. We need to trigger it to recalculate height on return to search.
-//           I have added a method, refreshLayout to the query component which we now call from issue-nav-plugin
-//           SearchPageModule, however jira can be using a newer version of issue-nav-components that issue-nav-plugin
-//           (installed via service desk). So we need this nasty hack until the minimum version of jira service desk
-//           supports has the updateLayout call inside of SearchPageModule.
-//         */
-//        JIRA.bind(JIRA.Events.NEW_CONTENT_ADDED, _.bind(function (e, el, reason) {
-//            if (reason === JIRA.CONTENT_ADDED_REASON.returnToSearch) {
-//                this.setQuery();
-//            }
-//        }, this));
+       this.view = new JqlQueryView({
+           queryStateModel: options.queryStateModel
+       })
+       .onVerticalResize(this.triggerVerticalResize, this)
+       .onSearchRequested(this.triggerSearchRequested, this);
+
+      //  /* Absolute hack to prevent DESK-1623 - after return to search, the jql box is thin cause issue nav is hidden when
+      //     rendered so height calculation is wrong. We need to trigger it to recalculate height on return to search.
+      //     I have added a method, refreshLayout to the query component which we now call from issue-nav-plugin
+      //     SearchPageModule, however jira can be using a newer version of issue-nav-components that issue-nav-plugin
+      //     (installed via service desk). So we need this nasty hack until the minimum version of jira service desk
+      //     supports has the updateLayout call inside of SearchPageModule.
+      //   */
+      //  JIRA.bind(JIRA.Events.NEW_CONTENT_ADDED, _.bind(function (e, el, reason) {
+      //      if (reason === JIRA.CONTENT_ADDED_REASON.returnToSearch) {
+      //          this.setQuery();
+      //      }
+      //  }, this));
     },
 
     search: function () {

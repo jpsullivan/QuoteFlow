@@ -7,3 +7,8 @@
     overflow: hidden;
     white-space: nowrap;
 }
+
+.shadow (@offsetX, @offsetY, @spread, @color) {
+    -webkit-box-shadow: @offsetX @offsetY @spread @color;
+    box-shadow: @offsetX @offsetY @spread @color;
+}

@@ -8,6 +8,7 @@ Backbone.$ = $;
 
 var BasicQueryModule = require('./basic_query');
 var JqlQueryModule = require('./jql_query');
+var QueryView = require('../../asset-nav/query/query-view');
 
 /**
  * Module for basic query mode
@@ -234,7 +235,7 @@ var AssetQueryModule = Brace.Evented.extend({
     },
 
     createAndRenderView: function ($el) {
-        this._queryView = new JIRA.Issues.QueryView({
+        this._queryView = new QueryView({
             el: $el,
             queryStateModel: this._queryStateModel,
             basicQueryModule: this._basicQueryModule,

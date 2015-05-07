@@ -1,0 +1,11 @@
+﻿{{! The "Order by" dropdown. }}
+{{#if sortBy}}
+<a class="order-by {{#if sortByAscending }}ascending{{else}}descending{{/if}}" data-field-id="{{sortBy.fieldId}}" data-direction="{{sortBy.order}}" href="#" title="">
+    <span>Sort ascending</span>
+</a>
+{{else}}
+<a class="order-by" title="">
+    <span>None</span>
+</a>
+{{/if}}
+<a class="order-options" title="">Sort options</a>

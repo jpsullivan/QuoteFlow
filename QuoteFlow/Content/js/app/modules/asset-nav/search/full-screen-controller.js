@@ -4,7 +4,7 @@ var Marionette = require('backbone.marionette');
 
 /**
  * A view containing the entire search/asset app.
- * 
+ *
  * Handles switching between the search and asset views.
  */
 var FullScreenLayoutController = Marionette.Controller.extend({
@@ -72,7 +72,8 @@ var FullScreenLayoutController = Marionette.Controller.extend({
     },
 
     onClose: function () {
-        this.fullScreenAsset.deactivate();
+        //this.fullScreenAsset.deactivate();
+        this.fullScreenAsset.destroy();
         this.assetTable.close();
         this.searchService.close();
 
