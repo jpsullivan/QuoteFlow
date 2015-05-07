@@ -8,19 +8,19 @@
                 <h2>Fuck</h2>
                 {{! list of issues goes in here}}
                 {{debug assetPanelData}}
+
                 {{#if assetPanelData}}
-                <!-- {call .issueList data="$issuePanelData" /} -->
+                <ol class="issue-list">
+                 </ol>
                 {{/if}}
             </div>
         </div>
         <div class="end-of-stable-message-container"></div>
         <div class="aui-group pagination-view count-pagination">
             <div class="refresh-container aui-item">
-                <!-- {call JIRA.Templates.IssueNav.refreshResults /} -->
             </div>
             <div class="pagination-container aui-item">
                 {{#if pagination}}
-                <!-- {call JIRA.Templates.IssueNavTable.pagination data="$pagination"/} -->
                 {{/if}}
             </div>
         </div>

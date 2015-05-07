@@ -148,6 +148,9 @@ QuoteFlow.application = new Application({
 });
 
 QuoteFlow.application.on("before:start", function (options) {
+    // register all the handlebars helpers
+    ApplicationHelpers.initialize();
+
     // add some mixins to underscore
     _.mixin({
         lambda: function(x) {
@@ -170,9 +173,6 @@ QuoteFlow.application.on("start", function (options) {
     if (Backbone.history) {
         Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
     }
-
-    // register all the handlebars helpers
-    ApplicationHelpers.initialize();
 });
 
 QuoteFlow.application.module("asset", AssetModule);

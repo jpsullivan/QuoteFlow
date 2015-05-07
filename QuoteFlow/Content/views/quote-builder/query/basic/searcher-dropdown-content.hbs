@@ -1,0 +1,21 @@
+<div class="searcher-groups available">
+	<ul>
+		{{#each searcherGroups}}
+		<li class="twixi-block {{#if isFirst}}expanded{{else}}collapsed{{/if}}" data-id="{{id}}">
+				<div class="twixi-trigger">
+						{{name}}
+				</div>
+				<ul class="twixi-content">
+					{{#each searchers}}
+					<li><a href="#" data-id="{{id}}" class="searcher-option" >{{name}}</a></li>
+					{{/each}}
+				</ul>
+		</li>
+		{{/each}}
+  </ul>
+    <div class="buttons-container">
+        <div class="buttons">
+            <a href="#" class="aui-button aui-button-link">Close</a>
+        </div>
+    </div>
+</div>

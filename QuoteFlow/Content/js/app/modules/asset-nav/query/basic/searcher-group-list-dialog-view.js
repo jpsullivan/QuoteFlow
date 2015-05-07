@@ -2,6 +2,9 @@
 
 var _ = require('underscore');
 var Brace = require('backbone-brace');
+var CheckboxMultiSelectSuggestHandler = require('../../../../components/select/checkbox-multi-select-suggest-handler');
+var GroupDescriptor = require('../../../../components/list/group-descriptor');
+var SuggestHelper = require('../../../../components/select/suggest-helper');
 
 var $moreCriteriaFooter;
 
@@ -10,7 +13,7 @@ var $moreCriteriaFooter;
  */
 var SearcherGroupListDialogView = Brace.View.extend({
 
-    template: JIRA.Templates.IssueNavQueryBasic.searcherDropdownContent,
+    template: JST["quote-builder/query/basic/searcher-dropdown-content"],
 
     /**
      * searcherSelected(id): a searcher has been selected. id is the id of the searcher
@@ -42,7 +45,7 @@ var SearcherGroupListDialogView = Brace.View.extend({
 
         var options = {
                 element: select,
-                suggestionsHandler: JIRA.Issues.SearcherGroupListDialogView.SuggestHandler,
+                suggestionsHandler: SearcherGroupListDialogView.SuggestHandler,
                 hideFooterButtons: true
             };
 
@@ -108,13 +111,13 @@ var SearcherGroupListDialogView = Brace.View.extend({
     CRITERIA_DISPLAY_LIMIT: 100
 });
 
-SearcherGroupListDialogView.SuggestHandler = AJS.CheckboxMultiSelectSuggestHandler.extend({
+SearcherGroupListDialogView.SuggestHandler = CheckboxMultiSelectSuggestHandler.extend({
     formatSuggestions: function (groups, query) {
         var numberHidden = 0,
-            selectedItems = AJS.SuggestHelper.removeDuplicates(this.model.getDisplayableSelectedDescriptors());
+            selectedItems = SuggestHelper.removeDuplicates(this.model.getDisplayableSelectedDescriptors());
 
         // Prepend a group containing all selected items.
-        groups.splice(0, 0, new AJS.GroupDescriptor({
+        groups.splice(0, 0, new GroupDescriptor({
             actionBarHtml: selectedItems.length > 1 ? this.createClearAll() : null,
             items: selectedItems,
             styleClass: "selected-group"
@@ -124,7 +127,7 @@ SearcherGroupListDialogView.SuggestHandler = AJS.CheckboxMultiSelectSuggestHandl
             if (query.length === 0) {
                 var items = _.filter(group.items(), function (item, index) {
                     var meta = item.meta();
-                    return meta && meta.isShown && index < JIRA.Issues.SearcherGroupListDialogView.CRITERIA_DISPLAY_LIMIT;
+                    return meta && meta.isShown && index < SearcherGroupListDialogView.CRITERIA_DISPLAY_LIMIT;
                 });
 
                 numberHidden += group.items().length - items.length;

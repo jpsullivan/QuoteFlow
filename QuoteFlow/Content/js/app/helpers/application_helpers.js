@@ -11,7 +11,7 @@ var ApplicationHelpers = {
      */
     initialize: function() {
         /**
-          Determines a 
+          Determines a
 
           @method eachKeys
           @for Handlebars
@@ -33,7 +33,7 @@ var ApplicationHelpers = {
 
         /**
           Allows an inline if statement to be performed within the markup
-        
+
           @method ifCond
           @for Handlebars
         **/
@@ -85,7 +85,7 @@ var ApplicationHelpers = {
         // Wraps a "select" element in a handlebars template with {{#select foo}}.
         // usage: {{#select foo}} <option value="bar">Baz</option> {{/select}}
         Handlebars.registerHelper('select', function (value, options) {
-            // Create a select element 
+            // Create a select element
             var select = document.createElement('select');
 
             // Populate it with the option HTML
@@ -109,7 +109,7 @@ var ApplicationHelpers = {
         /**
          * Produces a url based on the route name and its values. The route name
          * is just the name of the function within the routes.js file. The routeValues
-         * argument is taken in via an options hash (arg1=arg1) and sent through as a 
+         * argument is taken in via an options hash (arg1=arg1) and sent through as a
          * key-value object.
          * Usage: {{#routeUrl 'showAsset' arg1=arg1 arg2=arg2 }}
          */
@@ -137,6 +137,44 @@ var ApplicationHelpers = {
                 return datetime;
             }
         });
+
+        Handlebars.registerHelper('compare', function (lvalue, operator, rvalue, options) {
+          var operators, result;
+
+          if (arguments.length < 3) {
+              throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+          }
+
+          if (options === undefined) {
+              options = rvalue;
+              rvalue = operator;
+              operator = "===";
+          }
+
+          operators = {
+              '==': function (l, r) { return l == r; },
+              '===': function (l, r) { return l === r; },
+              '!=': function (l, r) { return l != r; },
+              '!==': function (l, r) { return l !== r; },
+              '<': function (l, r) { return l < r; },
+              '>': function (l, r) { return l > r; },
+              '<=': function (l, r) { return l <= r; },
+              '>=': function (l, r) { return l >= r; },
+              'typeof': function (l, r) { return typeof l == r; }
+          };
+
+          if (!operators[operator]) {
+              throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
+          }
+
+          result = operators[operator](lvalue, rvalue);
+
+          if (result) {
+              return options.fn(this);
+          } else {
+              return options.inverse(this);
+          }
+      });
     }
 };
 

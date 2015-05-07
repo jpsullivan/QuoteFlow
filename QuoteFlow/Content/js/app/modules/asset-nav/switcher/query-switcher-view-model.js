@@ -1,5 +1,6 @@
 "use strict";
 
+var _ = require('underscore');
 var Brace = require('backbone-brace');
 var SingleSelectMixin = require('../mixins/single-select');
 

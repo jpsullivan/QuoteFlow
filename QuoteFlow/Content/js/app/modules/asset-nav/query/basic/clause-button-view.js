@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var Brace = require('backbone-brace');
 var InlineLayer = require('../../../../components/layer/inline-layer');
+var SearcherGroupListDialogView = require('./searcher-group-list-dialog-view');
 
 /**
  * View that handles "add criteria" and "clear criteria" buttons
@@ -51,7 +52,7 @@ var ClauseButtonView = Brace.View.extend({
         });
 
         // Contents of InlineLayer
-        var listView = new JIRA.Issues.SearcherGroupListDialogView({
+        var listView = new SearcherGroupListDialogView({
             searcherCollection: this.searcherCollection,
             dialog: dialog
         });
@@ -61,7 +62,7 @@ var ClauseButtonView = Brace.View.extend({
             dialog.hide(reason);
         });
 
-        dialog.bind(AJS.InlineLayer.EVENTS.show, function(event, $layer) {
+        dialog.bind(InlineLayer.EVENTS.show, function(event, $layer) {
             jQuery("#criteria-input").focus();
             // List.js also resets the scrollTop but because the dialog is still hidden at that point, the browser won't actually do any scrolling.
             // @see JRADEV-15097
@@ -79,10 +80,10 @@ var ClauseButtonView = Brace.View.extend({
     },
 
     _addToolTip : function() {
-        new JIRA.Issues.Tipsy({
-            el: this.$el.find(this.addCriteriaButton),
-            showCondition: ":not(.active)"
-        });
+        // new JIRA.Issues.Tipsy({
+        //     el: this.$el.find(this.addCriteriaButton),
+        //     showCondition: ":not(.active)"
+        // });
     },
 
     _showOrHideClauseButtons: function() {
