@@ -80,7 +80,7 @@ var QueryView = Brace.View.extend({
      */
     search: function() {
         // TODO: temp hack for jql query view rework
-        if (this.queryStateModel.ADVANCED_SEARCH === this.switcherViewModel.getSelected().getId()) {
+        if (this.queryStateModel.ADVANCED_SEARCH === this.switcherViewModel.getSelected().get('id')) {
             this.jqlQueryModule.search();
         }
         else {

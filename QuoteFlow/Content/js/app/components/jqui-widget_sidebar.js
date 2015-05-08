@@ -27,6 +27,7 @@ var _ = require('underscore');
         },
 
         _create: function () {
+            debugger;
             _.bindAll(this, "_handleDrag", "_persist", "_setContainment", "_setHandlePosition", "updatePosition");
             if (this.options.easeOff) {
                 this.updatePosition = _.debounce(this.updatePosition, this.options.easeOff);
@@ -107,6 +108,7 @@ var _ = require('underscore');
         },
 
         updatePosition: function() {
+            debugger;
             this._setHandlePosition();
             this._setWidth(this.handle.offset().left - this._elementLeft);
             this._persist();

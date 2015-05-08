@@ -26,7 +26,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
 
         public SimpleNavigatorCollectorVisitor(IEnumerable<string> clauseNames)
         {
-            var names = new SortedSet<string>(null, StringComparer.OrdinalIgnoreCase);
+            var names = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
             if (clauseNames != null)
             {
                 foreach (var clauseName in clauseNames)

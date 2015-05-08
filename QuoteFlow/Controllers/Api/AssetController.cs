@@ -2,6 +2,7 @@
 using System.Net;
 using System.Web.Http;
 using Microsoft.Ajax.Utilities;
+using QuoteFlow.Api.Infrastructure.Services;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.RequestModels;
@@ -48,7 +49,7 @@ namespace QuoteFlow.Controllers.Api
         }
 
         [HttpPost]
-        public QuerySearchResults QueryComponent()
+        public IServiceOutcome<QuerySearchResults> QueryComponent()
         {
             // since post args can contain duplicate keys, we cannot rely on model binding
             var data = Request.Content.ReadAsStringAsync().Result;

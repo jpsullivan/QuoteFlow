@@ -192,7 +192,8 @@ namespace QuoteFlow.Controllers
 
             var searchOutcome = AssetSearchService.SearchWithJql(GetCurrentUser(), jql, 0);
 
-            var model = new QuoteBuilderViewModel(quote, assetTable.AssetTable, visibleFieldNames, visibleFunctionNames, jqlReservedWords);
+            var model = new QuoteBuilderViewModel(quote, assetTable.AssetTable, visibleFieldNames, visibleFunctionNames,
+                jqlReservedWords, searchOutcome);
 
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
         }

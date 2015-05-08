@@ -14,8 +14,8 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
     /// </summary>
     public class NamedTerminalClauseCollectingVisitor : RecursiveClauseVisitor, IClauseVisitor<object>
     {
-        private readonly Set<string> clauseNames;
-        private readonly IList<ITerminalClause> namedClauses;
+        private readonly IList<string> _clauseNames;
+        private readonly IList<ITerminalClause> _namedClauses;
 
         public NamedTerminalClauseCollectingVisitor(string clauseName)
             : this(new List<string> { clauseName })
@@ -24,7 +24,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
 
         public NamedTerminalClauseCollectingVisitor(IEnumerable<string> clauseNames)
         {
-            var names = new SortedSet<string>(null, StringComparer.OrdinalIgnoreCase);
+            var names = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
             if (clauseNames != null)
             {
                 foreach (var clauseName in clauseNames)
@@ -32,25 +32,26 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
                     names.Add(clauseName);
                 }
             }
-            this.clauseNames = new Set<string>(names);
-            this.namedClauses = new List<ITerminalClause>();
+            
+            _clauseNames = new List<string>(names);
+            _namedClauses = new List<ITerminalClause>();
         }
 
         public virtual IEnumerable<ITerminalClause> NamedClauses
         {
-            get { return namedClauses; }
+            get { return _namedClauses; }
         }
 
         public virtual bool ContainsNamedClause()
         {
-            return namedClauses.Count > 0;
+            return _namedClauses.Count > 0;
         }
 
         public override object Visit(ITerminalClause clause)
         {
-            if (clauseNames.Contains(clause.Name))
+            if (_clauseNames.Contains(clause.Name))
             {
-                this.namedClauses.Add(clause);
+                _namedClauses.Add(clause);
             }
             return null;
         }

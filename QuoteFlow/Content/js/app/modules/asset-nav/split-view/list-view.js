@@ -95,6 +95,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
      * @private
      */
     _createSearchPromise: function (options) {
+        debugger;
         var promise = jQuery.RecurringPromise();
 
         options = options || {};
@@ -157,6 +158,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
      * @private
      */
     _onSearchDone: function (result) {
+        debugger;
         //Depending on the default layout, anonymous user may have their layout preference set to the other layout
         //if that's true, data given by the server on page load will not be compatible. Hence do a check here.
         if (result instanceof Array) {
@@ -179,6 +181,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
      * @private
      */
     _onSearchFail: function () {
+        debugger;
         var navigatorContent = this.searchContainer.find(".navigator-content");
         navigatorContent.html(JIRA.Templates.Issues.ComponentUtil.errorMessage({
             msg: AJS.I18n.getText("issue.nav.common.server.error")
@@ -196,6 +199,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
                 return;
             }
 
+            debugger;
             // Pass the serverRendered value through so _onSearchDone knows whether to preserve HTML.
             return this.searchPromise.add(this.searchResults.getResultsForPage({
                 jql: this.search.getEffectiveJql()

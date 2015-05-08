@@ -41,26 +41,30 @@ namespace QuoteFlow.Api.Util
 
         public static string GetStringParam(IDictionary<string, object> @params, string key)
         {
-            object o = @params[key];
+            object o;
+            if (@params.TryGetValue(key, out o))
+            {
+                if (o is string)
+                {
+                    return (string)o;
+                }
 
-            if (o is string)
-            {
-                return (string)o;
+                if (o is string[])
+                {
+                    return ((string[])o)[0];
+                }
+
+                if (o is ICollection)
+                {
+                    var enumerator = ((ICollection)o).GetEnumerator();
+                    enumerator.MoveNext();
+                    return (string)enumerator.Current;
+                }
+
+                return o == null ? null : o.ToString();
             }
-            
-            if (o is string[])
-            {
-                return ((string[])o)[0];
-            }
-            
-            if (o is ICollection)
-            {
-                var enumerator = ((ICollection) o).GetEnumerator();
-                enumerator.MoveNext();
-                return (string) enumerator.Current;
-            }
-            
-            return o == null ? null : o.ToString();
+
+            return null;
         }
 
         /// <summary>

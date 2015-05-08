@@ -21,12 +21,7 @@ var EmptyResultsView = Marionette.ItemView.extend({
         //var createIssuePerm = JIRA.Issues.UserParms.get().createIssue;
         var createAssetPerm = true;
 
-        if (!JIRA.Issues.LoginUtils.isLoggedIn()) {
-            message = "No assets were found to match your search";
-            hint = "Try <a>logging in</a> to see more results";
-            cssClass = "not-logged-in-message";
-            linkType = 'login';
-        } else if (this.options.quoteflowHasAssets === false) {
+         if (this.options.quoteflowHasAssets === false) {
             message = "No assets have been created (yet)";
             hint = createAssetPerm ? "Be the first to <a>create an asset</a>" : null;
             cssClass = "empty-results-message";
@@ -51,7 +46,6 @@ var EmptyResultsView = Marionette.ItemView.extend({
         this.$el.addClass("empty-results");
 
         var $links = this.$('.no-results-hint a');
-        //var isLoggedIn = JIRA.Issues.LoginUtils.isLoggedIn();
         var isLoggedIn = true;
         if (!isLoggedIn) {
             //$links.attr('href', JIRA.Issues.LoginUtils.redirectUrlToCurrent()).addClass('login-link');

@@ -1,7 +1,7 @@
 ﻿"use strict";
 
+var _ = require('underscore');
 var Brace = require('backbone-brace');
-
 var SearchResults = require('./search-results');
 
 /**

@@ -1,13 +1,20 @@
 ﻿"use strict";
 
+var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 /**
  * The layout switcher control.
  */
 var LayoutSwitcherView = Marionette.ItemView.extend({
-    
     template: JST["asset/nav-search/layout-switcher"],
+
+    serializeData: function() {
+        return {
+            layouts: this.searchPageModule.getSortedLayouts(),
+            activeLayout: this.searchPageModule.getActiveLayout()
+        }
+    },
 
     /**
      * @param {object} options
@@ -23,18 +30,12 @@ var LayoutSwitcherView = Marionette.ItemView.extend({
     /**
      * @return {JIRA.Issues.LayoutSwitcherView} <tt>this</tt>
      */
-    render: function () {
-        this.$el.html(this.template({
-            layouts: this.searchPageModule.getSortedLayouts(),
-            activeLayout: this.searchPageModule.getActiveLayout()
-        }));
-
+    onRender: function () {
         this._addLayoutSwitcherTooltip();
 
         // We can't use delegate events as the dropdown is appended to the body.
         this.$el.find(".aui-list-item-link").click(this._onLayoutSwitchClick);
-        JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.$el, JIRA.CONTENT_ADDED_REASON.layoutSwitcherReady]);
-        return this;
+        //JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.$el, JIRA.CONTENT_ADDED_REASON.layoutSwitcherReady]);
     },
 
     /**
@@ -88,14 +89,14 @@ var LayoutSwitcherView = Marionette.ItemView.extend({
             }
         }
 
-        new JIRA.Issues.Tipsy({
-            el: this.$el.find("#layout-switcher-button"),
-            showCondition: ":not(.active)",
-            tipsy: {
-                title: getTooltipMessage,
-                gravity: 'ne'
-            }
-        });
+        // new JIRA.Issues.Tipsy({
+        //     el: this.$el.find("#layout-switcher-button"),
+        //     showCondition: ":not(.active)",
+        //     tipsy: {
+        //         title: getTooltipMessage,
+        //         gravity: 'ne'
+        //     }
+        // });
     },
 
     /**
@@ -109,12 +110,10 @@ var LayoutSwitcherView = Marionette.ItemView.extend({
      * @private
      */
     _onLayoutSwitchClick: function (e, options) {
-        if (JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
-            // HACK: Hover intent has a strange bug that when we click the layout switcher it triggers a mouseleave event on the filters panel
-            // To get around this, we disable it whilst we are transitioning to new layout.
-            var layoutKey = AJS.$(e.target).closest("[data-layout-key]").data("layout-key");
-            e.preventDefault();
-            this.searchPageModule.changeLayout(layoutKey, options);
-        }
+        var layoutKey = AJS.$(e.target).closest("[data-layout-key]").data("layout-key");
+        e.preventDefault();
+        this.searchPageModule.changeLayout(layoutKey, options);
     }
-})
+});
+
+module.exports = LayoutSwitcherView;

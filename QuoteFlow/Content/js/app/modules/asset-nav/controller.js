@@ -5,6 +5,7 @@ var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var AssetNavCreator = require('./search/asset-nav-creator');
+var Resize = require('./util/resize');
 
 /**
  * Contains callbacks for the asset module router.
@@ -44,19 +45,19 @@ var AssetNavController = Marionette.Controller.extend({
             }
         });
 
-//        // Trigger the event on page load to make sure the controls are visible.
-//        AJS.$(document).trigger("resultsWidthChanged");
-//
-//        JIRA.Issues.onVerticalResize(function () {
-//            jQuery.event.trigger("updateOffsets.popout");
-//        });
-//
-//        // When switching layouts we need to update the height of sidebar
-//        JIRA.bind(JIRA.Events.LAYOUT_RENDERED, function () {
-//            _.defer(function () {
-//                jQuery.event.trigger("updateOffsets.popout");
-//            });
-//        });
+       // Trigger the event on page load to make sure the controls are visible.
+       AJS.$(document).trigger("resultsWidthChanged");
+
+       QuoteFlow.Interactive.onVerticalResize(function () {
+           jQuery.event.trigger("updateOffsets.popout");
+       });
+
+    //    // When switching layouts we need to update the height of sidebar
+    //    JIRA.bind(JIRA.Events.LAYOUT_RENDERED, function () {
+    //        _.defer(function () {
+    //            jQuery.event.trigger("updateOffsets.popout");
+    //        });
+    //    });
     },
 
     /**

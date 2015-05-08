@@ -58,8 +58,11 @@ var AssetNavCreator = {
 //            }
 //        });
 
-      //  this.layoutSwitcherView = new LayoutSwitcherView({ searchPageModule: searchPageModule });
-      //  this.layoutSwitcherView.setElement($el.find("#layout-switcher-toggle")).render();
+        this.layoutSwitcherView = new LayoutSwitcherView({
+            el: $el.find("#layout-switcher-toggle"),
+            searchPageModule: searchPageModule
+        });
+        this.layoutSwitcherView.render();
 
         var issueModule = QuoteFlow.application.request("issueEditor");
 

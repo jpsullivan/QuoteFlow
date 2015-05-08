@@ -1,0 +1,22 @@
+@import '../theme.less';
+@import '../../../asset-nav/mixins/border-box';
+
+.adbox {
+    border-radius: 3px;
+	border: 1px solid #cccccc;
+    .border-box();
+    background: transparent none no-repeat bottom right;
+    background-image: inlineimage('images/adbox/page.png');
+    padding: 30px 120px 30px 20px;
+    width: auto;
+    margin: 0 auto;
+
+    &.adbox-medium { max-width: 500px; }
+
+    &.get-started-message {
+        background-image: inlineimage('images/adbox/rocket.png');
+    }
+    &.not-logged-in-message {
+        background-image: inlineimage('images/adbox/lock.png');
+    }
+}

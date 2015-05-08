@@ -8,6 +8,7 @@ using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Transport;
+using QuoteFlow.Api.Infrastructure.Services;
 using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
@@ -15,12 +16,17 @@ using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Infrastructure.Services;
+using QuoteFlow.Core.Util;
 using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Core.Services
 {
     public class AssetSearchService : IAssetSearchService
     {
+        private readonly string JqlInvalidErrorMessage = "jqlInvalid";
+        private readonly string JqlTooComplexErrorMessage = "jqlTooComplex";
+
         #region IoC
 
         public IJqlStringSupport JqlStringSupport { get; protected set; }
@@ -28,7 +34,9 @@ namespace QuoteFlow.Core.Services
         public ISearchHandlerManager SearchHandlerManager { get; protected set; }
         public ISearchService SearchService { get; protected set; }
 
-        public AssetSearchService() { }
+        public AssetSearchService()
+        {
+        }
 
         public AssetSearchService(IJqlStringSupport jqlStringSupport, IAssetSearcherManager assetSearcherManager, ISearchHandlerManager searchHandlerManager, ISearchService searchService)
         {
@@ -40,7 +48,7 @@ namespace QuoteFlow.Core.Services
 
         #endregion
 
-        public QuerySearchResults Search(User user, MultiDictionary<string, string[]> paramMap, long filterId)
+        public IServiceOutcome<QuerySearchResults> Search(User user, MultiDictionary<string, string[]> paramMap, long filterId)
         {
             var searchers = AssetSearcherManager.GetAllSearchers();
             
@@ -54,20 +62,51 @@ namespace QuoteFlow.Core.Services
             return GetSearchResults(true, user, searchers, clauses, query, searchContext);
         }
 
-        public QuerySearchResults SearchWithJql(User user, string jqlContext, long filterId)
+        public IServiceOutcome<QuerySearchResults> SearchWithJql(User user, string jqlContext, long filterId)
         {
             var parseResult = SearchService.ParseQuery(user, jqlContext);
             if (!parseResult.IsValid())
             {
-                
+                var errors = new SimpleErrorCollection();
+                errors.AddErrorMessage(JqlInvalidErrorMessage);
+
+                foreach (var error in parseResult.Errors.ErrorMessages)
+                {
+                    errors.AddError("jql", error);
+                }
+
+                if (!errors.HasAnyErrors())
+                {
+                    errors.AddError("jql", "Error in the JQL query: Unable to parse the query.");
+                }
+
+                return new ServiceOutcome<QuerySearchResults>(errors);
             }
+
+            // Is the query too complex to be expressed with searchers?
+            var query = parseResult.Query;
+//            if (!SearchService.DoesQueryFitFilterForm(user, query))
+//            {
+//                return ServiceOutcome<string>.Error(JqlTooComplexErrorMessage);
+//            }
+
+            var searchers = AssetSearcherManager.GetAllSearchers();
+            var searchContext = SearchService.GetSearchContext(user, parseResult.Query);
+            var clauses = GenerateQuery(searchContext, user, query, searchers);
+
+            return GetSearchResults(true, user, searchers, clauses, query, searchContext);
         }
 
-        private QuerySearchResults GetSearchResults(bool includePrimes, User user, ICollection<IAssetSearcher<ISearchableField>> searchers, IDictionary<string, SearchRendererHolder> clauses, IQuery query, ISearchContext searchContext)
+        private IServiceOutcome<QuerySearchResults> GetSearchResults(bool includePrimes, User user, ICollection<IAssetSearcher<ISearchableField>> searchers, IDictionary<string, SearchRendererHolder> clauses, IQuery query, ISearchContext searchContext)
         {
-            SearchRendererValueResults results = GetValueResults(includePrimes, user, searchers, clauses, query, searchContext);
+            var outcome = GetValueResults(includePrimes, user, searchers, clauses, query, searchContext);
+            if (!outcome.IsValid())
+            {
+                return new ServiceOutcome<QuerySearchResults>(outcome.ErrorCollection);
+            }
+
             var renderableSearchers = GetSearchers(searchContext, user);
-            return new QuerySearchResults(renderableSearchers, results);
+            return ServiceOutcome<QuerySearchResults>.Ok(new QuerySearchResults(renderableSearchers, outcome.ReturnedValue));
         }
 
         private IDictionary<string, SearchRendererHolder> GenerateQuery<T>(ISearchContext searchContext, User user, IQuery query, IEnumerable<T> searchers)
@@ -161,7 +200,7 @@ namespace QuoteFlow.Core.Services
             return jqlParams;
         }
 
-        private SearchRendererValueResults GetValueResults(bool includePrimes, User user, ICollection<IAssetSearcher<ISearchableField>> searchers, IDictionary<string, SearchRendererHolder> clauses, IQuery query, ISearchContext searchContext)
+        private IServiceOutcome<SearchRendererValueResults> GetValueResults(bool includePrimes, User user, ICollection<IAssetSearcher<ISearchableField>> searchers, IDictionary<string, SearchRendererHolder> clauses, IQuery query, ISearchContext searchContext)
         {
             var results = new SearchRendererValueResults();
             foreach (var assetSearcher in searchers)
@@ -199,7 +238,7 @@ namespace QuoteFlow.Core.Services
                 }
             }
 
-            return results;
+            return ServiceOutcome<SearchRendererValueResults>.Ok(results);
         }
 
         private Searchers GetSearchers(ISearchContext searchContext, User user)

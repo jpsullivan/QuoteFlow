@@ -8,7 +8,7 @@ namespace QuoteFlow.Core.Infrastructure.Services
     /// <summary>
     /// Generic service outcome that can optionally hold a value.
     /// </summary>
-    public class ServiceOutcome<T> : IServiceResult, IServiceOutcome<T>
+    public class ServiceOutcome<T> : ServiceResult, IServiceOutcome<T>
     {
         public IErrorCollection ErrorCollection { get; private set; }
 
@@ -16,7 +16,6 @@ namespace QuoteFlow.Core.Infrastructure.Services
 		/// Convenience method that returns a new ServiceOutcome instance containing no errors, and with the provided
 		/// returned value.
 		/// </summary>
-		/// @param <T> the type of the returned value</param>
 		/// <param name="returnedValue"> the returned value </param>
 		/// <returns> a new ServiceOutcome </returns>
 		public static ServiceOutcome<T> Ok(T returnedValue)
@@ -27,7 +26,6 @@ namespace QuoteFlow.Core.Infrastructure.Services
 		/// <summary>
 		/// Convenience method that returns a new ServiceOutcome instance with the errors from the passed outcome.
 		/// </summary>
-		/// @param <T> the type of the returned value </param>
 		/// <param name="outcome"> the outcome whose errors we are taking. </param>
 		/// <returns> a new ServiceOutcome </returns>
 		public static ServiceOutcome<T> Error(ServiceOutcome<T> outcome)
@@ -39,7 +37,6 @@ namespace QuoteFlow.Core.Infrastructure.Services
 		/// Convenience method that returns a new ServiceOutcome instance containing the provided error message, and no
 		/// return value.
 		/// </summary>
-		/// @param <T> the type of the returned value </param>
 		/// <param name="errorMessage"> the error message to include in the ServiceOutcome </param>
 		/// <returns> a new ServiceOutcome </returns>
 		public static ServiceOutcome<T> Error(string errorMessage)
@@ -54,7 +51,6 @@ namespace QuoteFlow.Core.Infrastructure.Services
 		/// </summary>
 		/// <param name="errorCollection"> an ErrorCollection </param>
 		/// <param name="value"> the returned value </param>
-		/// @param <T> the type of the returned value </param>
 		/// <returns> a new ServiceOutcome instance </returns>
 		public static ServiceOutcome<T> From(IErrorCollection errorCollection, T value)
 		{
@@ -65,7 +61,6 @@ namespace QuoteFlow.Core.Infrastructure.Services
 		/// Convenience method that returns a new ServiceOutcome containing the given errors and null return value.
 		/// </summary>
 		/// <param name="errorCollection"> an ErrorCollection </param>
-		/// @param <T> the type of the returned value </param>
 		/// <returns> a new ServiceOutcome instance </returns>
 		public static ServiceOutcome<T> From(IErrorCollection errorCollection)
 		{
@@ -77,20 +72,12 @@ namespace QuoteFlow.Core.Infrastructure.Services
 		/// </summary>
 		private readonly T _value;
 
-		/// <summary>
-		/// Creates a new ServiceOutcome with the given errors. The returned value will be set to null.
-		/// </summary>
-		/// <param name="errorCollection"> an ErrorCollection </param>
-		public ServiceOutcome(IErrorCollection errorCollection) : this(errorCollection, null)
-		{
-		}
-
-		/// <summary>
+        /// <summary>
 		/// Creates a new ServiceOutcome with the given errors and returned value.
 		/// </summary>
 		/// <param name="errorCollection"> an ErrorCollection </param>
 		/// <param name="value"> the wrapped value </param>
-		public ServiceOutcome(IErrorCollection errorCollection, T value)
+        public ServiceOutcome(IErrorCollection errorCollection, T value = default(T)) : base(errorCollection)
 		{
 			_value = value;
 		}
@@ -112,10 +99,5 @@ namespace QuoteFlow.Core.Infrastructure.Services
 		{
 			return _value;
 		}
-
-        public bool IsValid()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

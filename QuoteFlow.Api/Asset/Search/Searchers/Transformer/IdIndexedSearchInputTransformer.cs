@@ -98,22 +98,28 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         /// <returns> the values for this searcher as a list of Strings. Could be null. </returns>
         internal ISet<string> GetValuesFromHolder(IFieldValuesHolder fieldValuesHolder)
 		{
-			var list = fieldValuesHolder[urlParameterName];
-			if (list == null)
-			{
-				return null;
-			}
+            object list;
 
-			foreach (object o in (IEnumerable) list)
-			{
-				if (!(o is string))
-				{
-					throw new System.ArgumentException("Why are we putting non-String values in the FieldValuesHolder for searcher '" + urlParameterName + "'???");
-				}
-			}
+            if (fieldValuesHolder.TryGetValue(urlParameterName, out list))
+            {
+                if (list == null)
+                {
+                    return null;
+                }
 
-			// We have checked every element in the list is of type String, so it is safe to cast
-            return new HashSet<string>((IList<string>) list);
+                foreach (object o in (IEnumerable) list)
+                {
+                    if (!(o is string))
+                    {
+                        throw new System.ArgumentException("Why are we putting non-String values in the FieldValuesHolder for searcher '" + urlParameterName + "'???");
+                    }
+                }
+
+                // We have checked every element in the list is of type String, so it is safe to cast
+                return new HashSet<string>((IEnumerable<string>) list);
+            }
+
+            return null;
 		}
 
         /// <returns> the <see cref="DefaultIndexedInputHelper"/> always </returns>

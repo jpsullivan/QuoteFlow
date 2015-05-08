@@ -125,9 +125,9 @@ var SearchPageModule = Brace.Model.extend({
 
         if (layout) {
             // If the requested layout is already selected, do nothing.
-            if (previousLayout instanceof layout.view) {
-                return;
-            }
+            // if (previousLayout instanceof layout.view) {
+            //     return;
+            // }
 
             if (previousLayout && previousLayout.close) {
                 previousLayout.close();

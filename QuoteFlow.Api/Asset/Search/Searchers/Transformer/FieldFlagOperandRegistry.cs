@@ -11,7 +11,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
     /// </summary>
     public class FieldFlagOperandRegistry : IFieldFlagOperandRegistry
     {
-        private static readonly IDictionary<string, IDictionary<string, IOperand>> REGISTRY;
+        private static readonly IDictionary<string, IDictionary<string, IOperand>> Registry;
 
         static FieldFlagOperandRegistry()
 		{
@@ -38,16 +38,19 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
 			//tmpRegistry[SystemSearchConstants.forFixForVersion().JqlClauseNames.PrimaryName] = versionFlags;
 			//tmpRegistry[SystemSearchConstants.forResolution().JqlClauseNames.PrimaryName] = resolutionFlags;
 
-			REGISTRY = new Dictionary<string, IDictionary<string, IOperand>>(tmpRegistry);
+			Registry = new Dictionary<string, IDictionary<string, IOperand>>(tmpRegistry);
 		}
 
         public IOperand GetOperandForFlag(string fieldName, string flagValue)
         {
-            var fieldFlags = REGISTRY[fieldName];
-            if (fieldFlags != null)
+            IDictionary<string, IOperand> fieldFlags;
+            if (Registry.TryGetValue(fieldName, out fieldFlags))
             {
-                IOperand value;
-                return fieldFlags.TryGetValue(flagValue, out value) ? value : null;
+                if (fieldFlags != null)
+                {
+                    IOperand value;
+                    return fieldFlags.TryGetValue(flagValue, out value) ? value : null;
+                }
             }
 
             return null;
@@ -55,19 +58,23 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
 
         public ISet<string> GetFlagForOperand(string fieldName, IOperand operand)
         {
-            var fieldFlags = REGISTRY[fieldName];
-            if (fieldFlags == null) return null;
-
-            ISet<string> flags = new HashSet<string>();
-            foreach (var entry in fieldFlags)
+            IDictionary<string, IOperand> fieldFlags;
+            if (Registry.TryGetValue(fieldName, out fieldFlags))
             {
-                if (entry.Value.Equals(operand))
+                if (fieldFlags == null) return null;
+                ISet<string> flags = new HashSet<string>();
+                foreach (var entry in fieldFlags)
                 {
-                    flags.Add(entry.Key);
+                    if (entry.Value.Equals(operand))
+                    {
+                        flags.Add(entry.Key);
+                    }
                 }
+
+                return flags.Any() ? flags : null;
             }
 
-            return flags.Any() ? flags : null;
+            return null;
         }
     }
 }

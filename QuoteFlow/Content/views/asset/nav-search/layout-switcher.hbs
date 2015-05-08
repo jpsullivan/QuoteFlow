@@ -1,8 +1,8 @@
 ﻿<div class="aui-buttons">
-    <button id="layout-switcher-button" class="aui-button drop-arrow js-default-dropdown" type="button">
+    <button id="layout-switcher-button" class="aui-button aui-dropdown2-trigger" type="button" aria-owns="layout-switcher-dropdown" aria-haspopup="true">
         <span class="aui-icon aui-icon-small {{activeLayout.iconClass}}"></span>
     </button>
-    <div class="aui-list hidden">
+    <div id="layout-switcher-dropdown" class="aui-style-default aui-dropdown2">
         <h5>Views</h5>
         <ul class="aui-list-section aui-first aui-last">
             {{#each layouts}}

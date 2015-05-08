@@ -9,7 +9,7 @@ namespace QuoteFlow.Core.Infrastructure.Services
     /// </summary>
     public class ServiceResult : IServiceResult
     {
-        public ServiceResult(IErrorCollection errorCollection)
+        protected ServiceResult(IErrorCollection errorCollection)
         {
             if (errorCollection == null) throw new ArgumentNullException("errorCollection");
             ErrorCollection = errorCollection;
@@ -17,7 +17,7 @@ namespace QuoteFlow.Core.Infrastructure.Services
 
         public bool IsValid()
         {
-            return ErrorCollection.HasAnyErrors();
+            return !ErrorCollection.HasAnyErrors();
         }
 
         public IErrorCollection ErrorCollection { get; private set; }

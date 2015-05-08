@@ -8,6 +8,7 @@ var AssetNavController = require('./controller');
 var AssetNavCreator = require('./search/asset-nav-creator');
 var AssetRouter = require('./router');
 var AssetCustomRouter = require('./router-custom');
+var Resize = require('./util/resize');
 
 /**
  *
