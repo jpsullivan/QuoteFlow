@@ -93,9 +93,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Jil, Version=2.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Jil, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Jil.2.8.1\lib\net45\Jil.dll</HintPath>
+      <HintPath>..\packages\Jil.2.9.0\lib\net45\Jil.dll</HintPath>
     </Reference>
     <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -499,6 +499,8 @@
     <Content Include="Content\js\app\components\asset-table\views\pagination.js" />
     <Content Include="Content\js\app\components\asset-table\views\refresh-results.js" />
     <Content Include="Content\js\app\components\asset-table\views\results-count.js" />
+    <Content Include="Content\js\app\components\class\class.js" />
+    <Content Include="Content\js\app\components\class\objects.js" />
     <Content Include="Content\js\app\components\column-picker\column-config-model.js" />
     <Content Include="Content\js\app\components\column-picker\column-picker-model.js" />
     <Content Include="Content\js\app\components\column-picker\column-picker-sparkler-view.js" />
@@ -508,7 +510,10 @@
     <Content Include="Content\js\app\components\control\control.js" />
     <Content Include="Content\js\app\components\descriptor\descriptor.js" />
     <Content Include="Content\js\app\components\input\mouse.js" />
+    <Content Include="Content\js\app\components\layer\inline-layer-factory.js" />
     <Content Include="Content\js\app\components\layer\inline-layer-options-descriptor.js" />
+    <Content Include="Content\js\app\components\layer\inline-layer-standard-positioning.js" />
+    <Content Include="Content\js\app\components\layer\inline-layer-windowpositioning.js" />
     <Content Include="Content\js\app\components\layer\inline-layer.js" />
     <Content Include="Content\js\app\components\list\group-descriptor.js" />
     <Content Include="Content\js\app\components\list\item-descriptor.js" />
@@ -519,12 +524,14 @@
     <Content Include="Content\js\app\components\routes.js" />
     <Content Include="Content\js\app\components\search\search-service-controller.js" />
     <Content Include="Content\js\app\components\select\checkbox-multi-select-suggest-handler.js" />
+    <Content Include="Content\js\app\components\select\dropdown-select.js" />
     <Content Include="Content\js\app\components\select\fetchers\ajax-descriptor-fetcher.js" />
     <Content Include="Content\js\app\components\select\fetchers\func-descriptor-fetcher.js" />
     <Content Include="Content\js\app\components\select\fetchers\mixed-descriptor-fetcher.js" />
     <Content Include="Content\js\app\components\select\fetchers\static-descriptor-fetcher.js" />
     <Content Include="Content\js\app\components\select\queryable-dropdown-select.js" />
     <Content Include="Content\js\app\components\select\default-suggestion-handler.js" />
+    <Content Include="Content\js\app\components\select\select-model.js" />
     <Content Include="Content\js\app\components\select\select-suggest-handler.js" />
     <Content Include="Content\js\app\components\select\suggest-helper.js" />
     <Content Include="Content\js\app\components\select\user-list-suggest-handler.js" />
@@ -627,6 +634,7 @@
     <Content Include="Content\js\app\util\jquery\RecurringPromise.js" />
     <Content Include="Content\js\app\util\meta.js" />
     <Content Include="Content\js\app\util\navigator.js" />
+    <Content Include="Content\js\app\util\query-string-parser.js" />
     <Content Include="Content\js\app\util\url-serializer.js" />
     <Content Include="Content\js\app\util\utils.js" />
     <Content Include="Content\js\app\view.js" />
@@ -1036,6 +1044,8 @@
     <Content Include="Content\views\quote-builder\query\query.hbs" />
     <Content Include="Content\views\quote-builder\query\search-switcher.hbs" />
     <Content Include="Content\views\quote-builder\query\basic\searcher-dropdown-content.hbs" />
+    <Content Include="Content\views\quote-builder\error-message.hbs" />
+    <Content Include="Content\views\quote-builder\warning-message.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

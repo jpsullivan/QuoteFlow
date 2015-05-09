@@ -76,6 +76,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
 
         QuoteFlow.application.on("issueEditor:loadError", this._onIssueLoadError, this);
         this.listView.searchPromise.done(_.bind(function () {
+            debugger;
             this._makeVisible();
         }, this));
 

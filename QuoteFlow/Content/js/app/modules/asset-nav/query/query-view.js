@@ -98,7 +98,7 @@ var QueryView = Brace.View.extend({
      * @param {Array} errors The error(s) to be displayed.
      */
     showErrors: function(errors) {
-        this.$(".notifications").append(JIRA.Templates.Issues.ComponentUtil.errorMessage({messages: errors}));
+        this.$(".notifications").append(JST["quote-builder/error-message"]({messages: errors}));
     },
 
     /**
@@ -107,7 +107,7 @@ var QueryView = Brace.View.extend({
      * @param {Array} warnings The warning(s) to be displayed.
      */
     showWarnings: function(warnings) {
-        this.$(".notifications").append(JIRA.Templates.Issues.ComponentUtil.warningMessage({messages: warnings}));
+        this.$(".notifications").append(JST["quote-builder/warning-message"]({messages: warnings}));
     },
 
     /**

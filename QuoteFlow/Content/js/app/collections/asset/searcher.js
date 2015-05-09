@@ -7,6 +7,8 @@ var Brace = require('backbone-brace');
 Backbone.$ = $;
 
 var AssetSearcherModel = require('../../models/asset/searcher');
+var GroupDescriptor = require('../../components/list/group-descriptor');
+var ItemDescriptor = require('../../components/list/item-descriptor');
 
 /**
  *
@@ -54,12 +56,12 @@ var AssetSearcherCollection = Brace.Collection.extend({
      */
     _createItemDescriptors: function (searchers) {
         return _.map(searchers, function (searcher) {
-            return new AJS.ItemDescriptor({
+            return new ItemDescriptor({
                 meta: {
                     isShown: searcher.isShown
                 },
                 label: searcher.name,
-                title: searcher.isShown ? searcher.name : searcher.name + " " + AJS.I18n.getText("issuenav.inapplicable.searcher"),
+                title: searcher.isShown ? searcher.name : searcher.name + " is not applicable for the current catalog and/or manufacturer.",
                 selected: searcher.isSelected || searcher.jql,
                 value: searcher.id
             });
@@ -71,7 +73,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
      * <p/>
      * Returns valid non-primary searchers sorted by name (case insensitive).
      *
-     * @return {Array} AJS.GroupDescriptors for the "add criteria" menu.
+     * @return {Array} GroupDescriptors for the "add criteria" menu.
      */
     getAddMenuGroupDescriptors: function () {
         // Retrieve all valid, non-primary searchers.
@@ -86,14 +88,14 @@ var AssetSearcherCollection = Brace.Collection.extend({
         });
 
         if (searchers.length) {
-            var allSearchers = new AJS.GroupDescriptor({
-                label: AJS.I18n.getText("issues.components.query.filters.all"),
+            var allSearchers = new GroupDescriptor({
+                label: "All Criteria",
                 items: this._createItemDescriptors(_.sortBy(searchers, function (searcher) {
                     return searcher.name.toLowerCase();
                 }))
             });
-            var recentSearchers = new AJS.GroupDescriptor({
-                label: AJS.I18n.getText("issues.components.query.filters.recent"),
+            var recentSearchers = new GroupDescriptor({
+                label: "Recent Criteria",
                 items: this._createItemDescriptors(_.first(_.sortBy(_.filter(searchers, function (searcher) {
                     return searcher.lastViewed;
                 }), function (searcher) {

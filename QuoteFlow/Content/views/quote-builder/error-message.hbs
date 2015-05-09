@@ -1,0 +1,10 @@
+{{#if messages}}
+	<div class="aui-message error">
+		<span class="aui-icon icon-error"></span>
+		<ul>
+		{{#each messages}}
+		<li>{{this}}</li>
+		{{/each}}
+		</ul>
+	</div>
+{{/if}}

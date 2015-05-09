@@ -15,6 +15,7 @@ var returnAsNumber = function(x) {
 };
 
 var _ = require('underscore');
+var QueryStringParser = require('./query-string-parser');
 
 /**
  * An object describing the state of the issue navigator.
@@ -40,8 +41,8 @@ var UrlSerializer = {
         var query = [];
         var base;
 
-        if (state.selectedAssetKey) {
-            base = BASE_BROWSE + state.selectedAssetKey;
+        if (state.selectedIssueKey) {
+            base = BASE_BROWSE + state.selectedIssueKey;
         } else {
             base = BASE_ASSETS;
         }
@@ -49,10 +50,12 @@ var UrlSerializer = {
             query.push('filter=' + state.filter);
         }
 
-        if (state.jql != null && (state.filterJql == null || state.jql !== state.filterJql)) {
-            query.push('jql=' + encodeURIComponent(state.jql));
-        }
-        if (state.startIndex && !state.selectedAssetKey) {
+        // if (state.jql != null && (state.filterJql == null || state.jql !== state.filterJql)) {
+        //     query.push('jql=' + encodeURIComponent(state.jql));
+        // }
+        query.push('jql=' + encodeURIComponent(""));
+
+        if (state.startIndex && !state.selectedIssueKey) {
             query.push('startIndex=' + state.startIndex);
         }
         return base + (query.length ? '?' + query.join('&') : "");
@@ -72,17 +75,17 @@ var UrlSerializer = {
         var state = {
             filter: null,
             jql: null,
-            selectedAssetKey: null,
+            selectedIssueKey: null,
             startIndex: 0
         };
 
         if (url.indexOf(BASE_BROWSE) == 0) {
-            state.selectedAssetKey = path.split("/")[1];
+            state.selectedIssueKey = path.split("/")[1];
         }
 
         if (url.indexOf("?") !== -1) {
             queryString = url.substr(url.indexOf("?"));
-            parameters = JIRA.Issues.QueryStringParser.parse(queryString);
+            parameters = QueryStringParser.parse(queryString);
 
             //Need to keep a record of these and pass them along down to view issue
             //so that the correct element can be scrolled into view.

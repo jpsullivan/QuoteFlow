@@ -66,18 +66,18 @@ var AssetNavCreator = {
 
         var issueModule = QuoteFlow.application.request("issueEditor");
 
-        QuoteFlow.application.vent.on("assetEditor:render", function (regions) {
+        QuoteFlow.application.on("issueEditor:render", function (regions) {
             QuoteFlow.application.execute("pager:render", regions.pager);
         });
         QuoteFlow.application.commands.setHandler("returnToSearch", function () {
-            QuoteFlow.application.execute("assetEditor:close");
+            QuoteFlow.application.execute("issueEditor:close");
         });
 
         // Initialize event bubbling
-        QuoteFlow.application.vent.on("assetEditor:saveSuccess", function (props) {
+        QuoteFlow.application.on("issueEditor:saveSuccess", function (props) {
             QuoteFlow.application.vent.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
         });
-        QuoteFlow.application.vent.on("assetEditor:saveError", function (props) {
+        QuoteFlow.application.on("issueEditor:saveError", function (props) {
             if (!props.deferred) {
                 QuoteFlow.application.vent.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
             }
@@ -87,14 +87,14 @@ var AssetNavCreator = {
 
         var issueSearchManager = new AssetSearchManager({
             initialIssueTableState: options.initialIssueTableState,
-            initialAssetIds: options.initialAssetIds
+            initialIssueIds: options.initialIssueIds
         });
 
         var searchModule = new SearchModule({
             searchPageModule: searchPageModule,
             queryModule: queryModule,
             assetSearchManager: issueSearchManager,
-            initialSelectedAsset: options.initialSelectedAsset
+            initialSelectedIssue: options.initialSelectedIssue
         });
 
 //        var viewIssueData = issueModule.viewAssetData;

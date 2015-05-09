@@ -52,7 +52,7 @@ var PaginationView = Marionette.ItemView.extend({
      */
     _getPagingUri: function () {
         return UrlSerializer.getURLFromState({
-            selectedAssetKey: null,
+            selectedIssueKey: null,
             jql: this.options.currentSearch.jql,
             filter: this.options.currentSearch.filterId
         });

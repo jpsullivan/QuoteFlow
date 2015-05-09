@@ -1,25 +1,13 @@
 ﻿using System.Collections.Generic;
+using Jil;
 
 namespace QuoteFlow.Api.Jql.Query
 {
     public class FilteredSearcherGroup
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        private List<Searcher> Searchers { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string Type { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Title { get; set; }
-
-        public FilteredSearcherGroup() { }
+        public FilteredSearcherGroup()
+        {
+        }
 
         public FilteredSearcherGroup(string type)
         {
@@ -27,6 +15,24 @@ namespace QuoteFlow.Api.Jql.Query
             Title = null;
             Searchers = new List<Searcher>();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JilDirective("searchers")]
+        public IList<Searcher> Searchers { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JilDirective("type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JilDirective("title")]
+        public string Title { get; set; }
 
         /// <summary>
         /// 

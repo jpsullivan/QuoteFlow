@@ -13,7 +13,7 @@ var SearchModule = Brace.Evented.extend({
         this._searchPageModule = options.searchPageModule;
         this._searchResults = new SearchResults(null, {
             assetSearchManager: this._assetSearchManager,
-            initialSelectedAsset: options.initialSelectedAsset,
+            initialSelectedIssue: options.initialSelectedIssue,
             columnConfig: this._searchPageModule.columnConfig
         });
 
@@ -34,7 +34,7 @@ var SearchModule = Brace.Evented.extend({
             this._searchPageModule.update({
                 jql: jql,
                 startIndex: null,
-                selectedAssetKey: null
+                selectedIssueKey: null
             }, true);
         }
     },
@@ -73,7 +73,7 @@ var SearchModule = Brace.Evented.extend({
      */
     isStandAloneAsset: function (state) {
         state = state || this._searchPageModule.getState();
-        return !!state.selectedAssetKey && !_.isString(state.jql) && !state.filter;
+        return !!state.selectedIssueKey && !_.isString(state.jql) && !state.filter;
     },
 
     /**

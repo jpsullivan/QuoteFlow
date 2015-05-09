@@ -18,7 +18,8 @@ var ItemDescriptor = Descriptor.extend({
             // normalise
             options.meta = JSON.stringify(options.meta);
         }
-        this._super(options);
+        //this._super(options);
+        ItemDescriptor.__super__.initialize(options);
     },
 
     /**

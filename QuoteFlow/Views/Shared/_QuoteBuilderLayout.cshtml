@@ -1,4 +1,5 @@
 ﻿@using Jil
+@using Newtonsoft.Json
 @using QuoteFlow.Html
 @using QuoteFlow.Infrastructure.Extensions
 @using StackExchange.Profiling
@@ -53,8 +54,7 @@
                             <div class="navigator-content"
                                  data-issue-table-model-state="@JSON.Serialize(Model.AssetTable)"
                                  data-session-search-state="{ 'id': 118780 '}"
-                                 data-selected-issue="">
-                                @Html.Partial("Partials/Quote/Builder/SplitView")
+                                 data-selected-issue="{ 'id': 118780 '}">
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,8 @@
 <div id="jqlFieldz" style="display:none;"></div>
 <div id="jqlFunctionNamez" style="display:none;"></div>
 <div id="jqlReservedWordz" style="display:none;">@JSON.Serialize(Model.JqlReservedWords)</div>
-<div id="criteriaJson" style="display:none;">@JSON.Serialize(Model.CriteriaJqlOutcome.ReturnedValue)</div>
+@*<div id="criteriaJson" style="display:none;">@JSON.Serialize(Model.CriteriaJqlOutcome.ReturnedValue)</div>*@
+<div id="criteriaJson" style="display:none;">@JSON.SerializeDynamic(Model.CriteriaJqlOutcome.ReturnedValue)</div>
 <div id="systemFiltersJson" style="display:none;"></div>
 
 <script>

@@ -76,7 +76,7 @@ var AssetSearchManager = Brace.Evented.extend({
             deferred = jQuery.Deferred().resolve(this.initialIssueTableState);
             traceKey = "quoteflow.search.finished.initial";
             this.initialIssueTableState = null;
-            this.initialAssetIds = null;
+            this.initialIssueIds = null;
         } else {
             deferred = this.activeResultsReq = this._doSearch(data);
             traceKey = "quoteflow.search.finished.secondary";
@@ -85,7 +85,7 @@ var AssetSearchManager = Brace.Evented.extend({
         deferred.always(_.bind(function () {
             this.activeResultsReq = null;
             this.activeRequestData = null;
-            JIRA.trace(traceKey);
+            console.log(traceKey);
         }, this));
 
         deferred.done(_.bind(this._updateAssetKeysOnSearchSuccess, this));
@@ -140,8 +140,8 @@ var AssetSearchManager = Brace.Evented.extend({
     },
 
     _updateAssetKeysOnSearchSuccess: function (searchResult) {
-        var assetIds = searchResult.assetTable.issueIds;
-        var assetKeys = searchResult.assetTable.assetKeys;
+        var assetIds = searchResult.assetIds;
+        var assetKeys = searchResult.assetKeys;
         var assetKeyMapping;
 
         if (assetIds && assetKeys) {
@@ -155,7 +155,7 @@ var AssetSearchManager = Brace.Evented.extend({
             this.assetKeys.reset(assetKeyMapping);
         } else {
             // Stable search is off, resort to extracting keys for current page only from the table html
-            assetKeyMapping = AssetSearchManager._extractAssetKeysFromTable(searchResult.assetTable.table);
+            assetKeyMapping = AssetSearchManager._extractAssetKeysFromTable(searchResult.table);
             this.assetKeys.reset(assetKeyMapping);
         }
     },

@@ -29,7 +29,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
             SearchInputTransformer = new CatalogSearchInputTransformer(projectIndexInfoResolver, operandResolver, fieldFlagOperandRegistry, catalogService);
             SearchInformation = new GenericSearcherInformation<ISearchableField>(
                 constants.SearcherId, 
-                "common.concepts.catalog",
+                "Catalog",
                 new List<IFieldIndexer> { new CatalogIdIndexer() }, 
                 FieldReference, 
                 SearcherGroupType.Context

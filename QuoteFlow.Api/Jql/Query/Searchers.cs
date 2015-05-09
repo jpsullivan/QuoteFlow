@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Jil;
 
 namespace QuoteFlow.Api.Jql.Query
 {
@@ -7,6 +8,7 @@ namespace QuoteFlow.Api.Jql.Query
         /// <summary>
         /// 
         /// </summary>
+        [JilDirective("groups")]
         public List<FilteredSearcherGroup> Groups { get; set; }
 
         public Searchers()

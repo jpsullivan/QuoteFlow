@@ -34,7 +34,6 @@ var QueryComponent = function () {
                 preferredSearchMode: "basic"
             });
 
-
             options.primaryClauses = _.reject(options.primaryClauses, function (clause) {
                 return _.contains(options.without, clause.id);
             });
@@ -50,6 +49,7 @@ var QueryComponent = function () {
                 }
             });
 
+            debugger;
             var queryModule = new AssetQueryModule({
                 queryStateModel: new AssetQueryStateModel({
                     jql: options.jql,

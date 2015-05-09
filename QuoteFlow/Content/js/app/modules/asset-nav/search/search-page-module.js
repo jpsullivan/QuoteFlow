@@ -65,7 +65,7 @@ var SearchPageModule = Brace.Model.extend({
 
                 // Replace URL if issue updated successfully
                 if (model.getKey()) {
-                    var state = this._getUpdateState({ selectedAssetKey: model.getKey() });
+                    var state = this._getUpdateState({ selectedIssueKey: model.getKey() });
                     if (this._validateNavigate(state)) {
                         this.assetNavRouter.replaceState(state);
                     }
@@ -278,7 +278,6 @@ var SearchPageModule = Brace.Model.extend({
         }
     },
 
-
     registerLayoutSwitcher: function (layoutSwitcher) {
         this.layoutSwitcher = layoutSwitcher;
     },
@@ -303,6 +302,7 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     registerSearch: function (search) {
+        debugger;
         this.search = search;
         this.searchResults = this.search.getResults();
         this.searchResults.on("change:resultsId", this._handleSearchResultsChange, this);
@@ -612,7 +612,7 @@ var SearchPageModule = Brace.Model.extend({
         this.update({
             jql: jql,
             startIndex: 0,
-            selectedAssetKey: null,
+            selectedIssueKey: null,
             searchId: _.uniqueId()
         });
     },
@@ -624,7 +624,7 @@ var SearchPageModule = Brace.Model.extend({
     discardFilterChanges: function () {
         this.update({
             jql: null,
-            selectedAssetKey: null
+            selectedIssueKey: null
         }, true);
     },
 
@@ -638,7 +638,7 @@ var SearchPageModule = Brace.Model.extend({
         };
 
         if (this.standalone) {
-            state.selectedAssetKey = QuoteFlow.application.request("issueEditor:getIssueKey");
+            state.selectedIssueKey = QuoteFlow.application.request("issueEditor:getIssueKey");
         } else {
             _.extend(state, this.search.getResults().getState());
         }
@@ -647,6 +647,7 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     _doSearch: function (options) {
+        debugger;
         options = options || {};
         var searchOptions = {};
         var filter = this.getFilter();
@@ -671,10 +672,10 @@ var SearchPageModule = Brace.Model.extend({
             jQuery.event.trigger("updateOffsets.popout");
         }, this)).fail(_.bind(function (xhr) {
             if (xhr.statusText !== "abort") {
-                if (xhr.status == 400 && options.selectedAssetKey) {
-                    this.reset({ selectedAssetKey: options.selectedAssetKey }, { replace: true });
+                if (xhr.status == 400 && options.selectedIssueKey) {
+                    this.reset({ selectedIssueKey: options.selectedIssueKey }, { replace: true });
                 } else {
-                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedAssetKey"), this.searchResults.defaults));
+                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedIssueKey"), this.searchResults.defaults));
                     this.issueTableSearchError(xhr);
                 }
             }
@@ -715,15 +716,16 @@ var SearchPageModule = Brace.Model.extend({
         }
 
         var searchPromise;
+        debugger;
         if (this.shouldPerformNewSearch(prevState, newState)) {
             searchPromise = this._doSearch(newState);
         } else {
             searchPromise = jQuery.Deferred().resolve();
             if ("selectedIssueKey" in state) {
-                this.searchResults.selectAssetByKey(state.selectedAssetKey);
+                this.searchResults.selectAssetByKey(state.selectedIssueKey);
             }
             // If an issue is selected, its position in the results determines the page and we can ignore startIndex.
-            if ("startIndex" in state && !state.selectedAssetKey) {
+            if ("startIndex" in state && !state.selectedIssueKey) {
                 this.searchResults.goToPage(state.startIndex);
             }
         }
@@ -748,7 +750,7 @@ var SearchPageModule = Brace.Model.extend({
 
     refreshSearch: function () {
         return this._doSearch(_.extend({}, this.getState(), {
-            selectedAssetKey: undefined
+            selectedIssueKey: undefined
         }));
     },
 
@@ -804,7 +806,7 @@ var SearchPageModule = Brace.Model.extend({
         this.set(this.defaults());
         this.standalone = true;
         this.fullScreenAsset.show({
-            key: state.selectedAssetKey,
+            key: state.selectedIssueKey,
             viewIssueQuery: state.viewIssueQuery
         });
     },

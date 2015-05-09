@@ -59,7 +59,7 @@ namespace QuoteFlow.Core.Services
             var searchResults = GetSearchResults(true, user, searchers, clauses, query, searchContext);
             
             //throw new NotImplementedException();
-            return GetSearchResults(true, user, searchers, clauses, query, searchContext);
+            return searchResults;
         }
 
         public IServiceOutcome<QuerySearchResults> SearchWithJql(User user, string jqlContext, long filterId)

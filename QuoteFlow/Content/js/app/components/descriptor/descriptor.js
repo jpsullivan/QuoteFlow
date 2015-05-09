@@ -1,14 +1,14 @@
 ﻿"use strict";
 
 var $ = require('jquery');
-var Brace = require('backbone-brace');
+var Class = require('../class/class');
 
 /**
  * An abstract class used to maintain complex descriptors.
  */
-var Descriptor = Brace.Evented.extend({
+var Descriptor = Class.extend({
 
-    initialize: function(options) {
+    init: function(options) {
         if (this._validate(options)) {
             this.properties = $.extend(this._getDefaultOptions(), options);
         }

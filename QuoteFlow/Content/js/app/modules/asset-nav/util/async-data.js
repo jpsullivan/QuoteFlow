@@ -1,9 +1,10 @@
 ﻿"use strict";
 
+var _ = require('underscore');
 var Brace = require('backbone-brace');
 
 /**
- * 
+ *
  */
 var AsyncData = Brace.Evented.extend({
     namedEvents: ["change"],

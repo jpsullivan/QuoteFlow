@@ -50,7 +50,7 @@ var SearchResults = Brace.Model.extend({
         //ModelUtils.makeTransactional(this, "resetFromSearch", "selectNextAsset", "selectPrevAsset");
         this.assetUpdateCallbacks = [];
         this._assetSearchManager = options.assetSearchManager;
-        this._initialSelectedAsset = options.initialSelectedAsset;
+        this._initialSelectedIssue = options.initialSelectedIssue;
         this._columnConfig = options.columnConfig;
     },
 
@@ -192,7 +192,7 @@ var SearchResults = Brace.Model.extend({
 
     _notifyOfAssetUpdate: function (assetUpdate) {
         assetUpdate.message && JIRA.Issues.showNotification(assetUpdate.message, assetUpdate.key);
-        JIRA.trace("jira.search.stable.update");
+        console.log('quoteflow.search.stable.update');
     },
 
     getResultForId: function (id, filter) {
@@ -337,8 +337,8 @@ var SearchResults = Brace.Model.extend({
         this.set({ sortBy: null });
         this.set("startIndex", state.startIndex, { silent: true });
         this.set(_.pick(state, this.properties));
-        if (typeof state.selectedAssetKey === 'string') {
-            this.selectAssetByKey(state.selectedAssetKey);
+        if (typeof state.selectedIssueKey === 'string') {
+            this.selectAssetByKey(state.selectedIssueKey);
         } else {
             if (this.hasAssets()) {
                 this.highlightFirstInPage();
@@ -379,7 +379,7 @@ var SearchResults = Brace.Model.extend({
             var result = this.getTable();
             this.setTable(null, { silent: true }); //do not trigger a new search
             _.defer(function () {
-                JIRA.trace("jira.search.finished");
+                console.log('quoteflow.search.finished');
             });
             return $.Deferred().resolve(result).promise();
         }
@@ -410,7 +410,7 @@ var SearchResults = Brace.Model.extend({
         }).fail(deferred.reject)
             .always(function () {
                 _.defer(function () {
-                    JIRA.trace("jira.search.finished");
+                    console.log('quoteflow.search.finished');
                 });
             });
         return deferred;
@@ -582,6 +582,11 @@ var SearchResults = Brace.Model.extend({
 
         // Highlighting an asset updates the startIndex to ensure it is on the current page.
         var ID = this.getAssetIds()[startIndex];
+        if(!ID){
+            // fallback
+            return $.Deferred().resolve().promise();
+        }
+
         this.highlightAssetById(ID, options);
 
         return $.Deferred().resolve(ID).promise();
@@ -697,8 +702,8 @@ var SearchResults = Brace.Model.extend({
     _getAssetIdForKey: function (key) {
         // this only happens if the selected asset is not in the search results (i.e. when the user
         // navigates to the selected asset directly but has a search context).
-        if (this._initialSelectedAsset && key === this._initialSelectedAsset.key) {
-            return this._initialSelectedAsset.id;
+        if (this._initialSelectedIssue && key === this._initialSelectedIssue.key) {
+            return this._initialSelectedIssue.id;
         }
 
         return this._getAssetKeysToIds()[key];
@@ -707,8 +712,8 @@ var SearchResults = Brace.Model.extend({
     _getAssetKeyForId: function (id) {
         // this only happens if the selected asset is not in the search results (i.e. when the user
         // navigates to the selected asset directly but has a search context).
-        if (this._initialSelectedAsset && id === this._initialSelectedAsset.id) {
-            return this._initialSelectedAsset.key;
+        if (this._initialSelectedIssue && id === this._initialSelectedIssue.id) {
+            return this._initialSelectedIssue.key;
         }
 
         return this._getAssetIdsToKeys()[id];
