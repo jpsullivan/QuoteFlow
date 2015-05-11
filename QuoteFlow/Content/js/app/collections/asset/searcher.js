@@ -456,7 +456,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
             }, this),
             dataType: "json",
             error: function(xhr) {
-                //JIRA.Issues.displayFailSearchMessage(xhr);
+                QuoteFlow.displayFailSearchMessage(xhr);
             }
         }).always(_.bind(function () {
             this._activeSearcherReq = null;
@@ -516,7 +516,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
         }, this));
 
         this._activeSearcherReq.fail(_.bind(function (xhr) {
-            //JIRA.Issues.displayFailSearchMessage(xhr);
+            QuoteFlow.displayFailSearchMessage(xhr);
         }, this));
 
         this._activeSearcherReq.always(_.bind(function () {

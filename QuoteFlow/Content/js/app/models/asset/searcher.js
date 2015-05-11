@@ -166,10 +166,10 @@ var AssetSearcherModel = Brace.Model.extend({
 
         return SmartAjax.makeRequest({
             type: "POST",
-            url: QuoteFlow.RootUrl +"/secure/QueryComponentRendererEdit!Default.jspa",
+            url: QuoteFlow.RootUrl +"secure/QueryComponentRendererEdit!Default.jspa",
             success: _.bind(this.setEditHtml, this),
             dataType: "html",
-            error: JIRA.Issues.displayFailSearchMessage,
+            error: QuoteFlow.displayFailSearchMessage,
             data: {
                 fieldId: this.getId(),
                 decorator: "none",

@@ -5,6 +5,7 @@ var Brace = require('backbone-brace');
 var CheckboxMultiSelectSuggestHandler = require('../../../../components/select/checkbox-multi-select-suggest-handler');
 var GroupDescriptor = require('../../../../components/list/group-descriptor');
 var Reasons = require('../../util/reasons');
+var ScrollLock = require('jquery-scrollLock');
 var SearcherDialog = require('./searcher-dialog');
 var SuggestHelper = require('../../../../components/select/suggest-helper');
 

@@ -1,6 +1,7 @@
 "use strict";
 
 var $ = require('jquery');
+var _ = require('underscore');
 var ContentRetriever = require('./content-retriever');
 
 var DeferredContentRetriever = ContentRetriever.extend({

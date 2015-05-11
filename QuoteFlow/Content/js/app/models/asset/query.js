@@ -71,18 +71,18 @@ var AssetQueryStateModel = Brace.Model.extend({
      */
     _savePreferredSearchMode: function () {
         jQuery.ajax({
-            url: AJS.contextPath() + "/rest/querycomponent/latest/userSearchMode", // IssueTableResource (JIRA core)
+            url: QuoteFlow.RootUrl + "/rest/querycomponent/latest/userSearchMode", // IssueTableResource (JIRA core)
             type: 'POST',
             data: {
                 searchMode: this.getPreferredSearchMode()
             },
             error: _.bind(function (xhr) {
-                if (JIRA.Issues.displayFailSearchMessage) {
-                    JIRA.Issues.displayFailSearchMessage(xhr);
+                if (QuoteFlow.displayFailSearchMessage) {
+                    QuoteFlow.displayFailSearchMessage(xhr);
                 }
             }, this),
             success: function () {
-                JIRA.trace("jira.search.mode.changed");
+                console.log("quoteflow.search.mode.changed");
             }
         });
     }

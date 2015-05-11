@@ -7,7 +7,6 @@ Backbone.$ = $;
 
 var BaseView = require('../../view');
 
-var AssetNavigator = require('../asset/asset_navigator');
 var ShowAssetPage = require('../asset/show');;
 
 /**
@@ -25,7 +24,6 @@ var ShowAssetsInteractive = BaseView.extend({
     },
 
     initialize: function(options) {
-        var assetList = new AssetNavigator();
         var assetDetails = new ShowAssetPage();
     },
 

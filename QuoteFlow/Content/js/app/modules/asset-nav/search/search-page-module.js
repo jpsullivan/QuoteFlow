@@ -302,7 +302,6 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     registerSearch: function (search) {
-        debugger;
         this.search = search;
         this.searchResults = this.search.getResults();
         this.searchResults.on("change:resultsId", this._handleSearchResultsChange, this);
@@ -647,7 +646,6 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     _doSearch: function (options) {
-        debugger;
         options = options || {};
         var searchOptions = {};
         var filter = this.getFilter();
@@ -716,7 +714,6 @@ var SearchPageModule = Brace.Model.extend({
         }
 
         var searchPromise;
-        debugger;
         if (this.shouldPerformNewSearch(prevState, newState)) {
             searchPromise = this._doSearch(newState);
         } else {

@@ -5,7 +5,9 @@ var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var AssetNavCreator = require('./search/asset-nav-creator');
+var Message = require('../../ui/common/message');
 var Resize = require('./util/resize');
+var SmartAjax = require('../../components/ajax/smart-ajax');
 
 /**
  * Contains callbacks for the asset module router.
@@ -58,6 +60,19 @@ var AssetNavController = Marionette.Controller.extend({
     //            jQuery.event.trigger("updateOffsets.popout");
     //        });
     //    });
+
+        /**
+         * Determines the appropriate message to show upon search ajax failure
+         *
+         * @param xhr XHR object from jQuery.ajax
+         */
+        QuoteFlow.displayFailSearchMessage = function(xhr) {
+        if (xhr && xhr.statusText !== "abort") {
+            return Message.showErrorMsg(SmartAjax.buildSimpleErrorContent(xhr), {
+                closeable: true
+            });
+        }
+        };
     },
 
     /**

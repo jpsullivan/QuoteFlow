@@ -4,12 +4,12 @@ var $ = require('jquery');
 var Utils = require('../../util/utils');
 
 /**
- * The Ajax handling in JQuery is broken to some degree. For example if the server is down 
- * (eg cant talk to it at all) then jQuery runs through the success path, but with no data.  
- * And if you timeout, and you touch the xhr object then you can cause DOM exceptions because 
+ * The Ajax handling in JQuery is broken to some degree. For example if the server is down
+ * (eg cant talk to it at all) then jQuery runs through the success path, but with no data.
+ * And if you timeout, and you touch the xhr object then you can cause DOM exceptions because
  * its not ready to be called and so forth.
  *
- * So this wrapper code allows us to make an AJAX call and go down the right handler paths 
+ * So this wrapper code allows us to make an AJAX call and go down the right handler paths
  * and in a sensible manner.
  *
  * This is intended to be similar to the jQuery.ajax() method but without the wrinkles.
@@ -131,7 +131,7 @@ SmartAjax.makeRequest = function (ajaxOptions) {
 
     var errorHandler = function (xhr, statusText, errorThrown, smartAjaxResult) {
         if (!smartAjaxResult) {
-            var data = tryIt(function () {
+            var data = Utils.tryIt(function () {
                 return xhr.responseText;
             }, '');
             smartAjaxResult = _smartAjaxResult = new SmartAjax.SmartAjaxResult(xhr, _requestId, statusText, data, false, errorThrown);

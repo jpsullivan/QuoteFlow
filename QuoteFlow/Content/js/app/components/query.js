@@ -49,7 +49,6 @@ var QueryComponent = function () {
                 }
             });
 
-            debugger;
             var queryModule = new AssetQueryModule({
                 queryStateModel: new AssetQueryStateModel({
                     jql: options.jql,

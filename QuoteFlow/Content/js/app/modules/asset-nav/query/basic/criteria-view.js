@@ -194,7 +194,6 @@ var CriteriaView = Brace.View.extend({
     },
 
     _onClickCriteriaSelector: function(event) {
-        debugger;
         if (this.searcherCollection.isInteractive() && this._getSearcher() && this._isValidSearcher()) {
             QuoteFlow.SearcherDialog.instance.toggle(this._getSearcher());
         }
