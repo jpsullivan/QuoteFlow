@@ -1,12 +1,12 @@
 ﻿"use strict";
 
 var $ = require('jquery');
-var Brace = require('backbone-brace');
+var Class = require('../class/class');
 
 /**
  * An abstract class, providing utility methods helpful when building controls.
  */
-var Control = Brace.Evented.extend({
+var Control = Class.extend({
     INVALID: "INVALID",
 
     /**

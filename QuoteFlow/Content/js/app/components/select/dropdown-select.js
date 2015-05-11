@@ -13,7 +13,6 @@ var SelectModel = require('./select-model');
 var DropdownSelect = Control.extend({
 
     init: function (options) {
-
         var instance = this;
 
         this.model = new SelectModel(options);
@@ -22,6 +21,7 @@ var DropdownSelect = Control.extend({
 
         this._createFurniture();
 
+        debugger;
         this.dropdownController = InlineLayerFactory.createInlineLayers({
             alignment: AJS.LEFT,
             width: 200,

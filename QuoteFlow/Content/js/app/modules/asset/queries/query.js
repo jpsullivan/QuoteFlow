@@ -34,9 +34,10 @@ var AssetQueryModule = Brace.Evented.extend({
             this.triggerChangedPreferredSearchMode(this._queryStateModel.getPreferredSearchMode());
         }, this));
 
-       SearcherDialog.initialize({
-           queryStateModel: this._queryStateModel
-       });
+        QuoteFlow.SearcherDialog = SearcherDialog;
+        QuoteFlow.SearcherDialog.initialize({
+            queryStateModel: this._queryStateModel
+        });
 
         this._jqlQueryModule = new JqlQueryModule({
             queryStateModel: this._queryStateModel

@@ -26,10 +26,13 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
         public ManufacturerSearcher(IJqlOperandResolver operandResolver, ManufacturerResolver issueTypeResolver, IFieldFlagOperandRegistry fieldFlagOperandRegistry, ICatalogService projectManager)
 		{
 			var indexInfoResolver = new AssetConstantInfoResolver<Manufacturer>(issueTypeResolver);
-			SimpleFieldSearchConstants constants = SystemSearchConstants.ForManufacturer();
+			var constants = SystemSearchConstants.ForManufacturer();
 
-			this.SearchInformation = new GenericSearcherInformation<ISearchableField>(constants.SearcherId, "navigator.filter.manufacturer", new List<IFieldIndexer> { new ManufacturerIndexer() }, base.FieldReference, SearcherGroupType.Context);
-			this.SearchInputTransformer = new ManufacturerSearchInputTransformer(indexInfoResolver, operandResolver, fieldFlagOperandRegistry, issueTypeResolver);
+            SearchInformation = new GenericSearcherInformation<ISearchableField>(constants.SearcherId,
+                "Manufacturer", new List<IFieldIndexer> {new ManufacturerIndexer()},
+                FieldReference, SearcherGroupType.Context);
+
+			SearchInputTransformer = new ManufacturerSearchInputTransformer(indexInfoResolver, operandResolver, fieldFlagOperandRegistry, issueTypeResolver);
 		}
     }
 }

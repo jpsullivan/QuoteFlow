@@ -158,6 +158,9 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<SummaryClauseQueryFactory>().ToSelf().InRequestScope();
             Bind<SummarySearchHandlerFactory>().ToSelf().InRequestScope();
 
+            // creator searching
+            Bind<CreatorSearcher>().ToSelf().InRequestScope();
+
             #endregion
 
             ConfigureSearch();

@@ -3,6 +3,7 @@
 var $ = require('jquery');
 var Control = require('../control/control');
 var OptionsDescriptor = require('./inline-layer-options-descriptor');
+var ContentRetriever = require('../content-retriever/content-retriever');
 
 /**
  * A control that when specified element [offsetTarget] is clicked positions specified content absolutely underneath.
@@ -25,7 +26,6 @@ var InlineLayer = Control.extend({
      * @param {OptionsDescriptor | Object} options - {@see InlineLayer.OptionsDescriptor}
      */
     init: function (options) {
-
         var instance = this;
 
         if (!(options instanceof OptionsDescriptor)) {
@@ -339,7 +339,7 @@ var InlineLayer = Control.extend({
 
         event = jQuery.Event(InlineLayer.EVENTS.beforeShow);
         this.trigger(event, [this.layer(), this.options.id]);
-        Event.trigger(event, [this.layer(), this.options.id]);
+        //Event.trigger(event, [this.layer(), this.options.id]);
 
         if (!event.isDefaultPrevented()) {
             if (!this.isInitialized()) {

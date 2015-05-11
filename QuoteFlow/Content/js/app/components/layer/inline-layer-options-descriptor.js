@@ -1,6 +1,12 @@
 "use strict";
 
 var Descriptor = require('../descriptor/descriptor');
+var AjaxContentRetriever = require('../content-retriever/ajax-content-retriever');
+var DeferredContentRetriever = require('../content-retriever/deferred-content-retriever');
+var DOMContentRetriever = require('../content-retriever/dom-content-retriever');
+var IframePositioning = require('../layer/inline-layer-iframe-positioning');
+var StandardPositioning = require('../layer/inline-layer-standard-positioning');
+var WindowPositioning = require('../layer/inline-layer-windowpositioning');
 
 /**
  * Defines interface and 'intelligent' guesses intended behaviour for inline dialog
@@ -31,7 +37,7 @@ var OptionsDescriptor = Descriptor.extend({
         }
 
         if (!this.positioningController()) {
-            if (!params.ignoreFrame && this._inIFrame()) {
+            if (!AJS.params.ignoreFrame && this._inIFrame()) {
                 this.positioningController(new IframePositioning());
             } else {
                 var $body = jQuery("body");

@@ -91,8 +91,8 @@ var SearcherGroupListDialogView = Brace.View.extend({
     _searcherSelected: function(e, descriptor) {
         var searcher = this.searcherCollection.getSearcher(descriptor.properties.value);
         searcher.select();
-        SearcherDialog.instance.hide();
-        SearcherDialog.instance.show(searcher);
+        QuoteFlow.SearcherDialog.instance.hide();
+        QuoteFlow.SearcherDialog.instance.show(searcher);
     },
 
     _keyPressed: function (event) {

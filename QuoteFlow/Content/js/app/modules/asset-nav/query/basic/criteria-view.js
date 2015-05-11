@@ -26,8 +26,8 @@ var CriteriaView = Brace.View.extend({
         this.searcherCollection.onInteractiveChanged(this._handleInteractiveChanged, this);
         this.searcherCollection.bind('change:isSelected', this._onCriteriaSelectionChanged, this);
 
-        SearcherDialog.instance.onHide(_.bind(this._addTooltip, this));
-        SearcherDialog.instance.onShow(_.bind(this._onCriteriaDialogShow, this));
+        QuoteFlow.SearcherDialog.instance.onHide(_.bind(this._addTooltip, this));
+        QuoteFlow.SearcherDialog.instance.onShow(_.bind(this._onCriteriaDialogShow, this));
     },
 
     /**
@@ -123,7 +123,7 @@ var CriteriaView = Brace.View.extend({
 
     _showDialog: function() {
         if (this.searcherCollection.isInteractive() && this._getSearcher() && this._isValidSearcher()) {
-            SearcherDialog.instance.show(this._getSearcher());
+            QuoteFlow.SearcherDialog.instance.show(this._getSearcher());
         }
     },
 
@@ -196,7 +196,7 @@ var CriteriaView = Brace.View.extend({
     _onClickCriteriaSelector: function(event) {
         debugger;
         if (this.searcherCollection.isInteractive() && this._getSearcher() && this._isValidSearcher()) {
-            SearcherDialog.instance.toggle(this._getSearcher());
+            QuoteFlow.SearcherDialog.instance.toggle(this._getSearcher());
         }
         event.preventDefault();
     },
@@ -234,7 +234,7 @@ var CriteriaView = Brace.View.extend({
      * @private
      */
     _onCriteriaDialogShow: function () {
-        var currentSearcher = SearcherDialog.instance.getCurrentSearcher();
+        var currentSearcher = QuoteFlow.SearcherDialog.instance.getCurrentSearcher();
         if (currentSearcher == this._getSearcher()) {
             this.tipsy && this.tipsy.remove();
         }

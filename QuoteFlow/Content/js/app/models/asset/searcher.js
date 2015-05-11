@@ -6,8 +6,10 @@ var Backbone = require('backbone');
 var Brace = require('backbone-brace');
 Backbone.$ = $;
 
+var SmartAjax = require('../../components/ajax/smart-ajax');
+
 /**
- * 
+ *
  */
 var AssetSearcherModel = Brace.Model.extend({
     /**
@@ -136,6 +138,56 @@ var AssetSearcherModel = Brace.Model.extend({
             validSearcher: true,
             lastViewed: this._now()
         });
+    },
+
+    /**
+     * Ensures edit html exists. Triggers readyForDisplay when editHtml has been retrieved, which may be asynchronous if the value has not been retrieved,
+     * or immediate if we already have editHtml
+     */
+    retrieveEditHtml: function() {
+        var jql = this.collection.createJql();
+
+        // TODO: Abort a pending request if there is one.
+        // Avoid race condition -- ensure last request received is also last request issued.
+
+        /* EditHtml is always populated when we request the list of searchers from the server,
+         * for all searchers that have a value. We will always have editHtml when first showing a searcher.
+         * this.getEditHtml() will be null in 2 cases:
+         * - when we have just added a new searcher and it has no value
+         * - when we have closed a dialog and are waiting for the list of searchers (and new editHtml) to update.
+         * The second case is done because we *don't* cache the editHtml DOM elements. When showing an edit dialog
+         * we have to regenerate the DOM - however because the elements might have changed (eg values entered into
+         * inputs) we clear this.editHtml on hide (see this.clearEditHtml) so that it will be re-requested on show.
+         */
+
+        if (this.getEditHtml()) {
+            return jQuery.Deferred().resolve(this.getEditHtml());
+        }
+
+        return SmartAjax.makeRequest({
+            type: "POST",
+            url: QuoteFlow.RootUrl +"/secure/QueryComponentRendererEdit!Default.jspa",
+            success: _.bind(this.setEditHtml, this),
+            dataType: "html",
+            error: JIRA.Issues.displayFailSearchMessage,
+            data: {
+                fieldId: this.getId(),
+                decorator: "none",
+                jqlContext: jql
+            }
+        });
+    },
+
+    /**
+     * Returns true if this element has edit html and it contains an error class
+     */
+    hasErrorInEditHtml: function() {
+        var $el = jQuery('<div>').htmlCatchExceptions(this.getEditHtml());
+        if (!$el) {
+            return false;
+        } else {
+            return $el.find(".error, .has-errors").length > 0;
+        }
     },
 
     /**

@@ -1,9 +1,7 @@
-﻿using QuoteFlow.Api.Asset.Fields;
-using QuoteFlow.Api.Asset.Search;
+﻿using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Operand;
-using QuoteFlow.Api.Jql.Permission;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.Fields;
 using QuoteFlow.Core.Asset.Search.Searchers;
@@ -18,8 +16,6 @@ namespace QuoteFlow.Core.Asset.Search.Handlers
 {
     /// <summary>
     /// Class to create the <see cref="SearchHandler"/> for the <see cref="ManufacturerSystemField"/>.
-    /// 
-    /// @since v4.0
     /// </summary>
     public sealed class ManufacturerSearchHandlerFactory : SimpleSearchHandlerFactory
     {
