@@ -180,6 +180,7 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IIndexWriterConfiguration>().To<IndexConfiguration.Default.IndexWriterConfiguration>().InRequestScope();
             Bind<ILuceneQueryBuilder>().To<LuceneQueryBuilder>().InRequestScope();
             Bind<ILuceneQueryModifier>().To<LuceneQueryModifier>().InRequestScope();
+            Bind<ISearchContextHelper>().To<SearchContextHelper>().InRequestScope();
             Bind<ISearchExtractorRegistrationManager>().To<SearchExtractorRegistrationManager>().InRequestScope();
             Bind<ISearchHandlerManager>().To<SearchHandlerManager>().InRequestScope();
             Bind<ISearchProvider>().To<LuceneSearchService>().InRequestScope();

@@ -16,7 +16,9 @@ namespace QuoteFlow.Core.Asset.Search
         protected ICatalogService CatalogService { get; set; }
         protected IManufacturerService ManufacturerService { get; set; }
 
-        public SearchContext() { }
+        public SearchContext()
+        {
+        }
 
         public SearchContext(ICatalogService catalogService, IManufacturerService manufacturerService)
         {

@@ -10,5 +10,9 @@ namespace QuoteFlow.Api.Services
         IServiceOutcome<QuerySearchResults> Search(User user, MultiDictionary<string, string[]> paramMap, long filterId);
 
         IServiceOutcome<QuerySearchResults> SearchWithJql(User user, string jqlContext, long filterId);
+
+        IServiceOutcome<string> GetEditHtml(string searcherId, string jqlContext);
+
+        Searchers GetSearchers(string jqlContext);
     }
 }

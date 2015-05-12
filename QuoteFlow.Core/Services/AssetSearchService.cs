@@ -8,6 +8,7 @@ using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Transport;
+using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Infrastructure.Services;
 using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Parser;
@@ -27,22 +28,24 @@ namespace QuoteFlow.Core.Services
         private readonly string JqlInvalidErrorMessage = "jqlInvalid";
         private readonly string JqlTooComplexErrorMessage = "jqlTooComplex";
 
-        #region IoC
+        #region DI
 
         public IJqlStringSupport JqlStringSupport { get; protected set; }
         public IAssetSearcherManager AssetSearcherManager { get; protected set; }
         public ISearchHandlerManager SearchHandlerManager { get; protected set; }
+        public ISearchContextHelper SearchContextHelper { get; protected set; }
         public ISearchService SearchService { get; protected set; }
 
         public AssetSearchService()
         {
         }
 
-        public AssetSearchService(IJqlStringSupport jqlStringSupport, IAssetSearcherManager assetSearcherManager, ISearchHandlerManager searchHandlerManager, ISearchService searchService)
+        public AssetSearchService(IJqlStringSupport jqlStringSupport, IAssetSearcherManager assetSearcherManager, ISearchHandlerManager searchHandlerManager, ISearchContextHelper searchContextHelper, ISearchService searchService)
         {
             JqlStringSupport = jqlStringSupport;
             AssetSearcherManager = assetSearcherManager;
             SearchHandlerManager = searchHandlerManager;
+            SearchContextHelper = searchContextHelper;
             SearchService = searchService;
         }
 
@@ -95,6 +98,19 @@ namespace QuoteFlow.Core.Services
             var clauses = GenerateQuery(searchContext, user, query, searchers);
 
             return GetSearchResults(true, user, searchers, clauses, query, searchContext);
+        }
+
+        public IServiceOutcome<string> GetEditHtml(string searcherId, string jqlContext)
+        {
+            var searchContextWithFieldValues =
+                SearchContextHelper.GetSearchContextWithFieldValuesFromJqlString(jqlContext);
+
+            return GetEditHtml(searcherId, searchContextWithFieldValues, CreateDisplayParams());
+        }
+
+        public Searchers GetSearchers(string jqlContext)
+        {
+            throw new NotImplementedException();
         }
 
         private IServiceOutcome<QuerySearchResults> GetSearchResults(bool includePrimes, User user, ICollection<IAssetSearcher<ISearchableField>> searchers, IDictionary<string, SearchRendererHolder> clauses, IQuery query, ISearchContext searchContext)
@@ -280,5 +296,37 @@ namespace QuoteFlow.Core.Services
 			searchers.AddGroups(searcherGroups.Values);
 			return searchers;
 		}
+
+        private IServiceOutcome<string> GetEditHtml(string searcherId, SearchContextWithFieldValues searchContextWithFieldValues, IDictionary<string, string> displayParams)
+        {
+		    if (null == searcherId)
+		    {
+			    return ServiceOutcome<string>.Error("No search renderer found");
+		    }
+            
+            var issueSearcher = AssetSearcherManager.GetSearcher(searcherId);
+		    if (issueSearcher == null)
+		    {
+                return ServiceOutcome<string>.Error("No search renderer found");
+		    }
+
+		    //RecentSearchersService.addRecentSearcher(user, issueSearcher);
+
+		    string editHtml = issueSearcher.SearchRenderer.getEditHtml(user, searchContextWithFieldValues.searchContext, searchContextWithFieldValues.fieldValuesHolder, displayParams, action);
+            if (editHtml.IsNullOrEmpty())
+		    {
+			    editHtml = emptySearchResultHtmlProvider.getHtml(searcherId);
+		    }
+
+		    return ServiceOutcome<string>.Ok(editHtml);
+        }
+
+        private IDictionary<string, string> CreateDisplayParams()
+        {
+            var displayParams = new Dictionary<string, string>();
+            displayParams["theme"] = "aui";
+            displayParams["checkboxmultiselect"] = "on";
+            return displayParams;
+        }
     }
 }

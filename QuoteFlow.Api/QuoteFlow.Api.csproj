@@ -194,6 +194,7 @@
     <Compile Include="Asset\Search\Handlers\ISearchHandlerFactory.cs" />
     <Compile Include="Asset\Search\ILuceneFieldSorter.cs" />
     <Compile Include="Asset\Search\ISearchContext.cs" />
+    <Compile Include="Asset\Search\ISearchContextHelper.cs" />
     <Compile Include="Asset\Search\ISearchProviderFactory.cs" />
     <Compile Include="Asset\Search\ISystemClauseHandlerFactory.cs" />
     <Compile Include="Asset\Search\Managers\IAssetSearcherManager.cs" />
@@ -208,8 +209,11 @@
     <Compile Include="Asset\Search\QueryCacheClauseHandlerKey.cs" />
     <Compile Include="Asset\Search\QueryCacheKey.cs" />
     <Compile Include="Asset\Search\QueryCacheLiteralsKey.cs" />
+    <Compile Include="Asset\Search\SearchContextWithFieldValues.cs" />
     <Compile Include="Asset\Search\Searchers\IAssetSearcher.cs" />
     <Compile Include="Asset\Search\Searchers\Information\ISearcherInformation.cs" />
+    <Compile Include="Asset\Search\Searchers\Renderer\AbstractSearchRenderer.cs" />
+    <Compile Include="Asset\Search\Searchers\Renderer\ISearchRenderer.cs" />
     <Compile Include="Asset\Search\Searchers\SearcherGroup.cs" />
     <Compile Include="Asset\Search\Searchers\SearcherGroupType.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\AssetConstantSearchInputTransformer.cs" />
