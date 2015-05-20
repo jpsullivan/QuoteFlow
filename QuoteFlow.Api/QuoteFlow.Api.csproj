@@ -164,6 +164,9 @@
     <Compile Include="Asset\Fields\Layout\Column\IColumnLayout.cs" />
     <Compile Include="Asset\Fields\Layout\Column\IColumnLayoutItem.cs" />
     <Compile Include="Asset\Fields\NavigableFieldOrder.cs" />
+    <Compile Include="Asset\Fields\Option\AbstractOption.cs" />
+    <Compile Include="Asset\Fields\Option\IOption.cs" />
+    <Compile Include="Asset\Fields\Option\TextOption.cs" />
     <Compile Include="Asset\IAssetConstant.cs" />
     <Compile Include="Asset\IAssetFactory.cs" />
     <Compile Include="Asset\Index\Analyzer\EnglishAnalyzer.cs" />

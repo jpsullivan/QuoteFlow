@@ -312,7 +312,8 @@ namespace QuoteFlow.Core.Services
 
 		    //RecentSearchersService.addRecentSearcher(user, issueSearcher);
 
-		    string editHtml = issueSearcher.SearchRenderer.getEditHtml(user, searchContextWithFieldValues.searchContext, searchContextWithFieldValues.fieldValuesHolder, displayParams, action);
+            string editHtml = issueSearcher.SearchRenderer.GetEditHtml(searchContextWithFieldValues.SearchContext,
+                searchContextWithFieldValues.FieldValuesHolder, displayParams);
             if (editHtml.IsNullOrEmpty())
 		    {
 			    editHtml = emptySearchResultHtmlProvider.getHtml(searcherId);
@@ -321,7 +322,7 @@ namespace QuoteFlow.Core.Services
 		    return ServiceOutcome<string>.Ok(editHtml);
         }
 
-        private IDictionary<string, string> CreateDisplayParams()
+        private static IDictionary<string, string> CreateDisplayParams()
         {
             var displayParams = new Dictionary<string, string>();
             displayParams["theme"] = "aui";

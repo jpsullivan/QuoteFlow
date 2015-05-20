@@ -1,6 +1,7 @@
 ﻿using Lucene.Net.Documents;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Search.Searchers.Information;
+using QuoteFlow.Api.Asset.Search.Searchers.Renderer;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Transport;
 using QuoteFlow.Api.Jql.Query.Clause;
@@ -27,20 +28,20 @@ namespace QuoteFlow.Api.Asset.Search.Searchers
         /// Provides an object that contains information about the Searcher.
         /// </summary>
         /// <returns> the search information provider for this searcher. </returns>
-        ISearcherInformation<T> SearchInformation { get; }
+        ISearcherInformation<T> SearchInformation { get; set; }
 
         /// <summary>
         /// Provides an object that will allow you to transform raw request parameters to field holder values and
         /// field holder values to <see cref="IClause"/> search representations.
         /// </summary>
         /// <returns> the search input handler for this searcher. </returns>
-        ISearchInputTransformer SearchInputTransformer { get; }
+        ISearchInputTransformer SearchInputTransformer { get; set; }
 
         /// <summary>
         /// Provides an object that will allow you to render the edit and view html for a searcher. This also provides
         /// methods that indicate if the view and edit methods should be invoked.
         /// </summary>
         /// <returns> the search renderer for this searcher. </returns>
-        //SearchRenderer SearchRenderer { get; }
+        ISearchRenderer SearchRenderer { get; set; }
     }
 }

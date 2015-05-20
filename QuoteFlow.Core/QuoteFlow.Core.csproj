@@ -176,6 +176,7 @@
     <Compile Include="Asset\Fields\AbstractOrderableField.cs" />
     <Compile Include="Asset\Fields\AbstractOrderableNavigableField.cs" />
     <Compile Include="Asset\Fields\AbstractTextSystemField.cs" />
+    <Compile Include="Asset\Fields\AssetConstantOption.cs" />
     <Compile Include="Asset\Fields\CatalogSystemField.cs" />
     <Compile Include="Asset\Fields\FieldManager.cs" />
     <Compile Include="Asset\Fields\ManufacturerSystemField.cs" />
@@ -212,6 +213,8 @@
     <Compile Include="Asset\Index\Managers\FieldIndexerManager.cs" />
     <Compile Include="Asset\Index\Managers\IFieldIndexerManager.cs" />
     <Compile Include="Asset\Search\SearchContextHelper.cs" />
+    <Compile Include="Asset\Search\Searchers\Renderer\CatalogSearchRenderer.cs" />
+    <Compile Include="Asset\Search\Searchers\Renderer\ManufacturerSearchRenderer.cs" />
     <Compile Include="Auditing\AuditService.cs" />
     <Compile Include="Configuration\Lucene\IndexingConfiguration.cs" />
     <Compile Include="DependencyResolution\HangfireContainer.cs" />
