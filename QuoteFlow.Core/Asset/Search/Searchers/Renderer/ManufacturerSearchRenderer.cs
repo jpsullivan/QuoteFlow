@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using QuoteFlow.Api.Asset.Fields.Option;
 using QuoteFlow.Api.Asset.Index;
@@ -9,15 +10,19 @@ using QuoteFlow.Api.Asset.Search.Searchers.Renderer;
 using QuoteFlow.Api.Asset.Transport;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Services;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 {
     public class ManufacturerSearchRenderer : AbstractSearchRenderer, ISearchRenderer
     {
-        public ManufacturerSearchRenderer(SimpleFieldSearchConstants searchConstants, string searcherNameKey) 
+        public ICatalogService CatalogService { get; protected set; }
+
+        public ManufacturerSearchRenderer(ICatalogService catalogService, 
+            SimpleFieldSearchConstants searchConstants, string searcherNameKey) 
             : base(searchConstants, searcherNameKey)
         {
-            
+            CatalogService = catalogService;
         }
 
         /// <summary>
@@ -40,7 +45,6 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 
                 var invalidOptions = GetInvalidOptions(user, selectedOptions, validOptions);
                 SearchContextRenderHelper.AddSearchContextParams(searchContext, displayParameters);
-                
             }
 
             throw new System.NotImplementedException();
@@ -63,7 +67,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 
         /// <param name="i18nHelper"> An i18n helper. </param>
         /// <returns> All possible options (not just those that are visible). </returns>
-        private ICollection<IOption> getAllOptions(I18nHelper i18nHelper)
+        private ICollection<IOption> GetAllOptions()
         {
             var allOptions = new List<IOption>();
 //            allOptions.Add(new TextOption(ConstantsManager.ALL_STANDARD_ISSUE_TYPES, i18nHelper.getText("common.filters.allstandardissuetypes")));
@@ -84,7 +88,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 
             if (selectedOptions != null)
             {
-                foreach (IOption option in getAllOptions(getI18n(user)))
+                foreach (var option in GetAllOptions())
                 {
                     if (!validOptions.Contains(option) && selectedOptions.Contains(option.Id))
                     {
@@ -148,6 +152,43 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             options.AddRange(optionsInSearchContext);
 
             return options;
+        }
+
+        /// <summary>
+        /// todo: actually do something useful here
+        /// </summary>
+        /// <param name="searchContext"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private IEnumerable<Catalog> GetCatalogsInSearchContext(ISearchContext searchContext, User user)
+        {
+            return CatalogService.GetCatalogs(user.Organizations.First().Id);
+        }
+
+        private IDictionary<string, object> ProcessOptions(IEnumerable<IOption> validOptions, IEnumerable<IOption> invalidOptions)
+        {
+            IDictionary<string, object> result = new Dictionary<string, object>();
+            var options = new SortedSet<IOption>();
+            
+            foreach (var validOption in validOptions)
+            {
+                options.Add(validOption);
+            }
+
+            foreach (var invalidOption in invalidOptions)
+            {
+                options.Add(invalidOption);
+            }
+             
+            // We need to actually remove special options from the collection as
+            // STANDARD_OPTIONS_PREDICATE matches them (they'd be in two groups).
+            //result["specialOptions"] = CollectionUtils.select(options, SPECIAL_OPTION_PREDICATE);
+            options = CollectionUtils.selectRejected(options, SPECIAL_OPTION_PREDICATE);
+
+            result["standardOptions"] = CollectionUtils.select(options, IssueConstantOption.STANDARD_OPTIONS_PREDICATE);
+            //result["subtaskOptions"] = CollectionUtils.select(options, IssueConstantOption.SUB_TASK_OPTIONS_PREDICATE);
+
+            return result;
         }
     }
 }
