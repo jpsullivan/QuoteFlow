@@ -11,7 +11,7 @@ namespace QuoteFlow.Core.Asset.Search
 {
     public class SearchContext : ISearchContext
     {
-        #region IoC
+        #region DI
 
         protected ICatalogService CatalogService { get; set; }
         protected IManufacturerService ManufacturerService { get; set; }

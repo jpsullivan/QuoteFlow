@@ -57,5 +57,10 @@ namespace QuoteFlow.Api.Asset.Search
         /// Returns <see cref="Catalog"/> objects in this search context.
         /// </summary>
         IEnumerable<Catalog> Catalogs { get; set; }
+
+        /// <summary>
+        /// Returns <see cref="Manufacturer"/> objects in this search context.
+        /// </summary>
+        IEnumerable<Manufacturer> Manufacturers { get; set; } 
     }
 }

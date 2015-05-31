@@ -31,7 +31,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
         }
 
         protected IDictionary<string, object> GetDisplayParams(User searcher, ISearchContext searchContext,
-            IFieldValuesHolder fieldValuesHolder, IDictionary displayParameters)
+            IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters)
         {
             var templateParams = new Dictionary<string, object>();
             templateParams.Add("searchContext", searchContext);
@@ -48,7 +48,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
             return templateParams;
         }
 
-        protected string RenderEditTemplate(string templateName, object templateParams)
+        protected string RenderEditTemplate(string templateName, IDictionary<string, object> templateParams)
         {
 //            using (var sw = new StringWriter())
 //            {

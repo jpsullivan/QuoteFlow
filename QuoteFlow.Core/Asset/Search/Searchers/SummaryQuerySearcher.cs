@@ -4,6 +4,7 @@ using QuoteFlow.Api.Asset.Index.Indexers;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Asset.Search.Searchers.Information;
+using QuoteFlow.Api.Asset.Search.Searchers.Renderer;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Infrastructure.Concurrency;
 using QuoteFlow.Api.Jql.Operand;
@@ -21,8 +22,9 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
     {
         private const string NameKey = "asset.field.summary";
 
-        public virtual ISearcherInformation<ISearchableField> SearchInformation { get; private set; }
-        public virtual ISearchInputTransformer SearchInputTransformer { get; private set; }
+        public ISearcherInformation<ISearchableField> SearchInformation { get; set; }
+        public ISearchInputTransformer SearchInputTransformer { get; set; }
+        public ISearchRenderer SearchRenderer { get; set; }
 
         private static readonly IList<IFieldIndexer> SummaryIndexer = new List<IFieldIndexer> { new SummaryIndexer() };
         private readonly AtomicReference<ISearchableField> _fieldRef = new AtomicReference<ISearchableField>();

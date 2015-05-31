@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using QuoteFlow.Api.Asset.Transport;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Asset.Search.Searchers.Util;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 {
@@ -38,31 +40,34 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             object selectedOptions;
             if (fieldValuesHolder.TryGetValue(DocumentConstants.ManufacturerId, out selectedOptions))
             {
-                displayParameters.Add("selectedOptions", selectedOptions);
+                // attempt to cast the selectedOptions into a list
+                var options = (List<string>) selectedOptions;
 
-                var validOptions = GetVisibleOptions(user, searchContext);
+                displayParameters.Add("selectedOptions", options);
+
+                var validOptions = GetVisibleOptions(user, searchContext).ToList();
                 displayParameters.Add("optionCSSClasses", GetOptionCssClasses(validOptions));
 
-                var invalidOptions = GetInvalidOptions(user, selectedOptions, validOptions);
+                var invalidOptions = GetInvalidOptions(user, options, validOptions);
                 SearchContextRenderHelper.AddSearchContextParams(searchContext, displayParameters);
             }
 
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override bool IsShown(User user, ISearchContext searchContext)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override string GetViewHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary displayParameters)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override bool IsRelevantForQuery(User user, IQuery query)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /// <param name="i18nHelper"> An i18n helper. </param>
@@ -82,7 +87,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         /// <param name="selectedOptions"> Options the user has selected. </param>
         /// <param name="validOptions"> All options that may be selected. </param>
         /// <returns> Invalid options that the user has selected. </returns>
-        private ICollection<IOption> GetInvalidOptions(User user, ICollection selectedOptions, ICollection<IOption> validOptions)
+        private ICollection<IOption> GetInvalidOptions(User user, ICollection<string> selectedOptions, ICollection<IOption> validOptions)
         {
             ICollection<IOption> invalidOptions = new List<IOption>();
 
@@ -131,13 +136,13 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         protected virtual ICollection<IOption> GetOptionsInSearchContext(ISearchContext searchContext, User user)
         {
             ICollection<IOption> options = new HashSet<IOption>();
-            ICollection<FieldConfig> fieldConfigs = GetCatalogFieldConfigs(GetCatalogsInSearchContext(searchContext, user));
-
-            foreach (FieldConfig fieldConfig in fieldConfigs)
-            {
-                OptionSet optionSet = optionSetManager.getOptionsForConfig(fieldConfig);
-                options.addAll(optionSet.Options);
-            }
+//            ICollection<FieldConfig> fieldConfigs = GetCatalogFieldConfigs(GetCatalogsInSearchContext(searchContext, user));
+//
+//            foreach (FieldConfig fieldConfig in fieldConfigs)
+//            {
+//                OptionSet optionSet = optionSetManager.getOptionsForConfig(fieldConfig);
+//                options.addAll(optionSet.Options);
+//            }
 
             return options;
         }
@@ -183,9 +188,11 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             // We need to actually remove special options from the collection as
             // STANDARD_OPTIONS_PREDICATE matches them (they'd be in two groups).
             //result["specialOptions"] = CollectionUtils.select(options, SPECIAL_OPTION_PREDICATE);
-            options = CollectionUtils.selectRejected(options, SPECIAL_OPTION_PREDICATE);
+            //options = CollectionUtils.selectRejected(options, SPECIAL_OPTION_PREDICATE);
 
-            result["standardOptions"] = CollectionUtils.select(options, IssueConstantOption.STANDARD_OPTIONS_PREDICATE);
+            result.Add("standardOptions", options);
+
+            //result["standardOptions"] = CollectionUtils.select(options, IssueConstantOption.STANDARD_OPTIONS_PREDICATE);
             //result["subtaskOptions"] = CollectionUtils.select(options, IssueConstantOption.SUB_TASK_OPTIONS_PREDICATE);
 
             return result;

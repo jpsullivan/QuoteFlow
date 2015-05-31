@@ -5,6 +5,7 @@ using QuoteFlow.Api.Asset.Index.Indexers;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Asset.Search.Searchers.Information;
+using QuoteFlow.Api.Asset.Search.Searchers.Renderer;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Search.Searchers.Util;
 using QuoteFlow.Api.Jql.Operand;
@@ -17,10 +18,11 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
     /// <summary>
     /// A simple class that most date searchers will be able to extends to implement searching. 
     /// </summary>
-    public class AbstractDateSearcher : AbstractInitializationSearcher, IAssetSearcher<ISearchableField>
+    public sealed class AbstractDateSearcher : AbstractInitializationSearcher
     {
-        private readonly ISearcherInformation<ISearchableField> searcherInformation;
-        private readonly ISearchInputTransformer searchInputTransformer;
+        public override ISearcherInformation<ISearchableField> SearchInformation { get; set; }
+        public override ISearchInputTransformer SearchInputTransformer { get; set; }
+        public override ISearchRenderer SearchRenderer { get; set; }
 
         public AbstractDateSearcher(
             SimpleFieldSearchConstants constants, 
@@ -30,18 +32,8 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
             ICustomFieldInputHelper customFieldInputHelper)
         {
             var config = new DateSearcherConfig(constants.UrlParameter, constants.JqlClauseNames, constants.JqlClauseNames.PrimaryName);
-            this.searcherInformation = new GenericSearcherInformation<ISearchableField>(constants.SearcherId, nameKey, new List<IFieldIndexer>() { indexer }, FieldReference, SearcherGroupType.Date);
-            this.searchInputTransformer = new DateSearchInputTransformer(false, config, operandResolver, dateSupport, customFieldInputHelper);
-        }
-
-        public ISearcherInformation<ISearchableField> SearchInformation
-        {
-            get { return searcherInformation; }
-        }
-
-        public ISearchInputTransformer SearchInputTransformer
-        {
-            get { return searchInputTransformer; }
+            SearchInformation = new GenericSearcherInformation<ISearchableField>(constants.SearcherId, nameKey, new List<IFieldIndexer>() { indexer }, FieldReference, SearcherGroupType.Date);
+            SearchInputTransformer = new DateSearchInputTransformer(false, config, operandResolver, dateSupport, customFieldInputHelper);
         }
     }
 }

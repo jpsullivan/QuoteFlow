@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Lucene.Net.Support;
 using QuoteFlow.Api.Asset.Fields;
@@ -19,12 +21,16 @@ using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Infrastructure.Services;
 using QuoteFlow.Core.Util;
+using RazorEngine;
 using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Core.Services
 {
     public class AssetSearchService : IAssetSearchService
     {
+        private string JqlPrefix = "__jql_";
+        private string JqlContext = "jqlContext";
+
         private readonly string JqlInvalidErrorMessage = "jqlInvalid";
         private readonly string JqlTooComplexErrorMessage = "jqlTooComplex";
 
@@ -297,9 +303,9 @@ namespace QuoteFlow.Core.Services
 			return searchers;
 		}
 
-        private IServiceOutcome<string> GetEditHtml(string searcherId, SearchContextWithFieldValues searchContextWithFieldValues, IDictionary<string, string> displayParams)
+        private IServiceOutcome<string> GetEditHtml(string searcherId, SearchContextWithFieldValues searchContextWithFieldValues, IDictionary displayParams)
         {
-		    if (null == searcherId)
+		    if (searcherId == null)
 		    {
 			    return ServiceOutcome<string>.Error("No search renderer found");
 		    }
@@ -312,22 +318,65 @@ namespace QuoteFlow.Core.Services
 
 		    //RecentSearchersService.addRecentSearcher(user, issueSearcher);
 
-            string editHtml = issueSearcher.SearchRenderer.GetEditHtml(searchContextWithFieldValues.SearchContext,
+            string editHtml = issueSearcher.SearchRenderer.GetEditHtml(null, searchContextWithFieldValues.SearchContext,
                 searchContextWithFieldValues.FieldValuesHolder, displayParams);
+
             if (editHtml.IsNullOrEmpty())
 		    {
-			    editHtml = emptySearchResultHtmlProvider.getHtml(searcherId);
+			    editHtml = EmptySearchResultHtmlProvider.GetHtml(searcherId);
 		    }
 
 		    return ServiceOutcome<string>.Ok(editHtml);
         }
 
-        private static IDictionary<string, string> CreateDisplayParams()
+        private static IDictionary CreateDisplayParams()
         {
             var displayParams = new Dictionary<string, string>();
             displayParams["theme"] = "aui";
             displayParams["checkboxmultiselect"] = "on";
             return displayParams;
+        }
+
+        private IDictionary<string, string[]> GetJqlParameters(IDictionary<string, string[]> parameters)
+        {
+            return parameters.Where(entry => entry.Key.StartsWith(JqlPrefix))
+                .ToDictionary(entry => entry.Key.Substring(JqlPrefix.Length), entry => entry.Value);
+        }
+
+        private class EmptySearchResultHtmlProvider
+        {
+            private static readonly IDictionary<string, IMessageProvider> Providers = new Dictionary<string, IMessageProvider>();
+
+            public EmptySearchResultHtmlProvider()
+            {
+                Providers.Add("catalog", new MessageProvider());
+            }
+
+            public static string GetHtml(string searcherId)
+            {
+                if (!Providers.ContainsKey(searcherId))
+                {
+                    return string.Empty;
+                }
+
+                var message = Providers[searcherId].GetMessage();
+
+                var template = "<div class\"searchfilter-not-found\">@Model.MessageHtml</div>";
+                return Razor.Parse(template, new {MessageHtml = message});
+            }
+        }
+
+        private interface IMessageProvider
+        {
+            string GetMessage();
+        }
+
+        private class MessageProvider : IMessageProvider
+        {
+            public string GetMessage()
+            {
+                return "No Catalogs Found";
+            }
         }
     }
 }

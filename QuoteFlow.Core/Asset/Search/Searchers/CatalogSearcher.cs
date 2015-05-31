@@ -4,6 +4,7 @@ using QuoteFlow.Api.Asset.Index.Indexers;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Asset.Search.Searchers.Information;
+using QuoteFlow.Api.Asset.Search.Searchers.Renderer;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Services;
@@ -17,8 +18,12 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
     /// <summary>
     /// Searcher for the catalog system field.
     /// </summary>
-    public class CatalogSearcher : AbstractInitializationSearcher, IAssetSearcher<ISearchableField>
+    public sealed class CatalogSearcher : AbstractInitializationSearcher
     {
+        public override ISearcherInformation<ISearchableField> SearchInformation { get; set; }
+        public override ISearchInputTransformer SearchInputTransformer { get; set; }
+        public override ISearchRenderer SearchRenderer { get; set; }
+
         public CatalogSearcher(IJqlOperandResolver operandResolver, 
             CatalogResolver catalogResolver, ICatalogService catalogService, 
             IFieldFlagOperandRegistry fieldFlagOperandRegistry)
@@ -35,9 +40,5 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
                 SearcherGroupType.Context
             );
         }
-
-        public virtual ISearcherInformation<ISearchableField> SearchInformation { get; private set; }
-
-        public virtual ISearchInputTransformer SearchInputTransformer { get; private set; }
     }
 }

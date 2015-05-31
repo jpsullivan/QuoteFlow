@@ -115,7 +115,7 @@ namespace QuoteFlow.Controllers
                 using (var uploadStream = form.ManufacturerLogo.InputStream)
                 {
                     var extension = Path.GetExtension(form.ManufacturerLogo.FileName);
-                    var filename = string.Format("{0}-{1}{2}", manufacturer.Id.ToString(), Guid.NewGuid().ToString(), extension);
+                    var filename = string.Format("{0}-{1}{2}", manufacturer.Id, Guid.NewGuid(), extension);
                     await UploadFileService.SaveUploadFileAsync(GetCurrentUser().Id, uploadStream, extension, UploadType.ManufacturerLogo, filename);
                     ManufacturerLogoService.CreateManufacturerLogo(manufacturer.Id, Guid.NewGuid(), filename);
                 }

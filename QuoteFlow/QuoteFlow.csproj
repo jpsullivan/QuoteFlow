@@ -1146,6 +1146,7 @@
     <Content Include="Views\Shared\Partials\Auditing\Asset\Created.cshtml" />
     <Content Include="Views\Shared\Partials\Auditing\Asset\Imported.cshtml" />
     <Content Include="Views\Catalog\NotFound.cshtml" />
+    <Content Include="Views\Shared\Partials\Quote\Builder\NoResultsMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
