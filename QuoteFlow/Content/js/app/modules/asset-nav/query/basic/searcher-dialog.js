@@ -167,7 +167,7 @@ var SearcherDialog = function () {
 
             /**
              * shows dialog with correct searcher
-             * @param {JIRA.Issues.SearcherModel} searcher
+             * @param {SearcherModel} searcher
              */
             show: function (searcher) {
                 var waitingToShow;

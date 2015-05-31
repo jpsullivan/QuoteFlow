@@ -10,6 +10,8 @@ var AssetSearcherModel = require('../../models/asset/searcher');
 var GroupDescriptor = require('../../components/list/group-descriptor');
 var ItemDescriptor = require('../../components/list/item-descriptor');
 
+var SmartAjax = require('../../components/ajax/smart-ajax');
+
 /**
  *
  */
@@ -429,12 +431,12 @@ var AssetSearcherCollection = Brace.Collection.extend({
             this._activeSearcherReq.abort();
         }
 
-        return this._activeSearcherReq = JIRA.SmartAjax.makeRequest({
+        return this._activeSearcherReq = SmartAjax.makeRequest({
             type: "POST",
             data: data,
             processData: false,
             //url: QuoteFlow.ApplicationPath + "api/asset/FindAsset",
-            url: contextPath + "/secure/QueryComponentRendererValue!Default.jspa",
+            url: QuoteFlow.RootUrl + "api/queryRendererEditt",
             success:_.bind(function(data) {
                 var model = this.get(id);
                 if (model) {

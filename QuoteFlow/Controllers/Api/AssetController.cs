@@ -14,18 +14,20 @@ namespace QuoteFlow.Controllers.Api
 {
     public class AssetController : ApiController
     {
-        #region IoC
+        #region DI
 
         public IAssetService AssetService { get; protected set; }
-        public IAssetSearchService AssetSearchService { get; protected set; }
+        public ISearcherService SearcherService { get; protected set; }
         public IUserService UserService { get; protected set; }
 
-        public AssetController() { }
+        public AssetController()
+        {
+        }
 
-        public AssetController(IAssetService assetService, IAssetSearchService assetSearchService, IUserService userService)
+        public AssetController(IAssetService assetService, ISearcherService searcherService, IUserService userService)
         {
             AssetService = assetService;
-            AssetSearchService = assetSearchService;
+            SearcherService = searcherService;
             UserService = userService;
         }
 
@@ -76,7 +78,7 @@ namespace QuoteFlow.Controllers.Api
             // also get the user
             var user = UserService.GetUser(RequestContext.Principal.Identity.Name, null);
 
-            return AssetSearchService.Search(user, multiDict, new long());
+            return SearcherService.Search(user, multiDict, new long());
         }
     }
 }

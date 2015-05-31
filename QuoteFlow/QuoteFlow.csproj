@@ -327,6 +327,8 @@
     <Compile Include="Controllers\Api\AssetController.cs" />
     <Compile Include="Controllers\Api\AssetVarController.cs" />
     <Compile Include="Controllers\Api\AssetVarValueController.cs" />
+    <Compile Include="Controllers\Api\QueryRendererEditController.cs" />
+    <Compile Include="Controllers\Api\TestController.cs" />
     <Compile Include="Controllers\AssetController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\AppController.cs" />
@@ -1146,13 +1148,13 @@
     <Content Include="Views\Shared\Partials\Auditing\Asset\Created.cshtml" />
     <Content Include="Views\Shared\Partials\Auditing\Asset\Imported.cshtml" />
     <Content Include="Views\Catalog\NotFound.cshtml" />
-    <Content Include="Views\Shared\Partials\Quote\Builder\NoResultsMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
     <Folder Include="Content\fonts\" />
     <Folder Include="Infrastructure\Exceptions\Antlr\" />
     <Folder Include="Infrastructure\Exceptions\Search\" />
+    <Folder Include="Views\QueryRendererEdit\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

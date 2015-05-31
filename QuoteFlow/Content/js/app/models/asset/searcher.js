@@ -141,8 +141,9 @@ var AssetSearcherModel = Brace.Model.extend({
     },
 
     /**
-     * Ensures edit html exists. Triggers readyForDisplay when editHtml has been retrieved, which may be asynchronous if the value has not been retrieved,
-     * or immediate if we already have editHtml
+     * Ensures edit html exists. Triggers readyForDisplay when editHtml has
+     * been retrieved, which may be asynchronous if the value has not been retrieved,
+     * or immediate if we already have editHtml.
      */
     retrieveEditHtml: function() {
         var jql = this.collection.createJql();
@@ -166,7 +167,7 @@ var AssetSearcherModel = Brace.Model.extend({
 
         return SmartAjax.makeRequest({
             type: "POST",
-            url: QuoteFlow.RootUrl +"secure/QueryComponentRendererEdit!Default.jspa",
+            url: QuoteFlow.RootUrl + "api/QueryRendererEdit",
             success: _.bind(this.setEditHtml, this),
             dataType: "html",
             error: QuoteFlow.displayFailSearchMessage,

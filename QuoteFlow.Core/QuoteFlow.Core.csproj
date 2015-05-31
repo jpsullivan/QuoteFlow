@@ -429,7 +429,6 @@
     <Compile Include="Lucene\LuceneDocumentsBuilder.cs" />
     <Compile Include="Lucene\PerFieldAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AssetSearchService.cs" />
     <Compile Include="Services\AssetService.cs" />
     <Compile Include="Services\AssetVarService.cs" />
     <Compile Include="Services\CatalogImportService.cs" />
@@ -450,6 +449,7 @@
     <Compile Include="Services\QuoteLineItemService.cs" />
     <Compile Include="Services\QuoteService.cs" />
     <Compile Include="Services\QuoteStatusService.cs" />
+    <Compile Include="Services\SearcherService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UploadFileService.cs" />
     <Compile Include="Services\UserService.cs" />

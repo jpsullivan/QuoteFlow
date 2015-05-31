@@ -78,7 +78,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 //            allOptions.Add(new TextOption(ConstantsManager.ALL_STANDARD_ISSUE_TYPES, i18nHelper.getText("common.filters.allstandardissuetypes")));
 //            allOptions.Add(new TextOption(ConstantsManager.ALL_SUB_TASK_ISSUE_TYPES, i18nHelper.getText("common.filters.allsubtaskissuetypes")));
 
-            allOptions.AddRange(ConstantsManager.AllIssueTypeObjects);
+            //allOptions.AddRange(ConstantsManager.AllIssueTypeObjects);
 
             return allOptions;
         }

@@ -64,7 +64,6 @@ namespace QuoteFlow.Core.DependencyResolution
         {   
             Bind<IAssetFactory>().To<AssetFactory>().InRequestScope();
             Bind<IAssetService>().To<AssetService>().InRequestScope();
-            Bind<IAssetSearchService>().To<AssetSearchService>().InRequestScope();
             Bind<IAssetSearcherManager>().To<AssetSearcherManager>().InRequestScope();
             Bind<IAssetVarService>().To<AssetVarService>().InRequestScope();
             Bind<IAuditService>().To<AuditService>().InRequestScope();
@@ -79,6 +78,7 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IQuoteService>().To<QuoteService>().InRequestScope();
             Bind<IQuoteStatusService>().To<QuoteStatusService>().InRequestScope();
             Bind<ISearchService>().To<SearchService>().InRequestScope();
+            Bind<ISearcherService>().To<SearcherService>().InRequestScope();
             Bind<IUserService>().To<UserService>().InRequestScope();
             Bind<IUserTrackingService>().To<UserTrackingService>().InRequestScope();
 

@@ -6,7 +6,6 @@ using Jil;
 using QuoteFlow.Api.Asset.Nav;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Infrastructure.Helpers;
-using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Api.Models.ViewModels.Quotes;
 using QuoteFlow.Api.Services;
@@ -23,7 +22,6 @@ namespace QuoteFlow.Controllers
         #region DI
 
         public IAssetService AssetService { get; protected set; }
-        public IAssetSearchService AssetSearchService { get; protected set; }
         public IAssetTableService AssetTableService { get; protected set; }
         public IAssetTableServiceConfiguration AssetTableServiceConfiguration { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
@@ -32,6 +30,7 @@ namespace QuoteFlow.Controllers
         public IQuoteLineItemService QuoteLineItemService { get; protected set; }
         public IQuoteService QuoteService { get; protected set; }
         public IQuoteStatusService QuoteStatusService { get; protected set; }
+        public ISearcherService SearcherService { get; protected set; }
         public IUserService UserService { get; protected set; }
         public IUserTrackingService UserTrackingService { get; protected set; }
 
@@ -39,10 +38,9 @@ namespace QuoteFlow.Controllers
         {
         }
 
-        public QuoteController(IAssetService assetService, IAssetSearchService assetSearchService, IAssetTableService assetTableService, IAssetTableServiceConfiguration assetTableServiceConfiguration, ICatalogService catalogService, IJqlStringSupport jqlStringSupport, IManufacturerService manufacturerService, IQuoteLineItemService quoteLineItemService, IQuoteService quoteService, IQuoteStatusService quoteStatusService, IUserService userService, IUserTrackingService userTrackingService)
+        public QuoteController(IAssetService assetService, IAssetTableService assetTableService, IAssetTableServiceConfiguration assetTableServiceConfiguration, ICatalogService catalogService, IJqlStringSupport jqlStringSupport, IManufacturerService manufacturerService, IQuoteLineItemService quoteLineItemService, IQuoteService quoteService, IQuoteStatusService quoteStatusService, ISearcherService searcherService, IUserService userService, IUserTrackingService userTrackingService)
         {
             AssetService = assetService;
-            AssetSearchService = assetSearchService;
             AssetTableService = assetTableService;
             AssetTableServiceConfiguration = assetTableServiceConfiguration;
             CatalogService = catalogService;
@@ -51,6 +49,7 @@ namespace QuoteFlow.Controllers
             QuoteLineItemService = quoteLineItemService;
             QuoteService = quoteService;
             QuoteStatusService = quoteStatusService;
+            SearcherService = searcherService;
             UserService = userService;
             UserTrackingService = userTrackingService;
         }
@@ -192,7 +191,7 @@ namespace QuoteFlow.Controllers
             var visibleFunctionNames = new List<string>();
             var jqlReservedWords = JqlStringSupport.GetJqlReservedWords();
 
-            var searchOutcome = AssetSearchService.SearchWithJql(GetCurrentUser(), jql, 0);
+            var searchOutcome = SearcherService.SearchWithJql(GetCurrentUser(), jql, 0);
 
             var model = new QuoteBuilderViewModel(quote, assetTable.AssetTable, visibleFieldNames, visibleFunctionNames,
                 jqlReservedWords, searchOutcome);

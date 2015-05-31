@@ -502,7 +502,6 @@
     <Compile Include="QuoteFlowDataTypes.cs" />
     <Compile Include="Search\SearchFilter.cs" />
     <Compile Include="Search\SearchResults.cs" />
-    <Compile Include="Services\IAssetSearchService.cs" />
     <Compile Include="Services\IAssetService.cs" />
     <Compile Include="Services\IAssetVarService.cs" />
     <Compile Include="Services\ICacheService.cs" />
@@ -521,6 +520,7 @@
     <Compile Include="Services\IQuoteLineItemService.cs" />
     <Compile Include="Services\IQuoteService.cs" />
     <Compile Include="Services\IQuoteStatusService.cs" />
+    <Compile Include="Services\ISearcherService.cs" />
     <Compile Include="Services\ISearchProvider.cs" />
     <Compile Include="Services\ISearchService.cs" />
     <Compile Include="Services\IUploadFileService.cs" />
