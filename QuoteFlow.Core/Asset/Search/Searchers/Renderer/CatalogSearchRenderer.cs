@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Searchers.Renderer;
 using QuoteFlow.Api.Asset.Transport;
@@ -27,7 +28,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         {
         }
 
-        public override string GetEditHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary displayParameters)
+        public override string GetEditHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters)
         {
             throw new System.NotImplementedException();
         }

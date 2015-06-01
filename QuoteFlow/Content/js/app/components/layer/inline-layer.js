@@ -268,7 +268,7 @@ var InlineLayer = Control.extend({
         }
         event = jQuery.Event(InlineLayer.EVENTS.beforeHide);
         this.trigger(event, [this.layer(), reason, this.options.id, target]);
-        Event.trigger(event, [this.layer(), reason, this.options.id, target]);
+        //Event.trigger(event, [this.layer(), reason, this.options.id, target]);
 
         if (!event.isDefaultPrevented()) {
             this.visible = false;
@@ -293,7 +293,7 @@ var InlineLayer = Control.extend({
             /* Legacy events end */
 
             this.trigger(InlineLayer.EVENTS.hide, [this.layer(), reason, this.options.id]);
-            Event.trigger(InlineLayer.EVENTS.hide, [this.layer(), reason, this.options.id]);
+            //Event.trigger(InlineLayer.EVENTS.hide, [this.layer(), reason, this.options.id]);
 
             InlineLayer.current = null;
         }
@@ -546,7 +546,7 @@ var InlineLayer = Control.extend({
         /* Legacy events END */
 
         this.trigger(InlineLayer.EVENTS.show, [this.layer(), this.options.id]);
-        Event.trigger(InlineLayer.EVENTS.show, [this.layer(), this.options.id]);
+        //Event.trigger(InlineLayer.EVENTS.show, [this.layer(), this.options.id]);
     },
 
     /**

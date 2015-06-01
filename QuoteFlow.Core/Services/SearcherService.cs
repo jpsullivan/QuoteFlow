@@ -337,7 +337,7 @@ namespace QuoteFlow.Core.Services
             return searchers;
         }
 
-        private IServiceOutcome<string> GetEditHtml(string searcherId, SearchContextWithFieldValues searchContextWithFieldValues, IDictionary displayParams)
+        private IServiceOutcome<string> GetEditHtml(string searcherId, SearchContextWithFieldValues searchContextWithFieldValues, IDictionary<string, object> displayParams)
         {
             if (searcherId == null)
             {
@@ -363,9 +363,9 @@ namespace QuoteFlow.Core.Services
             return ServiceOutcome<string>.Ok(editHtml);
         }
 
-        private static IDictionary CreateDisplayParams()
+        private static IDictionary<string, object> CreateDisplayParams()
         {
-            var displayParams = new Dictionary<string, string>();
+            var displayParams = new Dictionary<string, object>();
             displayParams["theme"] = "aui";
             displayParams["checkboxmultiselect"] = "on";
             return displayParams;

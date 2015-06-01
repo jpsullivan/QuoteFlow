@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using QuoteFlow.Api.Asset.Search;
@@ -11,7 +10,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Util
     /// </summary>
     public class SearchContextRenderHelper
     {
-        public static void AddSearchContextParams(ISearchContext searchContext, IDictionary templateParams)
+        public static void AddSearchContextParams(ISearchContext searchContext, IDictionary<string, object> templateParams)
         {
             var catalogNames = new List<string>();
             var contextCatalogs = searchContext.Catalogs.ToList();

@@ -96,6 +96,9 @@
     <Reference Include="PowerCollections">
       <HintPath>..\packages\XAct.Wintellect.PowerCollections.0.0.1\lib\net20\PowerCollections.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\packages\RazorEngine.3.7.0\lib\net45\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="Sigil">
       <HintPath>..\packages\Sigil.4.4.0\lib\net45\Sigil.dll</HintPath>
     </Reference>
@@ -458,6 +461,7 @@
     <Compile Include="Models\PageErrorModel.cs" />
     <Compile Include="Models\QuoteLineItem.cs" />
     <Compile Include="Models\QuoteStatus.cs" />
+    <Compile Include="Models\RequestModels\Api\Query\QueryRendererEditPost.cs" />
     <Compile Include="Models\RequestModels\AssetCriteriaQuery.cs" />
     <Compile Include="Models\RequestModels\ImportCatalogRequest.cs" />
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />

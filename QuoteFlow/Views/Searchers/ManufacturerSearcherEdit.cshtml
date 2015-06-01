@@ -1,0 +1,37 @@
+﻿<select class="select js-default-checkboxmultiselect" data-placeholder-text="Find Manufacturers..." id="searcher-type" multiple="multiple" name="type" size="1">
+@*    <optgroup>*@
+@*        @foreach (var option in Model.SpecialOptions)*@
+@*        {*@
+@*            var isInvalid = Model.InvalidOptions.Contains(option);*@
+@*            var invalidClass = isInvalid ? "invalid_sel" : string.Empty;*@
+@**@
+@*            var isSelected = Model.SpecialOptions.Contains(option.Id);*@
+@*            var selectedAttr = isSelected ? "selected=\"selected\"" : string.Empty;*@
+@**@
+@*            //var name = HttpUtility.HtmlEncode(option.Name);*@
+@*            var name = option.Name;*@
+@**@
+@*            <option class="@invalidClass" id="type_@option.Id" @selectedAttr title="@name" value="@option.Id">*@
+@*                @name*@
+@*            </option>*@
+@*        }*@
+@*    </optgroup>*@
+
+    <optgroup label="Manufacturers">
+        @foreach (var option in Model["standardOptions"])
+        {
+            var isInvalid = Model["invalidOptions"].Contains(option);
+            var invalidClass = isInvalid ? "invalid_sel" : string.Empty;
+
+            var isSelected = Model["standardOptions"].Contains(option.Id);
+            var selectedAttr = isSelected ? "selected=\"selected\"" : string.Empty;
+
+            //var name = HttpUtility.HtmlEncode(option.Name);
+            var name = option.Name;
+
+            <option class="@invalidClass" id="type_@option.Id" @selectedAttr title="@name" value="@option.Id">
+                @name
+            </option>
+        }
+    </optgroup>
+</select>

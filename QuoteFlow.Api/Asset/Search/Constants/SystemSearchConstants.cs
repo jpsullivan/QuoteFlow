@@ -15,7 +15,7 @@ namespace QuoteFlow.Api.Asset.Search.Constants
 		/// </summary>
 		public const string QUERY_SEARCHER_ID = "text";
 
-		private static readonly SimpleFieldSearchConstants Catalog = new SimpleFieldSearchConstants(DocumentConstants.CatalogId, AssetFieldConstants.Catalog, "cid", AssetFieldConstants.Catalog, AssetFieldConstants.Catalog, OperatorClasses.EqualityOperatorsWithEmpty, QuoteFlowDataTypes.Catalog);
+		private static readonly SimpleFieldSearchConstants Catalog = new SimpleFieldSearchConstants(DocumentConstants.CatalogId, AssetFieldConstants.Catalog, "catalogId", AssetFieldConstants.Catalog, AssetFieldConstants.Catalog, OperatorClasses.EqualityOperatorsWithEmpty, QuoteFlowDataTypes.Catalog);
 		public static SimpleFieldSearchConstants ForCatalog()
 		{
 			return Catalog;
@@ -27,7 +27,7 @@ namespace QuoteFlow.Api.Asset.Search.Constants
 			return Summary;
 		}
 
-        private static readonly SimpleFieldSearchConstants Manufacturer = new SimpleFieldSearchConstants(DocumentConstants.ManufacturerId, AssetFieldConstants.Manufacturer, "manufacturer", AssetFieldConstants.Manufacturer, AssetFieldConstants.Manufacturer, OperatorClasses.EqualityOperatorsWithEmpty, QuoteFlowDataTypes.Manufacturer);
+        private static readonly SimpleFieldSearchConstants Manufacturer = new SimpleFieldSearchConstants(DocumentConstants.ManufacturerId, AssetFieldConstants.Manufacturer, "manufacturerId", AssetFieldConstants.Manufacturer, AssetFieldConstants.Manufacturer, OperatorClasses.EqualityOperatorsWithEmpty, QuoteFlowDataTypes.Manufacturer);
         public static SimpleFieldSearchConstants ForManufacturer()
         {
             return Manufacturer;

@@ -1,6 +1,7 @@
 "use strict";
 
 var Class = require('../class/class');
+var jqHasFixedParent = require('jquery-has-fixed-parent');
 
 /**
  * Handles standing positioning of dropdowns

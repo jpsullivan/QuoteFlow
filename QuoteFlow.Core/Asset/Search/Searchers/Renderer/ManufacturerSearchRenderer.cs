@@ -27,6 +27,32 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             CatalogService = catalogService;
         }
 
+        public void AddEditParameters(IFieldValuesHolder fieldValuesHolder, ISearchContext searchContext, User user, IDictionary<string, object> templateParameters)
+        {
+            object selectedOptions;
+            if (!fieldValuesHolder.TryGetValue(DocumentConstants.ManufacturerId, out selectedOptions)) return;
+
+            // attempt to cast the selectedOptions into a list
+            //var options = (List<string>)selectedOptions;
+            var options = new List<string>();
+
+            templateParameters.Add("selectedOptions", options);
+
+            var validOptions = GetVisibleOptions(user, searchContext).ToList();
+            templateParameters.Add("optionCSSClasses", GetOptionCssClasses(validOptions));
+
+            var invalidOptions = GetInvalidOptions(user, options, validOptions);
+            SearchContextRenderHelper.AddSearchContextParams(searchContext, templateParameters);
+
+            var processed = ProcessOptions(validOptions, invalidOptions);
+            foreach (var o in processed)
+            {
+                templateParameters.Add(o.Key, o.Value);
+            }
+
+            templateParameters.Add("invalidOptions", invalidOptions);
+        }
+
         /// <summary>
         /// Construct edit HTML parameters and add them to a template parameters map.
         /// </summary>
@@ -35,24 +61,11 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         /// <param name="fieldValuesHolder">Contains the values the user has selected</param>
         /// <param name="displayParameters"></param>
         /// <returns></returns>
-        public override string GetEditHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary displayParameters)
+        public override string GetEditHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters)
         {
-            object selectedOptions;
-            if (fieldValuesHolder.TryGetValue(DocumentConstants.ManufacturerId, out selectedOptions))
-            {
-                // attempt to cast the selectedOptions into a list
-                var options = (List<string>) selectedOptions;
-
-                displayParameters.Add("selectedOptions", options);
-
-                var validOptions = GetVisibleOptions(user, searchContext).ToList();
-                displayParameters.Add("optionCSSClasses", GetOptionCssClasses(validOptions));
-
-                var invalidOptions = GetInvalidOptions(user, options, validOptions);
-                SearchContextRenderHelper.AddSearchContextParams(searchContext, displayParameters);
-            }
-
-            throw new NotImplementedException();
+            var templateParameters = GetDisplayParams(user, searchContext, fieldValuesHolder, displayParameters);
+            AddEditParameters(fieldValuesHolder, searchContext, user, templateParameters);
+            return RenderEditTemplate("ManufacturerSearcherEdit.cshtml", templateParameters);
         }
 
         public override bool IsShown(User user, ISearchContext searchContext)
@@ -187,8 +200,8 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
              
             // We need to actually remove special options from the collection as
             // STANDARD_OPTIONS_PREDICATE matches them (they'd be in two groups).
-            //result["specialOptions"] = CollectionUtils.select(options, SPECIAL_OPTION_PREDICATE);
-            //options = CollectionUtils.selectRejected(options, SPECIAL_OPTION_PREDICATE);
+//            result["specialOptions"] = CollectionUtils.select(options, SPECIAL_OPTION_PREDICATE);
+//            options = CollectionUtils.selectRejected(options, SPECIAL_OPTION_PREDICATE);
 
             result.Add("standardOptions", options);
 

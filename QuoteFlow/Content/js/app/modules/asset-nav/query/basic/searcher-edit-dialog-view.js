@@ -2,6 +2,7 @@
 
 var _ = require('underscore');
 var Brace = require('backbone-brace');
+var catchExceptions = require('jquery-catch-exceptions');
 
 /**
  * The view for editing the value that one criterion has.
@@ -66,7 +67,7 @@ var SearcherEditDialogView = Brace.View.extend({
         this.$el.find("form").addClass(this.model.id + "-criteria");
         this.$el.find("label:first").remove(); // Server sends back label. todo: remove label on server
         // Trigger NEW_CONTENT_ADDED as searchers may need to add js to editHtml
-        JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.$el, JIRA.CONTENT_ADDED_REASON.criteriaPanelRefreshed]);
+        //JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.$el, JIRA.CONTENT_ADDED_REASON.criteriaPanelRefreshed]);
         this._formData = this.$el.find("form").serialize();
         this.model.setInitParams(this._formData);
         return this.$el;

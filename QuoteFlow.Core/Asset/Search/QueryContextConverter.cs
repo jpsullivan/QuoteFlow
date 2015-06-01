@@ -117,18 +117,10 @@ namespace QuoteFlow.Core.Asset.Search
                 manufacturersPerCatalog.Add(manufacturersForCatalog);
             }
 
-            // all catalogs must have the same set of manufacturers 
-            if (manufacturersPerCatalog.Count != 1)
-            {
-                return null;
-            }
-
-//            manufacturersPerCatalog.GetEnumerator().MoveNext();
-//            Set<int> types = manufacturersPerCatalog.GetEnumerator().Current;
             Set<int> types = manufacturersPerCatalog.First();
 
             // If there is an "All" manufacturer context, then there can be no specific manufacturer context
-            if (types.Count != 1)
+            if (types.Contains(0))
             {
                 return null;
             }

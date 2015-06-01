@@ -328,7 +328,6 @@
     <Compile Include="Controllers\Api\AssetVarController.cs" />
     <Compile Include="Controllers\Api\AssetVarValueController.cs" />
     <Compile Include="Controllers\Api\QueryRendererEditController.cs" />
-    <Compile Include="Controllers\Api\TestController.cs" />
     <Compile Include="Controllers\AssetController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\AppController.cs" />
@@ -631,6 +630,8 @@
     <Content Include="Content\js\app\ui\common\message.js" />
     <Content Include="Content\js\app\ui\common\panel-table.js" />
     <Content Include="Content\js\app\util\dialog-cleanup.js" />
+    <Content Include="Content\js\app\util\jquery\CatchExceptions.js" />
+    <Content Include="Content\js\app\util\jquery\hasFixedParent.js" />
     <Content Include="Content\js\app\util\jquery\RecurringPromise.js" />
     <Content Include="Content\js\app\util\meta.js" />
     <Content Include="Content\js\app\util\navigator.js" />
@@ -1148,6 +1149,7 @@
     <Content Include="Views\Shared\Partials\Auditing\Asset\Created.cshtml" />
     <Content Include="Views\Shared\Partials\Auditing\Asset\Imported.cshtml" />
     <Content Include="Views\Catalog\NotFound.cshtml" />
+    <Content Include="Views\Searchers\ManufacturerSearcherEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

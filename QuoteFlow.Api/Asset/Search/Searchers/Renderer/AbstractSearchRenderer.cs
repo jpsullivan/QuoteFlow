@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Web.Mvc;
+using System.Web.Hosting;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Transport;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Models;
+using RazorEngine;
+using RazorEngine.Configuration;
+using RazorEngine.Templating;
 
 namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
 {
@@ -50,17 +52,15 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
 
         protected string RenderEditTemplate(string templateName, IDictionary<string, object> templateParams)
         {
-//            using (var sw = new StringWriter())
-//            {
-//                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext,
-//                                                                         templateName);
-//                var viewContext = new ViewContext(ControllerContext, viewResult.View,
-//                                             ViewData, TempData, sw);
-//                viewResult.View.Render(viewContext, sw);
-//                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-//                return sw.GetStringBuilder().ToString();
-//            }
-            return string.Empty;
+            var templatePath = Path.GetFullPath(HostingEnvironment.MapPath("~/Views/Searchers/" + templateName));
+            var template = File.ReadAllText(templatePath);
+
+//            var config = new TemplateServiceConfiguration {Debug = true};
+//            var service = RazorEngineService.Create(config);
+//            Engine.Razor = service;
+//            var result = Engine.Razor.RunCompile(new LoadedTemplateSource(template, templatePath), "templateKey", null, templateParams);
+            var result = Engine.Razor.RunCompile(template, "templateKey", null, templateParams);
+            return result;
         }
 
         protected string RenderViewTemplate(string templateName, object templateParams)
@@ -80,7 +80,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
             return clauseVisitor.ContainsNamedClause();
         }
 
-        public abstract string GetEditHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary displayParameters);
+        public abstract string GetEditHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters);
 
         public abstract bool IsShown(User user, ISearchContext searchContext);
 

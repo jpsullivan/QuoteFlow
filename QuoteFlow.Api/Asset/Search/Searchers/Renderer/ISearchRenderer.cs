@@ -30,7 +30,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
         /// <param name="displayParameters">A map of "hints" that can be passed from the caller to this code which can use these
         /// hints to alter the way it renders the HTML.</param>
         /// <returns>String that contains HTML that can be rendered on the left-hand side of the QuoteFlow asset navigator/quote builder.</returns>
-        string GetEditHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary displayParameters);
+        string GetEditHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters);
 
         /// <summary>
         /// Checks if the searcher should be shown in this context on the Issue Navigator.
