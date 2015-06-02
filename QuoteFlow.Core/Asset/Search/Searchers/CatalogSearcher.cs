@@ -10,6 +10,7 @@ using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.CustomFields.Searchers.Information;
 using QuoteFlow.Core.Asset.Index.Indexers;
+using QuoteFlow.Core.Asset.Search.Searchers.Renderer;
 using QuoteFlow.Core.Jql.Resolver;
 using CatalogSearchInputTransformer = QuoteFlow.Core.Asset.Search.Searchers.Transformer.CatalogSearchInputTransformer;
 
@@ -24,14 +25,15 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
         public override ISearchInputTransformer SearchInputTransformer { get; set; }
         public override ISearchRenderer SearchRenderer { get; set; }
 
-        public CatalogSearcher(IJqlOperandResolver operandResolver, 
-            CatalogResolver catalogResolver, ICatalogService catalogService, 
+        public CatalogSearcher(ICatalogService catalogService, 
+            IJqlOperandResolver operandResolver, 
+            CatalogResolver catalogResolver, 
             IFieldFlagOperandRegistry fieldFlagOperandRegistry)
         {
-            var projectIndexInfoResolver = new CatalogIndexInfoResolver(catalogResolver);
+            var catalogIndexInfoResolver = new CatalogIndexInfoResolver(catalogResolver);
             var constants = SystemSearchConstants.ForCatalog();
 
-            SearchInputTransformer = new CatalogSearchInputTransformer(projectIndexInfoResolver, operandResolver, fieldFlagOperandRegistry, catalogService);
+            SearchInputTransformer = new CatalogSearchInputTransformer(catalogIndexInfoResolver, operandResolver, fieldFlagOperandRegistry, catalogService);
             SearchInformation = new GenericSearcherInformation<ISearchableField>(
                 constants.SearcherId, 
                 "Catalog",
@@ -39,6 +41,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
                 FieldReference, 
                 SearcherGroupType.Context
             );
+            SearchRenderer = new CatalogSearchRenderer(catalogService, SearchInformation.NameKey);
         }
     }
 }

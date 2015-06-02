@@ -38,7 +38,7 @@
 
 
 <script type="text/javascript">
-    var projectSelectList = document.getElementById("searcher-pid");
+    var projectSelectList = document.getElementById("searcher-catalogId");
     var originalProjectValue = getMultiSelectValues(projectSelectList).replace(" -1", ""); // remove the "all projects flag"
 
     var issueTypeSelectList = document.getElementById("searcher-type");
@@ -215,5 +215,5 @@
         }
     }
 
-    dynamicMultiIssueTypeSelect("searcher-pid", "searcher-type");
+    dynamicMultiIssueTypeSelect("searcher-catalogId", "searcher-type");
 </script>

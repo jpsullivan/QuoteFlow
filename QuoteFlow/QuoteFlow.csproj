@@ -1151,6 +1151,7 @@
     <Content Include="Views\Shared\Partials\Auditing\Asset\Imported.cshtml" />
     <Content Include="Views\Catalog\NotFound.cshtml" />
     <Content Include="Views\Searchers\ManufacturerSearcherEdit.cshtml" />
+    <Content Include="Views\Searchers\CatalogSearcherEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
