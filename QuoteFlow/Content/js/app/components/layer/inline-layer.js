@@ -301,8 +301,8 @@ var InlineLayer = Control.extend({
     },
 
     _makeInactiveAndHideLayer: function() {
-        this.layer().removeClass(AJS.ACTIVE_CLASS).hide();
-        this.offsetTarget().removeClass(AJS.ACTIVE_CLASS);
+        this.layer().removeClass("active").hide();
+        this.offsetTarget().removeClass("active");
     },
 
     /**
@@ -401,19 +401,19 @@ var InlineLayer = Control.extend({
         var hasSpaceOnRight = offsetTargetLeft + layerWidth < $window.width() + $window.scrollLeft();
         var hasSpaceOnLeft = offsetTargetLeft + this.offsetTarget().outerWidth() - layerWidth > $window.scrollLeft();
 
-        if (this.options.alignment() === AJS.RIGHT) {
+        if (this.options.alignment() === "right") {
             if (hasSpaceOnLeft || !hasSpaceOnRight) {
                 positioning = this.right();
             } else {
                 positioning = this.left();
             }
-        } else if (this.options.alignment() === AJS.LEFT) {
+        } else if (this.options.alignment() === "left") {
             if (hasSpaceOnRight || !hasSpaceOnLeft) {
                 positioning = this.left();
             } else {
                 positioning = this.right();
             }
-        } else if (this.options.alignment() === AJS.INTELLIGENT_GUESS) {
+        } else if (this.options.alignment() === "Intelligent Guess") {
             if ((offsetTargetLeft + (this.offsetTarget().width() / 2)) > $window.width() / 2) {
                 positioning = this.right();
             } else {
@@ -494,7 +494,7 @@ var InlineLayer = Control.extend({
             this.layer().insertAfter(this.offsetTarget());
 
             if (this._supportsBoxShadow()) {
-                this.layer().addClass(AJS.BOX_SHADOW_CLASS);
+                this.layer().addClass("box-shadow");
             }
 
             this.$placeholder = jQuery("<div class='ajs-layer-placeholder' />").insertAfter(this.offsetTarget());
@@ -526,8 +526,8 @@ var InlineLayer = Control.extend({
 
         this.appendToBody();
 
-        this.layer().addClass(AJS.ACTIVE_CLASS);
-        this.offsetTarget().addClass(AJS.ACTIVE_CLASS);
+        this.layer().addClass("active");
+        this.offsetTarget().addClass("active");
         this.layer().show();
 
         this.setWidth(this.options.width());
@@ -556,8 +556,8 @@ var InlineLayer = Control.extend({
      * @method _hideLoading
      */
     _hideLoading: function () {
-        this.$layer.removeClass(AJS.LOADING_CLASS);
-        this.offsetTarget().removeClass(AJS.LOADING_CLASS);
+        this.$layer.removeClass("loading");
+        this.offsetTarget().removeClass("loading");
     },
 
     /**
@@ -566,8 +566,8 @@ var InlineLayer = Control.extend({
      * @method _showLoading
      */
     _showLoading: function () {
-        this.$layer.addClass(AJS.LOADING_CLASS);
-        this.offsetTarget().addClass(AJS.LOADING_CLASS);
+        this.$layer.addClass("loading");
+        this.offsetTarget().addClass("loading");
     },
 
     /**

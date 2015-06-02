@@ -1,4 +1,5 @@
 ﻿var $ = require('jquery');
+var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var Control = require('../control/control');
@@ -9,7 +10,7 @@ var Navigator = require('../../util/navigator');
 /**
  * A dropdown that can be queried and it's links selected via keyboard. Dropdown contents retrieved via AJAX.
  */
-var QueryableDropdownSelect = Marionette.ItemView.extend({
+var QueryableDropdownSelect = Control.extend({
 
     /**
      *  A request will not be fired and suggestions will not reset if any of these keys are inputted.
@@ -29,7 +30,8 @@ var QueryableDropdownSelect = Marionette.ItemView.extend({
      * @param {jQuery | HTMLElement} options.element
      * @param {SuggestHandler} options.suggestionsHandler
      */
-    initialize: function (options) {
+     init: function (options) {
+         debugger;
         this.suggestionsVisible = false;
         this._setOptions(options);
         this._createFurniture();

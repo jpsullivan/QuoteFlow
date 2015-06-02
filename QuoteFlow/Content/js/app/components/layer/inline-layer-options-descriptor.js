@@ -218,8 +218,8 @@ var OptionsDescriptor = Descriptor.extend({
      * align right and vice versa.
      *
      * @method alignment
-     * @param {AJS.LEFT, AJS.RIGHT, AJS.INTELLIGENT_GUESS} alignment
-     * @return {AJS.LEFT, AJS.RIGHT, AJS.INTELLIGENT_GUESS}
+     * @param {"left", "right", "Intelligent Guess"} alignment
+     * @return {"left", "right", "Intelligent Guess"}
      */
     alignment: function (alignment) {
         if (alignment) {

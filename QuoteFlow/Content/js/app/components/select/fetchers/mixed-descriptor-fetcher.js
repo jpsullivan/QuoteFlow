@@ -2,17 +2,17 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-var Brace = require('backbone-brace');
+var Class = require('../../class/class');
 
 var AjaxDescriptorFetcher = require('./ajax-descriptor-fetcher');
 
 /**
- * Gets suggestions from unselected <option>s in <select> as well as going to the 
+ * Gets suggestions from unselected <option>s in <select> as well as going to the
  * server upon character for more results on input.
  *
  * @class MixedDescriptorFetcher
  */
-var MixedDescriptorFetcher = Brace.Evented.extend({
+var MixedDescriptorFetcher = Class.extend({
     /**
      *
      * @param {Object} options - jQuery ajax options object. With additional:
@@ -21,7 +21,7 @@ var MixedDescriptorFetcher = Brace.Evented.extend({
      * @param {Object} options.ajaxOptions
      * @param {SelectModel} model - a wrapper around <select> element
      */
-    initialize: function (options, model) {
+    init: function (options, model) {
         this.ajaxFetcher = new AjaxDescriptorFetcher(options.ajaxOptions);
         this.options = options;
         this.model = model;

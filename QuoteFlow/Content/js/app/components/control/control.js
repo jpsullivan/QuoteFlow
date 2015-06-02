@@ -1,7 +1,10 @@
 ﻿"use strict";
 
 var $ = require('jquery');
+var jQGetOptionsFromAttributes = require('jquery-get-options-from-attributes');
+
 var Class = require('../class/class');
+
 
 /**
  * An abstract class, providing utility methods helpful when building controls.

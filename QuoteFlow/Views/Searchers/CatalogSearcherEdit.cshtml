@@ -1,12 +1,15 @@
-﻿<select class="select js-default-checkboxmultiselect" data-placeholder-text="Find Catalogs..." id="searcher-catalogId" multiple="multiple" name="catalogId" size="1">
-    <optgroup label="All Catalogs">
-        @foreach (var catalog in Model["visibleCatalogs"])
-        {
-            var isSelected = Model["selectedCatalogs"] != null && Model["selectedCatalogs"].Contains(catalog.Id.ToString());
-            var name = catalog.Name;
-            var selectedAttr = isSelected ? "selected=\"selected\"" : string.Empty;
-            
-            <option data-icon="" @selectedAttr title="@name" value="@catalog.Id">@name</option>
-        }
-    </optgroup>
-</select>
+﻿<div class="field-group aui-field-catalog">
+    <label for="searcher-catalogId">Project</label>
+    <select class="select js-default-checkboxmultiselect" data-placeholder-text="Find Catalogs..." id="searcher-catalogId" multiple="multiple" name="catalogId" size="1">
+        <optgroup label="All Catalogs">
+            @foreach (var catalog in Model["visibleCatalogs"])
+            {
+                var isSelected = Model["selectedCatalogs"] != null && Model["selectedCatalogs"].Contains(catalog.Id.ToString());
+                var name = catalog.Name;
+                var selectedAttr = isSelected ? "selected=\"selected\"" : string.Empty;
+
+                <option data-icon="" @selectedAttr title="@name" value="@catalog.Id">@name</option>
+            }
+        </optgroup>
+    </select>
+</div>

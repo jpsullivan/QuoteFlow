@@ -1,19 +1,19 @@
 ﻿"use strict";
 
 var $ = require('jquery');
-var Brace = require('backbone-brace');
+var Class = require('../../class/class');
 
 /**
  * A single fetcher that will just return the result of calling supplied function.
  *
  * @class FuncDescriptorFetcher
  */
-var FuncDescriptorFetcher = Brace.Evented.extend({
+var FuncDescriptorFetcher = Class.extend({
     /**
      * @constructor
      * @param options
      */
-    initialize: function (options) {
+    init: function (options) {
         this.options = options;
     },
 

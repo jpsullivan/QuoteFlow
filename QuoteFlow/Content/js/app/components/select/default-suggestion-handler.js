@@ -2,8 +2,8 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-var Brace = require('backbone-brace');
 
+var Class = require('../class/class');
 var SuggestHelper = require('./suggest-helper');
 
 /**
@@ -11,12 +11,12 @@ var SuggestHelper = require('./suggest-helper');
  * @class SuggestHandler
  * @class DefaultSuggestHandler
  */
-var DefaultSuggestHandler = Brace.Evented.extend({
+var DefaultSuggestHandler = Class.extend({
     /**
      * @constructor
      * @param options
      */
-    initialize: function (options) {
+     init: function (options) {
         this.options = options;
         this.descriptorFetcher = SuggestHelper.createDescriptorFetcher(options);
     },

@@ -39,7 +39,7 @@ var SearcherDialog = function () {
 
         var _dialog = new InlineLayer({
             width: "auto",
-            alignment: AJS.LEFT,
+            alignment: "left",
             offsetTarget: function () {
                 // Don't cache the lozenge under the current implementation since it can get reblatted
                 return findLozenge(_currentSearcher);

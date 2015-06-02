@@ -9,13 +9,13 @@ var DefaultSuggestHandler = require('./default-suggestion-handler');
  * @class SelectSuggestHandler
  * @extends DefaultSuggestHandler
  */
-var SelectSuggestHandler = Brace.Evented.extend({
+var SelectSuggestHandler = DefaultSuggestHandler.extend({
     /**
      * @constructor
      * @param {Object} options
      * @param {SelectModel} model
      */
-    initialize: function (options, model) {
+     init: function (options, model) {
         this.descriptorFetcher = SuggestHelper.createDescriptorFetcher(options, model);
         this.options = options;
         this.model = model;

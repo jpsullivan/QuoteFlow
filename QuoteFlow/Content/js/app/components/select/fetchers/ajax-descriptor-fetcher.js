@@ -2,20 +2,20 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-var Brace = require('backbone-brace');
+var Class = require('../../class/class');
 var SmartAjax = require('../../ajax/smart-ajax');
 
 /**
  * Retrieves json from server and converts it into descriptors using formatSuggestions function supplied by user.
  * @class AjaxDescriptorFetcher
  */
-var AjaxDescriptorFetcher = Brace.Evented.extend({
+var AjaxDescriptorFetcher = Class.extend({
 
     /**
      * @constructor
      * @param options
      */
-    initialize: function (options) {
+     init: function (options) {
         this.options = _.extend({
             keyInputPeriod: 75, // Wait this long between key strokes before going to server
             minQueryLength: 1, // Need these many characters before we go to server
@@ -92,7 +92,7 @@ var AjaxDescriptorFetcher = Brace.Evented.extend({
 
         return deferred;
     },
-    
+
     /**
      * Sets up a request
      * @param {Function} query - lazily evaluated value of input field.

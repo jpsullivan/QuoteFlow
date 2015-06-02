@@ -3,12 +3,14 @@
 var $ = require('jquery');
 
 var Control = require('../control/control');
+var GroupDescriptor = require('./group-descriptor');
+var ItemDescriptor = require('./item-descriptor');
 var Mouse = require('../input/mouse');
 
 var List = Control.extend({
     MAX_RESULT_LIMIT: 2000,
 
-    initialize: function (options) {
+    init: function (options) {
         options = options || {};
         if (options) {
             this.options = jQuery.extend(true, this._getDefaultOptions(options), options);
@@ -176,7 +178,7 @@ var List = Control.extend({
             return;
         }
 
-        // Scrolling is constrained to within $scrollContainer so assume it's 
+        // Scrolling is constrained to within $scrollContainer so assume it's
         // scrollable and scroll it in place to ensure $activeItem is in view.
 
         if ($activeItem.closest($scrollContainer).length === 0) {
@@ -620,14 +622,14 @@ var List = Control.extend({
             return listElem;
         },
         noSuggestion: function () {
-            return jQuery("<li class='no-suggestions'>" + AJS.I18n.getText("common.concepts.no.matches") + "</li>");
+            return jQuery("<li class='no-suggestions'>No Matches</li>");
         },
         tooManySuggestions: function (suggestionCount) {
             if (this.options.expandAllResults) {
                 var instance = this;
                 var $button = jQuery([
                     "<button type='button' class='aui-button aui-button-link view-all'>",
-                        AJS.I18n.getText("common.concepts.view.all.with.total.info", suggestionCount),
+                        "View All (", suggestionCount, " more)",
                     "</button>"
                 ].join(""));
                 var $li = jQuery("<li class='no-suggestions'></li>").append($button);
@@ -641,7 +643,7 @@ var List = Control.extend({
                 $button = null;
                 return $li;
             } else {
-                return jQuery("<li class='no-suggestions'>" + AJS.I18n.getText("common.concepts.too.many.matches", suggestionCount) + "</li>");
+                return jQuery("<li class='no-suggestions'>" + suggestionCount + "more options. Continue typing to refine further.</li>");
             }
         },
         ungroupedSuggestions: function () {

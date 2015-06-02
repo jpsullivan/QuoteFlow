@@ -1,18 +1,18 @@
 ﻿"use strict";
 
 var $ = require('jquery');
-var Brace = require('backbone-brace');
+var Class = require('../../class/class');
 
 /**
  * Gets unselected <option>s from <select> as suggestions
  * @class StaticDescriptorFetcher
  */
-var StaticDescriptorFetcher = Brace.Evented.extend({
+var StaticDescriptorFetcher = Class.extend({
     /**
      * @param {Object} options - empty in this case
      * @param {SelectModel} model - a wrapper around <select> element
      */
-    initialize: function (options, model) {
+    init: function (options, model) {
         this.model = model;
         this.model.$element.data("static-suggestions", true);
     },

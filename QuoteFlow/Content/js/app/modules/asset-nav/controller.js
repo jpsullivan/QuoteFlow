@@ -9,12 +9,18 @@ var Message = require('../../ui/common/message');
 var Resize = require('./util/resize');
 var SmartAjax = require('../../components/ajax/smart-ajax');
 
+// component initializers
+var InitSparklers = require('./searchers/initSparklers');
+
 /**
  * Contains callbacks for the asset module router.
  */
 var AssetNavController = Marionette.Controller.extend({
 
     builder: function () {
+        // initialize renderable components here (such as sparklers)
+        InitSparklers.register();
+
         var options = this.initOptions();
         var creator = AssetNavCreator.create(AJS.$(document), {
             initialIssueTableState: options.initialIssueTableState,

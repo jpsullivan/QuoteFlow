@@ -16,6 +16,7 @@
     "jquery.browser": "./node_modules/jquery.browser/dist/jquery.browser.min.js",
     "jquery-catch-exceptions": "./QuoteFlow/Content/js/app/util/jquery/CatchExceptions.js",
     "jquery-expand-on-input": "./QuoteFlow/Content/js/lib/jquery.expand-on-input.js",
+    "jquery-get-options-from-attributes": "./QuoteFlow/Content/js/app/util/jquery/getOptionsFromAttributes.js",
     "jquery-has-fixed-parent": "./QuoteFlow/Content/js/app/util/jquery/hasFixedParent.js",
     "jquery-recurring-promise": "./QuoteFlow/Content/js/app/util/jquery/RecurringPromise.js",
     "jquery-scrollLock": "./QuoteFlow/Content/js/lib/jquery-scrolllock.min.js",
@@ -60,6 +61,11 @@
       ]
     },
     "jquery-expand-on-input": {
+      "depends": [
+        "jquery:$"
+      ]
+    },
+    "jquery-get-options-from-attributes": {
       "depends": [
         "jquery:$"
       ]

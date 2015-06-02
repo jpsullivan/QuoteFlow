@@ -34,7 +34,7 @@ var ClauseButtonView = Brace.View.extend({
 
         var dialog = this.dialog = new InlineLayer({
             width: "auto",
-            alignment: AJS.LEFT,
+            alignment: "left",
             // Lazilly get offset target as it isn't in the DOM at this time
             offsetTarget:function () {
                 return instance.$el.find(instance.addCriteriaButton);

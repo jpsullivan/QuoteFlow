@@ -507,7 +507,6 @@ var AssetSearcherCollection = Brace.Collection.extend({
 
         this._activeSearcherReq = AJS.$.ajax({
             url: QuoteFlow.ApplicationPath + "api/asset/QueryComponent",
-            //url: contextPath + "/secure/QueryComponent!Default.jspa",
             type: "POST",
             data: data,
             processData: false
@@ -549,10 +548,10 @@ var AssetSearcherCollection = Brace.Collection.extend({
     },
 
     _onQuerySearchersAndValues: function (data) {
-
         // merge searchers and values from response
         var collection = this,
             searchers = this._parseSearcherGroups(data.searchers);
+
         _.each(data.values, _.bind(function (value, id) {
             // compose searcher and value from response
             var searcher = searchers[id];
