@@ -55,11 +55,11 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
             var templatePath = Path.GetFullPath(HostingEnvironment.MapPath("~/Views/Searchers/" + templateName));
             var template = File.ReadAllText(templatePath);
 
-//            var config = new TemplateServiceConfiguration {Debug = true};
-//            var service = RazorEngineService.Create(config);
-//            Engine.Razor = service;
-//            var result = Engine.Razor.RunCompile(new LoadedTemplateSource(template, templatePath), "templateKey", null, templateParams);
-            var result = Engine.Razor.RunCompile(template, "templateKey", null, templateParams);
+            var config = new TemplateServiceConfiguration {Debug = true};
+            var service = RazorEngineService.Create(config);
+            Engine.Razor = service;
+            var result = Engine.Razor.RunCompile(new LoadedTemplateSource(template, templatePath), "templateKey", null, templateParams);
+            //var result = Engine.Razor.RunCompile(template, "templateKey", null, templateParams);
             return result;
         }
 

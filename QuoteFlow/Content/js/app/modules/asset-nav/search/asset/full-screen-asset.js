@@ -1,11 +1,13 @@
 ﻿"use strict";
 
 var _ = require('underscore');
-
 var Marionette = require('backbone.marionette');
 
+var ContentAddedReason = require('../../util/reasons');
+var EventTypes = require('../../util/types');
+
 /**
- * 
+ *
  */
 var FullScreenAsset = Marionette.ItemView.extend({
     initialize: function (options) {
@@ -99,7 +101,7 @@ var FullScreenAsset = Marionette.ItemView.extend({
             this.searchContainer.detach();
 
             //QuoteFlow.trace("jira.psycho.issue.refreshed", { id: JIRA.Issues.Application.request("issueEditor:getIssueId") });
-            QuoteFlow.application.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.assetContainer, JIRA.CONTENT_ADDED_REASON.pageLoad]);
+            QuoteFlow.application.trigger(EventTypes.NEW_CONTENT_ADDED, [this.assetContainer, ContentAddedReason.pageLoad]);
         }
     },
 

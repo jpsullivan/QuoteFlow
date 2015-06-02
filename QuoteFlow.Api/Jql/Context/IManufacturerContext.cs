@@ -10,7 +10,7 @@ namespace QuoteFlow.Api.Jql.Context
         /// <summary>
         /// Returns the manufacturer id for this context element.
         /// </summary>
-        int ManufacturerId { get; }
+        int? ManufacturerId { get; }
 
         /// <summary>
         /// Indicates the special case of all manufacturers that are not enumerated. If this is true 

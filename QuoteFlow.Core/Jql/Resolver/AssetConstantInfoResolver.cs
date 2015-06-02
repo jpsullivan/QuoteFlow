@@ -83,7 +83,7 @@ namespace QuoteFlow.Core.Jql.Resolver
                 throw new ArgumentNullException("indexedObject");
             }
 
-            return indexedObject.Id;
+            return indexedObject.Id.ToString();
         }
     }
 }

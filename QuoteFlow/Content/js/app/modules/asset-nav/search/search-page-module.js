@@ -6,6 +6,8 @@ var Brace = require('backbone-brace');
 var Utilities = require('../../../components/utilities');
 
 var ColumnPicker = require('../../../components/table/column-picker');
+var ContentAddedReason = require('../util/reasons');
+var EventTypes = require('../util/types');
 var FullScreenLayout = require('./full-screen-controller');
 var InlineLayer = require('../../../components/layer/inline-layer');
 var SimpleAsset = require('./asset/simple-asset');
@@ -154,7 +156,7 @@ var SearchPageModule = Brace.Model.extend({
 
             newLayout.on("render", function () {
                 this.searchContainer.find('.navigator-content').removeClass("pending");
-                JIRA.trigger(JIRA.Events.LAYOUT_RENDERED, [key]);
+                QuoteFlow.trigger(EventTypes.LAYOUT_RENDERED, [key]);
             }, this);
 
             options.render && newLayout.render();
@@ -359,11 +361,11 @@ var SearchPageModule = Brace.Model.extend({
 
     registerFullScreenAsset: function (fullScreenIssue) {
         this.fullScreenAsset = fullScreenIssue;
-//        this.fullScreenAsset.bindIssueHidden(function () {
-//            QuoteFlow.application.execute("assetEditor:dismiss");
-//            this.updateWindowTitle(this.getFilter());
-//            QuoteFlow.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.searchContainer, JIRA.CONTENT_ADDED_REASON.returnToSearch]);
-//        }, this);
+    //     this.fullScreenAsset.bindAssetHidden(function () {
+    //         QuoteFlow.application.execute("assetEditor:dismiss");
+    //         this.updateWindowTitle(this.getFilter());
+    //         QuoteFlow.trigger(EventTypes.NEW_CONTENT_ADDED, [this.searchContainer, ContentAddedReason.returnToSearch]);
+    //    }, this);
     },
 
     /**

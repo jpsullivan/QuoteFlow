@@ -26,7 +26,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
         public override ISearchInputTransformer SearchInputTransformer { get; set; }
         public override ISearchRenderer SearchRenderer { get; set; }
 
-		public ManufacturerSearcher(ICatalogService catalogService, 
+		public ManufacturerSearcher(ICatalogService catalogService, IManufacturerService manufacturerService,
             IJqlOperandResolver operandResolver, 
             ManufacturerResolver manufacturerResolver, 
             FieldFlagOperandRegistry fieldFlagOperandRegistry)
@@ -38,7 +38,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
 		        "Manufacturer", new List<IFieldIndexer> {new ManufacturerIndexer()},
 		        FieldReference, SearcherGroupType.Context);
             SearchInputTransformer = new ManufacturerSearchInputTransformer(indexInfoResolver, operandResolver, fieldFlagOperandRegistry, manufacturerResolver);
-		    SearchRenderer = new ManufacturerSearchRenderer(catalogService, constants, SearchInformation.NameKey);
+		    SearchRenderer = new ManufacturerSearchRenderer(catalogService, manufacturerService, constants, SearchInformation.NameKey);
 		}
     }
 }

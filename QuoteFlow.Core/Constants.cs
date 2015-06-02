@@ -19,7 +19,7 @@
         /// <summary>
         /// Used to retrieve a standard IssueTypes.
         /// </summary>
-        public const string ALL_STANDARD_ASSET_TYPES = "-2";
+        public const string ALL_STANDARD_MANUFACTURERS = "-2";
 
         /// <summary>
         /// Used to retrieve a subtask IssueTypes.

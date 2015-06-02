@@ -76,7 +76,7 @@ namespace QuoteFlow.Core.Asset.Search
         public virtual ISearchContext GetSearchContext(IQueryContext queryContext)
         {
             List<int?> catalogs = null;
-            List<int> manufacturers = null;
+            List<int?> manufacturers = null;
 
             if (queryContext != null)
             {
@@ -98,9 +98,9 @@ namespace QuoteFlow.Core.Asset.Search
             return null;
         }
 
-        private List<int> GetSearchContextManufacturers(IQueryContext queryContext)
+        private List<int?> GetSearchContextManufacturers(IQueryContext queryContext)
         {
-            var manufacturersPerCatalog = new HashSet<Set<int>>();
+            var manufacturersPerCatalog = new HashSet<Set<int?>>();
 
             IEnumerable<QueryContextCatalogManufacturerContexts> contexts = queryContext.CatalogManufacturerContexts;
 
@@ -108,7 +108,7 @@ namespace QuoteFlow.Core.Asset.Search
             foreach (QueryContextCatalogManufacturerContexts context in contexts)
             {
                 var manufacturerContexts = context.ManufacturerContexts;
-                Set<int> manufacturersForCatalog = new Set<int>();
+                var manufacturersForCatalog = new Set<int?>();
                 foreach (var manufacturerContext in manufacturerContexts)
                 {
                     manufacturersForCatalog.Add(manufacturerContext.ManufacturerId);
@@ -117,24 +117,20 @@ namespace QuoteFlow.Core.Asset.Search
                 manufacturersPerCatalog.Add(manufacturersForCatalog);
             }
 
-            Set<int> types = manufacturersPerCatalog.First();
+            var types = manufacturersPerCatalog.First();
 
             // If there is an "All" manufacturer context, then there can be no specific manufacturer context
-            if (types.Contains(0))
+            if (types.Contains(null) && types.Count != 1)
             {
                 return null;
             }
 
-//            if (types.Contains(null) && types.size() != 1)
-//            {
-//                return null;
-//            }
-//            if (types.contains(null))
-//            {
-//                return Collections.emptyList();
-//            }
+            if (types.Contains(null))
+            {
+                return new List<int?>();
+            }
 
-            return new List<int>(types);
+            return new List<int?>(types);
         }
 
         private List<int?> GetSearchContextCatalogs(IQueryContext queryContext)
@@ -165,7 +161,7 @@ namespace QuoteFlow.Core.Asset.Search
         }
 
         // We use this for testing since building a SearchContext brings up the entire world :)
-        protected virtual SearchContext CreateSearchContext(List<int?> catalogs, List<int> manufacturers)
+        protected virtual SearchContext CreateSearchContext(List<int?> catalogs, List<int?> manufacturers)
         {
             return new SearchContext(catalogs, manufacturers);
         }

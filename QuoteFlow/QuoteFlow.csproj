@@ -630,6 +630,7 @@
     <Content Include="Content\js\app\ui\common\message.js" />
     <Content Include="Content\js\app\ui\common\panel-table.js" />
     <Content Include="Content\js\app\util\dialog-cleanup.js" />
+    <Content Include="Content\js\app\util\events.js" />
     <Content Include="Content\js\app\util\jquery\CatchExceptions.js" />
     <Content Include="Content\js\app\util\jquery\hasFixedParent.js" />
     <Content Include="Content\js\app\util\jquery\RecurringPromise.js" />

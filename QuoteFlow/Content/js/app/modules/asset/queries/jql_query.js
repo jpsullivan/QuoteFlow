@@ -6,6 +6,8 @@ var Backbone = require('backbone');
 var Brace = require('backbone-brace');
 Backbone.$ = $;
 
+var ContentAddedReason = require('../../asset-nav/util/reasons');
+var EventTypes = require('../../asset-nav/util/types');
 var JqlQueryView = require('../../asset-nav/query/jql-query-view');
 
 /**
@@ -29,11 +31,12 @@ var AssetJqlQueryModule = Brace.Evented.extend({
       //     (installed via service desk). So we need this nasty hack until the minimum version of jira service desk
       //     supports has the updateLayout call inside of SearchPageModule.
       //   */
-      //  JIRA.bind(JIRA.Events.NEW_CONTENT_ADDED, _.bind(function (e, el, reason) {
-      //      if (reason === JIRA.CONTENT_ADDED_REASON.returnToSearch) {
-      //          this.setQuery();
-      //      }
-      //  }, this));
+
+      QuoteFlow.bind(EventTypes.NEW_CONTENT_ADDED, _.bind(function (e, el, reason) {
+           if (reason === ContentAddedReason.returnToSearch) {
+               this.setQuery();
+           }
+       }, this));
     },
 
     search: function () {

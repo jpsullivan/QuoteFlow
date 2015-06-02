@@ -14,7 +14,7 @@
 			//Don't create me.
 		}
 
-        public int ManufacturerId { get { return 0; } }
+        public int? ManufacturerId { get { return null; } }
         
         public bool All { get { return true; } }
 

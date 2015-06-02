@@ -7,6 +7,7 @@ var Backbone = require('backbone');
 var BackboneBrace = require('backbone-brace');
 Backbone.$ = $;
 
+var Events = require('./util/events');
 var Marionette = require('backbone.marionette');
 
 // QuoteFlow Namespace (hold-over from non CommonJS method)
@@ -44,6 +45,12 @@ var QuoteFlow = {
     },
     Views: {}
 };
+
+// Bind these jquery-like event handlers on the global namespace for now
+QuoteFlow.bind = Events.bind;
+QuoteFlow.unbind = Events.unbind;
+QuoteFlow.one = Events.one;
+QuoteFlow.trigger = Events.trigger;
 
 window.QuoteFlow = QuoteFlow;
 

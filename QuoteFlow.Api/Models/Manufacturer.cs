@@ -8,12 +8,12 @@ namespace QuoteFlow.Api.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string IconUrl { get; set; }
+        public string IconUrlHtml { get; set; }
         public int OrganizationId { get; set; }
         public DateTime LastUpdated { get; set; }
         public DateTime CreationDate { get; set; }
 
         public ManufacturerLogo Logo { get; set; }
-
-        string IAssetConstant.Id { get; set; }
     }
 }

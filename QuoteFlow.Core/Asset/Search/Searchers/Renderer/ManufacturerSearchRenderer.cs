@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Asset.Fields.Option;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Asset.Search;
@@ -12,6 +13,7 @@ using QuoteFlow.Api.Asset.Transport;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.Asset.Fields.Option;
 using QuoteFlow.Core.Asset.Search.Searchers.Util;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
@@ -19,12 +21,14 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
     public class ManufacturerSearchRenderer : AbstractSearchRenderer, ISearchRenderer
     {
         public ICatalogService CatalogService { get; protected set; }
+        public IManufacturerService ManufacturerService { get; protected set; }
 
-        public ManufacturerSearchRenderer(ICatalogService catalogService, 
+        public ManufacturerSearchRenderer(ICatalogService catalogService, IManufacturerService manufacturerService,
             SimpleFieldSearchConstants searchConstants, string searcherNameKey) 
             : base(searchConstants, searcherNameKey)
         {
             CatalogService = catalogService;
+            ManufacturerService = manufacturerService;
         }
 
         public void AddEditParameters(IFieldValuesHolder fieldValuesHolder, ISearchContext searchContext, User user, IDictionary<string, object> templateParameters)
@@ -83,15 +87,17 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             throw new NotImplementedException();
         }
 
-        /// <param name="i18nHelper"> An i18n helper. </param>
-        /// <returns> All possible options (not just those that are visible). </returns>
+        /// <summary>
+        /// Returns all possible options (not just those that are visible).
+        /// </summary>
+        /// <returns></returns>
         private ICollection<IOption> GetAllOptions()
         {
             var allOptions = new List<IOption>();
-//            allOptions.Add(new TextOption(ConstantsManager.ALL_STANDARD_ISSUE_TYPES, i18nHelper.getText("common.filters.allstandardissuetypes")));
-//            allOptions.Add(new TextOption(ConstantsManager.ALL_SUB_TASK_ISSUE_TYPES, i18nHelper.getText("common.filters.allsubtaskissuetypes")));
+            allOptions.Add(new TextOption(Constants.ALL_STANDARD_MANUFACTURERS, "All Standard Asset Types"));
 
-            //allOptions.AddRange(ConstantsManager.AllIssueTypeObjects);
+            var allManufacturers = ManufacturerService.GetManufacturers(1); // todo organization fix
+            allOptions.AddRange(allManufacturers.Select(manufacturer => new AssetConstantOption(manufacturer)));
 
             return allOptions;
         }
@@ -145,10 +151,10 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 
         /// <param name="searchContext"> The search context. </param>
         /// <param name="user"> The user performing the search. </param>
-        /// <returns> All issue type options visible in the given search context. </returns>
+        /// <returns> All manufacturer options visible in the given search context. </returns>
         protected virtual ICollection<IOption> GetOptionsInSearchContext(ISearchContext searchContext, User user)
         {
-            ICollection<IOption> options = new HashSet<IOption>();
+            var options = new List<IOption>();
 //            ICollection<FieldConfig> fieldConfigs = GetCatalogFieldConfigs(GetCatalogsInSearchContext(searchContext, user));
 //
 //            foreach (FieldConfig fieldConfig in fieldConfigs)
@@ -156,6 +162,10 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 //                OptionSet optionSet = optionSetManager.getOptionsForConfig(fieldConfig);
 //                options.addAll(optionSet.Options);
 //            }
+
+            // just shove these greasy bastards in there
+            var allManufacturers = ManufacturerService.GetManufacturers(1); // todo organization fix
+            options.AddRange(allManufacturers.Select(manufacturer => new AssetConstantOption(manufacturer)));
 
             return options;
         }
@@ -166,7 +176,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             var optionsInSearchContext = GetOptionsInSearchContext(searchContext, user);
 
             // Add the "All Standard Manufacturers" option and the standard types.
-            //options.Add(new TextOption(Constants.ALL_STANDARD_ASSET_TYPES, "All Standard Asset Types"));
+            options.Add(new TextOption(Constants.ALL_STANDARD_MANUFACTURERS, "All Standard Manufacturers"));
             options.AddRange(optionsInSearchContext);
 
             return options;
@@ -186,7 +196,8 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         private IDictionary<string, object> ProcessOptions(IEnumerable<IOption> validOptions, IEnumerable<IOption> invalidOptions)
         {
             IDictionary<string, object> result = new Dictionary<string, object>();
-            var options = new SortedSet<IOption>();
+            //var options = new SortedSet<IOption>();
+            var options = new List<IOption>();
             
             foreach (var validOption in validOptions)
             {

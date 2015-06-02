@@ -17,9 +17,9 @@ namespace QuoteFlow.Api.Asset.Context
         /// </summary>
         public int? CatalogId { get; private set; }
 
-        public int ManufacturerId { get; private set; }
+        public int? ManufacturerId { get; private set; }
 
-        public AssetContext(int? catalogId, int manufacturerId)
+        public AssetContext(int? catalogId, int? manufacturerId)
         {
             CatalogId = catalogId;
             ManufacturerId = manufacturerId;

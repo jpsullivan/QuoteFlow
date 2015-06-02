@@ -217,7 +217,7 @@ namespace QuoteFlow.Core.Services
             }
 
             // Could not generate one so lets return an empty one
-            return CreateSearchContext(new List<int?>(), new List<int>());
+            return CreateSearchContext(new List<int?>(), new List<int?>());
         }
 
         public string GetJqlString(IQuery query)
@@ -239,7 +239,7 @@ namespace QuoteFlow.Core.Services
             return JqlStringSupport.GenerateJqlString(query);
         }
 
-        public ISearchContext CreateSearchContext(List<int?> catalogs, List<int> manufacturers)
+        public ISearchContext CreateSearchContext(List<int?> catalogs, List<int?> manufacturers)
         {
             return new SearchContext(catalogs, manufacturers);
         }

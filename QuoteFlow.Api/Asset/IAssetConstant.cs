@@ -7,8 +7,10 @@ namespace QuoteFlow.Api.Asset
     /// </summary>
     public interface IAssetConstant
     {
-        string Id { get; set; }
-
+        int Id { get; set; }
         string Name { get; set; }
+        string Description { get; set; }
+        string IconUrl { get; set; }
+        string IconUrlHtml { get; set; }
     }
 }

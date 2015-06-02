@@ -179,10 +179,10 @@
     <Compile Include="Asset\Fields\AbstractOrderableField.cs" />
     <Compile Include="Asset\Fields\AbstractOrderableNavigableField.cs" />
     <Compile Include="Asset\Fields\AbstractTextSystemField.cs" />
-    <Compile Include="Asset\Fields\AssetConstantOption.cs" />
     <Compile Include="Asset\Fields\CatalogSystemField.cs" />
     <Compile Include="Asset\Fields\FieldManager.cs" />
     <Compile Include="Asset\Fields\ManufacturerSystemField.cs" />
+    <Compile Include="Asset\Fields\Option\AssetConstantOption.cs" />
     <Compile Include="Asset\Fields\SummarySystemField.cs" />
     <Compile Include="Asset\Index\AssetBatcherFactory.cs" />
     <Compile Include="Asset\Index\AssetDocumentAndIdCollector.cs" />

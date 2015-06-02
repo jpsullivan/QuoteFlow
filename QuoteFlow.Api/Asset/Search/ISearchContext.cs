@@ -39,7 +39,7 @@ namespace QuoteFlow.Api.Asset.Search
         /// <summary>
         /// All of the manufacturer ids for this context.
         /// </summary>
-        List<int> ManufacturerIds { get; set; }
+        List<int?> ManufacturerIds { get; set; }
 
             /// <summary>
         /// 

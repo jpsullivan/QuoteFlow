@@ -33,11 +33,11 @@ namespace QuoteFlow.Api.Jql.Context
             }
         }
 
-        public IEnumerable<int> ManufacturerIds
+        public IEnumerable<int?> ManufacturerIds
         {
             get
             {
-                var manufacturerIds = new List<int>();
+                var manufacturerIds = new List<int?>();
                 foreach (var manufacturerContext in ManufacturerContexts)
                 {
                     if (!manufacturerContext.All)

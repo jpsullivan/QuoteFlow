@@ -3,6 +3,9 @@
 var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
+var ContentAddedReason = require('../util/reasons');
+var EventTypes = require('../util/types');
+
 /**
  * The layout switcher control.
  */
@@ -35,7 +38,7 @@ var LayoutSwitcherView = Marionette.ItemView.extend({
 
         // We can't use delegate events as the dropdown is appended to the body.
         this.$el.find(".aui-list-item-link").click(this._onLayoutSwitchClick);
-        //JIRA.trigger(JIRA.Events.NEW_CONTENT_ADDED, [this.$el, JIRA.CONTENT_ADDED_REASON.layoutSwitcherReady]);
+        QuoteFlow.trigger(EventTypes.NEW_CONTENT_ADDED, [this.$el, ContentAddedReason.layoutSwitcherReady]);
     },
 
     /**

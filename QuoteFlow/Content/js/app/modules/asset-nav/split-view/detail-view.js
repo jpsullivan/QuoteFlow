@@ -3,6 +3,8 @@
 var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
+var ContentAddedReason = require('../util/reasons');
+var EventTypes = require('../util/types');
 var Utilities = require('../../../components/utilities');
 
 /**
@@ -85,7 +87,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
         this.listenTo(this.searchResults, "issueUpdated", this.onAssetUpdated, this);
         this.listenTo(this.searchResults, "issueDoesNotExist", this._onAssetDoesNotExist, this);
 
-        //JIRA.bind(JIRA.Events.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
+        QuoteFlow.bind(EventTypes.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
 
         QuoteFlow.Interactive.onVerticalResize(this.adjustHeight);
         QuoteFlow.application.on("issueEditor:loadComplete", this.adjustHeight, this);
@@ -97,7 +99,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
         QuoteFlow.application.execute("issueEditor:abortPending");
         QuoteFlow.Interactive.offVerticalResize(this.adjustHeight);
         QuoteFlow.application.off("issueEditor:loadComplete", this.adjustHeight);
-        //JIRA.unbind(JIRA.Events.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
+        QuoteFlow.unbind(EventTypes.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
         //JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
         this.isActive = false;
     },
@@ -110,9 +112,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
      * @param reason
      */
     fixMentionsDropdownInMentionableFields: function (event, $context, reason) {
-        if (reason === JIRA.CONTENT_ADDED_REASON.panelRefreshed ||
-            reason === JIRA.CONTENT_ADDED_REASON.inlineEditStarted
-            ) {
+        if (reason === ContentAddedReason.panelRefreshed || reason === ContentAddedReason.inlineEditStarted) {
             // Search for mentionable elements, add markup to force Mentions drop down
             // to follow the scroll of .split-view .issue-container
             $context.find(".mentionable:not([data-follow-scroll])").attr("follow-scroll", ".split-view .issue-container");
@@ -121,7 +121,6 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
             // to push the scroll of .issue-body-content if there is not enough room to
             // display the drop down
             $context.find(".mentionable:not([data-push-scroll])").attr("push-scroll", ".issue-body-content");
-
         }
     },
 

@@ -26,7 +26,7 @@ namespace QuoteFlow.Core.Asset.Search
             ManufacturerService = manufacturerService;
         }
 
-        public SearchContext(List<int?> catalogIds, List<int> manufacturerIds)
+        public SearchContext(List<int?> catalogIds, List<int?> manufacturerIds)
         {
             CatalogIds = catalogIds;
             ManufacturerIds = manufacturerIds;
@@ -35,7 +35,7 @@ namespace QuoteFlow.Core.Asset.Search
         #endregion
 
         private static readonly List<int?> AllCatalogs = new List<int?>();
-        private static readonly List<int> AllManufacturers = new List<int>(); 
+        private static readonly List<int?> AllManufacturers = new List<int?>(); 
 
         /// <summary>
         /// Returns whether the context is <em>global</em> or not. A context is global when there 
@@ -90,8 +90,8 @@ namespace QuoteFlow.Core.Asset.Search
             }
         }
 
-        private List<int> _manufacturerIds;
-        public List<int> ManufacturerIds
+        private List<int?> _manufacturerIds;
+        public List<int?> ManufacturerIds
         {
             get { return _manufacturerIds; }
             set
@@ -148,7 +148,7 @@ namespace QuoteFlow.Core.Asset.Search
             get
             {
                 if (ManufacturerIds == null) return null;
-                return _manufacturers ?? (_manufacturers = ManufacturerIds.Select(id => ManufacturerService.GetManufacturer(id)));
+                return _manufacturers ?? (_manufacturers = ManufacturerIds.Select(id => ManufacturerService.GetManufacturer((int) id)));
             }
             set { _manufacturers = value; }
         }
