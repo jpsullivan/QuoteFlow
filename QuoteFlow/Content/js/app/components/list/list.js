@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 var $ = require('jquery');
+var ScrollIntoView = require('jquery-scrollIntoView');
 
 var Control = require('../control/control');
 var GroupDescriptor = require('./group-descriptor');

@@ -3,7 +3,7 @@ var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var Control = require('../control/control');
-var DefaultSuggestHandler = require('./default-suggestion-handler');
+var DefaultSuggestHandler = require('./default-suggest-handler');
 var List = require('../list/list');
 var Navigator = require('../../util/navigator');
 
@@ -24,14 +24,14 @@ var QueryableDropdownSelect = Control.extend({
     },
 
     /**
-     * Overrides default options with user options. Inserts an input field before dropdown.
-     *
-     * @param {Object} options
-     * @param {jQuery | HTMLElement} options.element
-     * @param {SuggestHandler} options.suggestionsHandler
-     */
-     init: function (options) {
-         debugger;
+    * Overrides default options with user options. Inserts an input field before dropdown.
+    *
+    * @param {Object} options
+    * @param {jQuery | HTMLElement} options.element
+    * @param {SuggestHandler} options.suggestionsHandler
+    */
+    init: function (options) {
+        debugger;
         this.suggestionsVisible = false;
         this._setOptions(options);
         this._createFurniture();
@@ -78,6 +78,7 @@ var QueryableDropdownSelect = Control.extend({
      * @private
      */
     _createSuggestionsController: function () {
+        debugger;
         this.suggestionsHandler = this.options.suggestionsHandler
             ? new this.options.suggestionsHandler(this.options)
             : new DefaultSuggestHandler(this.options);
@@ -233,11 +234,12 @@ var QueryableDropdownSelect = Control.extend({
     },
 
     /**
-     * Requests JSON formatted suggestions from specified resource. Resource is sepecified in the ajaxOptions object
-     * passed to the constructed during initialization.
+     * Requests JSON formatted suggestions from specified resource. Resource is
+     * sepecified in the ajaxOptions object passed to the constructed during initialization.
      *
-     * If the query option of ajaxOptions is set to true, an ajax request will be made for every keypress. Otherwise
-     * ajax request will be made only the first time the dropdown is shown.
+     * If the query option of ajaxOptions is set to true, an ajax request will
+     * be made for every keypress. Otherwise ajax request will be made only the
+     * first time the dropdown is shown.
      *
      * @method _requestThenResetSuggestions
      * @private
@@ -248,6 +250,7 @@ var QueryableDropdownSelect = Control.extend({
             deferred = jQuery.Deferred();
 
         this.outstandingRequest = this.suggestionsHandler.execute(this.getQueryVal(), force).done(function (descriptors, query) {
+            debugger;
             if (query === instance.getQueryVal()) {
                 deferred.resolve(descriptors, query);
             }

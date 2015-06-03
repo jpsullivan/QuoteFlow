@@ -2,7 +2,7 @@
 
 var Brace = require('backbone-brace');
 var SuggestHelper = require('./suggest-helper');
-var DefaultSuggestHandler = require('./default-suggestion-handler');
+var DefaultSuggestHandler = require('./default-suggest-handler');
 
 /**
  * A suggestion handler that removes suggestions that have already been selected in <select>
@@ -10,6 +10,7 @@ var DefaultSuggestHandler = require('./default-suggestion-handler');
  * @extends DefaultSuggestHandler
  */
 var SelectSuggestHandler = DefaultSuggestHandler.extend({
+
     /**
      * @constructor
      * @param {Object} options
@@ -27,6 +28,7 @@ var SelectSuggestHandler = DefaultSuggestHandler.extend({
      * @param query
      * @return {GroupDescriptor[]}*/
     formatSuggestions: function (descriptors, query) {
+        debugger;
         var suggestions = this._super(descriptors, query);
         var selectedDescriptors = this.model.getDisplayableSelectedDescriptors();
         if (this.options.removeDuplicates) {

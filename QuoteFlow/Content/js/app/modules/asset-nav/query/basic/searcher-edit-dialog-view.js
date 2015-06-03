@@ -54,7 +54,6 @@ var SearcherEditDialogView = Brace.View.extend({
     },
 
     render: function(editHtml) {
-        debugger;
         var containsEditContent = !(/^\s*$/.test(editHtml));
         var renderedContent;
         if (containsEditContent) {

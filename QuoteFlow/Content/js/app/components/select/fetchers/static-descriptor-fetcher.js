@@ -8,6 +8,7 @@ var Class = require('../../class/class');
  * @class StaticDescriptorFetcher
  */
 var StaticDescriptorFetcher = Class.extend({
+
     /**
      * @param {Object} options - empty in this case
      * @param {SelectModel} model - a wrapper around <select> element

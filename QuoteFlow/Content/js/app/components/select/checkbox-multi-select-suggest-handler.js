@@ -1,8 +1,8 @@
 ﻿"use strict";
 
-var SuggestHelper = require('./suggest-helper');
-var SelectSuggestHelper = require('./select-suggest-handler');
 var GroupDescriptor = require('../list/group-descriptor');
+var SelectSuggestHandler = require('./select-suggest-handler');
+var SuggestHelper = require('./suggest-helper');
 
 /**
  * A suggestion handler that without a query, shows selected items at the top followed by unselected items in their groups.
@@ -10,13 +10,14 @@ var GroupDescriptor = require('../list/group-descriptor');
  * @class CheckboxMultiSelectSuggestHandler
  * @extends SelectSuggestHandler
  */
-var CheckboxMultiSelectSuggestHandler = SelectSuggestHelper.extend({
+var CheckboxMultiSelectSuggestHandler = SelectSuggestHandler.extend({
+
     /**
      * Creates html string for clear all
      * @return {String}
      */
     createClearAll: function () {
-        return "<li class='check-list-group-actions'><a class='clear-all' href='#'>Clear selected items</a></li>";
+        return "<li class='check-list-group-actions'><a class='clear-all' href='#'>" + AJS.I18n.getText("jira.ajax.autocomplete.clear.all") + "</a></li>";
     },
 
     /**
@@ -26,13 +27,13 @@ var CheckboxMultiSelectSuggestHandler = SelectSuggestHelper.extend({
      * @param query
      * @return {Array} formatted descriptors
      */
-    formatSuggestions: function(descriptors, query) {
+    formatSuggestions: function (descriptors, query) {
 
         var selectedItems = SuggestHelper.removeDuplicates(this.model.getDisplayableSelectedDescriptors());
         var selectedGroup = new GroupDescriptor({
             styleClass: "selected-group",
             items: selectedItems,
-            actionBarHtml: selectedItems.length > 1 ? this.createClearAll() : null
+            actionBarHtml: selectedItems.length > 1 ? this.createClearAll()  : null
         });
         descriptors.splice(0, 0, selectedGroup);
         if (query.length > 0) {
@@ -43,9 +44,9 @@ var CheckboxMultiSelectSuggestHandler = SelectSuggestHelper.extend({
                 b = b.label().toLowerCase();
                 return a.localeCompare(b);
             });
-            descriptors = [new GroupDescriptor({ items: items })];
+            descriptors = [new GroupDescriptor({items: items})];
         }
-        return;
+        return descriptors;
     }
 });
 

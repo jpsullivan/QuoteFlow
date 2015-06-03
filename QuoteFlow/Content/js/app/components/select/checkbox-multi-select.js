@@ -9,7 +9,7 @@ var ItemDescriptor = require('../list/item-descriptor');
 var List = require('../list/list');
 var SelectHelper = require('./select-helper');
 var SelectModel = require('./select-model');
-var SelectSuggestHandler = require('./select-suggest-handler');
+var SelectSuggestHandler = require('./checkbox-multi-select-suggest-handler');
 var QueryableDropdownSelect = require('./queryable-dropdown-select');
 
 /**
@@ -25,7 +25,6 @@ var CheckboxMultiSelect = QueryableDropdownSelect.extend({
      * @param {Object} options
      */
     init: function (options) {
-
         var instance = this;
 
         // mixin

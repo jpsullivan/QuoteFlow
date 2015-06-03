@@ -21,6 +21,7 @@
     "jquery-recurring-promise": "./QuoteFlow/Content/js/app/util/jquery/RecurringPromise.js",
     "jquery-scrollLock": "./QuoteFlow/Content/js/lib/jquery-scrolllock.min.js",
     "jquery-scroll-into-view": "./QuoteFlow/Content/js/lib/jquery.scroll-into-view.js",
+    "jquery-scrollIntoView": "./QuoteFlow/Content/js/lib/jquery.scrollIntoView.js",
     "jquery-ui-sidebar": "./QuoteFlow/Content/js/app/components/jqui-widget_sidebar.js",
     "string-extensions": "./QuoteFlow/Content/js/app/extensions/string_extensions.js"
   },
@@ -86,6 +87,11 @@
       ]
     },
     "jquery-scroll-into-view": {
+      "depends": [
+        "jquery:$"
+      ]
+    },
+    "jquery-scrollIntoView": {
       "depends": [
         "jquery:$"
       ]
