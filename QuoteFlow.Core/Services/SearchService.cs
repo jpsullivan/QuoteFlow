@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Managers;
-using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Infrastructure.Paging;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
-using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Search;
@@ -19,7 +17,6 @@ using QuoteFlow.Api.Util;
 using QuoteFlow.Core.Asset.Search;
 using QuoteFlow.Core.Jql.Context;
 using QuoteFlow.Core.Jql.Validator;
-using ClauseContext = QuoteFlow.Api.Jql.Context.ClauseContext;
 
 namespace QuoteFlow.Core.Services
 {

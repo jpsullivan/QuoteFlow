@@ -389,7 +389,6 @@ var AssetSearcherCollection = Brace.Collection.extend({
      * @param {Boolean} [forceUpdate=false] Force update of the JQL, even if autoupdate is disabled
      */
     createOrUpdateClauseWithQueryString: function (id, forceUpdate) {
-
         this.triggerRequestUpdateFromView();
 
         var deferred;
@@ -411,6 +410,12 @@ var AssetSearcherCollection = Brace.Collection.extend({
 
         // TODO: could optimise by only requesting all searchers and values when context changes (ie project or issue type)
         // and requesting only valuehtml for other cases. see _querySingleValue
+    },
+
+    containsInvalidSearchers: function() {
+        return this.any(function(searcherModel) {
+            return searcherModel.hasErrorInEditHtml();
+        });
     },
 
     _querySearchersByValue: function(id) {

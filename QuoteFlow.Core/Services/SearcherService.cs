@@ -191,7 +191,7 @@ namespace QuoteFlow.Core.Services
             var clauses = new Dictionary<string, SearchRendererHolder>();
 
             var actionParams = GetActionParameters(paramMap);
-            IDictionary<string, String[]> jqlParams = GetJqlParameters(paramMap);
+            var jqlParams = GetJqlParameters(paramMap);
             foreach (var assetSearcher in searchers)
             {
                 string id = assetSearcher.SearchInformation.Id;
@@ -235,21 +235,21 @@ namespace QuoteFlow.Core.Services
         private IActionParams GetActionParameters(IEnumerable<KeyValuePair<string, ICollection<string[]>>> paramMap)
         {
             var newParams = new MultiDictionary<string, string[]>(true);
-            foreach (var p in paramMap.Where(p => !p.Key.StartsWith("__jql_")))
+            foreach (var p in paramMap.Where(p => !p.Key.StartsWith(JqlPrefix)))
             {
                 newParams.Add(p);
             }
             return new ActionParams(newParams);
         }
 
-        private IDictionary<string, String[]> GetJqlParameters(IEnumerable<KeyValuePair<string, ICollection<string[]>>> paramMap)
+        private IDictionary<string, string[]> GetJqlParameters(IEnumerable<KeyValuePair<string, ICollection<string[]>>> paramMap)
         {
             var jqlParams = new HashMap<string, string[]>();
-            foreach (KeyValuePair<string, ICollection<string[]>> entry in paramMap)
+            foreach (var entry in paramMap)
             {
-                if (entry.Key.StartsWith("__jql_"))
+                if (entry.Key.StartsWith(JqlPrefix))
                 {
-                    jqlParams[entry.Key.Substring("__jql_".Length)].SetValue(entry.Value, 0);
+                    jqlParams[entry.Key.Substring(JqlPrefix.Length)].SetValue(entry.Value, 0);
                 }
             }
 

@@ -39,7 +39,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         {
             string url = SystemSearchConstants.ForCatalog().UrlParameter;
             var @params = actionParams.GetValuesForKey(url);
-            fieldValuesHolder.Add(url, @params == null ? null : new HashSet<string>());
+            fieldValuesHolder.Add(url, @params == null ? null : new List<string>(@params));
         }
 
         public void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)

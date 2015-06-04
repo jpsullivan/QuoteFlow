@@ -76,7 +76,6 @@ var SplitScreenLayout = Marionette.ItemView.extend({
 
         QuoteFlow.application.on("issueEditor:loadError", this._onIssueLoadError, this);
         this.listView.searchPromise.done(_.bind(function () {
-            debugger;
             this._makeVisible();
         }, this));
 
@@ -231,7 +230,6 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     _makeVisible: function () {
-        debugger;
         this.navigatorContent.removeClass("pending");
         if (this._isInitialRender()) {
             this.navigatorContent.html(this.$el);
@@ -381,7 +379,6 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @return {SplitScreenLayout} <tt>this</tt>
      */
      onRender: function () {
-         debugger;
          var hasIssues = this.searchResults.hasAssets(),
             isInitialRender = this._isInitialRender();
 
@@ -391,7 +388,6 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         //     this._activateIOSSpecificBehaviour();
         // }
 
-        debugger;
         if (hasIssues) {
             this._handleInitialIssueSelection();
             this.navigatorContent.removeClass("empty-results");

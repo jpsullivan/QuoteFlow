@@ -170,6 +170,10 @@ namespace QuoteFlow.Core.Jql.Validator
             internal readonly IJqlOperandResolver operandResolver;
             internal readonly IOperatorUsageValidator operatorUsageValidator;
 
+            public ValidatorVisitorFactory()
+            {
+            }
+
             public ValidatorVisitorFactory(IValidatorRegistry validatorRegistry, IJqlOperandResolver operandResolver, IOperatorUsageValidator operatorUsageValidator)
             {
                 this.validatorRegistry = validatorRegistry;

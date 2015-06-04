@@ -529,15 +529,18 @@
     <Content Include="Content\js\app\components\routes.js" />
     <Content Include="Content\js\app\components\search\search-service-controller.js" />
     <Content Include="Content\js\app\components\select\checkbox-multi-select-suggest-handler.js" />
+    <Content Include="Content\js\app\components\select\checkbox-multi-select.js" />
+    <Content Include="Content\js\app\components\select\default-suggest-handler.js" />
     <Content Include="Content\js\app\components\select\dropdown-select.js" />
     <Content Include="Content\js\app\components\select\fetchers\ajax-descriptor-fetcher.js" />
     <Content Include="Content\js\app\components\select\fetchers\func-descriptor-fetcher.js" />
     <Content Include="Content\js\app\components\select\fetchers\mixed-descriptor-fetcher.js" />
     <Content Include="Content\js\app\components\select\fetchers\static-descriptor-fetcher.js" />
     <Content Include="Content\js\app\components\select\queryable-dropdown-select.js" />
-    <Content Include="Content\js\app\components\select\default-suggestion-handler.js" />
+    <Content Include="Content\js\app\components\select\select-helper.js" />
     <Content Include="Content\js\app\components\select\select-model.js" />
     <Content Include="Content\js\app\components\select\select-suggest-handler.js" />
+    <Content Include="Content\js\app\components\select\single-select.js" />
     <Content Include="Content\js\app\components\select\suggest-helper.js" />
     <Content Include="Content\js\app\components\select\user-list-suggest-handler.js" />
     <Content Include="Content\js\app\components\select\views\queryable-dropdown\disabled-blanket.js" />
@@ -579,6 +582,7 @@
     <Content Include="Content\js\app\modules\asset-nav\query\jql-query-view.js" />
     <Content Include="Content\js\app\modules\asset-nav\query\query-view.js" />
     <Content Include="Content\js\app\modules\asset-nav\router-custom.js" />
+    <Content Include="Content\js\app\modules\asset-nav\searchers\initSparklers.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-api.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-navigator-api.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-search-manager.js" />
@@ -656,6 +660,7 @@
     <Content Include="Content\js\lib\handlebars.min.js" />
     <Content Include="Content\js\lib\html-sanitizer-bundle.js" />
     <Content Include="Content\js\lib\jquery-scrolllock.min.js" />
+    <Content Include="Content\js\lib\jquery.scrollIntoView.js" />
     <Content Include="Content\js\lib\md5.js" />
     <Content Include="Content\less\asset-navigator.css">
       <DependentUpon>asset-navigator.less</DependentUpon>
@@ -1052,6 +1057,17 @@
     <Content Include="Content\views\common\info-message.hbs" />
     <Content Include="Content\views\common\success-message.hbs" />
     <Content Include="Content\views\common\warning-message.hbs" />
+    <Content Include="Content\less\layer.less" />
+    <Content Include="Content\less\list.less" />
+    <Content Include="Content\less\select\checkbox-multi-select.less" />
+    <Content Include="Content\less\select\queryable-dropdown-select.less" />
+    <Content Include="Content\less\select\single-select.less" />
+    <Content Include="Content\less\mixins\border-radius.less" />
+    <Content Include="Content\less\mixins\borders.less" />
+    <Content Include="Content\less\mixins\dropdowns.less" />
+    <Content Include="Content\less\mixins\select.less" />
+    <Content Include="Content\less\static\aui-theme\components\adbox.less" />
+    <Content Include="Content\less\static\aui-theme\components\dropdowns.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

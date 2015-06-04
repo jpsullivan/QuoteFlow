@@ -61,16 +61,9 @@ namespace QuoteFlow.Api.Asset.Transport
         public string[] GetValuesForKey(string key)
         {
             var values = new List<string>();
-            foreach (var actionParam in actionParams)
+            foreach (var actionParam in actionParams.Where(actionParam => actionParam.Key == key))
             {
-                if (actionParam.Key == key)
-                {
-                    
-                    foreach (var value in actionParam.Value)
-                    {
-                        values.Add(value[0]);
-                    }
-                }
+                values.AddRange(actionParam.Value.Select(value => value[0]));
             }
 
             return values.Any() ? values.ToArray() : null;

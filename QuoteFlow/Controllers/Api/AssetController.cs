@@ -51,7 +51,7 @@ namespace QuoteFlow.Controllers.Api
         }
 
         [HttpPost]
-        public IServiceOutcome<QuerySearchResults> QueryComponent()
+        public QuerySearchResults QueryComponent()
         {
             // since post args can contain duplicate keys, we cannot rely on model binding
             var data = Request.Content.ReadAsStringAsync().Result;
@@ -78,7 +78,14 @@ namespace QuoteFlow.Controllers.Api
             // also get the user
             var user = UserService.GetUser(RequestContext.Principal.Identity.Name, null);
 
-            return SearcherService.Search(user, multiDict, new long());
+            var result = SearcherService.Search(user, multiDict, new long());
+            if (result.IsValid())
+            {
+                return result.ReturnedValue;
+            }
+
+            var errors = result.ErrorCollection;
+            throw new HttpResponseException(HttpStatusCode.BadRequest);
         }
     }
 }

@@ -197,11 +197,15 @@ namespace QuoteFlow.Core.Jql.Context
         /// </summary>
         public class QueryContextVisitorFactory
         {
-            internal readonly ISearchHandlerManager searchHandlerManager;
+            private readonly ISearchHandlerManager _searchHandlerManager;
+
+            public QueryContextVisitorFactory()
+            {
+            }
 
             public QueryContextVisitorFactory(ISearchHandlerManager searchHandlerManager)
             {
-                this.searchHandlerManager = searchHandlerManager;
+                _searchHandlerManager = searchHandlerManager;
             }
 
             /// <summary>
@@ -211,7 +215,7 @@ namespace QuoteFlow.Core.Jql.Context
             /// <returns> a visitor that will calculate the context for all clauses specified in the <see cref="com.atlassian.query.Query"/>. </returns>
             public virtual QueryContextVisitor CreateVisitor(User searcher)
             {
-                return new QueryContextVisitor(searcher, searchHandlerManager);
+                return new QueryContextVisitor(searcher, _searchHandlerManager);
             }
         }
 

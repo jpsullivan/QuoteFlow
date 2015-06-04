@@ -28,7 +28,6 @@ var SelectSuggestHandler = DefaultSuggestHandler.extend({
      * @param query
      * @return {GroupDescriptor[]}*/
     formatSuggestions: function (descriptors, query) {
-        debugger;
         var suggestions = this._super(descriptors, query);
         var selectedDescriptors = this.model.getDisplayableSelectedDescriptors();
         if (this.options.removeDuplicates) {

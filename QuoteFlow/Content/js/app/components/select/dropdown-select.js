@@ -16,12 +16,9 @@ var DropdownSelect = Control.extend({
         var instance = this;
 
         this.model = new SelectModel(options);
-
         this.model.$element.hide();
-
         this._createFurniture();
 
-        debugger;
         this.dropdownController = InlineLayerFactory.createInlineLayers({
             alignment: "left",
             width: 200,

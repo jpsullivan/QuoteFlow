@@ -35,7 +35,6 @@ var SingleSelect = QueryableDropdownSelect.extend({
      * @param options
      */
     init: function (options) {
-        debugger;
         if (this._setOptions(options) === this.INVALID) {
             return this.INVALID;
         }
@@ -104,8 +103,6 @@ var SingleSelect = QueryableDropdownSelect.extend({
         this.suggestionsHandler = this.options.suggestionsHandler ?
                 new this.options.suggestionsHandler(this.options, this.model) :
                 new SelectSuggestHandler(this.options, this.model);
-
-        debugger;
     },
 
     _assignEventsToFurniture: function () {

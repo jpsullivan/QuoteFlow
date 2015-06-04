@@ -10,6 +10,7 @@ using QuoteFlow.Api.Models;
 using RazorEngine;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
+using StackExchange.Profiling;
 
 namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
 {
@@ -55,12 +56,17 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
             var templatePath = Path.GetFullPath(HostingEnvironment.MapPath("~/Views/Searchers/" + templateName));
             var template = File.ReadAllText(templatePath);
 
-            var config = new TemplateServiceConfiguration {Debug = true};
-            var service = RazorEngineService.Create(config);
-            Engine.Razor = service;
-            var result = Engine.Razor.RunCompile(new LoadedTemplateSource(template, templatePath), "templateKey", null, templateParams);
-            //var result = Engine.Razor.RunCompile(template, "templateKey", null, templateParams);
-            return result;
+            // measure how long this takes to render
+            var profiler = MiniProfiler.Current; // it's ok if this is null
+            using (profiler.Step(string.Format("Rendering the {0} template", templateName))) 
+            {
+//                var config = new TemplateServiceConfiguration { Debug = true };
+//                var service = RazorEngineService.Create(config);
+//                Engine.Razor = service;
+//                var result = Engine.Razor.RunCompile(new LoadedTemplateSource(template, templatePath), "templateKey", null, templateParams);
+                var result = Engine.Razor.RunCompile(template, templateName, null, templateParams);
+                return result;
+            }
         }
 
         protected string RenderViewTemplate(string templateName, object templateParams)

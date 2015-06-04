@@ -19,6 +19,10 @@ namespace QuoteFlow.Core.Asset.Search
 
         public ICacheService CacheService { get; protected set; }
 
+        public QueryCache()
+        {
+        }
+
         public QueryCache(ICacheService cacheService)
         {
             CacheService = cacheService;
@@ -38,7 +42,9 @@ namespace QuoteFlow.Core.Asset.Search
 
         public IQueryContext GetQueryContextCache(User searcher, IQuery query)
         {
-            throw new NotImplementedException();
+            IQueryContext context;
+            var hasValue = GetQueryCache().TryGetValue(new QueryCacheKey(searcher, query), out context);
+            return hasValue ? context : null;
         }
 
         public void SetQueryContextCache(User searcher, IQuery query, IQueryContext queryContext)
@@ -94,7 +100,7 @@ namespace QuoteFlow.Core.Asset.Search
             //CacheService.SetItem(RequestCacheKeys.QueryLiteralsCache, valueCache, TimeSpan.FromMinutes(1));
         }
 
-        IDictionary<QueryCacheKey, IQueryContext> GetQueryCache()
+        public virtual IDictionary<QueryCacheKey, IQueryContext> GetQueryCache()
         {
             object queryCache = CacheService.GetItem(RequestCacheKeys.QueryContextCache);
             if (queryCache == null)
@@ -141,7 +147,7 @@ namespace QuoteFlow.Core.Asset.Search
         /// <summary>
         /// A a key used for caching on Query and user pairs.
         /// </summary>
-        private class QueryCacheKey
+        public class QueryCacheKey
         {
             private readonly User _searcher;
             private readonly IQuery _query;

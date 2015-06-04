@@ -31,7 +31,6 @@ var QueryableDropdownSelect = Control.extend({
     * @param {SuggestHandler} options.suggestionsHandler
     */
     init: function (options) {
-        debugger;
         this.suggestionsVisible = false;
         this._setOptions(options);
         this._createFurniture();
@@ -78,7 +77,6 @@ var QueryableDropdownSelect = Control.extend({
      * @private
      */
     _createSuggestionsController: function () {
-        debugger;
         this.suggestionsHandler = this.options.suggestionsHandler
             ? new this.options.suggestionsHandler(this.options)
             : new DefaultSuggestHandler(this.options);
@@ -250,7 +248,6 @@ var QueryableDropdownSelect = Control.extend({
             deferred = jQuery.Deferred();
 
         this.outstandingRequest = this.suggestionsHandler.execute(this.getQueryVal(), force).done(function (descriptors, query) {
-            debugger;
             if (query === instance.getQueryVal()) {
                 deferred.resolve(descriptors, query);
             }

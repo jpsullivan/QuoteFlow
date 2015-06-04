@@ -184,7 +184,8 @@ namespace QuoteFlow.Controllers
             // track that this quote has been visited
             UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Quote, quote.Id, quote.Name);
 
-            var jql = "catalog = MSA";
+            //var jql = "catalog = MSA";
+            var jql = string.Empty;
 
             var assetTable = AssetTableService.GetIssueTableFromFilterWithJql(GetCurrentUser(), string.Empty, jql, AssetTableServiceConfiguration, true);
             var visibleFieldNames = new List<string>();
