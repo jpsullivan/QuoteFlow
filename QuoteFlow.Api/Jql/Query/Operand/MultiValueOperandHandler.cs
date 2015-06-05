@@ -6,22 +6,21 @@ using QuoteFlow.Api.Util;
 
 namespace QuoteFlow.Api.Jql.Query.Operand
 {
-    public class MultiValueOperandHandler : IOperandHandler<IOperand>
+    public class MultiValueOperandHandler : IOperandHandler<MultiValueOperand>
     {
-        private readonly IJqlOperandResolver operandResolver;
+        private readonly IJqlOperandResolver _operandResolver;
 
         public MultiValueOperandHandler(IJqlOperandResolver operandResolver)
         {
-            this.operandResolver = operandResolver;
+            _operandResolver = operandResolver;
         }
 
-        public IMessageSet Validate(User searcher, IOperand operand, ITerminalClause terminalClause)
+        public IMessageSet Validate(User searcher, MultiValueOperand operand, ITerminalClause terminalClause)
         {
-            var mvo = (MultiValueOperand) operand;
             var messages = new MessageSet();
-            foreach (var subOperand in mvo.Values)
+            foreach (var subOperand in operand.Values)
             {
-                IMessageSet subMessageSet = operandResolver.Validate(searcher, subOperand, terminalClause);
+                IMessageSet subMessageSet = _operandResolver.Validate(searcher, subOperand, terminalClause);
                 if (subMessageSet.HasAnyErrors())
                 {
                     messages.AddMessageSet(subMessageSet);
@@ -30,13 +29,12 @@ namespace QuoteFlow.Api.Jql.Query.Operand
             return messages;
         }
 
-        public IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, IOperand operand, ITerminalClause terminalClause)
+        public IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, MultiValueOperand operand, ITerminalClause terminalClause)
         {
-            var mvo = (MultiValueOperand) operand;
             var valuesList = new List<QueryLiteral>();
-            foreach (var subOperand in mvo.Values)
+            foreach (var subOperand in operand.Values)
             {
-                var vals = operandResolver.GetValues(queryCreationContext, subOperand, terminalClause);
+                var vals = _operandResolver.GetValues(queryCreationContext, subOperand, terminalClause);
                 if (vals != null)
                 {
                     valuesList.AddRange(vals);

@@ -140,8 +140,13 @@
     <Compile Include="Jql\Query\LikeQueryFactoryTests.cs" />
     <Compile Include="Jql\Query\LuceneQueryBuilderTests.cs" />
     <Compile Include="Jql\Query\ManufacturerClauseQueryFactoryTests.cs" />
+    <Compile Include="Jql\Query\Operand\EmptyOperandHandlerTests.cs" />
     <Compile Include="Jql\Query\Operand\FunctionOperandTests.cs" />
+    <Compile Include="Jql\Query\Operand\JqlOperandResolverTests.cs" />
+    <Compile Include="Jql\Query\Operand\MockOperandHandler.cs" />
+    <Compile Include="Jql\Query\Operand\MultiValueOperandHandlerTests.cs" />
     <Compile Include="Jql\Query\Operand\SimpleLiteralFactory.cs" />
+    <Compile Include="Jql\Query\Operand\SingleValueOperandHandlerTests.cs" />
     <Compile Include="Jql\Query\Operand\SingleValueOperandTests.cs" />
     <Compile Include="Jql\Query\QueryFactoryResultTests.cs" />
     <Compile Include="Jql\Query\QueryRegistryTests.cs" />
@@ -150,6 +155,7 @@
     <Compile Include="Jql\Util\Searchers\MockSearcherFactory.cs" />
     <Compile Include="Jql\Util\ToJqlStringVisitorTests.cs" />
     <Compile Include="Jql\Validator\AllTextValidatorTests.cs" />
+    <Compile Include="Jql\Validator\MockJqlFunctionHandlerRegistry.cs" />
     <Compile Include="Jql\Validator\MockJqlOperandResolver.cs" />
     <Compile Include="Index\DefaultIndexManagerTests.cs" />
     <Compile Include="Lucene\Index\WriterWrapperTests.cs" />

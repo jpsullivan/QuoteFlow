@@ -9,7 +9,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
     /// <summary>
     /// Handles the <see cref="EmptyOperand"/>.
     /// </summary>
-    public class EmptyOperandHandler : IOperandHandler<IOperand>
+    public class EmptyOperandHandler : IOperandHandler<EmptyOperand>
     {
         /// <summary>
         /// Returns a single empty query literal.
@@ -18,12 +18,12 @@ namespace QuoteFlow.Api.Jql.Query.Operand
         /// <param name="operand"></param>
         /// <param name="terminalClause"></param>
         /// <returns></returns>
-        public virtual IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, IOperand operand, ITerminalClause terminalClause)
+        public IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, EmptyOperand operand, ITerminalClause terminalClause)
         {
             return new List<QueryLiteral> { new QueryLiteral(operand) };
         }
 
-        public IMessageSet Validate(User searcher, IOperand operand, ITerminalClause terminalClause)
+        public IMessageSet Validate(User searcher, EmptyOperand operand, ITerminalClause terminalClause)
         {
             // We don't need to do any validation
             return new MessageSet();
@@ -44,5 +44,4 @@ namespace QuoteFlow.Api.Jql.Query.Operand
             return false;
         }
     }
-
 }

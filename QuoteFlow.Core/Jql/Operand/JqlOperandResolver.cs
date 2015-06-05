@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Function;
 using QuoteFlow.Api.Jql.Operand;
@@ -20,12 +19,12 @@ namespace QuoteFlow.Core.Jql.Operand
     /// </summary>
     public class JqlOperandResolver : IJqlOperandResolver
     {
-		private readonly IJqlFunctionHandlerRegistry registry;
-		private readonly IOperandHandler<IOperand> emptyHandler;
-        private readonly IOperandHandler<IOperand> singleHandler;
-        private readonly IOperandHandler<IOperand> multiHandler;
+		private readonly IJqlFunctionHandlerRegistry _registry;
+		private readonly IOperandHandler<EmptyOperand> _emptyHandler;
+        private readonly IOperandHandler<SingleValueOperand> _singleHandler;
+        private readonly IOperandHandler<MultiValueOperand> _multiHandler;
 		// this is a request scoped cache
-		private readonly IQueryCache queryCache;
+		private readonly IQueryCache _queryCache;
 
         public JqlOperandResolver(IJqlFunctionHandlerRegistry registry, IQueryCache queryCache)
 		{
@@ -39,14 +38,14 @@ namespace QuoteFlow.Core.Jql.Operand
 		        throw new ArgumentNullException("queryCache");
 		    }
 
-		    this.registry = registry;
-			this.queryCache = queryCache;
-			this.emptyHandler = new EmptyOperandHandler();
-			this.singleHandler = new SingleValueOperandHandler();
-			this.multiHandler = new MultiValueOperandHandler(this);
+		    _registry = registry;
+			_queryCache = queryCache;
+			_emptyHandler = new EmptyOperandHandler();
+			_singleHandler = new SingleValueOperandHandler();
+			_multiHandler = new MultiValueOperandHandler(this);
 		}
 
-        internal JqlOperandResolver(IJqlFunctionHandlerRegistry registry, IOperandHandler<IOperand> emptyHandler, IOperandHandler<IOperand> singleHandler, IOperandHandler<IOperand> multiHandler, IQueryCache queryCache)
+        public JqlOperandResolver(IJqlFunctionHandlerRegistry registry, IOperandHandler<EmptyOperand> emptyHandler, IOperandHandler<SingleValueOperand> singleHandler, IOperandHandler<MultiValueOperand> multiHandler, IQueryCache queryCache)
 		{
             if (registry == null)
             {
@@ -73,11 +72,11 @@ namespace QuoteFlow.Core.Jql.Operand
                 throw new ArgumentNullException("queryCache");
             }
 
-			this.registry = registry;
-			this.emptyHandler = emptyHandler;
-			this.singleHandler = singleHandler;
-			this.multiHandler = multiHandler;
-			this.queryCache = queryCache;
+			_registry = registry;
+			_emptyHandler = emptyHandler;
+			_singleHandler = singleHandler;
+			_multiHandler = multiHandler;
+			_queryCache = queryCache;
 		}
 
         IMessageSet IJqlOperandResolver.Validate(User searcher, IOperand operand, IWasClause clause)
@@ -102,20 +101,20 @@ namespace QuoteFlow.Core.Jql.Operand
 
             if (operand is EmptyOperand)
             {
-                values = emptyHandler.GetValues(queryCreationContext, operand, terminalClause);
+                values = _emptyHandler.GetValues(queryCreationContext, (EmptyOperand) operand, terminalClause);
             }
             else if (operand is SingleValueOperand)
             {
-                values = singleHandler.GetValues(queryCreationContext, operand, terminalClause);
+                values = _singleHandler.GetValues(queryCreationContext, (SingleValueOperand) operand, terminalClause);
             }
             else if (operand is MultiValueOperand)
             {
-                values = multiHandler.GetValues(queryCreationContext, operand, terminalClause);
+                values = _multiHandler.GetValues(queryCreationContext, (MultiValueOperand) operand, terminalClause);
             }
             else if (operand is FunctionOperand)
             {
                 var funcOperand = (FunctionOperand) operand;
-                var handler = registry.GetOperandHandler(funcOperand);
+                var handler = _registry.GetOperandHandler(funcOperand);
                 values = handler != null ? handler.GetValues(queryCreationContext, funcOperand, terminalClause) : new List<QueryLiteral>();
             }
             else
@@ -137,20 +136,20 @@ namespace QuoteFlow.Core.Jql.Operand
 
             if (operand is EmptyOperand)
             {
-                return emptyHandler.Validate(user, operand, terminalClause);
+                return _emptyHandler.Validate(user, (EmptyOperand) operand, terminalClause);
             }
             if (operand is SingleValueOperand)
             {
-                return singleHandler.Validate(user, operand, terminalClause);
+                return _singleHandler.Validate(user, (SingleValueOperand) operand, terminalClause);
             }
             if (operand is MultiValueOperand)
             {
-                return multiHandler.Validate(user, operand, terminalClause);
+                return _multiHandler.Validate(user, (MultiValueOperand) operand, terminalClause);
             }
             if (operand is FunctionOperand)
             {
                 var funcOperand = (FunctionOperand) operand;
-                var handler = registry.GetOperandHandler(funcOperand);
+                var handler = _registry.GetOperandHandler(funcOperand);
                 if (handler != null)
                 {
                     return handler.Validate(user, funcOperand, terminalClause);
@@ -171,7 +170,7 @@ namespace QuoteFlow.Core.Jql.Operand
 
         public FunctionOperand SanitizeFunctionOperand(User searcher, FunctionOperand operand)
         {
-            FunctionOperandHandler funcHandler = registry.GetOperandHandler(operand);
+            FunctionOperandHandler funcHandler = _registry.GetOperandHandler(operand);
             if (funcHandler == null) return operand;
             IJqlFunction jqlFunction = funcHandler.JqlFunction;
             var function = jqlFunction as IClauseSanitizingJqlFunction;
@@ -200,19 +199,19 @@ namespace QuoteFlow.Core.Jql.Operand
 
         public bool IsEmptyOperand(IOperand operand)
         {
-            IOperandHandler<IOperand> operandHandler = GetOperandHandler(operand);
+            var operandHandler = GetOperandHandler(operand);
 			return operandHandler != null && operandHandler.IsEmpty();
         }
 
         public bool IsFunctionOperand(IOperand operand)
         {
-            IOperandHandler<IOperand> handler = GetOperandHandler(operand);
+            var handler = GetOperandHandler(operand);
 			return handler != null && handler.IsFunction();
         }
 
         public bool IsListOperand(IOperand operand)
         {
-            IOperandHandler<IOperand> handler = GetOperandHandler(operand);
+            var handler = GetOperandHandler(operand);
 			return handler != null && handler.IsList();
         }
 
@@ -228,22 +227,23 @@ namespace QuoteFlow.Core.Jql.Operand
                 throw new ArgumentNullException("operand");
             }
 
+            // todo look how safe these casts really are (covariance issues)
 			if (operand is EmptyOperand)
 			{
-				return emptyHandler;
+				return _emptyHandler;
 			}
             if (operand is SingleValueOperand)
             {
-                return singleHandler;
+                return _singleHandler;
             }
             if (operand is MultiValueOperand)
             {
-                return multiHandler;
+                return _multiHandler;
             }
             if (operand is FunctionOperand)
             {
                 var funcOperand = (FunctionOperand) operand;
-                return registry.GetOperandHandler(funcOperand);
+                return _registry.GetOperandHandler(funcOperand);
             }
             
             //log.debug(string.Format("Unknown operand type '{0}' with name '{1}'", operand.GetType(), operand.DisplayString));
@@ -252,7 +252,7 @@ namespace QuoteFlow.Core.Jql.Operand
 
         private IEnumerable<QueryLiteral> GetValuesFromCache(IQueryCreationContext ctx, IOperand operand, ITerminalClause jqlClause)
         {
-            return queryCache.GetValues(ctx, operand, jqlClause);
+            return _queryCache.GetValues(ctx, operand, jqlClause);
         }
 
 
@@ -260,7 +260,7 @@ namespace QuoteFlow.Core.Jql.Operand
         {
             if (values != null)
             {
-                queryCache.SetValues(ctx, operand, jqlClause, values.ToList());
+                _queryCache.SetValues(ctx, operand, jqlClause, values.ToList());
             }
         }
     }

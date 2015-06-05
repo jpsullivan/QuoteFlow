@@ -12,7 +12,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
     /// Adapter to convert the plugin point <see cref="JqlFunction"/> into
     /// <see cref="OperandHandler"/>.
     /// </summary>
-    public class FunctionOperandHandler : IOperandHandler<IOperand>
+    public class FunctionOperandHandler : IOperandHandler<FunctionOperand>
 	{
 		public FunctionOperandHandler(IJqlFunction jqlFunction)
 		{
@@ -24,14 +24,14 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 			JqlFunction = jqlFunction;
 		}
 
-        public IMessageSet Validate(User searcher, IOperand operand, ITerminalClause terminalClause)
+        public IMessageSet Validate(User searcher, FunctionOperand operand, ITerminalClause terminalClause)
         {
-            return JqlFunction.Validate(searcher, (FunctionOperand) operand, terminalClause);
+            return JqlFunction.Validate(searcher, operand, terminalClause);
         }
 
-        public IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, IOperand operand, ITerminalClause terminalClause)
+        public IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, FunctionOperand operand, ITerminalClause terminalClause)
         {
-            return JqlFunction.GetValues(queryCreationContext, (FunctionOperand) operand, terminalClause);
+            return JqlFunction.GetValues(queryCreationContext, operand, terminalClause);
         }
 
         public bool IsList()

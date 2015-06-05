@@ -98,6 +98,27 @@ namespace QuoteFlow.Api.Jql.Operand
             return IntValue != null ? IntValue.ToString() : StringValue;
         }
 
+        protected bool Equals(QueryLiteral other)
+        {
+            return IntValue == other.IntValue && string.Equals(StringValue, other.StringValue);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((QueryLiteral) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (IntValue.GetHashCode()*397) ^ (StringValue != null ? StringValue.GetHashCode() : 0);
+            }
+        }
+
         public override string ToString()
         {
             return (IntValue != null) ? IntValue.ToString() : Convert.ToString(StringValue);
