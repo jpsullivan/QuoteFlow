@@ -125,6 +125,9 @@
     <Compile Include="Jql\Builder\ValueBuilderTests.cs" />
     <Compile Include="Jql\Clause\DeMorgansVisitorTests.cs" />
     <Compile Include="Jql\Context\QueryCacheTests.cs" />
+    <Compile Include="Jql\Context\QueryContextVisitorTests.cs" />
+    <Compile Include="Jql\MockClauseHandler.cs" />
+    <Compile Include="Jql\MockClauseInformation.cs" />
     <Compile Include="Jql\Parser\Antlr\AntlrPositionTests.cs" />
     <Compile Include="Jql\Parser\Antlr\LexerErrorHelperTests.cs" />
     <Compile Include="Jql\Parser\JqlQueryParserTests.cs" />

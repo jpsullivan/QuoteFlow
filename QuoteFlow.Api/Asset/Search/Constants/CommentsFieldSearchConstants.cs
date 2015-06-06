@@ -1,7 +1,7 @@
-﻿using QuoteFlow.Api.Asset.Index;
+﻿using System.Collections.Generic;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Query;
-using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Api.Asset.Search.Constants
 {
@@ -12,14 +12,14 @@ namespace QuoteFlow.Api.Asset.Search.Constants
         private CommentsFieldSearchConstants()
         {
             JqlClauseNames = new ClauseNames(AssetFieldConstants.Comment);
-            SupportedOperators = new Set<Operator> { Operator.LIKE, Operator.NOT_LIKE};
+            SupportedOperators = new HashSet<Operator> { Operator.LIKE, Operator.NOT_LIKE };
         }
 
         public ClauseNames JqlClauseNames { get; private set; }
 
         public string IndexField { get { return DocumentConstants.CommentId; } }
         public string FieldId { get { return AssetFieldConstants.Comment; } }
-        public Set<Operator> SupportedOperators { get; private set; }
+        public HashSet<Operator> SupportedOperators { get; private set; }
         public IQuoteFlowDataType DataType { get; private set; }
 
         internal static CommentsFieldSearchConstants Instance

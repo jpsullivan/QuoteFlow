@@ -15,15 +15,15 @@ namespace QuoteFlow.Core.Jql.Context
     public class AllTextClauseContextFactory : IClauseContextFactory
     {
         private readonly ISearchHandlerManager searchHandlerManager;
+        private readonly ContextSetUtil contextSetUtil;
 
-        public AllTextClauseContextFactory(ISearchHandlerManager searchHandlerManager)
+        public AllTextClauseContextFactory(ISearchHandlerManager searchHandlerManager, ContextSetUtil contextSetUtil)
         {
-            if (searchHandlerManager == null)
-            {
-                throw new ArgumentNullException("searchHandlerManager");
-            }
+            if (searchHandlerManager == null) throw new ArgumentNullException("searchHandlerManager");
+            if (contextSetUtil == null) throw new ArgumentNullException("contextSetUtil");
 
             this.searchHandlerManager = searchHandlerManager;
+            this.contextSetUtil = contextSetUtil;
         }
 
         public virtual IClauseContext GetClauseContext(User searcher, ITerminalClause terminalClause)
@@ -36,7 +36,7 @@ namespace QuoteFlow.Core.Jql.Context
                 contexts.Add(factory.GetClauseContext(searcher, terminalClause));
             }
 
-            return contexts.Union();
+            return contextSetUtil.Union(contexts);
         }
 
         internal virtual IEnumerable<IClauseContextFactory> GetFactories(User searcher)
@@ -52,7 +52,7 @@ namespace QuoteFlow.Core.Jql.Context
         {
             var factories = new List<IClauseContextFactory>();
             var systemFieldClauseNames =
-                new List<string>()
+                new List<string>
                 {
                     SystemSearchConstants.ForComments().JqlClauseNames.PrimaryName,
                     SystemSearchConstants.ForDescription().JqlClauseNames.PrimaryName,

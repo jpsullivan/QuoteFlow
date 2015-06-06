@@ -20,16 +20,18 @@ namespace QuoteFlow.Core.Jql.Context
     public class QueryContextVisitor : IClauseVisitor<QueryContextVisitor.ContextResult>
     {
         private readonly User searcher;
+        private readonly ContextSetUtil contextSetUtil;
         private readonly ISearchHandlerManager searchHandlerManager;
         private bool rootClause = true;
 
-        public QueryContextVisitor(User searcher, ISearchHandlerManager searchHandlerManager)
+        public QueryContextVisitor(User searcher, ContextSetUtil contextSetUtil, ISearchHandlerManager searchHandlerManager)
         {
             this.searcher = searcher;
+            this.contextSetUtil = contextSetUtil;
             this.searchHandlerManager = searchHandlerManager;
         }
 
-        public ContextResult CreateContext(IClause clause)
+        public virtual ContextResult CreateContext(IClause clause)
         {
             // This method handles the root clause case
             rootClause = false;
@@ -161,7 +163,7 @@ namespace QuoteFlow.Core.Jql.Context
             return new ContextResult(fullContext, simpleContext);
         }
 
-        private static ContextResult CreateIntersectionResult<T1, T2>(ISet<T1> fullContexts, ISet<T2> simpleContexts)
+        private ContextResult CreateIntersectionResult<T1, T2>(ISet<T1> fullContexts, ISet<T2> simpleContexts)
             where T1 : IClauseContext
             where T2 : IClauseContext
         {
@@ -170,25 +172,25 @@ namespace QuoteFlow.Core.Jql.Context
             return new ContextResult(fullContext, simpleContext);
         }
 
-        private static IClauseContext SafeUnion<T>(ISet<T> contexts) where T : IClauseContext
+        private IClauseContext SafeUnion<T>(ISet<T> contexts) where T : IClauseContext
         {
             if (contexts == null || !contexts.Any())
             {
                 return ClauseContext.CreateGlobalClauseContext();
             }
 
-            var returnContext = contexts.Count() == 1 ? contexts.First() : contexts.Union();
+            var returnContext = contexts.Count() == 1 ? contexts.First() : contextSetUtil.Union(contexts);
             return (!returnContext.Contexts.Any()) ? ClauseContext.CreateGlobalClauseContext() : returnContext;
         }
 
-        private static IClauseContext SafeIntersection<T>(ISet<T> contexts) where T : IClauseContext
+        private IClauseContext SafeIntersection<T>(ISet<T> contexts) where T : IClauseContext
         {
             if (contexts == null || !contexts.Any())
             {
                 return ClauseContext.CreateGlobalClauseContext();
             }
 
-            var returnContext = contexts.Count() == 1 ? contexts.First() : contexts.Intersect();
+            var returnContext = contexts.Count() == 1 ? contexts.First() : contextSetUtil.Intersect(contexts);
             return (!returnContext.Contexts.Any()) ? ClauseContext.CreateGlobalClauseContext() : returnContext;
         }
 
@@ -197,14 +199,16 @@ namespace QuoteFlow.Core.Jql.Context
         /// </summary>
         public class QueryContextVisitorFactory
         {
+            private readonly ContextSetUtil _contextSetUtil;
             private readonly ISearchHandlerManager _searchHandlerManager;
 
             public QueryContextVisitorFactory()
             {
             }
 
-            public QueryContextVisitorFactory(ISearchHandlerManager searchHandlerManager)
+            public QueryContextVisitorFactory(ContextSetUtil contextSetUtil, ISearchHandlerManager searchHandlerManager)
             {
+                _contextSetUtil = contextSetUtil;
                 _searchHandlerManager = searchHandlerManager;
             }
 
@@ -215,7 +219,7 @@ namespace QuoteFlow.Core.Jql.Context
             /// <returns> a visitor that will calculate the context for all clauses specified in the <see cref="com.atlassian.query.Query"/>. </returns>
             public virtual QueryContextVisitor CreateVisitor(User searcher)
             {
-                return new QueryContextVisitor(searcher, _searchHandlerManager);
+                return new QueryContextVisitor(searcher, _contextSetUtil, _searchHandlerManager);
             }
         }
 

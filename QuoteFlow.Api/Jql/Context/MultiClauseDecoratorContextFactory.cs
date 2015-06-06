@@ -27,23 +27,23 @@ namespace QuoteFlow.Api.Jql.Context
     {
         private readonly IClauseContextFactory contextFactory;
         private readonly IJqlOperandResolver jqlOperandResolver;
+        private readonly ContextSetUtil contextSetUtil;
 
         public MultiClauseDecoratorContextFactory(IJqlOperandResolver jqlOperandResolver, IClauseContextFactory contextFactory)
+            : this(jqlOperandResolver, contextFactory, ContextSetUtil.Instance)
         {
-            if (jqlOperandResolver == null)
-            {
-                throw new ArgumentNullException("jqlOperandResolver");
-            }
-
-            if (contextFactory == null)
-            {
-                throw new ArgumentNullException("contextFactory");
-            }
-
-            this.jqlOperandResolver = jqlOperandResolver;
-            this.contextFactory = contextFactory;
         }
 
+        public MultiClauseDecoratorContextFactory(IJqlOperandResolver jqlOperandResolver, IClauseContextFactory contextFactory, ContextSetUtil contextSetUtil)
+        {
+            if (jqlOperandResolver == null) throw new ArgumentNullException("jqlOperandResolver");
+            if (contextFactory == null) throw new ArgumentNullException("contextFactory");
+            if (contextSetUtil == null) throw new ArgumentNullException("contextSetUtil");
+            
+            this.jqlOperandResolver = jqlOperandResolver;
+            this.contextFactory = contextFactory;
+            this.contextSetUtil = contextSetUtil;
+        }
 
         public IClauseContext GetClauseContext(User searcher, ITerminalClause terminalClause)
         {
@@ -70,11 +70,11 @@ namespace QuoteFlow.Api.Jql.Context
 
                     if (convertedOperator == Query.Operator.EQUALS)
                     {
-                        return ctxs.Union();
+                        return contextSetUtil.Union(ctxs);
                     }
                     else
                     {
-                        return ctxs.Intersect();
+                        return contextSetUtil.Intersect(ctxs);
                     }
                 }
             }

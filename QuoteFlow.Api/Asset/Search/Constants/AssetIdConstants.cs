@@ -1,4 +1,5 @@
-﻿using QuoteFlow.Api.Asset.Index;
+﻿using System.Collections.Generic;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Operator;
 using QuoteFlow.Api.Jql.Query;
@@ -14,7 +15,7 @@ namespace QuoteFlow.Api.Asset.Search.Constants
         public ClauseNames JqlClauseNames { get; private set; }
         public string IndexField { get; private set; }
         public string FieldId { get; private set; }
-        public Set<Operator> SupportedOperators { get; private set; }
+        public HashSet<Operator> SupportedOperators { get; private set; }
         public IQuoteFlowDataType DataType { get; private set; }
 
         private static readonly AssetIdConstants instance = new AssetIdConstants();

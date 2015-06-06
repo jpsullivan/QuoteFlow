@@ -33,7 +33,7 @@ namespace QuoteFlow.Core.Tests.Services
             public void Test()
             {
                 var clause = new Mock<IClause>();
-                var queryContextVisitor = new QueryContextVisitor(null, null);
+                var queryContextVisitor = new QueryContextVisitor(null, null, null);
 
                 var searchService = new TestableSearchService();
 

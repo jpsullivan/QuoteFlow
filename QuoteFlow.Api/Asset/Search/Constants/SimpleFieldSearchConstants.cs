@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Query;
-using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Api.Asset.Search.Constants
 {
@@ -15,7 +14,7 @@ namespace QuoteFlow.Api.Asset.Search.Constants
         public string UrlParameter { get; set; }
         public string SearcherId { get; private set; }
         public string FieldId { get; private set; }
-        public Set<Operator> SupportedOperators { get; private set; }
+        public HashSet<Operator> SupportedOperators { get; private set; }
         public IQuoteFlowDataType DataType { get; private set; }
 
         public SimpleFieldSearchConstants(string field, IEnumerable<Operator> supportedOperators, IQuoteFlowDataType supportedType)
@@ -30,7 +29,7 @@ namespace QuoteFlow.Api.Asset.Search.Constants
             UrlParameter = urlParameter;
             SearcherId = searcherId;
             FieldId = fieldId;
-            SupportedOperators = (Set<Operator>) supportedOperators;
+            SupportedOperators = (HashSet<Operator>) supportedOperators;
             DataType = supportedType;
         }
 

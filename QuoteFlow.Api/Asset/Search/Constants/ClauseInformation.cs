@@ -1,6 +1,6 @@
-﻿using QuoteFlow.Api.Jql;
+﻿using System.Collections.Generic;
+using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Query;
-using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Api.Asset.Search.Constants
 {
@@ -9,10 +9,10 @@ namespace QuoteFlow.Api.Asset.Search.Constants
         public ClauseNames JqlClauseNames { get; private set; }
         public string IndexField { get; private set; }
         public string FieldId { get; private set; }
-        public Set<Operator> SupportedOperators { get; private set; }
+        public HashSet<Operator> SupportedOperators { get; private set; }
         public IQuoteFlowDataType DataType { get; private set; }
 
-		public ClauseInformation(string indexField, ClauseNames names, string fieldId, Set<Operator> supportedOperators, IQuoteFlowDataType supportedType)
+		public ClauseInformation(string indexField, ClauseNames names, string fieldId, HashSet<Operator> supportedOperators, IQuoteFlowDataType supportedType)
 		{
 			DataType = supportedType;
 			IndexField = indexField;
@@ -21,7 +21,7 @@ namespace QuoteFlow.Api.Asset.Search.Constants
 			SupportedOperators = supportedOperators;
 		}
 
-        public ClauseInformation(string indexField, string jqlClauseName, string fieldId, Set<Operator> supportedOperators, IQuoteFlowDataType supportedType)
+        public ClauseInformation(string indexField, string jqlClauseName, string fieldId, HashSet<Operator> supportedOperators, IQuoteFlowDataType supportedType)
             : this(indexField, new ClauseNames(jqlClauseName), fieldId, supportedOperators, supportedType)
 		{
 		}

@@ -1,6 +1,6 @@
-﻿using QuoteFlow.Api.Jql;
+﻿using System.Collections.Generic;
+using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Query;
-using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Api.Asset.Search.Constants
 {
@@ -9,19 +9,17 @@ namespace QuoteFlow.Api.Asset.Search.Constants
     /// </summary>
     public class AllTextSearchConstants : IClauseInformation
     {
-        public static AllTextSearchConstants Instance = new AllTextSearchConstants();
-
-        private readonly ClauseNames ALL_TEXT;
-        private readonly Set<Operator> supportedOperators;
+        public static readonly AllTextSearchConstants Instance = new AllTextSearchConstants();
+        private readonly ClauseNames _allText;
 
         private AllTextSearchConstants()
         {
-            ALL_TEXT = new ClauseNames("text");
-            SupportedOperators = new Set<Operator> { Operator.LIKE };
+            _allText = new ClauseNames("text");
+            SupportedOperators = new HashSet<Operator> { Operator.LIKE };
         }
 
 
-        public ClauseNames JqlClauseNames { get { return ALL_TEXT; } }
+        public ClauseNames JqlClauseNames { get { return _allText; } }
 
         // This makes this implementation strange since it has no associated index field, instead it indicates searching across 
         public string IndexField { get { return null; } }
@@ -29,7 +27,7 @@ namespace QuoteFlow.Api.Asset.Search.Constants
         // This makes this implementation strance since it has no assciated field
         public string FieldId { get { return null; } }
 
-        public Set<Operator> SupportedOperators { get; private set; }
+        public HashSet<Operator> SupportedOperators { get; private set; }
         public IQuoteFlowDataType DataType { get; private set; }
     }
 }

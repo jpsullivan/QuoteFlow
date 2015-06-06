@@ -1,4 +1,4 @@
-﻿using Wintellect.PowerCollections;
+﻿using System.Collections.Generic;
 
 namespace QuoteFlow.Api.Jql.Operator
 {
@@ -10,7 +10,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// A set of all non-relational operators.
         /// </summary>
-        public static Set<Query.Operator> NonRelationalOperators = new Set<Query.Operator>()
+        public static HashSet<Query.Operator> NonRelationalOperators = new HashSet<Query.Operator>
         {
             Query.Operator.NOT_EQUALS,
             Query.Operator.EQUALS,
@@ -25,7 +25,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// A list of operators that work exclusively on the EMPTY clause.
         /// </summary>
-        public static Set<Query.Operator> EmptyOnlyOperators = new Set<Query.Operator>()
+        public static readonly HashSet<Query.Operator> EmptyOnlyOperators = new HashSet<Query.Operator>
         {
             Query.Operator.IS_NOT,
             Query.Operator.IS
@@ -34,7 +34,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// A list of operators that can work on the EMPTY clause.
         /// </summary>
-        public static Set<Query.Operator> EmptyOperators = new Set<Query.Operator>()
+        public static readonly HashSet<Query.Operator> EmptyOperators = new HashSet<Query.Operator>
         {
             Query.Operator.NOT_EQUALS,
             Query.Operator.EQUALS,
@@ -49,7 +49,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// A list of operators that can work on text clauses.
         /// </summary>
-        public static Set<Query.Operator> TextOperators = new Set<Query.Operator>()
+        public static readonly HashSet<Query.Operator> TextOperators = new HashSet<Query.Operator>
         {
             Query.Operator.NOT_LIKE,
             Query.Operator.LIKE,
@@ -60,7 +60,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// 
         /// </summary>
-        public static Set<Query.Operator> PositiveEqualityOperators = new Set<Query.Operator>()
+        public static HashSet<Query.Operator> PositiveEqualityOperators = new HashSet<Query.Operator>
         {
             Query.Operator.EQUALS,
             Query.Operator.IN,
@@ -70,7 +70,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// 
         /// </summary>
-        public static Set<Query.Operator> NegativeEqualityOperators = new Set<Query.Operator>()
+        public static readonly HashSet<Query.Operator> NegativeEqualityOperators = new HashSet<Query.Operator>
         {
             Query.Operator.NOT_EQUALS,
             Query.Operator.NOT_IN,
@@ -81,7 +81,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// A list of operators that a clause needs to support if it supports the EQUALS operator
         /// and the EMPTY operand.
         /// </summary>
-        public static Set<Query.Operator> EqualityOperatorsWithEmpty = new Set<Query.Operator>()
+        public static readonly HashSet<Query.Operator> EqualityOperatorsWithEmpty = new HashSet<Query.Operator>
         {
             Query.Operator.EQUALS,
             Query.Operator.NOT_EQUALS,
@@ -94,7 +94,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// The list of operators that a clause needs to support if it supports the EQUALS operator.
         /// </summary>
-        public static Set<Query.Operator> EqualityOperators = new Set<Query.Operator>()
+        public static HashSet<Query.Operator> EqualityOperators = new HashSet<Query.Operator>
         {
             Query.Operator.EQUALS,
             Query.Operator.NOT_EQUALS,
@@ -105,7 +105,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// A set of operators that work with lists.
         /// </summary>
-        public static Set<Query.Operator> ListOnlyOperators = new Set<Query.Operator>
+        public static readonly HashSet<Query.Operator> ListOnlyOperators = new HashSet<Query.Operator>
         {
             Query.Operator.NOT_IN,
             Query.Operator.IN,
@@ -116,7 +116,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// 
         /// </summary>
-        public static Set<Query.Operator> RelationalOnlyOperators = new Set<Query.Operator>
+        public static readonly HashSet<Query.Operator> RelationalOnlyOperators = new HashSet<Query.Operator>
         {
             Query.Operator.GREATER_THAN,
             Query.Operator.GREATER_THAN_EQUALS,
@@ -127,7 +127,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// A set of equality operators and relational only operators
         /// </summary>
-        public static Set<Query.Operator> EqualityAndRelational = new Set<Query.Operator>
+        public static readonly HashSet<Query.Operator> EqualityAndRelational = new HashSet<Query.Operator>
         {
             Query.Operator.EQUALS,
             Query.Operator.NOT_EQUALS,
@@ -142,7 +142,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// A list of change history predicates.
         /// </summary>
-        public static Set<Query.Operator> ChangeHistoryPredicates = new Set<Query.Operator>
+        public static HashSet<Query.Operator> ChangeHistoryPredicates = new HashSet<Query.Operator>
         {
             Query.Operator.AFTER,
             Query.Operator.BEFORE,
@@ -156,7 +156,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// A list of change history predicates that support date searching.
         /// </summary>
-        public static Set<Query.Operator> ChangeHistoryValuePredicates = new Set<Query.Operator>()
+        public static HashSet<Query.Operator> ChangeHistoryValuePredicates = new HashSet<Query.Operator>
         {
             Query.Operator.FROM,
             Query.Operator.TO
@@ -165,7 +165,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// A set of change history predicates that support date searching.
         /// </summary>
-        public static Set<Query.Operator> ChangeHistoryDatePredicates = new Set<Query.Operator>()
+        public static readonly HashSet<Query.Operator> ChangeHistoryDatePredicates = new HashSet<Query.Operator>
         {
             Query.Operator.AFTER,
             Query.Operator.BEFORE,
@@ -176,7 +176,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// A list of change history operators.
         /// </summary>
-        public static Set<Query.Operator> ChangeHistoryOperators = new Set<Query.Operator>()
+        public static HashSet<Query.Operator> ChangeHistoryOperators = new HashSet<Query.Operator>
         {
             Query.Operator.WAS,
             Query.Operator.WAS_NOT,
@@ -188,7 +188,7 @@ namespace QuoteFlow.Api.Jql.Operator
         /// <summary>
         /// A set of equality operators with empty and relational only operators.
         /// </summary>
-        public static Set<Query.Operator> EqualityAndRelationalWithEmpty = new Set<Query.Operator>()
+        public static readonly HashSet<Query.Operator> EqualityAndRelationalWithEmpty = new HashSet<Query.Operator>
         {
             Query.Operator.EQUALS,
             Query.Operator.NOT_EQUALS,

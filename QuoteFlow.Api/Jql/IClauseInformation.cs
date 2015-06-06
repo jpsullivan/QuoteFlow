@@ -1,5 +1,5 @@
-﻿using QuoteFlow.Api.Asset.Search;
-using Wintellect.PowerCollections;
+﻿using System.Collections.Generic;
+using QuoteFlow.Api.Asset.Search;
 
 namespace QuoteFlow.Api.Jql
 {
@@ -28,18 +28,18 @@ namespace QuoteFlow.Api.Jql
         /// can handle for its searching.
         /// </summary>
         /// <returns>A set of supported operators.</returns>
-        Set<Query.Operator> SupportedOperators { get; }
+        HashSet<Query.Operator> SupportedOperators { get; }
 
         /// <summary>
-        /// Provides the <see cref="com.atlassian.jira.JiraDataType"/> that this clause handles and searches on. This allows us
+        /// Provides the <see cref="QuoteFlowDataType"/> that this clause handles and searches on. This allows us
         /// to infer some information about how the search will behave and how it will interact with other elements in
         /// the system.
         /// 
-        /// For example, if this returns <see cref="com.atlassian.jira.JiraDataTypes#DATE"/> then we know that we could provide
+        /// For example, if this returns <see cref="QuoteFlowDataTypes.Date"/> then we know that we could provide
         /// users with a date picker for an input field, and we know that this clause should only be used by functions
         /// that also specify dates.
         /// </summary>
-        /// <returns> the JiraDataType that this clause can handle. </returns>
+        /// <returns>The QuoteFlowDataType that this clause can handle.</returns>
         IQuoteFlowDataType DataType { get; }
     }
 }

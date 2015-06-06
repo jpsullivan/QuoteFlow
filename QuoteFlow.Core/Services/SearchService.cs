@@ -155,8 +155,7 @@ namespace QuoteFlow.Core.Services
             if (queryContext == null)
             {
                 // calculate both the full and simple contexts and cache them
-                var factory = new QueryContextVisitor.QueryContextVisitorFactory(SearchHandlerManager);
-                QueryContextVisitor visitor = factory.CreateVisitor(searcher);
+                QueryContextVisitor visitor = QueryContextVisitorFactory.CreateVisitor(searcher);
 
                 QueryContextVisitor.ContextResult result = clause.Accept(visitor);
                 queryContext = new QueryContext(result.FullContext);

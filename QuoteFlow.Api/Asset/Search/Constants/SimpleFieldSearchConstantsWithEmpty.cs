@@ -1,6 +1,6 @@
-﻿using QuoteFlow.Api.Jql;
+﻿using System.Collections.Generic;
+using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Query;
-using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Api.Asset.Search.Constants
 {
@@ -13,18 +13,18 @@ namespace QuoteFlow.Api.Asset.Search.Constants
         public ClauseNames JqlClauseNames { get; private set; }
         public string UrlParameter { get; private set; }
         public string SearcherId { get; private set; }
-        public Set<Operator> SupportedOperators { get; private set; }
+        public HashSet<Operator> SupportedOperators { get; private set; }
         public string EmptySelectFlag { get; private set; }
         public string EmptyIndexValue { get; private set; }
         public string FieldId { get; private set; }
         public IQuoteFlowDataType DataType { get; private set; }
 
-        public SimpleFieldSearchConstantsWithEmpty(string field, Set<Operator> supportedOperators, IQuoteFlowDataType supportedType)
+        public SimpleFieldSearchConstantsWithEmpty(string field, HashSet<Operator> supportedOperators, IQuoteFlowDataType supportedType)
             : this(field, field, field, field, field, field, field, supportedOperators, supportedType)
         {
         }
 
-        public SimpleFieldSearchConstantsWithEmpty(string indexField, ClauseNames jqlClauseNames, string urlParameter, string searcherId, Set<Operator> supportedOperators, string emptySelectFlag, string emptyIndexValue, string fieldId, IQuoteFlowDataType supportedType)
+        public SimpleFieldSearchConstantsWithEmpty(string indexField, ClauseNames jqlClauseNames, string urlParameter, string searcherId, HashSet<Operator> supportedOperators, string emptySelectFlag, string emptyIndexValue, string fieldId, IQuoteFlowDataType supportedType)
         {
             IndexField = indexField;
             JqlClauseNames = jqlClauseNames;
@@ -37,7 +37,7 @@ namespace QuoteFlow.Api.Asset.Search.Constants
             DataType = supportedType;
         }
 
-        public SimpleFieldSearchConstantsWithEmpty(string indexField, string jqlClauseName, string urlParameter, string searcherId, string emptySelectFlag, string emptyIndexValue, string fieldId, Set<Operator> supportedOperators, IQuoteFlowDataType supportedType)
+        public SimpleFieldSearchConstantsWithEmpty(string indexField, string jqlClauseName, string urlParameter, string searcherId, string emptySelectFlag, string emptyIndexValue, string fieldId, HashSet<Operator> supportedOperators, IQuoteFlowDataType supportedType)
             : this(indexField, new ClauseNames(jqlClauseName), urlParameter, searcherId, supportedOperators, emptySelectFlag, emptyIndexValue, fieldId, supportedType)
         {
         }

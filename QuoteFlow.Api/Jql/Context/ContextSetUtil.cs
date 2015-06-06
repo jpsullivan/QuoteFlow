@@ -7,8 +7,10 @@ namespace QuoteFlow.Api.Jql.Context
     /// <summary>
     /// Performs set utilities on <see cref="IClauseContext"/>'s
     /// </summary>
-    public static class ContextSetUtil
+    public class ContextSetUtil
     {
+        public static readonly ContextSetUtil Instance = new ContextSetUtil();
+
         private static readonly ICatalogManufacturerContext GlobalContext = CatalogManufacturerContext.CreateGlobalContext();
 
         /// <summary>
@@ -20,7 +22,7 @@ namespace QuoteFlow.Api.Jql.Context
         /// </summary>
         /// <param name="childClauseContexts">The child clause contexts to intersect, must never be null or contain null elements.</param>
         /// <returns>The intersection of ClauseContext's that were passed in.</returns>
-        public static IClauseContext Intersect<T>(this ISet<T> childClauseContexts) where T : IClauseContext
+        public IClauseContext Intersect<T>(ISet<T> childClauseContexts) where T : IClauseContext
         {
             // todo: need to throw argumentnullexception if list has any null values
 
@@ -56,7 +58,7 @@ namespace QuoteFlow.Api.Jql.Context
         /// equivilent if the id values are the same, we do not compare if they are Explicit or Implicit. When combined
         /// an Explicit flag will always replace an Implicit flag.
         /// </summary>
-        public static IClauseContext Union<T>(this ISet<T> childClauseContexts) where T : IClauseContext
+        public IClauseContext Union<T>(ISet<T> childClauseContexts) where T : IClauseContext
 		{
 			// todo: need to throw argumentnullexception if list has any null values
 
@@ -80,7 +82,7 @@ namespace QuoteFlow.Api.Jql.Context
 			return union;
 		}
 
-        private static IClauseContext Intersect(IClauseContext context1, IClauseContext context2)
+        private IClauseContext Intersect(IClauseContext context1, IClauseContext context2)
         {
             IClauseContext clauseContext = ShortCircuitIfBothGlobal(context1, context2);
             if (clauseContext != null)
@@ -93,7 +95,7 @@ namespace QuoteFlow.Api.Jql.Context
             return clauseContext;
         }
 
-        private static IClauseContext Union(IClauseContext context1, IClauseContext context2)
+        private IClauseContext Union(IClauseContext context1, IClauseContext context2)
         {
             var contextProjectMap1 = new ContextCatalogMap(context1);
             var contextProjectMap2 = new ContextCatalogMap(context2);
