@@ -9,7 +9,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
     /// <summary>
     /// Knows how to perform validation on and get expanded values from <see cref="IOperand"/>s.
     /// </summary>
-    public interface IOperandHandler<T> where T : IOperand
+    public interface IOperandHandler<in T> where T : IOperand
     {
         /// <summary>
         /// Will perform operand specific validation.

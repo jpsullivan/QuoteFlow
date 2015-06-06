@@ -230,20 +230,20 @@ namespace QuoteFlow.Core.Jql.Operand
             // todo look how safe these casts really are (covariance issues)
 			if (operand is EmptyOperand)
 			{
-				return _emptyHandler;
+				return _emptyHandler as IOperandHandler<IOperand>;
 			}
             if (operand is SingleValueOperand)
             {
-                return _singleHandler;
+                return _singleHandler as IOperandHandler<IOperand>;
             }
             if (operand is MultiValueOperand)
             {
-                return _multiHandler;
+                return _multiHandler as IOperandHandler<IOperand>;
             }
             if (operand is FunctionOperand)
             {
                 var funcOperand = (FunctionOperand) operand;
-                return _registry.GetOperandHandler(funcOperand);
+                return _registry.GetOperandHandler(funcOperand) as IOperandHandler<IOperand>;
             }
             
             //log.debug(string.Format("Unknown operand type '{0}' with name '{1}'", operand.GetType(), operand.DisplayString));

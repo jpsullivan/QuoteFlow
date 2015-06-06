@@ -15,7 +15,7 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
     /// </summary>
     public class MockJqlOperandResolver : IJqlOperandResolver
     {
-        private IDictionary<string, IOperandHandler<IOperand>> _handlers;
+        private readonly IDictionary<string, IOperandHandler<IOperand>> _handlers;
 
         public MockJqlOperandResolver() : this(new Dictionary<string, IOperandHandler<IOperand>>())
 		{
@@ -36,7 +36,7 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
 			return this;
 		}
 
-		public virtual MockJqlOperandResolver AddHandler<T1>(string name, IOperandHandler<IOperand> handler)
+		public virtual MockJqlOperandResolver AddHandler<T>(string name, IOperandHandler<IOperand> handler)
 		{
 			_handlers.Add(name, handler);
 			return this;
@@ -149,12 +149,10 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
         public static MockJqlOperandResolver CreateSimpleSupport()
         {
             var support = new MockJqlOperandResolver();
-            var handlers = new Dictionary<string, IOperandHandler<IOperand>>
-            {
-                {"SingleValueOperand", new SingleValueOperandHandler()},
-                {"MultiValueOperand", new MultiValueOperandHandler(support)},
-                {"Empty", new EmptyOperandHandler()}
-            };
+            var handlers = new Dictionary<string, IOperandHandler<IOperand>>();
+            handlers.Add("SingleValueOperand", (IOperandHandler<IOperand>) new SingleValueOperandHandler());
+            handlers.Add("MultiValueOperand", (IOperandHandler<IOperand>) new MultiValueOperandHandler(support));
+            handlers.Add("Empty", (IOperandHandler<IOperand>) new EmptyOperandHandler());
 
             support.AddHandlers(handlers);
             return support;
