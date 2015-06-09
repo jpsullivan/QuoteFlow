@@ -34,5 +34,50 @@ namespace QuoteFlow.Core.Tests.Jql.Context
             Assert.True(contextsCollection.Contains(context1));
             Assert.True(contextsCollection.Contains(context2));
         }
+
+        [Fact]
+        public void TestGetCatalogManufacturerContexts_Implicit()
+        {
+            var manufacturers = new List<IManufacturerContext> { new ManufacturerContext(3) };
+            var context = new QueryContextCatalogManufacturerContexts(new CatalogContext(20), manufacturers);
+
+            var inputContext = new CatalogManufacturerContext(new CatalogContext(20), new ManufacturerContext(3));
+            var clauseContext = new ClauseContext(new List<ICatalogManufacturerContext> { inputContext });
+
+            var queryContext = new QueryContext(clauseContext);
+            var contextsCollection = queryContext.CatalogManufacturerContexts;
+            Assert.Equal(1, contextsCollection.Count());
+            Assert.True(contextsCollection.Contains(context));
+        }
+
+        [Fact]
+        public void TestGetCatalogManufacturerContexts_All()
+        {
+            var manufacturers = new List<IManufacturerContext> { new ManufacturerContext(3) };
+            var context = new QueryContextCatalogManufacturerContexts(AllCatalogsContext.Instance, manufacturers);
+
+            var inputContext = new CatalogManufacturerContext(AllCatalogsContext.Instance, new ManufacturerContext(3));
+            var clauseContext = new ClauseContext(new List<ICatalogManufacturerContext> { inputContext });
+
+            var queryContext = new QueryContext(clauseContext);
+            var contextsCollection = queryContext.CatalogManufacturerContexts;
+            Assert.Equal(1, contextsCollection.Count());
+            Assert.True(contextsCollection.Contains(context));
+        }
+
+        [Fact]
+        public void TestGetCatalogManufacturerContexts_AllImplicit()
+        {
+            var manufacturers = new List<IManufacturerContext> { new ManufacturerContext(3) };
+            var context = new QueryContextCatalogManufacturerContexts(AllCatalogsContext.Instance, manufacturers);
+
+            var inputContext = new CatalogManufacturerContext(AllCatalogsContext.Instance, new ManufacturerContext(3));
+            var clauseContext = new ClauseContext(new List<ICatalogManufacturerContext> { inputContext });
+
+            var queryContext = new QueryContext(clauseContext);
+            var contextsCollection = queryContext.CatalogManufacturerContexts;
+            Assert.Equal(1, contextsCollection.Count());
+            Assert.True(contextsCollection.Contains(context));
+        }
     }
 }
