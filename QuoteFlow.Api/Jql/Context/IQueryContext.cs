@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace QuoteFlow.Api.Jql.Context
 {
@@ -22,17 +22,9 @@ namespace QuoteFlow.Api.Jql.Context
             ManufacturerContexts = manufacturerContexts;
         }
 
-        public IEnumerable<int?> CatalogIdInList
+        public IEnumerable<int?> GetCatalogIdInList()
         {
-            get
-            {
-                if (CatalogContext.IsAll())
-                {
-                    return new List<int?>();
-                }
-
-                return new List<int?> {CatalogContext.CatalogId};
-            }
+            return CatalogContext.IsAll() ? new List<int?>() : new List<int?> { CatalogContext.CatalogId };
         }
 
         public IEnumerable<int?> GetManufacturerIds()
@@ -51,7 +43,17 @@ namespace QuoteFlow.Api.Jql.Context
 
         protected bool Equals(QueryContextCatalogManufacturerContexts other)
         {
-            return Equals(CatalogContext, other.CatalogContext) && Equals(ManufacturerContexts, other.ManufacturerContexts);
+            if (!ManufacturerContexts.SequenceEqual(other.ManufacturerContexts))
+            {
+                return false;
+            }
+
+            if (!Equals(CatalogContext, other.CatalogContext))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public override bool Equals(object obj)
