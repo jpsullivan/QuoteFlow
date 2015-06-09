@@ -5,7 +5,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 {
     public sealed class SingleValueOperand : IOperand
     {
-        public const string OPERAND_NAME = "SingleValueOperand";
+        public const string OperandName = "SingleValueOperand";
 
         private readonly int? _intValue;
         private readonly string _stringValue;
@@ -47,7 +47,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
             }
         }
 
-        public string Name { get { return OPERAND_NAME; } }
+        public string Name { get { return OperandName; } }
 
         public string DisplayString
         {

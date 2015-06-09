@@ -124,6 +124,7 @@
     <Compile Include="Jql\Builder\PrecedenceSimpleClauseBuilderTests.cs" />
     <Compile Include="Jql\Builder\ValueBuilderTests.cs" />
     <Compile Include="Jql\Clause\DeMorgansVisitorTests.cs" />
+    <Compile Include="Jql\Context\CatalogClauseContextFactoryTests.cs" />
     <Compile Include="Jql\Context\QueryCacheTests.cs" />
     <Compile Include="Jql\Context\QueryContextTests.cs" />
     <Compile Include="Jql\Context\QueryContextVisitorTests.cs" />

@@ -150,9 +150,9 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
         {
             var support = new MockJqlOperandResolver();
             var handlers = new Dictionary<string, IOperandHandler<IOperand>>();
-            handlers.Add("SingleValueOperand", (IOperandHandler<IOperand>) new SingleValueOperandHandler());
-            handlers.Add("MultiValueOperand", (IOperandHandler<IOperand>) new MultiValueOperandHandler(support));
-            handlers.Add("Empty", (IOperandHandler<IOperand>) new EmptyOperandHandler());
+            handlers.Add("SingleValueOperand", new SingleValueOperandHandler());
+            handlers.Add("MultiValueOperand", new MultiValueOperandHandler(support));
+            handlers.Add("Empty", new EmptyOperandHandler());
 
             support.AddHandlers(handlers);
             return support;

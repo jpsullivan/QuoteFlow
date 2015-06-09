@@ -8,15 +8,15 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 {
     public sealed class MultiValueOperand : IOperand
     {
-        public const string OPERAND_NAME = "MultiValueOperand";
+        public const string OperandName = "MultiValueOperand";
 
         public IEnumerable<IOperand> Values { get; private set; } 
         public int HashCode { get; set; }
 
-        private const string LEFT_PAREN = "(";
-		private const string COMMA_SPACE = ", ";
-		private const string RIGHT_PAREN = ")";
-		private readonly int hashcode;
+        private const string LeftParen = "(";
+		private const string CommaSpace = ", ";
+		private const string RightParen = ")";
+		private readonly int _hashcode;
 
 		public static MultiValueOperand OfQueryLiterals(IEnumerable<QueryLiteral> literals)
 		{
@@ -80,7 +80,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
             }
 
 			Values = values;
-			hashcode = CalculateHashCode(Values);
+			_hashcode = CalculateHashCode(Values);
 		}
 
         private static int CalculateHashCode(IEnumerable<IOperand> values)
@@ -97,7 +97,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
         public string Name
         {
-            get { return OPERAND_NAME; }
+            get { return OperandName; }
         }
 
         public string DisplayString
@@ -105,7 +105,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
             get
             {
                 var sb = new StringBuilder();
-                sb.Append(LEFT_PAREN);
+                sb.Append(LeftParen);
 
                 for (int i = 0; i < Values.Count(); i++)
                 {
@@ -114,11 +114,11 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
                     if (i != Values.Count() - 1)
                     {
-                        sb.Append(COMMA_SPACE);
+                        sb.Append(CommaSpace);
                     }
                 }
                 
-                sb.Append(RIGHT_PAREN);
+                sb.Append(RightParen);
                 return sb.ToString();
             }
         }
@@ -152,7 +152,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
         public override int GetHashCode()
         {
             // Since the enclosed list is immutable, we can pre-calculate the hashCode.
-            return hashcode;
+            return _hashcode;
         }
     }
 }
