@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace QuoteFlow.Api.Jql.Context
 {
@@ -29,24 +30,44 @@ namespace QuoteFlow.Api.Jql.Context
                 {
                     return new List<int?>();
                 }
-                return new List<int?>() {CatalogContext.CatalogId};
+
+                return new List<int?> {CatalogContext.CatalogId};
             }
         }
 
-        public IEnumerable<int?> ManufacturerIds
+        public IEnumerable<int?> GetManufacturerIds()
         {
-            get
+            var manufacturerIds = new List<int?>();
+            foreach (var manufacturerContext in ManufacturerContexts)
             {
-                var manufacturerIds = new List<int?>();
-                foreach (var manufacturerContext in ManufacturerContexts)
+                if (!manufacturerContext.IsAll())
                 {
-                    if (!manufacturerContext.All)
-                    {
-                        manufacturerIds.Add(manufacturerContext.ManufacturerId);
-                    }
+                    manufacturerIds.Add(manufacturerContext.ManufacturerId);
                 }
-                return manufacturerIds;
             }
-        } 
+
+            return manufacturerIds;
+        }
+
+        protected bool Equals(QueryContextCatalogManufacturerContexts other)
+        {
+            return Equals(CatalogContext, other.CatalogContext) && Equals(ManufacturerContexts, other.ManufacturerContexts);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((QueryContextCatalogManufacturerContexts) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((CatalogContext != null ? CatalogContext.GetHashCode() : 0)*397) ^ (ManufacturerContexts != null ? ManufacturerContexts.GetHashCode() : 0);
+            }
+        }
     }
 }

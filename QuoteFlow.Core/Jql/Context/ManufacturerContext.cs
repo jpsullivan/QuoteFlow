@@ -6,7 +6,6 @@ namespace QuoteFlow.Core.Jql.Context
     public class ManufacturerContext : IManufacturerContext
     {
         public int? ManufacturerId { get; private set; }
-        public bool All { get { return false; } }
 
         public ManufacturerContext(int manufacturerId)
         {
@@ -16,6 +15,29 @@ namespace QuoteFlow.Core.Jql.Context
             }
 
             ManufacturerId = manufacturerId;
+        }
+
+        public bool IsAll()
+        {
+            return false;
+        }
+
+        protected bool Equals(ManufacturerContext other)
+        {
+            return ManufacturerId == other.ManufacturerId;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((ManufacturerContext) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return ManufacturerId.GetHashCode();
         }
     }
 }

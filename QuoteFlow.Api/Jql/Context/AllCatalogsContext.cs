@@ -5,11 +5,11 @@
     /// </summary>
     public class AllCatalogsContext : ICatalogContext
     {
-        private static readonly AllCatalogsContext INSTANCE = new AllCatalogsContext();
+        private static readonly AllCatalogsContext _instance = new AllCatalogsContext();
 
         public static AllCatalogsContext Instance
         {
-            get { return INSTANCE; }
+            get { return _instance; }
         }
 
         private AllCatalogsContext()

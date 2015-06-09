@@ -22,7 +22,7 @@ namespace QuoteFlow.Api.Jql.Context
         /// </summary>
         /// <param name="childClauseContexts">The child clause contexts to intersect, must never be null or contain null elements.</param>
         /// <returns>The intersection of ClauseContext's that were passed in.</returns>
-        public IClauseContext Intersect<T>(ISet<T> childClauseContexts) where T : IClauseContext
+        public virtual IClauseContext Intersect<T>(ISet<T> childClauseContexts) where T : IClauseContext
         {
             // todo: need to throw argumentnullexception if list has any null values
 
@@ -58,7 +58,7 @@ namespace QuoteFlow.Api.Jql.Context
         /// equivilent if the id values are the same, we do not compare if they are Explicit or Implicit. When combined
         /// an Explicit flag will always replace an Implicit flag.
         /// </summary>
-        public IClauseContext Union<T>(ISet<T> childClauseContexts) where T : IClauseContext
+        public virtual IClauseContext Union<T>(ISet<T> childClauseContexts) where T : IClauseContext
 		{
 			// todo: need to throw argumentnullexception if list has any null values
 

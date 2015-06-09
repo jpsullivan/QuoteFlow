@@ -17,6 +17,6 @@ namespace QuoteFlow.Api.Jql.Context
         /// then the value for <see cref="ManufacturerId"/> will be null.
         /// </summary>
         /// <returns>True if all, false otherwise.</returns>
-        bool All { get; }
+        bool IsAll();
     }
 }

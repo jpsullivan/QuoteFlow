@@ -33,14 +33,14 @@ namespace QuoteFlow.Api.Jql.Context
 					IManufacturerContext issueTypeContext = catalogAssetTypeContext.ManufacturerContext;
 					if (catalogContext.IsAll())
 					{
-						if (!issueTypeContext.All)
+						if (!issueTypeContext.IsAll())
 						{
 							_assetTypeContextsContainedInGlobalCatalogContexts.Add(issueTypeContext);
 						}
 					}
 					else
 					{
-						if (issueTypeContext.All)
+						if (issueTypeContext.IsAll())
 						{
 							_catalogsWithAllAssetTypes.Add(catalogContext);
 						}

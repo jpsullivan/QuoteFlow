@@ -33,5 +33,23 @@ namespace QuoteFlow.Api.Jql.Context
 		{
             return _contexts.Contains(CatalogManufacturerContext.CreateGlobalContext());
 		}
+
+        protected bool Equals(ClauseContext other)
+        {
+            return Equals(_contexts, other._contexts);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((ClauseContext) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (_contexts != null ? _contexts.GetHashCode() : 0);
+        }
     }
 }

@@ -21,5 +21,23 @@ namespace QuoteFlow.Core.Jql.Context
         {
             return false;
         }
+
+        private bool Equals(ICatalogContext other)
+        {
+            return CatalogId == other.CatalogId;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((CatalogContext) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return CatalogId.GetHashCode();
+        }
     }
 }

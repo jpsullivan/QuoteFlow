@@ -15,8 +15,11 @@
 		}
 
         public int? ManufacturerId { get { return null; } }
-        
-        public bool All { get { return true; } }
+
+        public bool IsAll()
+        {
+            return true;
+        }
 
         public override string ToString()
         {

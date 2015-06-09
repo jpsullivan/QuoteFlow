@@ -271,6 +271,27 @@ namespace QuoteFlow.Core.Jql.Context
             {
                 return string.Format("[Complex: {0}, Simple: {1}]", FullContext, SimpleContext);
             }
+
+            protected bool Equals(ContextResult other)
+            {
+                return Equals(FullContext, other.FullContext) && Equals(SimpleContext, other.SimpleContext);
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                if (obj.GetType() != this.GetType()) return false;
+                return Equals((ContextResult) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return ((FullContext != null ? FullContext.GetHashCode() : 0)*397) ^ (SimpleContext != null ? SimpleContext.GetHashCode() : 0);
+                }
+            }
         }
     }
 }
