@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Query;
@@ -15,18 +16,18 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
     /// </summary>
     public class MockJqlOperandResolver : IJqlOperandResolver
     {
-        private readonly IDictionary<string, IOperandHandler<IOperand>> _handlers;
+        private readonly IDictionary<string, object> _handlers;
 
-        public MockJqlOperandResolver() : this(new Dictionary<string, IOperandHandler<IOperand>>())
+        public MockJqlOperandResolver() : this(new Dictionary<string, object>())
 		{
 		}
 
-		public MockJqlOperandResolver(IDictionary<string, IOperandHandler<IOperand>> handlers)
+		public MockJqlOperandResolver(IDictionary<string, object> handlers)
 		{
 			_handlers = handlers;
 		}
 
-        public virtual MockJqlOperandResolver AddHandlers(IDictionary<string, IOperandHandler<IOperand>> handlers)
+        public virtual MockJqlOperandResolver AddHandlers(IDictionary<string, object> handlers)
 		{
             foreach (var operandHandler in handlers)
             {
@@ -44,7 +45,7 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
 
         public IMessageSet Validate(User searcher, IOperand operand, IWasClause clause)
         {
-            IOperandHandler<IOperand> operandHandler;
+            object operandHandler;
             if (_handlers.TryGetValue(operand.Name, out operandHandler))
             {
                 // return operandHandler.Validate(searcher, operand, clause.AsTerminalClause());
@@ -61,10 +62,35 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
 
         public IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, IOperand operand, ITerminalClause terminalClause)
         {
-            IOperandHandler<IOperand> operandHandler;
+            object operandHandler;
             if (_handlers.TryGetValue(operand.Name, out operandHandler))
             {
-                return operandHandler.GetValues(queryCreationContext, operand, terminalClause);
+                var svHandler = operandHandler as SingleValueOperandHandler;
+                if (svHandler != null)
+                {
+                    return svHandler.GetValues(queryCreationContext, (SingleValueOperand) operand, terminalClause);
+                }
+
+                var mvHandler = operandHandler as MultiValueOperandHandler;
+                if (mvHandler != null)
+                {
+                    return mvHandler.GetValues(queryCreationContext, (MultiValueOperand) operand, terminalClause);
+                }
+
+                var emptyHandler = operandHandler as EmptyOperandHandler;
+                if (emptyHandler != null)
+                {
+                    return emptyHandler.GetValues(queryCreationContext, (EmptyOperand) operand, terminalClause);
+                }
+
+                var funcHandler = operandHandler as FunctionOperandHandler;
+                if (funcHandler != null)
+                {
+                    return funcHandler.GetValues(queryCreationContext, (FunctionOperand) operand, terminalClause);
+                }
+
+                Debug.WriteLine("Could not resolve the operand handler: {0}", operand.Name);
+                return null;
             }
 
             return null;
@@ -72,10 +98,35 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
 
         public IMessageSet Validate(User user, IOperand operand, ITerminalClause terminalClause)
         {
-            IOperandHandler<IOperand> operandHandler;
+            object operandHandler;
             if (_handlers.TryGetValue(operand.Name, out operandHandler))
             {
-                return operandHandler.Validate(user, operand, terminalClause);
+                var svHandler = operandHandler as SingleValueOperandHandler;
+                if (svHandler != null)
+                {
+                    return svHandler.Validate(user, operand as SingleValueOperand, terminalClause);
+                }
+
+                var mvHandler = operandHandler as MultiValueOperandHandler;
+                if (mvHandler != null)
+                {
+                    return mvHandler.Validate(user, operand as MultiValueOperand, terminalClause);
+                }
+
+                var emptyHandler = operandHandler as EmptyOperandHandler;
+                if (emptyHandler != null)
+                {
+                    return emptyHandler.Validate(user, operand as EmptyOperand, terminalClause);
+                }
+
+                var funcHandler = operandHandler as FunctionOperandHandler;
+                if (funcHandler != null)
+                {
+                    return funcHandler.Validate(user, operand as FunctionOperand, terminalClause);
+                }
+
+                Debug.WriteLine("Could not resolve the operand handler: {0}", operand.Name);
+                return null;
             }
 
             return new MessageSet();
@@ -104,10 +155,39 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
 
         public bool IsEmptyOperand(IOperand operand)
         {
-            IOperandHandler<IOperand> operandHandler;
+            object operandHandler;
             if (_handlers.TryGetValue(operand.Name, out operandHandler))
             {
-                return operandHandler != null && operandHandler.IsEmpty();
+                if (operandHandler == null)
+                {
+                    return false;
+                }
+
+                var svHandler = operandHandler as SingleValueOperandHandler;
+                if (svHandler != null)
+                {
+                    return svHandler.IsEmpty();
+                }
+
+                var mvHandler = operandHandler as MultiValueOperandHandler;
+                if (mvHandler != null)
+                {
+                    return mvHandler.IsEmpty();
+                }
+
+                var emptyHandler = operandHandler as EmptyOperandHandler;
+                if (emptyHandler != null)
+                {
+                    return emptyHandler.IsEmpty();
+                }
+
+                var funcHandler = operandHandler as FunctionOperandHandler;
+                if (funcHandler != null)
+                {
+                    return funcHandler.IsEmpty();
+                }
+
+                Debug.WriteLine("Could not resolve the operand handler: {0}", operand.Name);
             }
 
             return false;
@@ -115,10 +195,39 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
 
         public bool IsFunctionOperand(IOperand operand)
         {
-            IOperandHandler<IOperand> operandHandler;
+            object operandHandler;
             if (_handlers.TryGetValue(operand.Name, out operandHandler))
             {
-                return operandHandler != null && operandHandler.IsFunction();
+                if (operandHandler == null)
+                {
+                    return false;
+                }
+
+                var svHandler = operandHandler as SingleValueOperandHandler;
+                if (svHandler != null)
+                {
+                    return svHandler.IsFunction();
+                }
+
+                var mvHandler = operandHandler as MultiValueOperandHandler;
+                if (mvHandler != null)
+                {
+                    return mvHandler.IsFunction();
+                }
+
+                var emptyHandler = operandHandler as EmptyOperandHandler;
+                if (emptyHandler != null)
+                {
+                    return emptyHandler.IsFunction();
+                }
+
+                var funcHandler = operandHandler as FunctionOperandHandler;
+                if (funcHandler != null)
+                {
+                    return funcHandler.IsFunction();
+                }
+
+                Debug.WriteLine("Could not resolve the operand handler: {0}", operand.Name);
             }
 
             return false;
@@ -126,10 +235,39 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
 
         public bool IsListOperand(IOperand operand)
         {
-            IOperandHandler<IOperand> operandHandler;
+            object operandHandler;
             if (_handlers.TryGetValue(operand.Name, out operandHandler))
             {
-                return operandHandler != null && operandHandler.IsList();
+                if (operandHandler == null)
+                {
+                    return false;
+                }
+
+                var svHandler = operandHandler as SingleValueOperandHandler;
+                if (svHandler != null)
+                {
+                    return svHandler.IsList();
+                }
+
+                var mvHandler = operandHandler as MultiValueOperandHandler;
+                if (mvHandler != null)
+                {
+                    return mvHandler.IsList();
+                }
+
+                var emptyHandler = operandHandler as EmptyOperandHandler;
+                if (emptyHandler != null)
+                {
+                    return emptyHandler.IsList();
+                }
+
+                var funcHandler = operandHandler as FunctionOperandHandler;
+                if (funcHandler != null)
+                {
+                    return funcHandler.IsList();
+                }
+
+                Debug.WriteLine("Could not resolve the operand handler: {0}", operand.Name);
             }
 
             return false;
@@ -137,7 +275,7 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
 
         public bool IsValidOperand(IOperand operand)
         {
-            IOperandHandler<IOperand> operandHandler;
+            object operandHandler;
             if (_handlers.TryGetValue(operand.Name, out operandHandler))
             {
                 return operandHandler != null;
@@ -149,7 +287,7 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
         public static MockJqlOperandResolver CreateSimpleSupport()
         {
             var support = new MockJqlOperandResolver();
-            var handlers = new Dictionary<string, IOperandHandler<IOperand>>();
+            var handlers = new Dictionary<string, object>();
             handlers.Add("SingleValueOperand", new SingleValueOperandHandler());
             handlers.Add("MultiValueOperand", new MultiValueOperandHandler(support));
             handlers.Add("Empty", new EmptyOperandHandler());

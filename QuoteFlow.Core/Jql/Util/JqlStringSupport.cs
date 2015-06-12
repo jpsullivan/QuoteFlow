@@ -13,12 +13,12 @@ namespace QuoteFlow.Core.Jql.Util
 {
     public sealed class JqlStringSupport : IJqlStringSupport
     {
-        private static readonly IDictionary<char?, char?> STRING_DECODE_MAPPING;
-		private static readonly IDictionary<char?, string> STRING_ENCODE_MAPPING;
-		private const char QUOTE_CHAR = '"';
-		private const char SQUOTE_CHAR = '\'';
+        private static readonly IDictionary<char?, char?> StringDecodeMapping;
+		private static readonly IDictionary<char?, string> StringEncodeMapping;
+		private const char QuoteChar = '"';
+		private const char SquoteChar = '\'';
 
-		public static readonly HashSet<string> RESERVED_WORDS;
+		public static readonly HashSet<string> ReservedWords;
 
 		static JqlStringSupport()
 		{
@@ -27,21 +27,21 @@ namespace QuoteFlow.Core.Jql.Util
 			decoderMapping['n'] = '\n';
 			decoderMapping['r'] = '\r';
 			decoderMapping['\\'] = '\\';
-			decoderMapping[QUOTE_CHAR] = QUOTE_CHAR;
-			decoderMapping[SQUOTE_CHAR] = SQUOTE_CHAR;
+			decoderMapping[QuoteChar] = QuoteChar;
+			decoderMapping[SquoteChar] = SquoteChar;
 			decoderMapping[' '] = ' ';
 
-            STRING_DECODE_MAPPING = decoderMapping;
+            StringDecodeMapping = decoderMapping;
 
 			IDictionary<char?, string> encoderStringMapping = new Dictionary<char?, string>();
 			encoderStringMapping['\t'] = "\\t";
 			encoderStringMapping['\n'] = "\\n";
 			encoderStringMapping['\r'] = "\\r";
-			encoderStringMapping[QUOTE_CHAR] = "\\\"";
-			encoderStringMapping[SQUOTE_CHAR] = "\\'";
+			encoderStringMapping[QuoteChar] = "\\\"";
+			encoderStringMapping[SquoteChar] = "\\'";
 			encoderStringMapping['\\'] = "\\\\";
 
-		    STRING_ENCODE_MAPPING = encoderStringMapping;
+		    StringEncodeMapping = encoderStringMapping;
 
             //NOTE: Changing the contents of this method will change the strings that the JQL parser will parse, so think
             // about the change you are about to make.
@@ -65,7 +65,7 @@ namespace QuoteFlow.Core.Jql.Util
             bldr.AddRange(new List<string> { "uid", "union", "unique", "update", "user", "validate", "values", "view", "was", "when", "whenever", "where" });
             bldr.AddRange(new List<string> { "while", "with" });
 
-            RESERVED_WORDS = new HashSet<string>(bldr);
+            ReservedWords = new HashSet<string>(bldr);
 		}
 
 		private readonly IJqlQueryParser parser;
@@ -197,7 +197,7 @@ namespace QuoteFlow.Core.Jql.Util
 
         public HashSet<string> GetJqlReservedWords()
         {
-            return RESERVED_WORDS;
+            return ReservedWords;
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace QuoteFlow.Core.Jql.Util
 				    position++;
 
 			        char? substituteCharacter;
-			        if (!STRING_DECODE_MAPPING.TryGetValue(escapeCharacter, out substituteCharacter)) continue;
+			        if (!StringDecodeMapping.TryGetValue(escapeCharacter, out substituteCharacter)) continue;
 			        if (substituteCharacter == null)
 			        {
 			            // Maybe some unicode escaping ?
@@ -311,7 +311,7 @@ namespace QuoteFlow.Core.Jql.Util
                 //Newlines don't need to be quoted in strings.
                 if (escapeNewline || (currentCharacter != '\r' && currentCharacter != '\n'))
                 {
-                    appendString = EncodeCharacter(currentCharacter, SQUOTE_CHAR, false);
+                    appendString = EncodeCharacter(currentCharacter, SquoteChar, false);
                 }
                 else
                 {
@@ -322,7 +322,7 @@ namespace QuoteFlow.Core.Jql.Util
                     if (builder == null)
                     {
                         builder = new StringBuilder(str.Length);
-                        builder.Append(QUOTE_CHAR);
+                        builder.Append(QuoteChar);
                         if (position > 0)
                         {
                             builder.Append(str.Substring(0, position));
@@ -335,7 +335,7 @@ namespace QuoteFlow.Core.Jql.Util
                     builder.Append(currentCharacter);
                 }
             }
-            return builder == null ? QUOTE_CHAR + str + QUOTE_CHAR : builder.Append(QUOTE_CHAR).ToString();
+            return builder == null ? QuoteChar + str + QuoteChar : builder.Append(QuoteChar).ToString();
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace QuoteFlow.Core.Jql.Util
             }
 
             string encodedCharacter;
-            if (STRING_ENCODE_MAPPING.TryGetValue(character, out encodedCharacter))
+            if (StringEncodeMapping.TryGetValue(character, out encodedCharacter))
             {
                 if (encodedCharacter == null && (force || IsJqlControl(character)))
                 {
@@ -399,7 +399,7 @@ namespace QuoteFlow.Core.Jql.Util
         {
             //NOTE: Changing the implementation of this method will change the strings that the JQL parser will parse. We can
             //simply call toLowerCase here becasue all the reserved words are ENGLISH.
-            return RESERVED_WORDS.Contains(str.ToLower());
+            return ReservedWords.Contains(str.ToLower());
         }
 
         /// <summary>

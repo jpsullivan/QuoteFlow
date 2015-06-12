@@ -18,9 +18,9 @@ namespace QuoteFlow.Core.Tests.Jql.Query.Operand
         private static readonly string Field = "blah";
         private static readonly User TheUser = null;
 
-        private static Mock<IQueryCreationContext> QueryCreationContext;
-        private static Mock<IQueryCache> QueryCache;
-        private static Mock<IJqlFunctionHandlerRegistry> JqlFunctionHandlerRegistry; 
+        private static readonly Mock<IQueryCreationContext> QueryCreationContext = new Mock<IQueryCreationContext>();
+        private static readonly Mock<IQueryCache> QueryCache = new Mock<IQueryCache>();
+        private static Mock<IJqlFunctionHandlerRegistry> JqlFunctionHandlerRegistry = new Mock<IJqlFunctionHandlerRegistry>(); 
 
         public class TheCtor
         {

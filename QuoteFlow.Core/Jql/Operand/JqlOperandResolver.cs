@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Function;
@@ -119,7 +120,7 @@ namespace QuoteFlow.Core.Jql.Operand
             }
             else
             {
-                //log.debug(string.Format("Unknown operand type '{0}' with name '{1}'", operand.GetType(), operand.DisplayString));
+                Debug.WriteLine("Unknown operand type '{0}' with name '{1}'", operand.GetType(), operand.DisplayString);
             }
             
             PutValuesInCache(queryCreationContext, operand, terminalClause, values);
@@ -200,19 +201,22 @@ namespace QuoteFlow.Core.Jql.Operand
         public bool IsEmptyOperand(IOperand operand)
         {
             var operandHandler = GetOperandHandler(operand);
-			return operandHandler != null && operandHandler.IsEmpty();
+			//return operandHandler != null && operandHandler.IsEmpty();
+            return false;
         }
 
         public bool IsFunctionOperand(IOperand operand)
         {
             var handler = GetOperandHandler(operand);
-			return handler != null && handler.IsFunction();
+			//return handler != null && handler.IsFunction();
+            return false;
         }
 
         public bool IsListOperand(IOperand operand)
         {
             var handler = GetOperandHandler(operand);
-			return handler != null && handler.IsList();
+			//return handler != null && handler.IsList();
+            return false;
         }
 
         public bool IsValidOperand(IOperand operand)
@@ -220,33 +224,32 @@ namespace QuoteFlow.Core.Jql.Operand
             return GetOperandHandler(operand) != null;
         }
 
-        private IOperandHandler<IOperand> GetOperandHandler(IOperand operand)
+        private object GetOperandHandler(IOperand operand)
 		{
             if (operand == null)
             {
                 throw new ArgumentNullException("operand");
             }
 
-            // todo look how safe these casts really are (covariance issues)
 			if (operand is EmptyOperand)
 			{
-				return _emptyHandler as IOperandHandler<IOperand>;
+				return _emptyHandler;
 			}
             if (operand is SingleValueOperand)
             {
-                return _singleHandler as IOperandHandler<IOperand>;
+                return _singleHandler;
             }
             if (operand is MultiValueOperand)
             {
-                return _multiHandler as IOperandHandler<IOperand>;
+                return _multiHandler;
             }
             if (operand is FunctionOperand)
             {
                 var funcOperand = (FunctionOperand) operand;
-                return _registry.GetOperandHandler(funcOperand) as IOperandHandler<IOperand>;
+                return _registry.GetOperandHandler(funcOperand);
             }
-            
-            //log.debug(string.Format("Unknown operand type '{0}' with name '{1}'", operand.GetType(), operand.DisplayString));
+
+            Debug.WriteLine("Unknown operand type '{0}' with name '{1}'", operand.GetType(), operand.DisplayString);
             return null;
 		}
 
