@@ -102,7 +102,7 @@ namespace QuoteFlow.Core.Jql.Parser.Antlr
 
                 //is the next token EOF.
                 bool nextEof = Stream.LT(2) == CharStreamConstants.EndOfFile;
-                string text = nextEof ? null : Stream.Substring(Position.Index, Index + 1 - (Position.Index));
+                string text = nextEof ? null : Stream.Substring(Position.Index, 2);
                 message = JqlParseErrorMessages.IllegalEsacpe(text, Position.LinePosition, Position.CharPosition);
             }
             else
@@ -168,7 +168,7 @@ namespace QuoteFlow.Core.Jql.Parser.Antlr
 		private JqlParseErrorMessage HandleEscape()
 		{
             int index = Stream.LT(1) == CharStreamConstants.EndOfFile ? Index - 1 : Index;
-            string text = index <= Position.Index ? null : Stream.Substring(Position.Index, index - (Position.Index));
+            string text = index <= Position.Index ? null : Stream.Substring(Position.Index, 2);
 			//We have some sort of escaping error.
 			return JqlParseErrorMessages.IllegalEsacpe(text, Position.LinePosition, Position.CharPosition);
 		}

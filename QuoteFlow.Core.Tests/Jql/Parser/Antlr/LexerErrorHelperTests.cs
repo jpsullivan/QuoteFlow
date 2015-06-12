@@ -241,7 +241,7 @@ namespace QuoteFlow.Core.Tests.Jql.Parser.Antlr
                 antlrPosition = new AntlrPosition(JqlLexer.ERRORCHAR, stream);
 
                 helper = new LexerErrorHelper(stream, antlrPosition);
-                expectedMessage = JqlParseErrorMessages.IllegalEsacpe("\\c", 1, 8);
+                expectedMessage = JqlParseErrorMessages.IllegalEsacpe(@"\c", 1, 8);
                 expectedCause = new RecognitionException();
 
                 AssertResult(helper, expectedMessage, expectedCause);

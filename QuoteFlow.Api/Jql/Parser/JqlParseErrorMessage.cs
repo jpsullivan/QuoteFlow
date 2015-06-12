@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using QuoteFlow.Api.Infrastructure.Extensions;
 
 namespace QuoteFlow.Api.Jql.Parser
 {
@@ -9,8 +11,8 @@ namespace QuoteFlow.Api.Jql.Parser
 	/// </summary>
 	public sealed class JqlParseErrorMessage
 	{
-        private string Key { get; set; }
-        private IList<object> Arguments { get; set; } 
+	    public string Key { get; set; }
+	    public IList<object> Arguments { get; set; } 
         public int LineNumber { get; set; }
         public int ColumnNumber { get; set; }
 
@@ -30,13 +32,27 @@ namespace QuoteFlow.Api.Jql.Parser
             ColumnNumber = columnNumber <= 0 ? -1 : columnNumber;
 	    }
 
-		public JqlParseErrorMessage(string key, int lineNumber, int columnNumber, IEnumerable<object> arguments)
+		public JqlParseErrorMessage(string key, int lineNumber, int columnNumber, IList<object> arguments)
 		{
+		    if (arguments == null) throw new ArgumentNullException("arguments");
+		    if (!arguments.Any()) throw new ArgumentException("Arguments cannot be empty", "arguments");
+		    if (arguments.Any(argument => argument == null))
+		    {
+		        throw new ArgumentNullException("Arguments cannot contain any nulls", "arguments");
+		    }
+
+            if (key.IsNullOrEmpty()) throw new ArgumentException("Key cannot be empty");
+
 			Key = key;
 		    Arguments = new List<object>(arguments);
 			LineNumber = lineNumber <= 0 ? - 1 : lineNumber;
 			ColumnNumber = columnNumber <= 0 ? - 1 : columnNumber;
 		}
+
+	    public JqlParseErrorMessage(string key, int lineNumber, int columnNumber, params object[] arguments)
+            : this(key, lineNumber, columnNumber, arguments.ToList())
+	    {
+	    }
 
 		public override bool Equals(object o)
 		{
@@ -82,7 +98,7 @@ namespace QuoteFlow.Api.Jql.Parser
 
 		public override string ToString()
 		{
-		    return string.Format("Error<{0}:{1}> - {2}{3}", LineNumber.ToString(), ColumnNumber.ToString(), Key, Arguments);
+		    return string.Format("Error<{0}:{1}> - {2}{3}", LineNumber, ColumnNumber, Key, Arguments);
 		}
 	}
 }

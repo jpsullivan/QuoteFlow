@@ -23,10 +23,11 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage ReservedWord(string reservedWord, int antlrLine, int antlrColumn)
 		{
-			return CreateMessage("jql.parse.reserved.word", new Position(antlrLine, antlrColumn), NormalizeString(reservedWord));
+		    if (reservedWord == null) throw new ArgumentNullException("reservedWord");
+		    return CreateMessage("jql.parse.reserved.word", new Position(antlrLine, antlrColumn), NormalizeString(reservedWord));
 		}
 
-		public static JqlParseErrorMessage IllegalEsacpe(string illegalEscape, int antlrLine, int antlrColumn)
+	    public static JqlParseErrorMessage IllegalEsacpe(string illegalEscape, int antlrLine, int antlrColumn)
 		{
 			var pos = new Position(antlrLine, antlrColumn);
 			string normalizedString = NormalizeString(illegalEscape);
@@ -80,7 +81,9 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage GenericParseError(IToken token)
 		{
-			var position = new Position(token);
+		    if (token == null) throw new ArgumentNullException("token");
+
+		    var position = new Position(token);
 			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.unknown.no.pos", position.Line, position.Column);
@@ -90,7 +93,9 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage IllegalNumber(string number, int antlrLine, int antlrColumn)
 		{
-			var pos = new Position(antlrLine, antlrColumn);
+		    if (number == null) throw new ArgumentNullException("number");
+
+		    var pos = new Position(antlrLine, antlrColumn);
 			return CreateMessage("jql.parse.illegal.number", pos, NormalizeString(number), long.MinValue, long.MaxValue);
 		}
 
@@ -106,7 +111,9 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage BadFieldName(IToken token)
 		{
-			var pos = new Position(token);
+		    if (token == null) throw new ArgumentNullException("token");
+
+		    var pos = new Position(token);
 			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.no.field.eof", pos.Line, pos.Column);
@@ -120,7 +127,9 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage BadSortOrder(IToken token)
 		{
-			var pos = new Position(token);
+		    if (token == null) throw new ArgumentNullException("token");
+
+		    var pos = new Position(token);
 			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.no.order.eof", pos.Line, pos.Column);
@@ -130,7 +139,9 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage BadOperator(IToken token)
 		{
-			var pos = new Position(token);
+		    if (token == null) throw new ArgumentNullException("token");
+
+		    var pos = new Position(token);
 			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.no.operator.eof", pos.Line, pos.Column);
@@ -160,7 +171,9 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage BadFunctionArgument(IToken token)
 		{
-			var pos = new Position(token);
+		    if (token == null) throw new ArgumentNullException("token");
+
+		    var pos = new Position(token);
 			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.bad.function.argument.eof", pos.Line, pos.Column);
@@ -170,7 +183,9 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage NeedLogicalOperator(IToken token)
 		{
-			var pos = new Position(token);
+		    if (token == null) throw new ArgumentNullException("token");
+
+		    var pos = new Position(token);
 			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.logical.operator.eof", pos.Line, pos.Column);
@@ -180,7 +195,9 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage BadOperand(IToken token)
 		{
-			var pos = new Position(token);
+		    if (token == null) throw new ArgumentNullException("token");
+
+		    var pos = new Position(token);
 			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.bad.operand.eof", pos.Line, pos.Column);
@@ -190,12 +207,17 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage EmptyFunctionArgument(IToken token)
 		{
-			return CreateMessage("jql.parse.empty.function.argument", new Position(token));
+		    if (token == null) throw new ArgumentNullException("token");
+
+		    return CreateMessage("jql.parse.empty.function.argument", new Position(token));
 		}
 
-		public static JqlParseErrorMessage ExpectedText(IToken token, string expected)
+	    public static JqlParseErrorMessage ExpectedText(IToken token, string expected)
 		{
-			var pos = new Position(token);
+	        if (token == null) throw new ArgumentNullException("token");
+	        if (expected.IsNullOrEmpty()) throw new ArgumentNullException("expected");
+
+	        var pos = new Position(token);
 			if (IsEofToken(token))
 			{
 				return new JqlParseErrorMessage("jql.parse.expected.text.eof", pos.Line, pos.Column, expected);
@@ -205,11 +227,14 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage ExpectedText(IToken token, string expected1, string expected2)
 		{
-			var pos = new Position(token);
+		    if (token == null) throw new ArgumentNullException("token");
+		    if (expected1.IsNullOrEmpty()) throw new ArgumentNullException("expected1");
+            if (expected2.IsNullOrEmpty()) throw new ArgumentNullException("expected2");
+
+		    var pos = new Position(token);
 			if (IsEofToken(token))
 			{
-			    var args = new List<string>{expected1, expected2};
-				return new JqlParseErrorMessage("jql.parse.expected.text.2.eof", pos.Line, pos.Column, args);
+				return new JqlParseErrorMessage("jql.parse.expected.text.2.eof", pos.Line, pos.Column, expected1, expected2);
 			}
 		    return CreateMessage("jql.parse.expected.text.2", pos, expected1, expected2, NormalizeString(token.Text));
 		}
@@ -243,7 +268,7 @@ namespace QuoteFlow.Core.Jql.Parser
 			//char.UnicodeBlock unicodeBlock = char.UnicodeBlock.of(c);
 			if (JqlStringSupport.IsJqlControl(c) || char.IsWhiteSpace(c)) // || unicodeBlock == null || unicodeBlock == char.UnicodeBlock.SPECIALS)
 			{
-			    return c == '\t' ? string.Format("TAB") : string.Format("U+{0:X4}", (int) c);
+			    return c == '\t' ? "TAB" : string.Format("U+{0:X4}", (int) c);
 			}
 		    return Convert.ToString(c);
 		}

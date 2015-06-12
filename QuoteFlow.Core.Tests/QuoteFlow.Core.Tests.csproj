@@ -133,6 +133,8 @@
     <Compile Include="Jql\MockClauseInformation.cs" />
     <Compile Include="Jql\Parser\Antlr\AntlrPositionTests.cs" />
     <Compile Include="Jql\Parser\Antlr\LexerErrorHelperTests.cs" />
+    <Compile Include="Jql\Parser\JqlParseErrorMessagesTests.cs" />
+    <Compile Include="Jql\Parser\JqlParseErrorMessageTests.cs" />
     <Compile Include="Jql\Parser\JqlQueryParserTests.cs" />
     <Compile Include="Jql\Parser\JqlStringSupportTests.cs" />
     <Compile Include="Jql\Query\Clause\AndClauseTests.cs" />
