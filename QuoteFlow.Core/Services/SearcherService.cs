@@ -165,22 +165,21 @@ namespace QuoteFlow.Core.Services
             return ServiceOutcome<QuerySearchResults>.Ok(new QuerySearchResults(renderableSearchers, outcome.ReturnedValue));
         }
 
-        private IDictionary<string, SearchRendererHolder> GenerateQuery<T>(ISearchContext searchContext, User user, IQuery query, IEnumerable<T> searchers)
+        private IDictionary<string, SearchRendererHolder> GenerateQuery<T>(ISearchContext searchContext, User user, IQuery query, IEnumerable<T> searchers) where T : IAssetSearcher<ISearchableField>
         {
-            var clauses = new HashMap<string, SearchRendererHolder>();
+            var clauses = new Dictionary<string, SearchRendererHolder>();
             foreach (var searcher in searchers)
             {
-                var assetSearcher = (IAssetSearcher<ISearchableField>)searcher;
-                ISearchInputTransformer searchInputTransformer = assetSearcher.SearchInputTransformer;
+                var searchInputTransformer = searcher.SearchInputTransformer;
                 var fieldValuesHolder = new FieldValuesHolder();
 
                 searchInputTransformer.PopulateFromQuery(user, fieldValuesHolder, query, searchContext);
                 IClause clause = searchInputTransformer.GetSearchClause(user, fieldValuesHolder);
 
-                if (null == clause) continue;
+                if (clause == null) continue;
 
-                string id = assetSearcher.SearchInformation.Id;
-                clauses[id] = SearchRendererHolder.Valid(clause, fieldValuesHolder);
+                string id = searcher.SearchInformation.Id;
+                clauses.Add(id, SearchRendererHolder.Valid(clause, fieldValuesHolder));
             }
 
             return clauses;
@@ -258,20 +257,24 @@ namespace QuoteFlow.Core.Services
 
         private IServiceOutcome<SearchRendererValueResults> GetValueResults(bool includePrimes, User user, ICollection<IAssetSearcher<ISearchableField>> searchers, IDictionary<string, SearchRendererHolder> clauses, IQuery query, ISearchContext searchContext)
         {
+            var displayParams = CreateDisplayParams();
+
             var results = new SearchRendererValueResults();
             foreach (var assetSearcher in searchers)
             {
                 string id = assetSearcher.SearchInformation.Id;
-
                 IFieldValuesHolder fieldParams = new FieldValuesHolder();
 
                 SearchRendererHolder clause;
                 var hasValue = clauses.TryGetValue(id, out clause);
                 if (hasValue)
                 {
+                    string viewHtml = null;
+
+                    var searchRenderer = assetSearcher.SearchRenderer;
                     var searchInputTransformer = assetSearcher.SearchInputTransformer;
 
-                    if (includePrimes)
+                    if (includePrimes || searchRenderer.IsRelevantForQuery(user, query))
                     {
                         if (clause.IsValid)
                         {
@@ -284,8 +287,30 @@ namespace QuoteFlow.Core.Services
 
                         searchInputTransformer.ValidateParams(user, searchContext, fieldParams);
 
+                        SearchContextWithFieldValues searchContextWithFieldValues;
+                        if (searchRenderer.IsRelevantForQuery(user, query))
+                        {
+                            searchContextWithFieldValues = new SearchContextWithFieldValues(searchContext, fieldParams);
+                            viewHtml = searchRenderer.GetViewHtml(user, searchContext, fieldParams, displayParams);
+                        }
+                        else
+                        {
+                            searchContextWithFieldValues = SearchContextHelper.GetSearchContextWithFieldValuesFromQuery(searchContext, query);
+                        }
+
+                        string editHtml;
+                        var outcome = GetEditHtml(id, searchContextWithFieldValues, displayParams);
+                        if (outcome.IsValid())
+                        {
+                            editHtml = outcome.ReturnedValue;
+                        }
+                        else
+                        {
+                            return new ServiceOutcome<SearchRendererValueResults>(outcome.ErrorCollection);
+                        }
+
                         string jql = JqlStringSupport.GenerateJqlString(clause.Clause);
-                        results.Add(id, new SearchRendererValue(assetSearcher.SearchInformation.NameKey, jql, null, null, true, true));
+                        results.Add(id, new SearchRendererValue(assetSearcher.SearchInformation.NameKey, jql, viewHtml, editHtml, true, true));
                     }
                     else if (!clause.IsValid)
                     {

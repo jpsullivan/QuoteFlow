@@ -1,0 +1,12 @@
+﻿@if (Model["selectedCatalogs"] != null && Model["selectedCatalogs"].Count > 0)
+{
+    <div class="searcherValue">
+        <label class="fieldLabel" for="fieldcatalogid">Catalog:</label>
+        <span id="fieldcatalogid" class="fieldValue">
+            @foreach (var catalog in Model["selectedCatalogs"])
+            {
+                <a href="#" title="@catalog.Name">@catalog.Name</a>
+            }
+        </span>
+    </div>
+}

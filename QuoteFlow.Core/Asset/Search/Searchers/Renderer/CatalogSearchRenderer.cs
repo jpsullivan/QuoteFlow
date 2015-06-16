@@ -82,9 +82,28 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             return true;
         }
 
-        public override string GetViewHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary displayParameters)
+        public override string GetViewHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters)
         {
-            throw new System.NotImplementedException();
+            var templateParameters = GetDisplayParams(user, searchContext, fieldValuesHolder, displayParameters);
+
+            object fieldValue;
+            if (fieldValuesHolder.TryGetValue(SystemSearchConstants.ForCatalog().UrlParameter, out fieldValue))
+            {
+                var resolvedCatalogIds = fieldValue as List<string>;
+                if (resolvedCatalogIds != null)
+                {
+                    var catalogIds = resolvedCatalogIds.Select(int.Parse).ToList();
+                    var catalogs = catalogIds.Select(id => CatalogService.GetCatalog(id)).ToList();
+                    if (catalogs.Any())
+                    {
+                        templateParameters.Add("filteredOutCatalogs", catalogs);
+                    }
+
+                    templateParameters.Add("selectedCatalogs", catalogs);
+                }
+            }
+
+            return RenderEditTemplate("CatalogSearcherView.cshtml", templateParameters);
         }
 
         public override bool IsRelevantForQuery(User user, IQuery query)

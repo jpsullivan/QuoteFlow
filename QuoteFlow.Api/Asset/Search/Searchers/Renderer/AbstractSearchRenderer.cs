@@ -90,7 +90,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
 
         public abstract bool IsShown(User user, ISearchContext searchContext);
 
-        public abstract string GetViewHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary displayParameters);
+        public abstract string GetViewHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters);
 
         public abstract bool IsRelevantForQuery(User user, IQuery query);
     }

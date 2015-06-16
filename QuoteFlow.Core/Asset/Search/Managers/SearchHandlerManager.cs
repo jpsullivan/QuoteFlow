@@ -168,7 +168,14 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         public ICollection<string> GetFieldIds(string jqlClauseName)
         {
             var handler = GetHelper().GetSearchHandler(jqlClauseName);
-            var fieldIds = (from clauseHandler in handler where HasFieldId(clauseHandler) select GetFieldId(clauseHandler)).ToList();
+            var fieldIds = new List<string>();
+            foreach (var clauseHandler in handler)
+            {
+                if (HasFieldId(clauseHandler))
+                {
+                    fieldIds.Add(GetFieldId(clauseHandler));
+                }
+            }
             return fieldIds;
         }
 

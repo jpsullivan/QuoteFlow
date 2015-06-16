@@ -17,7 +17,7 @@ var CheckboxMultiSelectSuggestHandler = SelectSuggestHandler.extend({
      * @return {String}
      */
     createClearAll: function () {
-        return "<li class='check-list-group-actions'><a class='clear-all' href='#'>" + AJS.I18n.getText("jira.ajax.autocomplete.clear.all") + "</a></li>";
+        return "<li class='check-list-group-actions'><a class='clear-all' href='#'>Clear All</a></li>";
     },
 
     /**

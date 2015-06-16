@@ -12,6 +12,7 @@ using QuoteFlow.Api.Asset.Search.Util;
 using QuoteFlow.Api.Auditing;
 using QuoteFlow.Api.Configuration.Lucene;
 using QuoteFlow.Api.Infrastructure.Lucene;
+using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
@@ -113,7 +114,9 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<ISortJqlGenerator>().To<SortJqlGenerator>().InRequestScope();
             Bind<IOrderByUtil>().To<OrderByUtil>().InRequestScope();
             Bind<QueryContextConverter>().ToSelf().InRequestScope();
+            Bind<QueryContextVisitor.QueryContextVisitorFactory>().ToSelf();
             Bind<ValidatorVisitor.ValidatorVisitorFactory>().ToSelf().InRequestScope();
+            Bind<ContextSetUtil>().ToConstant(ContextSetUtil.Instance);
 
             #endregion
 

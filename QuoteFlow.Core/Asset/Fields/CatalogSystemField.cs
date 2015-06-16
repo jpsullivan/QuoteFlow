@@ -15,7 +15,7 @@ namespace QuoteFlow.Core.Asset.Fields
     public class CatalogSystemField : AbstractOrderableNavigableField, ICatalogField
     {
         public const string PROJECT_NAME_KEY = "asset.field.catalog";
-        private const string FIELD_PARAMETER_NAME = "cid";
+        private const string FIELD_PARAMETER_NAME = "catalogid";
 
         public ICatalogService CatalogService { get; protected set; }
 

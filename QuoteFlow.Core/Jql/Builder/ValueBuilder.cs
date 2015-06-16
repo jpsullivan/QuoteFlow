@@ -10,8 +10,6 @@ namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
     /// Default implementation of <see cref="ValueBuilder"/>.
-    /// 
-    /// @since v4.0
     /// </summary>
     public class ValueBuilder : IValueBuilder
     {

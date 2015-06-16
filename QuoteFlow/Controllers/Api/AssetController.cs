@@ -87,5 +87,27 @@ namespace QuoteFlow.Controllers.Api
             var errors = result.ErrorCollection;
             throw new HttpResponseException(HttpStatusCode.BadRequest);
         }
+
+        [HttpPost]
+        public QuerySearchResults QueryComponentFromJql([FromBody] QueryComponentJqlResolver values)
+        {
+            // also get the user
+            var user = UserService.GetUser(RequestContext.Principal.Identity.Name, null);
+
+            var result = SearcherService.SearchWithJql(user, values.Jql, new long());
+            if (result.IsValid())
+            {
+                return result.ReturnedValue;
+            }
+
+            var errors = result.ErrorCollection;
+            throw new HttpResponseException(HttpStatusCode.BadRequest);
+        }
+
+        public class QueryComponentJqlResolver
+        {
+            public string Decorator { get; set; }
+            public string Jql { get; set; }
+        }
     }
 }

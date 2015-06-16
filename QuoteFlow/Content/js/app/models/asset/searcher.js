@@ -58,6 +58,33 @@ var AssetSearcherModel = Brace.Model.extend({
     },
 
     /**
+     * "Cleans" view HTML returned from the server for display.
+     *
+     * @param viewHtml The original view HTML.
+     * @return the cleaned view HTML.
+     * @private
+     */
+    _cleanViewHtml: function(viewHtml) {
+        var $container = AJS.$("<div/>").appendCatchExceptions(viewHtml);
+        $container.find(".fieldLabel").remove();
+
+        // Remove links, leaving their HTML content.
+        $container.find("a").replaceWith(function() {
+            return AJS.$(this).html();
+        });
+
+        // Most searchers only have one "searcherValue" even if multiple values
+        // are selected. For those with multiple, insert dashes between them.
+        $container.find(".searcherValue").slice(0, -1).each(function() {
+            AJS.$(this).after('-');
+        });
+
+        // Remove titles so they don't conflict with our tooltips.
+        $container.find("*").removeAttr("title");
+        return $container.html();
+    },
+
+    /**
      * @param {Boolean} [forceUpdate=false] Force update of the JQL, even if autoupdate is disabled
      * @returns {*}
      */
@@ -189,6 +216,15 @@ var AssetSearcherModel = Brace.Model.extend({
         } else {
             return $el.find(".error, .has-errors").length > 0;
         }
+    },
+
+    // See this._fetchEditHtml
+    clearEditHtml: function () {
+         this.setEditHtml(null);
+    },
+
+    _onEditHtmlUpdated: function() {
+        this.setSerializedParams(jQuery("<form/>").appendCatchExceptions(this.getEditHtml()).serialize());
     },
 
     /**

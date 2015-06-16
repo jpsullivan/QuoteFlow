@@ -47,15 +47,15 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
         /// <param name="user">The user performing this action.</param>
         /// <param name="searchContext">The search context of the current search request that may be participating in rendering the quote builder.</param>
         /// <param name="fieldValuesHolder">Contains any request parameters that the HTML input may need to use to pre-populate
-        /// the input (e.g. if this is the priority renderer and the search request being rendered has two priorities already
-        /// selected these params will contain these request parameters). These parameters will have been populated via a
-        /// call to <seealso cref="ISearchInputTransformer.PopulateFromQuery"/>
-        /// if there is a SearchRequest involved in the rendering this IssueNavigator call. </param>
+        ///     the input (e.g. if this is the priority renderer and the search request being rendered has two priorities already
+        ///     selected these params will contain these request parameters). These parameters will have been populated via a
+        ///     call to <seealso cref="ISearchInputTransformer.PopulateFromQuery"/>
+        ///     if there is a SearchRequest involved in the rendering this IssueNavigator call. </param>
         /// <param name="displayParameters"> are a map of "hints" that can be passed from the caller to this code which can use these
-        /// hints to alter the way it renders the HTML. </param>
+        ///     hints to alter the way it renders the HTML. </param>
         /// <returns> a String that contains HTML that can be rendered on the left-hand side of the issue navigator to show
         /// a SearchRequest summary. </returns>
-        string GetViewHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary displayParameters);
+        string GetViewHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters);
 
         /// <summary>
         /// Checks if the searchRequest object has a search representation that was created by the searcher and is

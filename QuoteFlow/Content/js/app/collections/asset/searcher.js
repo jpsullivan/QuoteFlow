@@ -314,7 +314,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
 
         } else {
             var response = AJS.$.ajax({
-                url: QuoteFlow.RootUrl + "/api/asset/QueryComponent",
+                url: QuoteFlow.RootUrl + "/api/asset/QueryComponentFromJql",
                 headers: { 'X-SITEMESH-OFF': true },
                 data: requestData,
                 type: "POST"
@@ -615,6 +615,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
      */
     _setSearchersFromData: function (searchers, update) {
         _.each(searchers, _.bind(function (value, id) {
+            debugger;
             this._addOrSet(id, {
                 groupId: value.groupId,
                 groupName: value.groupName,

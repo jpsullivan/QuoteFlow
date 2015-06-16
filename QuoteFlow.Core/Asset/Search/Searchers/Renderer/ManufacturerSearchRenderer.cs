@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Asset.Fields.Option;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Asset.Search;
@@ -77,7 +75,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             throw new NotImplementedException();
         }
 
-        public override string GetViewHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary displayParameters)
+        public override string GetViewHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters)
         {
             throw new NotImplementedException();
         }

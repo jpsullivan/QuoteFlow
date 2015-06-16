@@ -160,6 +160,7 @@
     <Compile Include="Jql\Query\QueryRegistryTests.cs" />
     <Compile Include="Jql\Query\QueryVisitorTests.cs" />
     <Compile Include="Jql\Query\WasClauseQueryFactoryTests.cs" />
+    <Compile Include="Jql\Resolver\CatalogResolverTests.cs" />
     <Compile Include="Jql\Util\Searchers\MockSearcherFactory.cs" />
     <Compile Include="Jql\Util\ToJqlStringVisitorTests.cs" />
     <Compile Include="Jql\Validator\AllTextValidatorTests.cs" />
