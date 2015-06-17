@@ -36,6 +36,7 @@ var UrlSerializer = {
      * @return {string} A URL representation of <tt>state</tt>.
      */
     getURLFromState: function(state) {
+        console.warn("todo: fix hardcoded quote url");
         state = state || {};
 
         var query = [];
@@ -50,10 +51,9 @@ var UrlSerializer = {
             query.push('filter=' + state.filter);
         }
 
-        // if (state.jql != null && (state.filterJql == null || state.jql !== state.filterJql)) {
-        //     query.push('jql=' + encodeURIComponent(state.jql));
-        // }
-        query.push('jql=' + encodeURIComponent(""));
+        if (state.jql != null && (state.filterJql == null || state.jql !== state.filterJql)) {
+            query.push('jql=' + encodeURIComponent(state.jql));
+        }
 
         if (state.startIndex && !state.selectedIssueKey) {
             query.push('startIndex=' + state.startIndex);

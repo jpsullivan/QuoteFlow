@@ -784,7 +784,6 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     update: function (state, isReset, options) {
-        debugger;
         this._navigateToState(this._getUpdateState(state), isReset, options);
     },
 
@@ -813,7 +812,9 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     applyState: function (state, isReset, options) {
+        debugger;
         var filterRequest;
+        //var systemFiltersRequest = this.initSystemFilters();
 
         QuoteFlow.application.execute("assetEditor:abortPending");
         this.createLayout();
