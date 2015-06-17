@@ -63,7 +63,6 @@ var CriteriaView = Brace.View.extend({
      * Update view to reflect model changes
      */
     update: function() {
-        debugger;
         var noSearchers = this.searcherCollection.length === 0; // Searchers have not loaded, but render them anyway default 'All' value
         var searcher = this._getSearcher();
         var validSearcher = this._isValidSearcher();

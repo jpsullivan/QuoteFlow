@@ -34,7 +34,6 @@ var SearcherGroupListDialogView = Brace.View.extend({
     },
 
     render: function() {
-
         var descriptors = this.searcherCollection.getAddMenuGroupDescriptors(),
             tooManySearchers = descriptors.length && descriptors[0].properties.items.length > SearcherGroupListDialogView.CRITERIA_DISPLAY_LIMIT;
 

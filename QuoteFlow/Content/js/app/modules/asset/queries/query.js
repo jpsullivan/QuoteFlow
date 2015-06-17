@@ -77,6 +77,7 @@ var AssetQueryModule = Brace.Evented.extend({
     },
 
     handleSearchRequested: function (jql) {
+        debugger;
         this._queryStateModel.setJql(jql);
         this.clearSearchErrors();
     },
@@ -138,6 +139,7 @@ var AssetQueryModule = Brace.Evented.extend({
     },
 
     publishJqlChanges: function (jql) {
+        debugger;
         this.triggerJqlChanged(jql);
     },
 

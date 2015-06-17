@@ -754,13 +754,14 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     _navigateToState: function (state, isReset, options) {
+        debugger;
         options = options || {};
 
-        if (!QuoteFlow.application.request("issueEditor:canDismissComment")) {
-            this.queryModule.queryChanged();
-            InlineLayer.current && InlineLayer.current.hide();
-            return null;
-        }
+        // if (!QuoteFlow.application.request("issueEditor:canDismissComment")) {
+        //     this.queryModule.queryChanged();
+        //     InlineLayer.current && InlineLayer.current.hide();
+        //     return null;
+        // }
 
         if (this._validateNavigate(state)) {
             options.replace ? this.assetNavRouter.replaceState(state) : this.assetNavRouter.pushState(state);
@@ -783,6 +784,7 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     update: function (state, isReset, options) {
+        debugger;
         this._navigateToState(this._getUpdateState(state), isReset, options);
     },
 

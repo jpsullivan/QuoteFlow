@@ -24,8 +24,6 @@ var QueryComponent = function () {
                 primaryClauses : this.DEFAULT_CLAUSES,
                 without: [],
                 style: "generic",
-                /* This has to be true :( - If issue-nav-components is anything below 6.2, the layoutSwitcher option
-                 * didn't exist when it was first consumed in 6.1. */
                 layoutSwitcher: true,
                 autocompleteEnabled: true,
                 advancedAutoUpdate: false,
@@ -60,7 +58,6 @@ var QueryComponent = function () {
                     basicAutoUpdate: options.basicAutoUpdate,
                     preferredSearchMode: options.preferredSearchMode,
                     basicOrderBy: options.basicOrderBy
-
                 }),
                 primaryClauses: options.primaryClauses,
                 searchers: options.searchers

@@ -29,7 +29,15 @@ var AssetSearcherCollection = Brace.Collection.extend({
      *
      * beforeCriteriaRemoved: a user action caused a criteria to be removed from view. Args: id, direction
      */
-    namedEvents: ["searchRequested", "collectionChanged", "jqlTooComplex", "textFieldChanged", "requestUpdateFromView", "interactiveChanged", "beforeCriteriaRemoved"],
+    namedEvents: [
+        "searchRequested",
+        "collectionChanged",
+        "jqlTooComplex",
+        "textFieldChanged",
+        "requestUpdateFromView",
+        "interactiveChanged",
+        "beforeCriteriaRemoved"
+    ],
 
     QUERY_PARAM: "text",
     QUERY_ID: "text",
@@ -395,8 +403,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
         if (this.searcherAffectsContext(id)) {
             // Requery all searchers and values
             deferred = this._querySearchersAndValues(this.getQueryString());
-        }
-        else {
+        } else {
             deferred = this._querySearchersByValue(id);
         }
 
@@ -562,8 +569,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
             var searcher = searchers[id];
             if (!searcher) {
                 searchers[id] = value;
-            }
-            else {
+            } else {
                 _.extend(searcher, value);
             }
         }, this));
@@ -615,7 +621,6 @@ var AssetSearcherCollection = Brace.Collection.extend({
      */
     _setSearchersFromData: function (searchers, update) {
         _.each(searchers, _.bind(function (value, id) {
-            debugger;
             this._addOrSet(id, {
                 groupId: value.groupId,
                 groupName: value.groupName,

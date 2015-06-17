@@ -3,9 +3,12 @@
     <div class="searcherValue">
         <label class="fieldLabel" for="fieldcatalogid">Catalog:</label>
         <span id="fieldcatalogid" class="fieldValue">
-            @foreach (var catalog in Model["selectedCatalogs"])
+            @for (int i = 0; i < Model["selectedCatalogs"].Count; i++)
             {
-                <a href="#" title="@catalog.Name">@catalog.Name</a>
+                var catalog = Model["selectedCatalogs"][i];
+                <a href="#" title="@catalog.Name">
+                    @catalog.Name@if (i < Model["selectedCatalogs"].Count - 1) {<text>,</text>}
+                </a>
             }
         </span>
     </div>
