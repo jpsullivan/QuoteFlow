@@ -39,7 +39,6 @@ var BasicQueryView = Brace.View.extend({
             this.basicOrderByView = OrderByComponent.create();
 
             this.queryStateModel.on("change:jql", function () {
-                debugger;
                 this.basicOrderByView.setJql(this.queryStateModel.getJql());
             }, this);
 

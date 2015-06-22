@@ -67,7 +67,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         {
             var templateParameters = GetDisplayParams(user, searchContext, fieldValuesHolder, displayParameters);
             AddEditParameters(fieldValuesHolder, searchContext, user, templateParameters);
-            return RenderEditTemplate("ManufacturerSearcherEdit.cshtml", templateParameters);
+            return RenderEditTemplate("ManufacturerSearcherEdit", templateParameters);
         }
 
         public override bool IsShown(User user, ISearchContext searchContext)

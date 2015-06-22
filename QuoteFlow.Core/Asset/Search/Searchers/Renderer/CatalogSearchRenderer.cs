@@ -37,7 +37,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         {
             var templateParameters = GetDisplayParams(user, searchContext, fieldValuesHolder, displayParameters);
             AddParameters(user, fieldValuesHolder, false, templateParameters);
-            return RenderEditTemplate("CatalogSearcherEdit.cshtml", templateParameters);
+            return RenderEditTemplate("CatalogSearcherEdit", templateParameters);
         }
 
         public void AddParameters(User searcher, IFieldValuesHolder fieldValuesHolder, bool noCurrentSearchRequest, IDictionary<string, object> templateParams)
@@ -103,7 +103,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
                 }
             }
 
-            return RenderEditTemplate("CatalogSearcherView.cshtml", templateParameters);
+            return RenderEditTemplate("CatalogSearcherView", templateParameters);
         }
 
         public override bool IsRelevantForQuery(User user, IQuery query)

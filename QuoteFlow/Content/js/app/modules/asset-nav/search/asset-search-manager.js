@@ -93,7 +93,7 @@ var AssetSearchManager = Brace.Evented.extend({
         deferred.fail(_.bind(function () {
             this.assetKeys.reset();
             this.triggerSearchError();
-            _.defer(JIRA.trace, "quoteflow.search.finished");
+            _.defer(QuoteFlow.trace, "quoteflow.search.finished");
         }, this));
 
         return deferred.pipe(function (data) {
@@ -131,7 +131,7 @@ var AssetSearchManager = Brace.Evented.extend({
 
         return jQuery.ajax({
             type: "POST",
-            url: AJS.contextPath() + "/rest/issueNav/1/issueTable",
+            url: QuoteFlow.RootUrl + "/rest/issueNav/1/issueTable",
             //headers: JIRA.Issues.XsrfTokenHeader,
             data: _.extend(data, {
                 layoutKey: "split-view"
@@ -179,7 +179,7 @@ var AssetSearchManager = Brace.Evented.extend({
             }, searchOptions),
             type: "POST",
             //headers: JIRA.Issues.XsrfTokenHeader,
-            url: AJS.contextPath() + "/rest/issueNav/1/issueTable/stable"
+            url: QuoteFlow.RootUrl + "/rest/issueNav/1/issueTable/stable"
         });
 
         request.fail(_.bind(function () {
@@ -190,7 +190,7 @@ var AssetSearchManager = Brace.Evented.extend({
             return data.assetTable;
         }).done(_.bind(function (data) {
             this.assetKeys.setMultiple(AssetSearchManager._extractAssetKeysFromTable(data.table, ids));
-            _.defer(JIRA.trace, "jira.search.finished");
+            _.defer(QuoteFlow.trace, "quoteflow.search.finished");
         }, this)).promise();
     },
 

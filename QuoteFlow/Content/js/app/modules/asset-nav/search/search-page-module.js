@@ -545,12 +545,16 @@ var SearchPageModule = Brace.Model.extend({
     issueTableSearchError: function (response) {
         if (response.status !== 0) {
             // if we haven't aborted the request
-            this.filterModule.filtersComponent.markFilterHeaderAsInvalid();
+            //this.filterModule.filtersComponent.markFilterHeaderAsInvalid();
             var errors;
             try {
                 errors = JSON.parse(response.responseText);
             } catch (error) {
-                errors = { errorMessages: [AJS.I18n.getText("issue.nav.common.server.error")] };
+                errors = {
+                    errorMessages: [
+                        "Error occurred communicating with the server. Please reload the page and try again."
+                    ]
+                };
             }
             this.queryModule.onSearchError(errors);
         }
@@ -754,7 +758,6 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     _navigateToState: function (state, isReset, options) {
-        debugger;
         options = options || {};
 
         // if (!QuoteFlow.application.request("issueEditor:canDismissComment")) {
@@ -812,7 +815,6 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     applyState: function (state, isReset, options) {
-        debugger;
         var filterRequest;
         //var systemFiltersRequest = this.initSystemFilters();
 

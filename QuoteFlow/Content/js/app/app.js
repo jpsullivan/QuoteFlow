@@ -34,6 +34,7 @@ var QuoteFlow = {
     },
     Pages: {},
     Routes: {},
+    trace: $.noop,
     Utilities: {},
     UI: {
         Asset: {

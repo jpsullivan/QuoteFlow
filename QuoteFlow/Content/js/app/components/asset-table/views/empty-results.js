@@ -28,9 +28,9 @@ var EmptyResultsView = Marionette.ItemView.extend({
             this.linkType = 'create';
         } else {
             message = "No assets were found to match your search";
-            hint = createAssetPerm ?
-                "Try modifying your search criteria or <a>creating a new asset</a>" :
-                AJS.I18n.getText('Try modifying your search criteria');
+            hint = createAssetPerm
+                ? "Try modifying your search criteria or <a>creating a new asset</a>"
+                : "Try modifying your search criteria"
             cssClass = "no-results-message";
             this.linkType = 'create';
         }
@@ -50,7 +50,7 @@ var EmptyResultsView = Marionette.ItemView.extend({
         if (!isLoggedIn) {
             //$links.attr('href', JIRA.Issues.LoginUtils.redirectUrlToCurrent()).addClass('login-link');
         } else {
-            $links.addClass('create-issue').attr('href', AJS.contextPath() + "/secure/CreateIssue!default.jspa");
+            $links.addClass('create-issue').attr('href', QuoteFlow.RootUrl + "/secure/CreateIssue!default.jspa");
         }
 
         this.hidePending();

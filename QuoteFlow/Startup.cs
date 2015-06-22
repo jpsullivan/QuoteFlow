@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using System.Web.Hosting;
+using Microsoft.Owin;
 using Microsoft.Owin.Logging;
 using Ninject;
 using Owin;
@@ -32,6 +33,8 @@ namespace QuoteFlow
             ConfigureAuth(config, auth, app);
             ConfigureWebApi(app);
             ConfigureHangfire(app);
+
+            Api.Startup.ConfigureRazorEngine(HostingEnvironment.MapPath("~/Views/Searchers/"));
         }
     }
 }
