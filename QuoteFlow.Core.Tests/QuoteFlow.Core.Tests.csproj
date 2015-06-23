@@ -122,6 +122,7 @@
     <Compile Include="Jql\Builder\MultiMutableClauseTests.cs" />
     <Compile Include="Jql\Builder\NotMutableClauseTests.cs" />
     <Compile Include="Jql\Builder\PrecedenceSimpleClauseBuilderTests.cs" />
+    <Compile Include="Jql\Builder\SingleMutableClauseTests.cs" />
     <Compile Include="Jql\Builder\ValueBuilderTests.cs" />
     <Compile Include="Jql\Clause\DeMorgansVisitorTests.cs" />
     <Compile Include="Jql\Context\CatalogClauseContextFactoryTests.cs" />
