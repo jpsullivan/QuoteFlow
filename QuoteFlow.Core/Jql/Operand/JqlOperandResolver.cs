@@ -135,28 +135,35 @@ namespace QuoteFlow.Core.Jql.Operand
                 throw new ArgumentNullException("operand");
             }
 
-            if (operand is EmptyOperand)
+            var emptyOperand = operand as EmptyOperand;
+            if (emptyOperand != null)
             {
-                return _emptyHandler.Validate(user, (EmptyOperand) operand, terminalClause);
+                return _emptyHandler.Validate(user, emptyOperand, terminalClause);
             }
-            if (operand is SingleValueOperand)
+
+            var valueOperand = operand as SingleValueOperand;
+            if (valueOperand != null)
             {
-                return _singleHandler.Validate(user, (SingleValueOperand) operand, terminalClause);
+                return _singleHandler.Validate(user, valueOperand, terminalClause);
             }
-            if (operand is MultiValueOperand)
+
+            var multiValueOperand = operand as MultiValueOperand;
+            if (multiValueOperand != null)
             {
-                return _multiHandler.Validate(user, (MultiValueOperand) operand, terminalClause);
+                return _multiHandler.Validate(user, multiValueOperand, terminalClause);
             }
-            if (operand is FunctionOperand)
+
+            var functionOperand = operand as FunctionOperand;
+            if (functionOperand != null)
             {
-                var funcOperand = (FunctionOperand) operand;
+                var funcOperand = functionOperand;
                 var handler = _registry.GetOperandHandler(funcOperand);
                 if (handler != null)
                 {
                     return handler.Validate(user, funcOperand, terminalClause);
                 }
                 var messageSet = new MessageSet();
-                messageSet.AddErrorMessage(string.Format("jira.jql.operand.illegal.function: {0}", operand.DisplayString));
+                messageSet.AddErrorMessage(string.Format("quoteflow.jql.operand.illegal.function: {0}", operand.DisplayString));
                 return messageSet;
             }
             else
@@ -164,7 +171,7 @@ namespace QuoteFlow.Core.Jql.Operand
                 //log.debug(string.Format("Unknown operand type '{0}' with name '{1}'", operand.GetType(), operand.DisplayString));
 
                 var messageSet = new MessageSet();
-                messageSet.AddErrorMessage(string.Format("jira.jql.operand.illegal.operand: {0}", operand.DisplayString));
+                messageSet.AddErrorMessage(string.Format("quoteflow.jql.operand.illegal.operand: {0}", operand.DisplayString));
                 return messageSet;
             }
         }
@@ -200,22 +207,100 @@ namespace QuoteFlow.Core.Jql.Operand
 
         public bool IsEmptyOperand(IOperand operand)
         {
-            var operandHandler = GetOperandHandler(operand);
-			//return operandHandler != null && operandHandler.IsEmpty();
+            var handler = GetOperandHandler(operand);
+
+            if (handler == null)
+            {
+                return false;
+            }
+
+            if (handler is EmptyOperandHandler)
+            {
+                var resolvedHandler = handler as EmptyOperandHandler;
+                return resolvedHandler.IsEmpty();
+            }
+            if (handler is SingleValueOperandHandler)
+            {
+                var resolvedHandler = handler as SingleValueOperandHandler;
+                return resolvedHandler.IsEmpty();
+            }
+            if (handler is MultiValueOperandHandler)
+            {
+                var resolvedHandler = handler as MultiValueOperandHandler;
+                return resolvedHandler.IsEmpty();
+            }
+            if (operand is FunctionOperandHandler)
+            {
+                var resolvedHandler = handler as FunctionOperandHandler;
+                return resolvedHandler != null && resolvedHandler.IsEmpty();
+            }
+
             return false;
         }
 
         public bool IsFunctionOperand(IOperand operand)
         {
             var handler = GetOperandHandler(operand);
-			//return handler != null && handler.IsFunction();
+
+            if (handler == null)
+            {
+                return false;
+            }
+
+            if (handler is EmptyOperandHandler)
+            {
+                var resolvedHandler = handler as EmptyOperandHandler;
+                return resolvedHandler.IsFunction();
+            }
+            if (handler is SingleValueOperandHandler)
+            {
+                var resolvedHandler = handler as SingleValueOperandHandler;
+                return resolvedHandler.IsFunction();
+            }
+            if (handler is MultiValueOperandHandler)
+            {
+                var resolvedHandler = handler as MultiValueOperandHandler;
+                return resolvedHandler.IsFunction();
+            }
+            if (operand is FunctionOperandHandler)
+            {
+                var resolvedHandler = handler as FunctionOperandHandler;
+                return resolvedHandler != null && resolvedHandler.IsFunction();
+            }
+
             return false;
         }
 
         public bool IsListOperand(IOperand operand)
         {
             var handler = GetOperandHandler(operand);
-			//return handler != null && handler.IsList();
+
+            if (handler == null)
+            {
+                return false;
+            }
+
+            if (handler is EmptyOperandHandler)
+            {
+                var resolvedHandler = handler as EmptyOperandHandler;
+                return resolvedHandler.IsList();
+            }
+            if (handler is SingleValueOperandHandler)
+            {
+                var resolvedHandler = handler as SingleValueOperandHandler;
+                return resolvedHandler.IsList();
+            }
+            if (handler is MultiValueOperandHandler)
+            {
+                var resolvedHandler = handler as MultiValueOperandHandler;
+                return resolvedHandler.IsList();
+            }
+            if (operand is FunctionOperandHandler)
+            {
+                var resolvedHandler = handler as FunctionOperandHandler;
+                return resolvedHandler != null && resolvedHandler.IsList();
+            }
+
             return false;
         }
 

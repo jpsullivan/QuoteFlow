@@ -4,8 +4,8 @@ var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var Controller = require('./controller');
-var Router = require('./router');
-var AssetCustomRouter = require('./router-custom');
+var Router = require('./router-custom');
+//var AssetCustomRouter = require('./router-custom');
 
 // /**
 //  * [AssetNavModule description]
@@ -27,7 +27,7 @@ var AssetCustomRouter = require('./router-custom');
 // 		var router = this.router = new Router({ controller: this.controller });
 // 	});
 // };
-//
+
 var AssetNavModule = Marionette.Module.extend({
 
     onStart: function (options) {

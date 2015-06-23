@@ -12,12 +12,20 @@ var UrlSerializer = require('../../util/url-serializer');
  * asset table module.
  */
 var AssetNavCustomRouter = Marionette.AppRouter.extend({
+
     initialize: function (options) {
         _.extend(this, options);
         _.bindAll(this, "_restoreSessionSearch", "_route");
 
-        this.route(/^(.*?)([\?]{1}.*)?$/, this._route);
-        this.route(/^(assets\/)?$/, this._restoreSessionSearch);
+        //this.route(/^(.*?)([\?]{1}.*)?$/, this._route);
+        //this.route(/^(quote)\/([^\/\?]+)\/([^\/\?]+)\/(builder)(\?.*)?$/, this._route);
+
+        // equivalent to: "quote/:id/:name/builder/?:query"
+        //this.route(/^(quote\/)([^\/\?]+)\/([^\/\?]+)\/(builder\/)\?([^\/\?]+)(\?.*)?$/, this._route);
+        this.route("quote/:id/:name/builder/?:query", this._route);
+
+        // equivalent to "quote/:id/:name/builder/"
+        this.route(/^(quote)\/([^\/\?]+)\/([^\/\?]+)\/(builder)\/?$/, this._route);
 
         // backbone-query-parameters supports clever decoding of values into arrays, but we don't want this.
         delete Backbone.Router.arrayValueSplit;
@@ -47,7 +55,7 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
         this.navigate(UrlSerializer.getURLFromState(state), { trigger: false, replace: true });
     },
 
-    _restoreSessionSearch: function () {
+    _restoreSessionSearch: function (quoteId, quoteName) {
         var sessionSearch = this.initialSessionSearchState,
             url = UrlSerializer.getURLFromState(sessionSearch || this.searchPageModule.getState());
 
@@ -61,9 +69,8 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
      * @param {object} query The decoded querystring params
      * @private
      */
-    _route: function (path, query) {
-        // Re-encode back to a full fragment, since we do our own parsing in JIRA.Issues.URLSerializer
-        var fragment = this.toFragment(path, query);
+    _route: function (quoteId, quoteName, query) {
+        var fragment = Backbone.history.getFragment();
 
         if (QuoteFlow.application.ignorePopState) {
             // Workaround for Chrome bug firing a null popstate event on page load.

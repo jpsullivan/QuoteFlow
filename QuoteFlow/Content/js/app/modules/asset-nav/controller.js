@@ -17,7 +17,7 @@ var InitSparklers = require('./searchers/initSparklers');
  */
 var AssetNavController = Marionette.Controller.extend({
 
-    builder: function () {
+    builder: function (query) {
         // initialize renderable components here (such as sparklers)
         InitSparklers.register();
 
@@ -73,11 +73,11 @@ var AssetNavController = Marionette.Controller.extend({
          * @param xhr XHR object from jQuery.ajax
          */
         QuoteFlow.displayFailSearchMessage = function(xhr) {
-        if (xhr && xhr.statusText !== "abort") {
-            return Message.showErrorMsg(SmartAjax.buildSimpleErrorContent(xhr), {
-                closeable: true
-            });
-        }
+            if (xhr && xhr.statusText !== "abort") {
+                return Message.showErrorMsg(SmartAjax.buildSimpleErrorContent(xhr), {
+                    closeable: true
+                });
+            }
         };
     },
 

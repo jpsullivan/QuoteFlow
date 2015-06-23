@@ -560,6 +560,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
     },
 
     _onQuerySearchersAndValues: function (data) {
+        debugger;
         // merge searchers and values from response
         var collection = this,
             searchers = this._parseSearcherGroups(data.searchers);
@@ -567,6 +568,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
         _.each(data.values, _.bind(function (value, id) {
             // compose searcher and value from response
             var searcher = searchers[id];
+            debugger;
             if (!searcher) {
                 searchers[id] = value;
             } else {

@@ -53,14 +53,12 @@ namespace QuoteFlow.Core.Asset.Nav
             };
         }
 
-        public AssetTableCreator GetNormalAssetTableCreator(User user, IAssetTableServiceConfiguration configuration, IQuery query,
-            bool returnAssetIds, SearchRequest searchRequest)
+        public AssetTableCreator GetNormalAssetTableCreator(User user, IAssetTableServiceConfiguration configuration, IQuery query, bool returnAssetIds, SearchRequest searchRequest)
         {
             return CreateAssetTableCreator(user, configuration, false, null, query, returnAssetIds, searchRequest);
         }
 
-        public AssetTableCreator GetStableAssetTableCreator(User user, IAssetTableServiceConfiguration configuration, IQuery query, List<int?> assetIds,
-            SearchRequest searchRequest)
+        public AssetTableCreator GetStableAssetTableCreator(User user, IAssetTableServiceConfiguration configuration, IQuery query, List<int?> assetIds, SearchRequest searchRequest)
         {
             return CreateAssetTableCreator(user, configuration, true, assetIds, query, true, searchRequest);
         }

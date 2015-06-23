@@ -177,17 +177,14 @@ namespace QuoteFlow.Controllers
         }
 
         [QuoteFlowRoute("quote/{id:INT}/{name}/builder", Name = RouteNames.QuoteBuilder)]
-        public virtual ActionResult ShowBuilder(int id, string name)
+        public virtual ActionResult ShowBuilder(int id, string name, string jql)
         {
             var quote = QuoteService.GetQuote(id);
 
             // track that this quote has been visited
             UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Quote, quote.Id, quote.Name);
 
-            //var jql = "catalog = MSA";
-            var jql = string.Empty;
-
-            var assetTable = AssetTableService.GetIssueTableFromFilterWithJql(GetCurrentUser(), string.Empty, jql, AssetTableServiceConfiguration, true);
+            var assetTable = AssetTableService.GetIssueTableFromFilterWithJql(GetCurrentUser(), null, jql, AssetTableServiceConfiguration, true);
             var visibleFieldNames = new List<string>();
             var visibleFunctionNames = new List<string>();
             var jqlReservedWords = JqlStringSupport.GetJqlReservedWords();

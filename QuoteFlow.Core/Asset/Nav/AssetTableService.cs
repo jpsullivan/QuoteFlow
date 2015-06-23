@@ -58,14 +58,12 @@ namespace QuoteFlow.Core.Asset.Nav
             return GetAssetTable(user, config, parseResult.Query, isStableSearchFirstHit, new SearchRequest());
         }
 
-        public AssetTableViewModel GetAssetTableFromAssetIds(User user, string filterId, string jql, List<int> ids,
-            IAssetTableServiceConfiguration config)
+        public AssetTableViewModel GetAssetTableFromAssetIds(User user, string filterId, string jql, List<int> ids, IAssetTableServiceConfiguration config)
         {
             throw new NotImplementedException();
         }
 
-        private AssetTableViewModel GetAssetTableFromJql(User user, string jql, IAssetTableServiceConfiguration config,
-            bool returnMatchingAssetIds)
+        private AssetTableViewModel GetAssetTableFromJql(User user, string jql, IAssetTableServiceConfiguration config, bool returnMatchingAssetIds)
         {
             // parse the JQL into a Query object (and to validate it).
             var parseResult = SearchService.ParseQuery(new User(), jql);
