@@ -7,6 +7,7 @@ using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Operand;
 using QuoteFlow.Api.Jql.Util;
+using QuoteFlow.Core.Jql.Util;
 
 namespace QuoteFlow.Core.Jql.Builder
 {
@@ -34,6 +35,15 @@ namespace QuoteFlow.Core.Jql.Builder
             _parent = parent;
             _jqlDateSupport = jqlDateSupport;
             _builder = builder;
+        }
+
+        public JqlClauseBuilder(JqlQueryBuilder parent) 
+            : this(parent, new PrecedenceSimpleClauseBuilder(), new JqlDateSupport())
+        {
+        }
+
+        public JqlClauseBuilder() : this(null)
+        {
         }
 
         public JqlQueryBuilder EndWhere()
