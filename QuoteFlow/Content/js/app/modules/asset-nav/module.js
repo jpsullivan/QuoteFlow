@@ -1,18 +1,33 @@
 ﻿"use strict";
 
 var _ = require('underscore');
-
 var Marionette = require('backbone.marionette');
 
-var AssetNavController = require('./controller');
-var AssetNavCreator = require('./search/asset-nav-creator');
-var AssetRouter = require('./router');
+var Controller = require('./controller');
+var Router = require('./router');
 var AssetCustomRouter = require('./router-custom');
-var Resize = require('./util/resize');
 
-/**
- *
- */
+// /**
+//  * [AssetNavModule description]
+//  * @param {[type]} app [description]
+//  */
+// var AssetNavModule = function (app) {
+// 	app.module('asset-nav', function () {
+//
+// 		/**
+// 		 * This modules controller
+// 		 * @type {*|exports}
+// 		 */
+// 		var controller = this.controller = new Controller();
+//
+// 		/**
+// 		 * This modules router
+// 		 * @type {Router}
+// 		 */
+// 		var router = this.router = new Router({ controller: this.controller });
+// 	});
+// };
+//
 var AssetNavModule = Marionette.Module.extend({
 
     onStart: function (options) {
@@ -35,7 +50,7 @@ var AssetNavModule = Marionette.Module.extend({
     },
 
     startMediator: function (options) {
-        this.controller = new AssetNavController();
+        this.controller = new Controller();
         this.controller.builder();
 
         // return new AssetCustomRouter({

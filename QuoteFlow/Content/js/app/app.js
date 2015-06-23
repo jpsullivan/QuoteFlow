@@ -177,6 +177,11 @@ QuoteFlow.application.on("before:start", function (options) {
     });
 });
 
+/**
+ * Autoload any modules that may exist
+ */
+//var LoadedModules = require('./autoload/modules')(QuoteFlow.application);
+
 QuoteFlow.application.on("start", function (options) {
     if (Backbone.history) {
         Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
