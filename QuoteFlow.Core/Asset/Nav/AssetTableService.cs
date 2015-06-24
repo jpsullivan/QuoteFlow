@@ -46,7 +46,7 @@ namespace QuoteFlow.Core.Asset.Nav
         {
             if (filterId == null)
             {
-                return GetAssetTableFromJql(user, jql, config, isStableSearchFirstHit);
+                return GetAssetTableFromJql(user, jql ?? string.Empty, config, isStableSearchFirstHit);
             }
 
             if (jql == null)

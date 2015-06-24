@@ -189,7 +189,7 @@ namespace QuoteFlow.Controllers
             var visibleFunctionNames = new List<string>();
             var jqlReservedWords = JqlStringSupport.GetJqlReservedWords();
 
-            var searchOutcome = SearcherService.SearchWithJql(GetCurrentUser(), jql, 0);
+            var searchOutcome = SearcherService.SearchWithJql(GetCurrentUser(), jql ?? string.Empty, 0);
 
             var model = new QuoteBuilderViewModel(quote, assetTable.AssetTable, visibleFieldNames, visibleFunctionNames,
                 jqlReservedWords, searchOutcome);
