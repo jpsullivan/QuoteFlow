@@ -129,9 +129,10 @@ var AssetSearchManager = Brace.Evented.extend({
             return jQuery.Deferred().reject(response).promise();
         }
 
+        debugger;
         return jQuery.ajax({
             type: "POST",
-            url: QuoteFlow.RootUrl + "/rest/issueNav/1/issueTable",
+            url: QuoteFlow.RootUrl + "api/assetTable",
             //headers: JIRA.Issues.XsrfTokenHeader,
             data: _.extend(data, {
                 layoutKey: "split-view"
@@ -179,7 +180,7 @@ var AssetSearchManager = Brace.Evented.extend({
             }, searchOptions),
             type: "POST",
             //headers: JIRA.Issues.XsrfTokenHeader,
-            url: QuoteFlow.RootUrl + "/rest/issueNav/1/issueTable/stable"
+            url: QuoteFlow.RootUrl + "api/assetTable/stable"
         });
 
         request.fail(_.bind(function () {

@@ -138,6 +138,7 @@ var AssetQueryModule = Brace.Evented.extend({
     },
 
     publishJqlChanges: function (jql) {
+        debugger;
         this.triggerJqlChanged(jql);
     },
 

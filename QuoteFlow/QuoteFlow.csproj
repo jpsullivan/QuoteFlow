@@ -325,6 +325,7 @@
     <Compile Include="Areas\Admin\ViewModels\QuoteStatusViewModels.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\Api\AssetController.cs" />
+    <Compile Include="Controllers\Api\AssetTableController.cs" />
     <Compile Include="Controllers\Api\AssetVarController.cs" />
     <Compile Include="Controllers\Api\AssetVarValueController.cs" />
     <Compile Include="Controllers\Api\QueryRendererEditController.cs" />

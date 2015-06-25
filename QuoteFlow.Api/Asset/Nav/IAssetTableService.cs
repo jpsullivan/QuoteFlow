@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Api.Infrastructure.Services;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels.Assets.Nav;
 
@@ -19,7 +20,7 @@ namespace QuoteFlow.Api.Asset.Nav
         /// <param name="config"></param>
         /// <param name="isStableSearchFirstHit"></param>
         /// <returns></returns>
-        AssetTableViewModel GetIssueTableFromFilterWithJql(User user, string filterId, string jql,
+        IServiceOutcome<AssetTableViewModel> GetIssueTableFromFilterWithJql(User user, string filterId, string jql,
             IAssetTableServiceConfiguration config, bool isStableSearchFirstHit);
 
         /// <summary>

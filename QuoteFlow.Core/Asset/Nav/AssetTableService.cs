@@ -8,13 +8,16 @@ using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Asset.Search.Util;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Infrastructure.Extensions;
+using QuoteFlow.Api.Infrastructure.Services;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels.Assets.Nav;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Api.Util;
+using QuoteFlow.Core.Infrastructure.Services;
 using QuoteFlow.Core.Jql.Builder;
+using QuoteFlow.Core.Util;
 
 namespace QuoteFlow.Core.Asset.Nav
 {
@@ -42,7 +45,7 @@ namespace QuoteFlow.Core.Asset.Nav
 
         #endregion
 
-        public AssetTableViewModel GetIssueTableFromFilterWithJql(User user, string filterId, string jql, IAssetTableServiceConfiguration config, bool isStableSearchFirstHit)
+        public IServiceOutcome<AssetTableViewModel> GetIssueTableFromFilterWithJql(User user, string filterId, string jql, IAssetTableServiceConfiguration config, bool isStableSearchFirstHit)
         {
             if (filterId == null)
             {
@@ -55,6 +58,11 @@ namespace QuoteFlow.Core.Asset.Nav
             }
 
             var parseResult = SearchService.ParseQuery(user, jql);
+            if (!parseResult.IsValid())
+            {
+                return BuildJqlErrorServiceOutcome(parseResult.Errors);
+            }
+
             return GetAssetTable(user, config, parseResult.Query, isStableSearchFirstHit, new SearchRequest());
         }
 
@@ -63,7 +71,7 @@ namespace QuoteFlow.Core.Asset.Nav
             throw new NotImplementedException();
         }
 
-        private AssetTableViewModel GetAssetTableFromJql(User user, string jql, IAssetTableServiceConfiguration config, bool returnMatchingAssetIds)
+        private IServiceOutcome<AssetTableViewModel> GetAssetTableFromJql(User user, string jql, IAssetTableServiceConfiguration config, bool returnMatchingAssetIds)
         {
             // parse the JQL into a Query object (and to validate it).
             var parseResult = SearchService.ParseQuery(new User(), jql);
@@ -77,29 +85,29 @@ namespace QuoteFlow.Core.Asset.Nav
             return GetAssetTable(user, config, parseResult.Query, returnMatchingAssetIds, searchRequest);
         }
 
-//        /// <summary>
-//        /// Builds an "error" asset table model containing the given errors. If no errors, uses a generic
-//        /// "JQL is invalid" error message.
-//        /// </summary>
-//        /// <param name="messageSet">The errors to include.</param>
-//        /// <returns>An "error" asset table vm containing errors.</returns>
-//        private AssetTableViewModel BuildJqlErrorViewModel(IMessageSet messageSet)
-//        {
-//            ErrorCollection errors = new SimpleErrorCollection();
-//            IEnumerable<string> errorMessages = Iterables.limit(messageSet.ErrorMessages, MaxJqlErrors);
-//
-//            foreach (string error in errorMessages)
-//            {
-//                errors.addErrorMessage(error);
-//            }
-//
-//            if (!errors.hasAnyErrors())
-//            {
-//                errors.addErrorMessage(authenticationContext.I18nHelper.getText("jql.parse.unknown.no.pos"));
-//            }
-//
-//            return new AssetTableViewModel(errors);
-//        }
+        /// <summary>
+        /// Builds an "error" asset table model containing the given errors. If no errors, uses a generic
+        /// "JQL is invalid" error message.
+        /// </summary>
+        /// <param name="messageSet">The errors to include.</param>
+        /// <returns>An "error" asset table vm containing errors.</returns>
+        private IServiceOutcome<AssetTableViewModel> BuildJqlErrorServiceOutcome(IMessageSet messageSet)
+        {
+            var errors = new SimpleErrorCollection();
+            var errorMessages = new List<string>(messageSet.ErrorMessages);
+
+            foreach (var error in errorMessages)
+            {
+                errors.AddErrorMessage(error);
+            }
+
+            if (!errors.HasAnyErrors())
+            {
+                errors.AddErrorMessage("Error in the JQL Query: Unable to parse the query.");
+            }
+
+            return new ServiceOutcome<AssetTableViewModel>(errors);
+        } 
 
         /// <summary>
         /// Attempt to construct an <see cref="AssetTable"/>.
@@ -110,7 +118,7 @@ namespace QuoteFlow.Core.Asset.Nav
         /// <param name="returnIssueIds">Whether the issues' IDs should be returned.</param>
         /// <param name="searchRequest">The search request being executed (may differ from {@code query}).</param>
         /// <returns>The result of attempting to create an <see cref="AssetTable"/> from the given arguments.</returns>
-        protected virtual AssetTableViewModel GetAssetTable(User user, IAssetTableServiceConfiguration configuration, IQuery query, bool returnIssueIds, SearchRequest searchRequest)
+        protected virtual IServiceOutcome<AssetTableViewModel> GetAssetTable(User user, IAssetTableServiceConfiguration configuration, IQuery query, bool returnIssueIds, SearchRequest searchRequest)
         {
             if (searchRequest == null)
             {
@@ -128,17 +136,16 @@ namespace QuoteFlow.Core.Asset.Nav
         /// </summary>
         /// <param name="creator"> The object that validates the request and creates the <see cref="AssetTable"/>. </param>
         /// <returns> the result of attempting to create an <see cref="AssetTable"/> via {@code creator}. </returns>
-        protected virtual AssetTableViewModel CreateAssetTableFromCreator(AssetTableCreator creator)
+        protected virtual IServiceOutcome<AssetTableViewModel> CreateAssetTableFromCreator(AssetTableCreator creator)
         {
-            //ErrorCollection errorCollection = new SimpleErrorCollection();
+            var errorCollection = new SimpleErrorCollection();
 
             try
             {
                 IMessageSet validationResult = creator.Validate();
                 if (validationResult.HasAnyErrors())
                 {
-                    return null;
-                    //return BuildJQLErrorServiceOutcome(validationResult);
+                    return BuildJqlErrorServiceOutcome(validationResult);
                 }
 
                 AssetTable issueTable = creator.Create();
@@ -146,8 +153,8 @@ namespace QuoteFlow.Core.Asset.Nav
                 // The JQL is valid and the search can be executed, but warnings may
                 // have been generated (e.g. referencing a non-existent reporter).
                 ICollection<string> warnings = validationResult.WarningMessages;
-                return new AssetTableViewModel(issueTable, warnings.ToList());
-
+                return new ServiceOutcome<AssetTableViewModel>(errorCollection,
+                    new AssetTableViewModel(issueTable, warnings.ToList()));
             }
             catch (Exception ex)
             {

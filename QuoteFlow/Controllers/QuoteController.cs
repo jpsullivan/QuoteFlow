@@ -184,7 +184,14 @@ namespace QuoteFlow.Controllers
             // track that this quote has been visited
             UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Quote, quote.Id, quote.Name);
 
-            var assetTable = AssetTableService.GetIssueTableFromFilterWithJql(GetCurrentUser(), null, jql, AssetTableServiceConfiguration, true);
+            var assetTableOutcome = AssetTableService.GetIssueTableFromFilterWithJql(GetCurrentUser(), null, jql, AssetTableServiceConfiguration, true);
+            if (!assetTableOutcome.IsValid())
+            {
+                throw new InvalidOperationException();
+            }
+
+            var assetTable = assetTableOutcome.ReturnedValue;
+
             var visibleFieldNames = new List<string>();
             var visibleFunctionNames = new List<string>();
             var jqlReservedWords = JqlStringSupport.GetJqlReservedWords();
