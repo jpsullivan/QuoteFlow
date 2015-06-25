@@ -614,7 +614,6 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     queryModuleSearchRequested: function (jql) {
-        debugger;
         this.update({
             jql: jql,
             startIndex: 0,

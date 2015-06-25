@@ -1,5 +1,4 @@
 ﻿@using Jil
-@using Newtonsoft.Json
 @using QuoteFlow.Html
 @using QuoteFlow.Infrastructure.Extensions
 @using StackExchange.Profiling
@@ -55,6 +54,9 @@
                                  data-issue-table-model-state="@JSON.Serialize(Model.AssetTable)"
                                  data-session-search-state="{ 'id': 118780 '}"
                                  data-selected-issue="{ 'id': 118780 '}">
+
+                                <!-- Render the split view here -->
+                                @Html.Partial("Partials/Quote/Builder/SplitView", Model.AssetTable)
                             </div>
                         </div>
                     </div>

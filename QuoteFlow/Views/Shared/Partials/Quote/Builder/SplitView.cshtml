@@ -1,12 +1,32 @@
-﻿<div class="aui-group split-view">
+﻿@model QuoteFlow.Api.Asset.Nav.AssetTable
+
+<div class="aui-group split-view">
     <div class="aui-item list-results-panel">
         <div class="list-panel">
-            <div class="list-ordering"></div>
-            <div class="list-content"></div>
+            <div class="list-ordering">
+                <!-- order by goes in here -->
+            </div>
+            <div class="list-content">
+                <!-- list of assets goes in here -->
+                <ol class="issue-list">
+                    @foreach (var assetRow in Model.Table)
+                    {
+                        <li data-id="@assetRow.Id" title="@assetRow.Name">
+                            @* "splitview-issue-link" is used instead to stop enhanceIssueLinks from running *@
+                            <a class="splitview-issue-link" data-asset-id="@assetRow.Id" href="#">
+                                <span class="issue-link-sku">@assetRow.SKU</span><br/>
+                                <span class="issue-link-summary">@assetRow.Name</span>
+                            </a>
+                        </li>
+                    }
+                </ol>
+            </div>
         </div>
         <div class="end-of-stable-message-container"></div>
         <div class="aui-group pagination-view count-pagination">
-            <div class="refresh-container aui-item"></div>
+            <div class="refresh-container aui-item">
+                <a href="#" class="refresh-table" title="Refresh">Refresh results</a>
+            </div>
             <div class="pagination-container aui-item"></div>
         </div>
     </div>

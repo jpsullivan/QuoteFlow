@@ -12,7 +12,7 @@ var BasicQueryView = require('../../asset-nav/query/basic-query-view');
 /**
  * Module for basic query mode.
  */
-var AssetBasicQueryModule = Brace.Evented.extend({
+var BasicQueryModule = Brace.Evented.extend({
     namedEvents: ["jqlTooComplex", "searchRequested", "basicModeCriteriaCountWhenSearching", "verticalResize"],
 
     initialize: function(options) {
@@ -93,4 +93,4 @@ var AssetBasicQueryModule = Brace.Evented.extend({
     }
 });
 
-module.exports = AssetBasicQueryModule;
+module.exports = BasicQueryModule;

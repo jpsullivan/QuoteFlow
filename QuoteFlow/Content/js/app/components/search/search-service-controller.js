@@ -52,6 +52,7 @@ var SearchServiceController = Marionette.Controller.extend({
         _.bindAll(this, "_onAssetUpdated", "_onHighlightedAssetChange", "_onSelectedAssetChange");
 
         this.listenTo(this.searchResults, "change:resultsId change:startIndex stableUpdate assetDeleted", function () {
+            debugger;
             this._doSearch();
         });
 
