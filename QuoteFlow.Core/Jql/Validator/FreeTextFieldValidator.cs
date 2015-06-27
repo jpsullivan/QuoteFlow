@@ -49,7 +49,7 @@ namespace QuoteFlow.Core.Jql.Validator
             string fieldName = terminalClause.Name;
             if (!HandlesOperator(@operator))
             {
-                messageSet.AddErrorMessage(string.Format("jira.jql.clause.does.not.support.operator: {0}, {1}, {2}", @operator.GetDisplayAttributeFrom(typeof(Operator)), fieldName));
+                messageSet.AddErrorMessage(string.Format("jira.jql.clause.does.not.support.operator: {0}, {1}", @operator.GetDisplayAttributeFrom(typeof(Operator)), fieldName));
                 return messageSet;
             }
 

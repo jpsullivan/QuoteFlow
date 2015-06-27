@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace QuoteFlow.Api.Util
@@ -14,6 +11,7 @@ namespace QuoteFlow.Api.Util
     /// string strQuery = QueryString.Current.Add("id", "179").ToString();
     /// string strQuery = new QueryString().Add("id", "179").ToString();
     /// </summary>
+    [Serializable]
     public class QueryString : NameValueCollection
     {
         public QueryString() { }

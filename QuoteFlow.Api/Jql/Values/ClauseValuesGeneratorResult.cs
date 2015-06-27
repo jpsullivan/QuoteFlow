@@ -61,7 +61,7 @@ namespace QuoteFlow.Api.Jql.Values
 
 		public override string ToString()
 		{
-		    return string.Format("Result { value='{0}'\'', displayNameParts={1} }", DisplayNameParts, (DisplayNameParts == null ? null : DisplayNameParts.ToList()));
+		    return string.Format("Result {{ value='{0}'\'', displayNameParts={1} }}", DisplayNameParts, (DisplayNameParts == null ? null : DisplayNameParts.ToList()));
 		}
     }
 }

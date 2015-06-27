@@ -25,7 +25,7 @@
 
         public override string ToString()
         {
-            return string.Format("Result { value={0}, displayNameParts={1}", Value, DisplayNameParts);
+            return string.Format("Result {{ value={0}, displayNameParts={1} }}", Value, DisplayNameParts);
         }
     }
 }
