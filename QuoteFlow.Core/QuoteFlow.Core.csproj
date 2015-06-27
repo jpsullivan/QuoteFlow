@@ -45,6 +45,9 @@
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -223,6 +226,9 @@
     <Compile Include="Configuration\Lucene\IndexingConfiguration.cs" />
     <Compile Include="DependencyResolution\HangfireContainer.cs" />
     <Compile Include="DependencyResolution\ServiceBindings.cs" />
+    <Compile Include="Diagnostics\Glimpse\Timeline.cs" />
+    <Compile Include="Diagnostics\Glimpse\TimelineCapture.cs" />
+    <Compile Include="Diagnostics\Glimpse\TimelineMessage.cs" />
     <Compile Include="Index\Indexes.cs" />
     <Compile Include="Asset\Index\SearcherCache.cs" />
     <Compile Include="Asset\Nav\AbstractAssetTableCreator.cs" />

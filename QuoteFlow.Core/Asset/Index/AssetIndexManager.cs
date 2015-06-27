@@ -12,6 +12,7 @@ using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Api.Util;
 using QuoteFlow.Core.DependencyResolution;
+using QuoteFlow.Core.Diagnostics.Glimpse;
 using QuoteFlow.Core.Index;
 using QuoteFlow.Core.Lucene.Index;
 
@@ -192,13 +193,19 @@ namespace QuoteFlow.Core.Asset.Index
 
             if (useBackgroundReindexing)
             {
-                // doesn't delete indexes
-                lock (IndexReaderLock)
+                using (Timeline.Capture("Reindexing all assets"))
                 {
-                    DoBackgroundReindex(reIndexComments);
+                    // doesn't delete indexes
+                    lock (IndexReaderLock)
+                    {
+                        DoBackgroundReindex(reIndexComments);
+                    }
                 }
 
-                FlushThreadLocalSearchers();
+                using (Timeline.Capture("Flush thread local searchers"))
+                {
+                    FlushThreadLocalSearchers();
+                }
             }
             else
             {
@@ -394,7 +401,11 @@ namespace QuoteFlow.Core.Asset.Index
             foreach (var catalog in allCatalogs)
             {
                 var allAssets = AssetService.GetAssets(catalog.Id);
-                resultBuilder.Add(AssetIndexer.ReIndexAssets(allAssets, reIndexComments, false));
+
+                using (Timeline.Capture("Reindex assets from catalog"))
+                {
+                    resultBuilder.Add(AssetIndexer.ReIndexAssets(allAssets, reIndexComments, false));
+                }
             }
 
             stopWatch.Stop();

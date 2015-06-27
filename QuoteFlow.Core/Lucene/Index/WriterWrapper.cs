@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
@@ -67,10 +68,16 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public void AddDocuments(IEnumerable<Document> documents)
         {
-            foreach (Document document in documents)
-            {
-                _writer.AddDocument(document);
-            }
+//            foreach (Document document in documents)
+//            {
+//                _writer.AddDocument(document);
+//            }
+
+            // todo: lucene perf?
+
+            // As per http://stackoverflow.com/a/3894582. The IndexWriter is CPU bound, so we can try and write multiple packages in parallel.
+            // The IndexWriter is thread safe and is primarily CPU-bound.
+            Parallel.ForEach(documents, doc => _writer.AddDocument(doc));
         }
 
         public void DeleteDocuments(Term identifyingTerm)
@@ -89,10 +96,7 @@ namespace QuoteFlow.Core.Lucene.Index
             else
             {
                 _writer.DeleteDocuments(identifyingTerm);
-                foreach (Document document in documents)
-                {
-                    _writer.AddDocument(document);
-                }
+                AddDocuments(documents);
             }
         }
 

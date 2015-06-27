@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Glimpse.Core.Tab;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Infrastructure.Concurrency;
@@ -10,6 +12,7 @@ using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Util;
 using QuoteFlow.Core.Index;
 using QuoteFlow.Core.Lucene.Index;
+using Timeline = QuoteFlow.Core.Diagnostics.Glimpse.Timeline;
 
 namespace QuoteFlow.Core.Asset.Index
 {
@@ -80,34 +83,37 @@ namespace QuoteFlow.Core.Asset.Index
             {
                 try
                 {
-                    var mode = UpdateMode.Interactive;
-                    var documents = DocumentCreationStrategy.Get(asset, _reIndexComments);
-                    var assetTerm = documents.IdentifyingTerm;
-
-                    Operation update;
-                    if (_conditionalUpdate)
+                    using (Timeline.Capture("Index Asset: " + asset.Id))
                     {
-                        // do a conditional update using "updated" as the optimistic lock
-                        update = Operations.NewConditionalUpdate(assetTerm, documents.Asset, mode, AssetFieldConstants.Updated);
+                        var mode = UpdateMode.Interactive;
+                        var documents = DocumentCreationStrategy.Get(asset, _reIndexComments);
+                        var assetTerm = documents.IdentifyingTerm;
+
+                        Operation update;
+                        if (_conditionalUpdate)
+                        {
+                            // do a conditional update using "updated" as the optimistic lock
+                            update = Operations.NewConditionalUpdate(assetTerm, documents.Asset, mode, AssetFieldConstants.Updated);
+                        }
+                        else
+                        {
+                            update = Operations.NewUpdate(assetTerm, documents.Asset, mode);
+                        }
+
+                        var results = new AccumulatingResultBuilder();
+
+                        //var onCompletion = Operations.NewCompletionDelegate()
+                        var onCompletion = Operations.NewCompletionDelegate(update, null);
+                        results.Add("Asset", asset.Id, _lifecycle.AssetIndex.Perform(onCompletion));
+
+                        if (_reIndexComments)
+                        {
+                            results.Add("Comment for Asset", asset.Id,
+                                _lifecycle.CommentIndex.Perform(Operations.NewUpdate(assetTerm, documents.Comments, mode)));
+                        }
+
+                        return results.ToResult();
                     }
-                    else
-                    {
-                        update = Operations.NewUpdate(assetTerm, documents.Asset, mode);
-                    }
-
-                    var results = new AccumulatingResultBuilder();
-
-                    //var onCompletion = Operations.NewCompletionDelegate()
-                    var onCompletion = Operations.NewCompletionDelegate(update, null);
-                    results.Add("Asset", asset.Id, _lifecycle.AssetIndex.Perform(onCompletion));
-
-                    if (_reIndexComments)
-                    {
-                        results.Add("Comment for Asset", asset.Id,
-                            _lifecycle.CommentIndex.Perform(Operations.NewUpdate(assetTerm, documents.Comments, mode)));
-                    }
-
-                    return results.ToResult();
                 }
                 catch (Exception ex)
                 {
@@ -178,13 +184,13 @@ namespace QuoteFlow.Core.Asset.Index
         /// <returns>The <see cref="IIndexResult"/> may waited on or not.</returns>
         private static IIndexResult Perform(IEnumerable<IAsset> assets, IIndexingStrategy strategy, IIndexOperation operation)
         {
-            try
+            using (strategy)
             {
                 if (assets == null) throw new ArgumentNullException("assets");
 
                 // thread-safe handler for the asynchronous Result
-                AccumulatingResultBuilder builder = new AccumulatingResultBuilder();
-                
+                var builder = new AccumulatingResultBuilder();
+
                 // perform the operation for every asset in the collection
                 foreach (var asset in assets)
                 {
@@ -192,12 +198,8 @@ namespace QuoteFlow.Core.Asset.Index
                     var result = strategy.Get(supplier);
                     builder.Add("Asset", asset.Id, result);
                 }
-                
+
                 return builder.ToResult();
-            }
-            finally
-            {
-                strategy.Dispose();
             }
         }
 

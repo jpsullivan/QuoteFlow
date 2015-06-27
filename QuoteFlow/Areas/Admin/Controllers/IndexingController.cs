@@ -43,7 +43,7 @@ namespace QuoteFlow.Areas.Admin.Controllers
                 IndexLifecycleManager.ReIndexAll();
             }
 
-            return new EmptyResult();
+            return View();
         }
     }
 }
