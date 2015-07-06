@@ -78,14 +78,12 @@ namespace QuoteFlow.Core.Asset.Index
 
         public static string GetPath(this IndexDirectoryFactoryName name, IIndexPathManager indexPathManager)
         {
-            if (name == IndexDirectoryFactoryName.Asset)
+            switch (name)
             {
-                return Verify(name, indexPathManager, indexPathManager.AssetIndexPath);
-            }
-
-            if (name == IndexDirectoryFactoryName.Comment)
-            {
-                return Verify(name, indexPathManager, indexPathManager.CommentIndexPath);
+                case IndexDirectoryFactoryName.Asset:
+                    return Verify(name, indexPathManager, indexPathManager.AssetIndexPath);
+                case IndexDirectoryFactoryName.Comment:
+                    return Verify(name, indexPathManager, indexPathManager.CommentIndexPath);
             }
 
             throw new InvalidOperationException("No job found for this index directory factory name: " + name);

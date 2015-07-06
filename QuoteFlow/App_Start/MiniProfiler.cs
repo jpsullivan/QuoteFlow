@@ -43,9 +43,10 @@ namespace QuoteFlow
 
         public static void PostStart()
         {
-            // Prevent Hangfire from polluting the mini profiler list
+            // Prevent Hangfire/Glimpse from polluting the mini profiler list
             var paths = MiniProfiler.Settings.IgnoredPaths.ToList();
             paths.Add("/hangfire/");
+            paths.Add("/Glimpse.axd");
             MiniProfiler.Settings.IgnoredPaths = paths.ToArray();
 
             // Intercept ViewEngines to profile all partial views and regular views.
