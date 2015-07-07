@@ -5,16 +5,16 @@ using Lucene.Net.Search;
 
 namespace QuoteFlow.Core.Lucene.Index
 {
-    internal class DelayCloseSearcher : DelegateSearcher, IDelayDisposable
+    public class DelayCloseSearcher : DelegateSearcher, IDelayDisposable
     {
         private readonly DelayDisposableHelper _helper;
 
-        internal DelayCloseSearcher(IndexSearcher searcher) : base(searcher)
+        public DelayCloseSearcher(IndexSearcher searcher) : base(searcher)
         {
             _helper = new DelayDisposableHelper(new SearcherCloser(searcher));
         }
 
-        internal DelayCloseSearcher(IndexSearcher searcher, IDisposable closeAction) : base(searcher)
+        public DelayCloseSearcher(IndexSearcher searcher, IDisposable closeAction) : base(searcher)
         {
             _helper = new DelayDisposableHelper(new CompositeDisposable(closeAction, new SearcherCloser(searcher)));
         }

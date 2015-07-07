@@ -24,12 +24,12 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 
 		public override void AddIndex(Document doc, Api.Models.Asset asset)
 		{
-            IndexKeyword(doc, DocumentFieldId, Convert.ToString(asset.Id), asset);
+            IndexKeyword(doc, DocumentFieldId, Convert.ToString(asset.CatalogId), asset);
             // For sorting
-		    string sku = asset.SKU;
-            if (sku != null)
+		    string catalogName = asset.Catalog.Name;
+            if (catalogName != null)
             {
-                IndexKeyword(doc, DocumentConstants.CatalogId, sku, asset);
+                IndexKeyword(doc, DocumentConstants.CatalogId, catalogName, asset);
             }
 		}
     }

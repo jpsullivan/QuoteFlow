@@ -362,7 +362,7 @@ namespace QuoteFlow.Core.Services
 
         private TopDocs RunSearch(IndexSearcher searcher, Query query, Filter filter, SortField[] sortFields, string searchQueryString, IPagerFilter pager)
         {
-            Debug.WriteLine("Lucene boolean query: {0}", query.ToString(""));
+            Debug.WriteLine(String.Format("Lucene boolean query: {0}", query.ToString("")));
 
             TopDocs hits;
             try

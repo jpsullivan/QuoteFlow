@@ -13,11 +13,11 @@ namespace QuoteFlow.Core.Lucene.Index
     /// Note, this is a fragile extension. We need to check each time we update Lucene that new superclass
     /// methods have been added and override them too!
     /// </summary>
-    internal class DelegateSearcher : IndexSearcher, ISupplier<IndexSearcher>
+    public class DelegateSearcher : IndexSearcher, ISupplier<IndexSearcher>
     {
         private readonly IndexSearcher _searcher;
 
-        internal DelegateSearcher(IndexSearcher searcher) : base(searcher.IndexReader)
+        protected DelegateSearcher(IndexSearcher searcher) : base(searcher.IndexReader)
         {
             if (searcher == null)
             {
