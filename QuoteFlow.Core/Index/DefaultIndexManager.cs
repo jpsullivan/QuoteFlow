@@ -30,7 +30,7 @@ namespace QuoteFlow.Core.Index
 
         public IndexSearcher OpenSearcher()
         {
-            return _actor.Searcher;
+            return _actor.GetSearcher();
         }
 
         public bool IndexCreated

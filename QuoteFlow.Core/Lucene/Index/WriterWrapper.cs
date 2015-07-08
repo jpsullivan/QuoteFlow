@@ -51,8 +51,17 @@ namespace QuoteFlow.Core.Lucene.Index
                     // todo: lucene 4.8
                     //var luceneConfig = writerSettings.GetWriterConfiguration(_configuration.Analyzer);
                     //return new IndexWriter(_configuration.Directory, luceneConfig);
-                    return new IndexWriter(_configuration.Directory, _configuration.Analyzer, true,
+
+                    var writer = new IndexWriter(_configuration.Directory, _configuration.Analyzer, true,
                         new IndexWriter.MaxFieldLength(writerSettings.MaxFieldLength));
+                    writer.MaxMergeDocs = writerSettings.MaxMergeDocs;
+                    writer.MergeFactor = writerSettings.MergeFactor;
+                    writer.SetMaxBufferedDocs(writerSettings.MaxBufferedDocs);
+
+//                    return new IndexWriter(_configuration.Directory, _configuration.Analyzer, true,
+//                        new IndexWriter.MaxFieldLength(writerSettings.MaxFieldLength));
+
+                    return writer;
                 }
                 catch (Exception ex)
                 {

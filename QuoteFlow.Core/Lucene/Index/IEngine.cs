@@ -15,7 +15,7 @@ namespace QuoteFlow.Core.Lucene.Index
         /// <summary>
         /// Get the current searcher. Must be closed after use.
         /// </summary>
-        IndexSearcher Searcher { get; }
+        IndexSearcher GetSearcher();
 
         /// <summary>
         /// Clean (wipe) the index.

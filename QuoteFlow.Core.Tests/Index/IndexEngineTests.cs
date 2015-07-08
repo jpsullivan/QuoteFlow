@@ -35,13 +35,13 @@ namespace QuoteFlow.Core.Tests.Index
                 .Callback(() => new WriterWrapper(configuration, UpdateMode.Interactive, _indexSearcherSupplier));
             var engine = new IndexEngine(searcherFactory, writer.Object, configuration, IndexEngine.FlushPolicy.None);
 
-            var searcher = engine.Searcher;
+            var searcher = engine.GetSearcher();
 
             // should be same until something is written
-            Assert.Same(searcher, engine.Searcher);
+            Assert.Same(searcher, engine.GetSearcher());
             Touch(engine);
 
-            var newSearcher = engine.Searcher;
+            var newSearcher = engine.GetSearcher();
             Assert.NotSame(searcher, newSearcher);
         }
 
@@ -98,7 +98,7 @@ namespace QuoteFlow.Core.Tests.Index
             public void TestOldReaderDisposed_When_SearcherDisposedBeforeEngine()
             {
                 var engine = GetRamDirectory();
-                var searcher = engine.Searcher;
+                var searcher = engine.GetSearcher();
                 var reader = searcher.IndexReader;
                 AssertReaderOpen(reader);
                 engine.Dispose();
@@ -112,7 +112,7 @@ namespace QuoteFlow.Core.Tests.Index
             public void TestOldReaderClosed_When_SearcherClosedAfterEngine()
             {
                 var engine = GetRamDirectory();
-                var searcher = engine.Searcher;
+                var searcher = engine.GetSearcher();
                 var reader = searcher.IndexReader;
                 AssertReaderOpen(reader);
                 searcher.Dispose();
@@ -148,7 +148,7 @@ namespace QuoteFlow.Core.Tests.Index
                 Assert.Equal(1, writerWrapper.CloseCount);
                 Assert.Equal(0, SearcherDisposeCount.Get());
 
-                var searcher = engine.Searcher;
+                var searcher = engine.GetSearcher();
                 searcher.Dispose();
                 searcher.Dispose();
                 Assert.Equal(2, writerWrapper.CloseCount);
@@ -208,12 +208,12 @@ namespace QuoteFlow.Core.Tests.Index
             // correctly gets a new reader and disposes the old reader.
             var engine = GetRamDirectory();
 
-            var searcher = engine.Searcher;
+            var searcher = engine.GetSearcher();
             var reader = searcher.IndexReader;
             WriteTestDocument(engine);
             searcher.Dispose();
 
-            var newSearcher = engine.Searcher;
+            var newSearcher = engine.GetSearcher();
             Assert.NotSame(searcher, newSearcher);
             var newReader = newSearcher.IndexReader;
             Assert.NotSame(reader, newReader);
@@ -228,11 +228,11 @@ namespace QuoteFlow.Core.Tests.Index
             // test to just get the same searcher and reader when there are no writes
             var engine = GetRamDirectory();
 
-            var searcher = engine.Searcher;
+            var searcher = engine.GetSearcher();
             var reader = searcher.IndexReader;
             searcher.Dispose();
 
-            var newSearcher = engine.Searcher;
+            var newSearcher = engine.GetSearcher();
             Assert.Same(searcher, newSearcher);
             var newReader = newSearcher.IndexReader;
             Assert.Same(reader, newReader);
@@ -245,9 +245,9 @@ namespace QuoteFlow.Core.Tests.Index
             // test the old reader is still open until all searchers using it are disposed
             var engine = GetRamDirectory();
 
-            var oldSearcher1 = engine.Searcher;
-            var oldSearcher2 = engine.Searcher;
-            var oldSearcher3 = engine.Searcher;
+            var oldSearcher1 = engine.GetSearcher();
+            var oldSearcher2 = engine.GetSearcher();
+            var oldSearcher3 = engine.GetSearcher();
             var reader = oldSearcher1.IndexReader;
             Assert.Same(oldSearcher1, oldSearcher2); // should be same until something is written
             Assert.Same(oldSearcher1, oldSearcher3); // should be same until something is written
@@ -256,7 +256,7 @@ namespace QuoteFlow.Core.Tests.Index
 
             oldSearcher1.Dispose();
 
-            var newSearcher = engine.Searcher;
+            var newSearcher = engine.GetSearcher();
             Assert.NotSame(oldSearcher1, newSearcher);
             var newReader = newSearcher.IndexReader;
             Assert.NotSame(reader, newReader);
@@ -277,8 +277,8 @@ namespace QuoteFlow.Core.Tests.Index
             // test the old reader is still open until all searchers using it are disposed
             var engine = GetRamDirectory();
 
-            var oldSearcher1 = engine.Searcher;
-            var oldSearcher2 = engine.Searcher;
+            var oldSearcher1 = engine.GetSearcher();
+            var oldSearcher2 = engine.GetSearcher();
             Assert.Same(oldSearcher1, oldSearcher2); // should be same until something is written.
 
             WriteTestDocument(engine);
@@ -286,14 +286,14 @@ namespace QuoteFlow.Core.Tests.Index
             WriteTestDocument(engine);
             WriteTestDocument(engine);
 
-            var oldSearcher3 = engine.Searcher;
+            var oldSearcher3 = engine.GetSearcher();
             Assert.NotSame(oldSearcher1, oldSearcher3);
 
             WriteTestDocument(engine);
             WriteTestDocument(engine);
 
-            var oldSearcher4 = engine.Searcher;
-            var oldSearcher5 = engine.Searcher;
+            var oldSearcher4 = engine.GetSearcher();
+            var oldSearcher5 = engine.GetSearcher();
             Assert.NotSame(oldSearcher1, oldSearcher4);
             Assert.NotSame(oldSearcher3, oldSearcher4);
             Assert.Same(oldSearcher4, oldSearcher5);
@@ -320,7 +320,7 @@ namespace QuoteFlow.Core.Tests.Index
             AssertReaderOpen(oldSearcher4.IndexReader);
 
             // getting a new searcher -> gets a new reader -> disposes the old reader
-            var oldSearcher6 = engine.Searcher;
+            var oldSearcher6 = engine.GetSearcher();
             AssertReaderClosed(oldSearcher4.IndexReader);
             AssertReaderClosed(oldSearcher5.IndexReader);
         }

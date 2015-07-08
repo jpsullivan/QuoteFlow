@@ -39,7 +39,7 @@ namespace QuoteFlow.Core.Tests.Index
 
                 manager.OpenSearcher();
 
-                mockIndexEngine.Verify(x => x.Searcher, Times.Once);
+                mockIndexEngine.Verify(x => x.GetSearcher(), Times.Once);
             }
         }
 

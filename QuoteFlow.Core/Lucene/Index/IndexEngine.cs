@@ -46,7 +46,7 @@ namespace QuoteFlow.Core.Lucene.Index
             _configuration = configuration;
             _searcherFactory = searcherFactory;
             _searcherReference = new SearcherReference(searcherFactory);
-            _writerReference = new WriterReference(writerFactory ?? new DefaultWriterFactory());
+            _writerReference = new WriterReference(writerFactory ?? new DefaultWriterFactory(this));
         }
 
         /// <summary>
@@ -61,23 +61,20 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public void Write(Operation operation)
         {
-            try
+            using (_searcherReference)
             {
                 _writePolicy.Perform(operation, _writerReference);
             }
-            finally
-            {
-                _searcherReference.Dispose();
-            }
         }
 
-        public virtual IndexSearcher Searcher
+        /// <summary>
+        /// Leak a <see cref="IndexSearcher"/>. Must be closed after usage.
+        /// </summary>
+        /// <returns></returns>
+        public virtual IndexSearcher GetSearcher()
         {
-            get
-            {
-                // mode is irrelevant to a Searcher
-                return _searcherReference.Get(UpdateMode.Interactive);
-            }
+            // mode is irrelevant to a Searcher
+            return _searcherReference.Get(UpdateMode.Interactive);
         }
 
         public virtual void Clean()
@@ -214,10 +211,17 @@ namespace QuoteFlow.Core.Lucene.Index
 
         private class DefaultWriterFactory : IWriter
         {
+            private IndexEngine _outerClass;
+
+            public DefaultWriterFactory(IndexEngine outerClass)
+            {
+                _outerClass = outerClass;
+            }
+
             public IWriter Get(UpdateMode mode)
             {
                 // by default, create a writer wrapper that has access to this engine's searcher
-                return new WriterWrapper(_configuration, mode, new WriterFactorySupplier());
+                return new WriterWrapper(_configuration, mode, new WriterFactorySupplier(_outerClass));
             }
 
             public void AddDocuments(IEnumerable<Document> documents)
@@ -263,9 +267,16 @@ namespace QuoteFlow.Core.Lucene.Index
 
         private class WriterFactorySupplier : ISupplier<IndexSearcher>
         {
+            private readonly IndexEngine _outerClass;
+
+            public WriterFactorySupplier(IndexEngine outerClass)
+            {
+                _outerClass = outerClass;
+            }
+
             public IndexSearcher Get()
             {
-                return _searcherReference.Get(UpdateMode.Interactive);
+                return _outerClass.GetSearcher();
             }
         }
 
