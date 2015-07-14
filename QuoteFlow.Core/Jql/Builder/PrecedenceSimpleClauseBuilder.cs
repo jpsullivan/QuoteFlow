@@ -214,7 +214,7 @@ namespace QuoteFlow.Core.Jql.Builder
                     // operators only process when something of higher but not equal precedence appears on the stack.
                     int compare = op == BuilderOperator.NOT ? -1 : 0;
 
-                    while (currentTop != BuilderOperator.None && (op == BuilderOperator.None || op.CompareTo(currentTop) <= compare))
+                    while (currentTop != BuilderOperator.None && (op == BuilderOperator.None || op.CompareOperator(currentTop) <= compare))
                     {
                         PopOperator();
 
@@ -321,16 +321,21 @@ namespace QuoteFlow.Core.Jql.Builder
                                 if (operatorIterator.MoveNext())
                                 {
                                     nextOperator = operatorIterator.Current;
+                                }
 
-                                    // We don't want to print the next operand yet for these two operators.
-                                    if (nextOperator != BuilderOperator.LPAREN && nextOperator != BuilderOperator.NOT)
+                                // We don't want to print the next operand yet for these two operators.
+                                if (nextOperator != BuilderOperator.LPAREN && nextOperator != BuilderOperator.NOT)
+                                {
+                                    if (clauseIterator.MoveNext())
                                     {
-                                        if (clauseIterator.MoveNext())
-                                        {
-                                            AddString(stringBuilder, ClauseToString(clauseIterator.Current, op));
-                                        }
+                                        AddString(stringBuilder, ClauseToString(clauseIterator.Current, op));
+                                    }
+                                    else
+                                    {
+                                        AddString(stringBuilder, ClauseToString(null, op));
                                     }
                                 }
+
 
                                 start = false;
                                 op = nextOperator;
@@ -392,7 +397,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
                 // We need to bracket the clause if its primary operator has lower precedence than the passed operator.
                 BuilderOperator clauseOperator = OperatorVisitor.FindOperator(jqlClause);
-                if (op != BuilderOperator.None && clauseOperator != BuilderOperator.None && op.CompareTo(clauseOperator) > 0)
+                if (op != BuilderOperator.None && clauseOperator != BuilderOperator.None && op.CompareOperator(clauseOperator) > 0)
                 {
                     return "(" + jqlClause.ToString() + ")";
                 }

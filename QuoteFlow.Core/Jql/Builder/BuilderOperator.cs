@@ -62,5 +62,20 @@ namespace QuoteFlow.Core.Jql.Builder
 
             throw new InvalidOperationException();
         }
+
+        public static int CompareOperator(this BuilderOperator builderOp, BuilderOperator otherOp)
+        {
+            var sortOrder = new[]
+            {
+                BuilderOperator.None,
+                BuilderOperator.LPAREN,
+                BuilderOperator.RPAREN,
+                BuilderOperator.OR,
+                BuilderOperator.AND,
+                BuilderOperator.NOT
+            };
+
+            return Array.IndexOf(sortOrder, builderOp) - Array.IndexOf(sortOrder, otherOp);
+        }
     }
 }

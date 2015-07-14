@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Core.Jql.Builder;
@@ -731,7 +732,7 @@ namespace QuoteFlow.Core.Tests.Jql.Builder
 
         private static string NormalizeSpace(string str)
         {
-            return str.Replace("\\s+", "");
+            return Regex.Replace(str, @"\s+", "");
         }
     }
 }

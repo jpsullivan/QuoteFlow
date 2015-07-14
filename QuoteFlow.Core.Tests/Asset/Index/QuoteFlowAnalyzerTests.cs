@@ -1,5 +1,4 @@
-﻿using System;
-using Lucene.Net.Documents;
+﻿using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
@@ -19,11 +18,11 @@ namespace QuoteFlow.Core.Tests.Asset.Index
         [Fact]
         public void ShouldTokenizeNumbers_GivenTheyAreInA_CommaSeperatedString()
         {
-            AssertSearchFound("1602,1712,0000", "1602"); //JRA-7774
-            AssertSearchFound("1602,1712,0000", "1712"); //JRA-7774
-            AssertSearchFound("1602,1712,0000", "0000"); //JRA-7774
-            AssertSearchFound("1602,1712,0000", "1602,1712,0000"); //JRA-7774
-            AssertSearchFound("abc,def,ghi", "def"); //JRA-7774
+            AssertSearchFound("1602,1712,0000", "1602");
+            AssertSearchFound("1602,1712,0000", "1712");
+            AssertSearchFound("1602,1712,0000", "0000");
+            AssertSearchFound("1602,1712,0000", "1602,1712,0000");
+            AssertSearchFound("abc,def,ghi", "def");
         }
 
         [Fact]
@@ -91,7 +90,7 @@ namespace QuoteFlow.Core.Tests.Asset.Index
         {
             var hits = GetHitsForSearch(textToSearch, searchTerm);
 
-            var msg = string.Format("Search Term '{0}' was found in text '{1}' for the language {2}", searchTerm, textToSearch);
+            var msg = string.Format("Search Term '{0}' was found in text '{1}'", searchTerm, textToSearch);
             Assert.Equal(0, hits.TotalHits);
         }
 
@@ -115,7 +114,7 @@ namespace QuoteFlow.Core.Tests.Asset.Index
 //            AnalyzerUtils.DisplayTokensWithFullDetails(indexingAnalyzer, textToSearch);
 //            AnalyzerUtils.DisplayTokensWithFullDetails(searchingAnalyzer, searchTerm);
 
-            return searcher.Search(query, Int32.MaxValue);
+            return searcher.Search(query, int.MaxValue);
         }
 
         private class Mocks

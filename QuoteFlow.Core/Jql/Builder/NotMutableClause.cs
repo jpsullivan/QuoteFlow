@@ -34,7 +34,7 @@ namespace QuoteFlow.Core.Jql.Builder
         public IMutableClause Copy()
         {
             IMutableClause copyClause = Clause.Copy();
-            if (copyClause.Equals(Clause))
+            if (copyClause != Clause)
             {
                 return new NotMutableClause(copyClause);
             }
@@ -69,7 +69,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public override string ToString()
         {
-            return string.Format("{0}({1})", BuilderOperator.NOT.ToString(), Clause);
+            return string.Format("{0}({1})", BuilderOperator.NOT, Clause);
         }
     }
 }
