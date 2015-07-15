@@ -1,6 +1,4 @@
 ﻿using QuoteFlow.Api.Asset.Search.Constants;
-using QuoteFlow.Api.Asset.Search.Handlers;
-using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Services;

@@ -10,11 +10,6 @@ namespace QuoteFlow.Core.Jql.Query.Operand
     /// </summary>
     public sealed class Operands
     {
-        // Don't let people constuct me
-        private Operands()
-        {
-        }
-
         /// <summary>
         /// Create an operand that represents the passed string.
         /// </summary>
@@ -51,7 +46,7 @@ namespace QuoteFlow.Core.Jql.Query.Operand
         /// </summary>
         /// <param name="value"> the value to wrap as an operand. Cannot be null. </param>
         /// <returns> the operand that represents the passed value. </returns>
-        public static IOperand ValueOf(int? value)
+        public static IOperand ValueOf(int value)
         {
             return new SingleValueOperand(value);
         }
@@ -101,7 +96,7 @@ namespace QuoteFlow.Core.Jql.Query.Operand
         /// Return an operand that represents the JQL EMPTY value.
         /// </summary>
         /// <returns> the operand that represents the JQL EMPTY value. </returns>
-        public IOperand IsEmpty()
+        public static IOperand GetEmpty()
         {
             return EmptyOperand.Empty;
         }

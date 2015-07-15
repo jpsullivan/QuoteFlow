@@ -1,141 +1,415 @@
-id,manufacturer,source,catalog_id,model,part_num,nsn,uom,expires,delivery,markup,fr_cost,sell_price
-,MSA,OEM,10.0,CBRN Canister,10046570,,Ea.,,30-45 Days,0.2,29.11,34.93
-,MSA,OEM,10.0,Mask Pouch,10034184,,Ea.,,30-45 Days,0.2,41.72,50.06
-,MSA,OEM,10.0,Spectacle Kit,816137,,Ea.,,30-45 Days,0.2,53.18,63.82
-,MSA,OEM,10.0,Gasket,10007979,,Ea.,,30-45 Days,0.2,2.6,3.12
-,MSA,OEM,10.0,Exhalation Valve,10007996,,Ea.,,30-45 Days,0.2,2.6,3.12
-,MSA,OEM,10.0,Spider Gasket,10007994,,Ea.,,30-45 Days,0.2,2.5,3.0
-,MSA,OEM,10.0,Inhalation Valve Assembly,10007421,,Ea.,,30-45 Days,0.2,1.65,1.98
-,MSA,OEM,10.0,Deflector,10007388,,,,30-45 Days,0.2,2.54,3.05
-,MSA,OEM,10.0,Head Harness,10008587,,Ea.,,30-45 Days,0.2,10.39,12.47
-,MSA,OEM,10.0,Valve Seat,305349,,Ea.,,30-45 Days,0.2,1.83,2.2
-,MSA,OEM,10.0,Valve Disc,305350,,Ea.,,30-45 Days,0.2,1.33,1.6
-,MSA,OEM,10.0,ESP II (Millennium Voice Amplifier),10026265,,Ea.,,30-45 Days,0.2,232.88,279.46
-,Unifire,OEM,10.0,"AAA Battery, Pack of 24",6135-01-446-8380,,Ea.,,30-45 Days,1.5,5.32,13.3
-,MSA,OEM,10.0,"Carbon SCBA Cylinders - H-60, 60 minute high-pressure w/Valves",807588,,Ea.,,30-45 Days,0.2,1295.27,1554.32
-,MSA,OEM,10.0,Amplifier Kit w/ Bracket and Voicemitter,10024074,,Ea.,,30-45 Days,0.2,306.21,367.45
-,Unifire,OEM,10.0,"Battery, 9 Volt,  Pack of 24",6135-00-447-0949,,Ea.,,30-45 Days,0.34,12.57,16.84
-,Unifire,OEM,10.0,"AAA Battery, Pack of 24",6135-01-446-8380,,Ea.,,30-45 Days,1.5,5.32,13.3
-,MSA,OEM,10.0,"Facepiece, SCBA, MMRXtreme 4500, Replacement Ultra Elite FACE",,,Ea.,,30-45 Days,0.2,183.45,220.14
-,Ors Nasco,OEM,10.0,Lithium Battery,520-04-57R01,,Ea.,,30-45 Days,0.25,207.1,258.88
-,Ors Nasco,OEM,10.0,FR-40 Canister Set,453-03-03R06,,Ea.,,30-45 Days,0.25,216.4,270.5
-,Ors Nasco,OEM,10.0,3M Spectacle Kit 6878,70-0707-0907-9,,Ea.,,30-45 Days,0.25,53.33,66.66
-,Ors Nasco,OEM,10.0,NiMH Rechargeable Battery Pack for BE-10 and FR40L6(x) PAPRs,BP - 15,,Ea.,,30-45 Days,0.25,211.17,263.96
-,Ors Nasco,OEM,10.0,"Smart Battery Charger, Single Unit",BC-210,,Ea.,,30-45 Days,0.25,129.89,162.36
-,Onguard,OEM,10.0,HAZMAX (Size 6),87012 - 6,,Ea.,,30-45 Days,0.18,53.25,62.84
-,Onguard,OEM,10.0,HAZMAX (Size 7),87012 - 7,,Ea.,,30-45 Days,0.18,53.25,62.84
-,Onguard,OEM,10.0,HAZMAX (Size 8),87012 - 8,,Ea.,,30-45 Days,0.18,53.25,62.84
-,Onguard,OEM,10.0,HAZMAX (Size 9),87012 - 9,,Ea.,,30-45 Days,0.18,53.25,62.84
-,Onguard,OEM,10.0,HAZMAX (Size 10),87012 - 10,,Ea.,,30-45 Days,0.18,53.25,62.84
-,Onguard,OEM,10.0,HAZMAX (Size 11),87012 - 11,,Ea.,,30-45 Days,0.18,53.25,62.84
-,Onguard,OEM,10.0,HAZMAX (Size 12),87012 - 12,,Ea.,,30-45 Days,0.18,53.25,62.84
-,Onguard,OEM,10.0,HAZMAX (Size 13),87012 - 13,,Ea.,,30-45 Days,0.18,53.25,62.84
-,Onguard,OEM,10.0,HAZMAX (Size 14),87012 - 14,,Ea.,,30-45 Days,0.18,53.25,62.84
-,Onguard,OEM,10.0,HAZMAX (Size 15),87012 - 15,,Ea.,,30-45 Days,0.18,53.25,62.84
-,Onguard,OEM,10.0,EZ Fit HAZMAX (6),87025-6,,Ea.,,30-45 Days,0.18,35.92,42.39
-,Onguard,OEM,10.0,EZ Fit HAZMAX (7),87025-7,,Ea.,,30-45 Days,0.18,35.92,42.39
-,Onguard,OEM,10.0,EZ Fit HAZMAX (8),87025-8,,Ea.,,30-45 Days,0.18,35.92,42.39
-,Onguard,OEM,10.0,EZ Fit HAZMAX (9),87025-9,,Ea.,,30-45 Days,0.18,35.92,42.39
-,Onguard,OEM,10.0,EZ Fit HAZMAX (10),87025-10,,Ea.,,30-45 Days,0.18,35.92,42.39
-,Onguard,OEM,10.0,EZ Fit HAZMAX (11),87025-11,,Ea.,,30-45 Days,0.18,35.92,42.39
-,Onguard,OEM,10.0,EZ Fit HAZMAX (12),87025-12,,Ea.,,30-45 Days,0.18,35.92,42.39
-,Onguard,OEM,10.0,EZ Fit HAZMAX (13),87025-13,,Ea.,,30-45 Days,0.18,35.92,42.39
-,Onguard,OEM,10.0,EZ Fit HAZMAX (14),87025-14,,Ea.,,30-45 Days,0.18,35.92,42.39
-,Onguard,OEM,10.0,EZ Fit HAZMAX (15),87025-15,,Ea.,,30-45 Days,0.18,35.92,42.39
-,Onguard,OEM,10.0,"EZ Fit HAZMAX Boots, SM",87015-SM,,Ea.,,30-45 Days,0.25,53.25,66.56
-,Onguard,OEM,10.0,"EZ Fit HAZMAX Boots, MED",87015-MED,,Ea.,,30-45 Days,0.25,53.25,66.56
-,Onguard,OEM,10.0,"EZ Fit HAZMAX Boots, LRG",87015-L,,Ea.,,30-45 Days,0.25,53.25,66.56
-,Onguard,OEM,10.0,"EZ Fit HAZMAX Boots, XL",87015-XL,,Ea.,,30-45 Days,0.25,53.25,66.56
-,Tingley,OEM,10.0,"Boots, Tingley, size 9",82330-9,,Ea.,,30-45 Days,0.2,60.77,73.07
-,Tingley,OEM,10.0,"Boots, Tingley, size 10",82330-10,,Ea.,,30-45 Days,0.2,60.77,73.07
-,Tingley,OEM,10.0,"Boots, Tingley, size 11",82330-11                      ,,Ea.,,30-45 Days,0.2,60.77,73.07
-,Tingley,OEM,10.0,"Boots, Tingley, size 12",82330-12                      ,,Ea.,,30-45 Days,0.2,60.77,73.07
-,Tingley,OEM,10.0,"Boots, Tingley, size 13",82330-13                      ,,Ea.,,30-45 Days,0.2,60.77,73.07
-,Best Glove,OEM,10.0,Best Butyl 14mil (Medium),874R - 8,,Ea.,,30-45 Days,0.2,17.8,21.41
-,Best Glove,OEM,10.0,Best Butyl 14mil (Large),874R - 9,,Ea.,,30-45 Days,0.2,17.8,21.41
-,Best Glove,OEM,10.0,Best Butyl 14mil (XL),874R - 10,,Ea.,,30-45 Days,0.2,17.8,21.41
-,Best Glove,OEM,10.0,Best Butyl 14mil (2XL),874R - 11,,Ea.,,30-45 Days,0.2,17.8,21.41
-,North Safety Products,OEM,10.0,Gloves Borth Butyl 7mil (Sm),B074GI (SML),,Ea.,,30-45 Days,0.15,11.04,12.64
-,North Safety Products,OEM,10.0,Gloves Borth Butyl 7mil (Med),B074GI (MED),,Ea.,,30-45 Days,0.15,11.04,12.64
-,North Safety Products,OEM,10.0,Gloves Borth Butyl 7mil (Lrg),B074GI (LRG),,Ea.,,30-45 Days,0.15,11.04,12.64
-,North Safety Products,OEM,10.0,North Viton (size 9),F124 - 9,,Ea.,,30-45 Days,0.15,65.35,74.83
-,North Safety Products,OEM,10.0,North Viton (size 10),F124 - 10,,Ea.,,30-45 Days,0.15,65.35,74.83
-,North Safety Products,OEM,10.0,North Silver Shield (size 8) Pack of 10,SSG - 8,,Ea.,,30-45 Days,0.13,153.5,174.1
-,North Safety Products,OEM,10.0,North Silver Shield (size 9),SSG - 9,,Ea.,,30-45 Days,0.13,153.5,174.1
-,North Safety Products,OEM,10.0,North Silver Shield (size 10),SSG - 10,,Ea.,,30-45 Days,0.13,153.5,174.1
-,North Safety Products,OEM,10.0,North Silver Shield (size 11),SSG - 11,,Ea.,,30-45 Days,0.13,153.5,174.1
-,Quicksilver Analytics,OEM,10.0,Nitrile Gloves 100/box- Lrg,90021,,Ea.,,30-45 Days,0.2,30.99,37.19
-,Rayovac,OEM,10.0,"Battery, Industrial, 1.5 Volt, Size D, 24/pk",6135-01-446-8310,,Ea.,,30-45 Days,1.1,7.81,16.4
-,House Of Batteries,OEM,10.0,ICAM/M279 Battery,6135-01-440-7774,,Ea.,,30-45 Days,0.5,29.0,43.5
-,Draeger Safety,OEM,10.0,"Qty 3 Cds Set I (thioether, Phosgene, Hydrocyanic Acid, Organic Arsenic Compounds And Arsine [lewisite], And Organic Basic Nitrogen Compounds [hn])",8103140,,Ea.,,30-45 Days,0.17,182.75,214.61
-,Draeger Safety,OEM,10.0,"Qty 3 Cds Set V (cyanogen Chloride, Thiether, Phosgene, Chlorine, And Phosphoric Acid Ester (nerve Agents)",8103200,,Ea.,,30-45 Days,0.17,182.75,214.61
-,Draeger Safety,OEM,10.0,"Qty 3 Hazmat Set I (acid Gases, Hydrocyanic Acid, Carbon Monoxide, Basic Gases, Nitrous Gases)",8101735,,Ea.,,30-45 Days,0.17,52.5,61.44
-,Draeger Safety,OEM,10.0,"Qty 3 Hazmat Set Ii (sulfur Dioxide, Chlorine, Hydrogen Sulfide, Carbon Dioxide, Phosgene)",8101736,,Ea.,,30-45 Days,0.17,52.5,61.44
-,Draeger Safety,OEM,10.0,"Qty 3 Hazmat Set Iii (ketones, Aromatic Hydrocarbons, Alcohols, Aliphatic Hydrocarbons, Chlorinated Hydrocarbons)",8101770,,Ea.,,30-45 Days,0.17,52.5,61.44
-,Draeger Safety,OEM,10.0,Cds Training Set I,8103230,,Ea.,,30-45 Days,0.16,51.1,59.34
-,Draeger Safety,OEM,10.0,Cds Training Set V,8103240,,Ea.,,30-45 Days,0.16,51.1,59.34
-,Draeger Safety,OEM,10.0,Quantimeter Spare Parts Kit,8101005,,Ea.,,30-45 Days,0.16,50.62,58.61
-,Draeger Safety,OEM,10.0,Accuro Pump Spare Parts Kit,6400220,,Ea.,,30-45 Days,0.16,44.25,51.4
-,Draeger Safety,OEM,10.0,Fluorine (8101491),8101491,,Ea.,,30-45 Days,0.16,65.8,76.59
-,Draeger Safety,OEM,10.0,Hydrogen Fluoride (8103251),8103251,,Ea.,,30-45 Days,0.17,58.1,68.18
-,Draeger Safety,OEM,10.0,"Carbon Disulfide 3/a, 3-95 Ppm ",8101891,,Ea.,,30-45 Days,0.17,52.5,61.44
-,Smiths Detection,OEM,10.0,Replacement Filters Filtered Nozzle,2450204,,Ea.,,30-45 Days,6.0,20.0,140.0
-,Rae Systems,OEM,10.0,MultiRAE H2S Sensor ,008-1111-000,,Ea.,,30-45 Days,0.16,127.2,147.88
-,Rae Systems,OEM,10.0,MultiRAE HCN Sensor ,008-1117-000,,Ea.,,30-45 Days,0.17,256.8,299.37
-,Rae Systems,OEM,10.0,MultiRAE NO2 Sensor,008-1115-000,,Ea.,,30-45 Days,0.16,127.2,147.88
-,Rae Systems,OEM,10.0,"NH3 cal gas, 50 ppm (balance nitrogen), in 58L cylinder, 1 year shelf life",600-0058-000,,Ea.,,30-45 Days,0.17,181.8,212.08
-,Rae Systems,OEM,10.0,"HCN cal gas, 10 ppm (balance nitrogen), in 58L cylinder, 1 year shelf life",600-0057-000,,Ea.,,30-45 Days,0.17,181.8,212.08
-,Rae Systems,OEM,10.0,"NO2 cal gas, 5 ppm (balance nitrogen), in 58L cylinder, 6 month shelf life",600-0055-000,,Ea.,,30-45 Days,0.17,181.8,212.08
-,Rae Systems,OEM,10.0,CO Sensor,008-1112-000,,Ea.,,30-45 Days,0.17,127.2,148.52
-,Rae Systems,OEM,10.0,O2 Sensor,008-1161-000,,Ea.,,30-45 Days,0.17,78.0,91.08
-,Rae Systems,OEM,10.0,LEL Sensor,008-1171-001,,Ea.,,30-45 Days,0.17,114.0,133.11
-,Rae Systems,OEM,10.0,NH3 Sensor,008-1125-000,,Ea.,,30-45 Days,0.17,256.8,299.85
-,Rae Systems,OEM,10.0,"NH3 cal gas, 50 ppm (balance nitrogen), in 58L cylinder, 1 year shelf life",600-0058-000,,Ea.,,30-45 Days,0.17,181.8,212.08
-,Rae Systems,OEM,10.0,"HCN cal gas, 10 ppm (balance nitrogen), in 58L cylinder, 1 year shelf life",600-0057-000,,Ea.,,30-45 Days,0.17,181.8,212.08
-,Rae Systems,OEM,10.0,"NO2 cal gas, 5 ppm (balance nitrogen), in 58L cylinder, 6 month shelf life",600-0055-000,,Ea.,,30-45 Days,0.17,181.8,212.08
-,Smiths Detection,OEM,10.0,APD Confidence Sample,2450232,,Ea.,,30-45 Days,0.2,118.75,142.5
-,Grainger,OEM,10.0,Long Handled Equipment Brushes,3H381,,Ea.,,30-45 Days,0.3,6.84,8.89
-,Grainger,OEM,10.0,Long Handled Equipment Brush Handles,3H389,,Ea.,,30-45 Days,0.3,9.49,12.34
-,Office Depot,OEM,10.0,55 Gallon Plastic Bags (100 per roll),331396,,Ea.,,30-45 Days,0.3,39.99,51.99
-,TVI,OEM,10.0,"Transport Bag, Hydrant Wrench, 2.5"" Brass Fitting MST x 1.5' MNST, 50' Poly Fire Hose - 150 PSI",WS-HYCA,,Ea.,,30-45 Days,0.2,586.5,703.8
-,TVI,OEM,10.0,500 Gallon Bladder,WSB-500G,,Ea.,,30-45 Days,0.3,830.25,1079.33
-,TVI,OEM,10.0,Interior catch basin (berm),HDB-UZ-05-I-01,,Ea.,,30-45 Days,0.3,732.75,952.58
-,TVI,OEM,10.0,Transfer Boards with alignment guides,LCA-B,,Ea.,,30-45 Days,0.3,121.5,157.95
-,TVI,OEM,10.0,18W' x 10' L Articulating litter conveyors,LC-1810-X,,Ea.,,30-45 Days,0.3,913.5,1187.55
-,TVI,OEM,10.0,Fluorescent water resistant hardened light fixtures,LF-54-2,,Ea.,,30-45 Days,0.3,471.75,613.28
-,TVI,OEM,10.0,Ergonomic overhead hand sprayers,HS-X-P,,Ea.,,30-45 Days,0.3,88.5,115.05
-,TVI,OEM,10.0,2-20' Hoses and garden hose adapters,HW-D20B-.75-CFCF,,Ea.,,30-45 Days,0.3,49.5,64.35
-,TVI,OEM,10.0,"Maintenance kit, shower, PVDF",SMK-2,,Ea.,,30-45 Days,0.3,183.0,237.9
-,TVI,OEM,10.0,Waste water pump 30 gpm(18gpm discountinued),WP-30-S,,Ea.,,30-45 Days,0.3,222.0,288.6
-,Reeves,OEM,10.0,"SECUR-ID Decon Property Bag Series 2, 22"" x 24""  - Large 50/bundle",RDPW0200,,Ea.,,30-45 Days,0.3,189.75,246.68
-,TVI,OEM,10.0,repair kits,KIT-01-01-UZ,,Ea.,,30-45 Days,0.3,130.5,169.65
-,TVI,OEM,10.0,anchor kit,AK-CO-SML,,Ea.,,30-45 Days,0.3,137.25,178.43
-,Hazmat Dqe,OEM,10.0,[HM1001] Portable Decon Shower Kit (Hazmat DQE),HM1001,,Ea.,,30-45 Days,0.3,1067.18,1387.33
-,Hazmat Dqe,OEM,10.0,HM1048 Collapsible Collection Pool (Hazmat DQE),HM1048 ,,Ea.,,30-45 Days,0.17,628.2,732.9
-,Hazmat Dqe,OEM,10.0,HM1023 Elevation Grids (Hazmat DQE),HM1023,,Ea.,,30-45 Days,0.2,88.2,106.04
-,Hazmat Dqe,OEM,10.0,HM1061 Manual Sump Pump (Hazmat DQE),HM1061,,Ea.,,30-45 Days,0.2,124.2,149.32
-,Hazmat Dqe,OEM,10.0,Fire Hydrant Reduction Manifold (Hazmat DQE),RV100,,Ea.,,30-45 Days,0.2,162.0,194.76
-,TVI,OEM,10.0,"Floor Riser, Poly 1.5"" x 24"" x 48""",FR-24-48,,Ea.,,30-45 Days,0.3,64.5,83.85
-,Reeves,OEM,10.0,"3-Lane First Response Decon System (Blue) - 14'6""W x 16'L ",RDPK0010,,Ea.,,30-45 Days,0.3,21619.5,28105.35
-,TVI,OEM,10.0,"Light Fixture, Fluorescent, 110 volt",LF-40-1,,Ea.,,30-45 Days,0.3,173.25,225.23
-,Hazmat Dqe,OEM,10.0,HM150 Collapsible Waste Water Container (Hazmat DQE),HM150,,Ea.,,30-45 Days,0.2,382.5,459.87
-,Hazmat Dqe,OEM,10.0,HM1060 Electric Sump Pump (Hazmat DQE),HM1060,,Ea.,,30-45 Days,0.2,131.4,157.98
-,Hazmat Dqe,OEM,10.0,HM 200 50-Foot Chemical Resistant Water Hose (Hazmat DQE),HM200,,Ea.,,30-45 Days,0.2,40.5,48.7
-,TVI,OEM,10.0,"6XB Shelter (Tan) - 13'8""W x 33'8""L x 8'9""H - with 6XB Plenum",1008935,,Ea.,,30-45 Days,0.3,14130.4,18434.82
-,TVI,OEM,10.0,"Storage Bladder, 250 Gallon Waste Water",WSB-250G,,Ea.,,30-45 Days,0.3,637.5,828.75
-,Hazmatshower.com,OEM,10.0,Hot Shower Systems  w/cart,5170,,Ea.,,30-45 Days,0.15,2649.95,3047.44
-,Hazmat Dqe,OEM,10.0,"Decon Sys-1 Shower Part, Valve Upright",HMPT10014,,Ea.,,30-45 Days,0.2,134.28,161.44
-,Hazmatshower.com,OEM,10.0,Shower Heads for Hot shower systems,5191,,Ea.,,30-45 Days,0.25,159.95,199.94
-,Na Rescue,OEM,10.0,Raven Model 90C,BH-60-0001,,Ea.,,30-45 Days,0.3,290.0,375.55
-,Skedco,OEM,10.0,Complete HMD SKED rescue system with strap kit,SK-250,,Ea.,,30-45 Days,0.29,228.71,294.06
-,Skedco,OEM,10.0,SKED Rapid Deployment Case,SK-253,,Ea.,,30-45 Days,0.29,76.49,98.35
-,Amazon,OEM,10.0,"Tempest Chem-Bio (CB-FAQ), 1st Edition",978-0966543711,,Ea.,,30-45 Days,0.25,18.0,22.5
-,Amazon,OEM,10.0,"Emergency Care for Hazardous Materials Exposure, Bronstein, 2nd Edition, 1994",978-0323048774,,Ea.,,30-45 Days,0.25,45.85,57.31
-,Amazon,OEM,10.0,"First Responders Guide to Agriculture Chemical Accidents, Foden-Weddell, 1992 Edition",978-0873717991,,Ea.,,30-45 Days,0.38,171.24,236.61
-,Government Printing Office,OEM,10.0,Emergency Response to Terrorism Job Aid,064-000-00027-6,,Ea.,,30-45 Days,0.25,13.5,16.88
-,Government Printing Office,OEM,10.0,"NIOSH Pocket Guide to Chemical Hazards, 2003 Edition",017-033-00501-0,,Ea.,,30-45 Days,0.3,21.0,27.25
-,Barnes And Noble,OEM,10.0,"Quick Selection Guide to Chemical Protective Clothing, Forsberg, 4th Edition",9780470146811,,Ea.,,30-45 Days,0.25,53.95,67.44
-,Amazon,OEM,10.0,"TLVs and BELs Guidebook, ACGIH, 2005 Edition",1882417585,,Ea.,,30-45 Days,0.22,115.35,140.73
-,Bureau Of Explosives,OEM,10.0,"Emergency Handling of Hazardous Materials in Surface Transportation, Association of American Railroads, 2010 Edition",B000I17VLW,,Ea.,,30-45 Days,0.25,102.1,127.63
-,Barnes And Noble,OEM,10.0,"Handbook of Toxic and Hazardous Chemicals and Carcinogens, Sittig, 4th Edition, 2002",9780815514596,,Ea.,,30-45 Days,0.3,106.06,137.88
-,Amazon,OEM,10.0,"Merck Index, 13th Edition, 2000",978-0911910131,,Ea.,,30-45 Days,0.22,110.25,134.51
+id,manufacturer,source,catalog_id,model,part_num,nsn,uom,expires,delivery,markup,fr_cost,sale_price
+,3M,OEM,8,"Smart Battery Charger, Single Unit",BC-210,,Ea.,,30 Days,0.15,133.79,153.86
+,3M,OEM,8,3m Spectacle Kit 6878 ,6878,,Ea.,,30 Days,0.15,57.59,66.23
+,3M,OEM,8,"Full Facepiece Silicone Respirator, Lg",7800S-L,,Ea.,,30 Days,0.15,214.53,246.71
+,3M,OEM,8,"Full Facepiece Silicone Respirator, Md",7800S-M,,Ea.,,30 Days,0.15,214.53,246.71
+,3M,OEM,8,"Full Facepiece Silicone Respirator, Sm",7800S-S,,Ea.,,30 Days,0.15,214.53,246.71
+,3M,OEM,8,Lithium Battery ,520-04-57R01,,Ea.,,30 Days,0.15,213.32,245.32
+,3M,OEM,8,Nimh Rechargeable Battery Pack For Be-10 And Fr40l6(x) Paprs ,BP-15,,Ea.,,30 Days,0.15,217.5,250.13
+,3M,OEM,8,Papr Breath Easy 10 ,57N10,,Ea.,,30 Days,0.15,858.39,987.15
+,3M,OEM,8,"3m, Multi Gas/vapor Cartridge P1oo, 30 Packs Of 2 Per Case ",6003,,Ea.,,30 Days,0.15,213.3,245.3
+,3M,OEM,8,"3m, Organic Vapor Cartidge, 30 Packs Of 2 Per Case ",6001,,Ea.,,30 Days,0.15,196.8,226.32
+,3M,OEM,8,C2a1 Filter Canister ,C2A1,,Ea.,,30 Days,0.15,36.02,41.42
+,3M,OEM,8,Papr Rapid Response Powered Air System (rrpas) - Medium ,40L68,,Ea.,,30 Days,0.15,1007.92,1159.11
+,3M,OEM,8,"Rrpas, Rapid Response Powered Air Purifying System, 3m, Med ",FR-57L68,,Ea.,,30 Days,0.15,1085.31,1248.11
+,3M,OEM,8,"Rrpas, Rapid Response Powered Air Purifying System, 3m, Lg ",FR-57L69,,Ea.,,30 Days,0.15,1085.31,1248.11
+,Generic,OEM,8,"Chair, Folding, Set Of 4",998006245,,Ea.,,30 Days,0.2,79.99,95.99
+,Generic,OEM,8,"Funnel, Plastic, 1-1/2 Qt.",2147002660,,Ea.,,30 Days,0.2,8.99,10.79
+,Generic,OEM,8,"17002 Ribbon, Flagging, Surveyor Fts, Red, Pack Of 12 Rolls",20924,,Ea.,,30 Days,0.2,15.99,19.19
+,Generic,OEM,8,"17023 Ribbon, Flagging, Surveyor Fts, Blue, Pack Of 12 Rolls",20910,,Ea.,,30 Days,0.2,15.99,19.19
+,Generic,OEM,8,"17024 Ribbon, Flagging, Surveyor Fts, Yellow, Pack Of 12 Rolls",20912,,Ea.,,30 Days,0.2,15.99,19.19
+,Generic,OEM,8,"Tape, Masking; 1.89 In X 60 Yds",1000003174,,Ea.,,30 Days,0.2,10.99,13.19
+,Generic,OEM,8,"Cable, Telephone, Field Wire",6145-01-155-4256,,Ea.,,30 Days,0.2,825,990
+,Generic,OEM,8,"Jerrican, Water, Plastic",7240-00-089-3827,,Ea.,,30 Days,0.2,25,30
+,Generic,OEM,8,"Shovel, Entrenching",5120-00-878-5932,,Ea.,,30 Days,0.2,98,117.6
+,Generic,OEM,8,"Carrier, Entrenching Tool",8465-00-001-6474,,Ea.,,30 Days,0.2,4.5,5.4
+,Generic,OEM,8,"Scissors, Bandage",6515-00-935-7138,,Ea.,,30 Days,0.2,9.5,11.4
+,Generic,OEM,8,"Spout, Can, Flex, 16 In Long",7240-00-177-6154,,Ea.,,30 Days,0.2,15.75,18.9
+,Generic,OEM,8,"Jerrican, Plastic, Fuel",7240-01-337-5269,,Ea.,,30 Days,0.2,62.5,75
+,Generic,OEM,8,"Tape, Od Green Duct (60 Yds)",7510-00-266-5016,,Ea.,,30 Days,0.2,15.98,19.18
+,Generic,OEM,8,"Sand Bags, Filled With Sand, Wt. 35# Each, 100/unit",8105-00-285-4744,,Ea.,,30 Days,0.2,825,990
+,Generic,OEM,8,"Sand Bags, No Sand, Bags Only, 10 Oz. Wt., 100/unit",8105-00-285-4744,,Ea.,,30 Days,0.2,80,96
+,Generic,OEM,8,"Sign Kit, Contamination, M274",9905-01-346-4716,,Ea.,,30 Days,0.2,325,390
+,Generic,OEM,8,"Koolatron P95 Thermoelectric Cooler, 45 Qt",B000Q754E4,,Ea.,,30 Days,0.2,149.99,179.99
+,Generic,OEM,8,"Dot Emergency Response Book, 1 Of 4",9781437906233,,Ea.,,30 Days,0.2,39.25,47.1
+,Generic,OEM,8,"Niosh Pocket Guide, 3 Of 4",9781598040524,,Ea.,,30 Days,0.2,32.63,39.16
+,Generic,OEM,8,"Hazardous Materials Reference Book: Cross-index, 4 Of 4",9780471286813,,Ea.,,30 Days,0.2,114.41,137.29
+,Generic,OEM,8,"30 Minute Economy Stop Watch 1/5 Second, 60 Second Sweep",B001LGGISK,,Ea.,,30 Days,0.2,48.5,58.2
+,Generic,OEM,8,Ampli Wireless Handheld Portable Public Address Set,AMSW223,,Ea.,,30 Days,0.2,474.95,569.94
+,Generic,OEM,8,"Canon Zr-960 Mini-dv Camcorder, Digital",CAZR960,,Ea.,,30 Days,0.2,249.99,299.99
+,Generic,OEM,8,"Konustar 11 Prof. Geology Compass, Magnetic, Unmounted",KOKS11PGCG,,Ea.,,30 Days,0.2,24.95,29.94
+,Generic,OEM,8,"Nikon 7x50 Action Ex Extremem Binocular, Prism Type, Individual",7239,,Ea.,,30 Days,0.2,124.99,149.99
+,Generic,OEM,8,"Laser Range Finder, 8x30, 1500 Yard, Non-reflective Target, W/ Holster",SW8X30LG,,Ea.,,30 Days,0.2,999,1198.8
+,Generic,OEM,8,Velbon Videomate 607 Tripod W/ph 368 Head/case,VEV607,,Ea.,,30 Days,0.2,64.99,77.99
+,Generic,OEM,8,"Lowepro Edit 110 Camera Case, Black",LOE110B,,Ea.,,30 Days,0.2,16.89,20.27
+,Best Buy,OEM,8,"Sx210is Canon Powershot 14.1 Megapixel Digital Camera, Black",9770402,,Ea.,,30 Days,0.2,248.99,298.79
+,Best Gloves,OEM,8,Best Butyl 14mil (medium) ,874R-8,,Ea.,,30 Days,0.2,17.8,21.36
+,Best Gloves,OEM,8,Best Butyl 14mil (large) ,874R-9,,Ea.,,30 Days,0.2,17.8,21.36
+,Best Gloves,OEM,8,Best Butyl 14mil (xl) ,874R-10,,Ea.,,30 Days,0.2,17.8,21.36
+,Best Gloves,OEM,8,Best Butyl 14mil (2xl) ,874R-11,,Ea.,,30 Days,0.2,17.8,21.36
+,Best Gloves,OEM,8,"Gloves, Patient Examining, 100/box",700PF-XL,,Ea.,,30 Days,0.2,7.75,9.3
+,Best Gloves,OEM,8,"Gloves, Chemical Protective, 14 In Black Rubber",874R-10,,Ea.,,30 Days,0.2,17.8,21.36
+,Generic,OEM,8,"(replaces Cf30 Toughbook) Cf-31 Description: Windows 7 Professional, Intel Core I5-520m 2.40ghz, 13.1"" Xga Touchscreen Lcd, 160gb Shock-mounted Hdd, 2gb, Wi-fi, Bluetooth, Single Pass (wwan), Tpm 1.2, Toughbook Preferred; Status:stock 12/16/10.",CF-31BTAAX1M,,Ea.,,30 Days,0.15,3998.29,4598.03
+,Generic,OEM,8,"(replaces Cf30 Toughbook) Cf-31 Description: **special Federal Model**, Windows 7 Professional, Intel Core I5-520m 2.40ghz, 13.1"" Xga Touchscreen Lcd, 160gb Shock-mounted Hdd, 2gb, No Wi-fi, No Bluetooth, Single Pass (wwan), Tpm 1.2, Toughbook Preferred; Status:up To 4 To 6 Week Build Time. ",CF-31BTAAZ1M,,Ea.,,30 Days,0.15,3998.29,4598.03
+,Generic,OEM,8,"Decon Kit, Individual Equipment, M295 (come In Case Lots Of 20 Kits Only)",6850-01-357-8456,,Ea.,,30 Days,0.15,749,861.35
+,Generic,OEM,8,"Tarp, All Purpose, Brown, 8 Ft X 10 Ft",8340-00-NSL-0001,,Ea.,,30 Days,0.15,14.33,16.48
+,Generic,OEM,8,"Tarp, All Purpose, Brown, 16 Ft X 20 Ft",8340-00-NSL-0003,,Ea.,,30 Days,0.15,58.88,67.71
+,Generic,OEM,8,"Tent, 10 Ft X 10 Ft",8340-00-NSL-0021,,Ea.,,30 Days,0.15,130,149.5
+,Canberra,OEM,8,"An/pdr-77 - Military Radiac For Alpha, Beta, Gamma And X-ray Radiation Detection. ",AN-PDR-77,,Ea.,,30 Days,0.19,7705,9171.68
+,Canberra,OEM,8,An/udr-13 - Tactical Device Capable Of Measuring Prompt Gamma/neutron Dose From A Nuclear Event Plus Gamma Dose And Dose-rate From A Fallout Environment In A Tactical Battlefield Situation. ,AN-UDR-13,,Ea.,,30 Days,0.19,791,941.61
+,Canberra,OEM,8,An/udr - High Sensitivity Military Pocket Radiac ,AN-UDR-14,,Ea.,,30 Days,0.15,791,913
+,Canberra,OEM,8,"Radiac Set, Adm 300, Kit C",6665-01-320-4712,,Ea.,,30 Days,0.11,6228,6920
+,Canberra,OEM,8,"Verification Kit, Radiac, Adm 300, Kit E",6665-01-426-5071,,Ea.,,30 Days,0.11,824,915
+,Coast Environmental,OEM,8,Weatherpak Mtr (replaces Weatherpak 400 Trx) ,S80110,,Ea.,,30 Days,0.09,14891,16231.19
+,Generic,OEM,8,Fire Extinguisher; Kidde; 5 Lb; A-b-c Fires,466112,,Ea.,,30 Days,0.18,55.36,65.32
+,Generic,OEM,8,55 Gallon Plastic Bags (75 Per Roll) ,52-209,,Ea.,,30 Days,0.18,26.04,30.73
+,Generic,OEM,8,Long Handled Equipment Brush Handles ,3H389,,Ea.,,30 Days,0.18,8.37,9.88
+,Generic,OEM,8,Long Handled Equipment Brushes ,3H381,,Ea.,,30 Days,0.18,8.37,9.88
+,Draeger Safety Inc.,OEM,8,Airboss Pss 100 Cbrn Approved  ,4047045,,Ea.,,30 Days,0.15,3623.65,4167.2
+,Draeger Safety Inc.,OEM,8,"Case, Hard, Transport For Harness And Regulator ",4054929,,Ea.,,30 Days,0.15,73,83.95
+,Draeger Safety Inc.,OEM,8,"Spare Bottle, Scba ",4055699,,Ea.,,30 Days,0.15,830.62,955.21
+,Draeger Safety Inc.,OEM,8,Civil Defense Simultest (cds) Kit,6400565S,,Ea.,,30 Days,0.15,3322.53,3820.91
+,Draeger Safety Inc.,OEM,8,Sulfur Trioxide ,6728781,,Ea.,,30 Days,0.15,75.71,87.07
+,Draeger Safety Inc.,OEM,8,"Carbon Disulfide 3/a, 3-95 Ppm  ",8101891,,Ea.,,30 Days,0.15,54.08,62.19
+,Draeger Safety Inc.,OEM,8,Parathion (6728461) ,6728461,,Ea.,,30 Days,0.15,88.69,101.99
+,Draeger Safety Inc.,OEM,8,Phosgene (8101521) ,8101521,,Ea.,,30 Days,0.15,67.78,77.95
+,Draeger Safety Inc.,OEM,8,Propylene Oxide (6728961) ,6728961,,Ea.,,30 Days,0.15,59.13,68
+,Draeger Safety Inc.,OEM,8,Sulfuric Acid (6728781) ,6728781,,Ea.,,30 Days,0.15,75.71,87.07
+,Draeger Safety Inc.,OEM,8,Sulfur Dioxide (6728491) ,6728491,,Ea.,,30 Days,0.15,49.75,57.21
+,Draeger Safety Inc.,OEM,8,Nitric Acid (6728311) ,6728311,,Ea.,,30 Days,0.15,59.85,68.83
+,Draeger Safety Inc.,OEM,8,Nitrogen Dioxide (ch30001) ,CH30001,,Ea.,,30 Days,0.15,46.15,53.07
+,Draeger Safety Inc.,OEM,8,Hydrogen Fluoride (8103251) ,8103251,,Ea.,,30 Days,0.15,59.85,68.83
+,Draeger Safety Inc.,OEM,8,Hydrazine (ch31801) ,CH31801,,Ea.,,30 Days,0.15,59.13,68
+,Draeger Safety Inc.,OEM,8,Hydrogen Chloride (ch29501) ,CH29501,,Ea.,,30 Days,0.15,59.49,68.41
+,Draeger Safety Inc.,OEM,8,Hydrogen Cyanide (ch25701) ,CH25701,,Ea.,,30 Days,0.15,50.47,58.04
+,Draeger Safety Inc.,OEM,8,Fluorine (8101491) ,8101491,,Ea.,,30 Days,0.15,67.78,77.95
+,Draeger Safety Inc.,OEM,8,Formaldehyde (6733081) ,6733081,,Ea.,,30 Days,0.15,60.57,69.66
+,Draeger Safety Inc.,OEM,8,Acrolein (dimethylsulfide) ,6728451,,Ea.,,30 Days,0.15,59.13,68
+,Draeger Safety Inc.,OEM,8,Acrylonitrile (6728591) ,6728591,,Ea.,,30 Days,0.15,49.75,57.21
+,Draeger Safety Inc.,OEM,8,Allyl Alcohol (ch29701) ,29701,,Ea.,,30 Days,0.15,50.47,58.04
+,Draeger Safety Inc.,OEM,8,Arsine (ch25001) ,25001,,Ea.,,30 Days,0.15,67.78,77.95
+,Draeger Safety Inc.,OEM,8,Cyanogen Chloride (ch19801) ,CH19801,,Ea.,,30 Days,0.15,71.74,82.5
+,Draeger Safety Inc.,OEM,8,Dimethylamine (6718401) ,6718401,,Ea.,,30 Days,0.15,54.8,63.02
+,Draeger Safety Inc.,OEM,8,Ethylene Oxide (6728961) ,6728961,,Ea.,,30 Days,0.15,59.13,68
+,Draeger Safety Inc.,OEM,8,Accuro Pump Spare Parts Kit ,6400220,,Ea.,,30 Days,0.15,45.58,52.42
+,Draeger Safety Inc.,OEM,8,Ammonia (6733231) ,CH20501,,Ea.,,30 Days,0.15,47.59,54.73
+,Draeger Safety Inc.,OEM,8,Cds Training Set I ,8103230,,Ea.,,30 Days,0.15,52.64,60.54
+,Draeger Safety Inc.,OEM,8,Cds Training Set V ,8103240,,Ea.,,30 Days,0.15,52.64,60.54
+,Draeger Safety Inc.,OEM,8,Quantimeter Spare Parts Kit ,8101005,,Ea.,,30 Days,0.15,52.14,59.96
+,Draeger Safety Inc.,OEM,8,"Soft Side Accuro Pump Kit. Includes Accuro-bellows Pump, Deluxe Tube Opener, Spare Parts Kit, Rubber Cap (10 Pack), Allen Wrench, Nylon Transport Case ",4053473,,Ea.,,30 Days,0.15,385.74,443.6
+,Draeger Safety Inc.,OEM,8,"Qty 3 Hazmat Set Ii (sulfur Dioxide, Chlorine, Hydrogen Sulfide, Carbon Dioxide, Phosgene) ",8101736,,Ea.,,30 Days,0.15,54.08,62.19
+,Draeger Safety Inc.,OEM,8,"Hazmat Set Iii (ketones, Aromatic Hydrocarbons, Alcohols, Aliphatic Hydrocarbons, Chlorinated Hydrocarbons) ",8101770,,Ea.,,30 Days,0.15,54.08,62.19
+,Draeger Safety Inc.,OEM,8,Accuro 2000 Deluxe Kit ,4500200,,Ea.,,30 Days,0.15,864.48,994.15
+,Draeger Safety Inc.,OEM,8,Accuro Pump ,6400000,,Ea.,,30 Days,0.15,299.22,344.1
+,Draeger Safety Inc.,OEM,8,"Qty 3 Hazmat Set I (acid Gases, Hydrocyanic Acid, Carbon Monoxide, Basic Gases, Nitrous Gases) ",8101735,,Ea.,,30 Days,0.15,54.08,62.19
+,Draeger Safety Inc.,OEM,8,"Cds Set V (cyanogen Chloride, Thiether, Phosgene, Chlorine, And Phosphoric Acid Ester) (nerve Agents) ",8103200,,Ea.,,30 Days,0.15,188.24,216.48
+,Draeger Safety Inc.,OEM,8,"Cds Set I (thioether, Phosgene, Hydrocyanic Acid, Organic Arsenic Compounds And Arsine [lewisite], And Organic Basic Nitrogen Compounds [hn]) ",8103140,,Ea.,,30 Days,0.15,188.24,216.48
+,Draeger Safety Inc.,OEM,8,Chlorine (6728411) ,640530,,Ea.,,30 Days,0.15,1390.5,1599.08
+,Draeger Safety Inc.,OEM,8,Civil Defense Simultest (cds)/hazmat Kit With Quantimeter 1000 And Charger ,4056528,,Ea.,,30 Days,0.15,5756.42,6619.88
+,Drash/Reeves,OEM,8,"4 Light Se, 50w, Overhead Stringable, W/ Hard Carry Case ",1003666,,Ea.,,30 Days,0.15,1125,1293.19
+,Drash/Reeves,OEM,8,"Diesel Flash Water Heater W/ Solution Injector, G2 ",RDHW0004,,Ea.,,30 Days,0.15,7537.5,8664.36
+,Drash/Reeves,OEM,8,Interior Catch Basin (berm) ,RDCB0001,,Ea.,,30 Days,0.15,624.75,718.15
+,Drash/Reeves,OEM,8,"600 Gallon Bladder, Fresh Water ",RDB0034,,Ea.,,30 Days,0.15,1377.75,1583.72
+,Drash/Reeves,OEM,8,Usar Decontamination ,RDPK0005,,Ea.,,30 Days,0.15,14349.75,16495.04
+,Drash/Reeves,OEM,8,"600 Gallon Bladder, Waste Water ",RDB0004,,Ea.,,30 Days,0.15,1377.75,1583.72
+,Drash/Reeves,OEM,8,3-line Shelter System ,RDPK0004,,Ea.,,30 Days,0.15,10109.25,11620.58
+,Dupont,OEM,8,"Level A Encapsulated Suit, Tychem Responder Csm (large) ",RC550T-L,,Ea.,,30 Days,0.15,1137.88,1307.99
+,Dupont,OEM,8,"Level A Encapsulated Suit, Tychem Responder Csm (medium) ",RC550T-M,,Ea.,,30 Days,0.15,1137.88,1307.99
+,Dupont,OEM,8,"Level A Encapsulated Suit, Tychem Responder Csm (small) ",RC550T-S,,Ea.,,30 Days,0.15,1137.88,1307.99
+,Dupont,OEM,8,"Level A Encapsulated Suit, Tychem Responder Csm (xl) ",RC550T-XL,,Ea.,,30 Days,0.15,1137.88,1307.99
+,Dupont,OEM,8,"Level A Encapsulated Suit, Tychem Responder Csm (xxl) ",RC550T-XXL,,Ea.,,30 Days,0.15,1206.15,1386.47
+,Dupont,OEM,8,Tychem Responder Rear Entry (large) ,TK613T-L,,Ea.,,30 Days,0.15,775.03,890.9
+,Dupont,OEM,8,"Tychem Cpf3 With Sockboots,(meduim) ; 6 Per Case (replaces C3168t) ",C31286T-M,,Ea.,,30 Days,,0,0
+,Dupont,OEM,8,Tychem Cpf3 With Sockboots (large); 6 Per Case (replaces C3168t) ,C31286T-L,,Ea.,,30 Days,,0,0
+,Dupont,OEM,8,Tychem Cpf3 With Sockboots (xl); 6 Per Case (replaces C3168t) ,C31286T-XL,,Ea.,,30 Days,,0,0
+,Dupont,OEM,8,Tychem Cpf3 With Sockboots (2xl); 6 Per Case (replaces C3168t) ,C31286T-XXL,,Ea.,,30 Days,,0,0
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf3 W/o Attached Boots (medium); 2 Per Case ,C3127T-M,,Ea.,,30 Days,0.15,194.31,223.36
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf3 W/o Attached Boots (small); 2 Per Case ,C3127T-S,,Ea.,,30 Days,0.15,194.31,223.36
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf3 W/o Attached Boots (xl); 2 Per Case ,C3127T-XL,,Ea.,,30 Days,0.15,194.31,223.36
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf3 W/o Attached Boots (xxl); 2 Per Case ,C3127T-XXL,,Ea.,,30 Days,0.15,205.98,236.77
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf-4 W/o Attached Boots (large); 2 Per Case (replaces C4127t) ,LV127T-L,,Ea.,,30 Days,0.15,73.15,84.09
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf-4 W/o Attached Boots (medium); 2 Per Case (replaces C4127t) ,LV127T-M,,Ea.,,30 Days,0.15,73.15,84.09
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf-4 W/o Attached Boots (small); 2 Per Case (replaces C4127t) ,LV127T-S,,Ea.,,30 Days,0.15,73.15,84.09
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf-4 W/o Attached Boots (xl); 2 Per Case (replaces C4127t) ,LV127T-XL,,Ea.,,30 Days,0.15,73.15,84.09
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf-4 W/o Attached Boots (xxl); 2 Per Case (replaces C4127t) ,LV127T-XXL,,Ea.,,30 Days,0.15,77.54,89.13
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf-4 W/attached Boots (large); 6 Per Case ,LV128T-L,,Ea.,,30 Days,0.15,95.36,109.62
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf-4 W/attached Boots (medium); 6 Per Case ,LV128T-M,,Ea.,,30 Days,0.15,95.36,109.62
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf-4 W/attached Boots (small); 6 Per Case ,LV128T-S,,Ea.,,30 Days,0.15,95.36,109.62
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf-4 W/attached Boots (xl); 6 Per Case ,LV128T-XL,,Ea.,,30 Days,0.15,95.36,109.62
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf-4 W/attached Boots (xxl); 6 Per Case ,LV128T-XXL,,Ea.,,30 Days,0.15,101.08,116.19
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf3 W/attached Boots (large); 6 Per Case ,C3122T-L,,Ea.,,30 Days,0.15,211.04,242.59
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf3 W/attached Boots (small); 6 Per Case ,C3122T-S,,Ea.,,30 Days,0.15,211.04,242.59
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf3 W/attached Boots (xl); 6 Per Case ,C3122T-XL,,Ea.,,30 Days,0.15,211.04,242.59
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf3 W/attached Boots (xxl); 6 Per Case ,C3122T-XXL,,Ea.,,30 Days,0.15,223.7,257.14
+,Dupont,OEM,8,Level B/c Suit Tychem Cpf3 W/o Attached Boots (large); 2 Per Case ,C3127T-L,,Ea.,,30 Days,0.15,194.31,223.36
+,Dupont,OEM,8,"Coveralls, Tyvek, Disposable; Hood, Elastic Face & Wrists, Booties;  Sizes 3x; 25/case; Order By Case",TY122SWHSM002500,,Ea.,,30 Days,0.15,87.47,100.55
+,Dupont,OEM,8,"Nfpa 1994 Certified Class 2, Rear Entry Level B, Size Sm",BR611TYLSM000100,,Ea.,,30 Days,0.15,333.96,383.89
+,Dupont,OEM,8,"Nfpa 1994 Certified Class 2, Rear Entry Level B, Size Md",BR611TYLMD000100,,Ea.,,30 Days,0.15,333.96,383.89
+,Dupont,OEM,8,"Nfpa 1994 Certified Class 2, Rear Entry Level B, Size Lg",BR611TYLLG000100,,Ea.,,30 Days,0.15,333.96,383.89
+,Dupont,OEM,8,"Nfpa 1994 Certified Class 2, Rear Entry Level B, Size Xl",BR611TYLXL000100,,Ea.,,30 Days,0.15,333.96,383.89
+,Dupont,OEM,8,"Nfpa 1994 Certified Class 2, Rear Entry Level B, Size 2x",BR611TYL2X000100,,Ea.,,30 Days,0.15,333.96,383.89
+,Dupont,OEM,8,"Nfpa 1994 Certified Class 2, Rear Entry Level B, Size 3x",BR611TYL3X000100,,Ea.,,30 Days,0.15,354,406.92
+,Dupont,OEM,8,"Nfpa 1994 Certified Class 2, Rear Entry Level B, Size 4x",BR611TYL4X000100,,Ea.,,30 Days,0.15,382.32,439.48
+,Dupont,OEM,8,"Nfpa 1994 Certified Class 2, Rear Entry Level B, Size 5x",BR611TYL5X000100,,Ea.,,30 Days,,0,0
+,Generic,OEM,8,"Battery Ba 9759, Energizer, Aaa ",EN92,,Ea.,,30 Days,0.15,1.7,1.95
+,Generic,OEM,8,"Battery, Energiger Titanium ""d"", Replaces Ba-3030/u, 2-pack  ",X95RP-2,,Ea.,,30 Days,0.15,7.5,8.62
+,Generic,OEM,8,Tarps - 10 X 10 - 12 Mil ,12566-00057,,Ea.,,30 Days,0.15,12,13.79
+,Generic,OEM,8,Duct Tape ,63161,,Ea.,,30 Days,0.15,7.09,8.15
+,Generic,OEM,8,"Sprayer, Insecticide, 8 Qt",3740-00-NSL-0006,,Ea.,,30 Days,0.15,47.21,54.27
+,Generic,OEM,8,"Hammer, Hand, Sledge, 8 Lb",5120-00-251-4489,,Ea.,,30 Days,0.15,63,72.42
+,Generic,OEM,8,"Power Strip, 15 Amp, 15 Ft Cord, 10 Outlets",6150-01-NSL-0002,,Ea.,,30 Days,0.15,73.55,84.55
+,Generic,OEM,8,"Light, Chemiluminescent, Yellow",6260-01-196-0136,,Ea.,,30 Days,0.15,14.6,16.78
+,Generic,OEM,8,"Plugs, Ear, 200/box",6515-00-137-6345,,Ea.,,30 Days,0.15,32.75,37.65
+,Generic,OEM,8,"Bracket,vehicle Mount, Fire Extinguisher",1000998,,Ea.,,30 Days,0.15,7.04,8.09
+,Generic,OEM,8,"Bag, Plastic, 60 In X 36 In, 200 Bags",8105-01-221-3239,,Ea.,,30 Days,0.15,36.34,41.77
+,Generic,OEM,8,"Bag, Plastic, 12 In X 12 In, 1000 Bags",8105-00-837-7757,,Ea.,,30 Days,0.15,71.1,81.73
+,Generic,OEM,8,"Collection Kit, Ambient Air",DFU-A-17,,Ea.,,30 Days,0.15,131.29,150.92
+,Geomet Technologies,OEM,8,4 Additional Phase Change Packs ,90-630,,Ea.,,30 Days,0.11,92,102.12
+,Geomet Technologies,OEM,8,Cool-guard Lite W/ 4 Phase Change Packs ,90-600,,Ea.,,30 Days,0.11,122,135.42
+,Geomet Technologies,OEM,8,"Dtaps Nfpa 1994, Class 2 Encapsulating Suit (small) ",10-260-S,,Ea.,,30 Days,0.11,815,904.65
+,Geomet Technologies,OEM,8,"Dtaps Nfpa 1994, Class 2 Encapsulating Suit (medium) ",10-260-M,,Ea.,,30 Days,0.11,815,904.65
+,Geomet Technologies,OEM,8,"Dtaps Nfpa 1994, Class 2 Encapsulating Suit (large) ",10-260-L,,Ea.,,30 Days,0.11,815,904.65
+,Geomet Technologies,OEM,8,"Dtaps Nfpa 1994, Class 2 Encapsulating Suit (xl) ",10-260-XL,,Ea.,,30 Days,0.11,815,904.65
+,Geomet Technologies,OEM,8,"Dtaps Nfpa 1994, Class 2 Encapsulating Suit (xxl) ",10-260-XXL,,Ea.,,30 Days,0.11,937,1040.07
+,Harger,OEM,8,"Hammer, Slide, Ground Rod",SMGRD58USHGR,,Ea.,,30 Days,0.2,292.17,350.6
+,Generic,OEM,8,"Ph Paper, Hydrion, 15 Ft. Roll With Dispenser",6640-00-NSL-0004,,Ea.,,30 Days,0.2,12,14.4
+,Generic,OEM,8,Battery Acada Ba-5590a/u ,BA5590A/U,,Ea.,,30 Days,0.2,146.1,175.32
+,Generic,OEM,8,Battery Acada Ba-5590b/u ,BA5590B-U,,Ea.,,30 Days,0.2,85.64,102.77
+,Generic,OEM,8,"Battery Lithium, Ba5847b/u ",BA5847B-U,,Ea.,,30 Days,0.2,45.54,54.65
+,Generic,OEM,8,"Battery, Ba5800a/u ",BA5800A-U,,Ea.,,30 Days,0.2,27.1,32.52
+,Generic,OEM,8,"Battery, Dry, Size D, 1.5 Volt (alkaline); 12 Per Pkg.",E95,,Ea.,,30 Days,0.25,9,11.25
+,Generic,OEM,8,"Battery, Non-rechargeable, 9 V, (alkaline); 12 Per Pkg.",EN22,,Ea.,,30 Days,0.2,14.04,16.85
+,Generic,OEM,8,"Battery, Nonrechargeable, 3.5 Lithium",Ls 14250,,Ea.,,30 Days,0.2,3.12,3.74
+,Generic,OEM,8,"Battery, Non-rechargeable, Lithium, 4 Per Pkg",BA5590B/U,,Ea.,,30 Days,0.2,342.56,411.07
+,Generic,OEM,8,"Battery, Non-rechargeable, 8 Per Pkg",BA5800A/U,,Ea.,,30 Days,0.2,216.8,260.16
+,Hydrion,OEM,8,"Phydrion Ph Paper, 15' Roll W/ Plastic Dispenser",6640-00-NSL-0004,,Ea.,,30 Days,0.2,12,14.4
+,Icx,OEM,8,Standard Biocapture 650,BC-650,,Ea.,,30 Days,0.1,7760,8528
+,Ihs Janes,OEM,8,"Janes Chem-bio Manual, 2 Of 4",9780710619235,,Ea.,,30 Days,0.2,40,48
+,Innotech,OEM,8,"Chemical Detector Kits, M256a1 ",M256A1,,Ea.,,30 Days,0.5,123.5,185.25
+,Innotech,OEM,8,M9 Chemical Detection Paper; Roll  ,M9,,Ea.,,30 Days,0.2,26.42,31.7
+,Innotech,OEM,8,"Chemical Training Kit, M256a1 ",M256A1 TRAINER,,Ea.,,30 Days,0.5,274,411
+,Innotech,OEM,8,"Detector Kit, Chemical Agent, M-256a1",M256A1,,Ea.,,30 Days,0.5,123.5,185.25
+,Innotech,OEM,8,"Paper, Chemical Agent Detector, M9",M9,,Ea.,,30 Days,0.12,26.42,29.64
+,Kappler,OEM,8,Chem Tape  Case,99402,,Ea.,,30 Days,0.3,412.95,538.78
+,Kappler,OEM,8,"Coverall, Pvg Zyton 100, Zipper Front, Collar, Elastic Wrists And Ankles, Serged (large/xl); 12 Per Case ",Z1S417LGXL,,Ea.,,30 Days,0.3,67.74,88.38
+,Kappler,OEM,8,"Coverall, Pvg Zyton 100, Zipper Front, Collar, Elastic Wrists And Ankles, Serged (small/medium); 12 Per Case ",Z1S417SMMD,,Ea.,,30 Days,0.3,67.74,88.38
+,Kappler,OEM,8,"Coverall, Pvg Zyton 100, Zipper Front, Collar, Elastic Wrists And Ankles, Serged (2xl/3xl); 12 Per Case ",Z1S4172X3X,,Ea.,,30 Days,0.3,74.52,97.23
+,Kappler,OEM,8,Pvg Zyton 300 Coverall Total Encapsulating Suit (large/x-large) 6 Per Case ,Z3H571LGXL,,Ea.,,30 Days,0.3,470.57,613.93
+,Kappler,OEM,8,Pvg Zyton 300 Coverall Total Encapsulating Suit (small/medium) 6 Per Case ,Z3H571SMMD,,Ea.,,30 Days,0.3,470.57,613.93
+,Kappler,OEM,8,Pvg Zyton 300 Coverall Total Encapsulating Suit (xxl/xxxl) 6 Per Case ,Z3H5712X3X,,Ea.,,30 Days,0.3,517.61,675.28
+,Kestrel,OEM,8,Kestrel 4500 Weather Meter ,4500,,Ea.,,30 Days,0.19,299,355.35
+,Generic,OEM,8,"5000w Gas Generator, Honda ",EM50002ACH,,Ea.,,30 Days,0.3,2100,2721.02
+,L3 Comms Corp,OEM,8,M953 Night Vision Binocular,AN/PVS-15,,Ea.,,30 Days,0.1,11982,13180.2
+,Lakeland,OEM,8,Level A Tychem Tk 650 Deluxe (large) ,TK650-L,,Ea.,,30 Days,0.15,676.51,777.99
+,Lakeland,OEM,8,Level A Tychem Tk 650 Deluxe (medium) ,TK650-M,,Ea.,,30 Days,0.15,676.51,777.99
+,Lakeland,OEM,8,Level A Tychem Tk 650 Deluxe (small) ,TK650-S,,Ea.,,30 Days,0.15,676.51,777.99
+,Lakeland,OEM,8,Level A Tychem Tk 650 Deluxe (xl) ,TK650-XL,,Ea.,,30 Days,0.15,676.51,777.99
+,Lakeland,OEM,8,Level A Tychem Tk 650 Deluxe (xxl) ,TK650-XXL,,Ea.,,30 Days,0.15,676.51,777.99
+,Lakeland,OEM,8,Level A Tychem Tk 650 Deluxe (xxxl) ,TK650-XXXL,,Ea.,,30 Days,0.15,710.34,816.89
+,Lakeland,OEM,8,Level A Encapsulated Suit - Large ,TK656-L,,Ea.,,30 Days,,0,0
+,Lakeland,OEM,8,Level A Encapsulated Suit - Medium ,TK656-M,,Ea.,,30 Days,,0,0
+,Lakeland,OEM,8,Level A Encapsulated Suit - Small ,TK656-S,,Ea.,,30 Days,,0,0
+,Lakeland,OEM,8,Level A Encapsulated Suit - Xl ,TK656-XL,,Ea.,,30 Days,,0,0
+,Lakeland,OEM,8,Level A Encapsulated Suit - Xxl ,TK656-XXL,,Ea.,,30 Days,,0,0
+,Lakeland,OEM,8,Level A Encapsulated Suit - Xxxl ,TK656-XXXL,,Ea.,,30 Days,,0,0
+,Lakeland,OEM,8,"Coverall, Tychem Lv, Respirator Fit Hood, Double Storm Flap With Hook And Loop, Elastic Face And Wrists, Attached Boots With Boot Flaps (large); 6 Per Case ",LV165-L,,Ea.,,30 Days,0.15,320.76,368.87
+,Lakeland,OEM,8,"Coverall, Tychem Lv, Respirator Fit Hood, Double Storm Flap With Hook And Loop, Elastic Face And Wrists, Attached Boots With Boot Flaps (medium); 6 Per Case ",LV165-M,,Ea.,,30 Days,0.15,311.85,358.63
+,Lakeland,OEM,8,"Coverall, Tychem Lv, Respirator Fit Hood, Double Storm Flap With Hook And Loop, Elastic Face And Wrists, Attached Boots With Boot Flaps (small); 6 Per Case ",LV165-S,,Ea.,,30 Days,0.15,311.85,358.63
+,Lakeland,OEM,8,"Coverall, Tychem Lv, Respirator Fit Hood, Double Storm Flap With Hook And Loop, Elastic Face And Wrists, Attached Boots With Boot Flaps (xl); 6 Per Case ",LV165-XL,,Ea.,,30 Days,0.15,311.85,358.63
+,Lakeland,OEM,8,"Coverall, Tychem Lv, Respirator Fit Hood, Double Storm Flap With Hook And Loop, Elastic Face And Wrists, Attached Boots With Boot Flaps (xxl); 6 Per Case ",LV165-XXL,,Ea.,,30 Days,0.15,311.85,358.63
+,Lakeland,OEM,8,"Coverall, Tychem Sl (large); 6 Per Case ",72150-L,,Ea.,,30 Days,0.15,153.88,176.96
+,Lakeland,OEM,8,"Coverall, Tychem Sl (medium); 6 Per Case ",72150-M,,Ea.,,30 Days,0.15,153.88,176.96
+,Lakeland,OEM,8,"Coverall, Tychem Sl (small); 6 Per Case ",72150-S,,Ea.,,30 Days,0.15,161.58,185.82
+,Lakeland,OEM,8,"Coverall, Tychem Sl (xl); 6 Per Case ",72150-XL,,Ea.,,30 Days,0.15,153.88,176.96
+,Lakeland,OEM,8,"Coverall, Tychem Sl (xxl); 6 Per Case ",72150-XXL,,Ea.,,30 Days,0.15,132.45,152.32
+,Lakeland,OEM,8,"Coverall, Tyvek Disposable (large); 25 Per Case (replaces 1015) ",01428-L,,Ea.,,30 Days,0.15,85.19,97.97
+,Lakeland,OEM,8,"Coverall, Tyvek Disposable (medium); 25 Per Case (replaces 1015) ",01428-M,,Ea.,,30 Days,0.15,85.19,97.97
+,Lakeland,OEM,8,"Coverall, Tyvek Disposable, (small); 25 Per Case (replaces 1015) ",01428-S,,Ea.,,30 Days,0.15,85.19,97.97
+,Lakeland,OEM,8,"Coverall, Tyvek Disposable (xl); 25 Per Case (replaces 1015) ",01428-XL,,Ea.,,30 Days,0.15,85.19,97.97
+,Lakeland,OEM,8,"Coverall, Tyvek Disposable (xxl); 25 Per Case (replaces 1015) ",0142-XXL,,Ea.,,30 Days,0.15,100.73,115.84
+,Lakeland,OEM,8,"Level C Coveralls, Tychem F; (large) 6 Per Case ",60132-L,,Ea.,,30 Days,,0,0
+,Lakeland,OEM,8,"Level C Coveralls, Tychem F (medium); 6 Per Case ",60132-M,,Ea.,,30 Days,,0,0
+,Lakeland,OEM,8,"Level C Coveralls, Tychem F (small); 6 Per Case ",60132-S,,Ea.,,30 Days,,0,0
+,Lakeland,OEM,8,"Level C Coveralls, Tychem F (xl); 6 Per Case ",60132-XL,,Ea.,,30 Days,,0,0
+,Lakeland,OEM,8,"Level C Coveralls, Tychem F (xxl); 6 Per Case ",60132-XXL,,Ea.,,30 Days,,0,0
+,Lakeland,OEM,8,Micromax Coverall - (large) 25 Per Case   ,TG428-L,,Ea.,,30 Days,0.15,66.52,76.5
+,Lakeland,OEM,8,Micromax Coverall - Medium ,TG428-M,,Ea.,,30 Days,0.15,66.52,76.5
+,Lakeland,OEM,8,Micromax Coverall - Small ,TG428-S,,Ea.,,30 Days,0.15,66.42,76.38
+,Lakeland,OEM,8,Micromax Coverall - Xl ,TG428-XL,,Ea.,,30 Days,0.15,66.42,76.38
+,Lakeland,OEM,8,Micromax Coverall - Xxl ,TG428-XXL,,Ea.,,30 Days,0.15,66.42,76.38
+,Lakeland,OEM,8,Micromax Coverall - Xxxl ,TG428-XXXL,,Ea.,,30 Days,0.15,69.85,80.33
+,Lakeland,OEM,8,"Level A Fully Encapsulated Suit, Nfpa 1994-2007 Class 2 Ensemble W/interspiro Pass-thru, Sizes S Through Xl",TK658/P11-S-XL,,Ea.,,30 Days,0.15,736.49,846.96
+,Lakeland,OEM,8,"Level A Fully Encapsulated Suit, Nfpa 1994-2007 Class 2 Ensemble W/interspiro Pass-thru, Sizes 2x",TK658/P11-2X,,Ea.,,30 Days,0.15,773.31,889.31
+,Lakeland,OEM,8,"Level A Fully Encapsulated Suit, Nfpa 1994-2007 Class 2 Ensemble W/interspiro Pass-thru, Sizes 4x",TK658/P11-3X,,Ea.,,30 Days,0.15,811.98,933.78
+,Lakeland,OEM,8,"Level A Fully Encapsulated Suit, Nfpa 1994-2007 Class 2 Ensemble W/interspiro Pass-thru, Sizes 3x",TK658/P11-4X,,Ea.,,30 Days,0.15,852.58,980.47
+,Lakeland,OEM,8,"Level A Fully Encapsulated Suit, Nfpa 1994-2007 Class 2 Ensemble W/interspiro Pass-thru, Sizes 5x",TK658/P11-5X,,Ea.,,30 Days,0.15,895.21,1029.49
+,Generic,OEM,8,Dfu Pre-separator,DFU-A-11,,Ea.,,30 Days,0.1,153.3,168.63
+,Generic,OEM,8,Dfu Conical Tubes,DFU-A-25,,Ea.,,30 Days,0.1,2.46,2.71
+,Generic,OEM,8,"Dfu 1000, Dry Filter Unit",DFU-A-1000,,Ea.,,30 Days,0.1,2409.75,2650.73
+,Mine Safety Appliances,OEM,8,Flow Test Adapter For Threaded Ip Hose ,10064117,,Ea.,,30 Days,0.11,82.06,90.68
+,Mine Safety Appliances,OEM,8,Spider Gasket ,10007994,,Ea.,,30 Days,0.11,2.6,2.87
+,Mine Safety Appliances,OEM,8,Mask Pouch ,10034184,,Ea.,,30 Days,0.11,41.72,46.1
+,Mine Safety Appliances,OEM,8,Spectacle Kit ,816137,,Ea.,,30 Days,0.11,53.18,58.76
+,Mine Safety Appliances,OEM,8,"Canister, Gas Mask, Adv 1000, Cba/rca, 6/bx ",817590,,Ea.,,30 Days,0.11,147.54,163.03
+,Mine Safety Appliances,OEM,8,"Cartridges, Optifilter, Cba/rca, P100, 6/bx ",10011890,,Ea.,,30 Days,0.11,179.18,197.99
+,Mine Safety Appliances,OEM,8,"Gas Mask Assy, Adv 1000, Cba-rca, Lg, Bk ",813861,,Ea.,,30 Days,0.11,169.98,187.83
+,Mine Safety Appliances,OEM,8,"Gas Mask Assy, Adv 1000, Cba-rca, Md, Bk ",813859,,Ea.,,30 Days,0.11,169.98,187.83
+,Mine Safety Appliances,OEM,8,"Gas Mask Assy, Adv 1000, Cba-rca, Sm, Bk ",813860,,Ea.,,30 Days,0.11,169.98,187.83
+,Mine Safety Appliances,OEM,8,Millennium Head Harness Assembly ,10008587,,Ea.,,30 Days,0.11,10.39,11.48
+,Mine Safety Appliances,OEM,8,"Papr Assy, Optimair Mm2k, Ultravue, Hyc, Lg ",10023857,,Ea.,,30 Days,0.11,377.05,416.64
+,Mine Safety Appliances,OEM,8,"Papr Assy, Optimair Mm2k,ultravue, Sil, Md ",10023859,,Ea.,,30 Days,0.11,377.05,416.64
+,Mine Safety Appliances,OEM,8,"Papr Assy, Optimair Mm2k, Ultravue, Sil, Sm ",10023881,,Ea.,,30 Days,0.11,377.05,416.64
+,Mine Safety Appliances,OEM,8,Amplifier Kit W/ Bracket And Voicemitter ,10024074,,Ea.,,30 Days,0.11,306.21,338.36
+,Mine Safety Appliances,OEM,8,Cbrn Canister ,10046570,,Ea.,,30 Days,0.11,29.11,32.17
+,Mine Safety Appliances,OEM,8,"Carbon Scba Cylinders H60, 60 Minute High Pressure W/ Valves ",807588,,Ea.,,30 Days,0.11,1295.27,1431.27
+,Mine Safety Appliances,OEM,8,Deflector ,10007388,,Ea.,,30 Days,0.11,2.54,2.81
+,Mine Safety Appliances,OEM,8,Esp Ii Millennium Voice Amplifier ,10026265,,Ea.,,30 Days,0.11,232.88,257.33
+,Mine Safety Appliances,OEM,8,Exhalation Valve ,10007996,,Ea.,,30 Days,0.11,2.6,2.87
+,Mine Safety Appliances,OEM,8,Firehawk 4500 Ultra Elite Facepiece - Sml ,815869,,Ea.,,30 Days,0.11,295.43,326.45
+,Mine Safety Appliances,OEM,8,Firehawk 4500 Ultra Elite Facepiece - Med ,815854,,Ea.,,30 Days,0.11,295.43,326.45
+,Mine Safety Appliances,OEM,8,Firehawk 4500 Ultra Elite Facepiece - Lge ,815875,,Ea.,,30 Days,0.11,295.43,326.45
+,Mine Safety Appliances,OEM,8,"Firehawk 4500 W/ Clear Command Amp, Pass, Hud, Buddy Breather And Cylinder (large Ultra Elite Face Piece) ",K-CMD-14N01D14CD0,,Ea.,,30 Days,0.11,4873,5384.67
+,Mine Safety Appliances,OEM,8,"Firehawk 4500 W/ Clear Command Amp, Pass, Hud, Buddy Breather And Cylinder (medium Ultra Elite Face Piece) ",K-CMD-14N01C14CD0,,Ea.,,30 Days,0.11,4873,5384.67
+,Mine Safety Appliances,OEM,8,"Firehawk 4500 W/ Clear Command Amp, Pass, Hud, Buddy Breather And Cylinder (small Ultra Elite Face Piece) ",K-CMD-14D01B14CD0,,Ea.,,30 Days,0.11,4958.25,5478.87
+,Mine Safety Appliances,OEM,8,"Firehawk 4500 W/ Pass, Hud, Buddy Breather And Cylinder ",K-CMD-14D0A00AD0,,Ea.,,30 Days,0.11,4237.75,4682.71
+,Mine Safety Appliances,OEM,8,Gasket ,10007979,,Ea.,,30 Days,0.11,2.6,2.87
+,Mine Safety Appliances,OEM,8,Inhalation Valve Assembly ,10007421,,Ea.,,30 Days,0.11,1.65,1.82
+,Mine Safety Appliances,OEM,8,Valve Seat ,305349,,Ea.,,30 Days,0.11,1.83,2.02
+,Mine Safety Appliances,OEM,8,Valve Disc ,305350,,Ea.,,30 Days,0.11,1.33,1.47
+,Mine Safety Appliances,OEM,8,Millennium Nose Cup Assembly - Small ,10006824,,Ea.,,30 Days,0.11,35.52,39.25
+,Mine Safety Appliances,OEM,8,Millennium Nose Cup Assembly - Large ,10006825,,Ea.,,30 Days,0.11,35.52,39.25
+,Mine Safety Appliances,OEM,8,Millennium Nose Cup Assembly - Medium ,10006823,,Ea.,,30 Days,0.11,35.52,39.25
+,Miti Co / Iml,OEM,8,"Complete Portable Decon Kit, Single Pool, Decon Hoop Wash Kit",DHK1-40,,Ea.,,30 Days,0.1,5025,5527.5
+,Msa,OEM,8,"Air Force Cots M7 Responder Scba 4500psi, D-pull W/chest Strap/swiveling Lumbar, 60' Bottle W/air, Med. Facepiece & Nosecup, Speed-on Less Strap, Clear Com Amp/ri W/lapel Mic, Apr 18"" Tube, Pass/telem W/thermalarm, Hard Case - Extra 60 Bottle & Cbrn ",A-M7R-AFCOTS-60-M,,Ea.,,30 Days,0.15,8096.68,9307.13
+,Na Rescue,OEM,8,Raven Litter Model 90c ,60-0001,,Ea.,,30 Days,0.25,298,372.5
+,North Safety Products,OEM,8,Disposable Level B Gloves,FR-B144GI/XS-XL,,Ea.,,30 Days,0.14,29.3,33.55
+,North Safety Products,OEM,8,Gloves North Butyl 7mil (sm) ,B074GI-S,,Ea.,,30 Days,0.14,11.04,12.64
+,North Safety Products,OEM,8,Gloves Borth Butyl 7mil (med) ,B074GI-M,,Ea.,,30 Days,0.14,11.04,12.64
+,North Safety Products,OEM,8,Gloves Borth Butyl 7mil (lrg)  ,B074GI-L,,Ea.,,30 Days,0.14,11.04,12.64
+,North Safety Products,OEM,8,Cotton Inserts For Butyl Gloves - Extra-large ,74-2101-FAM-XL,,Ea.,,30 Days,0.2,2,2.4
+,North Safety Products,OEM,8,Cotton Inserts For Butyl Gloves - Large ,74-2101-FAM-L,,Ea.,,30 Days,0.2,2,2.4
+,North Safety Products,OEM,8,Cotton Inserts For Butyl Gloves - Medium ,74-2101-FAM-M,,Ea.,,30 Days,0.2,2,2.4
+,North Safety Products,OEM,8,"Butyl Gloves, Rough Curved Hand, 14 Mil, 14"" Length - Extra Small ",B144RGI-XS,,Ea.,,30 Days,0.2,14.65,17.58
+,North Safety Products,OEM,8,"Butyl Gloves, Rough Curved Hand, 14 Mil, 14"" Length - Small ",B144RGI-S,,Ea.,,30 Days,0.2,14.65,17.58
+,North Safety Products,OEM,8,"Butyl Gloves, Rough Curved Hand, 14 Mil, 14"" Length - Medium ",B144RGI-M,,Ea.,,30 Days,0.2,14.65,17.58
+,North Safety Products,OEM,8,"Butyl Gloves, Rough Curved Hand, 14 Mil, 14"" Length - Large ",B144RGI-L,,Ea.,,30 Days,0.2,14.65,17.58
+,North Safety Products,OEM,8,"Butyl Gloves, Rough Curved Hand, 14 Mil, 14"" Length - Extra Large ",B144RGI-XL,,Ea.,,30 Days,0.2,14.65,17.58
+,North Safety Products,OEM,8,"Butyl Gloves, Smooth Curved Hand, 14 Mil, 14"" Length - Medium ",B144GI-M,,Ea.,,30 Days,0.2,14.65,17.58
+,North Safety Products,OEM,8,"Butyl Gloves, Smooth Curved Hand, 14 Mil, 14"" Length - Large ",B144GI-L,,Ea.,,30 Days,0.2,14.65,17.58
+,North Safety Products,OEM,8,"Butyl Gloves, Smooth Curved Hand, 14 Mil, 14"" Length - Extra Large ",B144GI-XL,,Ea.,,30 Days,0.2,14.65,17.58
+,North Safety Products,OEM,8,"North Silver Shield (size 10)  (1 Pair Per Bag, 10 Bags Per Case) ",SSG-10,,Ea.,,30 Days,0.2,153.5,184.2
+,North Safety Products,OEM,8,"North Silver Shield (size 9)  (1 Pair Per Bag, 10 Bags Per Case) ",SSG-9,,Ea.,,30 Days,0.2,153.5,184.2
+,North Safety Products,OEM,8,"North Silver Shield (size 8) (1 Pair Per Bag, 10 Bags Per Case) ",SSG-8,,Ea.,,30 Days,0.2,153.5,184.2
+,North Safety Products,OEM,8,"North Viton Glove - Thickness 10 Mil (0.25mm) - Length 11"" (28cm) - 1 Pair Per Bag, 10 Bags Per Case - Size 8 ",F101-8,,Ea.,,30 Days,0.2,43.73,52.48
+,North Safety Products,OEM,8,"North Viton Glove - Thickness 10 Mil (0.25mm) - Length 11"" (28cm) - 1 Pair Per Bag, 10 Bags Per Case - Size 9 ",F101-9,,Ea.,,30 Days,0.2,43.73,52.48
+,North Safety Products,OEM,8,"North Viton Glove - Thickness 10 Mil (0.25mm) - Length 11"" (28cm) - 1 Pair Per Bag, 10 Bags Per Case - Size 10 ",F101-10,,Ea.,,30 Days,0.2,43.73,52.48
+,North Safety Products,OEM,8,"North Viton Glove - Thickness 10 Mil (0.25mm) - Length 11"" (28cm) - 1 Pair Per Bag, 10 Bags Per Case - Size 11 ",F101-11,,Ea.,,30 Days,0.2,43.73,52.48
+,North Safety Products,OEM,8,"North Viton (size 9) 1 Pair Per Bag, 10 Pairs Per Case. ",F124-9,,Ea.,,30 Days,0.2,65.35,78.42
+,North Safety Products,OEM,8,"North Viton (size 10) 1 Pair Per Bag, 10 Pairs Per Case. ",F124-10,,Ea.,,30 Days,0.2,65.35,78.42
+,North Safety Products,OEM,8,"North Viton (size 11) 1 Pair Per Bag, 10 Pairs Per Case. ",F124-11,,Ea.,,30 Days,0.2,65.35,78.42
+,Onguard,OEM,8,Hazmax - Size 6 ,87012-6,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Hazmax - Size 7 ,87012-7,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Hazmax - Size 8 ,87012-8,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Hazmax - Size 9 ,87012-9,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Hazmax - Size 10 ,87012-10,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Hazmax - Size 11 ,87012-11,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Hazmax - Size 12 ,87012-12,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Hazmax - Size 13 ,87012-13,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Hazmax - Size 14 ,87012-14,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Hazmax - Size 15 ,87012-15,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Hazmax Chemical Overshoe - Size 6 ,87025-6,,Ea.,,30 Days,0.16,30.53,35.41
+,Onguard,OEM,8,Hazmax Chemical Overshoe - Size 7 ,87025-7,,Ea.,,30 Days,0.16,30.53,35.41
+,Onguard,OEM,8,Hazmax Chemical Overshoe - Size 8 ,87025-8,,Ea.,,30 Days,0.16,30.53,35.41
+,Onguard,OEM,8,Hazmax Chemical Overshoe - Size 9 ,87025-9,,Ea.,,30 Days,0.16,30.53,35.41
+,Onguard,OEM,8,Hazmax Chemical Overshoe - Size 10 ,87025-10,,Ea.,,30 Days,0.16,30.53,35.41
+,Onguard,OEM,8,Hazmax Chemical Overshoe - Size 11 ,87025-11,,Ea.,,30 Days,0.16,30.53,35.41
+,Onguard,OEM,8,Hazmax Chemical Overshoe - Size 12 ,87025-12,,Ea.,,30 Days,0.16,30.53,35.41
+,Onguard,OEM,8,Hazmax Chemical Overshoe - Size 13 ,87025-13,,Ea.,,30 Days,0.16,30.53,35.41
+,Onguard,OEM,8,Hazmax Chemical Overshoe - Size 14 ,87025-14,,Ea.,,30 Days,0.16,30.53,35.41
+,Onguard,OEM,8,Copy Of Hazmax Chemical Overshoe - Size 15 [camber],87025-15,,Ea.,,30 Days,0.16,30.53,35.41
+,Onguard,OEM,8,Ez Fit Hazmax - Size 15 ,87015-15,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Ez Fit Hazmax - Size 11 ,87015-11,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Ez Fit Hazmax - Size 14 ,87015-14,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Ez Fit Hazmax - Size 13 ,87015-13,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Ez Fit Hazmax - Size 12 ,87015-12,,Ea.,,30 Days,0.16,53.25,61.77
+,Onguard,OEM,8,Level B Boots,87012,,Ea.,,30 Days,0.16,53.25,61.77
+,Phoenix Group,OEM,8,Sigmon Class 3 Suit (small) ,ANC3E-S,,Ea.,,30 Days,0.11,210,233.1
+,Phoenix Group,OEM,8,Sigmon Class 3 Suit (medium) ,ANC3E-M,,Ea.,,30 Days,0.11,210,233.1
+,Phoenix Group,OEM,8,Sigmon Class 3 Suit  (large) ,ANC3E-L,,Ea.,,30 Days,0.11,210,233.1
+,Phoenix Group,OEM,8,Sigmon Class 3 Suit  (xl) ,ANC3E-XL,,Ea.,,30 Days,0.11,210,233.1
+,Phoenix Group,OEM,8,Sigmon Class 3 Suit  (2xl) ,ANC3E-XXL,,Ea.,,30 Days,0.11,210,233.1
+,Quicksilver Analytics,OEM,8,"Reactive Skin Decontamination Lotion, 3-pack (replaces M291 Kit)",10051,,Ea.,,30 Days,0.12,91.4,101.99
+,Quicksilver Analytics,OEM,8,Large Area Sampling Kit (laskit) ,BIS-40001A,,Ea.,,30 Days,0.1,29.99,32.99
+,Quicksilver Analytics,OEM,8,Chem/bio  Sampling Kit (sas Kit) ,SAS KIT,,Ea.,,30 Days,0.1,15.29,16.82
+,Quicksilver Analytics,OEM,8,Qsa-102 Full ,QSA-102 FULL FAC,,Ea.,,30 Days,0.1,2423.29,2665.62
+,Radeco,OEM,8,"Filter Holder, 4""",2500-25,,Ea.,,30 Days,0.11,135,149.85
+,Radeco,OEM,8,Tripod W/adapter,TRP-2,,Ea.,,30 Days,0.11,175,194.25
+,Radeco,OEM,8,Soft Case Air For Sampling Kit,SC-1,,Ea.,,30 Days,0.11,248,275.28
+,Radeco,OEM,8,"Filter Paper, 100/package",0750-49,,Ea.,,30 Days,0.11,78,86.58
+,Radeco,OEM,8,Portable High Vol Air Sampler,H-809VII,,Ea.,,30 Days,0.11,1005,1115.55
+,Radeco,OEM,8,"Airflow Calibrator, 2 To 20 Cfm",D-8528,,Ea.,,30 Days,0.11,1545,1714.95
+,Rae Systems,OEM,8,"No Cal Gas, 25 Ppm (balance Nitrogen), In 58l Cylinder, 1 Year Shelf Life ",600-0054-000,,Ea.,,30 Days,0.18,181.8,213.62
+,Rae Systems,OEM,8,"No2 Cal Gas, 5 Ppm (balance Nitrogen), In 58l Cylinder, 6 Month Shelf Life ",600-0055-000,,Ea.,,30 Days,0.18,181.8,213.62
+,Rae Systems,OEM,8,"Ph3 Cal Gas, 5 Ppm (balance Nitrogen), In 58l Cylinder, 6 Month Shelf Life ",600-0059-000,,Ea.,,30 Days,0.18,181.8,213.62
+,Rae Systems,OEM,8,"Cl2 Cal Gas, 10 Ppm (balance Nitrogen), In 58l Cylinder, 8 Month Shelf Life ",600-0056-000,,Ea.,,30 Days,0.18,181.8,213.62
+,Rae Systems,OEM,8,"Hcn Cal Gas, 10 Ppm (balance Nitrogen), In 58l Cylinder, 1 Year Shelf Life ",600-0057-000,,Ea.,,30 Days,0.18,181.8,213.62
+,Rae Systems,OEM,8,Multirae Hcn Sensor  ,008-1117-000,,Ea.,,30 Days,0.18,256.8,301.74
+,Rae Systems,OEM,8,Multirae O2 Sensor ,008-1161-000,,Ea.,,30 Days,0.18,78,91.65
+,Rae Systems,OEM,8,Multirae Lel Sensor ,008-1171-001,,Ea.,,30 Days,0.18,114,133.95
+,Rae Systems,OEM,8,Multirae Ph3 Sensor ,008-1119-000,,Ea.,,30 Days,0.18,256.8,301.74
+,Rae Systems,OEM,8,Multirae Cl2 Sensor ,008-1116-001,,Ea.,,30 Days,0.18,127.2,149.46
+,Rae Systems,OEM,8,Multirae No Sensor ,008-1114-000,,Ea.,,30 Days,0.18,127.2,149.46
+,Rae Systems,OEM,8,Multirae So2 Sensor  ,008-1113-000,,Ea.,,30 Days,0.18,127.2,149.46
+,Rae Systems,OEM,8,Multirae Nh3 Sensor  ,008-1125-000,,Ea.,,30 Days,0.18,256.8,301.74
+,Rae Systems,OEM,8,Multirae No2 Sensor ,008-1115-000,,Ea.,,30 Days,0.18,127.2,149.46
+,Rae Systems,OEM,8,"Nh3 Cal Gas, 50 Ppm (balance Nitrogen), In 58l Cylinder, 1 Year Shelf Life ",600-0058-000,,Ea.,,30 Days,0.18,181.8,213.62
+,Rae Systems,OEM,8,Multirae Plus (pgm-50-5p) & Accessories  ,009-3821-010,,Ea.,,30 Days,0.18,2847.6,3345.93
+,Rae Systems,OEM,8,Multirae H2s Sensor  ,008-1111-000,,Ea.,,30 Days,0.18,127.2,149.46
+,Rae Systems,OEM,8,"So2 Cal Gas, 5 Ppm (balance Nitrogen), In 58l Cylinder, 1 Year Shelf Life ",600-0053-000,,Ea.,,30 Days,0.18,127.2,149.46
+,Rae Systems,OEM,8,Arearae (pgm-5020) & Accessories ,039-W128-110,,Ea.,,30 Days,,0,0
+,Rae Systems,OEM,8,"Arearae Co, O2, Lel, And Nh3 Sensors ",008-1112-000,,Ea.,,30 Days,0.18,127.2,149.46
+,Rae Systems,OEM,8,"Multirae Plus, Lel, O2, H2s, Co, 10.6 Lamp, Pump/li-ion Battery/charger, Accessories And Calibration Kit",009-3121-014,,Ea.,,30 Days,0.18,3234,3799.95
+,Rae Systems,OEM,8,"Multirae Calibration Kit W/ 4-gas Cal Gas + Isobutylene, Regulators, Tubing In A Hard Case",008-3001-000,,Ea.,,30 Days,0.18,448.2,526.64
+,Generic,OEM,8,Coleman Cable 12/3 50' Sjeow Right Angle Gfci W/tri-source Receptacle,02838,,Ea.,,30 Days,0.15,56.47,64.94
+,Generic,OEM,8,"Ntn, Dagr Receiver (9 Month Lead Time)",822-1873-002,,Ea.,,30 Days,0.15,1868,2148.2
+,Generic,OEM,8,"Battery, Ba5800a/u ",BA5800A-U,,Ea.,,30 Days,0.2,27.1,32.52
+,Safetytech International,OEM,8,Belt Assy ,S-30019-001,,Ea.,,30 Days,0.15,14.4,16.56
+,Safetytech International,OEM,8,Breathing Tube Assy ,SÃ¢â‚¬ï¿½30111Ã¢â‚¬ï¿½001,,Ea.,,30 Days,0.15,21.6,24.84
+,Safetytech International,OEM,8,C-420 Blower Filter Gasket ,M-60026-002,,Ea.,,30 Days,0.13,8,9
+,Safetytech International,OEM,8,C420 Remote Cable Assy ,M-60039-001,,Ea.,,30 Days,0.13,180,202.5
+,Safetytech International,OEM,8,C420 Shower Decontamination Caps ,M-70004-001,,Ea.,,30 Days,0.15,11.2,12.88
+,Safetytech International,OEM,8,Powered Air Purifying Respirator (papr) ,M-60067-001,,Ea.,,30 Days,,0,0
+,Safetytech International,OEM,8,Airflow Indicator ,S-30020-001,,Ea.,,30 Days,0.13,12.8,14.4
+,Saic,OEM,8,Gr-135d Plus Handheld Isotope Identifier,GR-135D,,Ea.,,30 Days,0.1,7150,7861.43
+,Skedco,OEM,8,Hmd Sked Rapid Deployment Case - Yellow ,SK-253,,Ea.,,30 Days,0.35,80.31,108.42
+,Skedco,OEM,8,Complete Hmd Sked Rescue System With Strap Kit (assembled & Rolled) ,SK-250,,Ea.,,30 Days,0.35,240.15,324.17
+,Smiths Detection,OEM,8,Gid-3 (cots Alt To 6665-01-438-6963),P0614-2000-4-M24,,Ea.,,30 Days,0.1,15881.85,17462.09
+,Smiths Detection,OEM,8,Lcd 3.3 (cots Alt To 6665-01-529-7408),15128,,Ea.,,30 Days,0.1,8700,9565.65
+,Smiths Detection,OEM,8,Cam2 (cots Alt To 6665-01-357-8502),0482-0301R-17-M42,,Ea.,,30 Days,0.1,9009.58,9906.03
+,Smiths Detection,OEM,8,"Hazmatid, Command System",023-1005,,Ea.,,30 Days,0.1,61987,68154.71
+,Smiths Detection,OEM,8,Hazmat Id ,023-1001,,Ea.,,30 Days,0.1,47850,52611.08
+,Smiths Detection,OEM,8,Gas Id ,023-3001,,Ea.,,30 Days,0.1,47850,52611.08
+,Smiths Detection,OEM,8,Apd 2000 ,2428800-30,,Ea.,,30 Days,0.1,5220,5739.39
+,Smiths Detection,OEM,8,Replacement Filters Filtered Nozzle ,2450204,,Ea.,,30 Days,0.1,28,30.79
+,Smiths Detection,OEM,8,M22 Acada ,6665-01-438-6963,,Ea.,,30 Days,0.1,15881.85,17462.09
+,Smiths Detection,OEM,8,Icam ,6665-01-357-8502,,Ea.,,30 Days,0.1,9009.58,9906.03
+,Smiths Detection,OEM,8,Icam/m279 Batteries ,6135-01-440-7774,,Ea.,,30 Days,0.1,127.89,140.62
+,Smiths Detection,OEM,8,Communcations Adapter (cots Alt To 6665-01-557-4010),PC10190-1,,Ea.,,30 Days,0.1,2406.42,2645.86
+,Smiths Detection,OEM,8,Sieve Pack Assembly (cots Alt To 6665-01-555-6120),PC10791-1,,Ea.,,30 Days,0.1,439.35,483.07
+,Smiths Detection,OEM,8,Battery Cassette Assembly (cots Alt To 6135-01-985-7845),PC10055-1,,Ea.,,30 Days,0.1,122.67,134.88
+,Smiths Detection,OEM,8,Survey Nozzle (cots Alt To 4210-01-555-0682),PC11642-B,,Ea.,,30 Days,0.1,61.77,67.92
+,Thorogood,OEM,8,"Women's Nfpa 1992-2005 Hazmat-fire Boot, Size 6 ",507-6004-6,,Ea.,,30 Days,0.1,159.5,175
+,Thorogood,OEM,8,"Women's Nfpa 1992-2005 Hazmat-fire Boot, Size 5 ",507-6004-5,,Ea.,,30 Days,0.1,159.5,175
+,Thorogood,OEM,8,"Women's Nfpa 1992-2005 Hazmat-fire Boot, Size 7 ",507-6004-7,,Ea.,,30 Days,0.1,159.5,175
+,Thorogood,OEM,8,"Women's Nfpa 1992-2005 Hazmat-fire Boot, Size 8 ",507-6004-8,,Ea.,,30 Days,0.1,159.5,175
+,Thorogood,OEM,8,"Women's Nfpa 1992-2005 Hazmat-fire Boot, Size 9 ",507-6004-9,,Ea.,,30 Days,0.1,159.5,175
+,Tingley,OEM,8,Tingley Boots - Size 9 ,82330-9,,Ea.,,30 Days,0.2,60.77,73.07
+,Tingley,OEM,8,Tingley Boots - Size 10 ,82330-10,,Ea.,,30 Days,0.2,60.77,73.07
+,Tingley,OEM,8,Tingley Boots - Size 11 ,82330-11,,Ea.,,30 Days,0.2,60.77,73.07
+,Tingley,OEM,8,Tingley Boots - Size 12 ,82330-12,,Ea.,,30 Days,0.2,60.77,73.07
+,Tingley,OEM,8,Tingley Boots - Size 13 ,82330-13,,Ea.,,30 Days,0.2,60.77,73.07
+,Generic,OEM,8,"Extension Cord, 12/3, 100 Ft (w/gfi Receptacle)",02839,,Ea.,,30 Days,0.25,109.99,137.49
+,Generic,OEM,8,"Mega Power Xp1000 Portable Generator, 1200watt",73338,,Ea.,,30 Days,0.25,127,158.75
+,Generic,OEM,8,"Mega Power Xp4400 Portable Generator, 4400watt, 3500watt Rated Output, Does Not Come With Gen. Spt. Package",9644U,,Ea.,,30 Days,0.25,397,496.25
+,Generic,OEM,8,Vantage Pro 2 Wireless Portable Weather Station,6152,,Ea.,,30 Days,0.25,497,621.25
+,Zumro,OEM,8,Mobile Command Center ,7500,,Ea.,,30 Days,0.25,7023.2,8779

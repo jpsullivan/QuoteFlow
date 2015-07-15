@@ -107,6 +107,7 @@
     <Compile Include="Asset\Index\Search\ClauseNamesTests.cs" />
     <Compile Include="Asset\Search\Managers\SearchHandlerManagerTests.cs" />
     <Compile Include="Asset\Search\SearchContextTests.cs" />
+    <Compile Include="Asset\Search\SearchHandlerTests.cs" />
     <Compile Include="Asset\Search\Util\LuceneQueryModifierTests.cs" />
     <Compile Include="Caching\MemoryCacheService.cs" />
     <Compile Include="Caching\MockQueryCache.cs" />
@@ -126,6 +127,8 @@
     <Compile Include="Jql\Builder\ValueBuilderTests.cs" />
     <Compile Include="Jql\Clause\DeMorgansVisitorTests.cs" />
     <Compile Include="Jql\Context\CatalogClauseContextFactoryTests.cs" />
+    <Compile Include="Jql\Context\MockClauseContext.cs" />
+    <Compile Include="Jql\Context\MockClauseContextFactory.cs" />
     <Compile Include="Jql\Context\QueryCacheTests.cs" />
     <Compile Include="Jql\Context\QueryContextTests.cs" />
     <Compile Include="Jql\Context\QueryContextVisitorTests.cs" />
@@ -149,11 +152,13 @@
     <Compile Include="Jql\Query\LikeQueryFactoryTests.cs" />
     <Compile Include="Jql\Query\LuceneQueryBuilderTests.cs" />
     <Compile Include="Jql\Query\ManufacturerClauseQueryFactoryTests.cs" />
+    <Compile Include="Jql\Query\MockClauseQueryFactory.cs" />
     <Compile Include="Jql\Query\Operand\EmptyOperandHandlerTests.cs" />
     <Compile Include="Jql\Query\Operand\FunctionOperandTests.cs" />
     <Compile Include="Jql\Query\Operand\JqlOperandResolverTests.cs" />
     <Compile Include="Jql\Query\Operand\MockOperandHandler.cs" />
     <Compile Include="Jql\Query\Operand\MultiValueOperandHandlerTests.cs" />
+    <Compile Include="Jql\Query\Operand\OperandsTests.cs" />
     <Compile Include="Jql\Query\Operand\SimpleLiteralFactory.cs" />
     <Compile Include="Jql\Query\Operand\SingleValueOperandHandlerTests.cs" />
     <Compile Include="Jql\Query\Operand\SingleValueOperandTests.cs" />
@@ -165,6 +170,7 @@
     <Compile Include="Jql\Util\Searchers\MockSearcherFactory.cs" />
     <Compile Include="Jql\Util\ToJqlStringVisitorTests.cs" />
     <Compile Include="Jql\Validator\AllTextValidatorTests.cs" />
+    <Compile Include="Jql\Validator\MockClauseValidator.cs" />
     <Compile Include="Jql\Validator\MockJqlFunctionHandlerRegistry.cs" />
     <Compile Include="Jql\Validator\MockJqlOperandResolver.cs" />
     <Compile Include="Index\DefaultIndexManagerTests.cs" />
