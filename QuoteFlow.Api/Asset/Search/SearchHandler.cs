@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Index.Indexers;
@@ -111,6 +112,8 @@ namespace QuoteFlow.Api.Asset.Search
 
             public ClauseRegistration(IClauseHandler handler)
             {
+                if (handler == null) throw new ArgumentNullException("handler");
+
                 Handler = handler;
             }
         }

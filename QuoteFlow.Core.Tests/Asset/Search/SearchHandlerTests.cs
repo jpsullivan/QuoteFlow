@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Core.Jql;
 using QuoteFlow.Core.Tests.Jql;
@@ -29,6 +30,19 @@ namespace QuoteFlow.Core.Tests.Asset.Search
             Assert.Equal(names, rego.Handler.Information.JqlClauseNames);
             Assert.Equal(clauseFactory, rego.Handler.Factory);
             Assert.Equal(clauseValidator, rego.Handler.Validator);
+        }
+
+        [Fact]
+        public void TestClauseRegistrationCtorBad()
+        {
+            var goodNames = new ClauseNames("dude", new List<string>() { "jack" });
+            var clauseFactory = new MockClauseQueryFactory();
+            var clauseValidator = new MockClauseValidator();
+            var clauseContextFactory = new MockClauseContextFactory();
+
+            Assert.Throws<ArgumentNullException>(() => new SearchHandler.ClauseRegistration(null));
+            Assert.Throws<ArgumentNullException>(() => new ClauseHandler(new MockClauseInformation(goodNames), clauseFactory, null, clauseContextFactory));
+            Assert.Throws<ArgumentNullException>(() => new ClauseHandler(new MockClauseInformation(goodNames), null, clauseValidator, clauseContextFactory));
         }
     }
 }
