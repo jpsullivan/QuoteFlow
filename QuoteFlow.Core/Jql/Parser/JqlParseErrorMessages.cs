@@ -27,11 +27,11 @@ namespace QuoteFlow.Core.Jql.Parser
 		    return CreateMessage("jql.parse.reserved.word", new Position(antlrLine, antlrColumn), NormalizeString(reservedWord));
 		}
 
-	    public static JqlParseErrorMessage IllegalEsacpe(string illegalEscape, int antlrLine, int antlrColumn)
+	    public static JqlParseErrorMessage IllegalEscape(string illegalEscape, int antlrLine, int antlrColumn)
 		{
 			var pos = new Position(antlrLine, antlrColumn);
 			string normalizedString = NormalizeString(illegalEscape);
-            if (string.IsNullOrEmpty(illegalEscape))
+            if (string.IsNullOrWhiteSpace(illegalEscape))
 			{
 				return CreateMessage("jql.parse.illegal.escape.blank", pos);
 			}

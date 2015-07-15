@@ -77,7 +77,7 @@ namespace QuoteFlow.Core.Jql.Util
 
         public string EncodeStringValue(string value)
         {
-            if (value.IsNullOrWhiteSpace())
+            if (value == null)
             {
                 throw new ArgumentNullException("value");
             }
@@ -237,41 +237,40 @@ namespace QuoteFlow.Core.Jql.Util
 				    position++;
 
 			        char? substituteCharacter;
-			        if (!StringDecodeMapping.TryGetValue(escapeCharacter, out substituteCharacter)) continue;
-			        if (substituteCharacter == null)
+			        if (StringDecodeMapping.TryGetValue(escapeCharacter, out substituteCharacter))
 			        {
-			            // Maybe some unicode escaping ?
-			            if (escapeCharacter == 'u')
-			            {
-			                if (position + 4 > str.Length)
-			                {
-			                    throw new ArgumentException("Unterminated escape sequence '\\u" + str.Substring(position) + "'.");
-			                }
-
-			                string hexString = str.Substring(position, 4);
-			                position += 4;
-			                try
-			                {
-			                    int i = Convert.ToInt32(hexString, 16);
-			                    if (i < 0)
-			                    {
-			                        throw new ArgumentException("Illegal unicode escape '\\u" + hexString + "'.");
-			                    }
-			                    stringBuilder.Append((char)i);
-			                }
-			                catch (Exception e)
-			                {
-			                    throw new ArgumentException("Illegal unicode escape '\\u" + hexString + "'.", e);
-			                }
-			            }
-			            else
-			            {
-			                throw new ArgumentException("Illegal escape sequence '\\" + escapeCharacter + "'.");
-			            }
+			            stringBuilder.Append(substituteCharacter);
 			        }
 			        else
 			        {
-			            stringBuilder.Append(substituteCharacter);
+                        // Maybe some unicode escaping ?
+                        if (escapeCharacter == 'u')
+                        {
+                            if (position + 4 > str.Length)
+                            {
+                                throw new ArgumentException("Unterminated escape sequence '\\u" + str.Substring(position) + "'.");
+                            }
+
+                            string hexString = str.Substring(position, 4);
+                            position += 4;
+                            try
+                            {
+                                int i = Convert.ToInt32(hexString, 16);
+                                if (i < 0)
+                                {
+                                    throw new ArgumentException("Illegal unicode escape '\\u" + hexString + "'.");
+                                }
+                                stringBuilder.Append((char)i);
+                            }
+                            catch (Exception e)
+                            {
+                                throw new ArgumentException("Illegal unicode escape '\\u" + hexString + "'.", e);
+                            }
+                        }
+                        else
+                        {
+                            throw new ArgumentException("Illegal escape sequence '\\" + escapeCharacter + "'.");
+                        }
 			        }
 			    }
 			    else if (stringBuilder != null)
@@ -339,14 +338,15 @@ namespace QuoteFlow.Core.Jql.Util
         }
 
         /// <summary>
-        /// Encode the passed character so that it may be used in JQL. null will be returned if the string does not need
-        /// to be encoded and the encoding has not been forced.
+        /// Encode the passed character so that it may be used in JQL. null will be 
+        /// returned if the string does not need to be encoded and the encoding has not been forced.
         /// </summary>
-        /// <param name="character"> the character to encode. </param>
-        /// <param name="ignoredCharacter"> the character not to encode. -1 can be passed to indicate that this character should be
-        /// excluded from encoding. This setting overrides force for this character. </param>
-        /// <param name="force"> when true, the passed character will be encoded even if it does not need to be. </param>
-        /// <returns> the encoded character or null if the passed character did not need to be encoded. </returns>
+        /// <param name="character">The character to encode.</param>
+        /// <param name="ignoredCharacter">The character not to encode. -1 can be passed to indicate 
+        /// that this character should be excluded from encoding. This setting overrides force for 
+        /// this character.</param>
+        /// <param name="force">When true, the passed character will be encoded even if it does not need to be.</param>
+        /// <returns>The encoded character or null if the passed character did not need to be encoded.</returns>
         private static string EncodeCharacter(char character, int ignoredCharacter, bool force)
         {
             if (ignoredCharacter >= 0 && character == (char)ignoredCharacter)
@@ -354,14 +354,19 @@ namespace QuoteFlow.Core.Jql.Util
                 return null;
             }
 
+            var cp1252 = Encoding.GetEncoding(1252);
+            var charNum = (int) character;
+            var x4 = Convert.ToUInt16(character).ToString("X4");
+
             string encodedCharacter;
             if (StringEncodeMapping.TryGetValue(character, out encodedCharacter))
             {
-                if (encodedCharacter == null && (force || IsJqlControl(character)))
-                {
-                    return string.Format("\\u{0:x4}", (int) character);
-                }
                 return encodedCharacter;
+            }
+            
+            if (force || IsJqlControl(character))
+            {
+                return string.Format("\\u{0:x4}", (int)character);
             }
 
             return null;

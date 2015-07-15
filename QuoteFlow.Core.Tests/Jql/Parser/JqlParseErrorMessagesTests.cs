@@ -43,19 +43,19 @@ namespace QuoteFlow.Core.Tests.Jql.Parser
         public void TestIllegalEscape()
         {
             var expectedMessage = new JqlParseErrorMessage("jql.parse.illegal.escape", 1, 21, "1", "21", "\\u484");
-            var actualMessage = JqlParseErrorMessages.IllegalEsacpe("\\u484", 1, 20);
+            var actualMessage = JqlParseErrorMessages.IllegalEscape("\\u484", 1, 20);
             Assert.Equal(expectedMessage, actualMessage);
 
             expectedMessage = new JqlParseErrorMessage("jql.parse.illegal.escape", 1, 21, "1", "21", "\\u4 84");
-            actualMessage = JqlParseErrorMessages.IllegalEsacpe("\\u4\n84", 1, 20);
+            actualMessage = JqlParseErrorMessages.IllegalEscape("\\u4\n84", 1, 20);
             Assert.Equal(expectedMessage, actualMessage);
 
             expectedMessage = new JqlParseErrorMessage("jql.parse.illegal.escape.blank", 1, -2902, "1", "?");
-            actualMessage = JqlParseErrorMessages.IllegalEsacpe(null, 1, -1);
+            actualMessage = JqlParseErrorMessages.IllegalEscape(null, 1, -1);
             Assert.Equal(expectedMessage, actualMessage);
 
             expectedMessage = new JqlParseErrorMessage("jql.parse.illegal.escape.blank", -1, 2003, "?", "?");
-            actualMessage = JqlParseErrorMessages.IllegalEsacpe("   ", -1, 2002);
+            actualMessage = JqlParseErrorMessages.IllegalEscape("   ", -1, 2002);
             Assert.Equal(expectedMessage, actualMessage);
         }
 

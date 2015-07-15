@@ -103,7 +103,7 @@ namespace QuoteFlow.Core.Jql.Parser.Antlr
                 //is the next token EOF.
                 bool nextEof = Stream.LT(2) == CharStreamConstants.EndOfFile;
                 string text = nextEof ? null : Stream.Substring(Position.Index, 2);
-                message = JqlParseErrorMessages.IllegalEsacpe(text, Position.LinePosition, Position.CharPosition);
+                message = JqlParseErrorMessages.IllegalEscape(text, Position.LinePosition, Position.CharPosition);
             }
             else
             {
@@ -137,8 +137,10 @@ namespace QuoteFlow.Core.Jql.Parser.Antlr
 			int currentInt = Stream.LT(1);
             if (currentInt == CharStreamConstants.EndOfFile)
 			{
-				// End the query without closing a string.
-				string text = Stream.Substring(Position.Index + 1, Index - 1 - (Position.Index + 1));
+                // End the query without closing a string.
+			    var start = Position.Index + 1;
+			    var stop = (Index - 1) - start + 1;
+				string text = Stream.Substring(start, stop);
 				message = JqlParseErrorMessages.UnfinishedString(text, Position.LinePosition, Position.CharPosition);
 			}
 			else
@@ -146,8 +148,10 @@ namespace QuoteFlow.Core.Jql.Parser.Antlr
 			    var currentChar = (char) currentInt;
 				if (IsNewLine(currentChar))
 				{
-					//End the line without closing a string.
-					string text = Stream.Substring(Position.Index + 1, Index - 1 - (Position.Index + 1));
+					// end the line without closing a string.
+				    var start = Position.Index + 1;
+				    var stop = (Index - 1) - start + 1;
+					string text = Stream.Substring(start, stop);
 					message = JqlParseErrorMessages.UnfinishedString(text, Position.LinePosition, Position.CharPosition);
 				}
 				else
@@ -169,8 +173,8 @@ namespace QuoteFlow.Core.Jql.Parser.Antlr
 		{
             int index = Stream.LT(1) == CharStreamConstants.EndOfFile ? Index - 1 : Index;
             string text = index <= Position.Index ? null : Stream.Substring(Position.Index, 2);
-			//We have some sort of escaping error.
-			return JqlParseErrorMessages.IllegalEsacpe(text, Position.LinePosition, Position.CharPosition);
+			// we have some sort of escaping error.
+			return JqlParseErrorMessages.IllegalEscape(text, Position.LinePosition, Position.CharPosition);
 		}
 
 		private static bool IsNewLine(char ch)

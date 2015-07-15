@@ -41,7 +41,10 @@ namespace QuoteFlow.Api.Jql.Parser
 		        throw new ArgumentNullException("Arguments cannot contain any nulls", "arguments");
 		    }
 
-            if (key.IsNullOrEmpty()) throw new ArgumentException("Key cannot be empty");
+		    if (key.IsNullOrEmpty())
+		    {
+		        throw new ArgumentException("Key cannot be empty");
+		    }
 
 			Key = key;
 		    Arguments = new List<object>(arguments);

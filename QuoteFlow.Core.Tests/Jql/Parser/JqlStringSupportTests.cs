@@ -5,7 +5,6 @@ using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Operand;
 using QuoteFlow.Api.Jql.Query.Order;
-using QuoteFlow.Core.Index;
 using QuoteFlow.Core.Jql.Builder;
 using QuoteFlow.Core.Jql.Util;
 using Xunit;
@@ -306,11 +305,11 @@ namespace QuoteFlow.Core.Tests.Jql.Parser
                 mockParser.Setup(x => x.IsValidFieldName(It.IsAny<string>())).Returns(true);
 
                 var support = new JqlStringSupport(mockParser.Object);
-                var builder = JqlQueryBuilder.NewBuilder().Where().AddCondition("qwerty").Eq("").Or().Description("foo");
+                var builder = JqlQueryBuilder.NewBuilder().Where().AddCondition("qwerty").Eq("").Or().Catalog("foo");
 
                 IQuery query = new Api.Jql.Query.Query(builder.BuildClause(), "ignore = me");
 
-                Assert.Equal("qwerty = \"\" OR description = \"foo\"", support.GenerateJqlString(query));
+                Assert.Equal("qwerty = \"\" OR catalog = \"foo\"", support.GenerateJqlString(query));
 
                 mockParser.Verify();
             }

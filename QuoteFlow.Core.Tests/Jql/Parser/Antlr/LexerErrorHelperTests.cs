@@ -69,7 +69,7 @@ namespace QuoteFlow.Core.Tests.Jql.Parser.Antlr
                 stream.Seek(input.Length - 1);
                 var antlrPosition = new AntlrPosition(JqlLexer.ESCAPE, stream);
                 var helper = new LexerErrorHelper(stream, antlrPosition);
-                var expectedMessage = JqlParseErrorMessages.IllegalEsacpe(null, 1, 4);
+                var expectedMessage = JqlParseErrorMessages.IllegalEscape(null, 1, 4);
                 var expectedCause = new RecognitionException();
 
                 AssertResult(helper, expectedMessage, expectedCause);
@@ -83,7 +83,7 @@ namespace QuoteFlow.Core.Tests.Jql.Parser.Antlr
                 stream.Consume();
                 helper = new LexerErrorHelper(stream, antlrPosition);
 
-                expectedMessage = JqlParseErrorMessages.IllegalEsacpe("\\n", 1, 4);
+                expectedMessage = JqlParseErrorMessages.IllegalEscape("\\n", 1, 4);
                 expectedCause = new RecognitionException();
 
                 AssertResult(helper, expectedMessage, expectedCause);
@@ -92,27 +92,27 @@ namespace QuoteFlow.Core.Tests.Jql.Parser.Antlr
             [Fact]
             public void StringErrorEof()
             {
-                //Check an unfinished string.
+                // check an unfinished string.
                 string input = "this = \"";
-                ANTLRStringStream stream = new ANTLRStringStream(input);
+                var stream = new ANTLRStringStream(input);
 
-                //The string position starts before the end.
+                // the string position starts before the end.
                 stream.Seek(input.Length - 1);
-                AntlrPosition antlrPosition = new AntlrPosition(JqlLexer.SQUOTE_STRING, stream);
-                //Move to the EOF.
+                var antlrPosition = new AntlrPosition(JqlLexer.SQUOTE_STRING, stream);
+                // move to the EOF.
                 stream.Consume();
 
-                LexerErrorHelper helper = new LexerErrorHelper(stream, antlrPosition);
-                JqlParseErrorMessage expectedMessage = JqlParseErrorMessages.UnfinishedString("", 1, 7);
-                RecognitionException expectedCause = new RecognitionException();
+                var helper = new LexerErrorHelper(stream, antlrPosition);
+                var expectedMessage = JqlParseErrorMessages.UnfinishedString("", 1, 7);
+                var expectedCause = new RecognitionException();
 
                 AssertResult(helper, expectedMessage, expectedCause);
 
-                //Check an unfinished string to EOF.
+                // check an unfinished string to EOF.
                 input = "\"this";
                 stream = new ANTLRStringStream(input);
 
-                //String starts at the start.
+                // string starts at the start.
                 antlrPosition = new AntlrPosition(JqlLexer.SQUOTE_STRING, stream);
                 stream.Seek(input.Length);
 
@@ -126,27 +126,27 @@ namespace QuoteFlow.Core.Tests.Jql.Parser.Antlr
             [Fact]
             public void StringErrorNewLine()
             {
-                //Check an unfinished string on newline.
+                // check an unfinished string on newline.
                 string input = "this=\"\nblah";
-                ANTLRStringStream stream = new ANTLRStringStream(input);
+                var stream = new ANTLRStringStream(input);
 
-                //The string position starts before the end.
+                // the string position starts before the end.
                 stream.Seek(5);
-                AntlrPosition antlrPosition = new AntlrPosition(JqlLexer.QUOTE_STRING, stream);
-                //Move to the EOF.
+                var antlrPosition = new AntlrPosition(JqlLexer.QUOTE_STRING, stream);
+                // move to the EOF.
                 stream.Consume();
 
-                LexerErrorHelper helper = new LexerErrorHelper(stream, antlrPosition);
-                JqlParseErrorMessage expectedMessage = JqlParseErrorMessages.UnfinishedString("", 1, 5);
-                RecognitionException expectedCause = new RecognitionException();
+                var helper = new LexerErrorHelper(stream, antlrPosition);
+                var expectedMessage = JqlParseErrorMessages.UnfinishedString("", 1, 5);
+                var expectedCause = new RecognitionException();
 
                 AssertResult(helper, expectedMessage, expectedCause);
 
-                //Check an unfinished string on newline with trailing text.
+                // check an unfinished string on newline with trailing text.
                 input = "\"this\nistheend";
                 stream = new ANTLRStringStream(input);
 
-                //String starts at the start.
+                // string starts at the start.
                 antlrPosition = new AntlrPosition(JqlLexer.SQUOTE_STRING, stream);
                 stream.Seek(5);
 
@@ -228,7 +228,7 @@ namespace QuoteFlow.Core.Tests.Jql.Parser.Antlr
                 AntlrPosition antlrPosition = new AntlrPosition(JqlLexer.ERRORCHAR, stream);
 
                 LexerErrorHelper helper = new LexerErrorHelper(stream, antlrPosition);
-                JqlParseErrorMessage expectedMessage = JqlParseErrorMessages.IllegalEsacpe(null, 1, 8);
+                JqlParseErrorMessage expectedMessage = JqlParseErrorMessages.IllegalEscape(null, 1, 8);
                 RecognitionException expectedCause = new RecognitionException();
 
                 AssertResult(helper, expectedMessage, expectedCause);
@@ -241,7 +241,7 @@ namespace QuoteFlow.Core.Tests.Jql.Parser.Antlr
                 antlrPosition = new AntlrPosition(JqlLexer.ERRORCHAR, stream);
 
                 helper = new LexerErrorHelper(stream, antlrPosition);
-                expectedMessage = JqlParseErrorMessages.IllegalEsacpe(@"\c", 1, 8);
+                expectedMessage = JqlParseErrorMessages.IllegalEscape(@"\c", 1, 8);
                 expectedCause = new RecognitionException();
 
                 AssertResult(helper, expectedMessage, expectedCause);
@@ -250,16 +250,16 @@ namespace QuoteFlow.Core.Tests.Jql.Parser.Antlr
             [Fact]
             public void CharacterIllegalCharacter()
             {
-                //Check a query that ends with an empty escape.
-                String input = "comment=bad\uffffchatacer";
-                ANTLRStringStream stream = new ANTLRStringStream(input);
+                // Check a query that ends with an empty escape.
+                string input = "comment=bad\uffffchatacer";
+                var stream = new ANTLRStringStream(input);
 
                 stream.Seek(11);
-                AntlrPosition antlrPosition = new AntlrPosition(JqlLexer.ERRORCHAR, stream);
+                var antlrPosition = new AntlrPosition(JqlLexer.ERRORCHAR, stream);
 
-                LexerErrorHelper helper = new LexerErrorHelper(stream, antlrPosition);
-                JqlParseErrorMessage expectedMessage = JqlParseErrorMessages.IllegalCharacter('\uffff', 1, 11);
-                RecognitionException expectedCause = new RecognitionException();
+                var helper = new LexerErrorHelper(stream, antlrPosition);
+                var expectedMessage = JqlParseErrorMessages.IllegalCharacter('\uffff', 1, 11);
+                var expectedCause = new RecognitionException();
 
                 AssertResult(helper, expectedMessage, expectedCause);
             }
@@ -267,7 +267,7 @@ namespace QuoteFlow.Core.Tests.Jql.Parser.Antlr
             [Fact]
             public void Reserved()
             {
-                String input = "chat#acer";
+                String input = @"chat#acer";
                 ANTLRStringStream stream = new ANTLRStringStream(input);
 
                 stream.Seek(4);
