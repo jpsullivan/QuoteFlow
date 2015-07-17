@@ -130,10 +130,10 @@ namespace QuoteFlow.Api.Asset.Search
         public SearchRequest(IQuery query, User owner, string name, string description)
             : this()
         {
-            this.OwnerId = owner.Id;
-            this.Name = name;
-            this.Description = description;
-            this.Query = query;
+            OwnerId = owner.Id;
+            Name = name;
+            Description = description;
+            Query = query;
         }
 
         /// <summary>
@@ -147,11 +147,11 @@ namespace QuoteFlow.Api.Asset.Search
         public SearchRequest(IQuery query, User owner, string name, string description, int id)
             : this()
         {
-            this.OwnerId = owner.Id;
-            this.Name = name;
-            this.Description = description;
-            this.Query = query;
-            this.Id = id;
+            OwnerId = owner.Id;
+            Name = name;
+            Description = description;
+            Query = query;
+            Id = id;
         }
 
         public override string ToString()
@@ -161,7 +161,7 @@ namespace QuoteFlow.Api.Asset.Search
 
             if (Query != null && Query.ToString().HasValue())
             {
-                sb.AppendFormat("query = {0}", Query.ToString());
+                sb.AppendFormat("query = {0}", Query);
             }
 
             return sb.ToString();

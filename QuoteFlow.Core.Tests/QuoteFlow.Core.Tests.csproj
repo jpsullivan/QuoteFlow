@@ -108,6 +108,7 @@
     <Compile Include="Asset\Search\Managers\SearchHandlerManagerTests.cs" />
     <Compile Include="Asset\Search\SearchContextTests.cs" />
     <Compile Include="Asset\Search\SearchHandlerTests.cs" />
+    <Compile Include="Asset\Search\SearchRequestTests.cs" />
     <Compile Include="Asset\Search\Util\LuceneQueryModifierTests.cs" />
     <Compile Include="Caching\MemoryCacheService.cs" />
     <Compile Include="Caching\MockQueryCache.cs" />
