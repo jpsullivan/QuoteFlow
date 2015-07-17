@@ -1,6 +1,7 @@
 ﻿@using QuoteFlow.Api.Infrastructure.Extensions
 @using QuoteFlow.Api.Models
 @using QuoteFlow.Api.Models.ViewModels
+@using QuoteFlow.Infrastructure.Extensions
 @model CatalogShowModel
 
 @{
@@ -69,7 +70,7 @@
 
                     <dt>Catalog Owner</dt>
                     <dd>
-                        <a href="#" class="quoteflow-user-name quoteflow-user-avatar">
+                        <a href="@Url.UserProfile(Model.CatalogCreator.Username)" class="quoteflow-user-name quoteflow-user-avatar">
                             <span class="aui-avatar aui-avatar-xsmall">
                                 <span class="aui-avatar-inner">
                                     @Html.Gravatar(@Model.CatalogCreator.EmailAddress, 16)
