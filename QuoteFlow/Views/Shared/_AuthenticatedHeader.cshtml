@@ -121,21 +121,20 @@
                         </li>
                     }
                     <li>
-                        <a href="#dropdown2-header9" aria-owns="dropdown2-header9" aria-haspopup="true" class="aui-dropdown2-trigger" aria-controls="dropdown2-header9">
+                        <a href="#" aria-haspopup="true" class="aui-dropdown2-trigger aui-alignment-element-attached-top aui-alignment-element-attached-left" aria-controls="dropdown2-qf-user" aria-expanded="false">
                             <div class="aui-avatar aui-avatar-small">
                                 <div class="aui-avatar-inner">
                                     @Html.Gravatar(currentEmailAddress, 80)
                                 </div>
                             </div>
                         </a>
-                        <div class="aui-dropdown2 aui-style-default aui-dropdown2-in-header" id="dropdown2-header9" style="display: none; top: 40px; min-width: 160px; left: 1213px;" aria-hidden="true">
+                        <div class="aui-dropdown2 aui-style-default aui-dropdown2-in-header aui-layer aui-alignment-side-bottom aui-alignment-snap-left aui-alignment-element-attached-top aui-alignment-element-attached-left aui-alignment-side-bottom aui-alignment-snap-left aui-alignment-side-bottom aui-alignment-snap-left" id="dropdown2-qf-user" aria-hidden="true" data-aui-alignment="bottom auto" data-aui-alignment-static="true">
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <div class="aui-dropdown2-section">
                                     <ul>
                                         <li><a href="@Url.UserProfile(CurrentUser.Username)" class="active">View Profile</a></li>
                                         <li><a href="@Url.Account()" class="active">Manage Account</a></li>
-                                        <li><a href="http://example.com/">Extensions</a></li>
                                     </ul>
                                 </div>
                                 <div class="aui-dropdown2-section">
