@@ -1,5 +1,7 @@
 node_modules/
 QuoteFlow/App_Data/Lucene/
+QuoteFlow/Content/compiled/css
+QuoteFlow/Content/compiled/js
 
 #################
 ## Visual Studio
