@@ -1,6 +1,7 @@
 ﻿@using QuoteFlow.Api.Infrastructure.Extensions
 @using QuoteFlow.Api.Models
 @using QuoteFlow.Api.Models.ViewModels
+@using QuoteFlow.Api.Models.ViewModels.Catalogs
 @using QuoteFlow.Infrastructure.Extensions
 @model CatalogShowModel
 
@@ -10,17 +11,7 @@
 }
 
 <section id="content" role="main">
-    <header class="aui-page-header">
-        <div class="aui-page-header">
-            <div class="aui-page-header-inner">
-                <h2>@Model.Catalog.Name</h2>
-               
-                <div class="header-side-buttons">
-                    <a href="#" class="aui-button" title="">Download original</a>
-                </div>
-            </div>
-        </div>
-    </header><!-- .aui-page-header -->
+    @Html.Partial("Partials/Catalog/Header", new CatalogHeader(Model.CatalogCreator, Model.Catalog))
 
     <div class="aui-page-panel">
         <div class="aui-page-panel-inner">

@@ -85,7 +85,7 @@
                 <dl class="meta-list">
                     <dt>Quote Creator</dt>
                     <dd>
-                        <a href="#" class="quoteflow-user-name quoteflow-user-avatar quoteflow-user-avatar-small">
+                        <a href="@Url.UserProfile(Model.QuoteCreator.Username)" class="quoteflow-user-name quoteflow-user-avatar quoteflow-user-avatar-small">
                             <span class="aui-avatar aui-avatar-small">
                                 <span class="aui-avatar-inner">
                                     @Html.Gravatar(@Model.QuoteCreator.EmailAddress, 24)

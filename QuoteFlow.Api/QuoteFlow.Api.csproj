@@ -475,6 +475,7 @@
     <Compile Include="Models\ViewModels\Assets\Nav\AssetTableViewModel.cs" />
     <Compile Include="Models\ViewModels\Assets\NewAssetCommentViewModel.cs" />
     <Compile Include="Models\ViewModels\CatalogModels.cs" />
+    <Compile Include="Models\ViewModels\Catalogs\CatalogHeader.cs" />
     <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactModels.cs" />
     <Compile Include="Models\ViewModels\DashboardViewModel.cs" />

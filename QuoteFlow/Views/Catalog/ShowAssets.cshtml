@@ -1,5 +1,6 @@
 ﻿@using QuoteFlow.Api.Models
 @using QuoteFlow.Api.Models.ViewModels
+@using QuoteFlow.Api.Models.ViewModels.Catalogs
 @using QuoteFlow.Infrastructure.Extensions
 @using QuoteFlow.Infrastructure.Helpers
 @model CatalogShowAssetsModel
@@ -9,38 +10,7 @@
 }
 
 <section id="content" role="main">
-    <header class="aui-page-header">
-        <div class="aui-page-header">
-            <div class="aui-page-header-inner">
-                <h2>@Model.Catalog.Name</h2>
-
-                <ul class="operations-list">
-                    <li>
-                        <span class="list-label">Owner:</span>
-                        @if (Model.CatalogCreator == null)
-                        {
-                            <span>(User not found)</span>
-                        }
-                        else
-                        {
-                            <a href="#" class="quoteflow-user-name quoteflow-user-avatar">
-                                <div class="aui-avatar aui-avatar-xsmall">
-                                    <div class="aui-avatar-inner">
-                                        @Html.Gravatar(@Model.CatalogCreator.EmailAddress, 16)
-                                    </div>
-                                </div>
-                                @Model.CatalogCreator.FullName
-                            </a>
-                        }
-                    </li>
-                </ul>
-
-                <div class="header-side-buttons">
-                    <a href="#" class="aui-button" title="">Download original</a>
-                </div>
-            </div>
-        </div>
-    </header><!-- .aui-page-header -->
+    @Html.Partial("Partials/Catalog/Header", new CatalogHeader(Model.CatalogCreator, Model.Catalog))
 
     <div class="aui-page-panel">
         <div class="aui-page-panel-inner">

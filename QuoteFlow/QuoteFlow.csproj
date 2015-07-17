@@ -1224,6 +1224,7 @@
     <Content Include="Views\Searchers\ManufacturerSearcherEdit.cshtml" />
     <Content Include="Views\Searchers\CatalogSearcherEdit.cshtml" />
     <Content Include="Views\Searchers\CatalogSearcherView.cshtml" />
+    <Content Include="Views\Shared\Partials\Catalog\Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

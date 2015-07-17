@@ -1,0 +1,31 @@
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Api.Models.ViewModels.Catalogs.CatalogHeader
+
+<header class="aui-page-header">
+    <div class="aui-page-header">
+        <div class="aui-page-header-inner">
+            <h2>@Model.CatalogName</h2>
+
+            <ul class="operations-list">
+                <li>
+                    <span class="list-label">Owner:</span>
+                    @if (Model == null)
+                    {
+                        <span>(User not found)</span>
+                    }
+                    else
+                    {
+                        <a href="@Url.UserProfile(Model.User.Username)" class="quoteflow-user-name quoteflow-user-avatar">
+                            <div class="aui-avatar aui-avatar-xsmall">
+                                <div class="aui-avatar-inner">
+                                    @Html.Gravatar(Model.User.EmailAddress, 16)
+                                </div>
+                            </div>
+                            @Model.User.FullName
+                        </a>
+                    }
+                </li>
+            </ul>
+        </div>
+    </div>
+</header><!-- .aui-page-header -->
