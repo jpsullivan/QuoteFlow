@@ -18,10 +18,10 @@ namespace QuoteFlow.Core.Jql
 
         public ClauseHandler(IClauseInformation information, IClauseQueryFactory factory, IClauseValidator validator, IClauseContextFactory clauseContextFactory)
         {
-            if (information == null) throw new ArgumentNullException("information");
-            if (factory == null) throw new ArgumentNullException("factory");
-            if (validator == null) throw new ArgumentNullException("validator");
-            if (clauseContextFactory == null) throw new ArgumentNullException("clauseContextFactory");
+            if (information == null) throw new ArgumentNullException(nameof(information));
+            if (factory == null) throw new ArgumentNullException(nameof(factory));
+            if (validator == null) throw new ArgumentNullException(nameof(validator));
+            if (clauseContextFactory == null) throw new ArgumentNullException(nameof(clauseContextFactory));
 
             Information = information;
             Factory = factory;

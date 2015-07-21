@@ -17,7 +17,7 @@ namespace QuoteFlow.Core.Jql.Query
 
         public QueryRegistry(ISearchHandlerManager manager)
         {
-            if (manager == null) throw new ArgumentNullException("manager");
+            if (manager == null) throw new ArgumentNullException(nameof(manager));
 
             _manager = manager;
         }
@@ -26,7 +26,7 @@ namespace QuoteFlow.Core.Jql.Query
         {
             if (clause == null)
             {
-                throw new ArgumentNullException("clause");
+                throw new ArgumentNullException(nameof(clause));
             }
 
             ICollection<IClauseHandler> handlers;

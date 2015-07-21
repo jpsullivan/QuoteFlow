@@ -36,9 +36,9 @@ namespace QuoteFlow.Api.Jql.Context
 
         public MultiClauseDecoratorContextFactory(IJqlOperandResolver jqlOperandResolver, IClauseContextFactory contextFactory, ContextSetUtil contextSetUtil)
         {
-            if (jqlOperandResolver == null) throw new ArgumentNullException("jqlOperandResolver");
-            if (contextFactory == null) throw new ArgumentNullException("contextFactory");
-            if (contextSetUtil == null) throw new ArgumentNullException("contextSetUtil");
+            if (jqlOperandResolver == null) throw new ArgumentNullException(nameof(jqlOperandResolver));
+            if (contextFactory == null) throw new ArgumentNullException(nameof(contextFactory));
+            if (contextSetUtil == null) throw new ArgumentNullException(nameof(contextSetUtil));
             
             this.jqlOperandResolver = jqlOperandResolver;
             this.contextFactory = contextFactory;
@@ -109,12 +109,12 @@ namespace QuoteFlow.Api.Jql.Context
             {
                 if (validator == null)
                 {
-                    throw new ArgumentNullException("validator");
+                    throw new ArgumentNullException(nameof(validator));
                 }
 
                 if (resolver == null)
                 {
-                    throw new ArgumentNullException("resolver");
+                    throw new ArgumentNullException(nameof(resolver));
                 }
 
                 this.validator = validator;
@@ -143,7 +143,7 @@ namespace QuoteFlow.Api.Jql.Context
             {
                 if (contextFactory == null)
                 {
-                    throw new ArgumentNullException("contextFactory");
+                    throw new ArgumentNullException(nameof(contextFactory));
                 }
 
                 IClauseContextFactory factory = new MultiClauseDecoratorContextFactory(resolver, contextFactory);

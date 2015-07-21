@@ -21,7 +21,7 @@ namespace QuoteFlow.Core.Lucene.Index
         {
             if (searcher == null)
             {
-                throw new ArgumentNullException("searcher");
+                throw new ArgumentNullException(nameof(searcher));
             }
 
             _searcher = searcher;

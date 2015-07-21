@@ -63,38 +63,20 @@ namespace QuoteFlow.Core.Jql.Clause
 
         public IClause Visit(IWasClause clause)
         {
-            if (Negating)
-            {
-                return new WasClause(clause.Name, GetNotOperator(clause.Operator), clause.Operand, clause.Predicate);
-            }
-            return clause;
+            return Negating ? new WasClause(clause.Name, GetNotOperator(clause.Operator), clause.Operand, clause.Predicate) : clause;
         }
 
         public IClause Visit(IChangedClause clause)
         {
-            if (Negating)
-            {
-                return new ChangedClause(clause.Field, GetNotOperator(clause.Operator), clause.Predicate);
-            }
-            return clause;
+            return Negating ? new ChangedClause(clause.Field, GetNotOperator(clause.Operator), clause.Predicate) : clause;
         }
 
-        private bool Negating
-        {
-            get
-            {
-                // If the notCount is odd then this is true, otherwise it is false
-                return (_notCount%2) == 1;
-            }
-        }
+        private bool Negating => (_notCount%2) == 1;
 
         private IList<IClause> VisitChildren(MultiClause multiClause)
         {
             var nodes = new List<IClause>(multiClause.Clauses.Count());
-            foreach (IClause logicalClause in multiClause.Clauses)
-            {
-                nodes.Add(logicalClause.Accept(this));
-            }
+            nodes.AddRange(multiClause.Clauses.Select(logicalClause => logicalClause.Accept(this)));
             return nodes;
         }
 

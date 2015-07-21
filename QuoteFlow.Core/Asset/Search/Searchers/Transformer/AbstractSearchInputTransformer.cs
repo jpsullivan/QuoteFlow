@@ -33,7 +33,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         {
             if (operandResolver == null)
             {
-                throw new ArgumentNullException("operandResolver");
+                throw new ArgumentNullException(nameof(operandResolver));
             }
 
             this.operandResolver = operandResolver;

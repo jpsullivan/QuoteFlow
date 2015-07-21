@@ -20,12 +20,12 @@ namespace QuoteFlow.Core.Jql.Validator
 		{
             if (catalogIndexInfoResolver == null)
             {
-                throw new ArgumentNullException("catalogIndexInfoResolver");
+                throw new ArgumentNullException(nameof(catalogIndexInfoResolver));
             }
 
             if (catalogService == null)
             {
-                throw new ArgumentNullException("catalogService");
+                throw new ArgumentNullException(nameof(catalogService));
             }
 
             this.catalogIndexInfoResolver = catalogIndexInfoResolver;

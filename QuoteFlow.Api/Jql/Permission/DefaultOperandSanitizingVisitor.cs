@@ -25,7 +25,7 @@ namespace QuoteFlow.Api.Jql.Permission
         {
             if (jqlOperandResolver == null)
             {
-                throw new ArgumentNullException("jqlOperandResolver");;
+                throw new ArgumentNullException(nameof(jqlOperandResolver));;
             }
 
             this.jqlOperandResolver = jqlOperandResolver;

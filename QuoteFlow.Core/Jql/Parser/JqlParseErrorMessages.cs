@@ -23,7 +23,7 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage ReservedWord(string reservedWord, int antlrLine, int antlrColumn)
 		{
-		    if (reservedWord == null) throw new ArgumentNullException("reservedWord");
+		    if (reservedWord == null) throw new ArgumentNullException(nameof(reservedWord));
 		    return CreateMessage("jql.parse.reserved.word", new Position(antlrLine, antlrColumn), NormalizeString(reservedWord));
 		}
 
@@ -81,7 +81,7 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage GenericParseError(IToken token)
 		{
-		    if (token == null) throw new ArgumentNullException("token");
+		    if (token == null) throw new ArgumentNullException(nameof(token));
 
 		    var position = new Position(token);
 			if (IsEofToken(token))
@@ -93,7 +93,7 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage IllegalNumber(string number, int antlrLine, int antlrColumn)
 		{
-		    if (number == null) throw new ArgumentNullException("number");
+		    if (number == null) throw new ArgumentNullException(nameof(number));
 
 		    var pos = new Position(antlrLine, antlrColumn);
 			return CreateMessage("jql.parse.illegal.number", pos, NormalizeString(number), long.MinValue, long.MaxValue);
@@ -111,7 +111,7 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage BadFieldName(IToken token)
 		{
-		    if (token == null) throw new ArgumentNullException("token");
+		    if (token == null) throw new ArgumentNullException(nameof(token));
 
 		    var pos = new Position(token);
 			if (IsEofToken(token))
@@ -127,7 +127,7 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage BadSortOrder(IToken token)
 		{
-		    if (token == null) throw new ArgumentNullException("token");
+		    if (token == null) throw new ArgumentNullException(nameof(token));
 
 		    var pos = new Position(token);
 			if (IsEofToken(token))
@@ -139,7 +139,7 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage BadOperator(IToken token)
 		{
-		    if (token == null) throw new ArgumentNullException("token");
+		    if (token == null) throw new ArgumentNullException(nameof(token));
 
 		    var pos = new Position(token);
 			if (IsEofToken(token))
@@ -171,7 +171,7 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage BadFunctionArgument(IToken token)
 		{
-		    if (token == null) throw new ArgumentNullException("token");
+		    if (token == null) throw new ArgumentNullException(nameof(token));
 
 		    var pos = new Position(token);
 			if (IsEofToken(token))
@@ -183,7 +183,7 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage NeedLogicalOperator(IToken token)
 		{
-		    if (token == null) throw new ArgumentNullException("token");
+		    if (token == null) throw new ArgumentNullException(nameof(token));
 
 		    var pos = new Position(token);
 			if (IsEofToken(token))
@@ -195,7 +195,7 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage BadOperand(IToken token)
 		{
-		    if (token == null) throw new ArgumentNullException("token");
+		    if (token == null) throw new ArgumentNullException(nameof(token));
 
 		    var pos = new Position(token);
 			if (IsEofToken(token))
@@ -207,15 +207,15 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage EmptyFunctionArgument(IToken token)
 		{
-		    if (token == null) throw new ArgumentNullException("token");
+		    if (token == null) throw new ArgumentNullException(nameof(token));
 
 		    return CreateMessage("jql.parse.empty.function.argument", new Position(token));
 		}
 
 	    public static JqlParseErrorMessage ExpectedText(IToken token, string expected)
 		{
-	        if (token == null) throw new ArgumentNullException("token");
-	        if (expected.IsNullOrEmpty()) throw new ArgumentNullException("expected");
+	        if (token == null) throw new ArgumentNullException(nameof(token));
+	        if (expected.IsNullOrEmpty()) throw new ArgumentNullException(nameof(expected));
 
 	        var pos = new Position(token);
 			if (IsEofToken(token))
@@ -227,9 +227,9 @@ namespace QuoteFlow.Core.Jql.Parser
 
 		public static JqlParseErrorMessage ExpectedText(IToken token, string expected1, string expected2)
 		{
-		    if (token == null) throw new ArgumentNullException("token");
-		    if (expected1.IsNullOrEmpty()) throw new ArgumentNullException("expected1");
-            if (expected2.IsNullOrEmpty()) throw new ArgumentNullException("expected2");
+		    if (token == null) throw new ArgumentNullException(nameof(token));
+		    if (expected1.IsNullOrEmpty()) throw new ArgumentNullException(nameof(expected1));
+            if (expected2.IsNullOrEmpty()) throw new ArgumentNullException(nameof(expected2));
 
 		    var pos = new Position(token);
 			if (IsEofToken(token))

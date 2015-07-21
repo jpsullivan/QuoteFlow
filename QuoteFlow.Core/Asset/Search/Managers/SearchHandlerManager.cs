@@ -29,12 +29,12 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (fieldManager == null)
             {
-                throw new ArgumentNullException("fieldManager");
+                throw new ArgumentNullException(nameof(fieldManager));
             }
 
             if (systemClauseHandlerFactory == null)
             {
-                throw new ArgumentNullException("systemClauseHandlerFactory");
+                throw new ArgumentNullException(nameof(systemClauseHandlerFactory));
             }
 
             _queryCache = queryCache;
@@ -47,7 +47,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             context.Verify();
@@ -67,7 +67,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (string.IsNullOrEmpty(id))
             {
-                throw new ArgumentException("Searcher ID cannot be empty", "id");
+                throw new ArgumentException("Searcher ID cannot be empty", nameof(id));
             }
 
             return GetHelper().GetAssetSearcher(id);
@@ -141,7 +141,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (string.IsNullOrEmpty(jqlClauseName))
             {
-                throw new ArgumentException("Clause name cannot be empty.", "jqlClauseName");
+                throw new ArgumentException("Clause name cannot be empty.", nameof(jqlClauseName));
             }
 
             return new List<IClauseHandler>(GetHelper().GetSearchHandler(jqlClauseName));
@@ -151,7 +151,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (string.IsNullOrEmpty(fieldId))
             {
-                throw new ArgumentException("Field ID cannot be empty.", "fieldId");
+                throw new ArgumentException("Field ID cannot be empty.", nameof(fieldId));
             }
 
             var clauseNames = GetHelper().GetJqlClauseNames(fieldId);
@@ -197,7 +197,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (string.IsNullOrEmpty(jqlClauseName))
             {
-                throw new ArgumentException("Clause name cannot be empty.", "jqlClauseName");
+                throw new ArgumentException("Clause name cannot be empty.", nameof(jqlClauseName));
             }
 
             var regs = GetHelper().GetAssetSearcherRegistrationsByClauseName(jqlClauseName);

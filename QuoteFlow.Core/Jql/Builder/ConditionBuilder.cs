@@ -15,8 +15,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public ConditionBuilder(string clauseName, IJqlClauseBuilder builder)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (builder == null) throw new ArgumentNullException("builder");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (builder == null) throw new ArgumentNullException(nameof(builder));
 
             _builder = builder;
             _clauseName = clauseName;
@@ -197,20 +197,14 @@ namespace QuoteFlow.Core.Jql.Builder
             return new ValueBuilder(_builder, _clauseName, Operator.IS);
         }
 
-        public virtual IJqlClauseBuilder Empty
-        {
-            get { return _builder.AddCondition(_clauseName, Operator.IS, EmptyOperand.Empty); }
-        }
+        public virtual IJqlClauseBuilder Empty => _builder.AddCondition(_clauseName, Operator.IS, EmptyOperand.Empty);
 
         public virtual IValueBuilder IsNot()
         {
             return new ValueBuilder(_builder, _clauseName, Operator.IS_NOT);
         }
 
-        public virtual IJqlClauseBuilder NotEmpty
-        {
-            get { return _builder.AddCondition(_clauseName, Operator.IS_NOT, EmptyOperand.Empty); }
-        }
+        public virtual IJqlClauseBuilder NotEmpty => _builder.AddCondition(_clauseName, Operator.IS_NOT, EmptyOperand.Empty);
 
         public virtual IValueBuilder Lt()
         {

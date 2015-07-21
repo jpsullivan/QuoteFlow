@@ -29,12 +29,12 @@ namespace QuoteFlow.Core.Jql.Validator
         {
             if (string.IsNullOrEmpty(indexField))
             {
-                throw new ArgumentException("IndexField cannot be empty.", "indexField");
+                throw new ArgumentException("IndexField cannot be empty.", nameof(indexField));
             }
 
             if (operandResolver == null)
             {
-                throw new ArgumentNullException("operandResolver");
+                throw new ArgumentNullException(nameof(operandResolver));
             }
 
             this.indexField = indexField;

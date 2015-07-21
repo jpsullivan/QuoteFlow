@@ -23,12 +23,12 @@ namespace QuoteFlow.Api.Jql.Util
         {
             if (lowerDate == null)
             {
-                throw new ArgumentNullException("lowerDate");
+                throw new ArgumentNullException(nameof(lowerDate));
             }
 
             if (upperDate == null)
             {
-                throw new ArgumentNullException("upperDate");
+                throw new ArgumentNullException(nameof(upperDate));
             }
 
             LowerDate = MinOf(lowerDate, upperDate);

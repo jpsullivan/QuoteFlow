@@ -6,7 +6,6 @@ using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Infrastructure.Extensions;
-using QuoteFlow.Api.Infrastructure.IoC;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Core.Asset.Search.Managers;
@@ -47,7 +46,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if (newSorts == null)
             {
-                throw new ArgumentNullException("newSorts");
+                throw new ArgumentNullException(nameof(newSorts));
             }
 
             _searchSorts = new List<SearchSort>(newSorts);
@@ -130,7 +129,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if (fieldName == null)
             {
-                throw new ArgumentNullException("fieldName");
+                throw new ArgumentNullException(nameof(fieldName));
             }
 
             ISearchHandlerManager searchHandlerManager = Container.Kernel.TryGet<SearchHandlerManager>();
@@ -164,7 +163,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if (jqlClauseName.IsNullOrWhiteSpace())
             {
-                throw new ArgumentNullException("jqlClauseName");
+                throw new ArgumentNullException(nameof(jqlClauseName));
             }
 
             if (makePrimarySort)

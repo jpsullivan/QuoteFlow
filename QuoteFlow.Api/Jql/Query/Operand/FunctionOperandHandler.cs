@@ -18,7 +18,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 		{
 		    if (jqlFunction == null)
 		    {
-		        throw new ArgumentNullException("jqlFunction");
+		        throw new ArgumentNullException(nameof(jqlFunction));
 		    }
 
 			JqlFunction = jqlFunction;

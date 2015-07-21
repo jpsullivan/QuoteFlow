@@ -79,7 +79,7 @@ namespace QuoteFlow.Core.Jql.Util
         {
             if (value == null)
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
 
             if (!parser.IsValidValue(value))
@@ -94,7 +94,7 @@ namespace QuoteFlow.Core.Jql.Util
         {
             if (value.IsNullOrWhiteSpace())
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
 
             if (!parser.IsValidValue(value))
@@ -137,7 +137,7 @@ namespace QuoteFlow.Core.Jql.Util
 
         public string GenerateJqlString(IQuery query)
         {
-            if (query == null) throw new ArgumentNullException("query");
+            if (query == null) throw new ArgumentNullException(nameof(query));
 
             StringBuilder builder = new StringBuilder();
             

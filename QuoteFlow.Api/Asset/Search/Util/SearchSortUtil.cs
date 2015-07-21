@@ -36,7 +36,7 @@ namespace QuoteFlow.Api.Asset.Search.Util
         {
             if (newSorts == null)
             {
-                throw new ArgumentNullException("newSorts");
+                throw new ArgumentNullException(nameof(newSorts));
             }
 
             throw new NotImplementedException();
@@ -183,7 +183,7 @@ namespace QuoteFlow.Api.Asset.Search.Util
         {
             if (newSorts == null)
             {
-                throw new ArgumentNullException("newSorts");
+                throw new ArgumentNullException(nameof(newSorts));
             }
 
             // like merge, except we don't bother checking for duplicates - just join the two collections together (new then old)
@@ -198,7 +198,7 @@ namespace QuoteFlow.Api.Asset.Search.Util
         {
             if (searchRequest == null)
             {
-                throw new ArgumentNullException("searchRequest");
+                throw new ArgumentNullException(nameof(searchRequest));
             }
 
             IList<string> searchSortDescriptions = new List<string>();

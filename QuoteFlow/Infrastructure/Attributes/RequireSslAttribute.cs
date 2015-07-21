@@ -24,7 +24,7 @@ namespace QuoteFlow.Infrastructure.Attributes
         {
             if (filterContext == null)
             {
-                throw new ArgumentNullException("filterContext");
+                throw new ArgumentNullException(nameof(filterContext));
             }
 
             var request = filterContext.HttpContext.Request;

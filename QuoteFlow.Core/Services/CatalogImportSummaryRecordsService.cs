@@ -15,7 +15,7 @@ namespace QuoteFlow.Core.Services
         public IEnumerable<ICatalogSummaryRecord> GetImportSummaryRecords(int catalogId)
         {
             if (catalogId == 0) {
-                throw new ArgumentException("Catalog id must be greater than zero.", "catalogId");
+                throw new ArgumentException("Catalog id must be greater than zero.", nameof(catalogId));
             }
 
             const string sql = "select * from CatalogImportSummaryRecords where CatalogId = @catalogId";
@@ -76,7 +76,7 @@ namespace QuoteFlow.Core.Services
         public IEnumerable<CatalogImportSummaryRecord> ConvertToRawSummaryRecords(IEnumerable<ICatalogSummaryRecord> summaries, int catalogId)
         {
             if (summaries == null) {
-                throw new ArgumentNullException("summaries");
+                throw new ArgumentNullException(nameof(summaries));
             }
 
             var rawSummaries = new List<CatalogImportSummaryRecord>();
@@ -118,7 +118,7 @@ namespace QuoteFlow.Core.Services
         public void InsertSummaries(IEnumerable<CatalogImportSummaryRecord> summaries)
         {
             if (summaries == null) {
-                throw new ArgumentNullException("summaries");
+                throw new ArgumentNullException(nameof(summaries));
             }
 
             Current.DB.BeginTransaction();
@@ -139,7 +139,7 @@ namespace QuoteFlow.Core.Services
         public void InsertSummaries(IEnumerable<ICatalogSummaryRecord> summaries, int catalogId)
         {
             if (summaries == null) {
-                throw new ArgumentNullException("summaries");
+                throw new ArgumentNullException(nameof(summaries));
             }
 
             var rawSummaries = ConvertToRawSummaryRecords(summaries, catalogId);

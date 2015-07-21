@@ -39,12 +39,12 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         {
             if (fieldValuesHolder == null)
             {
-                throw new ArgumentNullException("fieldValuesHolder");
+                throw new ArgumentNullException(nameof(fieldValuesHolder));
             }
 
             if (actionParams == null)
             {
-                throw new ArgumentNullException("actionParams");
+                throw new ArgumentNullException(nameof(actionParams));
             }
 
             fieldValuesHolder[dateSearcherConfig.BeforeField] = actionParams.GetFirstValueForKey(dateSearcherConfig.BeforeField);
@@ -57,7 +57,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         {
             if (fieldValuesHolder == null)
             {
-                throw new ArgumentNullException("fieldValuesHolder");
+                throw new ArgumentNullException(nameof(fieldValuesHolder));
             }
             
             ValidateAbsoluteDates(fieldValuesHolder);
@@ -149,12 +149,12 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         {
             if (fieldValuesHolder == null)
             {
-                throw new ArgumentNullException("fieldValuesHolder");
+                throw new ArgumentNullException(nameof(fieldValuesHolder));
             }
 
             if (query == null)
             {
-                throw new ArgumentNullException("query");
+                throw new ArgumentNullException(nameof(query));
             }
 
             if (query.WhereClause != null)
@@ -194,7 +194,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         {
             if (fieldValuesHolder == null)
             {
-                throw new ArgumentNullException("fieldValuesHolder");
+                throw new ArgumentNullException(nameof(fieldValuesHolder));
             }
 
             string clauseName = GetClauseName(user);

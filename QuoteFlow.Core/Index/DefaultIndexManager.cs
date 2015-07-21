@@ -14,9 +14,9 @@ namespace QuoteFlow.Core.Index
 
         public DefaultIndexManager(IIndexConfiguration configuration, IEngine engine, IDisposableIndex index)
         {
-            if (configuration == null) throw new ArgumentNullException("configuration");
-            if (engine == null) throw new ArgumentNullException("engine");
-            if (index == null) throw new ArgumentNullException("index");
+            if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+            if (engine == null) throw new ArgumentNullException(nameof(engine));
+            if (index == null) throw new ArgumentNullException(nameof(index));
 
             _configuration = configuration;
             _actor = engine;

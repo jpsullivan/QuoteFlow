@@ -19,7 +19,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
         {
             if (assetConstantResolver == null)
             {
-                throw new ArgumentNullException("assetConstantResolver");
+                throw new ArgumentNullException(nameof(assetConstantResolver));
             }
 
             this.assetConstantResolver = assetConstantResolver;

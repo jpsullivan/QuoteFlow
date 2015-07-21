@@ -25,7 +25,7 @@ namespace QuoteFlow.Core.Lucene.Index
         {
             if (result == null)
             {
-                throw new ArgumentNullException("result");
+                throw new ArgumentNullException(nameof(result));
             }
 
             var compResult = result as CompositeResult;
@@ -49,7 +49,7 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public AccumulatingResultBuilder Add(string indexName, int identifier, IIndexResult result)
         {
-            if (result == null) throw new ArgumentNullException("result");
+            if (result == null) throw new ArgumentNullException(nameof(result));
 
             if (result is CompositeResult)
             {

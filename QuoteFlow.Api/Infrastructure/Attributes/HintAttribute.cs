@@ -24,7 +24,7 @@ namespace QuoteFlow.Api.Infrastructure.Attributes
         {
             if (metadata == null)
             {
-                throw new ArgumentNullException("metadata");
+                throw new ArgumentNullException(nameof(metadata));
             }
             metadata.AdditionalValues["Hint"] = Hint;
         }

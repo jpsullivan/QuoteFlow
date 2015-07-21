@@ -37,7 +37,7 @@ namespace QuoteFlow.Core.Jql.Query.Operand
         /// <returns> the operand that represents the list of values. </returns>
         public static IOperand ValueOfStrings(ICollection<string> values)
         {
-            if (values == null) throw new ArgumentNullException("values");
+            if (values == null) throw new ArgumentNullException(nameof(values));
             return new MultiValueOperand(values.ToArray());
         }
 
@@ -68,7 +68,7 @@ namespace QuoteFlow.Core.Jql.Query.Operand
         /// <returns> the operand that represents the list of values. </returns>
         public static IOperand ValueOfNumbers(ICollection<int?> values)
         {
-            if (values == null) throw new ArgumentNullException("values");
+            if (values == null) throw new ArgumentNullException(nameof(values));
             return new MultiValueOperand(values.ToArray());
         }
 

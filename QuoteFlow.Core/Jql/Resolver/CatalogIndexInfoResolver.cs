@@ -25,7 +25,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (rawValue == null)
             {
-                throw new ArgumentNullException("rawValue");
+                throw new ArgumentNullException(nameof(rawValue));
             }
 
             var catalogs = NameResolver.GetIdsFromName(rawValue);
@@ -45,7 +45,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (rawValue == 0)
             {
-                throw new ArgumentException("Raw value must be greater than zero.", "rawValue");
+                throw new ArgumentException("Raw value must be greater than zero.", nameof(rawValue));
             }
 
             var catalog = NameResolver.Get(rawValue.Value);
@@ -61,7 +61,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (catalog == null)
             {
-                throw new ArgumentNullException("catalog");
+                throw new ArgumentNullException(nameof(catalog));
             }
 
             return catalog.Id.ToString();

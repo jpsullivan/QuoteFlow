@@ -156,7 +156,7 @@ namespace QuoteFlow.Core.Asset.Search
             {
                 if (query == null)
                 {
-                    throw new ArgumentNullException("query");
+                    throw new ArgumentNullException(nameof(query));
                 }
 
                 _searcher = searcher;
@@ -208,7 +208,7 @@ namespace QuoteFlow.Core.Asset.Search
 			{
 			    if (jqlClauseName == null)
 			    {
-			        throw new ArgumentNullException("jqlClauseName");
+			        throw new ArgumentNullException(nameof(jqlClauseName));
 			    }
 
 				_searcher = searcher;
@@ -261,17 +261,17 @@ namespace QuoteFlow.Core.Asset.Search
 			{
 			    if (context == null)
 			    {
-			        throw new ArgumentNullException("context");
+			        throw new ArgumentNullException(nameof(context));
 			    }
 
                 if (operand == null)
 			    {
-			        throw new ArgumentNullException("operand");
+			        throw new ArgumentNullException(nameof(operand));
 			    }
 
                 if (jqlClause == null)
 			    {
-			        throw new ArgumentNullException("jqlClause");
+			        throw new ArgumentNullException(nameof(jqlClause));
 			    }
 
 				_context = context;

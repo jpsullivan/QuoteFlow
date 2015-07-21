@@ -12,7 +12,7 @@ namespace QuoteFlow.Api.Jql.Values
 		{
 		    if (value == null)
 		    {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
 		    }
 
             Value = value;
@@ -23,12 +23,12 @@ namespace QuoteFlow.Api.Jql.Values
 		{
 		    if (value == null)
 		    {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
 		    }
 
 		    if (displayName == null)
 		    {
-                throw new ArgumentNullException("displayName");
+                throw new ArgumentNullException(nameof(displayName));
 		    }
 
             Value = value;
@@ -47,12 +47,12 @@ namespace QuoteFlow.Api.Jql.Values
 		{
 		    if (value == null)
 		    {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
 		    }
 
 		    if (displayNameParts == null)
 		    {
-                throw new ArgumentNullException("displayNameParts");
+                throw new ArgumentNullException(nameof(displayNameParts));
 		    }
 
             Value = value;

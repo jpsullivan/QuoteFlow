@@ -74,7 +74,7 @@ namespace QuoteFlow.Core.Index
 
             internal Delete(Term term, UpdateMode mode)
             {
-                if (term == null) throw new ArgumentNullException("term");
+                if (term == null) throw new ArgumentNullException(nameof(term));
                 Term = term;
                 _mode = mode;
             }
@@ -100,7 +100,7 @@ namespace QuoteFlow.Core.Index
 
             internal Create(Document document, UpdateMode mode)
             {
-                if (document == null) throw new ArgumentNullException("document");
+                if (document == null) throw new ArgumentNullException(nameof(document));
 
                 Documents = new List<Document> { document };
                 _mode = mode;
@@ -108,7 +108,7 @@ namespace QuoteFlow.Core.Index
 
             internal Create(IEnumerable<Document> documents, UpdateMode mode)
             {
-                if (documents == null) throw new ArgumentNullException("documents");
+                if (documents == null) throw new ArgumentNullException(nameof(documents));
 
                 Documents = documents.ToList();
                 _mode = mode;

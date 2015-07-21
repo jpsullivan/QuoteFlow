@@ -30,31 +30,31 @@ namespace QuoteFlow.Core.Jql.Builder
                 case BuilderOperator.OR:
                     if (left == null)
                     {
-                        throw new ArgumentNullException("left");
+                        throw new ArgumentNullException(nameof(left));
                     }
 
                     if (right == null)
                     {
-                        throw new ArgumentNullException("right");
+                        throw new ArgumentNullException(nameof(right));
                     }
 
                     return new MultiMutableClause<IMutableClause>(builderOp, left, right);
                 case BuilderOperator.AND:
                     if (left == null)
                     {
-                        throw new ArgumentNullException("left");
+                        throw new ArgumentNullException(nameof(left));
                     }
 
                     if (right == null)
                     {
-                        throw new ArgumentNullException("right");
+                        throw new ArgumentNullException(nameof(right));
                     }
 
                     return new MultiMutableClause<IMutableClause>(builderOp, left, right);
                 case BuilderOperator.NOT:
                     if (left == null)
                     {
-                        throw new ArgumentNullException("left");
+                        throw new ArgumentNullException(nameof(left));
                     }
 
                     return new NotMutableClause(left);

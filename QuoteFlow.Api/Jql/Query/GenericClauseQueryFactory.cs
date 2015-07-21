@@ -21,17 +21,17 @@ namespace QuoteFlow.Api.Jql.Query
         {
             if (documentFieldName == null)
             {
-                throw new ArgumentNullException("documentFieldName");
+                throw new ArgumentNullException(nameof(documentFieldName));
             }
 
             if (operandResolver == null)
             {
-                throw new ArgumentNullException("operandResolver");
+                throw new ArgumentNullException(nameof(operandResolver));
             }
 
             if (operatorQueryFactories == null)
             {
-                throw new ArgumentNullException("operatorQueryFactories");
+                throw new ArgumentNullException(nameof(operatorQueryFactories));
             }
 
             this.documentFieldName = documentFieldName;

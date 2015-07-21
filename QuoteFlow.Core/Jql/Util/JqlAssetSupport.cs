@@ -14,7 +14,7 @@ namespace QuoteFlow.Core.Jql.Util
         {
             if (assetService == null)
             {
-                throw new ArgumentNullException("assetService");
+                throw new ArgumentNullException(nameof(assetService));
             }
 
             AssetService = assetService;

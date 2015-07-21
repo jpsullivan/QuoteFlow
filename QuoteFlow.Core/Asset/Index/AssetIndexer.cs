@@ -186,7 +186,7 @@ namespace QuoteFlow.Core.Asset.Index
         {
             using (strategy)
             {
-                if (assets == null) throw new ArgumentNullException("assets");
+                if (assets == null) throw new ArgumentNullException(nameof(assets));
 
                 // thread-safe handler for the asynchronous Result
                 var builder = new AccumulatingResultBuilder();
@@ -230,7 +230,7 @@ namespace QuoteFlow.Core.Asset.Index
 
             public Lifecycle(IIndexDirectoryFactory factory)
             {
-                if (factory == null) throw new ArgumentNullException("factory");
+                if (factory == null) throw new ArgumentNullException(nameof(factory));
                 _factory = factory;
             }
 

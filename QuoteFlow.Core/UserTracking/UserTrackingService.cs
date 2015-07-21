@@ -27,7 +27,7 @@ namespace QuoteFlow.Core.UserTracking
 
         public void UpdateRecentLinks(int userId, PageType type, int pageId, string pageName)
         {
-            if (pageName == null) throw new ArgumentNullException("pageName");
+            if (pageName == null) throw new ArgumentNullException(nameof(pageName));
 
             var recentPages = GetRecentLinks(userId, type).ToList();
             var newPage = new RecentLink

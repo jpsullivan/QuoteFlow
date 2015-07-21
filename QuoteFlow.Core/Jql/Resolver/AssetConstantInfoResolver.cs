@@ -21,7 +21,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (resolver == null)
             {
-                throw new ArgumentNullException("resolver");
+                throw new ArgumentNullException(nameof(resolver));
             }
 
             this.resolver = resolver;
@@ -43,7 +43,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (rawValue == null)
             {
-                throw new ArgumentNullException("rawValue");
+                throw new ArgumentNullException(nameof(rawValue));
             }
 
             // our id is our index value
@@ -66,7 +66,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (rawValue == null)
             {
-                throw new ArgumentNullException("rawValue");
+                throw new ArgumentNullException(nameof(rawValue));
             }
 
             if (resolver.IdExists((int) rawValue))
@@ -80,7 +80,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (indexedObject == null)
             {
-                throw new ArgumentNullException("indexedObject");
+                throw new ArgumentNullException(nameof(indexedObject));
             }
 
             return indexedObject.Id.ToString();

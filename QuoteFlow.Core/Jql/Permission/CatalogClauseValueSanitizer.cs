@@ -21,17 +21,17 @@ namespace QuoteFlow.Core.Jql.Permission
 		{
 		    if (catalogService == null)
 		    {
-		        throw new ArgumentNullException("catalogService");
+		        throw new ArgumentNullException(nameof(catalogService));
 		    }
 
 		    if (jqlOperandResolver == null)
 		    {
-		        throw new ArgumentNullException("jqlOperandResolver");
+		        throw new ArgumentNullException(nameof(jqlOperandResolver));
 		    }
 
 		    if (catalogResolver == null)
 		    {
-		        throw new ArgumentNullException("catalogResolver");
+		        throw new ArgumentNullException(nameof(catalogResolver));
 		    }
 
             CatalogService = catalogService;

@@ -57,7 +57,7 @@ namespace QuoteFlow.Core.Index
 
             public QueueingTask(BlockingCollection<FutureOperation> queue)
             {
-                if (queue == null) throw new ArgumentNullException("queue");
+                if (queue == null) throw new ArgumentNullException(nameof(queue));
                 _queue = queue;
             }
 
@@ -97,7 +97,7 @@ namespace QuoteFlow.Core.Index
 
             internal FutureOperation(Operation operation)
             {
-                if (operation == null) throw new ArgumentNullException("operation");
+                if (operation == null) throw new ArgumentNullException(nameof(operation));
 
                 _operation = operation;
             }

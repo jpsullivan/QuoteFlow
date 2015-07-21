@@ -16,7 +16,8 @@ namespace QuoteFlow.Core.Jql.Builder
     /// IValueBuilder}. For example, the JQL clause {@code affectedVersion = "1.2"} can be
     /// generated using {@code JqlQueryBuilder.affectedVersion().eq("1.2").build()} or {@code
     /// JqlQueryBuilder.affectedVersion().eq().string("1.2").build()}.
-    /// <p>Generally, it is not possible to passs nulls, empty collections, empty arrays, collections that contain nulls, or arrays
+    /// 
+    /// Generally, it is not possible to passs nulls, empty collections, empty arrays, collections that contain nulls, or arrays
     /// that contain nulls to the method on the interface. Any exceptions to these argument conditions are documented on the method concern.
     /// Passing a method a bad argument will result in a <see cref="IllegalArgumentException"/>.
     /// 
@@ -37,7 +38,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IValueBuilder Eq();
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#EQUALS equals operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#EQUALS equals operator"/> and the
         /// passed value. It essentially creates the JQL condition {@code name = "str"}.
         /// </summary>
         /// <param name="value"> the value of the condition. Cannot be null. </param>
@@ -53,7 +54,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Eq(int? value);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#EQUALS equals operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#EQUALS equals operator"/> and the
         /// passed date. It essentially creates the JQL condition {@code name = date}.
         /// </summary>
         /// <param name="date"> the value of the condition. Cannot be null. </param>
@@ -61,7 +62,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Eq(DateTime date);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#EQUALS equals operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#EQUALS equals operator"/> and the
         /// passed value. It essentially creates the JQL condition {@code name = operand}.
         /// </summary>
         /// <param name="operand"> the value of the condition. Cannot be null. </param>
@@ -69,14 +70,14 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Eq(IOperand operand);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#EQUALS equals operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#EQUALS equals operator"/> and the
         /// EMPTY value. It essentially creates the JQL condition {@code name = EMPTY}.
         /// </summary>
         /// <returns> the <see cref="IJqlClauseBuilder"/> that created the condition. </returns>
         IJqlClauseBuilder EqEmpty();
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#EQUALS equals operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#EQUALS equals operator"/> and the
         /// passed function. It essentially creates the JQL condition {@code name = funcName()}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. Cannot be null. </param>
@@ -84,7 +85,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder EqFunc(string funcName);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#EQUALS equals operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#EQUALS equals operator"/> and the
         /// passed function. It essentially creates the JQL condition {@code name = funcName(arg1, arg2, arg3, ... argN)}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. </param>
@@ -93,7 +94,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder EqFunc(string funcName, params string[] args);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#EQUALS equals operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#EQUALS equals operator"/> and the
         /// passed function. It essentially creates the JQL condition {@code name = funcName(arg1, arg2, arg3, ... argN)}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. </param>
@@ -102,14 +103,14 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder EqFunc(string funcName, ICollection<string> args);
 
         /// <summary>
-        /// Make the operator for the JQL condition <see cref="QuoteFlow.Api.Jql.Operator#NOT_EQUALS not equals"/>. The
+        /// Make the operator for the JQL condition <see cref="Api.Jql.Operator#NOT_EQUALS not equals"/>. The
         /// value of the condition can be specified using the returned <see cref="IValueBuilder"/>.
         /// </summary>
         /// <returns> a builder that can be used to specify the value of the condition. </returns>
         IValueBuilder NotEq();
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_EQUALS not equals operator"/>
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_EQUALS not equals operator"/>
         /// and the passed value. It essentially creates the JQL condition {@code name != "str"}.
         /// </summary>
         /// <param name="value"> the value of the condition. Cannot be null. </param>
@@ -117,7 +118,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotEq(string value);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_EQUALS not equals operator"/>
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_EQUALS not equals operator"/>
         /// and the passed value. It essentially creates the JQL condition {@code name != value}.
         /// </summary>
         /// <param name="value"> the value of the condition. Cannot be null. </param>
@@ -125,7 +126,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotEq(int? value);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_EQUALS not equals operator"/>
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_EQUALS not equals operator"/>
         /// and the passed value. It essentially creates the JQL condition {@code name != operand}.
         /// </summary>
         /// <param name="operand"> the value of the condition. Cannot be null. </param>
@@ -133,7 +134,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotEq(IOperand operand);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_EQUALS not equals operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_EQUALS not equals operator"/> and the
         /// passed date. It essentially creates the JQL condition {@code name != date}.
         /// </summary>
         /// <param name="date"> the value of the condition. Cannot be null. </param>
@@ -141,14 +142,14 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotEq(DateTime date);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_EQUALS not equals operator"/>
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_EQUALS not equals operator"/>
         /// and the EMPTY value. It essentially creates the JQL condition {@code name != EMPTY}.
         /// </summary>
         /// <returns> the <see cref="IJqlClauseBuilder"/> that created the condition. </returns>
         IJqlClauseBuilder NotEqEmpty();
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_EQUALS not equals operator"/>
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_EQUALS not equals operator"/>
         /// and the passed function. It essentially creates the JQL condition {@code name != funcName()}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. Cannot be null. </param>
@@ -156,7 +157,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotEqFunc(string funcName);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_EQUALS not equals operator"/>
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_EQUALS not equals operator"/>
         /// and the passed function. It essentially creates the JQL condition {@code name != funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>
@@ -166,7 +167,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotEqFunc(string funcName, params string[] args);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_EQUALS not equals operator"/>
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_EQUALS not equals operator"/>
         /// and the passed function. It essentially creates the JQL condition {@code name != funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>
@@ -176,14 +177,14 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotEqFunc(string funcName, ICollection<string> args);
 
         /// <summary>
-        /// Make the operator for the JQL condition <see cref="QuoteFlow.Api.Jql.Operator#LIKE like"/>. The value of the
+        /// Make the operator for the JQL condition <see cref="Api.Jql.Operator#LIKE like"/>. The value of the
         /// condition can be specified using the returned <see cref="IValueBuilder"/>.
         /// </summary>
         /// <returns> a builder that can be used to specify the value of the condition. </returns>
         IValueBuilder Like();
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LIKE like operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LIKE like operator"/> and the passed
         /// value. It essentially creates the JQL condition {@code name ~ "str"}.
         /// </summary>
         /// <param name="value"> the value of the condition. Cannot be null. </param>
@@ -191,7 +192,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Like(string value);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LIKE like operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LIKE like operator"/> and the passed
         /// value. It essentially creates the JQL condition {@code name ~ value}.
         /// </summary>
         /// <param name="value">The value of the condition. Cannot be null.</param>
@@ -199,7 +200,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Like(int? value);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LIKE like operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LIKE like operator"/> and the passed
         /// value. It essentially creates the JQL condition {@code name ~ operand}.
         /// </summary>
         /// <param name="operand"> the value of the condition. Cannot be null. </param>
@@ -207,7 +208,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Like(IOperand operand);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LIKE like operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LIKE like operator"/> and the
         /// passed date. It essentially creates the JQL condition {@code name ~ date}.
         /// </summary>
         /// <param name="date"> the value of the condition. Cannot be null. </param>
@@ -215,7 +216,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Like(DateTime date);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LIKE like operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LIKE like operator"/> and the passed
         /// function. It essentially creates the JQL condition {@code name ~ funcName()}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. Cannot be null. </param>
@@ -223,7 +224,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder LikeFunc(string funcName);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LIKE like operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LIKE like operator"/> and the passed
         /// function. It essentially creates the JQL condition {@code name ~ funcName(arg1, arg2, arg3, ... argN)}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. </param>
@@ -232,7 +233,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder LikeFunc(string funcName, params string[] args);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LIKE like operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LIKE like operator"/> and the passed
         /// function. It essentially creates the JQL condition {@code name != funcName(arg1, arg2, arg3, ... argN)}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. </param>
@@ -241,14 +242,14 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder LikeFunc(string funcName, ICollection<string> args);
 
         /// <summary>
-        /// Make the operator for the JQL condition <see cref="QuoteFlow.Api.Jql.Operator#NOT_LIKE not like"/>. The
+        /// Make the operator for the JQL condition <see cref="Api.Jql.Operator#NOT_LIKE not like"/>. The
         /// value of the condition can be specified using the returned <see cref="IValueBuilder"/>.
         /// </summary>
         /// <returns> a builder that can be used to specify the value of the condition. </returns>
         IValueBuilder NotLike();
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_LIKE not like operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_LIKE not like operator"/> and
         /// the passed value. It essentially creates the JQL condition {@code name !~ "str"}.
         /// </summary>
         /// <param name="value"> the value of the condition. Cannot be null. </param>
@@ -256,7 +257,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotLike(string value);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_LIKE not like operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_LIKE not like operator"/> and
         /// the passed value. It essentially creates the JQL condition {@code name !~ value}.
         /// </summary>
         /// <param name="value">The value of the condition. Cannot be null. </param>
@@ -264,7 +265,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotLike(int? value);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_LIKE not like operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_LIKE not like operator"/> and
         /// the passed value. It essentially creates the JQL condition {@code name !~ operand}.
         /// </summary>
         /// <param name="operand"> the value of the condition. Cannot be null. </param>
@@ -272,7 +273,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotLike(IOperand operand);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_LIKE not like operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_LIKE not like operator"/> and the
         /// passed date. It essentially creates the JQL condition {@code name !~ date}.
         /// </summary>
         /// <param name="date"> the value of the condition. Cannot be null. </param>
@@ -280,7 +281,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotLike(DateTime date);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_LIKE not like operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_LIKE not like operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name !~ funcName()}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. Cannot be null. </param>
@@ -288,7 +289,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotLikeFunc(string funcName);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_LIKE not like operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_LIKE not like operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name !~ funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>
@@ -298,7 +299,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotLikeFunc(string funcName, params string[] args);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_LIKE not like operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_LIKE not like operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name !~ funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>
@@ -308,42 +309,42 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotLikeFunc(string funcName, ICollection<string> args);
 
         /// <summary>
-        /// Make the operator for the JQL condition <see cref="QuoteFlow.Api.Jql.Operator#IS is"/>. The value of the
+        /// Make the operator for the JQL condition <see cref="Api.Jql.Operator#IS is"/>. The value of the
         /// condition can be specified using the returned <see cref="IValueBuilder"/>.
         /// </summary>
         /// <returns> a builder that can be used to specify the value of the condition. </returns>
         IValueBuilder Is();
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IS is operator"/> and the EMPTY
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IS is operator"/> and the EMPTY
         /// value. It essentially creates the JQL condition {@code name IS EMPTY}.
         /// </summary>
         /// <returns> the <see cref="IJqlClauseBuilder"/> that created the condition. </returns>
         IJqlClauseBuilder Empty { get; }
 
         /// <summary>
-        /// Make the operator for the JQL condition <see cref="QuoteFlow.Api.Jql.Operator#IS_NOT is not"/>. The value of
+        /// Make the operator for the JQL condition <see cref="Api.Jql.Operator#IS_NOT is not"/>. The value of
         /// the condition can be specified using the returned <see cref="IValueBuilder"/>.
         /// </summary>
         /// <returns> a builder that can be used to specify the value of the condition. </returns>
         IValueBuilder IsNot();
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IS_NOT is not operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IS_NOT is not operator"/> and the
         /// EMPTY value. It essentially creates the JQL condition {@code name IS NOT EMPTY}.
         /// </summary>
         /// <returns> the <see cref="IJqlClauseBuilder"/> that created the condition. </returns>
         IJqlClauseBuilder NotEmpty { get; }
 
         /// <summary>
-        /// Make the operator for the JQL condition <see cref="QuoteFlow.Api.Jql.Operator#LESS_THAN less than"/>. The
+        /// Make the operator for the JQL condition <see cref="Api.Jql.Operator#LESS_THAN less than"/>. The
         /// value of the condition can be specified using the returned <see cref="IValueBuilder"/>.
         /// </summary>
         /// <returns> a builder that can be used to specify the value of the condition. </returns>
         IValueBuilder Lt();
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LESS_THAN less than operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LESS_THAN less than operator"/> and
         /// the passed value. It essentially creates the JQL condition {@code name &lt; "str"}.
         /// </summary>
         /// <param name="value"> the value of the condition. Cannot be null. </param>
@@ -351,7 +352,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Lt(string value);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LESS_THAN less than operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LESS_THAN less than operator"/> and
         /// the passed value. It essentially creates the JQL condition {@code name &lt; value}.
         /// </summary>
         /// <param name="value">The value of the condition. Cannot be null.</param>
@@ -359,7 +360,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Lt(int? value);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LESS_THAN less than operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LESS_THAN less than operator"/> and
         /// the passed value. It essentially creates the JQL condition {@code name &lt; operand}.
         /// </summary>
         /// <param name="operand"> the value of the condition. Cannot be null. </param>
@@ -367,7 +368,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Lt(IOperand operand);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LESS_THAN less than operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LESS_THAN less than operator"/> and the
         /// passed date. It essentially creates the JQL condition {@code name &lt; date}.
         /// </summary>
         /// <param name="date"> the value of the condition. Cannot be null. </param>
@@ -375,7 +376,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Lt(DateTime date);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LESS_THAN "&lt;" operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LESS_THAN "&lt;" operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name < funcName()}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. Cannot be null. </param>
@@ -383,7 +384,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder LtFunc(string funcName);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LESS_THAN "&lt;" operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LESS_THAN "&lt;" operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name < funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>
@@ -393,7 +394,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder LtFunc(string funcName, params string[] args);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LESS_THAN `&lt;` operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LESS_THAN `&lt;` operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name < funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>
@@ -435,7 +436,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder LtEq(IOperand operand);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#LESS_THAN_EQUALS less than or equals operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#LESS_THAN_EQUALS less than or equals operator"/> and the
         /// passed date. It essentially creates the JQL condition {@code name &lt;= date}.
         /// </summary>
         /// <param name="date"> the value of the condition. Cannot be null. </param>
@@ -471,7 +472,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder LtEqFunc(string funcName, ICollection<string> args);
 
         /// <summary>
-        /// Make the operator for the JQL condition <see cref="QuoteFlow.Api.Jql.Operator#GREATER_THAN greater than"/>.
+        /// Make the operator for the JQL condition <see cref="Api.Jql.Operator#GREATER_THAN greater than"/>.
         /// The value of the condition can be specified using the returned <see cref="IValueBuilder"/>.
         /// </summary>
         /// <returns> a builder that can be used to specify the value of the condition. </returns>
@@ -502,7 +503,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Gt(IOperand operand);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#GREATER_THAN greater than operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#GREATER_THAN greater than operator"/> and the
         /// passed date. It essentially creates the JQL condition {@code name &gt; date}.
         /// </summary>
         /// <param name="date"> the value of the condition. Cannot be null. </param>
@@ -510,7 +511,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Gt(DateTime date);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#GREATER_THAN `&gt;` operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#GREATER_THAN `&gt;` operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name &gt; funcName()}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. Cannot be null. </param>
@@ -518,7 +519,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder GtFunc(string funcName);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#GREATER_THAN `&gt;` operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#GREATER_THAN `&gt;` operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name &gt; funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>
@@ -528,7 +529,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder GtFunc(string funcName, params string[] args);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#GREATER_THAN `&gt;` operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#GREATER_THAN `&gt;` operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name &gt; funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>
@@ -570,7 +571,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder GtEq(IOperand operand);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#GREATER_THAN_EQUALS greater than or equals operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#GREATER_THAN_EQUALS greater than or equals operator"/> and the
         /// passed date. It essentially creates the JQL condition {@code name &gt;= date}.
         /// </summary>
         /// <param name="date"> the value of the condition. Cannot be null. </param>
@@ -613,7 +614,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IValueBuilder In();
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IN in operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IN in operator"/> and the passed
         /// values. It essentially creates the JQL condition {@code name IN (values)}.
         /// </summary>
         /// <param name="values"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -621,7 +622,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder In(params string[] values);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IN in operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IN in operator"/> and the passed
         /// values. It essentially creates the JQL condition {@code name IN (values)}.
         /// </summary>
         /// <param name="values"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -645,7 +646,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder InNumbers(ICollection<int?> values);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IN in operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IN in operator"/> and the passed
         /// values. It essentially creates the JQL condition {@code name IN (operands)}.
         /// </summary>
         /// <param name="operands"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -653,7 +654,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder In(params IOperand[] operands);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IN in operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IN in operator"/> and the passed
         /// values. It essentially creates the JQL condition {@code name IN (operands)}.
         /// </summary>
         /// <param name="operands"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -661,7 +662,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder InOperands(ICollection<IOperand> operands);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IN in operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IN in operator"/> and the passed
         /// values. It essentially creates the JQL condition {@code name IN (dates)}.
         /// </summary>
         /// <param name="dates"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -669,7 +670,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder In(params DateTime[] dates);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IN in operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IN in operator"/> and the passed
         /// values. It essentially creates the JQL condition {@code name IN (dates)}.
         /// </summary>
         /// <param name="dates"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -677,7 +678,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder InDates(ICollection<DateTime> dates);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IN"/> in operator and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IN"/> in operator and
         /// the passed function. It essentially creates the JQL condition {@code name in funcName()}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. Cannot be null. </param>
@@ -685,7 +686,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder InFunc(string funcName);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IN in operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IN in operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name in funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>
@@ -695,7 +696,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder InFunc(string funcName, params string[] args);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IN in operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IN in operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name in funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>
@@ -705,14 +706,14 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder InFunc(string funcName, ICollection<string> args);
 
         /// <summary>
-        /// Make the operator for the JQL condition <see cref="QuoteFlow.Api.Jql.Operator#NOT_IN not in"/>. The values
+        /// Make the operator for the JQL condition <see cref="Api.Jql.Operator#NOT_IN not in"/>. The values
         /// of the condition can be specified using the returned <see cref="IValueBuilder"/>.
         /// </summary>
         /// <returns> a builder that can be used to specify the value of the condition. </returns>
         IValueBuilder NotIn();
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_IN not in operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_IN not in operator"/> and the
         /// passed values. It essentially creates the JQL condition {@code name NOT IN (values)}.
         /// </summary>
         /// <param name="values"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -720,7 +721,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotIn(params string[] values);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_IN not in operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_IN not in operator"/> and the
         /// passed values. It essentially creates the JQL condition {@code name NOT IN (values)}.
         /// </summary>
         /// <param name="values"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -728,7 +729,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotInStrings(ICollection<string> values);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_IN not in operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_IN not in operator"/> and the
         /// passed values. It essentially creates the JQL condition {@code name NOT IN (values)}.
         /// </summary>
         /// <param name="values">The values of the condition. Cannot be null, empty or contain any null value.</param>
@@ -736,7 +737,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotIn(params int?[] values);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_IN not in operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_IN not in operator"/> and the
         /// passed values. It essentially creates the JQL condition {@code name NOT IN (values)}.
         /// </summary>
         /// <param name="values">The values of the condition. Cannot be null, empty or contain any null value.</param>
@@ -744,7 +745,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotInNumbers(ICollection<int?> values);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_IN not in operator"/> and the
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_IN not in operator"/> and the
         /// passed values. It essentially creates the JQL condition {@code name NOT IN (operands)}.
         /// </summary>
         /// <param name="operands"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -752,7 +753,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotIn(params IOperand[] operands);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_IN not in operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_IN not in operator"/> and the passed
         /// values. It essentially creates the JQL condition {@code name NOT IN (dates)}.
         /// </summary>
         /// <param name="dates"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -760,7 +761,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotIn(params DateTime[] dates);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_IN in operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_IN in operator"/> and the passed
         /// values. It essentially creates the JQL condition {@code name NOT IN (dates)}.
         /// </summary>
         /// <param name="dates"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -768,7 +769,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotInDates(ICollection<DateTime> dates);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#IN not in operator"/> and the passed
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#IN not in operator"/> and the passed
         /// values. It essentially creates the JQL condition {@code name NOT IN (operands)}.
         /// </summary>
         /// <param name="operands"> the values of the condition. Cannot be null, empty or contain any null value. </param>
@@ -776,7 +777,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotInOperands(ICollection<IOperand> operands);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_IN "not in" operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_IN "not in" operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name not in funcName()}.
         /// </summary>
         /// <param name="funcName"> the name of the function in the new condition. Cannot be null. </param>
@@ -784,7 +785,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotInFunc(string funcName);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_IN "not in" operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_IN "not in" operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name not in funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>
@@ -794,7 +795,7 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder NotInFunc(string funcName, params string[] args);
 
         /// <summary>
-        /// Create the JQL condition with the <see cref="QuoteFlow.Api.Jql.Operator#NOT_IN "not in" operator"/> and
+        /// Create the JQL condition with the <see cref="Api.Jql.Operator#NOT_IN "not in" operator"/> and
         /// the passed function. It essentially creates the JQL condition {@code name not in funcName(arg1, arg2, arg3, ...
         /// argN)}.
         /// </summary>

@@ -21,7 +21,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         {
             if (clauseName == null)
             {
-                throw new ArgumentNullException("clauseName");
+                throw new ArgumentNullException(nameof(clauseName));
             }
 
             this.clauseName = clauseName;

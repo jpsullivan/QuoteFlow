@@ -24,7 +24,7 @@ namespace QuoteFlow.Core.Jql.Query
         {
             if (searchHandlerManager == null)
             {
-                throw new ArgumentNullException("searchHandlerManager");
+                throw new ArgumentNullException(nameof(searchHandlerManager));
             }
 
             this.searchHandlerManager = searchHandlerManager;

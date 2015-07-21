@@ -19,12 +19,12 @@ namespace QuoteFlow.Api.Jql.Context
         {
             if (usageValidator == null)
             {
-                throw new ArgumentNullException("usageValidator");
+                throw new ArgumentNullException(nameof(usageValidator));
             }
 
             if (delegatingContextFactory == null)
             {
-                throw new ArgumentNullException("delegatingContextFactory");
+                throw new ArgumentNullException(nameof(delegatingContextFactory));
             }
 
             _usageValidator = usageValidator;

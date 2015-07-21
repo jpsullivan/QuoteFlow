@@ -31,7 +31,7 @@ namespace QuoteFlow.Core.Services
         {
             if (manufacturerId == 0)
             {
-                throw new ArgumentException("Manufacturer ID must be greater than zero.", "manufacturerId");
+                throw new ArgumentException("Manufacturer ID must be greater than zero.", nameof(manufacturerId));
             }
 
             var manufacturer = Current.DB.Manufacturers.Get(manufacturerId);
@@ -142,7 +142,7 @@ namespace QuoteFlow.Core.Services
         {
             if (id == 0)
             {
-                throw new ArgumentException("Manufacturer ID must be greater than zero.", "id");
+                throw new ArgumentException("Manufacturer ID must be greater than zero.", nameof(id));
             }
 
             Current.DB.Manufacturers.Update(id, diff);

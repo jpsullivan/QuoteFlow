@@ -74,7 +74,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
         {
             if (values == null)
             {
-                throw new ArgumentNullException("values");
+                throw new ArgumentNullException(nameof(values));
             }
 
             var operandValues = new HashSet<IOperand>();

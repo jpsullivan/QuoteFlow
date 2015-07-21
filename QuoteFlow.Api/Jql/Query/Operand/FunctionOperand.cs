@@ -36,12 +36,12 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
         public FunctionOperand(string name, IEnumerable<string> args)
         {
-            if (name == null) throw new ArgumentNullException("name");
-            if (args == null) throw new ArgumentNullException("args");
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (args == null) throw new ArgumentNullException(nameof(args));
 
             if (args.Any(arg => arg == null))
             {
-                throw new ArgumentException("Cannot be empty.", "args");
+                throw new ArgumentException("Cannot be empty.", nameof(args));
             }
 
             Name = name;

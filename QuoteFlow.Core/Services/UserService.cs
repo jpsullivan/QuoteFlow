@@ -426,7 +426,7 @@ namespace QuoteFlow.Core.Services
         {
             if (user == null)
             {
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
             }
 
             user.EmailAllowed = emailAllowed;
@@ -567,12 +567,12 @@ namespace QuoteFlow.Core.Services
         {
             if (user == null)
             {
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
             }
 
             if (String.IsNullOrEmpty(token))
             {
-                throw new ArgumentNullException("token");
+                throw new ArgumentNullException(nameof(token));
             }
 
             if (user.EmailConfirmationToken != token)

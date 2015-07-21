@@ -30,7 +30,7 @@ namespace QuoteFlow.Core.Diagnostics
             }
             if (String.IsNullOrEmpty(message))
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Strings.ParameterCannotBeNullOrEmpty, "message"), "message");
+                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Strings.ParameterCannotBeNullOrEmpty, "message"), nameof(message));
             }
 
             _source.TraceEvent(type, id, FormatMessage(message, member, file, line));

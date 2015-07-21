@@ -15,7 +15,7 @@ namespace QuoteFlow.Core.Lucene.Index
         {
             if (engine == null)
             {
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
             }
 
             Engine = engine;
@@ -25,7 +25,7 @@ namespace QuoteFlow.Core.Lucene.Index
         {
             if (operation == null)
             {
-                throw new ArgumentNullException("operation");
+                throw new ArgumentNullException(nameof(operation));
             }
 
             try

@@ -19,17 +19,17 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
         {
             if (string.IsNullOrWhiteSpace(id))
             {
-                throw new ArgumentException("id cannot be blank.", "id");
+                throw new ArgumentException("id cannot be blank.", nameof(id));
             }
 
             if (string.IsNullOrWhiteSpace(fieldName))
             {
-                throw new ArgumentException("fieldName cannot be blank.", "fieldName");
+                throw new ArgumentException("fieldName cannot be blank.", nameof(fieldName));
             }
 
             if (clauseNames == null)
             {
-                throw new ArgumentNullException("clauseNames");
+                throw new ArgumentNullException(nameof(clauseNames));
             }
 
             Id = id;

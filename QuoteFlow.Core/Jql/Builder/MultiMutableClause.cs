@@ -8,8 +8,7 @@ namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
 	/// A <see cref="IMutableClause"/> that represents a collection of MutableClauses joined by
-	/// either an <see cref="BuilderOperator.AND"/> or an {@link
-	/// BuilderOperator#OR}.
+	/// either an <see cref="BuilderOperator.AND"/> or an <see cref="BuilderOperator.OR"/>
 	/// </summary>
     public class MultiMutableClause<T> : IMutableClause where T : IMutableClause
     {
@@ -20,7 +19,7 @@ namespace QuoteFlow.Core.Jql.Builder
 		{
 		}
 
-        private MultiMutableClause(BuilderOperator logicalOperator, List<IMutableClause> clauses)
+        private MultiMutableClause(BuilderOperator logicalOperator, IReadOnlyCollection<IMutableClause> clauses)
         {
             if (logicalOperator != BuilderOperator.AND && logicalOperator != BuilderOperator.OR)
 			{
@@ -47,7 +46,7 @@ namespace QuoteFlow.Core.Jql.Builder
 			{
 			    if (otherClause == null)
 			    {
-			        throw new ArgumentNullException("otherClause");
+			        throw new ArgumentNullException(nameof(otherClause));
 			    }
 
 				_clauses.Add(otherClause);

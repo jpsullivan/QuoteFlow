@@ -58,7 +58,7 @@ namespace QuoteFlow.Core.Asset.Search.Handlers
         {
             if (field == null)
             {
-                throw new ArgumentNullException("field");
+                throw new ArgumentNullException(nameof(field));
             }
 
             IAssetSearcher<ISearchableField> searcher = CreateSearchableField(searcherClass, field);

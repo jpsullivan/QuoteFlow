@@ -160,12 +160,12 @@ namespace QuoteFlow.Core.Services
         {
             if (asset == null) 
             {
-                throw new ArgumentNullException("asset");
+                throw new ArgumentNullException(nameof(asset));
             }
 
             if (userId == 0) 
             {
-                throw new ArgumentException("User Id must be greater than zero.", "userId");
+                throw new ArgumentException("User Id must be greater than zero.", nameof(userId));
             }
 
             // Fill in any fields that one shouldn't be concerned with elsewhere
@@ -215,7 +215,7 @@ namespace QuoteFlow.Core.Services
         {
             if (assetId == 0) 
             {
-                throw new ArgumentException("Asset ID must be greater than zero.", "assetId");
+                throw new ArgumentException("Asset ID must be greater than zero.", nameof(assetId));
             }
 
             var asset = GetAsset(assetId);
