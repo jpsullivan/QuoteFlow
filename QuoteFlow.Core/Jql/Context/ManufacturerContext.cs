@@ -11,7 +11,7 @@ namespace QuoteFlow.Core.Jql.Context
         {
             if (manufacturerId == 0)
             {
-                throw new ArgumentOutOfRangeException("manufacturerId", "manufacturerId must be greater than zero.");
+                throw new ArgumentOutOfRangeException(nameof(manufacturerId), "manufacturerId must be greater than zero.");
             }
 
             ManufacturerId = manufacturerId;

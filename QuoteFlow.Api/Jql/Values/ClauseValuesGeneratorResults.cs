@@ -11,7 +11,7 @@ namespace QuoteFlow.Api.Jql.Values
 		{
             if (results == null)
             {
-                throw new ArgumentNullException("results");
+                throw new ArgumentNullException(nameof(results));
             }
 
             this.results = new List<ClauseValuesGeneratorResult>(results);

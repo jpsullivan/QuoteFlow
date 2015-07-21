@@ -11,7 +11,7 @@ namespace QuoteFlow.Core.Services
         {
             if (organizationId == 0)
             {
-                throw new ArgumentException("Organization ID must be greater than zero.", "organizationId");
+                throw new ArgumentException("Organization ID must be greater than zero.", nameof(organizationId));
             }
 
             const string sql = "select * from QuoteStatus where OrganizationId = @organizationId order by OrderNum ASC";

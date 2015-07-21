@@ -15,12 +15,12 @@ namespace QuoteFlow.Core.Lucene.Index
         {
             if (entity == null)
             {
-                throw new ArgumentNullException("entity");
+                throw new ArgumentNullException(nameof(entity));
             }
 
             if (indexName == null)
             {
-                throw new ArgumentNullException("indexName");
+                throw new ArgumentNullException(nameof(indexName));
             }
 
             Entity = entity;

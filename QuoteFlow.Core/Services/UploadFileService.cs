@@ -22,7 +22,7 @@ namespace QuoteFlow.Services
         {
             if (userId < 1)
             {
-                throw new ArgumentException("A user id is required.", "userId");
+                throw new ArgumentException("A user id is required.", nameof(userId));
             }
 
             var uploadFileName = BuildFileName(userId);
@@ -34,7 +34,7 @@ namespace QuoteFlow.Services
         {
             if (userId < 1)
             {
-                throw new ArgumentException("A user id is required.", "userId");
+                throw new ArgumentException("A user id is required.", nameof(userId));
             }
 
             // Use the trick of a private core method that actually does the async stuff to allow for sync arg contract checking
@@ -45,17 +45,17 @@ namespace QuoteFlow.Services
         {
             if (userId < 1)
             {
-                throw new ArgumentException("A user id is required.", "userId");
+                throw new ArgumentException("A user id is required.", nameof(userId));
             }
 
             if (fileStream == null)
             {
-                throw new ArgumentNullException("fileStream");
+                throw new ArgumentNullException(nameof(fileStream));
             }
 
             if (fileExtension == null) 
             {
-                throw new ArgumentNullException("fileExtension");
+                throw new ArgumentNullException(nameof(fileExtension));
             }
 
             if (filename.IsNullOrEmpty())

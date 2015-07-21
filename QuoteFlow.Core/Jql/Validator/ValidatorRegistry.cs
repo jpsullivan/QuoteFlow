@@ -25,7 +25,7 @@ namespace QuoteFlow.Core.Jql.Validator
         {
             if (clause == null)
             {
-                throw new ArgumentNullException("clause");
+                throw new ArgumentNullException(nameof(clause));
             }
             
             var clauseHandlers = manager.GetClauseHandler(searcher, clause.Name).ToList();

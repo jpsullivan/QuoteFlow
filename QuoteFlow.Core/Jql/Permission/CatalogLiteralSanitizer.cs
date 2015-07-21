@@ -29,12 +29,12 @@ namespace QuoteFlow.Core.Jql.Permission
 		{
             if (catalogResolver == null)
             {
-                throw new ArgumentNullException("catalogResolver");
+                throw new ArgumentNullException(nameof(catalogResolver));
             }
 
             if (indexInfoResolver == null)
             {
-                throw new ArgumentNullException("indexInfoResolver");
+                throw new ArgumentNullException(nameof(indexInfoResolver));
             }
 
 			_catalogResolver = catalogResolver;
@@ -54,7 +54,7 @@ namespace QuoteFlow.Core.Jql.Permission
         {
 		    if (literals == null)
 		    {
-                throw new ArgumentNullException("literals");
+                throw new ArgumentNullException(nameof(literals));
 		    }
             
             bool isModified = false;

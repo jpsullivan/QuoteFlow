@@ -24,48 +24,34 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
     /// </summary>
     public abstract class AbstractSearchInputTransformer : ISearchInputTransformer
     {
-        protected internal IJqlOperandResolver operandResolver;
-        protected internal readonly string fieldsKey;
-        protected internal readonly string id;
-        private readonly TextQueryValidator textQueryValidator;
+        protected readonly IJqlOperandResolver OperandResolver;
+        protected readonly string FieldsKey;
+        protected readonly string Id;
+
+        private readonly TextQueryValidator _textQueryValidator;
 
         public AbstractSearchInputTransformer(IJqlOperandResolver operandResolver, string id, string fieldsKey)
         {
             if (operandResolver == null)
             {
-                throw new ArgumentNullException("operandResolver");
+                throw new ArgumentNullException(nameof(operandResolver));
             }
 
-            this.operandResolver = operandResolver;
-            this.id = id;
-            this.fieldsKey = fieldsKey;
-            this.textQueryValidator = new TextQueryValidator();
+            OperandResolver = operandResolver;
+            Id = id;
+            FieldsKey = fieldsKey;
+            _textQueryValidator = new TextQueryValidator();
         }
 
         protected internal bool HasDuplicates(IEnumerable<ITerminalClause> foundChildren)
         {
             ISet<string> containsSet = new HashSet<string>();
-            foreach (TerminalClause foundChild in foundChildren)
-            {
-                if (!containsSet.Add(foundChild.Name))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return foundChildren.Any(foundChild => !containsSet.Add(foundChild.Name));
         }
 
         protected internal bool HasEmpties(IEnumerable<ITerminalClause> foundChildren)
         {
-            foreach (TerminalClause foundChild in foundChildren)
-            {
-                var operand = foundChild.Operand;
-                if (operandResolver.IsEmptyOperand(operand))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return foundChildren.Select(foundChild => foundChild.Operand).Any(operand => OperandResolver.IsEmptyOperand(operand));
         }
 
         protected internal string GetValueForField(IEnumerable<ITerminalClause> terminalClauses, User user, params string[] jqlClauseNames)
@@ -73,10 +59,10 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             return GetValueForField(terminalClauses, user, jqlClauseNames.ToList());
         }
 
-        protected internal string GetValueForField(IEnumerable<ITerminalClause> terminalClauses, User user, ICollection<string> jqlClauseNames)
+        private string GetValueForField(IEnumerable<ITerminalClause> terminalClauses, User user, ICollection<string> jqlClauseNames)
         {
-            TerminalClause theClause = null;
-            foreach (TerminalClause terminalClause in terminalClauses)
+            ITerminalClause theClause = null;
+            foreach (var terminalClause in terminalClauses)
             {
                 if (jqlClauseNames.Contains(terminalClause.Name))
                 {
@@ -92,7 +78,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             if (theClause != null)
             {
                 var operand = theClause.Operand;
-                QueryLiteral rawValue = operandResolver.GetSingleValue(user, operand, theClause);
+                QueryLiteral rawValue = OperandResolver.GetSingleValue(user, operand, theClause);
                 if (rawValue != null && !rawValue.IsEmpty)
                 {
                     return rawValue.AsString();
@@ -103,12 +89,12 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 
         public void ValidateParams(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
         {
-            string query = (string)fieldValuesHolder[id];
+            string query = (string)fieldValuesHolder[Id];
 
             if (query.HasValue())
             {
 
-                IMessageSet validationResult = textQueryValidator.Validate(CreateQueryParser(), query, id, null, true);
+                IMessageSet validationResult = _textQueryValidator.Validate(CreateQueryParser(), query, Id, null, true);
                 foreach (String errorMessage in validationResult.ErrorMessages)
                 {
                     //errors.AddError(id, errorMessage);
@@ -116,7 +102,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             }
         }
 
-        internal QueryParser CreateQueryParser()
+        private static QueryParser CreateQueryParser()
         {
             // We pass in the summary index field here, because we dont actually care about the lhs of the query, only that
             // user input can be parsed.

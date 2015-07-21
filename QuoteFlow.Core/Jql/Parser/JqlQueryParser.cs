@@ -19,7 +19,7 @@ namespace QuoteFlow.Core.Jql.Parser
         {
             if (jqlQuery == null)
             {
-                throw new ArgumentNullException("jqlQuery");
+                throw new ArgumentNullException(nameof(jqlQuery));
             }
 
             JqlParser.query_return aReturn = ParseClause(jqlQuery);
@@ -32,7 +32,7 @@ namespace QuoteFlow.Core.Jql.Parser
         {
             if (fieldName == null)
             {
-                throw new ArgumentNullException("fieldName");
+                throw new ArgumentNullException(nameof(fieldName));
             }
 
             try
@@ -60,7 +60,7 @@ namespace QuoteFlow.Core.Jql.Parser
         {
             if (argument == null)
             {
-                throw new ArgumentNullException("argument");
+                throw new ArgumentNullException(nameof(argument));
             }
 
             try
@@ -77,7 +77,7 @@ namespace QuoteFlow.Core.Jql.Parser
         {
             if (functionName == null)
             {
-                throw new ArgumentNullException("functionName");
+                throw new ArgumentNullException(nameof(functionName));
             }
 
             try
@@ -95,7 +95,7 @@ namespace QuoteFlow.Core.Jql.Parser
         {
             if (value == null)
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
 
             try

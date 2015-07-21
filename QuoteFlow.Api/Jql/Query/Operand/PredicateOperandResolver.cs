@@ -21,7 +21,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
         {
             if (operand == null)
             {
-                throw new ArgumentNullException("operand");
+                throw new ArgumentNullException(nameof(operand));
             }
 
             return predicateOperandHandlerRegistry.GetHandler(searcher, field, operand).Values;

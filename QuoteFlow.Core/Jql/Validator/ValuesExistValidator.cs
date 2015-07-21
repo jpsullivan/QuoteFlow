@@ -19,7 +19,7 @@ namespace QuoteFlow.Core.Jql.Validator
         {
             if (operandResolver == null)
             {
-                throw new ArgumentNullException("operandResolver");
+                throw new ArgumentNullException(nameof(operandResolver));
             }
 
             _operandResolver = operandResolver;

@@ -25,7 +25,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
 		public MultiValueOperand(params string[] stringValues)
 		{
-		    if (stringValues == null) throw new ArgumentNullException("stringValues");
+		    if (stringValues == null) throw new ArgumentNullException(nameof(stringValues));
             if (!stringValues.Any()) throw new ArgumentException("stringValues cannot be empty");
 
 		    var tmpValues = new List<IOperand>(stringValues.Length);
@@ -77,7 +77,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
         public MultiValueOperand(List<IOperand> values)
 		{
-            if (values == null) throw new ArgumentNullException("values");
+            if (values == null) throw new ArgumentNullException(nameof(values));
             if (!values.Any()) throw new ArgumentException("values cannot be empty");
             if (values.Any(value => value == null))
             {

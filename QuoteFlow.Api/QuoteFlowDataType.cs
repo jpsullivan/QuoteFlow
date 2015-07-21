@@ -18,12 +18,12 @@ namespace QuoteFlow.Api
 		{
 		    if (types == null)
 		    {
-		        throw new ArgumentNullException("types");
+		        throw new ArgumentNullException(nameof(types));
 		    }
 
 		    if (types.Count == 0)
 		    {
-		        throw new ArgumentException("Provided types cannot be empty", "types");
+		        throw new ArgumentException("Provided types cannot be empty", nameof(types));
 		    }
 
 		    dataTypes = new List<Type>((IList<Type>) types);
@@ -44,7 +44,7 @@ namespace QuoteFlow.Api
 		{
 		    if (otherType == null)
 		    {
-		        throw new ArgumentNullException("otherType");
+		        throw new ArgumentNullException(nameof(otherType));
 		    }
 
 		    if (otherType is QuoteFlowDataType<T>)

@@ -70,7 +70,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns>The new clause builder.</returns>
         public static IJqlClauseBuilder NewClauseBuilder(IQuery query)
         {
-            return CreateClauseBuilder(null, query == null ? null : query.WhereClause);
+            return CreateClauseBuilder(null, query?.WhereClause);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <returns> the new clause builder. </returns>
         public static JqlOrderByBuilder NewOrderByBuilder(IQuery query)
         {
-            return CreateOrderByBuilder(null, query == null ? null : query.OrderByClause);
+            return CreateOrderByBuilder(null, query?.OrderByClause);
         }
 
         private JqlQueryBuilder()
@@ -187,7 +187,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         private static JqlOrderByBuilder CreateOrderByBuilder(JqlQueryBuilder parent, IOrderBy copy)
         {
-            JqlOrderByBuilder builder = new JqlOrderByBuilder(parent);
+            var builder = new JqlOrderByBuilder(parent);
             if (copy != null)
             {
                 builder.SetSorts(copy);

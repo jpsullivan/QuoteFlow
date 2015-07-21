@@ -17,7 +17,7 @@ namespace QuoteFlow.Core.Jql.Parser.Antlr
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             Stream = stream;

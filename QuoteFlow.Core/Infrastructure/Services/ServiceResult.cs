@@ -11,7 +11,7 @@ namespace QuoteFlow.Core.Infrastructure.Services
     {
         protected ServiceResult(IErrorCollection errorCollection)
         {
-            if (errorCollection == null) throw new ArgumentNullException("errorCollection");
+            if (errorCollection == null) throw new ArgumentNullException(nameof(errorCollection));
             ErrorCollection = errorCollection;
         }
 

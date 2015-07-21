@@ -30,14 +30,14 @@ namespace QuoteFlow.Core.Lucene
 
         class TitleAnalyzer : Analyzer
         {
-            private static readonly WhitespaceAnalyzer whitespaceAnalyzer = new WhitespaceAnalyzer();
+            private static readonly WhitespaceAnalyzer WhitespaceAnalyzer = new WhitespaceAnalyzer();
 
             public override TokenStream TokenStream(string fieldName, TextReader reader)
             {
                 // Split the title based on IdSeparators, then run it through the innerAnalyzer
                 string title = reader.ReadToEnd();
-                string partiallyTokenized = String.Join(" ", title.Split(new []{ '.', '-' }, StringSplitOptions.RemoveEmptyEntries));
-                TokenStream result = whitespaceAnalyzer.TokenStream(fieldName, new StringReader(partiallyTokenized));
+                string partiallyTokenized = string.Join(" ", title.Split(new []{ '.', '-' }, StringSplitOptions.RemoveEmptyEntries));
+                TokenStream result = WhitespaceAnalyzer.TokenStream(fieldName, new StringReader(partiallyTokenized));
                 result = new LowerCaseFilter(result);
                 return result;
             }

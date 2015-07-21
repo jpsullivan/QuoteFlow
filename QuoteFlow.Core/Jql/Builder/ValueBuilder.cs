@@ -19,8 +19,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public ValueBuilder(IJqlClauseBuilder builder, string clauseName, Operator @operator)
         {
-            if (builder == null) throw new ArgumentNullException("builder");
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
+            if (builder == null) throw new ArgumentNullException(nameof(builder));
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
 
             _builder = builder;
             _clauseName = clauseName;
@@ -94,7 +94,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public virtual IJqlClauseBuilder FunctionMembersOf(string groupName)
         {
-            if (groupName.IsNullOrEmpty()) throw new ArgumentNullException("groupName");
+            if (groupName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(groupName));
 
             return Function(MembersOfFunction.FUNCTION_MEMBERSOF, groupName);
         }

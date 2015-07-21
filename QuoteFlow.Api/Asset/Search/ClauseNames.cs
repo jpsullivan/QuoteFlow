@@ -31,13 +31,13 @@ namespace QuoteFlow.Api.Asset.Search
             // ensure that the primary name isn't empty
             if (primaryName.IsNullOrWhiteSpace())
             {
-                throw new ArgumentNullException("primaryName");
+                throw new ArgumentNullException(nameof(primaryName));
             }
 
             // ensure that names doesn't contain any empty elements
             if (names.Any(name => name.IsNullOrWhiteSpace()))
             {
-                throw new ArgumentNullException("names");
+                throw new ArgumentNullException(nameof(names));
             }
 
             newNames.UnionWith(names);

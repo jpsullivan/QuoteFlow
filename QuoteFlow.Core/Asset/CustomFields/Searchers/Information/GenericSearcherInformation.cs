@@ -25,17 +25,17 @@ namespace QuoteFlow.Core.Asset.CustomFields.Searchers.Information
         {
             if (string.IsNullOrEmpty(id))
             {
-                throw new ArgumentException("ID Cannot be empty", "id");
+                throw new ArgumentException("ID Cannot be empty", nameof(id));
             }
 
             if (string.IsNullOrEmpty(nameKey))
             {
-                throw new ArgumentException("NameKey Cannot be empty", "nameKey");
+                throw new ArgumentException("NameKey Cannot be empty", nameof(nameKey));
             }
 
             if (fieldReference == null)
             {
-                throw new ArgumentNullException("fieldReference");
+                throw new ArgumentNullException(nameof(fieldReference));
             }
 
             Id = id;

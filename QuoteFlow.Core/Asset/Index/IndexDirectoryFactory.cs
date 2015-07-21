@@ -14,8 +14,8 @@ namespace QuoteFlow.Core.Asset.Index
 
         public IndexDirectoryFactory(IIndexPathManager indexPathManager, IIndexWriterConfiguration writerConfiguration)
         {
-            if (indexPathManager == null) throw new ArgumentNullException("indexPathManager");
-            if (writerConfiguration == null) throw new ArgumentNullException("writerConfiguration");
+            if (indexPathManager == null) throw new ArgumentNullException(nameof(indexPathManager));
+            if (writerConfiguration == null) throw new ArgumentNullException(nameof(writerConfiguration));
 
             IndexPathManager = indexPathManager;
             WriterConfiguration = writerConfiguration;

@@ -12,19 +12,19 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
     /// </summary>
     internal class TextQueryValidatingVisitor : SimpleNavigatorCollectorVisitor, IClauseVisitor<object>
     {
-        private bool seenQueryClauses;
-        private string clauseName;
-        private ITerminalClause terminal;
+        private bool _seenQueryClauses;
+        private readonly string _clauseName;
+        private ITerminalClause _terminal;
 
         public TextQueryValidatingVisitor(string clauseName)
             : base(clauseName)
         {
             if (clauseName == null)
             {
-                throw new ArgumentNullException("clauseName");
+                throw new ArgumentNullException(nameof(clauseName));
             }
 
-            this.clauseName = clauseName;
+            _clauseName = clauseName;
         }
 
         public virtual void Visit(OrClause orClause)
@@ -35,24 +35,24 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         public virtual void Visit(ITerminalClause terminalClause)
         {
             base.Visit(terminalClause);
-            if (!terminalClause.Name.Equals(clauseName, StringComparison.InvariantCultureIgnoreCase)) return;
+            if (!terminalClause.Name.Equals(_clauseName, StringComparison.InvariantCultureIgnoreCase)) return;
 
-            if ((seenQueryClauses) || terminalClause.Operator != Operator.LIKE)
+            if ((_seenQueryClauses) || terminalClause.Operator != Operator.LIKE)
             {
                 valid = false;
             }
             else
             {
-                seenQueryClauses = true;
-                terminal = !valid ? null : terminalClause;
+                _seenQueryClauses = true;
+                _terminal = !valid ? null : terminalClause;
             }
         }
 
         public virtual string GetTextTerminalValue(IJqlOperandResolver operandResolver, User user)
         {
-            if (terminal != null)
+            if (_terminal != null)
             {
-                QueryLiteral rawValue = operandResolver.GetSingleValue(user, terminal.Operand, terminal);
+                QueryLiteral rawValue = operandResolver.GetSingleValue(user, _terminal.Operand, _terminal);
                 if (rawValue != null && !rawValue.IsEmpty)
                 {
                     return rawValue.AsString();

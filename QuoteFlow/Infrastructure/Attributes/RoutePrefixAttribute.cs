@@ -23,7 +23,7 @@ namespace QuoteFlow.Infrastructure.Attributes
         {
             if (url == null)
             {
-                throw new ArgumentNullException("url");
+                throw new ArgumentNullException(nameof(url));
             }
             Url = url;
         }

@@ -65,12 +65,12 @@ namespace QuoteFlow.Core.Jql.Query
 		{
 		    if (predicate == null)
 		    {
-		        throw new ArgumentNullException("predicate");
+		        throw new ArgumentNullException(nameof(predicate));
 		    }
 
 		    if (predicateQuery == null)
 		    {
-		        throw new ArgumentNullException("predicateQuery");
+		        throw new ArgumentNullException(nameof(predicateQuery));
 		    }
 
 			var @operator = predicate.Operator;

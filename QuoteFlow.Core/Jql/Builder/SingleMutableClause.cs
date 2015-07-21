@@ -14,7 +14,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if (clause == null)
             {
-                throw new ArgumentNullException("clause");
+                throw new ArgumentNullException(nameof(clause));
             }
 
             _clause = clause;

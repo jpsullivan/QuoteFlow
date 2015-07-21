@@ -19,8 +19,8 @@ namespace QuoteFlow.Core.Jql.Context
 
         public AllTextClauseContextFactory(ISearchHandlerManager searchHandlerManager, ContextSetUtil contextSetUtil)
         {
-            if (searchHandlerManager == null) throw new ArgumentNullException("searchHandlerManager");
-            if (contextSetUtil == null) throw new ArgumentNullException("contextSetUtil");
+            if (searchHandlerManager == null) throw new ArgumentNullException(nameof(searchHandlerManager));
+            if (contextSetUtil == null) throw new ArgumentNullException(nameof(contextSetUtil));
 
             this.searchHandlerManager = searchHandlerManager;
             this.contextSetUtil = contextSetUtil;

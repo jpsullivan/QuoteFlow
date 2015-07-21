@@ -35,12 +35,12 @@ namespace QuoteFlow.Core.Asset.Search.Handlers
         {
             if (clauseContextFactory == null)
             {
-                throw new ArgumentNullException("clauseContextFactory");
+                throw new ArgumentNullException(nameof(clauseContextFactory));
             }
 
             if (clauseValidator == null)
             {
-                throw new ArgumentNullException("clauseValidator");
+                throw new ArgumentNullException(nameof(clauseValidator));
             }
 
             this.operandResolver = operandResolver;

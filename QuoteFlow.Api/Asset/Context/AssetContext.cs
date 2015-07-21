@@ -33,7 +33,7 @@ namespace QuoteFlow.Api.Asset.Context
 
         public AssetContext(Catalog catalog)
         {
-            CatalogId = catalog != null ? catalog.Id : (int?) null;
+            CatalogId = catalog?.Id;
         }
 
         public AssetContext(int? catalogId)

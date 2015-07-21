@@ -31,12 +31,12 @@ namespace QuoteFlow.Core.Jql.Operand
 		{
 		    if (registry == null)
 		    {
-		        throw new ArgumentNullException("registry");
+		        throw new ArgumentNullException(nameof(registry));
 		    }
 
 		    if (queryCache == null)
 		    {
-		        throw new ArgumentNullException("queryCache");
+		        throw new ArgumentNullException(nameof(queryCache));
 		    }
 
 		    _registry = registry;
@@ -50,27 +50,27 @@ namespace QuoteFlow.Core.Jql.Operand
 		{
             if (registry == null)
             {
-                throw new ArgumentNullException("registry");
+                throw new ArgumentNullException(nameof(registry));
             }
 
             if (emptyHandler == null)
             {
-                throw new ArgumentNullException("emptyHandler");
+                throw new ArgumentNullException(nameof(emptyHandler));
             }
 
             if (singleHandler == null)
             {
-                throw new ArgumentNullException("singleHandler");
+                throw new ArgumentNullException(nameof(singleHandler));
             }
 
             if (multiHandler == null)
             {
-                throw new ArgumentNullException("multiHandler");
+                throw new ArgumentNullException(nameof(multiHandler));
             }
 
             if (queryCache == null)
             {
-                throw new ArgumentNullException("queryCache");
+                throw new ArgumentNullException(nameof(queryCache));
             }
 
 			_registry = registry;
@@ -94,7 +94,7 @@ namespace QuoteFlow.Core.Jql.Operand
         {
             if (operand == null)
             {
-                throw new ArgumentNullException("operand");
+                throw new ArgumentNullException(nameof(operand));
             }
 
             var values = GetValuesFromCache(queryCreationContext, operand, terminalClause);
@@ -132,7 +132,7 @@ namespace QuoteFlow.Core.Jql.Operand
         {
             if (operand == null)
             {
-                throw new ArgumentNullException("operand");
+                throw new ArgumentNullException(nameof(operand));
             }
 
             var emptyOperand = operand as EmptyOperand;
@@ -163,7 +163,7 @@ namespace QuoteFlow.Core.Jql.Operand
                     return handler.Validate(user, funcOperand, terminalClause);
                 }
                 var messageSet = new MessageSet();
-                messageSet.AddErrorMessage(string.Format("quoteflow.jql.operand.illegal.function: {0}", operand.DisplayString));
+                messageSet.AddErrorMessage($"quoteflow.jql.operand.illegal.function: {operand.DisplayString}");
                 return messageSet;
             }
             else
@@ -171,7 +171,7 @@ namespace QuoteFlow.Core.Jql.Operand
                 //log.debug(string.Format("Unknown operand type '{0}' with name '{1}'", operand.GetType(), operand.DisplayString));
 
                 var messageSet = new MessageSet();
-                messageSet.AddErrorMessage(string.Format("quoteflow.jql.operand.illegal.operand: {0}", operand.DisplayString));
+                messageSet.AddErrorMessage($"quoteflow.jql.operand.illegal.operand: {operand.DisplayString}");
                 return messageSet;
             }
         }
@@ -313,7 +313,7 @@ namespace QuoteFlow.Core.Jql.Operand
 		{
             if (operand == null)
             {
-                throw new ArgumentNullException("operand");
+                throw new ArgumentNullException(nameof(operand));
             }
 
 			if (operand is EmptyOperand)

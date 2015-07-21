@@ -10,7 +10,7 @@ namespace QuoteFlow.Core.Asset.Search.Util
         {
             if (originalQuery == null)
             {
-                throw new ArgumentNullException("originalQuery");
+                throw new ArgumentNullException(nameof(originalQuery));
             }
 
             if (originalQuery is BooleanQuery)

@@ -12,7 +12,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
         public SingleValueOperand(string stringValue)
         {
-            if (stringValue == null) throw new ArgumentNullException("stringValue");
+            if (stringValue == null) throw new ArgumentNullException(nameof(stringValue));
 
             _stringValue = stringValue;
             _intValue = null;

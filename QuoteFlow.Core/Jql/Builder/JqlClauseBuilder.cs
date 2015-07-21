@@ -24,12 +24,12 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if (jqlDateSupport == null)
             {
-                throw new ArgumentNullException("jqlDateSupport");
+                throw new ArgumentNullException(nameof(jqlDateSupport));
             }
 
             if (builder == null)
             {
-                throw new ArgumentNullException("builder");
+                throw new ArgumentNullException(nameof(builder));
             }
 
             _parent = parent;
@@ -240,7 +240,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if (jqlName.IsNullOrEmpty())
             {
-                throw new ArgumentNullException("jqlName");
+                throw new ArgumentNullException(nameof(jqlName));
             }
 
             return new ConditionBuilder(jqlName, this);
@@ -248,7 +248,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddClause(IClause clause)
         {
-            if (clause == null) throw new ArgumentNullException("clause");
+            if (clause == null) throw new ArgumentNullException(nameof(clause));
 
             _builder = _builder.Clause(clause);
             return this;
@@ -256,7 +256,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddDateCondition(string clauseName, Operator @operator, DateTime date)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
 
             return AddTerminalClause(clauseName, @operator, new SingleValueOperand(_jqlDateSupport.GetDateString(date)));
         }
@@ -273,8 +273,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddDateCondition(string clauseName, Operator @operator, params DateTime[] dates)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (dates == null) throw new ArgumentNullException("dates");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (dates == null) throw new ArgumentNullException(nameof(dates));
 
             if (!dates.Any())
             {
@@ -288,7 +288,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
             string[] args = new string[dates.Length];
             int position = 0;
-            foreach (DateTime date in dates)
+            foreach (var date in dates)
             {
                 args[position++] = _jqlDateSupport.GetDateString(date);
             }
@@ -308,8 +308,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddDateCondition(string clauseName, Operator @operator, ICollection<DateTime> dates)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (dates == null) throw new ArgumentNullException("dates");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (dates == null) throw new ArgumentNullException(nameof(dates));
 
             if (!dates.Any())
             {
@@ -323,7 +323,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
             string[] args = new string[dates.Count];
             int position = 0;
-            foreach (DateTime date in dates)
+            foreach (var date in dates)
             {
                 args[position++] = _jqlDateSupport.GetDateString(date);
             }
@@ -356,17 +356,17 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddFunctionCondition(string clauseName, Operator @operator, string functionName)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (functionName == null) throw new ArgumentNullException("functionName");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (functionName == null) throw new ArgumentNullException(nameof(functionName));
 
             return AddTerminalClause(clauseName, @operator, new FunctionOperand(functionName));
         }
 
         public IJqlClauseBuilder AddFunctionCondition(string clauseName, Operator @operator, string functionName, params string[] args)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (functionName == null) throw new ArgumentNullException("functionName");
-            if (args == null) throw new ArgumentNullException("args");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (functionName == null) throw new ArgumentNullException(nameof(functionName));
+            if (args == null) throw new ArgumentNullException(nameof(args));
 
             if (args.Any(clauseValue => clauseValue == null))
             {
@@ -378,9 +378,9 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddFunctionCondition(string clauseName, Operator @operator, string functionName, ICollection<string> args)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (functionName == null) throw new ArgumentNullException("functionName");
-            if (args == null) throw new ArgumentNullException("args");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (functionName == null) throw new ArgumentNullException(nameof(functionName));
+            if (args == null) throw new ArgumentNullException(nameof(args));
 
             if (args.Any(clauseValue => clauseValue == null))
             {
@@ -417,16 +417,16 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddStringCondition(string clauseName, Operator @operator, string clauseValue)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (clauseValue == null) throw new ArgumentNullException("clauseValue");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (clauseValue == null) throw new ArgumentNullException(nameof(clauseValue));
 
             return AddTerminalClause(clauseName, @operator, new SingleValueOperand(clauseValue));
         }
 
         public IJqlClauseBuilder AddStringCondition(string clauseName, Operator @operator, params string[] clauseValues)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (clauseValues == null) throw new ArgumentNullException("clauseValues");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (clauseValues == null) throw new ArgumentNullException(nameof(clauseValues));
 
             if (!clauseValues.Any())
             {
@@ -435,7 +435,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
             if (clauseValues.Any(clauseValue => clauseValue == null))
             {
-                throw new ArgumentException("No nulls are allowed", "clauseValues");
+                throw new ArgumentException("No nulls are allowed", nameof(clauseValues));
             }
 
             return AddTerminalClause(clauseName, @operator, new MultiValueOperand(clauseValues));
@@ -443,8 +443,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddStringCondition(string clauseName, Operator @operator, ICollection<string> clauseValues)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (clauseValues == null) throw new ArgumentNullException("clauseValues");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (clauseValues == null) throw new ArgumentNullException(nameof(clauseValues));
 
             if (!clauseValues.Any())
             {
@@ -453,7 +453,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
             if (clauseValues.Any(clauseValue => clauseValue == null))
             {
-                throw new ArgumentException("No nulls are allowed", "clauseValues");
+                throw new ArgumentException("No nulls are allowed", nameof(clauseValues));
             }
 
             return AddTerminalClause(clauseName, @operator, new MultiValueOperand(clauseValues.ToArray()));
@@ -494,16 +494,16 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, int? clauseValue)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (clauseValue == null) throw new ArgumentNullException("clauseValue");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (clauseValue == null) throw new ArgumentNullException(nameof(clauseValue));
 
             return AddTerminalClause(clauseName, @operator, new SingleValueOperand(clauseValue));
         }
 
         public IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, params int?[] clauseValues)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (clauseValues == null) throw new ArgumentNullException("clauseValues");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (clauseValues == null) throw new ArgumentNullException(nameof(clauseValues));
 
             if (!clauseValues.Any())
             {
@@ -512,7 +512,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
             if (clauseValues.Any(clauseValue => clauseValue == null))
             {
-                throw new ArgumentException("No nulls are allowed", "clauseValues");
+                throw new ArgumentException("No nulls are allowed", nameof(clauseValues));
             }
 
             return AddTerminalClause(clauseName, @operator, new MultiValueOperand(clauseValues));
@@ -520,8 +520,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, ICollection<int?> clauseValues)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (clauseValues == null) throw new ArgumentNullException("clauseValues");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (clauseValues == null) throw new ArgumentNullException(nameof(clauseValues));
 
             if (!clauseValues.Any())
             {
@@ -530,7 +530,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
             if (clauseValues.Any(clauseValue => clauseValue == null))
             {
-                throw new ArgumentException("No nulls are allowed", "clauseValues");
+                throw new ArgumentException("No nulls are allowed", nameof(clauseValues));
             }
 
             return AddTerminalClause(clauseName, @operator, new MultiValueOperand(clauseValues.ToArray()));
@@ -548,7 +548,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if (clauseName == null)
             {
-                throw new ArgumentNullException("clauseName");
+                throw new ArgumentNullException(nameof(clauseName));
             }
 
             return new ConditionBuilder(clauseName, this);
@@ -571,16 +571,16 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddCondition(string clauseName, Operator @operator, IOperand operand)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (operand == null) throw new ArgumentNullException("operand");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (operand == null) throw new ArgumentNullException(nameof(operand));
 
             return AddTerminalClause(clauseName, @operator, operand);
         }
 
         public IJqlClauseBuilder AddCondition(string clauseName, Operator @operator, params IOperand[] operands)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (operands == null) throw new ArgumentNullException("operands");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (operands == null) throw new ArgumentNullException(nameof(operands));
 
             if (operands.Any(op => op == null))
             {
@@ -592,8 +592,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddCondition<T>(string clauseName, Operator @operator, ICollection<T> operands) where T : IOperand
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
-            if (operands == null) throw new ArgumentNullException("operands");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (operands == null) throw new ArgumentNullException(nameof(operands));
 
             if (operands.Any(op => op == null))
             {
@@ -605,7 +605,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddRangeCondition(string clauseName, IOperand start, IOperand end)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
             if ((start == null) && (end == null))
             {
                 throw new ArgumentException("Start and End are both null.");
@@ -636,7 +636,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public IJqlClauseBuilder AddEmptyCondition(string clauseName)
         {
-            if (clauseName == null) throw new ArgumentNullException("clauseName");
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
             return AddTerminalClause(clauseName, Operator.IS, EmptyOperand.Empty);
         }
 

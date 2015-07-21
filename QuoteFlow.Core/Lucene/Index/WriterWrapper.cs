@@ -183,10 +183,7 @@ namespace QuoteFlow.Core.Lucene.Index
         {
             try
             {
-                if (searcher != null)
-                {
-                    searcher.Dispose();
-                }
+                searcher?.Dispose();
             }
             catch (Exception ex)
             {

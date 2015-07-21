@@ -9,7 +9,7 @@ namespace QuoteFlow.Core.Jql.Context
         {
             if (catalogId == null)
             {
-                throw new ArgumentNullException("catalogId");
+                throw new ArgumentNullException(nameof(catalogId));
             }
 
             CatalogId = catalogId;

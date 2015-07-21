@@ -28,7 +28,7 @@ namespace QuoteFlow.Core.Services
         {
             if (id == 0)
             {
-                throw new ArgumentException("Line item ID must be greater than zero.", "id");
+                throw new ArgumentException("Line item ID must be greater than zero.", nameof(id));
             }
 
             const string sql = @"select * from QuoteLineItems q 
@@ -52,7 +52,7 @@ namespace QuoteFlow.Core.Services
         {
             if (quoteId == 0)
             {
-                throw new ArgumentException("Quote ID must be greater than zero.", "quoteId");
+                throw new ArgumentException("Quote ID must be greater than zero.", nameof(quoteId));
             }
 
             const string sql = @"select * from QuoteLineItems q 
@@ -70,7 +70,7 @@ namespace QuoteFlow.Core.Services
         {
             if (lineItem == null)
             {
-                throw new ArgumentNullException("lineItem");
+                throw new ArgumentNullException(nameof(lineItem));
             }
 
             AddLineItem(lineItem.QuoteId, lineItem.AssetId, lineItem.Quantity);
@@ -105,7 +105,7 @@ namespace QuoteFlow.Core.Services
         {
             if (id == 0)
             {
-                throw new ArgumentException("Line item ID must be greater than zero.", "id");
+                throw new ArgumentException("Line item ID must be greater than zero.", nameof(id));
             }
 
             Current.DB.QuoteLineItems.Delete(id);

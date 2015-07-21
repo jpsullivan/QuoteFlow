@@ -34,8 +34,8 @@ namespace QuoteFlow.Api.Jql.Parser
 
 		public JqlParseErrorMessage(string key, int lineNumber, int columnNumber, IList<object> arguments)
 		{
-		    if (arguments == null) throw new ArgumentNullException("arguments");
-		    if (!arguments.Any()) throw new ArgumentException("Arguments cannot be empty", "arguments");
+		    if (arguments == null) throw new ArgumentNullException(nameof(arguments));
+		    if (!arguments.Any()) throw new ArgumentException("Arguments cannot be empty", nameof(arguments));
 		    if (arguments.Any(argument => argument == null))
 		    {
 		        throw new ArgumentNullException("Arguments cannot contain any nulls", "arguments");

@@ -132,7 +132,7 @@ namespace QuoteFlow.Core.Lucene.Index
             {
                 if (searcherSupplier == null)
                 {
-                    throw new ArgumentNullException("searcherSupplier");
+                    throw new ArgumentNullException(nameof(searcherSupplier));
                 }
 
                 _searcherSupplier = searcherSupplier;
@@ -175,7 +175,7 @@ namespace QuoteFlow.Core.Lucene.Index
             {
                 if (writerFactory == null)
                 {
-                    throw new ArgumentNullException("writerFactory");
+                    throw new ArgumentNullException(nameof(writerFactory));
                 }
 
                 _writerFactory = writerFactory;
@@ -334,10 +334,7 @@ namespace QuoteFlow.Core.Lucene.Index
 
             protected abstract T Open(T element);
 
-            protected bool IsNull
-            {
-                get { return _reference.Value == null; }
-            }
+            protected bool IsNull => _reference.Value == null;
 
             protected T Get()
             {

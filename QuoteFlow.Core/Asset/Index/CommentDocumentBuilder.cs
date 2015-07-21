@@ -51,7 +51,7 @@ namespace QuoteFlow.Core.Asset.Index
 
         public IEnumerable<Document> Build(IEnumerable<AssetComment> entities)
         {
-            return entities == null ? new List<Document>() : entities.Select(Build).ToList();
+            return entities?.Select(Build).ToList() ?? new List<Document>();
         }
     }
 }

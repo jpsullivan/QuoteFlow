@@ -42,7 +42,7 @@ namespace QuoteFlow.Infrastructure.Enumerables
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if (array == null) throw new ArgumentNullException("array");
+            if (array == null) throw new ArgumentNullException(nameof(array));
 
             array[arrayIndex] = _item;
         }

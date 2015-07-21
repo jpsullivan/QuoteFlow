@@ -59,7 +59,7 @@ namespace QuoteFlow.Api.Jql.Query.Clause
 		/// <param name="property"> the name of the property. </param>
 		public TerminalClause(string name, Operator oprator, IOperand operand, IEnumerable<Property> property)
 		{
-		    if (name == null) throw new ArgumentNullException("name");
+		    if (name == null) throw new ArgumentNullException(nameof(name));
 
 		    Operator = oprator;
 			Operand = operand;

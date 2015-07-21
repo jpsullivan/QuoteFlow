@@ -29,10 +29,7 @@ namespace QuoteFlow.Core.Lucene.Index
             _helper.CloseWhenDone();
         }
 
-        public bool IsClosed
-        {
-            get { return _helper.IsClosed; }
-        }
+        public bool IsClosed => _helper.IsClosed;
 
         protected override void Dispose(bool disposing)
         {

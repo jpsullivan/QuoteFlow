@@ -26,7 +26,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
 
             var catalogList = new List<string>();
@@ -46,7 +46,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
 
             var catalog = CatalogService.GetCatalog(name);

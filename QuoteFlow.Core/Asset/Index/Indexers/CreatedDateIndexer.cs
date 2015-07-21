@@ -5,15 +5,9 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public class CreatedDateIndexer : BaseFieldIndexer
     {
-        public override string Id
-        {
-            get { return SystemSearchConstants.ForCreatedDate().FieldId; }
-        }
+        public override string Id => SystemSearchConstants.ForCreatedDate().FieldId;
 
-        public override string DocumentFieldId
-        {
-            get { return SystemSearchConstants.ForCreatedDate().IndexField; }
-        }
+        public override string DocumentFieldId => SystemSearchConstants.ForCreatedDate().IndexField;
 
         public override bool IsFieldVisibleAndInScope(Api.Models.Asset asset)
         {

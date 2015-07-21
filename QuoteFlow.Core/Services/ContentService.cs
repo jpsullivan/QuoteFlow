@@ -37,12 +37,12 @@ namespace QuoteFlow.Core.Services
         {
             if (fileStorage == null)
             {
-                throw new ArgumentNullException("fileStorage");
+                throw new ArgumentNullException(nameof(fileStorage));
             }
 
             if (diagnosticsService == null)
             {
-                throw new ArgumentNullException("diagnosticsService");
+                throw new ArgumentNullException(nameof(diagnosticsService));
             }
 
             FileStorage = fileStorage;
@@ -53,7 +53,7 @@ namespace QuoteFlow.Core.Services
         {
             if (String.IsNullOrEmpty(name))
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Strings.ParameterCannotBeNullOrEmpty, "name"), "name");
+                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Strings.ParameterCannotBeNullOrEmpty, "name"), nameof(name));
             }
 
             return GetContentItemCore(name, expiresIn);

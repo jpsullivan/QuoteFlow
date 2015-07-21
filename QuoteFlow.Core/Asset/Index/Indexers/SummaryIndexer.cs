@@ -7,20 +7,14 @@ using QuoteFlow.Api.Models;
 namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     /// <summary>
-    /// Responsible for populating a <see cref="Document lucene document"/> with the information held in
+    /// Responsible for populating a <see cref="Document"/> lucene document with the information held in
     /// the &quot;Summary&quot; field of the <see cref="Asset asset"/>
     /// </summary>
     public class SummaryIndexer : BaseFieldIndexer
     {
-        public override string Id
-        {
-            get { return SystemSearchConstants.ForSummary().FieldId; }
-        }
+        public override string Id => SystemSearchConstants.ForSummary().FieldId;
 
-        public override string DocumentFieldId
-        {
-            get { return SystemSearchConstants.ForSummary().IndexField; }
-        }
+        public override string DocumentFieldId => SystemSearchConstants.ForSummary().IndexField;
 
         public override bool IsFieldVisibleAndInScope(Api.Models.Asset issue)
         {

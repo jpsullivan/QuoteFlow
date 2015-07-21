@@ -112,7 +112,7 @@ namespace QuoteFlow.Api.Asset.Search
 
             public ClauseRegistration(IClauseHandler handler)
             {
-                if (handler == null) throw new ArgumentNullException("handler");
+                if (handler == null) throw new ArgumentNullException(nameof(handler));
 
                 Handler = handler;
             }

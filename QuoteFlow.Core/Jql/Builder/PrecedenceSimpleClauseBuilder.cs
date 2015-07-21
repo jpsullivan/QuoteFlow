@@ -8,9 +8,9 @@ namespace QuoteFlow.Core.Jql.Builder
 {
     /// <summary>
     /// An implementation of <see cref="ISimpleClauseBuilder"/> that takes JQL prededence into account when building its associated
-    /// JQL <see cref="IClause"/>. For exmaple, the expression {@code
-    /// builder.clause(clause1).or().clause(clause2).and().clause(clause3).build()} will return the Clause representation of
-    /// <code>clause1 OR (clause2 AND clause3)</code>.
+    /// JQL <see cref="IClause"/>. For exmaple, the expression 
+    /// <code>builder.Clause(clause1).Or().Clause(clause2).And().Clause(clause3).Build()</code>
+    /// will return the Clause representation of <code>clause1 OR (clause2 AND clause3)</code>.
     /// </summary>
     public class PrecedenceSimpleClauseBuilder : ISimpleClauseBuilder
     {
@@ -20,17 +20,17 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public PrecedenceSimpleClauseBuilder()
         {
-            this._stacks = new Stacks();
-            this._builderState = StartState.INSTANCE.Enter(_stacks);
-            this._defaultOperator = BuilderOperator.None;
+            _stacks = new Stacks();
+            _builderState = StartState.INSTANCE.Enter(_stacks);
+            _defaultOperator = BuilderOperator.None;
         }
 
         private PrecedenceSimpleClauseBuilder(PrecedenceSimpleClauseBuilder copy)
         {
-            this._builderState = IllegalState.INSTANCE;
-            this._stacks = new Stacks(copy._stacks);
-            this._builderState = copy._builderState.Copy(this._stacks);
-            this._defaultOperator = copy._defaultOperator;
+            _builderState = IllegalState.INSTANCE;
+            _stacks = new Stacks(copy._stacks);
+            _builderState = copy._builderState.Copy(_stacks);
+            _defaultOperator = copy._defaultOperator;
         }
 
         public ISimpleClauseBuilder Clear()
@@ -64,7 +64,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if (clause == null)
             {
-                throw new ArgumentNullException("clause");
+                throw new ArgumentNullException(nameof(clause));
             }
 
             _builderState = _builderState.Add(_stacks, new SingleMutableClause(clause), _defaultOperator).Enter(_stacks);
@@ -126,10 +126,10 @@ namespace QuoteFlow.Core.Jql.Builder
         /// </summary>
         private sealed class Stacks
         {
-            private LinkedList<BuilderOperator> Operators { get; set; }
-            private LinkedList<IMutableClause> Operands { get; set; }
+            private LinkedList<BuilderOperator> Operators { get; }
+            private LinkedList<IMutableClause> Operands { get; }
 
-            internal int Level { get; set; }
+            internal int Level { get; private set; }
 
             public Stacks()
             {
@@ -385,11 +385,7 @@ namespace QuoteFlow.Core.Jql.Builder
             /// <returns> the string version of the passed clause. </returns>
             private static string ClauseToString(IMutableClause clause, BuilderOperator op)
             {
-                if (clause == null)
-                {
-                    return "";
-                }
-                IClause jqlClause = clause.AsClause();
+                IClause jqlClause = clause?.AsClause();
                 if (jqlClause == null)
                 {
                     return "";
@@ -767,12 +763,14 @@ namespace QuoteFlow.Core.Jql.Builder
 
             public virtual IBuilderState And(Stacks stacks)
             {
-                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", _lastOperator, BuilderOperator.AND, stacks.DisplayString));
+                throw new InvalidOperationException(
+                    $"Trying to create illegal JQL expression '{_lastOperator} {BuilderOperator.AND}'. Current JQL is '{stacks.DisplayString}'.");
             }
 
             public virtual IBuilderState Or(Stacks stacks)
             {
-                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", _lastOperator, BuilderOperator.OR, stacks.DisplayString));
+                throw new InvalidOperationException(
+                    $"Trying to create illegal JQL expression '{_lastOperator} {BuilderOperator.OR}'. Current JQL is '{stacks.DisplayString}'.");
             }
 
             /// <summary>
@@ -802,12 +800,14 @@ namespace QuoteFlow.Core.Jql.Builder
 
             public virtual IBuilderState Endgroup(Stacks stacks)
             {
-                throw new InvalidOperationException(string.Format("Trying to create illegal JQL expression '{0} {1}'. Current JQL is '{2}'.", _lastOperator, BuilderOperator.RPAREN, stacks.DisplayString));
+                throw new InvalidOperationException(
+                    $"Trying to create illegal JQL expression '{_lastOperator} {BuilderOperator.RPAREN}'. Current JQL is '{stacks.DisplayString}'.");
             }
 
             public virtual IClause Build(Stacks stacks)
             {
-                throw new InvalidOperationException(string.Format("Trying end the JQL expression with operator '{0}'. Current JQL is '{1}'.", _lastOperator, stacks.DisplayString));
+                throw new InvalidOperationException(
+                    $"Trying end the JQL expression with operator '{_lastOperator}'. Current JQL is '{stacks.DisplayString}'.");
             }
 
             public virtual IBuilderState Copy(Stacks stacks)
@@ -844,7 +844,7 @@ namespace QuoteFlow.Core.Jql.Builder
             }
 
             /// <summary>
-            /// Starting a NOT clause will put us in the <see cref="PrecedenceSimpleClauseBuilder.NotState"/>.
+            /// Starting a NOT clause will put us in the <see cref="NotState"/>.
             /// </summary>
             /// <param name="stacks"> current stacks for the builder. </param>
             /// <param name="defaultOperator"> the default combining operator. </param>

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using QuoteFlow.Api.Asset.Search;
-using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Models;

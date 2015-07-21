@@ -42,15 +42,9 @@ namespace QuoteFlow.Core.Asset.Index
 
         private static readonly object IndexReaderLock = new object();
 
-        public Analyzer AnalyzerForSearching 
-        { 
-            get { return QuoteFlowAnalyzer.AnalyzerForSearching; } 
-        }
+        public Analyzer AnalyzerForSearching => QuoteFlowAnalyzer.AnalyzerForSearching;
 
-        public Analyzer AnalyzerForIndexing
-        {
-            get { return QuoteFlowAnalyzer.AnalyzerForIndexing; }
-        }
+        public Analyzer AnalyzerForIndexing => QuoteFlowAnalyzer.AnalyzerForIndexing;
 
         #region Asset searcher supplier / helper class
 
@@ -129,10 +123,7 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
-        public bool IsEmpty
-        {
-            get { return Size() == 0; }
-        }
+        public bool IsEmpty => Size() == 0;
 
         public int ReIndexAllAssetsInBackground()
         {

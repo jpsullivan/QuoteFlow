@@ -14,7 +14,7 @@ namespace QuoteFlow.Core.Jql.Builder
         {
             if (clause == null)
             {
-                throw new ArgumentNullException("clause");
+                throw new ArgumentNullException(nameof(clause));
             }
 
             Clause = clause;
@@ -69,7 +69,7 @@ namespace QuoteFlow.Core.Jql.Builder
 
         public override string ToString()
         {
-            return string.Format("{0}({1})", BuilderOperator.NOT, Clause);
+            return $"{BuilderOperator.NOT}({Clause})";
         }
     }
 }

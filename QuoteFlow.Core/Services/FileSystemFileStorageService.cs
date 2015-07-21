@@ -24,12 +24,12 @@ namespace QuoteFlow.Core.Services
         {
             if (String.IsNullOrWhiteSpace(folderName))
             {
-                throw new ArgumentNullException("folderName");
+                throw new ArgumentNullException(nameof(folderName));
             }
 
             if (String.IsNullOrWhiteSpace(fileName))
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             var path = BuildPath(_configuration.FileStorageDirectory, folderName, fileName);
@@ -50,11 +50,11 @@ namespace QuoteFlow.Core.Services
         {
             if (String.IsNullOrWhiteSpace(folderName))
             {
-                throw new ArgumentNullException("folderName");
+                throw new ArgumentNullException(nameof(folderName));
             }
             if (String.IsNullOrWhiteSpace(fileName))
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             var path = BuildPath(_configuration.FileStorageDirectory, folderName, fileName);
@@ -70,11 +70,11 @@ namespace QuoteFlow.Core.Services
         {
             if (String.IsNullOrWhiteSpace(folderName))
             {
-                throw new ArgumentNullException("folderName");
+                throw new ArgumentNullException(nameof(folderName));
             }
             if (String.IsNullOrWhiteSpace(fileName))
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             var path = BuildPath(_configuration.FileStorageDirectory, folderName, fileName);
@@ -87,11 +87,11 @@ namespace QuoteFlow.Core.Services
         {
             if (String.IsNullOrWhiteSpace(folderName))
             {
-                throw new ArgumentNullException("folderName");
+                throw new ArgumentNullException(nameof(folderName));
             }
             if (String.IsNullOrWhiteSpace(fileName))
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             var path = BuildPath(_configuration.FileStorageDirectory, folderName, fileName);
@@ -104,11 +104,11 @@ namespace QuoteFlow.Core.Services
         {
             if (String.IsNullOrWhiteSpace(folderName))
             {
-                throw new ArgumentNullException("folderName");
+                throw new ArgumentNullException(nameof(folderName));
             }
             if (String.IsNullOrWhiteSpace(fileName))
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             var path = BuildPath(_configuration.FileStorageDirectory, folderName, fileName);
@@ -122,17 +122,17 @@ namespace QuoteFlow.Core.Services
         {
             if (String.IsNullOrWhiteSpace(folderName))
             {
-                throw new ArgumentNullException("folderName");
+                throw new ArgumentNullException(nameof(folderName));
             }
 
             if (String.IsNullOrWhiteSpace(fileName))
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             if (packageFile == null)
             {
-                throw new ArgumentNullException("packageFile");
+                throw new ArgumentNullException(nameof(packageFile));
             }
 
             var storageDirectory = ResolvePath(_configuration.FileStorageDirectory);

@@ -40,7 +40,7 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 
         public void IndexKeywordWithDefault(Document doc, string indexField, long? aLong, string defaultValue, Api.Models.Asset asset)
         {
-            string value = aLong != null ? aLong.ToString() : null;
+            string value = aLong?.ToString();
             IndexKeywordWithDefault(doc, indexField, value, defaultValue, asset);
         }
 

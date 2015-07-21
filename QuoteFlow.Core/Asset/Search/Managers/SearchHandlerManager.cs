@@ -29,12 +29,12 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (fieldManager == null)
             {
-                throw new ArgumentNullException("fieldManager");
+                throw new ArgumentNullException(nameof(fieldManager));
             }
 
             if (systemClauseHandlerFactory == null)
             {
-                throw new ArgumentNullException("systemClauseHandlerFactory");
+                throw new ArgumentNullException(nameof(systemClauseHandlerFactory));
             }
 
             _queryCache = queryCache;
@@ -47,7 +47,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             context.Verify();
@@ -67,7 +67,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (string.IsNullOrEmpty(id))
             {
-                throw new ArgumentException("Searcher ID cannot be empty", "id");
+                throw new ArgumentException("Searcher ID cannot be empty", nameof(id));
             }
 
             return GetHelper().GetAssetSearcher(id);
@@ -141,7 +141,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (string.IsNullOrEmpty(jqlClauseName))
             {
-                throw new ArgumentException("Clause name cannot be empty.", "jqlClauseName");
+                throw new ArgumentException("Clause name cannot be empty.", nameof(jqlClauseName));
             }
 
             return new List<IClauseHandler>(GetHelper().GetSearchHandler(jqlClauseName));
@@ -151,7 +151,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (string.IsNullOrEmpty(fieldId))
             {
-                throw new ArgumentException("Field ID cannot be empty.", "fieldId");
+                throw new ArgumentException("Field ID cannot be empty.", nameof(fieldId));
             }
 
             var clauseNames = GetHelper().GetJqlClauseNames(fieldId);
@@ -197,7 +197,7 @@ namespace QuoteFlow.Core.Asset.Search.Managers
         {
             if (string.IsNullOrEmpty(jqlClauseName))
             {
-                throw new ArgumentException("Clause name cannot be empty.", "jqlClauseName");
+                throw new ArgumentException("Clause name cannot be empty.", nameof(jqlClauseName));
             }
 
             var regs = GetHelper().GetAssetSearcherRegistrationsByClauseName(jqlClauseName);
@@ -462,9 +462,11 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 						{
 						    if (field != null)
 							{
-								throw new Exception(string.Format("Two system clauses are trying to register against the same JQL name. New Field = '{0}', Jql Name = '{1}'.", field.Name, name));
+								throw new Exception(
+								    $"Two system clauses are trying to register against the same JQL name. New Field = '{field.Name}', Jql Name = '{name}'.");
 							}
-						    throw new Exception(string.Format("Two system clauses are trying to register against the same JQL name. Clause with Jql Name = '{0}'.", name));
+						    throw new Exception(
+						        $"Two system clauses are trying to register against the same JQL name. Clause with Jql Name = '{name}'.");
 						}
 //					    var type = ((ICustomField) field).CustomFieldType;
 //					    string typeName = (type != null) ? type.Name : "Unknown Type";

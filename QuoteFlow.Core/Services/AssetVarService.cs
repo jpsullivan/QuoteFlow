@@ -11,7 +11,7 @@ namespace QuoteFlow.Core.Services
         public AssetVar GetAssetVar(int id)
         {
             if (id == 0)
-                throw new ArgumentException("Asset Var ID must be greater than zero", "id");
+                throw new ArgumentException("Asset Var ID must be greater than zero", nameof(id));
 
             return Current.DB.AssetVars.Get(id);
         }
@@ -19,7 +19,7 @@ namespace QuoteFlow.Core.Services
         public AssetVarValue GetVarValue(int id)
         {
             if (id == 0)
-                throw new ArgumentException("Asset Var Value ID must be greater than zero", "id");
+                throw new ArgumentException("Asset Var Value ID must be greater than zero", nameof(id));
 
             return Current.DB.AssetVarValues.Get(id);
         }
@@ -33,7 +33,7 @@ namespace QuoteFlow.Core.Services
         public IEnumerable<AssetVarValue> GetVarValues(int assetId)
         {
             if (assetId == 0)
-                throw new ArgumentException("Asset ID must be greater than zero", "assetId");
+                throw new ArgumentException("Asset ID must be greater than zero", nameof(assetId));
 
             const string sql =
                 "select * from AssetVarValues where AssetId = @assetId";
@@ -91,7 +91,7 @@ namespace QuoteFlow.Core.Services
         {
             if (id == 0) 
             {
-                throw new ArgumentException("AssetVar ID must be greater than zero.", "id");
+                throw new ArgumentException("AssetVar ID must be greater than zero.", nameof(id));
             }
 
             Current.DB.AssetVars.Delete(id);
@@ -140,8 +140,8 @@ namespace QuoteFlow.Core.Services
         /// <param name="assetVarValue"></param>
         public void UpdateAssetVarValue(int assetVarValueId, int assetVarId, string assetVarValue)
         {
-            if (assetVarValueId == 0) throw new ArgumentException("Asset Var Value ID must be greater than zero.", "assetVarValueId");
-            if (assetVarId == 0) throw new ArgumentException("Asset Var row ID must be greater than zero.", "assetVarId");
+            if (assetVarValueId == 0) throw new ArgumentException("Asset Var Value ID must be greater than zero.", nameof(assetVarValueId));
+            if (assetVarId == 0) throw new ArgumentException("Asset Var row ID must be greater than zero.", nameof(assetVarId));
 
             Current.DB.AssetVarValues.Update(assetVarValueId, new
             {
@@ -154,7 +154,7 @@ namespace QuoteFlow.Core.Services
         {
             if (id == 0)
             {
-                throw new ArgumentException("AssetVarValue ID must be greater than zero.", "id");
+                throw new ArgumentException("AssetVarValue ID must be greater than zero.", nameof(id));
             }
 
             Current.DB.AssetVarValues.Delete(id);

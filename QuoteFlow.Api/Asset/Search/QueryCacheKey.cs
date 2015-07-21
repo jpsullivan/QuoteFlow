@@ -16,7 +16,7 @@ namespace QuoteFlow.Api.Asset.Search
         {
             if (query == null)
             {
-                throw new ArgumentNullException("query");
+                throw new ArgumentNullException(nameof(query));
             }
 
             this.searcher = searcher;

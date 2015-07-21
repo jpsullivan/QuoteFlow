@@ -80,7 +80,7 @@ namespace QuoteFlow.Core.Services
         {
             if (query == null)
             {
-                throw new ArgumentNullException("query");
+                throw new ArgumentNullException(nameof(query));
             }
 
             IQuery newQuery = null;
@@ -108,7 +108,7 @@ namespace QuoteFlow.Core.Services
         {
             if (query == null)
             {
-                throw new ArgumentNullException("query");
+                throw new ArgumentNullException(nameof(query));
             }
 
             var clause = query.WhereClause;
@@ -139,7 +139,7 @@ namespace QuoteFlow.Core.Services
         {
             if (query == null)
             {
-                throw new ArgumentNullException("query");
+                throw new ArgumentNullException(nameof(query));
             }
 
             // We know that the read and put are non-atomic but we will always generate the same result and it does not
@@ -170,7 +170,7 @@ namespace QuoteFlow.Core.Services
         {
             if (query == null)
             {
-                throw new ArgumentNullException("query");
+                throw new ArgumentNullException(nameof(query));
             }
 
             // We know that the read and put are non-atomic but we will always generate 
@@ -218,7 +218,7 @@ namespace QuoteFlow.Core.Services
 
         public string GetJqlString(IQuery query)
         {
-            if (query == null) throw new ArgumentNullException("query");
+            if (query == null) throw new ArgumentNullException(nameof(query));
 
             if (query.QueryString != null)
             {
@@ -230,7 +230,7 @@ namespace QuoteFlow.Core.Services
 
         public string GetGeneratedJqlString(IQuery query)
         {
-            if (query == null) throw new ArgumentNullException("query");
+            if (query == null) throw new ArgumentNullException(nameof(query));
 
             return JqlStringSupport.GenerateJqlString(query);
         }

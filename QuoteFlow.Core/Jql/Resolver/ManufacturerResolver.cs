@@ -18,7 +18,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (manufacturerService == null)
             {
-                throw new ArgumentNullException("manufacturerService");
+                throw new ArgumentNullException(nameof(manufacturerService));
             }
 
             ManufacturerService = manufacturerService;
@@ -28,7 +28,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
 
             var manufacturer = ManufacturerService.GetManufacturer(name);
@@ -39,7 +39,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
 
             var manufacturer = ManufacturerService.GetManufacturer(name);
@@ -50,7 +50,7 @@ namespace QuoteFlow.Core.Jql.Resolver
         {
             if (id == 0)
             {
-                throw new ArgumentException("ID must be greater than zero.", "id");
+                throw new ArgumentException("ID must be greater than zero.", nameof(id));
             }
 
             var manufacturer = ManufacturerService.GetManufacturer(id);

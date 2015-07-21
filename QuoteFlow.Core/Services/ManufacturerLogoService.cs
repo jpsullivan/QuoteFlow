@@ -17,7 +17,7 @@ namespace QuoteFlow.Core.Services
         {
             if (manufacturerId == 0)
             {
-                throw new ArgumentException("Manufacturer ID must be greater than zero", "manufacturerId");
+                throw new ArgumentException("Manufacturer ID must be greater than zero", nameof(manufacturerId));
             }
 
             const string sql = "select * from ManufacturerLogos where manufacturerId = @manufacturerId";
@@ -52,7 +52,7 @@ namespace QuoteFlow.Core.Services
         {
             if (manufacturerId == 0)
             {
-                throw new ArgumentException("Manufacturer ID must be greater than zero", "manufacturerId");
+                throw new ArgumentException("Manufacturer ID must be greater than zero", nameof(manufacturerId));
             }
 
             Current.DB.ManufacturerLogos.Delete(manufacturerId);

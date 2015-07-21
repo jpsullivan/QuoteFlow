@@ -73,10 +73,7 @@ namespace QuoteFlow.Core.Lucene.Index
         /// If it is true, this instance can no longer be used.
         /// </summary>
         /// <returns>Whether the underlying IndexSearcher has really been closed.</returns>
-        public bool IsClosed
-        {
-            get { return _usageTracker.Closed; }
-        }
+        public bool IsClosed => _usageTracker.Closed;
 
         private void CheckClosed()
         {

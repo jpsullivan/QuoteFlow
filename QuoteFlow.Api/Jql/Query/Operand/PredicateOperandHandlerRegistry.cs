@@ -18,7 +18,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
         {
             if (functionRegistry == null)
             {
-                throw new ArgumentNullException("functionRegistry");
+                throw new ArgumentNullException(nameof(functionRegistry));
             }
 
             this.functionRegistry = functionRegistry;

@@ -17,7 +17,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Util
 		{
             if (jqlDateSupport == null)
             {
-                throw new ArgumentNullException("jqlDateSupport");
+                throw new ArgumentNullException(nameof(jqlDateSupport));
             }
 
 			this.jqlDateSupport = jqlDateSupport;

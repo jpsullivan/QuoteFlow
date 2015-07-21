@@ -25,9 +25,9 @@ namespace QuoteFlow.Api.Jql.Query
 
         public AssetIdClauseQueryFactory(IJqlOperandResolver operandResolver, IJqlAssetSupport assetSupport, ICatalogService catalogService)
 		{
-            if (operandResolver == null) throw new ArgumentNullException("operandResolver");
-            if (assetSupport == null) throw new ArgumentNullException("assetSupport");
-            if (catalogService == null) throw new ArgumentNullException("catalogService");
+            if (operandResolver == null) throw new ArgumentNullException(nameof(operandResolver));
+            if (assetSupport == null) throw new ArgumentNullException(nameof(assetSupport));
+            if (catalogService == null) throw new ArgumentNullException(nameof(catalogService));
 
             _assetSupport = assetSupport;
 			_operandResolver = operandResolver;
@@ -38,7 +38,7 @@ namespace QuoteFlow.Api.Jql.Query
         {
             if (queryCreationContext == null)
             {
-                throw new ArgumentNullException("queryCreationContext");
+                throw new ArgumentNullException(nameof(queryCreationContext));
             }
 
             var operand = terminalClause.Operand;

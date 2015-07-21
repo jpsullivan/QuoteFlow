@@ -6,15 +6,9 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public class ManufacturerIndexer: BaseFieldIndexer
 	{
-        public override string Id
-		{
-			get { return SystemSearchConstants.ForManufacturer().FieldId; }
-		}
+        public override string Id => SystemSearchConstants.ForManufacturer().FieldId;
 
-        public override string DocumentFieldId
-		{
-			get { return SystemSearchConstants.ForManufacturer().IndexField; }
-		}
+        public override string DocumentFieldId => SystemSearchConstants.ForManufacturer().IndexField;
 
         public override bool IsFieldVisibleAndInScope(Api.Models.Asset asset)
         {

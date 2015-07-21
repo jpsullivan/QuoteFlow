@@ -18,7 +18,7 @@ namespace QuoteFlow.Api.Asset.CustomFields.Searchers.Transformer
         {
             if (searchHandlerManager == null)
             {
-                throw new ArgumentNullException("searchHandlerManager");
+                throw new ArgumentNullException(nameof(searchHandlerManager));
             }
 
             this.searchHandlerManager = searchHandlerManager;

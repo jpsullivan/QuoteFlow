@@ -28,7 +28,7 @@ namespace QuoteFlow.Core.Jql.Query.Clause
 
         public WasClause(string field, Operator @operator, IOperand operand, IHistoryPredicate predicate)
         {
-            if (field == null) throw new ArgumentNullException("field");
+            if (field == null) throw new ArgumentNullException(nameof(field));
 
             Field = field;
             Operand = operand;
