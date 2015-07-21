@@ -32,10 +32,7 @@ namespace QuoteFlow.Core.Lucene.Index
             return _searcher;
         }
 
-        public override IndexReader IndexReader
-        {
-            get { return _searcher.IndexReader; }
-        }
+        public override IndexReader IndexReader => _searcher.IndexReader;
 
         protected override void GatherSubReaders(IList<IndexReader> allSubReaders, IndexReader reader)
         {
@@ -99,10 +96,7 @@ namespace QuoteFlow.Core.Lucene.Index
             set { _searcher.Similarity = value; }
         }
 
-        public override int MaxDoc
-        {
-            get { return _searcher.MaxDoc; }
-        }
+        public override int MaxDoc => _searcher.MaxDoc;
 
         public override Query Rewrite(Query query)
         {

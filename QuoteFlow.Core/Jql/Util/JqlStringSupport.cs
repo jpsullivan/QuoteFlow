@@ -68,11 +68,11 @@ namespace QuoteFlow.Core.Jql.Util
             ReservedWords = new HashSet<string>(bldr);
 		}
 
-		private readonly IJqlQueryParser parser;
+		private readonly IJqlQueryParser _parser;
 
         public JqlStringSupport(IJqlQueryParser parser)
 		{
-			this.parser = parser;
+			_parser = parser;
 		}
 
         public string EncodeStringValue(string value)
@@ -82,7 +82,7 @@ namespace QuoteFlow.Core.Jql.Util
                 throw new ArgumentNullException(nameof(value));
             }
 
-            if (!parser.IsValidValue(value))
+            if (!_parser.IsValidValue(value))
             {
                 return EncodeAsQuotedString(value);
             }
@@ -97,7 +97,7 @@ namespace QuoteFlow.Core.Jql.Util
                 throw new ArgumentNullException(nameof(value));
             }
 
-            if (!parser.IsValidValue(value))
+            if (!_parser.IsValidValue(value))
             {
                 return EncodeAsQuotedString(value);
             }
@@ -107,7 +107,7 @@ namespace QuoteFlow.Core.Jql.Util
 
         public string EncodeFunctionArgument(string argument)
         {
-            if (!parser.IsValidFunctionArgument(argument))
+            if (!_parser.IsValidFunctionArgument(argument))
             {
                 return EncodeAsQuotedString(argument, true);
             }
@@ -117,7 +117,7 @@ namespace QuoteFlow.Core.Jql.Util
 
         public string EncodeFunctionName(string functionName)
         {
-            if (!parser.IsValidFunctionName(functionName))
+            if (!_parser.IsValidFunctionName(functionName))
             {
                 return EncodeAsQuotedString(functionName, true);
             }
@@ -127,7 +127,7 @@ namespace QuoteFlow.Core.Jql.Util
 
         public string EncodeFieldName(string fieldName)
         {
-            if (!parser.IsValidFieldName(fieldName))
+            if (!_parser.IsValidFieldName(fieldName))
             {
                 return EncodeAsQuotedString(fieldName, true);
             }
@@ -205,7 +205,7 @@ namespace QuoteFlow.Core.Jql.Util
         /// </summary>
         /// <param name="str">The string to decode.</param>
         /// <returns>The decoded string.</returns>
-        /// <exception cref="IllegalArgumentException"> if the input str contains invalid escape sequences. </exception>
+        /// <exception cref="ArgumentException">If the input str contains invalid escape sequences.</exception>
 	    public static string Decode(string str)
 	    {
 		    if (string.IsNullOrWhiteSpace(str))
@@ -273,13 +273,13 @@ namespace QuoteFlow.Core.Jql.Util
                         }
 			        }
 			    }
-			    else if (stringBuilder != null)
+			    else
 			    {
-				    stringBuilder.Append(currentCharacter);
+			        stringBuilder?.Append(currentCharacter);
 			    }
 		    }
 
-		    return stringBuilder == null ? str : stringBuilder.ToString();
+		    return stringBuilder?.ToString() ?? str;
 	    }
 
         /// <summary>
@@ -329,12 +329,12 @@ namespace QuoteFlow.Core.Jql.Util
                     }
                     builder.Append(appendString);
                 }
-                else if (builder != null)
+                else
                 {
-                    builder.Append(currentCharacter);
+                    builder?.Append(currentCharacter);
                 }
             }
-            return builder == null ? QuoteChar + str + QuoteChar : builder.Append(QuoteChar).ToString();
+            return builder?.Append(QuoteChar).ToString() ?? QuoteChar + str + QuoteChar;
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace QuoteFlow.Core.Jql.Util
             
             if (force || IsJqlControl(character))
             {
-                return string.Format("\\u{0:x4}", (int)character);
+                return $"\\u{(int) character:x4}";
             }
 
             return null;
@@ -409,7 +409,7 @@ namespace QuoteFlow.Core.Jql.Util
 
         /// <summary>
         /// Tells if caller if the passed character is considered a control character by JQL.
-        /// <p/>
+        /// 
         /// NOTE: This method duplicates some logic from the grammar. If the grammar changes then this method will also need
         /// to change. We have replicated the logic for effeciency reasons.
         /// </summary>

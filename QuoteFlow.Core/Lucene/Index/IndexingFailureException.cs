@@ -8,16 +8,13 @@ namespace QuoteFlow.Core.Lucene.Index
     [Serializable]
     public class IndexingFailureException : Exception
     {
-        private readonly int failures;
+        private readonly int _failures;
 
         public IndexingFailureException(int failures)
         {
-            this.failures = failures;
+            _failures = failures;
         }
 
-        public override string Message
-        {
-            get { return string.Format("Indexing completed with {0:D} errors", failures); }
-        }
+        public override string Message => $"Indexing completed with {_failures:D} errors";
     }
 }

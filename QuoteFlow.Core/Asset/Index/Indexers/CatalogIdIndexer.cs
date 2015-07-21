@@ -7,17 +7,11 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public class CatalogIdIndexer : BaseFieldIndexer
     {
-        public override string Id
-		{
-			get { return SystemSearchConstants.ForCatalog().FieldId; }
-		}
+        public override string Id => SystemSearchConstants.ForCatalog().FieldId;
 
-        public override string DocumentFieldId
-		{
-			get { return SystemSearchConstants.ForCatalog().IndexField; }
-		}
+        public override string DocumentFieldId => SystemSearchConstants.ForCatalog().IndexField;
 
-		public override bool IsFieldVisibleAndInScope(Api.Models.Asset asset)
+        public override bool IsFieldVisibleAndInScope(Api.Models.Asset asset)
 		{
 			return true;
 		}

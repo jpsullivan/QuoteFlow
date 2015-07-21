@@ -8,7 +8,7 @@ namespace QuoteFlow.Core.Jql.Context
     {
         public IClauseContext GetClauseContext(User searcher, ITerminalClause terminalClause)
         {
-            return Api.Jql.Context.ClauseContext.CreateGlobalClauseContext();
+            return ClauseContext.CreateGlobalClauseContext();
         }
     }
 }

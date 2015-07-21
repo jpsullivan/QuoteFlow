@@ -162,13 +162,7 @@ namespace QuoteFlow.Core.Asset.Index
             return _lifecycle.Get(IndexDirectoryFactoryName.Comment).OpenSearcher();
         }
 
-        public IList<string> IndexPaths
-        {
-            get
-            {
-                return new List<string>();
-            }
-        }
+        public IList<string> IndexPaths => new List<string>();
 
         public string IndexRootPath { get; private set; }
 
@@ -269,30 +263,18 @@ namespace QuoteFlow.Core.Asset.Index
                 return result;
             }
 
-            internal IIndex AssetIndex
-            {
-                get { return Get(IndexDirectoryFactoryName.Asset).Index; }
-            }
+            internal IIndex AssetIndex => Get(IndexDirectoryFactoryName.Asset).Index;
 
-            internal IIndex CommentIndex
-            {
-                get { return Get(IndexDirectoryFactoryName.Comment).Index; }
-            }
+            internal IIndex CommentIndex => Get(IndexDirectoryFactoryName.Comment).Index;
 
             public IIndexManager Get(IndexDirectoryFactoryName key)
             {
                 return Open()[key];
             }
 
-            internal IEnumerable<string> IndexPaths
-            {
-                get { return _factory.IndexPaths; }
-            }
+            internal IEnumerable<string> IndexPaths => _factory.IndexPaths;
 
-            internal string IndexRootPath
-            {
-                get { return _factory.IndexRootPath; }
-            }
+            internal string IndexRootPath => _factory.IndexRootPath;
 
             internal IndexDirectoryFactoryMode Mode
             {

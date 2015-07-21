@@ -11,7 +11,7 @@ namespace QuoteFlow.Core.Jql.Resolver
     /// </summary>
     public class AssetConstantInfoResolver<T> : IIndexInfoResolver<T> where T : IAssetConstant
     {
-        private readonly INameResolver<T> resolver;
+        private readonly INameResolver<T> _resolver;
 
         /// <summary>
         /// 
@@ -24,7 +24,7 @@ namespace QuoteFlow.Core.Jql.Resolver
                 throw new ArgumentNullException(nameof(resolver));
             }
 
-            this.resolver = resolver;
+            _resolver = resolver;
         }
 
         private static int? GetValueAsInt(string singleValueOperand)
@@ -33,7 +33,7 @@ namespace QuoteFlow.Core.Jql.Resolver
             {
                 return Convert.ToInt32(singleValueOperand);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 return null;
             }
@@ -49,12 +49,12 @@ namespace QuoteFlow.Core.Jql.Resolver
             // our id is our index value
             var ids = new List<string>();
 
-            IList<string> idsForName = resolver.GetIdsFromName(rawValue);
+            IList<string> idsForName = _resolver.GetIdsFromName(rawValue);
             ids.AddRange(idsForName);
 
             // search by id
-            int? valueAsLong = GetValueAsInt(rawValue);
-            if (valueAsLong != null && resolver.IdExists((int) valueAsLong))
+            int? valueAsInt = GetValueAsInt(rawValue);
+            if (valueAsInt != null && _resolver.IdExists((int) valueAsInt))
             {
                 ids.Add(rawValue);
             }
@@ -69,11 +69,11 @@ namespace QuoteFlow.Core.Jql.Resolver
                 throw new ArgumentNullException(nameof(rawValue));
             }
 
-            if (resolver.IdExists((int) rawValue))
+            if (_resolver.IdExists((int) rawValue))
             {
                 return new List<string> { rawValue.ToString() };
             }
-            return resolver.GetIdsFromName(rawValue.ToString());
+            return _resolver.GetIdsFromName(rawValue.ToString());
         }
 
         public string GetIndexedValue(T indexedObject)

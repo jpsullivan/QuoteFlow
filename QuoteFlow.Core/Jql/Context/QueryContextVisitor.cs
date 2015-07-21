@@ -117,21 +117,13 @@ namespace QuoteFlow.Core.Jql.Context
             {
                 // keep track of this context in the full contexts
                 IClauseContext context = clauseHandler.ClauseContextFactory.GetClauseContext(searcher, clause);
-                if (context.Contexts.Any())
-                {
-                    fullClauseContexts.Add(context);
+                if (!context.Contexts.Any()) continue;
 
-                    // the simple context is only made up of project and issue type clauses - if this clause is not one of those
-                    // then ignore (by adding the Global)
-                    if (@explicit)
-                    {
-                        simpleClauseContexts.Add(context);
-                    }
-                    else
-                    {
-                        simpleClauseContexts.Add(ClauseContext.CreateGlobalClauseContext());
-                    }
-                }
+                fullClauseContexts.Add(context);
+
+                // the simple context is only made up of project and issue type clauses - if this clause is not one of those
+                // then ignore (by adding the Global)
+                simpleClauseContexts.Add(@explicit ? context : ClauseContext.CreateGlobalClauseContext());
             }
 
             return CreateUnionResult(fullClauseContexts, simpleClauseContexts);
@@ -269,7 +261,7 @@ namespace QuoteFlow.Core.Jql.Context
 
             public override string ToString()
             {
-                return string.Format("[Complex: {0}, Simple: {1}]", FullContext, SimpleContext);
+                return $"[Complex: {FullContext}, Simple: {SimpleContext}]";
             }
 
             protected bool Equals(ContextResult other)
@@ -289,7 +281,7 @@ namespace QuoteFlow.Core.Jql.Context
             {
                 unchecked
                 {
-                    return ((FullContext != null ? FullContext.GetHashCode() : 0)*397) ^ (SimpleContext != null ? SimpleContext.GetHashCode() : 0);
+                    return ((FullContext?.GetHashCode() ?? 0)*397) ^ (SimpleContext?.GetHashCode() ?? 0);
                 }
             }
         }

@@ -90,10 +90,7 @@ namespace QuoteFlow.Core.Asset.Index
             _docBase = docBase;
         }
 
-        public override bool AcceptsDocsOutOfOrder
-        {
-            get { return false; }
-        }
+        public override bool AcceptsDocsOutOfOrder => false;
 
         public int TotalHits
         {

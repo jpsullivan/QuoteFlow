@@ -23,10 +23,7 @@ namespace QuoteFlow.Core.Index
             _index = index;
         }
 
-        public IIndex Index
-        {
-            get { return _index; }
-        }
+        public IIndex Index => _index;
 
         public IndexSearcher OpenSearcher()
         {

@@ -14,25 +14,10 @@ namespace QuoteFlow.Core.Configuration.Lucene
             {
             }
 
-            public override int MergeFactor
-            {
-                get { return 50; }
-            }
-
-            public override int MaxMergeDocs
-            {
-                get { return int.MaxValue; }
-            }
-
-            public override int MaxBufferedDocs
-            {
-                get { return 300; }
-            }
-
-            public override int MaxFieldLength
-            {
-                get { return MAX_FIELD_LENGTH; }
-            }
+            public override int MergeFactor => 50;
+            public override int MaxMergeDocs => int.MaxValue;
+            public override int MaxBufferedDocs => 300;
+            public override int MaxFieldLength => MAX_FIELD_LENGTH;
         }
 
         public static readonly WriterSettings Interactive = new InteractiveWriterSettings();
@@ -42,25 +27,10 @@ namespace QuoteFlow.Core.Configuration.Lucene
             {
             }
 
-            public override int MergeFactor
-            {
-                get { return 4; }
-            }
-
-            public override int MaxMergeDocs
-            {
-                get { return 5000; }
-            }
-
-            public override int MaxBufferedDocs
-            {
-                get { return 300; }
-            }
-
-            public override int MaxFieldLength
-            {
-                get { return MAX_FIELD_LENGTH; }
-            }
+            public override int MergeFactor => 4;
+            public override int MaxMergeDocs => 5000;
+            public override int MaxBufferedDocs => 300;
+            public override int MaxFieldLength => MAX_FIELD_LENGTH;
         }
     }
 }

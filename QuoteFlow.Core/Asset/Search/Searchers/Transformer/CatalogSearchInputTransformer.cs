@@ -21,18 +21,18 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
     /// </summary>
     public class CatalogSearchInputTransformer : ISearchInputTransformer
     {
-        private readonly IFieldFlagOperandRegistry fieldFlagOperandRegistry;
-        private readonly IJqlOperandResolver operandResolver;
-        private readonly CatalogIndexInfoResolver projectIndexInfoResolver;
-        private readonly ICatalogService catalogService;
+        private readonly IFieldFlagOperandRegistry _fieldFlagOperandRegistry;
+        private readonly IJqlOperandResolver _operandResolver;
+        private readonly CatalogIndexInfoResolver _projectIndexInfoResolver;
+        private readonly ICatalogService _catalogService;
 
         public CatalogSearchInputTransformer(CatalogIndexInfoResolver projectIndexInfoResolver, IJqlOperandResolver operandResolver, 
             IFieldFlagOperandRegistry fieldFlagOperandRegistry, ICatalogService catalogService)
         {
-            this.fieldFlagOperandRegistry = fieldFlagOperandRegistry;
-            this.operandResolver = operandResolver;
-            this.projectIndexInfoResolver = projectIndexInfoResolver;
-            this.catalogService = catalogService;
+            _fieldFlagOperandRegistry = fieldFlagOperandRegistry;
+            _operandResolver = operandResolver;
+            _projectIndexInfoResolver = projectIndexInfoResolver;
+            _catalogService = catalogService;
         }
 
         public virtual void PopulateFromParams(User user, IFieldValuesHolder fieldValuesHolder, IActionParams actionParams)
@@ -120,7 +120,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             try
             {
                 var id = Convert.ToInt32(idStr);
-                var catalog = catalogService.GetCatalog(id);
+                var catalog = _catalogService.GetCatalog(id);
                 var o = catalog == null ? new SingleValueOperand(id) : new SingleValueOperand(catalog.Id);
                 return o;
             }
@@ -134,8 +134,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         /// <summary>
         /// Sets the project Id in session if only one project was selected.
         /// </summary>
-        /// <param name="selectedProjectIds"> Collecyion of Longs. Assumes that all non-null Long are valid project Ids </param>
-        internal virtual ISet<string> CatalogIdInSession
+        protected virtual ISet<string> CatalogIdInSession
         {
             set
             {
@@ -147,7 +146,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
                     string idStr = iter.Current;
                     var id = Convert.ToInt32(idStr);
 
-                    Catalog project = catalogService.GetCatalog(id);
+                    Catalog project = _catalogService.GetCatalog(id);
                     if (project != null)
                     {
                         //projectHistoryManager.addProjectToHistory(authenticationContext.LoggedInUser, project);
@@ -155,10 +154,10 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
                 }
             }
         }
-        
-        internal virtual IIndexedInputHelper CreateIndexedInputHelper()
+
+        protected virtual IIndexedInputHelper CreateIndexedInputHelper()
         {
-            return new IndexedInputHelper<Catalog>(projectIndexInfoResolver, operandResolver, fieldFlagOperandRegistry);
+            return new IndexedInputHelper<Catalog>(_projectIndexInfoResolver, _operandResolver, _fieldFlagOperandRegistry);
         }
     }
 }

@@ -312,10 +312,7 @@ namespace QuoteFlow.Core.Asset.Nav
         /// <summary>
         /// Returns the maximum number of assets in a stable search.
         /// </summary>
-        private int StableSearchResultsLimit
-        {
-            get { return 50; }
-        }
+        private int StableSearchResultsLimit => 50;
 
         /// <summary>
         /// Calculate the issue table's start index, taking the selected issue into consideration.
@@ -346,7 +343,7 @@ namespace QuoteFlow.Core.Asset.Nav
             // Don't run validation stable search query (we assume its correct).
             if (!_fromAssetIds)
             {
-                int filterId = _searchRequest != null ? _searchRequest.Id : 0;
+                int filterId = _searchRequest?.Id ?? 0;
                 return _searchService.ValidateQuery(_user, _query, filterId);
             }
 
@@ -380,7 +377,7 @@ namespace QuoteFlow.Core.Asset.Nav
             get
             {
                 IOrderBy orderBy = _query.OrderByClause;
-                if (orderBy == null || orderBy.SearchSorts == null || !orderBy.SearchSorts.Any())
+                if (orderBy?.SearchSorts == null || !orderBy.SearchSorts.Any())
                 {
                     return new List<INavigableField>();
                 }

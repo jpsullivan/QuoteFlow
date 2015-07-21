@@ -334,10 +334,7 @@ namespace QuoteFlow.Core.Lucene.Index
 
             protected abstract T Open(T element);
 
-            protected bool IsNull
-            {
-                get { return _reference.Value == null; }
-            }
+            protected bool IsNull => _reference.Value == null;
 
             protected T Get()
             {

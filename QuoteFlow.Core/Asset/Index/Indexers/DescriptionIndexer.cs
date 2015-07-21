@@ -7,15 +7,9 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public class DescriptionIndexer : BaseFieldIndexer
     {
-        public override string Id
-        {
-            get { return SystemSearchConstants.ForDescription().FieldId; }
-        }
+        public override string Id => SystemSearchConstants.ForDescription().FieldId;
 
-        public override string DocumentFieldId
-        {
-            get { return SystemSearchConstants.ForDescription().IndexField; }
-        }
+        public override string DocumentFieldId => SystemSearchConstants.ForDescription().IndexField;
 
         public override void AddIndex(Document doc, Api.Models.Asset issue)
         {

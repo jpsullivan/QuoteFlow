@@ -53,10 +53,7 @@ namespace QuoteFlow.Core.Lucene.Index
             {
             }
 
-            public bool Done
-            {
-                get { return true; }
-            }
+            public bool Done => true;
         }
 
         /// <summary>
@@ -76,10 +73,7 @@ namespace QuoteFlow.Core.Lucene.Index
                 DoThrow();
             }
 
-            public bool Done
-            {
-                get { return true; }
-            }
+            public bool Done => true;
 
             private bool DoThrow()
             {

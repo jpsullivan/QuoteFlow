@@ -462,9 +462,11 @@ namespace QuoteFlow.Core.Asset.Search.Managers
 						{
 						    if (field != null)
 							{
-								throw new Exception(string.Format("Two system clauses are trying to register against the same JQL name. New Field = '{0}', Jql Name = '{1}'.", field.Name, name));
+								throw new Exception(
+								    $"Two system clauses are trying to register against the same JQL name. New Field = '{field.Name}', Jql Name = '{name}'.");
 							}
-						    throw new Exception(string.Format("Two system clauses are trying to register against the same JQL name. Clause with Jql Name = '{0}'.", name));
+						    throw new Exception(
+						        $"Two system clauses are trying to register against the same JQL name. Clause with Jql Name = '{name}'.");
 						}
 //					    var type = ((ICustomField) field).CustomFieldType;
 //					    string typeName = (type != null) ? type.Name : "Unknown Type";

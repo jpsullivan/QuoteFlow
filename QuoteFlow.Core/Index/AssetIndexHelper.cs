@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Elmah.Assertions;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
@@ -13,7 +12,6 @@ using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.Index;
 using QuoteFlow.Core.Lucene.Index;
-using WebBackgrounder;
 
 namespace QuoteFlow.Core.Index
 {

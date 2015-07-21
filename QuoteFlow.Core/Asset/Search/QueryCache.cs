@@ -190,7 +190,7 @@ namespace QuoteFlow.Core.Asset.Search
 
             public override int GetHashCode()
             {
-                int result = _searcher != null ? _searcher.GetHashCode() : 0;
+                int result = _searcher?.GetHashCode() ?? 0;
                 result = 31 * result + _query.GetHashCode();
                 return result;
             }

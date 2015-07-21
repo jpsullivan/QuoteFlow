@@ -35,7 +35,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
                 whereClause.Accept<object>(visitor);
                 if (visitor.Valid)
                 {
-                    string textQuery = visitor.GetTextTerminalValue(operandResolver, user);
+                    string textQuery = visitor.GetTextTerminalValue(OperandResolver, user);
                     return textQuery != null;
                 }
             }
@@ -44,7 +44,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 
         public override void PopulateFromParams(User user, IFieldValuesHolder fieldValuesHolder, IActionParams actionParams)
         {
-            fieldValuesHolder[fieldsKey] = actionParams.GetFirstValueForKey(id);
+            fieldValuesHolder[FieldsKey] = actionParams.GetFirstValueForKey(Id);
         }
 
         public override void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, ModelState errors)
@@ -62,16 +62,16 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             whereClause.Accept<object>(visitor);
             if (!visitor.Valid) return;
 
-            string textQuery = visitor.GetTextTerminalValue(operandResolver, user);
+            string textQuery = visitor.GetTextTerminalValue(OperandResolver, user);
             if (textQuery != null)
             {
-                fieldValuesHolder[fieldsKey] = textQuery.Trim();
+                fieldValuesHolder[FieldsKey] = textQuery.Trim();
             }
         }
 
         public override IClause GetSearchClause(User user, IFieldValuesHolder fieldValuesHolder)
         {
-            string query = ParameterUtils.GetStringParam(fieldValuesHolder, fieldsKey);
+            string query = ParameterUtils.GetStringParam(fieldValuesHolder, FieldsKey);
             if (query != null)
             {
                 return new TerminalClause(clauseNames.PrimaryName, Operator.LIKE, query);

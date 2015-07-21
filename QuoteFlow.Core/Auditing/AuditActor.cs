@@ -35,7 +35,7 @@ namespace QuoteFlow.Core.Auditing
             return new AuditActor(
                 Environment.MachineName,
                 ipAddress,
-                String.Format(@"{0}\{1}", Environment.UserDomainName, Environment.UserName),
+                $@"{Environment.UserDomainName}\{Environment.UserName}",
                 "MachineUser",
                 DateTime.UtcNow,
                 onBehalfOf);

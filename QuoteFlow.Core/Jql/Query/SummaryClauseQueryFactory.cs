@@ -23,7 +23,7 @@ namespace QuoteFlow.Core.Jql.Query
         public QueryFactoryResult GetQuery(IQueryCreationContext queryCreationContext, ITerminalClause terminalClause)
         {
             QueryFactoryResult queryFactoryResult = _delegateClauseQueryFactory.GetQuery(queryCreationContext, terminalClause);
-            if (queryFactoryResult != null && queryFactoryResult.LuceneQuery != null)
+            if (queryFactoryResult?.LuceneQuery != null)
             {
                 // Summary always gets a boost of 9
                 queryFactoryResult.LuceneQuery.Boost = SummaryBoostFactor;

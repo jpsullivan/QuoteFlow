@@ -93,10 +93,7 @@ namespace QuoteFlow.Core.Asset.Index
 
         private void CloseSearcher(IndexSearcher searcher)
         {
-            if (searcher != null)
-            {
-                searcher.Dispose();
-            }
+            searcher?.Dispose();
         }
     }
 }

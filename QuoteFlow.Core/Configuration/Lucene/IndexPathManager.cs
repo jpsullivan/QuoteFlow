@@ -59,7 +59,7 @@ namespace QuoteFlow.Core.Configuration.Lucene
             get
             {
                 // Don't create the directory if it's not already present.
-                return _directorySingleton == null ? null : _directorySingleton.Directory.FullName;
+                return _directorySingleton?.Directory.FullName;
             }
         }
 
@@ -83,9 +83,6 @@ namespace QuoteFlow.Core.Configuration.Lucene
             }
         }
 
-        public IndexPathManagerMode Mode
-        {
-            get { return IndexPathManagerMode.Default; }
-        }
+        public IndexPathManagerMode Mode => IndexPathManagerMode.Default;
     }
 }

@@ -112,7 +112,7 @@ namespace QuoteFlow.Core.Jql.Query
                 {
                     if (literal != null)
                     {
-                        string value = (literal.IntValue != null) ? literal.IntValue.ToString() : literal.StringValue;
+                        string value = literal.IntValue?.ToString() ?? literal.StringValue;
                         // If we can't match the id to a current valid value then we just search with the literal. It may have been
                         // a valid value once upon a time, Of course we may still find nothing matches
                         TermQuery fromQuery = CreateTermQuery(clause, EncodeProtocol(value), DocumentConstants.ChangeFrom);
@@ -163,7 +163,7 @@ namespace QuoteFlow.Core.Jql.Query
 
         private static string EncodeProtocol(string changeItem)
         {
-            return DocumentConstants.ChangeHistoryProtocol + (changeItem == null ? "" : changeItem.ToLower());
+            return DocumentConstants.ChangeHistoryProtocol + (changeItem?.ToLower() ?? "");
         }
 
         private static string EncodeProtocolPreservingCase(string changeItem)
