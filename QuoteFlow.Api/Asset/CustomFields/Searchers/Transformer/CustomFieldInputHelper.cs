@@ -12,7 +12,7 @@ namespace QuoteFlow.Api.Asset.CustomFields.Searchers.Transformer
     /// </summary>
     public class CustomFieldInputHelper : ICustomFieldInputHelper
     {
-        private readonly ISearchHandlerManager searchHandlerManager;
+        private readonly ISearchHandlerManager _searchHandlerManager;
 
         public CustomFieldInputHelper(ISearchHandlerManager searchHandlerManager)
         {
@@ -21,7 +21,7 @@ namespace QuoteFlow.Api.Asset.CustomFields.Searchers.Transformer
                 throw new ArgumentNullException(nameof(searchHandlerManager));
             }
 
-            this.searchHandlerManager = searchHandlerManager;
+            _searchHandlerManager = searchHandlerManager;
         }
 
         public virtual string GetUniqueClauseName(User user, string primaryName, string fieldName)
@@ -31,7 +31,7 @@ namespace QuoteFlow.Api.Asset.CustomFields.Searchers.Transformer
             if (SystemSearchConstants.IsSystemName(fieldName)) return primaryName;
             if (JqlCustomFieldId.IsJqlCustomFieldId(fieldName)) return primaryName;
 
-            if (searchHandlerManager.GetClauseHandler(user, fieldName).Count() == 1)
+            if (_searchHandlerManager.GetClauseHandler(user, fieldName).Count() == 1)
             {
                 return fieldName;
             }

@@ -47,12 +47,12 @@ namespace QuoteFlow.Api.Asset.Context
 
             var o = (AssetContext) obj;
             var comparable = CatalogId as IComparable;
-            return comparable == null ? 1 : comparable.CompareTo(o.CatalogId);
+            return comparable?.CompareTo(o.CatalogId) ?? 1;
         }
 
         public override string ToString()
         {
-            return string.Format("AssetContext[catalogId={0}]", CatalogId.ToString());
+            return $"AssetContext[catalogId={CatalogId}]";
         }
     }
 }

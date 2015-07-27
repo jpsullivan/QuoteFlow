@@ -1,3 +1,4 @@
+/// <binding ProjectOpened='default' />
 /*
   gulpfile.js
   ===========
