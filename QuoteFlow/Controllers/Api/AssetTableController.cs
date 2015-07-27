@@ -51,14 +51,16 @@ namespace QuoteFlow.Controllers.Api
             throw new HttpResponseException(HttpStatusCode.BadRequest);
         }
 
-        private IAssetTableServiceConfiguration CreateConfig(AssetTableRequest model, ColumnConfig columnConfig, List<string> columnNames)
+        private static IAssetTableServiceConfiguration CreateConfig(AssetTableRequest model, ColumnConfig columnConfig, List<string> columnNames)
         {
-            var config = new AssetTableServiceConfiguration();
-            config.EnableSorting = true;
-            config.LayoutKey = model.LayoutKey;
-            config.Start = model.StartIndex;
-            config.ColumnNames = columnNames;
-            config.ColumnConfig = columnConfig;
+            var config = new AssetTableServiceConfiguration
+            {
+                EnableSorting = true,
+                LayoutKey = model.LayoutKey,
+                Start = model.StartIndex,
+                ColumnNames = columnNames,
+                ColumnConfig = columnConfig
+            };
 
             // if it was explicitly requested that we display a certain number
             // of assets, then do that; otherwise fall back to the user's preferences.
@@ -75,7 +77,7 @@ namespace QuoteFlow.Controllers.Api
             return config;
         }
 
-        private IAssetTableServiceConfiguration BuildConfiguration(AssetTableRequest model, List<string> explicitColumns)
+        private static IAssetTableServiceConfiguration BuildConfiguration(AssetTableRequest model, List<string> explicitColumns)
         {
             var columnConfig = ColumnConfig.None;
             var config = CreateConfig(model, columnConfig, null);

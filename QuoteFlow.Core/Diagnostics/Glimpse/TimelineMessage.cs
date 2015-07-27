@@ -6,7 +6,7 @@ namespace QuoteFlow.Core.Diagnostics.Glimpse
 {
     public class TimelineMessage : ITimelineMessage
     {
-        private static readonly TimelineCategoryItem DefaultCategory = new TimelineCategoryItem("MyApp", "green", "blue");
+        private static readonly TimelineCategoryItem DefaultCategory = new TimelineCategoryItem("QuoteFlow", "green", "blue");
 
         public TimelineMessage(string eventName, TimerResult result)
         {

@@ -11,10 +11,7 @@ namespace QuoteFlow.Core.DependencyResolution
     {
         private static readonly Lazy<IKernel> LazyKernel = new Lazy<IKernel>(GetKernel);
 
-        public static IKernel Kernel
-        {
-            get { return LazyKernel.Value; }
-        }
+        public static IKernel Kernel => LazyKernel.Value;
 
         private static IKernel GetKernel()
         {
