@@ -99,6 +99,14 @@
                                         <span class="value">@Model.Asset.Markup.ToString("P", CultureInfo.InvariantCulture)</span>
                                     </div>
                                 </li>
+                                <li class="item">
+                                    <div class="wrap">
+                                        <strong class="name">Catalog:</strong>
+                                        <span class="value">
+                                            <a href="@Url.Catalog(Model.Asset.Catalog.Id, Model.Asset.Catalog.Name)">@Model.Asset.Catalog.Name</a>
+                                        </span>
+                                    </div>
+                                </li>
                                 <li class="item item-right">
                                     <div class="wrap">
                                         <strong class="name">Price:</strong>
