@@ -97,8 +97,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CsvHelper.2.7.0\lib\net40-client\CsvHelper.dll</HintPath>
     </Reference>
-    <Reference Include="Dapper">
-      <HintPath>..\packages\Dapper.1.13\lib\net45\Dapper.dll</HintPath>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Dapper.Rainbow">
       <HintPath>..\lib\Dapper.Rainbow.dll</HintPath>
@@ -462,6 +463,7 @@
     <Compile Include="Migrations\M028_CreateQuoteStatus.cs" />
     <Compile Include="Migrations\M029_CreateRecentlyVisitedLinks.cs" />
     <Compile Include="Migrations\M030_CreateAuditLog.cs" />
+    <Compile Include="Migrations\M031_DeleteUsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -942,8 +944,6 @@
     <Content Include="Global.asax" />
     <EmbeddedResource Include="Migrations\Elmah.SqlServer.sql" />
     <Content Include="Content\js\lib\async-file-upload.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\less\bootstrap.less" />
     <Content Include="Content\less\misc.less" />
     <Content Include="Content\less\misc.css.map">
