@@ -23,7 +23,7 @@ namespace QuoteFlow.Core.Services
         /// </summary>
         /// <param name="organizationId">The organization Id to search for</param>
         /// <returns>List of Contacts</returns>
-        public IEnumerable<Contact> GetContactsByOrganizationId(int organizationId)
+        public IEnumerable<Contact> GetContactsFromOrganization(int organizationId)
         {
             const string sql = "select * from Contacts where OrganizationId = @organizationId";
             return Current.DB.Query<Contact>(sql, new { organizationId });

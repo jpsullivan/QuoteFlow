@@ -1,52 +1,77 @@
-﻿@using QuoteFlow.Api.Models
-@using QuoteFlow.Models
-@{ ViewBag.Title = "QuoteFlow - Contacts"; }
+﻿@using QuoteFlow.Infrastructure.Extensions
+@model QuoteFlow.Api.Models.ViewModels.Contacts.ContactsViewModel
 
-<div class="row">
-    <div class="content-toolbar span12">
-        <div class="toolbar-actions">
-            <div class="pull-left">
-                <a href="/contact/new" class="btn">Create a new contact</a>
-            </div>
-            <div class="filter-container">
-                <p class="filter-label">Filters:</p>
-                <ul class="filter-control">
-                    <li id="all">
-                        <a href="/jaysche/bitbucket-test-repo/issues">All</a>
-                    </li>
+@{
+    ViewBag.Title = "Contacts - QuoteFlow";
+}
 
-                    <li id="open" aria-pressed="true">
-                        <a href="/jaysche/bitbucket-test-repo/issues?status=new&amp;status=open">Open</a>
-                    </li>
-                    <li id="mine">
-                        <a href="/jaysche/bitbucket-test-repo/issues?responsible=jaysche">My issues</a>
-                    </li>
-
-                    <li id="watching">
-                        <a href="/jaysche/bitbucket-test-repo/issues?watching=jaysche">Watching</a>
-                    </li>
-                </ul>
-            </div>
+<header class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main entity-item">
+            <h1>
+                <span>Contacts</span>
+            </h1>
+            <a class="aui-button aui-button-light" href="@Url.NewQuote()" autocomplete="off" tabindex="0">Add a new contact</a>
         </div>
-        <h4>Contacts <span class="secondary">(1–1 of 1)</span></h4>
     </div>
-</div>
-<div class="row">
-    <div class="content-list span12">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Manufacturer</th>
-                    <th>Model / Description</th>
-                    <th>Cost</th>
-                    <th>Last Updated</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (Contact contact in Model) {
-                    @Html.Partial("Partials/Contact/ListItem", contact, new ViewDataDictionary { { "contact", contact } })
-                }
-            </tbody>
-        </table>
+</header>
+
+<div class="aui-page-panel content-body fixed-right">
+    <div class="aui-page-panel-inner">
+        <section class="aui-page-panel-content">
+            @if (Model.Contacts.Any())
+            {
+                <table class="aui aui-table-interactive contact-list-table">
+                    <thead>
+                    <tr>
+                        <th id="first_name">First Name</th>
+                        <th id="last_name">Last Name</th>
+                        <th id="email">Email Address</th>
+                        <th id="phone">Phone Number</th>
+                        <th id="address">Address</th>
+                        <th id="created_date">Created</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var quote in Model.Contacts)
+                    {
+                        var address = string.Format("{0} {1} {2} {3}", quote.Address1, quote.City, quote.State, quote.Zipcode);
+
+                        <tr>
+                            <td headers="first_name">
+                                <div title="@quote.FirstName">@quote.FirstName</div>
+                            </td>
+                            <td headers="last_name">
+                                <div title="@quote.LastName">@quote.LastName</div>
+                            </td>
+                            <td headers="email">
+                                <div title="@quote.Email">@quote.Email</div>
+                            </td>
+                            <td headers="phone">
+                                <div title="@quote.Phone">@quote.Phone</div>
+                            </td>
+                            <td headers="address">
+                                <div title="@address">@address</div>
+                            </td>
+                            <td headers="created">
+                                <div title="@quote.CreationDate.ToString("g")">
+                                    @quote.CreationDate.ToString("MM/dd/yy")
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="blank-message">
+                    <h2>No contacts found</h2>
+                    <p>
+                        No contacts have been added yet. <a href="@Url.Contacts()">Crate one now.</a>
+                    </p>
+                </div>
+            }
+        </section>
     </div>
 </div>

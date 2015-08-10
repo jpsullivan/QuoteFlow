@@ -18,7 +18,11 @@
         </div>
         <div class="field-group">
             @Html.LabelFor(m => m.QuoteDescription)
-            @Html.TextAreaFor(m => m.QuoteDescription, new { @class = "textarea long-field" })
+            @Html.TextAreaFor(m => m.QuoteDescription, new {@class = "textarea long-field"})
+        </div>
+        <div class="field-group">
+            @Html.LabelFor(m => m.ContactId)
+            @Html.DropDownListFor(m => m.ContactId, Model.Contacts.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.FullName }).OrderBy(s => s.Text), new { @class = "select" })
         </div>
     </fieldset>
 

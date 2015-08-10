@@ -480,6 +480,7 @@
     <Compile Include="Models\ViewModels\Catalogs\CatalogHeader.cs" />
     <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactModels.cs" />
+    <Compile Include="Models\ViewModels\Contacts\ContactsViewModel.cs" />
     <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\ViewModels\LogOnViewModel.cs" />

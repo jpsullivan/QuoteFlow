@@ -1,19 +1,23 @@
 ﻿using System.Web.Mvc;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels;
+using QuoteFlow.Api.Models.ViewModels.Contacts;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
 
 namespace QuoteFlow.Controllers
 {
-    public partial class ContactController : AppController
+    public class ContactController : AppController
     {
-        #region IoC
+        #region DI
 
         public IContactService ContactService { get; protected set; }
 
-        public ContactController() { }
+        public ContactController()
+        {
+        }
 
         public ContactController(IContactService contactService)
         {
@@ -22,11 +26,12 @@ namespace QuoteFlow.Controllers
 
         #endregion
 
-        [QuoteFlowRoute("contacts")]
+        [QuoteFlowRoute("contacts", Name = RouteNames.Contacts)]
         public virtual ActionResult Index()
         {
-            var contacts = ContactService.GetContactsByOrganizationId(CurrentOrganization.Id);
-            return View(contacts);
+            var contacts = ContactService.GetContactsFromOrganization(CurrentOrganization.Id);
+            var model = new ContactsViewModel(contacts);
+            return View(model);
         }
 
         [QuoteFlowRoute("contact/new", HttpVerbs.Get)]

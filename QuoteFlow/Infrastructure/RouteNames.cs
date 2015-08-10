@@ -23,6 +23,8 @@
 
         public const string CatalogShow = "Catalog-Show";
 
+        public const string Contacts = "Contacts";
+
         public const string QuoteAccessControl = "Quote-AccessControl";
         public const string QuoteBuilder = "Quote-Builder";
         public const string QuoteChangeHistory = "Quote-ChangeHistory";

@@ -146,6 +146,15 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         #endregion
 
+        #region Contacts
+
+        public static string Contacts(this UrlHelper url)
+        {
+            return url.RouteUrl(RouteNames.Contacts);
+        }
+
+        #endregion
+
         #region Manufacturers
 
         public static string Manufacturer(this UrlHelper url, int id, string manufacturerName)

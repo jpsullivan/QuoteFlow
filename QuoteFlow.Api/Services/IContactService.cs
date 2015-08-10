@@ -17,7 +17,7 @@ namespace QuoteFlow.Api.Services
         /// </summary>
         /// <param name="organizationId">The organization Id to search for</param>
         /// <returns>List of Contacts</returns>
-        IEnumerable<Contact> GetContactsByOrganizationId(int organizationId);
+        IEnumerable<Contact> GetContactsFromOrganization(int organizationId);
 
         /// <summary>
         /// Inserts a new contact into the database
