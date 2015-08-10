@@ -8,7 +8,7 @@ namespace QuoteFlow.Api.Models
         public int OrganizationId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
+        public string EmailAddress { get; set; }
         public string Phone { get; set; }
         public string Organization { get; set; }
         public string Title { get; set; }

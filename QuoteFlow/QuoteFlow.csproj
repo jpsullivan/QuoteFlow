@@ -1176,7 +1176,6 @@
     <Content Include="Views\Quote\Index.cshtml" />
     <Content Include="Views\Quote\New.cshtml" />
     <Content Include="Views\Shared\Partials\Asset\ListItem.cshtml" />
-    <Content Include="Views\Shared\Partials\Contact\ListItem.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\New\Step1.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\New\Step2.cshtml" />
     <Content Include="Views\Shared\_QuoteBuilderLayout.cshtml" />

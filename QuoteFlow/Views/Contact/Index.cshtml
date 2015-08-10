@@ -1,4 +1,5 @@
-﻿@using QuoteFlow.Infrastructure.Extensions
+﻿@using QuoteFlow.Api.Infrastructure.Extensions
+@using QuoteFlow.Infrastructure.Extensions
 @model QuoteFlow.Api.Models.ViewModels.Contacts.ContactsViewModel
 
 @{
@@ -24,8 +25,7 @@
                 <table class="aui aui-table-interactive contact-list-table">
                     <thead>
                     <tr>
-                        <th id="first_name">First Name</th>
-                        <th id="last_name">Last Name</th>
+                        <th id="name">Name</th>
                         <th id="email">Email Address</th>
                         <th id="phone">Phone Number</th>
                         <th id="address">Address</th>
@@ -33,29 +33,28 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach (var quote in Model.Contacts)
+                    @foreach (var contact in Model.Contacts)
                     {
-                        var address = string.Format("{0} {1} {2} {3}", quote.Address1, quote.City, quote.State, quote.Zipcode);
+                        var address = string.Format("{0} {1}, {2} {3}", contact.Address1, contact.City, contact.State, contact.Zipcode);
 
                         <tr>
-                            <td headers="first_name">
-                                <div title="@quote.FirstName">@quote.FirstName</div>
-                            </td>
-                            <td headers="last_name">
-                                <div title="@quote.LastName">@quote.LastName</div>
+                            <td headers="name">
+                                <div title="@contact.FullName">
+                                    <a href="@Url.Contact(contact.Id, contact.FullName.UrlFriendly())">@contact.FullName</a>
+                                </div>
                             </td>
                             <td headers="email">
-                                <div title="@quote.Email">@quote.Email</div>
+                                <div title="@contact.EmailAddress">@contact.EmailAddress</div>
                             </td>
                             <td headers="phone">
-                                <div title="@quote.Phone">@quote.Phone</div>
+                                <div title="@contact.Phone">@contact.Phone</div>
                             </td>
                             <td headers="address">
                                 <div title="@address">@address</div>
                             </td>
                             <td headers="created">
-                                <div title="@quote.CreationDate.ToString("g")">
-                                    @quote.CreationDate.ToString("MM/dd/yy")
+                                <div title="@contact.CreationDate.ToString("g")">
+                                    @contact.CreationDate.ToRelativeTime()
                                 </div>
                             </td>
                         </tr>

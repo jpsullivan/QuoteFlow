@@ -41,7 +41,7 @@ namespace QuoteFlow.Core.Services
                 OrganizationId = contact.OrganizationId,
                 FirstName = contact.FirstName,
                 LastName = contact.LastName,
-                EmailAddress = contact.Email,
+                EmailAddress = contact.EmailAddress,
                 Address1 = contact.Address1,
                 Address2 = contact.Address2,
                 Country = contact.Country,

@@ -54,7 +54,7 @@ namespace QuoteFlow.Controllers
                 OrganizationId = CurrentOrganization.Id,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                Email = model.Email,
+                EmailAddress = model.Email,
                 Address1 = model.Address1,
                 Address2 = model.Address2,
                 Country = model.Country,
