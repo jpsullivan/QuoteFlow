@@ -404,7 +404,6 @@
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadModule.cs" />
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadProgress.cs" />
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadRequestParser.cs" />
-    <Compile Include="Infrastructure\Attributes\LayoutInjectorAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\ReadOnlyModeErrorFilter.cs" />
     <Compile Include="Infrastructure\Attributes\RequireSslAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\RoutePrefixAttribute.cs" />

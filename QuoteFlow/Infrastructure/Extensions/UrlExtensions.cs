@@ -148,9 +148,19 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         #region Contacts
 
+        public static string Contact(this UrlHelper url, int id, string name)
+        {
+            return url.RouteUrl(RouteNames.ContactShow, new { id, name });
+        }
+
         public static string Contacts(this UrlHelper url)
         {
             return url.RouteUrl(RouteNames.Contacts);
+        }
+
+        public static string NewContact(this UrlHelper url)
+        {
+            return url.RouteUrl(RouteNames.ContactNew);
         }
 
         #endregion
@@ -194,7 +204,7 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         public static string NewQuote(this UrlHelper url)
         {
-            return string.Format("/quote/new");
+            return "/quote/new";
         }
 
         public static string QuoteBuilder(this UrlHelper url, int id, string name)

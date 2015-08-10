@@ -34,23 +34,20 @@ namespace QuoteFlow.Controllers
             return View(model);
         }
 
-        [QuoteFlowRoute("contact/new", HttpVerbs.Get)]
-        [LayoutInjector("_LayoutWorkflow")]
+        [QuoteFlowRoute("contact/new", HttpVerbs.Get, Name = RouteNames.ContactNew)]
         public virtual ActionResult New()
         {
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [QuoteFlowRoute("contact/create", HttpVerbs.Post)]
-        public virtual ActionResult CreateContact(NewContactModel model)
+        public ActionResult CreateContact(NewContactModel model)
         {
-            if (ContactService.ContactExists(model.FirstName, model.LastName, model.Email, CurrentOrganization.Id))
+            if (!ModelState.IsValid)
             {
-                // TODO: Return saying that the org name already exists
-                return RedirectToAction("New", "Contact");
+                return View("New", model);
             }
-
-            // TODO form validation
 
             var contact = new Contact
             {
@@ -70,15 +67,14 @@ namespace QuoteFlow.Controllers
             };
 
             var newContact = ContactService.CreateContact(contact);
-
-            // there has to be a better way to do this...
-            return Redirect("~/contact/" + newContact.Id + "/" + newContact.FullName.UrlFriendly());
+            
+            return SafeRedirect(Url.Contact(newContact.Id, newContact.FullName.UrlFriendly()));
         }
 
-        [QuoteFlowRoute("contact/{contactId}/{contactNameSlug}")]
-        public virtual ActionResult Show(int contactId, string contactNameSlug)
+        [QuoteFlowRoute("contact/{id:INT}/{name}", Name = RouteNames.ContactShow)]
+        public virtual ActionResult Show(int id, string name)
         {
-            var contact = ContactService.GetContact(contactId);
+            var contact = ContactService.GetContact(id);
             return View(contact);
         }
     }
