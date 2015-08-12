@@ -14,20 +14,22 @@ namespace QuoteFlow.Controllers
         #region DI
 
         public ICustomerService CustomerService { get; protected set; }
+        public IQuoteService QuoteService { get; protected set; }
 
         public CustomerController()
         {
         }
 
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ICustomerService customerService, IQuoteService quoteService)
         {
             CustomerService = customerService;
+            QuoteService = quoteService;
         }
 
         #endregion
 
         [QuoteFlowRoute("customers", Name = RouteNames.Customers)]
-        public virtual ActionResult Index()
+        public ActionResult Index()
         {
             var contacts = CustomerService.GetCustomersFromOrganization(CurrentOrganization.Id);
             var model = new CustomersViewModel(contacts);
@@ -35,7 +37,7 @@ namespace QuoteFlow.Controllers
         }
 
         [QuoteFlowRoute("customer/new", HttpVerbs.Get, Name = RouteNames.CustomerNew)]
-        public virtual ActionResult New()
+        public ActionResult New()
         {
             return View();
         }
@@ -67,16 +69,34 @@ namespace QuoteFlow.Controllers
             };
 
             var newContact = CustomerService.CreateCustomer(contact);
-            
             return SafeRedirect(Url.Customer(newContact.Id, newContact.FullName.UrlFriendly()));
         }
 
         [QuoteFlowRoute("customer/{id:INT}/{name}", Name = RouteNames.CustomerShow)]
-        public virtual ActionResult Show(int id, string name)
+        public ActionResult Show(int id, string name)
         {
             var customer = CustomerService.GetCustomer(id);
+            if (customer == null)
+            {
+                return PageNotFound();
+            }
+            
             var model = new CustomerShowModel(customer);
-            return View(model);
+            return customer.FullName.UrlFriendly() != name ? PageNotFound() : View(model);
+        }
+
+        public ActionResult ShowQuotes(int id, string name)
+        {
+            var customer = CustomerService.GetCustomer(id);
+            if (customer == null)
+            {
+                return PageNotFound();
+            }
+
+            var quotes = QuoteService.GetQuotesFromOrganization(1);
+
+            var model = new CustomerShowQuotesModel(customer, quotes);
+            return customer.FullName.UrlFriendly() != name ? PageNotFound() : View(model);
         }
     }
 }

@@ -464,6 +464,7 @@
     <Compile Include="Migrations\M029_CreateRecentlyVisitedLinks.cs" />
     <Compile Include="Migrations\M030_CreateAuditLog.cs" />
     <Compile Include="Migrations\M031_RenameContacts.cs" />
+    <Compile Include="Migrations\M032_AddCustomerIdToQuotes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1228,6 +1229,7 @@
     <Content Include="Views\Shared\Partials\Catalog\Header.cshtml" />
     <Content Include="Views\Shared\Partials\Customer\Header.cshtml" />
     <Content Include="Views\Shared\Partials\Customer\ShowSidebar.cshtml" />
+    <Content Include="Views\Customer\ShowQuotes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

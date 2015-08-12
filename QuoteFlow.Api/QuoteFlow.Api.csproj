@@ -481,6 +481,7 @@
     <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactModels.cs" />
     <Compile Include="Models\ViewModels\Customers\CustomerHeader.cs" />
+    <Compile Include="Models\ViewModels\Customers\CustomerShowQuotesModel.cs" />
     <Compile Include="Models\ViewModels\Customers\CustomerShowModel.cs" />
     <Compile Include="Models\ViewModels\Customers\CustomersViewModel.cs" />
     <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
