@@ -21,9 +21,6 @@ namespace QuoteFlow.Api.Models
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdated { get; set; }
 
-        public string FullName
-        {
-            get { return string.Format("{0} {1}", FirstName, LastName); }
-        }
+        public string FullName => $"{FirstName} {LastName}";
     }
 }
