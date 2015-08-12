@@ -1,6 +1,8 @@
-﻿@using QuoteFlow.Api.Models
+﻿@using QuoteFlow.Api.Infrastructure.Extensions
+@using QuoteFlow.Api.Models
 @using QuoteFlow.Api.Models.ViewModels
 @using QuoteFlow.Api.Models.ViewModels.Customers
+@using QuoteFlow.Infrastructure.Extensions
 @model CustomerShowQuotesModel
 
 @{
@@ -23,15 +25,43 @@
                     </div>
                 </div>
 
-                <div class="summary-modules">
-                    <div class="aui-group">
-                        <div class="aui-item">
-                            <div class="module">
-                                <p>Customer data</p>
+                @if (Model.Quotes.Any())
+                {
+                    <div class="customer-quote-results">
+                        @foreach (var quote in Model.Quotes)
+                        {
+                            <div id="@quote.Id" class="customer-quote-container">
+                                <div class="quote-container tab-panel-status-container">
+                                    <span class="aui-lozenge aui-lozenge-complete">Fulfilled</span>
+                                </div>
+
+                                <h4 class="quote-title">
+                                    <a href="@Url.Quote(quote.Id, quote.Name)">@quote.Name</a>
+                                </h4>
+                                <div class="quote-stats">
+                                    <dl>
+                                        <dt>Created:</dt>
+                                        <dd class="time-started">@quote.CreationDate.ToString("g")</dd>
+                                    </dl>
+                                    <dl></dl>
+                                    <dl>
+                                        <dt>Line Items:</dt>
+                                        <dd class="lineitems-total">@quote.TotalLineItems</dd>
+                                    </dl>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div class="blank-message">
+                        <h2>No quotes found</h2>
+                        <p>
+                            @Model.Customer.FullName does not have any quotes yet. <a href="@Url.NewQuote()">Create one now.</a>
+                        </p>
+                    </div>
+                }
             </section><!-- .aui-page-panel-content -->
         </div><!-- .aui-page-panel-inner -->
     </div><!-- .aui-page-panel -->
