@@ -23,9 +23,10 @@
 
         public const string CatalogShow = "Catalog-Show";
 
-        public const string Contacts = "Contacts";
-        public const string ContactNew = "Contact-New";
-        public const string ContactShow = "Contact-Show";
+        public const string Customers = "Contacts";
+        public const string CustomerNew = "Contact-New";
+        public const string CustomerQuotes = "Contact-ShowQuotes";
+        public const string CustomerShow = "Contact-Show";
 
         public const string QuoteAccessControl = "Quote-AccessControl";
         public const string QuoteBuilder = "Quote-Builder";

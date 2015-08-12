@@ -2,7 +2,7 @@
 
 namespace QuoteFlow.Api.Models
 {
-    public class Contact
+    public class Customer
     {
         public int Id { get; set; }
         public int OrganizationId { get; set; }

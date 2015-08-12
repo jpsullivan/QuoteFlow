@@ -1,18 +1,18 @@
 ﻿@using QuoteFlow.Api.Infrastructure.Extensions
 @using QuoteFlow.Infrastructure.Extensions
-@model QuoteFlow.Api.Models.ViewModels.Contacts.ContactsViewModel
+@model QuoteFlow.Api.Models.ViewModels.Customers.CustomersViewModel
 
 @{
-    ViewBag.Title = "Contacts - QuoteFlow";
+    ViewBag.Title = "Customers - QuoteFlow";
 }
 
 <header class="aui-page-header">
     <div class="aui-page-header-inner">
         <div class="aui-page-header-main entity-item">
             <h1>
-                <span>Contacts</span>
+                <span>Customers</span>
             </h1>
-            <a class="aui-button aui-button-light" href="@Url.NewContact()" autocomplete="off" tabindex="0">Add a new contact</a>
+            <a class="aui-button aui-button-light" href="@Url.NewCustomer()" autocomplete="off" tabindex="0">Add a new customer</a>
         </div>
     </div>
 </header>
@@ -20,7 +20,7 @@
 <div class="aui-page-panel content-body fixed-right">
     <div class="aui-page-panel-inner">
         <section class="aui-page-panel-content">
-            @if (Model.Contacts.Any())
+            @if (Model.Customers.Any())
             {
                 <table class="aui aui-table-interactive contact-list-table">
                     <thead>
@@ -33,28 +33,28 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach (var contact in Model.Contacts)
+                    @foreach (var customer in Model.Customers)
                     {
-                        var address = string.Format("{0} {1}, {2} {3}", contact.Address1, contact.City, contact.State, contact.Zipcode);
+                        var address = string.Format("{0} {1}, {2} {3}", customer.Address1, customer.City, customer.State, customer.Zipcode);
 
                         <tr>
                             <td headers="name">
-                                <div title="@contact.FullName">
-                                    <a href="@Url.Contact(contact.Id, contact.FullName.UrlFriendly())">@contact.FullName</a>
+                                <div title="@customer.FullName">
+                                    <a href="@Url.Customer(customer.Id, customer.FullName.UrlFriendly())">@customer.FullName</a>
                                 </div>
                             </td>
                             <td headers="email">
-                                <div title="@contact.EmailAddress">@contact.EmailAddress</div>
+                                <div title="@customer.EmailAddress">@customer.EmailAddress</div>
                             </td>
                             <td headers="phone">
-                                <div title="@contact.Phone">@contact.Phone</div>
+                                <div title="@customer.Phone">@customer.Phone</div>
                             </td>
                             <td headers="address">
                                 <div title="@address">@address</div>
                             </td>
                             <td headers="created">
-                                <div title="@contact.CreationDate.ToString("g")">
-                                    @contact.CreationDate.ToRelativeTime()
+                                <div title="@customer.CreationDate.ToString("g")">
+                                    @customer.CreationDate.ToRelativeTime()
                                 </div>
                             </td>
                         </tr>
@@ -65,9 +65,9 @@
             else
             {
                 <div class="blank-message">
-                    <h2>No contacts found</h2>
+                    <h2>No customers found</h2>
                     <p>
-                        No contacts have been added yet. <a href="@Url.NewContact()">Create one now.</a>
+                        No customers have been added yet. <a href="@Url.NewCustomer()">Create one now.</a>
                     </p>
                 </div>
             }

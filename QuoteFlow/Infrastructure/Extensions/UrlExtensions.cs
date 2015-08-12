@@ -146,21 +146,26 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         #endregion
 
-        #region Contacts
+        #region Customers
 
-        public static string Contact(this UrlHelper url, int id, string name)
+        public static string Customer(this UrlHelper url, int id, string name)
         {
-            return url.RouteUrl(RouteNames.ContactShow, new { id, name });
+            return url.RouteUrl(RouteNames.CustomerShow, new { id, name });
         }
 
-        public static string Contacts(this UrlHelper url)
+        public static string Customers(this UrlHelper url)
         {
-            return url.RouteUrl(RouteNames.Contacts);
+            return url.RouteUrl(RouteNames.Customers);
         }
 
-        public static string NewContact(this UrlHelper url)
+        public static string NewCustomer(this UrlHelper url)
         {
-            return url.RouteUrl(RouteNames.ContactNew);
+            return url.RouteUrl(RouteNames.CustomerNew);
+        }
+
+        public static string CustomerQuotes(this UrlHelper url, int id, string name)
+        {
+            return url.RouteUrl(RouteNames.CustomerQuotes, new { id, name });
         }
 
         #endregion

@@ -1,0 +1,15 @@
+﻿@using QuoteFlow.Api.Models
+@using QuoteFlow.Api.Models.ViewModels
+@using QuoteFlow.Infrastructure.Extensions
+@model SidebarViewModel<Customer>
+
+<div class="aui-page-panel-nav">
+    <nav class="aui-navgroup aui-navgroup-vertical">
+        <div class="aui-navgroup-inner">
+            <ul class="aui-nav">
+                <li class="@Model.GetMenuItemClass("summary")"><a href="@Url.Customer(Model.Actor.Id, Model.Actor.FullName.UrlFriendly())">Summary</a></li>
+                <li class="@Model.GetMenuItemClass("quotes")"><a href="@Url.CustomerQuotes(Model.Actor.Id, Model.Actor.FullName.UrlFriendly())">Quotes</a></li>
+            </ul>
+        </div>
+    </nav><!-- .aui-navgroup -->
+</div><!-- .aui-page-panel-nav -->

@@ -24,7 +24,7 @@ namespace QuoteFlow.Controllers
         public IAssetTableService AssetTableService { get; protected set; }
         public IAssetTableServiceConfiguration AssetTableServiceConfiguration { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
-        public IContactService ContactService { get; protected set; }
+        public ICustomerService CustomerService { get; protected set; }
         public IJqlStringSupport JqlStringSupport { get; protected set; }
         public IManufacturerService ManufacturerService { get; protected set; }
         public IQuoteLineItemService QuoteLineItemService { get; protected set; }
@@ -38,13 +38,13 @@ namespace QuoteFlow.Controllers
         {
         }
 
-        public QuoteController(IAssetService assetService, IAssetTableService assetTableService, IAssetTableServiceConfiguration assetTableServiceConfiguration, ICatalogService catalogService, IContactService contactService, IJqlStringSupport jqlStringSupport, IManufacturerService manufacturerService, IQuoteLineItemService quoteLineItemService, IQuoteService quoteService, IQuoteStatusService quoteStatusService, ISearcherService searcherService, IUserService userService, IUserTrackingService userTrackingService)
+        public QuoteController(IAssetService assetService, IAssetTableService assetTableService, IAssetTableServiceConfiguration assetTableServiceConfiguration, ICatalogService catalogService, ICustomerService customerService, IJqlStringSupport jqlStringSupport, IManufacturerService manufacturerService, IQuoteLineItemService quoteLineItemService, IQuoteService quoteService, IQuoteStatusService quoteStatusService, ISearcherService searcherService, IUserService userService, IUserTrackingService userTrackingService)
         {
             AssetService = assetService;
             AssetTableService = assetTableService;
             AssetTableServiceConfiguration = assetTableServiceConfiguration;
             CatalogService = catalogService;
-            ContactService = contactService;
+            CustomerService = customerService;
             JqlStringSupport = jqlStringSupport;
             ManufacturerService = manufacturerService;
             QuoteLineItemService = quoteLineItemService;
@@ -68,7 +68,7 @@ namespace QuoteFlow.Controllers
         [QuoteFlowRoute("quote/new")]
         public virtual ActionResult New()
         {
-            var contacts = ContactService.GetContactsFromOrganization(CurrentOrganization.Id);
+            var contacts = CustomerService.GetCustomersFromOrganization(CurrentOrganization.Id);
             var model = new NewQuoteModel
             {
                 Contacts = contacts

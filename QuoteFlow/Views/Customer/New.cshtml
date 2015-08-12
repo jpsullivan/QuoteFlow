@@ -2,11 +2,11 @@
 
 @{
     Layout = "../Shared/_FocusedLayout.cshtml";
-    ViewBag.Title = "New Contact - QuoteFlow";
+    ViewBag.Title = "New Customer - QuoteFlow";
 }
 
 <h2>Create a new contact</h2>
-@using (Html.BeginForm("CreateContact", "Contact", FormMethod.Post, new { @class = "aui" }))
+@using (Html.BeginForm("CreateContact", "Customer", FormMethod.Post, new { @class = "aui" }))
 {
     @Html.AntiForgeryToken()
 

@@ -21,6 +21,6 @@ namespace QuoteFlow.Api.Models.ViewModels.Quotes
         /// <summary>
         /// For populating the contacts dropdown.
         /// </summary>
-        public IEnumerable<Contact> Contacts { get; set; }
+        public IEnumerable<Customer> Contacts { get; set; }
     }
 }

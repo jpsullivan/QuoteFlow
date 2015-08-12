@@ -390,7 +390,7 @@
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
-    <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
@@ -463,6 +463,7 @@
     <Compile Include="Migrations\M028_CreateQuoteStatus.cs" />
     <Compile Include="Migrations\M029_CreateRecentlyVisitedLinks.cs" />
     <Compile Include="Migrations\M030_CreateAuditLog.cs" />
+    <Compile Include="Migrations\M031_RenameContacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1170,9 +1171,9 @@
     <Content Include="Views\Catalog\Index.cshtml" />
     <Content Include="Views\Catalog\New.cshtml" />
     <Content Include="Views\Catalog\Show.cshtml" />
-    <Content Include="Views\Contact\Index.cshtml" />
-    <Content Include="Views\Contact\New.cshtml" />
-    <Content Include="Views\Contact\Show.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\New.cshtml" />
+    <Content Include="Views\Customer\Show.cshtml" />
     <Content Include="Views\Quote\Index.cshtml" />
     <Content Include="Views\Quote\New.cshtml" />
     <Content Include="Views\Shared\Partials\Asset\ListItem.cshtml" />
@@ -1225,6 +1226,8 @@
     <Content Include="Views\Searchers\CatalogSearcherEdit.cshtml" />
     <Content Include="Views\Searchers\CatalogSearcherView.cshtml" />
     <Content Include="Views\Shared\Partials\Catalog\Header.cshtml" />
+    <Content Include="Views\Shared\Partials\Customer\Header.cshtml" />
+    <Content Include="Views\Shared\Partials\Customer\ShowSidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

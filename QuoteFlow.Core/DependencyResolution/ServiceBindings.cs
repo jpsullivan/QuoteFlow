@@ -71,7 +71,7 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<ICatalogImportService>().To<CatalogImportService>().InRequestScope();
             Bind<ICatalogImportSummaryRecordsService>().To<CatalogImportSummaryRecordsService>().InRequestScope();
             Bind<ICatalogService>().To<CatalogService>().InRequestScope();
-            Bind<IContactService>().To<ContactService>().InRequestScope();
+            Bind<ICustomerService>().To<CustomerService>().InRequestScope();
             Bind<IManufacturerService>().To<ManufacturerService>().InRequestScope();
             Bind<IManufacturerLogoService>().To<ManufacturerLogoService>().InRequestScope();
             Bind<IOrganizationService>().To<OrganizationService>().InRequestScope();
