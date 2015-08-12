@@ -59,6 +59,34 @@ namespace QuoteFlow.Core.Services
         }
 
         /// <summary>
+        /// Find all quotes for a specific customer.
+        /// </summary>
+        /// <param name="customerId">The customer id</param>
+        /// <returns></returns>
+        public IEnumerable<Quote> GetCustomerQuotes(int customerId)
+        {
+            if (customerId == 0)
+            {
+                throw new ArgumentException("Customer ID must not be zero.");
+            }
+
+            var builder = new SqlBuilder();
+            var tmpl = builder.AddTemplate(@"
+                select
+                    *,
+                    (select count(*) from QuoteLineItems where QuoteId = quotes.Id) TotalLineItems
+                from
+                (
+                    select * from Quotes /**where**/
+                ) as quotes
+            ");
+
+            builder.Where("CustomerId = @customerId");
+
+            return Current.DB.Query<Quote>(tmpl.RawSql, new { customerId });
+        }
+
+        /// <summary>
         /// Fetch all the quotes from a particular organization
         /// </summary>
         /// <param name="organizationId" type="int">The organization id</param>

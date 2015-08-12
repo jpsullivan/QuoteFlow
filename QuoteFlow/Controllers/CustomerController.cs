@@ -85,6 +85,7 @@ namespace QuoteFlow.Controllers
             return customer.FullName.UrlFriendly() != name ? PageNotFound() : View(model);
         }
 
+        [QuoteFlowRoute("customer{id:INT}/{name}/quotes", Name = RouteNames.CustomerQuotes)]
         public ActionResult ShowQuotes(int id, string name)
         {
             var customer = CustomerService.GetCustomer(id);
@@ -93,7 +94,7 @@ namespace QuoteFlow.Controllers
                 return PageNotFound();
             }
 
-            var quotes = QuoteService.GetQuotesFromOrganization(1);
+            var quotes = QuoteService.GetCustomerQuotes(customer.Id);
 
             var model = new CustomerShowQuotesModel(customer, quotes);
             return customer.FullName.UrlFriendly() != name ? PageNotFound() : View(model);
