@@ -36,25 +36,26 @@ namespace QuoteFlow.Core.Services
         /// <returns>The newly created <see cref="Quote"/>.</returns>
         public Quote CreateQuote(NewQuoteModel model, int userId)
         {
-            var quote = new Quote
+            var quote = new Quote();
+            var insert = Current.DB.Quotes.Insert(new
             {
                 Name = model.QuoteName,
                 Description = model.QuoteDescription,
                 Status = 1,
                 Responded = false,
                 CreatorId = userId,
+                CustomerId = model.CustomerId,
                 OrganizationId = model.Organization.Id,
                 CreationDate = DateTime.UtcNow,
                 LastUpdated = DateTime.UtcNow,
                 Enabled = true
-            };
-
-            var insert = Current.DB.Quotes.Insert(quote);
-            if (insert != null)
+            });
+            if (insert == null)
             {
-                quote.Id = insert.Value;
+                throw new ArgumentException("Quote insert failed.");
             }
 
+            quote = GetQuote(insert.Value);
             return quote;
         }
 

@@ -16,11 +16,11 @@ namespace QuoteFlow.Api.Models.ViewModels.Quotes
 
         [Required]
         [Display(Name = "Customer")]
-        public int ContactId { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// For populating the contacts dropdown.
         /// </summary>
-        public IEnumerable<Customer> Contacts { get; set; }
+        public IEnumerable<Customer> Customers { get; set; }
     }
 }

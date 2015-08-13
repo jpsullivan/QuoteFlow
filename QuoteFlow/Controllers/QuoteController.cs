@@ -71,7 +71,7 @@ namespace QuoteFlow.Controllers
             var contacts = CustomerService.GetCustomersFromOrganization(CurrentOrganization.Id);
             var model = new NewQuoteModel
             {
-                Contacts = contacts
+                Customers = contacts
             };
             return View(model);
         }
@@ -87,20 +87,21 @@ namespace QuoteFlow.Controllers
             // is implemented.
             model.Organization = currentUser.Organizations.First();
 
-            if (!ModelState.IsValid) return New();
+            if (!ModelState.IsValid)
+            {
+                return New();
+            }
 
             // check to make sure that a quote with this name doesn't already exist
-            if (QuoteService.ExistsWithinOrganization(model.QuoteName, CurrentOrganization.Id)) {
-                var errorMsg = string.Format("Quote name already exists within the {0} organization.",
-                    model.Organization.OrganizationName);
+            if (QuoteService.ExistsWithinOrganization(model.QuoteName, CurrentOrganization.Id))
+            {
+                var errorMsg = $"Quote name already exists within the {model.Organization.OrganizationName} organization.";
                 ModelState.AddModelError("Name", errorMsg);
                 return View("New", model);
             }
 
             var newQuote = QuoteService.CreateQuote(model, currentUser.Id);
-
-            // there has to be a better way to do this...
-            return Redirect("~/quote/" + newQuote.Id + "/" + newQuote.Name.UrlFriendly());
+            return SafeRedirect(Url.Quote(newQuote.Id, newQuote.Name.UrlFriendly()));
         }
 
         [QuoteFlowRoute("quote/{id:INT}/{name}", Name = RouteNames.QuoteShow)]
