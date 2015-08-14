@@ -21,13 +21,6 @@
                             </li>
                         </ul>
                     </div>
-                    
-                    <ul class="operations-list">
-                        <li>
-                            <span class="list-label">Created By:</span>
-                            <span>@Model.QuoteCreator.FullName</span>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -81,20 +74,35 @@
             </section><!-- .aui-page-panel-content -->
 
             <aside class="aui-page-panel-sidebar">
-                <h3>Members</h3>
-                <dl class="meta-list">
-                    <dt>Quote Creator</dt>
-                    <dd>
-                        <a href="@Url.UserProfile(Model.QuoteCreator.Username)" class="quoteflow-user-name quoteflow-user-avatar quoteflow-user-avatar-small">
-                            <span class="aui-avatar aui-avatar-small">
-                                <span class="aui-avatar-inner">
-                                    @Html.Gravatar(@Model.QuoteCreator.EmailAddress, 24)
+                <div id="quote_members" class="module">
+                    <div class="mod-header">
+                        <h2>Participants</h2>
+                    </div>
+                    <dl class="meta-list">
+                        <dt>Quote Creator</dt>
+                        <dd>
+                            <a href="@Url.UserProfile(Model.QuoteCreator.Username)" class="quoteflow-user-name quoteflow-user-avatar quoteflow-user-avatar-small">
+                                <span class="aui-avatar aui-avatar-small">
+                                    <span class="aui-avatar-inner">
+                                        @Html.Gravatar(@Model.QuoteCreator.EmailAddress, 24)
+                                    </span>
                                 </span>
-                            </span>
-                            @Model.QuoteCreator.FullName
-                        </a>
-                    </dd>
-                </dl>
+                                @Model.QuoteCreator.FullName
+                            </a>
+                        </dd>
+                    </dl>
+                </div>
+                <div id="quote_summary" class="module">
+                    <div class="mod-header">
+                        <h2>Summary</h2>
+                    </div>
+                    <dl class="meta-list">
+                        <dt>Date Created</dt>
+                        <dd>
+                            @Model.Quote.CreationDate.ToString("g")
+                        </dd>
+                    </dl>
+                </div>
             </aside>
         </div><!-- .aui-page-panel-inner -->
     </div><!-- .aui-page-panel -->

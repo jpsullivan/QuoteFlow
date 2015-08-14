@@ -1058,8 +1058,6 @@
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
     <Content Include="Content\less\asset-nav\split-view.less" />
-    <Content Include="Content\less\asset-nav\mixins\border-box.less" />
-    <Content Include="Content\less\asset-nav\mixins\clearfix.less" />
     <Content Include="Content\less\asset-nav\mixins\content-box.less" />
     <Content Include="Content\less\asset-nav\mixins\text-overflow.less" />
     <Content Include="Content\less\asset-nav\split-view.css.map">
@@ -1127,6 +1125,10 @@
     <Content Include="Content\less\static\aui-theme\components\dropdowns.less" />
     <Content Include="Areas\Admin\Views\Indexing\DoReindex.cshtml" />
     <Content Include="Content\less\quote\customer-quote-results.less" />
+    <Content Include="Content\less\asset-nav\query.less" />
+    <Content Include="Content\less\mixins\border-box.less" />
+    <Content Include="Content\less\mixins\clearfix.less" />
+    <Content Include="Content\less\modules.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
