@@ -1126,6 +1126,7 @@
     <Content Include="Content\less\static\aui-theme\components\adbox.less" />
     <Content Include="Content\less\static\aui-theme\components\dropdowns.less" />
     <Content Include="Areas\Admin\Views\Indexing\DoReindex.cshtml" />
+    <Content Include="Content\less\quote\customer-quote-results.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
