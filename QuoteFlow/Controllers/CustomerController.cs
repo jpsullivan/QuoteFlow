@@ -15,15 +15,17 @@ namespace QuoteFlow.Controllers
 
         public ICustomerService CustomerService { get; protected set; }
         public IQuoteService QuoteService { get; protected set; }
+        public IQuoteStatusService QuoteStatusService { get; protected set; }
 
         public CustomerController()
         {
         }
 
-        public CustomerController(ICustomerService customerService, IQuoteService quoteService)
+        public CustomerController(ICustomerService customerService, IQuoteService quoteService, IQuoteStatusService quoteStatusService)
         {
             CustomerService = customerService;
             QuoteService = quoteService;
+            QuoteStatusService = quoteStatusService;
         }
 
         #endregion
@@ -95,8 +97,9 @@ namespace QuoteFlow.Controllers
             }
 
             var quotes = QuoteService.GetCustomerQuotes(customer.Id);
+            var statuses = QuoteStatusService.GetStatuses(1); // todo organization id fix
 
-            var model = new CustomerShowQuotesModel(customer, quotes);
+            var model = new CustomerShowQuotesModel(customer, quotes, statuses);
             return customer.FullName.UrlFriendly() != name ? PageNotFound() : View(model);
         }
     }

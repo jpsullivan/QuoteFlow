@@ -26,12 +26,30 @@
 
                 @if (Model.Quotes.Any())
                 {
+                    var firstStatus = Model.Statuses.First();
+                    var lastStatus = Model.Statuses.Last();
+
                     <div class="customer-quote-results">
                         @foreach (var quote in Model.Quotes)
                         {
+                            var statusClass = "";
+                            QuoteStatus status = Model.Statuses.FirstOrDefault(s => s.Id == quote.Status);
+                            if (status.Equals(firstStatus))
+                            {
+                                statusClass = "aui-lozenge-complete";
+                            }
+                            else if (status.Equals(lastStatus))
+                            {
+                                statusClass = "aui-lozenge-success";
+                            }
+                            else
+                            {
+                                statusClass = "aui-lozenge-current";
+                            }
+
                             <div id="@quote.Id" class="customer-quote-container">
                                 <div class="quote-status-container tab-panel-status-container">
-                                    <span class="aui-lozenge aui-lozenge-complete">Fulfilled</span>
+                                    <span class="aui-lozenge @statusClass">@status.Name</span>
                                 </div>
 
                                 <h4 class="quote-title">
