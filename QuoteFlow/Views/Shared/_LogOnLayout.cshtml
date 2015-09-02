@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui.min.css")" media="all">
     <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui-experimental.min.css")" media="all">
-    @Styles.Render("~/bundles/css_app")
+    @Html.RenderCssBundle("app.css", BundleOptions.BuildConfigDependent)
 </head>
 <body class="aui-layout aui-page-focused aui-page-focused-medium">
     <div id="page" class="login">
