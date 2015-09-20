@@ -35,9 +35,9 @@ namespace QuoteFlow.Core.Tests.Jql.Builder
         public void TestCopyNoCopy()
         {
             var mockClause = new Mock<IMutableClause>();
-            mockClause.Setup(x => x.Copy()).Returns(new MockMutableClause(null));
+            mockClause.Setup(x => x.Copy()).Returns(mockClause.Object);
 
-            NotMutableClause notMutableClause = new NotMutableClause(mockClause.Object);
+            var notMutableClause = new NotMutableClause(mockClause.Object);
             Assert.Same(notMutableClause, notMutableClause.Copy());
 
             mockClause.Verify();
@@ -49,7 +49,7 @@ namespace QuoteFlow.Core.Tests.Jql.Builder
             var mockClause = new Mock<IMutableClause>();
             mockClause.Setup(x => x.Copy()).Returns(new MockMutableClause(null));
 
-            NotMutableClause notMutableClause = new NotMutableClause(mockClause.Object);
+            var notMutableClause = new NotMutableClause(mockClause.Object);
             IMutableClause actualCopy = notMutableClause.Copy();
 
             Assert.NotSame(notMutableClause, actualCopy);
