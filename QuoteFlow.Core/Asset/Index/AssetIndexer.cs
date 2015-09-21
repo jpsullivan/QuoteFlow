@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Glimpse.Core.Tab;
+using Lucene.Net.Documents;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Infrastructure.Concurrency;
@@ -19,19 +18,19 @@ namespace QuoteFlow.Core.Asset.Index
     public class AssetIndexer : IAssetIndexer
     {
         public IAssetDocumentFactory AssetDocumentFactory { get; protected set; }
-        public static IDocumentCreationStrategy DocumentCreationStrategy { get; protected set; }
 
         private static Lifecycle _lifecycle;
 
         // simple indexing strategy just asks the operation for its result
         private readonly SimpleIndexingStrategy _simpleIndexingStrategy = new SimpleIndexingStrategy();
 
-        public AssetIndexer(IIndexDirectoryFactory indexDirectoryFactory, 
-            IAssetDocumentFactory assetDocumentFactory, IDocumentCreationStrategy documentCreationStrategy)
+        private readonly IDocumentCreationStrategy _documentCreationStrategy;
+
+        public AssetIndexer(IIndexDirectoryFactory indexDirectoryFactory, IAssetDocumentFactory assetDocumentFactory)
         {
             _lifecycle = new Lifecycle(indexDirectoryFactory);
+            _documentCreationStrategy = new DefaultDocumentCreationStrategy(assetDocumentFactory);
             AssetDocumentFactory = assetDocumentFactory;
-            DocumentCreationStrategy = documentCreationStrategy;
         }
 
 
@@ -64,7 +63,7 @@ namespace QuoteFlow.Core.Asset.Index
 
         public IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, bool reIndexComments, bool conditionalUpdate)
         {
-            var operation = new ReIndexAssetsOperation(reIndexComments, conditionalUpdate);
+            var operation = new ReIndexAssetsOperation(reIndexComments, conditionalUpdate, _documentCreationStrategy);
             return Perform(assets, _simpleIndexingStrategy, operation);
         }
 
@@ -72,11 +71,13 @@ namespace QuoteFlow.Core.Asset.Index
         {
             private readonly bool _reIndexComments;
             private readonly bool _conditionalUpdate;
+            private readonly IDocumentCreationStrategy _documentCreationStrategy;
 
-            public ReIndexAssetsOperation(bool reIndexComments, bool conditionalUpdate)
+            public ReIndexAssetsOperation(bool reIndexComments, bool conditionalUpdate, IDocumentCreationStrategy documentCreationStrategy)
             {
                 _reIndexComments = reIndexComments;
                 _conditionalUpdate = conditionalUpdate;
+                _documentCreationStrategy = documentCreationStrategy;
             }
 
             public IIndexResult Perform(IAsset asset)
@@ -86,7 +87,7 @@ namespace QuoteFlow.Core.Asset.Index
                     using (Timeline.Capture("Index Asset: " + asset.Id))
                     {
                         var mode = UpdateMode.Interactive;
-                        var documents = DocumentCreationStrategy.Get(asset, _reIndexComments);
+                        var documents = _documentCreationStrategy.Get(asset, _reIndexComments);
                         var assetTerm = documents.IdentifyingTerm;
 
                         Operation update;
@@ -279,6 +280,33 @@ namespace QuoteFlow.Core.Asset.Index
             internal IndexDirectoryFactoryMode Mode
             {
                 set { _factory.IndexingMode = value; }
+            }
+        }
+
+        /// <summary>
+        /// Get the list of change documents for indexing.
+        /// </summary>
+        private interface IDocumentBuilder : IEnumerable<Document>
+        {
+        }
+
+        /// <summary>
+        /// Get the documents (asset and asset related entities) for the asset.
+        /// </summary>
+        private class DefaultDocumentCreationStrategy : IDocumentCreationStrategy
+        {
+            private readonly IAssetDocumentFactory _assetDocumentFactory;
+
+            public DefaultDocumentCreationStrategy(IAssetDocumentFactory assetDocumentFactory)
+            {
+                _assetDocumentFactory = assetDocumentFactory;
+            }
+
+            public Documents Get(IAsset asset, bool includeComments)
+            {
+                var comments =  new List<Document>();
+                var assets = _assetDocumentFactory.Apply(asset);
+                return new Documents(asset, assets, comments);
             }
         }
 

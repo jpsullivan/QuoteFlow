@@ -101,6 +101,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Asset\Index\AnalyzerUtils.cs" />
+    <Compile Include="Asset\Index\AssetIndexerTests.cs" />
     <Compile Include="Asset\Index\AssetIndexManagerTests.cs" />
     <Compile Include="Asset\Index\Indexers\FieldIndexerUtilTests.cs" />
     <Compile Include="Asset\Index\QuoteFlowAnalyzerTests.cs" />

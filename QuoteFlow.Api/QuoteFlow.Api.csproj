@@ -181,6 +181,7 @@
     <Compile Include="Asset\Index\Analyzer\SubtokenFilter.cs" />
     <Compile Include="Asset\Index\Analyzer\TextAnalyzer.cs" />
     <Compile Include="Asset\Index\Analyzer\TokenFilters.cs" />
+    <Compile Include="Asset\Index\AssetIndexingParams.cs" />
     <Compile Include="Asset\Index\DocumentConstants.cs" />
     <Compile Include="Asset\Index\IAssetIndexManager.cs" />
     <Compile Include="Asset\Index\IEntityDocumentBuilder.cs" />

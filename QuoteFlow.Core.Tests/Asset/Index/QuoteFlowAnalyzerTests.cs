@@ -82,7 +82,7 @@ namespace QuoteFlow.Core.Tests.Asset.Index
         {
             var hits = GetHitsForSearch(textToSearch, searchTerm);
 
-            var msg = string.Format("Search Term '{0}' wasn't found in text '{1}'", searchTerm, textToSearch);
+            var msg = $"Search Term '{searchTerm}' wasn't found in text '{textToSearch}'";
             Assert.Equal(1, hits.TotalHits);
         }
 
@@ -90,7 +90,7 @@ namespace QuoteFlow.Core.Tests.Asset.Index
         {
             var hits = GetHitsForSearch(textToSearch, searchTerm);
 
-            var msg = string.Format("Search Term '{0}' was found in text '{1}'", searchTerm, textToSearch);
+            var msg = $"Search Term '{searchTerm}' was found in text '{textToSearch}'";
             Assert.Equal(0, hits.TotalHits);
         }
 
