@@ -135,7 +135,7 @@ namespace QuoteFlow.Core.Index
                 {
                     try
                     {
-                        var asset = _outerInstance._issueManager.GetAsset((int)assetId);
+                        var asset = _outerInstance._issueManager.GetAsset((int) assetId);
                         if (asset == null) continue;
 
                         TermQuery query = new TermQuery(new Term(DocumentConstants.AssetId, Convert.ToString(assetId)));

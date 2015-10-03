@@ -43,7 +43,6 @@ namespace QuoteFlow.Core.Asset.Index
         private static readonly object IndexReaderLock = new object();
 
         public Analyzer AnalyzerForSearching => QuoteFlowAnalyzer.AnalyzerForSearching;
-
         public Analyzer AnalyzerForIndexing => QuoteFlowAnalyzer.AnalyzerForIndexing;
 
         #region Asset searcher supplier / helper class

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Moq;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Core.Asset.Index;
 using QuoteFlow.Core.Lucene.Index;
 using Xunit;
@@ -32,7 +33,7 @@ namespace QuoteFlow.Core.Tests.Asset.Index
         [Fact]
         public void TestDeleteIndexesOnSelectedIndexes()
         {
-            _assetIndexer.DeleteIndexes(IssueIndexingParams.builder().withoutIssues().withComments().withWorklogs().build());
+            _assetIndexer.DeleteIndexes(AssetIndexingParams.Builder().WithoutAssets().WithComments().Build());
         }
 
         [Fact]
