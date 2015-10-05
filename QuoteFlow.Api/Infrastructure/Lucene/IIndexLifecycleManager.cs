@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Infrastructure.Collect;
 using QuoteFlow.Api.Util;
 
@@ -16,6 +17,13 @@ namespace QuoteFlow.Api.Infrastructure.Lucene
         int ReIndexAll();
 
         /// <summary>
+        /// Reindex indexes defined by the <see cref="AssetIndexingParams"/>.
+        /// </summary>
+        /// <param name="assetIndexingParams">Indexes to reindex.</param>
+        /// <returns>Reindex time in ms.</returns>
+        int ReIndexAll(AssetIndexingParams assetIndexingParams);
+
+        /// <summary>
         /// Reindex everything, but don't stop the world
         /// Comments will not be reindexed.
         /// </summary>
@@ -23,11 +31,18 @@ namespace QuoteFlow.Api.Infrastructure.Lucene
         int ReIndexAllAssetsInBackground();
 
         /// <summary>
-        /// Reindex everything, but don't stop the world
+        /// Reindex everything, but don't stop the world.
         /// </summary>
         /// <param name="reIndexComments"> Also reindex all the asset comments. </param>
         /// <returns>Reindex time in ms.</returns>
         int ReIndexAllAssetsInBackground(bool reIndexComments);
+
+        /// <summary>
+        /// Reindex everything, but don't stop the world.
+        /// </summary>
+        /// <param name="assetIndexingParams">Determines which related objects should be indexed together with assets.</param>
+        /// <returns>Reindex time in ms.</returns>
+        int ReIndexAllAssetsInBackground(AssetIndexingParams assetIndexingParams);
 
         /// <summary>
         /// Optimize the underlying indexes. Make the subsequent searching more efficient.

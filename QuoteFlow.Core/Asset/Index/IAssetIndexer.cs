@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Lucene.Index;
@@ -26,6 +27,15 @@ namespace QuoteFlow.Core.Asset.Index
         /// </summary>
         /// <param name="assets">An iterable of assets to index.</param>
         IIndexResult DeIndexAssets(IEnumerable<IAsset> assets);
+
+        /// <summary>
+        /// Re-index the given assets, delete any existing documents and add new ones.
+        /// </summary>
+        /// <param name="assets">An interable of assets to reindex.</param>
+        /// <param name="reIndexComments">Set to true if you require the asset comments to also be reindexed.</param>
+        /// <param name="conditionalUpdate">Set to true to use conditional updates when writing to the index.</param>
+        [Obsolete]
+        IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, bool reIndexComments, bool conditionalUpdate);
 
         /// <summary>
         /// Re-index the given assets, delete any existing documents and add new ones.

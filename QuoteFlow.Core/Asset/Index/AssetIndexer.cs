@@ -54,6 +54,18 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
+        public IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, bool reIndexComments, bool conditionalUpdate)
+        {
+            var assetIndexingParams = AssetIndexingParams.Builder().SetComments(reIndexComments).Build();
+            return ReIndexAssets(assets, assetIndexingParams, conditionalUpdate);
+        }
+
+        public IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, AssetIndexingParams assetIndexingParams, bool conditionalUpdate)
+        {
+            var operation = new ReIndexAssetsOperation(assetIndexingParams, conditionalUpdate, _documentCreationStrategy);
+            return Perform(assets, _simpleIndexingStrategy, operation);
+        }
+
         private void DeIndexAction(IAsset asset)
         {
             try
@@ -65,12 +77,6 @@ namespace QuoteFlow.Core.Asset.Index
                 
                 throw;
             }
-        }
-
-        public IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, AssetIndexingParams assetIndexingParams, bool conditionalUpdate)
-        {
-            var operation = new ReIndexAssetsOperation(assetIndexingParams, conditionalUpdate, _documentCreationStrategy);
-            return Perform(assets, _simpleIndexingStrategy, operation);
         }
 
         /// <summary>

@@ -124,6 +124,71 @@ namespace QuoteFlow.Core.Asset.Index
 
         public bool IsEmpty => Size() == 0;
 
+        public int ReIndexAll()
+        {
+            // don't use background indexing by default
+            return ReIndexAll(false);
+        }
+
+        public int ReIndexAll(bool useBackgroundReindexing, bool updateReplicatedIndexStore = true)
+        {
+            return ReIndexAll(useBackgroundReindexing, false, updateReplicatedIndexStore);
+        }
+
+        public int ReIndexAll(bool useBackgroundReindexing, bool reIndexComments, bool updateReplicatedIndexStore)
+        {
+            var indexingInBackgroundParams = AssetIndexingParams.Builder().SetComments(reIndexComments).Build();
+            var assetIndexingParams = useBackgroundReindexing
+                ? indexingInBackgroundParams
+                : AssetIndexingParams.Index_All;
+
+            return ReIndexAll(useBackgroundReindexing, assetIndexingParams, updateReplicatedIndexStore);
+        }
+
+        public int ReIndexAll(AssetIndexingParams assetIndexingParams)
+        {
+            return ReIndexAll(false, assetIndexingParams, true);
+        }
+
+        public int ReIndexAll(bool useBackgroundReindexing, AssetIndexingParams assetIndexingParams, bool updateReplicatedIndexStore)
+        {
+            var filteredAssetIndexingParams = FilterIndexingParams(assetIndexingParams);
+
+            // if nothing to reindex
+            if (!filteredAssetIndexingParams.Index)
+            {
+                return -1;
+            }
+            
+            Debug.WriteLine("Re-indexing all assets.");
+            var stopWatch = Stopwatch.StartNew();
+
+            if (useBackgroundReindexing)
+            {
+                using (Timeline.Capture("Reindexing all assets"))
+                {
+                    // doesn't delete indexes
+                    lock (IndexReaderLock)
+                    {
+                        DoBackgroundReindex(assetIndexingParams);
+                    }
+                }
+
+                using (Timeline.Capture("Flush thread local searchers"))
+                {
+                    FlushThreadLocalSearchers();
+                }
+            }
+            else
+            {
+                DoStopTheWorldReindex();
+            }
+
+            stopWatch.Stop();
+
+            return stopWatch.Elapsed.Seconds;
+        }
+
         public int ReIndexAllAssetsInBackground()
         {
             return ReIndexAllAssetsInBackground(false);
@@ -132,6 +197,11 @@ namespace QuoteFlow.Core.Asset.Index
         public int ReIndexAllAssetsInBackground(bool reIndexComments)
         {
             return ReIndexAll(true, reIndexComments, true);
+        }
+
+        public int ReIndexAllAssetsInBackground(AssetIndexingParams assetIndexingParams)
+        {
+            return ReIndexAll(true, assetIndexingParams, true);
         }
 
         public int Optimize()
@@ -165,54 +235,17 @@ namespace QuoteFlow.Core.Asset.Index
 
         public bool IndexConsistent { get; private set; }
 
-        public int ReIndexAll()
-        {
-            // don't use background indexing by default
-            return ReIndexAll(false);
-        }
-
-        public int ReIndexAll(bool useBackgroundReindexing, bool updateReplicatedIndexStore = true)
-        {
-            return ReIndexAll(useBackgroundReindexing, false, updateReplicatedIndexStore);
-        }
-
-        public int ReIndexAll(bool useBackgroundReindexing, bool reIndexComments, bool updateReplicatedIndexStore)
-        {
-            Debug.WriteLine("Re-indexing all assets.");
-            var stopWatch = Stopwatch.StartNew();
-
-            if (useBackgroundReindexing)
-            {
-                using (Timeline.Capture("Reindexing all assets"))
-                {
-                    // doesn't delete indexes
-                    lock (IndexReaderLock)
-                    {
-                        DoBackgroundReindex(reIndexComments);
-                    }
-                }
-
-                using (Timeline.Capture("Flush thread local searchers"))
-                {
-                    FlushThreadLocalSearchers();
-                }
-            }
-            else
-            {
-                DoStopTheWorldReindex();
-            }
-
-            stopWatch.Stop();
-
-            return stopWatch.Elapsed.Seconds;
-        }
-
         public int ReIndexAssets(IEnumerable<IAsset> assets)
         {
             throw new NotImplementedException();
         }
 
         public int ReIndexAssets(IEnumerable<IAsset> assets, bool reIndexComments)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int ReIndexAssets(IEnumerable<IAsset> assets, AssetIndexingParams assetIndexingParams)
         {
             throw new NotImplementedException();
         }
@@ -227,20 +260,21 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
-        public int ReIndexComments(IEnumerable<AssetComment> comments)
+        public void ReIndex(IAsset asset, AssetIndexingParams assetIndexingParams)
         {
             throw new NotImplementedException();
         }
 
         public int ReIndexComments(ICollection<AssetComment> comments)
         {
-            throw new NotImplementedException();
+            return ReIndexComments(comments, true);
         }
 
         public int ReIndexComments(ICollection<AssetComment> comments, bool updateReplicatedIndexStore)
         {
             throw new NotImplementedException();
         }
+        private int CommentCount => 0;
 
         public void DeIndex(IAsset asset)
         {
@@ -267,7 +301,18 @@ namespace QuoteFlow.Core.Asset.Index
             throw new NotImplementedException();
         }
 
+        public int ReIndexAssetObjects<T>(ICollection<T> assetObjects, AssetIndexingParams assetIndexingParams) where T : IAsset
+        {
+            throw new NotImplementedException();
+        }
+
         public long ReIndexAssetObjects<T>(ICollection<T> assetObjects, bool reIndexComments, bool updateReplicatedIndexStore) where T : IAsset
+        {
+            throw new NotImplementedException();
+        }
+
+        public long ReIndexAssetObjects<T>(ICollection<T> assetObjects, AssetIndexingParams assetIndexingParams,
+            bool updateReplicatedIndexStore) where T : IAsset
         {
             throw new NotImplementedException();
         }
@@ -359,7 +404,7 @@ namespace QuoteFlow.Core.Asset.Index
             return Container.Kernel.TryGet<AssetBatcherFactory>();
         }
 
-        private void DoBackgroundReindex(bool reIndexComments)
+        private void DoBackgroundReindex(AssetIndexingParams assetIndexingParams)
         {
             var stopWatch = Stopwatch.StartNew();
 
@@ -394,7 +439,7 @@ namespace QuoteFlow.Core.Asset.Index
 
                 using (Timeline.Capture("Reindex assets from catalog"))
                 {
-                    resultBuilder.Add(AssetIndexer.ReIndexAssets(allAssets, reIndexComments, false));
+                    resultBuilder.Add(AssetIndexer.ReIndexAssets(allAssets, assetIndexingParams, false));
                 }
             }
 
@@ -430,5 +475,16 @@ namespace QuoteFlow.Core.Asset.Index
                 throw ex;
             }
         }
+
+        private AssetIndexingParams FilterIndexingParams(AssetIndexingParams assetIndexingParams)
+        {
+            return
+                AssetIndexingParams.Builder().WithoutAssets()
+                    .AddIndexingParams(assetIndexingParams)
+                    .SetComments(assetIndexingParams.IndexComments && ShouldCommentsBeReindexed)
+                    .Build();
+        }
+
+        private bool ShouldCommentsBeReindexed => CommentCount > 0;
     }
 }
