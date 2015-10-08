@@ -2,13 +2,13 @@
 
 namespace QuoteFlow.Api.Models
 {
-    public class Contact
+    public class Customer
     {
         public int Id { get; set; }
         public int OrganizationId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
+        public string EmailAddress { get; set; }
         public string Phone { get; set; }
         public string Organization { get; set; }
         public string Title { get; set; }
@@ -21,9 +21,6 @@ namespace QuoteFlow.Api.Models
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdated { get; set; }
 
-        public string FullName
-        {
-            get { return string.Format("{0} {1}", FirstName, LastName); }
-        }
+        public string FullName => $"{FirstName} {LastName}";
     }
 }

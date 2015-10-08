@@ -390,7 +390,7 @@
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
-    <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
@@ -404,7 +404,6 @@
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadModule.cs" />
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadProgress.cs" />
     <Compile Include="Infrastructure\AsyncFileUpload\AsyncFileUploadRequestParser.cs" />
-    <Compile Include="Infrastructure\Attributes\LayoutInjectorAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\ReadOnlyModeErrorFilter.cs" />
     <Compile Include="Infrastructure\Attributes\RequireSslAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\RoutePrefixAttribute.cs" />
@@ -464,6 +463,8 @@
     <Compile Include="Migrations\M028_CreateQuoteStatus.cs" />
     <Compile Include="Migrations\M029_CreateRecentlyVisitedLinks.cs" />
     <Compile Include="Migrations\M030_CreateAuditLog.cs" />
+    <Compile Include="Migrations\M031_RenameContacts.cs" />
+    <Compile Include="Migrations\M032_AddCustomerIdToQuotes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1057,8 +1058,6 @@
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
     <Content Include="Content\less\asset-nav\split-view.less" />
-    <Content Include="Content\less\asset-nav\mixins\border-box.less" />
-    <Content Include="Content\less\asset-nav\mixins\clearfix.less" />
     <Content Include="Content\less\asset-nav\mixins\content-box.less" />
     <Content Include="Content\less\asset-nav\mixins\text-overflow.less" />
     <Content Include="Content\less\asset-nav\split-view.css.map">
@@ -1125,6 +1124,11 @@
     <Content Include="Content\less\static\aui-theme\components\adbox.less" />
     <Content Include="Content\less\static\aui-theme\components\dropdowns.less" />
     <Content Include="Areas\Admin\Views\Indexing\DoReindex.cshtml" />
+    <Content Include="Content\less\quote\customer-quote-results.less" />
+    <Content Include="Content\less\asset-nav\query.less" />
+    <Content Include="Content\less\mixins\border-box.less" />
+    <Content Include="Content\less\mixins\clearfix.less" />
+    <Content Include="Content\less\modules.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1171,13 +1175,12 @@
     <Content Include="Views\Catalog\Index.cshtml" />
     <Content Include="Views\Catalog\New.cshtml" />
     <Content Include="Views\Catalog\Show.cshtml" />
-    <Content Include="Views\Contact\Index.cshtml" />
-    <Content Include="Views\Contact\New.cshtml" />
-    <Content Include="Views\Contact\Show.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\New.cshtml" />
+    <Content Include="Views\Customer\Show.cshtml" />
     <Content Include="Views\Quote\Index.cshtml" />
     <Content Include="Views\Quote\New.cshtml" />
     <Content Include="Views\Shared\Partials\Asset\ListItem.cshtml" />
-    <Content Include="Views\Shared\Partials\Contact\ListItem.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\New\Step1.cshtml" />
     <Content Include="Views\Shared\Partials\Quote\New\Step2.cshtml" />
     <Content Include="Views\Shared\_QuoteBuilderLayout.cshtml" />
@@ -1227,6 +1230,9 @@
     <Content Include="Views\Searchers\CatalogSearcherEdit.cshtml" />
     <Content Include="Views\Searchers\CatalogSearcherView.cshtml" />
     <Content Include="Views\Shared\Partials\Catalog\Header.cshtml" />
+    <Content Include="Views\Shared\Partials\Customer\Header.cshtml" />
+    <Content Include="Views\Shared\Partials\Customer\ShowSidebar.cshtml" />
+    <Content Include="Views\Customer\ShowQuotes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

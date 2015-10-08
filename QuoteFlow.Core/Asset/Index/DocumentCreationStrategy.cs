@@ -22,10 +22,10 @@ namespace QuoteFlow.Core.Asset.Index
             AssetService = assetService;
         }
 
-        public Documents Get(IAsset asset, bool includeComments)
+        public Documents Get(IAsset asset, AssetIndexingParams assetIndexingParams)
         {
             var comments = new List<Document>();
-            if (includeComments)
+            if (assetIndexingParams.IndexComments)
             {
                 var assetComments = AssetService.GetAssetComments(asset.Id);
                 CommentDocumentBuilder.Build(assetComments);

@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Glimpse.Core.Tab;
+using Lucene.Net.Documents;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Asset;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Infrastructure.Concurrency;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Api.Models;
@@ -19,25 +20,29 @@ namespace QuoteFlow.Core.Asset.Index
     public class AssetIndexer : IAssetIndexer
     {
         public IAssetDocumentFactory AssetDocumentFactory { get; protected set; }
-        public static IDocumentCreationStrategy DocumentCreationStrategy { get; protected set; }
 
         private static Lifecycle _lifecycle;
 
         // simple indexing strategy just asks the operation for its result
         private readonly SimpleIndexingStrategy _simpleIndexingStrategy = new SimpleIndexingStrategy();
 
-        public AssetIndexer(IIndexDirectoryFactory indexDirectoryFactory, 
-            IAssetDocumentFactory assetDocumentFactory, IDocumentCreationStrategy documentCreationStrategy)
+        private readonly IDocumentCreationStrategy _documentCreationStrategy;
+
+        public AssetIndexer(IIndexDirectoryFactory indexDirectoryFactory, IAssetDocumentFactory assetDocumentFactory)
         {
             _lifecycle = new Lifecycle(indexDirectoryFactory);
+            _documentCreationStrategy = new DefaultDocumentCreationStrategy(assetDocumentFactory);
             AssetDocumentFactory = assetDocumentFactory;
-            DocumentCreationStrategy = documentCreationStrategy;
         }
-
 
         public IIndexResult IndexAssets(IEnumerable<IAsset> assets)
         {
-            throw new NotImplementedException();
+            return IndexAssets(assets, AssetIndexingParams.Index_All);
+        }
+
+        public IIndexResult IndexAssets(IEnumerable<IAsset> assets, AssetIndexingParams assetIndexingParams)
+        {
+            return Perform(assets, _simpleIndexingStrategy, new IndexAssetsOperation(this, UpdateMode.Interactive, assetIndexingParams));
         }
 
         public IIndexResult DeIndexAssets(IEnumerable<IAsset> assets)
@@ -47,6 +52,18 @@ namespace QuoteFlow.Core.Asset.Index
             Parallel.ForEach(assets, DeIndexAction);
 
             throw new NotImplementedException();
+        }
+
+        public IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, bool reIndexComments, bool conditionalUpdate)
+        {
+            var assetIndexingParams = AssetIndexingParams.Builder().SetComments(reIndexComments).Build();
+            return ReIndexAssets(assets, assetIndexingParams, conditionalUpdate);
+        }
+
+        public IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, AssetIndexingParams assetIndexingParams, bool conditionalUpdate)
+        {
+            var operation = new ReIndexAssetsOperation(assetIndexingParams, conditionalUpdate, _documentCreationStrategy);
+            return Perform(assets, _simpleIndexingStrategy, operation);
         }
 
         private void DeIndexAction(IAsset asset)
@@ -62,21 +79,57 @@ namespace QuoteFlow.Core.Asset.Index
             }
         }
 
-        public IIndexResult ReIndexAssets(IEnumerable<Api.Models.Asset> assets, bool reIndexComments, bool conditionalUpdate)
+        /// <summary>
+        /// Used when indexing to do the actual indexing of an asset.
+        /// </summary>
+        private class IndexAssetsOperation : IIndexOperation
         {
-            var operation = new ReIndexAssetsOperation(reIndexComments, conditionalUpdate);
-            return Perform(assets, _simpleIndexingStrategy, operation);
+            private readonly AssetIndexer _assetIndexer;
+            private readonly UpdateMode _mode;
+            private readonly AssetIndexingParams _assetIndexingParams;
+
+            public IndexAssetsOperation(AssetIndexer outerInstance, UpdateMode mode, AssetIndexingParams assetIndexingParams)
+            {
+                _assetIndexer = outerInstance;
+                _mode = mode;
+                _assetIndexingParams = assetIndexingParams;
+            }
+
+            public IIndexResult Perform(IAsset asset)
+            {
+                try
+                {
+                    Documents documents = _assetIndexer._documentCreationStrategy.Get(asset, _assetIndexingParams);
+                    Operation assetCreate = Operations.NewCreate(documents.Asset, _mode);
+                    Operation onCompletion = Operations.NewCompletionDelegate(assetCreate, null);
+                    var results = new AccumulatingResultBuilder();
+                    results.Add("Asset", asset.Id, _lifecycle.AssetIndex.Perform(onCompletion));
+                    if (documents.Comments.Any())
+                    {
+                        Operation commentsCreate = Operations.NewCreate(documents.Comments, _mode);
+                        results.Add("Comment For Issue", asset.Id, _lifecycle.CommentIndex.Perform(commentsCreate));
+                    }
+                    //FlushCustomFieldValueCache();
+                    return results.ToResult();
+                }
+                catch (Exception ex)
+                {
+                    return new Lucene.Index.Index.Failure(ex);
+                }
+            }
         }
 
         private class ReIndexAssetsOperation : IIndexOperation
         {
-            private readonly bool _reIndexComments;
+            private readonly AssetIndexingParams _assetIndexingParams;
             private readonly bool _conditionalUpdate;
+            private readonly IDocumentCreationStrategy _documentCreationStrategy;
 
-            public ReIndexAssetsOperation(bool reIndexComments, bool conditionalUpdate)
+            public ReIndexAssetsOperation(AssetIndexingParams assetIndexingParams, bool conditionalUpdate, IDocumentCreationStrategy documentCreationStrategy)
             {
-                _reIndexComments = reIndexComments;
+                _assetIndexingParams = assetIndexingParams;
                 _conditionalUpdate = conditionalUpdate;
+                _documentCreationStrategy = documentCreationStrategy;
             }
 
             public IIndexResult Perform(IAsset asset)
@@ -86,7 +139,7 @@ namespace QuoteFlow.Core.Asset.Index
                     using (Timeline.Capture("Index Asset: " + asset.Id))
                     {
                         var mode = UpdateMode.Interactive;
-                        var documents = DocumentCreationStrategy.Get(asset, _reIndexComments);
+                        var documents = _documentCreationStrategy.Get(asset, _assetIndexingParams);
                         var assetTerm = documents.IdentifyingTerm;
 
                         Operation update;
@@ -106,7 +159,7 @@ namespace QuoteFlow.Core.Asset.Index
                         var onCompletion = Operations.NewCompletionDelegate(update, null);
                         results.Add("Asset", asset.Id, _lifecycle.AssetIndex.Perform(onCompletion));
 
-                        if (_reIndexComments)
+                        if (_assetIndexingParams.IndexComments)
                         {
                             results.Add("Comment for Asset", asset.Id,
                                 _lifecycle.CommentIndex.Perform(Operations.NewUpdate(assetTerm, documents.Comments, mode)));
@@ -144,7 +197,19 @@ namespace QuoteFlow.Core.Asset.Index
 
         public void DeleteIndexes()
         {
-            throw new NotImplementedException();
+            foreach (var manager in _lifecycle)
+            {
+                manager.DeleteIndexDirectory();
+            }
+        }
+
+        public void DeleteIndexes(AssetIndexingParams assetIndexingParams)
+        {
+            var indexes = TransformIndexingParamsToIndexesEnumSet(assetIndexingParams);
+            foreach (var indexName in indexes)
+            {
+                _lifecycle.Get(indexName).DeleteIndexDirectory();
+            }
         }
 
         public void Shutdown()
@@ -283,12 +348,56 @@ namespace QuoteFlow.Core.Asset.Index
         }
 
         /// <summary>
+        /// Get the list of change documents for indexing.
+        /// </summary>
+        private interface IDocumentBuilder : IEnumerable<Document>
+        {
+        }
+
+        /// <summary>
+        /// Get the documents (asset and asset related entities) for the asset.
+        /// </summary>
+        private class DefaultDocumentCreationStrategy : IDocumentCreationStrategy
+        {
+            private readonly IAssetDocumentFactory _assetDocumentFactory;
+
+            public DefaultDocumentCreationStrategy(IAssetDocumentFactory assetDocumentFactory)
+            {
+                _assetDocumentFactory = assetDocumentFactory;
+            }
+
+            public Documents Get(IAsset asset, AssetIndexingParams assetIndexingParams)
+            {
+                var comments =  new List<Document>();
+                var assets = _assetDocumentFactory.Apply(asset);
+                return new Documents(asset, assets, comments);
+            }
+        }
+
+        /// <summary>
         /// An <see cref="IIndexOperation"/> performs the actual update to the index for a 
         /// specific <see cref="IAsset"/>.
         /// </summary>
         private interface IIndexOperation
         {
             IIndexResult Perform(IAsset asset);
+        }
+
+        private IList<IndexDirectoryFactoryName> TransformIndexingParamsToIndexesEnumSet(AssetIndexingParams assetIndexingParams)
+        {
+            var indexes = new List<IndexDirectoryFactoryName>();
+
+            if (assetIndexingParams.IndexAssets)
+            {
+                indexes.Add(IndexDirectoryFactoryName.Asset);
+            }
+
+            if (assetIndexingParams.IndexComments)
+            {
+                indexes.Add(IndexDirectoryFactoryName.Comment);
+            }
+
+            return indexes;
         }
     }
 }

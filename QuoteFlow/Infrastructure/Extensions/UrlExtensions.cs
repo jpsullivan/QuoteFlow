@@ -146,6 +146,30 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         #endregion
 
+        #region Customers
+
+        public static string Customer(this UrlHelper url, int id, string name)
+        {
+            return url.RouteUrl(RouteNames.CustomerShow, new { id, name });
+        }
+
+        public static string Customers(this UrlHelper url)
+        {
+            return url.RouteUrl(RouteNames.Customers);
+        }
+
+        public static string NewCustomer(this UrlHelper url)
+        {
+            return url.RouteUrl(RouteNames.CustomerNew);
+        }
+
+        public static string CustomerQuotes(this UrlHelper url, int id, string name)
+        {
+            return url.RouteUrl(RouteNames.CustomerQuotes, new { id, name });
+        }
+
+        #endregion
+
         #region Manufacturers
 
         public static string Manufacturer(this UrlHelper url, int id, string manufacturerName)
@@ -185,7 +209,7 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         public static string NewQuote(this UrlHelper url)
         {
-            return string.Format("/quote/new");
+            return "/quote/new";
         }
 
         public static string QuoteBuilder(this UrlHelper url, int id, string name)

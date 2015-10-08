@@ -1,0 +1,45 @@
+@import "static/global";
+@import "mixins/border-box";
+@import "mixins/clearfix";
+
+.module {
+    .border-box();
+    .clearfix();
+    margin-top: 25px;
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    > .mod-header {
+        .clearfix();
+        > h1,
+        > h2,
+        > h3,
+        > h4,
+        > h5,
+        > h6 {
+            margin-top: 0;
+        }
+
+        + .mod-content {
+            margin-top: 10px;
+        }
+    }
+
+    > .mod-content {
+        .clearfix();
+        iframe { // for things like the activity stream, or gadgets.
+            border: 0;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+    }
+
+    + .module {
+        border-top: 1px solid @aui-border-color;
+        margin-top: 25px;
+        padding-top: 25px;
+    }
+}

@@ -442,7 +442,7 @@
     <Compile Include="Services\CatalogImportService.cs" />
     <Compile Include="Services\CatalogImportSummaryRecordsService.cs" />
     <Compile Include="Services\CatalogService.cs" />
-    <Compile Include="Services\ContactService.cs" />
+    <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\ContentService.cs" />
     <Compile Include="Services\CryptographyService.cs" />
     <Compile Include="Services\FileSystemFileStorageService.cs" />

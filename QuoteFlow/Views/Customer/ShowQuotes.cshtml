@@ -1,0 +1,85 @@
+﻿@using QuoteFlow.Api.Models
+@using QuoteFlow.Api.Models.ViewModels
+@using QuoteFlow.Api.Models.ViewModels.Customers
+@using QuoteFlow.Infrastructure.Extensions
+@model CustomerShowQuotesModel
+
+@{
+    ViewBag.Title = Model.Customer.FullName + " - QuoteFlow";
+}
+
+<section id="content" role="main">
+    @Html.Partial("Partials/Customer/Header", new CustomerHeader(Model.Customer.FullName))
+
+    <div class="aui-page-panel">
+        <div class="aui-page-panel-inner">
+            @Html.Partial("Partials/Customer/ShowSidebar", new SidebarViewModel<Customer>("quotes", Model.Customer))
+
+            <section class="aui-page-panel-content">
+                <div class="aui-page-header">
+                    <div class="aui-page-header-inner">
+                        <div class="aui-page-header-main">
+                            <h2>Quotes</h2>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.Quotes.Any())
+                {
+                    var firstStatus = Model.Statuses.First();
+                    var lastStatus = Model.Statuses.Last();
+
+                    <div class="customer-quote-results">
+                        @foreach (var quote in Model.Quotes)
+                        {
+                            var statusClass = "";
+                            QuoteStatus status = Model.Statuses.FirstOrDefault(s => s.Id == quote.Status);
+                            if (status.Equals(firstStatus))
+                            {
+                                statusClass = "aui-lozenge-complete";
+                            }
+                            else if (status.Equals(lastStatus))
+                            {
+                                statusClass = "aui-lozenge-success";
+                            }
+                            else
+                            {
+                                statusClass = "aui-lozenge-current";
+                            }
+
+                            <div id="@quote.Id" class="customer-quote-container">
+                                <div class="quote-status-container tab-panel-status-container">
+                                    <span class="aui-lozenge @statusClass">@status.Name</span>
+                                </div>
+
+                                <h4 class="quote-title">
+                                    <a href="@Url.Quote(quote.Id, quote.Name)">@quote.Name</a>
+                                </h4>
+                                <div class="quote-stats">
+                                    <dl>
+                                        <dt>Created:</dt>
+                                        <dd class="time-started">@quote.CreationDate.ToString("g")</dd>
+                                    </dl>
+                                    <dl></dl>
+                                    <dl>
+                                        <dt>Line Items:</dt>
+                                        <dd class="lineitems-total">@quote.TotalLineItems</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="blank-message">
+                        <h2>No quotes found</h2>
+                        <p>
+                            @Model.Customer.FullName does not have any quotes yet. <a href="@Url.NewQuote()">Create one now.</a>
+                        </p>
+                    </div>
+                }
+            </section><!-- .aui-page-panel-content -->
+        </div><!-- .aui-page-panel-inner -->
+    </div><!-- .aui-page-panel -->
+</section>

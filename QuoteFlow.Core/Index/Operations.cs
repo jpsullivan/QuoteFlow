@@ -26,7 +26,7 @@ namespace QuoteFlow.Core.Index
             return new Create(document, mode);
         }
 
-        public static Operation NewCreate(ICollection<Document> documents, UpdateMode mode)
+        public static Operation NewCreate(IEnumerable<Document> documents, UpdateMode mode)
         {
             return new Create(documents, mode);
         }

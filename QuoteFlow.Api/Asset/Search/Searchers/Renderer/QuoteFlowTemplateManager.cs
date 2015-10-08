@@ -16,7 +16,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
         public ITemplateSource Resolve(ITemplateKey key)
         {
             var template = key.Name;
-            var path = Path.Combine(_baseTemplatePath, string.Format("{0}{1}", template, ".cshtml"));
+            var path = Path.Combine(_baseTemplatePath, $"{template}{".cshtml"}");
             var content = File.ReadAllText(path);
             return new LoadedTemplateSource(content, path);
         }

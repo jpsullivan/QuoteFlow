@@ -65,16 +65,20 @@ namespace QuoteFlow.Core.Index
             }
         }
 
-        private static int[] EnsureCapacity(int[] assetIds, int i)
+        /// <summary>
+        /// Ensure the array has at least <see cref="requiredSize"/> elements.
+        /// </summary>
+        /// <param name="assetIds">Array to test.</param>
+        /// <param name="requiredSize">Required size.</param>
+        /// <returns></returns>
+        public int[] EnsureCapacity(int[] assetIds, int requiredSize)
         {
-            if (assetIds.Length <= i)
+            if (assetIds.Length < requiredSize)
             {
                 // Expand the array.  This should occur rarely if ever so we only add a small increment
-                int newSize = Math.Max(i, assetIds.Length + assetIds.Length / 10);
-                int[] assetIdsCopy = new int[newSize];
-
-                assetIds.CopyTo(assetIdsCopy, newSize);
-                return assetIdsCopy;
+                int newSize = Math.Max(requiredSize, assetIds.Length + assetIds.Length / 10);
+                Array.Resize(ref assetIds, newSize);
+                return assetIds;
             }
             return assetIds;
         }
@@ -135,7 +139,7 @@ namespace QuoteFlow.Core.Index
                 {
                     try
                     {
-                        var asset = _outerInstance._issueManager.GetAsset((int)assetId);
+                        var asset = _outerInstance._issueManager.GetAsset((int) assetId);
                         if (asset == null) continue;
 
                         TermQuery query = new TermQuery(new Term(DocumentConstants.AssetId, Convert.ToString(assetId)));

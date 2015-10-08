@@ -45,6 +45,11 @@ namespace QuoteFlow.Core.Util.Index
 
         public int ReIndexAll()
         {
+            return ReIndexAll(AssetIndexingParams.Index_All);
+        }
+
+        public int ReIndexAll(AssetIndexingParams assetIndexingParams)
+        {
             Debug.WriteLine("Reindex All starting...");
 
             int result = 0;
@@ -52,7 +57,7 @@ namespace QuoteFlow.Core.Util.Index
             {
                 try
                 {
-                    int reIndexAll = @delegate.ReIndexAll();
+                    int reIndexAll = @delegate.ReIndexAll(assetIndexingParams);
                     Debug.WriteLine("Reindex took: {0}ms. Indexer: {1}", reIndexAll, @delegate);
                     result += reIndexAll;
                 }
@@ -63,11 +68,11 @@ namespace QuoteFlow.Core.Util.Index
                     throw re;
                 }
             }
-//            long newCounterValue = indexingCounterManager.incrementValue();
-//            context.Name = "";
-//            log.info("Reindex All complete. Total time: " + result + "ms. Reindex run: " + newCounterValue);
-//
-//            nodeReindexService.start();
+            //            long newCounterValue = indexingCounterManager.incrementValue();
+            //            context.Name = "";
+            //            log.info("Reindex All complete. Total time: " + result + "ms. Reindex run: " + newCounterValue);
+            //
+            //            nodeReindexService.start();
 
             return result;
         }
@@ -105,6 +110,11 @@ namespace QuoteFlow.Core.Util.Index
 //            log.info("Reindex All In Background complete. Total time: " + result + "ms. Reindex run: " + newCounterValue);
 
             return result;
+        }
+
+        public int ReIndexAllAssetsInBackground(AssetIndexingParams assetIndexingParams)
+        {
+            throw new NotImplementedException();
         }
 
         public int Optimize()

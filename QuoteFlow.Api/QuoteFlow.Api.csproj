@@ -181,6 +181,7 @@
     <Compile Include="Asset\Index\Analyzer\SubtokenFilter.cs" />
     <Compile Include="Asset\Index\Analyzer\TextAnalyzer.cs" />
     <Compile Include="Asset\Index\Analyzer\TokenFilters.cs" />
+    <Compile Include="Asset\Index\AssetIndexingParams.cs" />
     <Compile Include="Asset\Index\DocumentConstants.cs" />
     <Compile Include="Asset\Index\IAssetIndexManager.cs" />
     <Compile Include="Asset\Index\IEntityDocumentBuilder.cs" />
@@ -458,7 +459,7 @@
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ClientCatalog.cs" />
     <Compile Include="Models\ClientUser.cs" />
-    <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Credential.cs" />
     <Compile Include="Models\EmailMessage.cs" />
     <Compile Include="Models\IAsset.cs" />
@@ -480,6 +481,10 @@
     <Compile Include="Models\ViewModels\Catalogs\CatalogHeader.cs" />
     <Compile Include="Models\ViewModels\ConfirmationViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactModels.cs" />
+    <Compile Include="Models\ViewModels\Customers\CustomerHeader.cs" />
+    <Compile Include="Models\ViewModels\Customers\CustomerShowQuotesModel.cs" />
+    <Compile Include="Models\ViewModels\Customers\CustomerShowModel.cs" />
+    <Compile Include="Models\ViewModels\Customers\CustomersViewModel.cs" />
     <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\ViewModels\LogOnViewModel.cs" />
@@ -519,7 +524,7 @@
     <Compile Include="Services\ICatalogImportService.cs" />
     <Compile Include="Services\ICatalogImportSummaryRecordsService.cs" />
     <Compile Include="Services\ICatalogService.cs" />
-    <Compile Include="Services\IContactService.cs" />
+    <Compile Include="Services\ICustomerService.cs" />
     <Compile Include="Services\IContentService.cs" />
     <Compile Include="Services\IFileReference.cs" />
     <Compile Include="Services\IFileStorageService.cs" />

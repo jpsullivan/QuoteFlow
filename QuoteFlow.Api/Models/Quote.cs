@@ -21,6 +21,7 @@ namespace QuoteFlow.Api.Models
 
         public int TotalLineItems { get; set; }
         public int CreatorId { get; set; }
+        public int CustomerId { get; set; }
         public int OrganizationId { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdated { get; set; }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Jil;
 using QuoteFlow.Api.Asset.Nav;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Infrastructure.Helpers;
@@ -25,6 +24,7 @@ namespace QuoteFlow.Controllers
         public IAssetTableService AssetTableService { get; protected set; }
         public IAssetTableServiceConfiguration AssetTableServiceConfiguration { get; protected set; }
         public ICatalogService CatalogService { get; protected set; }
+        public ICustomerService CustomerService { get; protected set; }
         public IJqlStringSupport JqlStringSupport { get; protected set; }
         public IManufacturerService ManufacturerService { get; protected set; }
         public IQuoteLineItemService QuoteLineItemService { get; protected set; }
@@ -38,12 +38,13 @@ namespace QuoteFlow.Controllers
         {
         }
 
-        public QuoteController(IAssetService assetService, IAssetTableService assetTableService, IAssetTableServiceConfiguration assetTableServiceConfiguration, ICatalogService catalogService, IJqlStringSupport jqlStringSupport, IManufacturerService manufacturerService, IQuoteLineItemService quoteLineItemService, IQuoteService quoteService, IQuoteStatusService quoteStatusService, ISearcherService searcherService, IUserService userService, IUserTrackingService userTrackingService)
+        public QuoteController(IAssetService assetService, IAssetTableService assetTableService, IAssetTableServiceConfiguration assetTableServiceConfiguration, ICatalogService catalogService, ICustomerService customerService, IJqlStringSupport jqlStringSupport, IManufacturerService manufacturerService, IQuoteLineItemService quoteLineItemService, IQuoteService quoteService, IQuoteStatusService quoteStatusService, ISearcherService searcherService, IUserService userService, IUserTrackingService userTrackingService)
         {
             AssetService = assetService;
             AssetTableService = assetTableService;
             AssetTableServiceConfiguration = assetTableServiceConfiguration;
             CatalogService = catalogService;
+            CustomerService = customerService;
             JqlStringSupport = jqlStringSupport;
             ManufacturerService = manufacturerService;
             QuoteLineItemService = quoteLineItemService;
@@ -67,7 +68,12 @@ namespace QuoteFlow.Controllers
         [QuoteFlowRoute("quote/new")]
         public virtual ActionResult New()
         {
-            return View();
+            var contacts = CustomerService.GetCustomersFromOrganization(CurrentOrganization.Id);
+            var model = new NewQuoteModel
+            {
+                Customers = contacts
+            };
+            return View(model);
         }
 
         [ValidateAntiForgeryToken]
@@ -81,20 +87,21 @@ namespace QuoteFlow.Controllers
             // is implemented.
             model.Organization = currentUser.Organizations.First();
 
-            if (!ModelState.IsValid) return New();
+            if (!ModelState.IsValid)
+            {
+                return New();
+            }
 
             // check to make sure that a quote with this name doesn't already exist
-            if (QuoteService.ExistsWithinOrganization(model.QuoteName, CurrentOrganization.Id)) {
-                var errorMsg = string.Format("Quote name already exists within the {0} organization.",
-                    model.Organization.OrganizationName);
+            if (QuoteService.ExistsWithinOrganization(model.QuoteName, CurrentOrganization.Id))
+            {
+                var errorMsg = $"Quote name already exists within the {model.Organization.OrganizationName} organization.";
                 ModelState.AddModelError("Name", errorMsg);
                 return View("New", model);
             }
 
             var newQuote = QuoteService.CreateQuote(model, currentUser.Id);
-
-            // there has to be a better way to do this...
-            return Redirect("~/quote/" + newQuote.Id + "/" + newQuote.Name.UrlFriendly());
+            return SafeRedirect(Url.Quote(newQuote.Id, newQuote.Name.UrlFriendly()));
         }
 
         [QuoteFlowRoute("quote/{id:INT}/{name}", Name = RouteNames.QuoteShow)]

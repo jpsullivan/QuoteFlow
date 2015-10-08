@@ -13,8 +13,8 @@ namespace QuoteFlow.Api.Models
         public Table<AuditLogRecord> AuditLog { get; private set; } 
         public Table<Catalog> Catalogs { get; private set; }
         public Table<CatalogImportSummaryRecord> CatalogImportSummaryRecords { get; private set; }
-        public Table<Contact> Contacts { get; private set; }
-        public Table<Credential> Credentials { get; private set; } 
+        public Table<Credential> Credentials { get; private set; }
+        public Table<Customer> Customers { get; private set; }
         public Table<Manufacturer> Manufacturers { get; private set; }
         public Table<ManufacturerLogo> ManufacturerLogos { get; private set; } 
         public Table<Organization> Organizations { get; private set; }

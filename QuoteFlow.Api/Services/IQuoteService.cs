@@ -23,6 +23,13 @@ namespace QuoteFlow.Api.Services
         Quote CreateQuote(NewQuoteModel model, int userId);
 
         /// <summary>
+        /// Find all quotes for a specific customer.
+        /// </summary>
+        /// <param name="customerId">The customer id</param>
+        /// <returns></returns>
+        IEnumerable<Quote> GetCustomerQuotes(int customerId);
+
+            /// <summary>
         /// Fetch all the quotes from a particular organization
         /// </summary>
         /// <param name="organizationId" type="int">The organization id</param>

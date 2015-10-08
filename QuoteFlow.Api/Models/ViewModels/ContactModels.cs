@@ -31,14 +31,14 @@ namespace QuoteFlow.Api.Models.ViewModels
         [Display(Name = "Address 2")]
         public string Address2 { get; set; }
 
+        [Display(Name = "City")]
+        public string City { get; set; }
+
         [Display(Name = "State")]
         public string State { get; set; }
 
         [Display(Name = "Country")]
         public string Country { get; set; }
-
-        [Display(Name = "City")]
-        public string City { get; set; }
 
         [Display(Name = "Zipcode")]
         public string Zipcode { get; set; }

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Web.Http;
 using QuoteFlow.Api.Asset.Fields.Layout.Column;
 using QuoteFlow.Api.Asset.Nav;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels.Assets.Nav;
-using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Configuration;
 
 namespace QuoteFlow.Controllers.Api
