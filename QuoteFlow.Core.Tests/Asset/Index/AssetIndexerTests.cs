@@ -26,6 +26,7 @@ namespace QuoteFlow.Core.Tests.Asset.Index
                 _indexManagers.Add(indexName, new Mock<IIndexManager>().Object);
             }
 
+            _indexDirectoryFactory = new Mock<IIndexDirectoryFactory>();
             _indexDirectoryFactory.Setup(x => x.Get()).Returns(_indexManagers);
             _assetIndexer = new AssetIndexer(_indexDirectoryFactory.Object, _assetDocumentFactory.Object);
         }
@@ -34,12 +35,22 @@ namespace QuoteFlow.Core.Tests.Asset.Index
         public void TestDeleteIndexesOnSelectedIndexes()
         {
             _assetIndexer.DeleteIndexes(AssetIndexingParams.Builder().WithoutAssets().WithComments().Build());
+
+            IIndexManager manager;
+            if (_indexManagers.TryGetValue(IndexDirectoryFactoryName.Asset, out manager))
+            {
+                
+            }
         }
 
         [Fact]
         public void TestDeleteIndexesWhenAllIndexAreSelected()
         {
-            
+            _assetIndexer.DeleteIndexes(AssetIndexingParams.Index_All);
+            foreach (var manager in _indexManagers.Values)
+            {
+                
+            }
         }
     }
 }
