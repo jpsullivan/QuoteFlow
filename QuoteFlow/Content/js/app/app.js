@@ -58,6 +58,7 @@ window.QuoteFlow = QuoteFlow;
 var AssetModule = require('./modules/asset/module');
 var AssetTableModule = require('./modules/asset-nav/module');
 var CatalogModule = require('./modules/catalog/module');
+var QuoteStatusModule = require('./modules/quote-status/module');
 
 // App Dependencies
 var jquery_browser = require('jquery.browser'); // so that aui works
@@ -191,5 +192,6 @@ QuoteFlow.application.on("start", function (options) {
 QuoteFlow.application.module("asset", AssetModule);
 QuoteFlow.application.module("asset-table", AssetTableModule);
 QuoteFlow.application.module("catalog", CatalogModule);
+QuoteFlow.application.module("quote-status", QuoteStatusModule);
 
 module.exports = QuoteFlow.application;

@@ -4,7 +4,7 @@ var Marionette = require('backbone.marionette');
 var CatalogController = require('./controller');
 
 /**
- * 
+ *
  */
 var AssetRouter = Marionette.AppRouter.extend({
     appRoutes: {
