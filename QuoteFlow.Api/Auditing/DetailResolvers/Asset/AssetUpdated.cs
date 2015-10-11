@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Dapper;
 using Jil;
 
@@ -19,9 +18,12 @@ namespace QuoteFlow.Api.Auditing.DetailResolvers.Asset
             foreach (var p in changedParameters.ParameterNames)
             {
                 if (p == "LastUpdated") continue;
+                
+                var resolvedOldValue = oldAsset.GetType().GetProperty(p).GetValue(oldAsset);
+                var oldValue = resolvedOldValue?.ToString() ?? string.Empty;
 
-                var oldValue = oldAsset.GetType().GetProperty(p).GetValue(oldAsset, null).ToString();
-                var newValue = changedParameters.Get<object>(p).ToString();
+                var resolvedParameterValue = changedParameters.Get<object>(p);
+                var newValue = resolvedParameterValue?.ToString() ?? string.Empty;
 
                 changedFields.Add(p, new[] {oldValue, newValue});
             }

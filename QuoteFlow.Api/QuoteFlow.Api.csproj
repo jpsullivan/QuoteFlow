@@ -270,6 +270,7 @@
     <Compile Include="Auditing\AuditCategory.cs" />
     <Compile Include="Auditing\AuditEvent.cs" />
     <Compile Include="Auditing\AuditLogRecord.cs" />
+    <Compile Include="Auditing\DetailResolvers\AbstractDetailResolver.cs" />
     <Compile Include="Auditing\DetailResolvers\Asset\AssetCreated.cs" />
     <Compile Include="Auditing\DetailResolvers\Asset\AssetUpdated.cs" />
     <Compile Include="Auditing\DetailResolvers\Catalog\CatalogAssetsImported.cs" />
