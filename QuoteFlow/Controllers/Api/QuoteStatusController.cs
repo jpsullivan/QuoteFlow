@@ -8,7 +8,7 @@ namespace QuoteFlow.Controllers.Api
 {
     public class QuoteStatusController : ApiController
     {
-        #region IoC
+        #region DI
 
         protected IQuoteStatusService QuoteStatusService { get; }
 
@@ -42,19 +42,19 @@ namespace QuoteFlow.Controllers.Api
             return QuoteStatusService.GetStatuses(id);
         }
 
-        public void Post(AssetVar assetVar)
+        public void Post(QuoteStatus status)
         {
-            if (assetVar == null)
+            if (status == null)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            //QuoteStatusService.InsertAssetVar(assetVar);
+            QuoteStatusService.CreateStatus(status);
         }
 
-        public void Put(AssetVar assetVar)
+        public void Put(QuoteStatus status)
         {
-            if (assetVar == null)
+            if (status == null)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }

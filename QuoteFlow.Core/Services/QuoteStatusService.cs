@@ -20,7 +20,17 @@ namespace QuoteFlow.Core.Services
 
         public void CreateStatus(QuoteStatus status)
         {
-            throw new NotImplementedException();
+            var insert = Current.DB.QuoteStatus.Insert(new
+            {
+                Name = status.Name,
+                OrganizationId = 1,
+                OrderNum = 4
+            });
+
+            if (insert == null)
+            {
+                throw new InvalidOperationException("Quote status insert failed.");
+            }
         }
 
         public void CreateStatus(string name, int organizationId)

@@ -24,10 +24,6 @@ var QuoteStatusController = Marionette.Controller.extend({
                     header: "Name"
                 },
                 {
-                    id: "description",
-                    header: "Description"
-                },
-                {
                     id: "rules",
                     header: "Edit Rules"
                 }
