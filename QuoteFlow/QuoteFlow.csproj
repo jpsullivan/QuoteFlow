@@ -675,6 +675,9 @@
     <Content Include="Content\js\app\modules\catalog\controller.js" />
     <Content Include="Content\js\app\modules\catalog\module.js" />
     <Content Include="Content\js\app\modules\catalog\router.js" />
+    <Content Include="Content\js\app\modules\quote-status\controller.js" />
+    <Content Include="Content\js\app\modules\quote-status\module.js" />
+    <Content Include="Content\js\app\modules\quote-status\router.js" />
     <Content Include="Content\js\app\pages\asset.js" />
     <Content Include="Content\js\app\pages\catalog.js" />
     <Content Include="Content\js\app\router.js" />

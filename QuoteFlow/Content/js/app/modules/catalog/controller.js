@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 var Marionette = require('backbone.marionette');
+var SortableTable = require('@atlassian/aui/lib/js/aui/tables-sortable');
 
 var AsyncFileUploadManager = require('../../../lib/async-file-upload');
 var CatalogImportSetFields = require('./views/import_set_fields');
@@ -32,10 +33,11 @@ var CatalogController = Marionette.Controller.extend({
         });
     },
 
+    assets: function () {},
+
     showAssetsInteractive: function() {
         debugger;
     }
 });
 
 module.exports = CatalogController;
-

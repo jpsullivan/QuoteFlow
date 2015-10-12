@@ -83,7 +83,8 @@ namespace QuoteFlow.Core.Services
             const string sql = @"select a.*, m.*, c.* from Assets a
                         join Manufacturers m on m.Id = a.ManufacturerId
                         join Catalogs c on c.Id = a.CatalogId
-                        where a.CatalogId = @catalogId";
+                        where a.CatalogId = @catalogId
+                        order by a.Name asc";
 
             // Multi-mapping won't work out of the box for this since we can't supply an
             // IEnumerable<AssetPrice>. Instead, we just manually map the required fields
