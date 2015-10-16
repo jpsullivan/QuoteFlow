@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Lucene.Net.Documents;
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Asset.Index.Indexers;
@@ -25,6 +26,25 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
             if (fieldValue.HasValue())
             {
                 doc.Add(new Field(indexField, fieldValue, Field.Store.YES, Unanalyzed(asset)));
+            }
+        }
+
+        /// <summary>
+        /// Case fold the passed keyword and add it to the passed document.
+        /// </summary>
+        /// <param name="doc">The document to add the field to.</param>
+        /// <param name="indexField">The document field name to use.</param>
+        /// <param name="fieldValue">The value to index. This value will be folded before adding it to the document.</param>
+        /// <param name="asset">The asset that defines the context and contains the value we are indexing.</param>
+        public void IndexFoldedKeyword(Document doc, string indexField, string fieldValue, Api.Models.Asset asset)
+        {
+            if (fieldValue.HasValue())
+            {
+                if (IsFieldVisibleAndInScope(asset))
+                {
+                    doc.Add(new Field(indexField, fieldValue.ToLower(CultureInfo.CurrentCulture), Field.Store.NO, Field.Index.ANALYZED_NO_NORMS));
+                }
+                // since we don't store we don't need to add it at all if it is not visible
             }
         }
 

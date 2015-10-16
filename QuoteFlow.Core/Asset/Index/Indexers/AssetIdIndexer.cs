@@ -1,4 +1,5 @@
 ﻿using Lucene.Net.Documents;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Asset.Search.Constants;
 
 namespace QuoteFlow.Core.Asset.Index.Indexers
@@ -16,7 +17,14 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 
         public override void AddIndex(Document doc, Api.Models.Asset asset)
         {
-            IndexKeyword(doc, DocumentFieldId, asset.Id.ToString(), asset);
+            if ((asset == null) || asset.Id <= 0)
+            {
+                return;
+            }
+
+            var id = asset.Id;
+            IndexKeyword(doc, DocumentConstants.AssetId, id.ToString(), asset);
+            IndexFoldedKeyword(doc, DocumentFieldId, id.ToString(), asset);
         }
     }
 }

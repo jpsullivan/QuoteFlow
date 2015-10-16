@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dapper;
 using Lucene.Net.Documents;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Auditing;
