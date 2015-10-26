@@ -84,10 +84,7 @@ namespace QuoteFlow.Controllers
 
             if (user == null)
             {
-                ModelState.AddModelError(
-                    "SignIn",
-                    Strings.UsernameAndPasswordNotFound);
-
+                ModelState.AddModelError("SignIn", Strings.UsernameAndPasswordNotFound);
                 return LogOnView(model);
             }
 
