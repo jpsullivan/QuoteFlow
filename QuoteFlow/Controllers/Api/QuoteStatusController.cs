@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Http;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
@@ -60,6 +64,21 @@ namespace QuoteFlow.Controllers.Api
             }
 
             //QuoteStatusService.InsertAssetVar(assetVar);
+        }
+        
+        [Route("Api/quotestatus/{id}/move"), HttpPost]
+        public void Move(int id, [FromBody] IDictionary<string, Uri> move)
+        {
+            Uri value;
+            if (move.TryGetValue("after", out value))
+            {
+                int movePos = Convert.ToInt32(value.Segments.Last());
+                QuoteStatusService.MoveStatus(id, movePos);
+            }
+            else
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
         }
 
         public void Delete(int id)
