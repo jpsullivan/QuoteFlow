@@ -36,6 +36,8 @@
 
         UserAdded = 500,
         UserEdited = 501,
-        UserDeleted = 502
+        UserDeleted = 502,
+        UserLogin = 503,
+        UserPasswordChange = 504
     }
 }

@@ -25,9 +25,10 @@ namespace QuoteFlow.Api.Models.ViewModels
             Actor = actor;
         }
 
-        public SidebarViewModel(string selectedItem)
+        public SidebarViewModel(string selectedItem, string selectedItemClass = "aui-nav-selected")
         {
             SelectedItem = selectedItem;
+            SelectedItemClass = selectedItemClass;
         }
     }
 

@@ -1,0 +1,23 @@
+﻿@using QuoteFlow.Api.Models.ViewModels
+@model SidebarViewModel<object>
+
+<div class="aui-page-panel-nav">
+    <nav class="aui-navgroup aui-navgroup-vertical">
+        <div class="aui-navgroup-inner">
+            <div class="aui-nav-heading">
+                <strong>General</strong>
+            </div>
+            <ul class="aui-nav">
+                <li class="@Model.GetMenuItemClass("account")"><a href="#">Account settings</a></li>
+                <li class="@Model.GetMenuItemClass("notifications")"><a href="#">Notifications</a></li>
+                <li class="@Model.GetMenuItemClass("changeusername")"><a href="#">Change username</a></li>
+            </ul>
+            <div class="aui-nav-heading">
+                <strong>Security</strong>
+            </div>
+            <ul class="aui-nav">
+                <li class="@Model.GetMenuItemClass("changepassword")"><a href="#">Change password</a></li>
+            </ul>
+        </div>
+    </nav><!-- .aui-navgroup -->
+</div><!-- .aui-page-panel-nav -->

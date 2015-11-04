@@ -1,5 +1,34 @@
-﻿@{
-    ViewBag.Title = "Account";
+﻿@model QuoteFlow.Api.Models.ViewModels.Users.Manage.AccountSettings
+
+@{
+    Layout = "../Shared/User/_ManageLayout.cshtml";
+    ViewBag.Title = CurrentUser.Username + " / account - QuoteFlow";
 }
 
-<h2>Account</h2>
+<header class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h2>Account settings</h2>
+        </div>
+    </div>
+</header>
+
+@using (Html.BeginForm("DoReindex", "Indexing", FormMethod.Post, new { @class = "aui" }))
+{
+    <div class="field-group">
+        @Html.LabelFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.FirstName, new {@class = "text"})
+        <div class="error">@Html.ValidationMessageFor(m => m.FirstName)</div>
+    </div>
+    <div class="field-group">
+        @Html.LabelFor(m => m.LastName)
+        @Html.TextBoxFor(m => m.LastName, new {@class = "text"})
+        <div class="error">@Html.ValidationMessageFor(m => m.LastName)</div>
+    </div>
+
+    <div class="buttons-container form-footer">
+        <div class="buttons">
+            <input accesskey="s" class="aui-button aui-button-primary" id="account-settings-submit" name="account-settings-submit" title="Press Alt+s to submit this form" type="submit" value="Update profile">
+        </div>
+    </div>
+}

@@ -7,6 +7,7 @@ using QuoteFlow.Api.Authentication;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels;
+using QuoteFlow.Api.Models.ViewModels.Users.Manage;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Authentication;
 using QuoteFlow.Core.Infrastructure.Exceptions;
@@ -70,7 +71,7 @@ namespace QuoteFlow.Controllers
         [QuoteFlowRoute("account")]
         public virtual ActionResult Account()
         {
-            return AccountView(new AccountViewModel());
+            return AccountView(new AccountSettings());
         }
 
         [Authorize]
@@ -255,7 +256,7 @@ namespace QuoteFlow.Controllers
         {
             if (!ModelState.IsValidField("ChangeEmail.NewEmail"))
             {
-                return AccountView(model);
+                //return AccountView(model);
             }
 
             var user = GetCurrentUser();
@@ -263,22 +264,22 @@ namespace QuoteFlow.Controllers
             {
                 if (!ModelState.IsValidField("ChangeEmail.Password"))
                 {
-                    return AccountView(model);
+                    //return AccountView(model);
                 }
 
                 var authUser = await AuthService.Authenticate(User.Identity.Name, model.ChangeEmail.Password);
                 if (authUser == null)
                 {
                     ModelState.AddModelError("ChangeEmail.Password", Strings.CurrentPasswordIncorrect);
-                    return AccountView(model);
+                    //return AccountView(model);
                 }
             }
             // No password? We can't do any additional verification...
 
-            if (String.Equals(model.ChangeEmail.NewEmail, user.LastSavedEmailAddress, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(model.ChangeEmail.NewEmail, user.LastSavedEmailAddress, StringComparison.OrdinalIgnoreCase))
             {
                 // email address unchanged - accept
-                return RedirectToAction("Account");
+                //return RedirectToAction("Account");
             }
 
             try
@@ -288,7 +289,7 @@ namespace QuoteFlow.Controllers
             catch (EntityException e)
             {
                 ModelState.AddModelError("NewEmail", e.Message);
-                return AccountView(model);
+                //return AccountView(model);
             }
 
             if (user.Confirmed)
@@ -327,13 +328,13 @@ namespace QuoteFlow.Controllers
             {
                 if (!ModelState.IsValidField("ChangePassword"))
                 {
-                    return AccountView(model);
+                    //return AccountView(model);
                 }
 
                 if (!(await AuthService.ChangePassword(user, model.ChangePassword.OldPassword, model.ChangePassword.NewPassword)))
                 {
                     ModelState.AddModelError("ChangePassword.OldPassword", Strings.CurrentPasswordIncorrect);
-                    return AccountView(model);
+                    //return AccountView(model);
                 }
 
                 TempData["Message"] = Strings.PasswordChanged;
@@ -392,18 +393,13 @@ namespace QuoteFlow.Controllers
             return RedirectToAction("Account");
         }
 
-        private ActionResult EditProfileView()
-        {
-            return AccountView(new AccountViewModel());
-        }
-
-        private ActionResult AccountView(AccountViewModel model)
+        private ActionResult AccountView(AccountSettings model)
         {
             // Load Credential info
             var user = GetCurrentUser();
             var creds = user.Credentials.Select(c => AuthService.DescribeCredential(c)).ToList();
 
-            model.Credentials = creds;
+            //model.Credentials = creds;
             return View("Account", model);
         }
 

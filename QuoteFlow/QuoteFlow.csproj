@@ -1241,6 +1241,8 @@
     <Content Include="Views\Shared\Partials\Customer\Header.cshtml" />
     <Content Include="Views\Shared\Partials\Customer\ShowSidebar.cshtml" />
     <Content Include="Views\Customer\ShowQuotes.cshtml" />
+    <Content Include="Views\Shared\Partials\User\AccountSidebar.cshtml" />
+    <Content Include="Views\Shared\User\_ManageLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

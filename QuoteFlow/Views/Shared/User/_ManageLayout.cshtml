@@ -1,0 +1,65 @@
+﻿@using QuoteFlow.Api.Models.ViewModels
+@using QuoteFlow.Html
+@using QuoteFlow.Infrastructure.Extensions
+@using StackExchange.Profiling
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui.min.css")" media="all">
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/lib/aui/aui-experimental.min.css")" media="all">
+    @Html.RenderCssBundle("app.css", BundleOptions.BuildConfigDependent)
+</head>
+<body class="aui-layout">
+    <div id="page">
+        @Html.Partial("_AuthenticatedHeader")
+
+        <section id="content" role="main">
+            <header class="aui-page-header">
+                <div class="aui-page-header">
+                    <div class="aui-page-header-inner">
+                        <h1>Administration</h1>
+                    </div>
+                </div>
+            </header>
+
+            <div class="aui-page-panel">
+                <div class="aui-page-panel-inner">
+                    @Html.Partial("Partials/User/AccountSidebar", new SidebarViewModel<object>(Request.Url.Segments.Last()))
+
+                    <section class="aui-page-panel-content">
+                        @RenderBody()
+                    </section> <!-- aui-page-panel-content-->
+                </div>
+            </div>
+        </section>
+
+        @Html.Partial("_Footer")
+    </div>
+
+    <div id="dialog_container"></div>
+
+    <script>
+        // set the global application vars
+        window.rootUrl = '@Url.SiteRoot()';
+        window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
+        @if (Request.IsAuthenticated)
+        {
+            <text>window.currentOrganization = '@CurrentOrganization.Id.ToString()';</text>
+            <text>window.currentUser = @ViewHelpers.JsEncode(CurrentUser);</text>
+        }
+    </script>
+
+    <script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>
+    @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
+    @RenderSection("scripts", false)
+    @RenderSection("bootstrap", false)
+    @Html.RenderJsBundle("bundle.js", BundleOptions.BuildConfigDependent)
+    @RenderSection("secondaryScripts", false)
+
+    @MiniProfiler.RenderIncludes()
+</body>
+</html>
