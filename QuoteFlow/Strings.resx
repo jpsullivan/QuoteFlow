@@ -274,4 +274,7 @@ The {2} Team</value>
   <data name="CannotRenameToSameUsername" xml:space="preserve">
     <value>Please provide a new username to rename to.</value>
   </data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>The password confirmation provided does not match the new password.</value>
+  </data>
 </root>

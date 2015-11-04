@@ -255,6 +255,11 @@ namespace QuoteFlow.Infrastructure.Extensions
             return url.RouteUrl("Account-ChangeUsername");
         }
 
+        public static string ChangePassword(this UrlHelper url)
+        {
+            return url.RouteUrl("Account-ChangePassword");
+        }
+
         #endregion
 
         public static string ConfirmationUrl(this UrlHelper url, string action, string controller, string username, string token)

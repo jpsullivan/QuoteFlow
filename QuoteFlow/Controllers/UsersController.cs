@@ -82,6 +82,13 @@ namespace QuoteFlow.Controllers
         }
 
         [Authorize]
+        [QuoteFlowRoute("account/changepassword", Name = "Account-ChangePassword")]
+        public virtual ActionResult ChangePassword()
+        {
+            return ChangePasswordView(new ChangePassword());
+        }
+
+        [Authorize]
         [ValidateAntiForgeryToken]
         [QuoteFlowRoute("account/subscribe"), AcceptVerbs(HttpVerbs.Post)]
         public virtual ActionResult ChangeEmailSubscription(bool subscribe)
@@ -306,6 +313,28 @@ namespace QuoteFlow.Controllers
             return SafeRedirect(Url.LogOff(Url.ChangeUsername()));
         }
 
+        [Authorize]
+        [QuoteFlowRoute("account/password/save", HttpVerbs.Post)]
+        public async Task<ActionResult> SavePassword(ChangePassword model)
+        {
+            if (!string.Equals(model.NewPassword, model.NewPasswordConfirm))
+            {
+                ModelState.AddModelError(nameof(model.NewPasswordConfirm), Strings.PasswordsDoNotMatch);
+                return ChangePasswordView(model);
+            }
+
+            var user = GetCurrentUser();
+            if (!(await AuthService.ChangePassword(user, model.OldPassword, model.NewPassword)))
+            {
+                ModelState.AddModelError(nameof(model.OldPassword), Strings.CurrentPasswordIncorrect);
+                return ChangePasswordView(model);
+            }
+
+            TempData["Message"] = Strings.PasswordChanged;
+
+            return SafeRedirect(Url.LogOff(Url.ChangePassword()));
+        }
+
         [HttpPost]
         [Authorize]
         public virtual async Task<ActionResult> ChangeEmail(AccountViewModel model)
@@ -467,6 +496,11 @@ namespace QuoteFlow.Controllers
 
             model.Username = user.Username;
             return View("ChangeUsername", model);
+        }
+
+        private ActionResult ChangePasswordView(ChangePassword model)
+        {
+            return View("ChangePassword", model);
         }
 
         private static int CountLoginCredentials(User user)

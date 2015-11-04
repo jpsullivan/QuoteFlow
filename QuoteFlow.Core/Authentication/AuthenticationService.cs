@@ -409,7 +409,8 @@ namespace QuoteFlow.Core.Authentication
                     cred.Type == credential.Type)
                 .ToList();
 
-            foreach (var cred in toRemove) {
+            foreach (var cred in toRemove)
+            {
                 Current.DB.Credentials.Delete(cred.Id);
             }
 
@@ -420,7 +421,13 @@ namespace QuoteFlow.Core.Authentication
             }
 
             user.Credentials.Add(credential);
-            Current.DB.Credentials.Insert(credential);
+            Current.DB.Credentials.Insert(new
+            {
+                UserId = user.Id,
+                credential.Type,
+                credential.Value,
+                credential.Ident
+            });
 
             await Auditing.SaveAuditRecord(new UserAuditRecord(user, UserAuditAction.AddedCredential, credential));
         }

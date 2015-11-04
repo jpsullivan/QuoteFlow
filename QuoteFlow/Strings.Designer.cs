@@ -383,6 +383,15 @@ namespace QuoteFlow {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The password confirmation provided does not match the new password..
+        /// </summary>
+        internal static string PasswordsDoNotMatch {
+            get {
+                return ResourceManager.GetString("PasswordsDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your password has been set.
         /// </summary>
         internal static string PasswordSet {
