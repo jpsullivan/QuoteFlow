@@ -1,4 +1,5 @@
 ﻿@using QuoteFlow.Api.Models.ViewModels
+@using QuoteFlow.Infrastructure.Extensions
 @model SidebarViewModel<object>
 
 <div class="aui-page-panel-nav">
@@ -8,9 +9,9 @@
                 <strong>General</strong>
             </div>
             <ul class="aui-nav">
-                <li class="@Model.GetMenuItemClass("account")"><a href="#">Account settings</a></li>
+                <li class="@Model.GetMenuItemClass("account")"><a href="@Url.Account()">Account settings</a></li>
                 <li class="@Model.GetMenuItemClass("notifications")"><a href="#">Notifications</a></li>
-                <li class="@Model.GetMenuItemClass("changeusername")"><a href="#">Change username</a></li>
+                <li class="@Model.GetMenuItemClass("changeusername")"><a href="@Url.ChangeUsername()">Change username</a></li>
             </ul>
             <div class="aui-nav-heading">
                 <strong>Security</strong>

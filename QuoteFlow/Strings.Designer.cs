@@ -88,6 +88,15 @@ namespace QuoteFlow {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please provide a new username to rename to..
+        /// </summary>
+        internal static string CannotRenameToSameUsername {
+            get {
+                return ResourceManager.GetString("CannotRenameToSameUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A pricing catalog is required to perform an import..
         /// </summary>
         internal static string CatalogImportFileRequired {

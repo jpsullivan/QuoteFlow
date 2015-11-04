@@ -513,6 +513,7 @@
     <Compile Include="Models\ViewModels\SubHeaderViewData.cs" />
     <Compile Include="Models\ViewModels\UserProfileModel.cs" />
     <Compile Include="Models\ViewModels\Users\Manage\AccountSettings.cs" />
+    <Compile Include="Models\ViewModels\Users\Manage\ChangeUsername.cs" />
     <Compile Include="Models\ViewModels\VerifyCatalogImportViewModel.cs" />
     <Compile Include="Models\_Database.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

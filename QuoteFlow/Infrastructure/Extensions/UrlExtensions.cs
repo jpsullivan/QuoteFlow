@@ -248,6 +248,15 @@ namespace QuoteFlow.Infrastructure.Extensions
 
         #endregion
 
+        #region Account
+
+        public static string ChangeUsername(this UrlHelper url)
+        {
+            return url.RouteUrl("Account-ChangeUsername");
+        }
+
+        #endregion
+
         public static string ConfirmationUrl(this UrlHelper url, string action, string controller, string username, string token)
         {
             return ConfirmationUrl(url, action, controller, username, token, null);
@@ -285,10 +294,16 @@ namespace QuoteFlow.Infrastructure.Extensions
         {
             string returnUrl = url.Current();
             // If we're logging off from the Admin Area, don't set a return url
-            if (String.Equals(url.RequestContext.RouteData.DataTokens["area"].ToStringOrNull(), "Admin", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(url.RequestContext.RouteData.DataTokens["area"].ToStringOrNull(), "Admin", StringComparison.OrdinalIgnoreCase))
             {
-                returnUrl = String.Empty;
+                returnUrl = string.Empty;
             }
+
+            return LogOff(url, returnUrl);
+        }
+
+        public static string LogOff(this UrlHelper url, string returnUrl)
+        {
             return url.Action("LogOff", "Authentication", new { returnUrl, area = "" });
         }
 

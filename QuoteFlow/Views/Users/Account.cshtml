@@ -2,7 +2,7 @@
 
 @{
     Layout = "../Shared/User/_ManageLayout.cshtml";
-    ViewBag.Title = CurrentUser.Username + " / account - QuoteFlow";
+    ViewBag.Title = "Account settings - QuoteFlow";
 }
 
 <header class="aui-page-header">
@@ -13,17 +13,17 @@
     </div>
 </header>
 
-@using (Html.BeginForm("DoReindex", "Indexing", FormMethod.Post, new { @class = "aui" }))
+@using (Html.BeginForm("SaveAccountSettings", "Users", FormMethod.Post, new { @class = "aui" }))
 {
     <div class="field-group">
-        @Html.LabelFor(m => m.FirstName)
-        @Html.TextBoxFor(m => m.FirstName, new {@class = "text"})
-        <div class="error">@Html.ValidationMessageFor(m => m.FirstName)</div>
+        @Html.LabelFor(m => m.FullName)
+        @Html.TextBoxFor(m => m.FullName, new {@class = "text"})
+        <div class="error">@Html.ValidationMessageFor(m => m.FullName)</div>
     </div>
     <div class="field-group">
-        @Html.LabelFor(m => m.LastName)
-        @Html.TextBoxFor(m => m.LastName, new {@class = "text"})
-        <div class="error">@Html.ValidationMessageFor(m => m.LastName)</div>
+        @Html.LabelFor(m => m.EmailAddress)
+        @Html.TextBoxFor(m => m.EmailAddress, new {@class = "text"})
+        <div class="error">@Html.ValidationMessageFor(m => m.EmailAddress)</div>
     </div>
 
     <div class="buttons-container form-footer">

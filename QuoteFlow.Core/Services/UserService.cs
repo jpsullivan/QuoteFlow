@@ -416,6 +416,18 @@ namespace QuoteFlow.Core.Services
             return false;
         }
 
+        public void ChangeUsername(User user)
+        {
+            var username = user.Username;
+            
+            if (!username.All(char.IsLetterOrDigit) || username.Contains(" "))
+            {
+                throw new FormatException("Username must be alphanumeric and contain no spaces.");
+            }
+
+            UpdateUser(user);
+        }
+
         /// <summary>
         /// Sets whether or not the specified user should be allowed
         /// to receive email.

@@ -36,9 +36,9 @@ namespace QuoteFlow.Api.Models.ViewModels
     {
         public static string GetMenuItemClass<T>(this SidebarViewModel<T> model, string expectedMenuItemName)
         {
-            return String.Equals(model.SelectedItem, expectedMenuItemName, StringComparison.CurrentCultureIgnoreCase)
+            return string.Equals(model.SelectedItem, expectedMenuItemName, StringComparison.CurrentCultureIgnoreCase)
                 ? model.SelectedItemClass
-                : String.Empty;
+                : string.Empty;
         }
     }
 }

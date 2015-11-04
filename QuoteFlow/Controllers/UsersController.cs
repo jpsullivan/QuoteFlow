@@ -16,7 +16,7 @@ using QuoteFlow.Infrastructure.Extensions;
 
 namespace QuoteFlow.Controllers
 {
-    public partial class UsersController : AppController
+    public class UsersController : AppController
     {
         public IUserService UserService { get; protected set; }
         public IMessageService MessageService { get; protected set; }
@@ -72,6 +72,13 @@ namespace QuoteFlow.Controllers
         public virtual ActionResult Account()
         {
             return AccountView(new AccountSettings());
+        }
+
+        [Authorize]
+        [QuoteFlowRoute("account/changeusername", Name = "Account-ChangeUsername")]
+        public virtual ActionResult ChangeUsername()
+        {
+            return ChangeUsernameView(new ChangeUsername());
         }
 
         [Authorize]
@@ -249,6 +256,55 @@ namespace QuoteFlow.Controllers
 
             return View(model);
         }
+        
+        [Authorize]
+        [QuoteFlowRoute("account/settings/save", HttpVerbs.Post)]
+        public ActionResult SaveAccountSettings(AccountSettings model)
+        {
+            if (!ModelState.IsValidField(nameof(model.EmailAddress)))
+            {
+                return AccountView(model);
+            }
+
+            var currentUser = GetCurrentUser();
+            currentUser.FullName = model.FullName;
+            currentUser.EmailAddress = model.EmailAddress;
+
+            UserService.UpdateUser(currentUser);
+
+            return RedirectToAction("Account");
+        }
+
+        [Authorize]
+        [QuoteFlowRoute("account/username/save", HttpVerbs.Post)]
+        public ActionResult SaveUsername(ChangeUsername model)
+        {
+            if (!ModelState.IsValidField(nameof(model.Username)))
+            {
+                return ChangeUsernameView(model);
+            }
+
+            var user = GetCurrentUser();
+            if (string.Equals(user.Username, model.Username))
+            {
+                ModelState.AddModelError(nameof(model.Username), Strings.CannotRenameToSameUsername);
+                return ChangeUsernameView(model);
+            }
+
+            user.Username = model.Username;
+
+            try
+            {
+                UserService.ChangeUsername(user);
+            }
+            catch (FormatException e)
+            {
+                ModelState.AddModelError(nameof(model.Username), e.Message);
+                return ChangeUsernameView(model);
+            }
+
+            return SafeRedirect(Url.LogOff(Url.ChangeUsername()));
+        }
 
         [HttpPost]
         [Authorize]
@@ -326,14 +382,14 @@ namespace QuoteFlow.Controllers
             }
             else
             {
-                if (!ModelState.IsValidField("ChangePassword"))
+                if (!ModelState.IsValidField("ChangeUsername"))
                 {
                     //return AccountView(model);
                 }
 
                 if (!(await AuthService.ChangePassword(user, model.ChangePassword.OldPassword, model.ChangePassword.NewPassword)))
                 {
-                    ModelState.AddModelError("ChangePassword.OldPassword", Strings.CurrentPasswordIncorrect);
+                    ModelState.AddModelError("ChangeUsername.OldPassword", Strings.CurrentPasswordIncorrect);
                     //return AccountView(model);
                 }
 
@@ -399,8 +455,18 @@ namespace QuoteFlow.Controllers
             var user = GetCurrentUser();
             var creds = user.Credentials.Select(c => AuthService.DescribeCredential(c)).ToList();
 
+            model.FullName = user.FullName;
+            model.EmailAddress = user.EmailAddress;
             //model.Credentials = creds;
             return View("Account", model);
+        }
+
+        private ActionResult ChangeUsernameView(ChangeUsername model)
+        {
+            var user = GetCurrentUser();
+
+            model.Username = user.Username;
+            return View("ChangeUsername", model);
         }
 
         private static int CountLoginCredentials(User user)

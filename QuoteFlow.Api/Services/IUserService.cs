@@ -158,6 +158,13 @@ namespace QuoteFlow.Api.Services
         bool IsCatalogAdmin(User user, int catalogId);
 
         /// <summary>
+        /// Attempts to update the users username, validating it is a 
+        /// valid one in the process.
+        /// </summary>
+        /// <param name="user"></param>
+        void ChangeUsername(User user);
+
+        /// <summary>
         /// Sets whether or not the specified user should be allowed
         /// to receive email.
         /// </summary>

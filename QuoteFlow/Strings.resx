@@ -271,4 +271,7 @@ The {2} Team</value>
   <data name="Quote_StartEditing" xml:space="preserve">
     <value>Get Started</value>
   </data>
+  <data name="CannotRenameToSameUsername" xml:space="preserve">
+    <value>Please provide a new username to rename to.</value>
+  </data>
 </root>

@@ -1,0 +1,32 @@
+﻿@model QuoteFlow.Api.Models.ViewModels.Users.Manage.ChangeUsername
+
+@{
+    Layout = "../Shared/User/_ManageLayout.cshtml";
+    ViewBag.Title = "Change username - QuoteFlow";
+}
+
+<header class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h2>Change username</h2>
+        </div>
+    </div>
+</header>
+
+<p>QuoteFlow allows you to change your username as many times as you like.</p>
+
+@using (Html.BeginForm("SaveUsername", "Users", FormMethod.Post, new { @class = "aui" }))
+{
+    <div class="field-group">
+        @Html.LabelFor(m => m.Username)
+        @Html.TextBoxFor(m => m.Username, new { @class = "text" })
+        <div class="description">You will need to log in again after making this change.</div>
+        <div class="error">@Html.ValidationMessageFor(m => m.Username)</div>
+    </div>
+
+    <div class="buttons-container form-footer">
+        <div class="buttons">
+            <input accesskey="s" class="aui-button aui-button-primary" id="username-rename-submit" name="username-rename-submit" title="Press Alt+s to submit this form" type="submit" value="Rename">
+        </div>
+    </div>
+}
