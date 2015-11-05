@@ -706,7 +706,7 @@ var SearchPageModule = Brace.Model.extend({
     _applyState: function (state, isReset, options) {
         options = options || {};
         var prevState = _.extend(this.toJSON(), this.search.getResults().toJSON());
-        var stateToApply = _.pick(state, this.properties);
+        var stateToApply = _.pick(state, Object.keys(this.namedAttributes));
         this.set(stateToApply);
         var newState = _.extend(this.toJSON(), state);
         this.updateWindowTitle(this.getFilter());

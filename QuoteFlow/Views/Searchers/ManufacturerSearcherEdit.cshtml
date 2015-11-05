@@ -48,15 +48,13 @@
         var refreshFilter = document.getElementById("issue-filter-refreshFilter");
         refreshFilter.value = 'true';
         refreshFilter.form.submit();
-
     }
 
     function toggleRefresh() {
         if (originalProjectValue == getMultiSelectValues(projectSelectList).replace(" -1", "") && // remove the "all projects flag"
            originalIssueTypeValue == getMultiSelectValues(issueTypeSelectList)) {
             jQuery("#projectRefreshPanel").addClass("hidden");
-        }
-        else {
+        } else {
             jQuery("#projectRefreshPanel").removeClass("hidden");
         }
     }
@@ -106,10 +104,13 @@
 
     function getMultiSelectValues(selectObject) {
         var selectedValues = '';
-        for (var i = 0; i < selectObject.length; i++) {
-            if (selectObject.options[i].selected) {
-                if (selectObject.options[i].value && selectObject.options[i].value.length > 0)
-                    selectedValues = selectedValues + ' ' + selectObject.options[i].value;
+        if (selectObject) {
+            for (var i = 0; i < selectObject.length; i++) {
+                if (selectObject.options[i].selected) {
+                    if (selectObject.options[i].value && selectObject.options[i].value.length > 0) {
+                        selectedValues = selectedValues + ' ' + selectObject.options[i].value;
+                    }
+                }
             }
         }
 
@@ -120,8 +121,9 @@
         var selectedValues = [];
         for (var i = 0; i < selectObject.length; i++) {
             if (selectObject.options[i].selected) {
-                if (selectObject.options[i].value && selectObject.options[i].value.length > 0)
+                if (selectObject.options[i].value && selectObject.options[i].value.length > 0) {
                     selectedValues[selectedValues.length] = selectObject.options[i].value;
+                }
             }
         }
         return selectedValues;
@@ -188,13 +190,14 @@
     }
 
     function matchAnyRegex(s, array) {
-        if (array.length == 0 || (array.length == 1 && array[0] == "-1"))
+        if (array.length == 0 || (array.length == 1 && array[0] == "-1")) {
             return true;
+        }
 
         for (var i = 0; i < array.length; i++) {
             var pattern = new RegExp("( |^)(" + lookup(array[i]) + ")( |$)");
             if (s.match(pattern)) {
-                return true
+                return true;
             }
         }
         return false;

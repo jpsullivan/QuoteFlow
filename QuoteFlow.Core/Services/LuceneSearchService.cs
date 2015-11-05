@@ -20,6 +20,7 @@ using QuoteFlow.Api.Search;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.Fields;
 using QuoteFlow.Core.Asset.Search;
+using QuoteFlow.Core.Diagnostics.Glimpse;
 using QuoteFlow.Core.Jql.Query;
 using Container = QuoteFlow.Core.DependencyResolution.Container;
 using Query = Lucene.Net.Search.Query;
@@ -362,10 +363,10 @@ namespace QuoteFlow.Core.Services
 
         private TopDocs RunSearch(IndexSearcher searcher, Query query, Filter filter, SortField[] sortFields, string searchQueryString, IPagerFilter pager)
         {
-            Debug.WriteLine(String.Format("Lucene boolean query: {0}", query.ToString("")));
+            Debug.WriteLine($"Lucene boolean query: {query.ToString("")}");
 
             TopDocs hits;
-            try
+            using (Timeline.Capture("Reindexing all assets"))
             {
                 int maxHits;
                 if (pager != null && pager.End > 0)
@@ -382,18 +383,16 @@ namespace QuoteFlow.Core.Services
                 }
                 else
                 {
-                    hits = searcher.Search(query, filter, maxHits);
+                    hits = searcher.Search(query, maxHits);
+                    //hits = searcher.Search(query, filter, maxHits);
                 }
                 // NOTE: this is only here so we can flag any queries in production that are taking long and try to figure out
                 // why they are doing that.
-//                long timeQueryTook = opTimer.end().MillisecondsTaken;
-//                if (timeQueryTook > 400)
-//                {
-//                    logSlowQuery(query, searchQueryString, timeQueryTook);
-//                }
-            }
-            finally
-            {
+                //                long timeQueryTook = opTimer.end().MillisecondsTaken;
+                //                if (timeQueryTook > 400)
+                //                {
+                //                    logSlowQuery(query, searchQueryString, timeQueryTook);
+                //                }
             }
 
             return hits;

@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 var BASE_BROWSE = "browse/",
-    BASE_ASSETS = "quote/2/quote-numero-uno/builder/";
+    BASE_ASSETS = "quote/3/test-quote/builder/"; // todo: rip this shit out omg
 
 var returnAsIs = function(x) {
     return x;

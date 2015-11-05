@@ -452,11 +452,25 @@ namespace QuoteFlow.Core.Asset.Index
 
             AssetIndexer.DeleteIndexes();
 
+//            var allCatalogs = CatalogService.GetCatalogs(1);
+//            foreach (var catalog in allCatalogs)
+//            {
+//                var allAssets = AssetService.GetAssets(catalog.Id);
+//                AssetIndexer.IndexAssetsBatchMode(allAssets);
+//            }
+
+            // fuck it, lets do it live
+            var resultBuilder = new AccumulatingResultBuilder();
             var allCatalogs = CatalogService.GetCatalogs(1);
+            var assetIndexingParams = AssetIndexingParams.IndexAssetOnly;
             foreach (var catalog in allCatalogs)
             {
                 var allAssets = AssetService.GetAssets(catalog.Id);
-                AssetIndexer.IndexAssetsBatchMode(allAssets);
+
+                using (Timeline.Capture("Reindex assets from catalog"))
+                {
+                    resultBuilder.Add(AssetIndexer.ReIndexAssets(allAssets, assetIndexingParams, false));
+                }
             }
 
             AssetIndexer.Optimize();

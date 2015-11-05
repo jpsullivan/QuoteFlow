@@ -63,7 +63,7 @@ namespace QuoteFlow.Core.Asset.Nav
                 return BuildJqlErrorServiceOutcome(parseResult.Errors);
             }
 
-            return GetAssetTable(user, config, parseResult.Query, isStableSearchFirstHit, new SearchRequest());
+            return GetAssetTable(user, config, parseResult.Query, isStableSearchFirstHit, null);
         }
 
         public AssetTableViewModel GetAssetTableFromAssetIds(User user, string filterId, string jql, List<int> ids, IAssetTableServiceConfiguration config)
