@@ -5,6 +5,7 @@
         public const string LuceneSortFieldPrefix = "sort_";
 
         public const string CatalogId = "catalogId";
+        public const string CatalogName = "catalogName";
         public const string ManufacturerId = "manufacturerId";
 
         public const string AssetId = "assetId";

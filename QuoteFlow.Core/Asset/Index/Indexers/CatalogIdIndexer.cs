@@ -23,7 +23,7 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 		    string catalogName = asset.Catalog.Name;
             if (catalogName != null)
             {
-                IndexKeyword(doc, DocumentConstants.CatalogId, catalogName, asset);
+                IndexKeyword(doc, DocumentConstants.CatalogName, catalogName, asset);
             }
 		}
     }

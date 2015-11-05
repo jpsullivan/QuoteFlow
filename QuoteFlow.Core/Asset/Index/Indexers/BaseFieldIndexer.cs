@@ -111,5 +111,26 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
         {
             return true;
         }
+
+        protected bool Equals(BaseFieldIndexer other)
+        {
+            return string.Equals(Id, other.Id) && string.Equals(DocumentFieldId, other.DocumentFieldId);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((BaseFieldIndexer) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((Id?.GetHashCode() ?? 0)*397) ^ (DocumentFieldId?.GetHashCode() ?? 0);
+            }
+        }
     }
 }
