@@ -28,6 +28,8 @@ namespace QuoteFlow.Core.Asset.Index.Managers
                 typeof (ManufacturerIndexer),
                 typeof (SummaryIndexer)
             );
+
+            _allAssetIndexers = new Lazy<IEnumerable<IFieldIndexer>>(AllAssetIndexersFactory);
         }
 
         private static IEnumerable<IFieldIndexer> Indexers(params Type[] indexers)
@@ -35,22 +37,19 @@ namespace QuoteFlow.Core.Asset.Index.Managers
             return indexers.Select(clazz => (IFieldIndexer) Container.Kernel.TryGet(clazz)).ToList();
         }
 
-        public IEnumerable<IFieldIndexer> AllAssetIndexers
+        private readonly Lazy<IEnumerable<IFieldIndexer>> _allAssetIndexers;
+        public IEnumerable<IFieldIndexer> AllAssetIndexers => _allAssetIndexers.Value; // todo: perf check
+
+        private IEnumerable<IFieldIndexer> AllAssetIndexersFactory()
         {
-            get
+            var answer = new List<IFieldIndexer>();
+            var allSearchers = AssetSearcherManager.GetAllSearchers();
+            foreach (var searcher in allSearchers)
             {
-                // should probably cache this instead of rebuilding every time.
-                // todo: perf check
-
-                var answer = new List<IFieldIndexer>();
-                var allSearchers = AssetSearcherManager.GetAllSearchers();
-                foreach (var searcher in allSearchers)
-                {
-                    answer.AddRange(searcher.SearchInformation.RelatedIndexers);
-                }
-
-                return _knownIndexers.Union(answer);
+                answer.AddRange(searcher.SearchInformation.RelatedIndexers);
             }
+
+            return _knownIndexers.Union(answer);
         }
 
         /// <summary>

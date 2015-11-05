@@ -26,10 +26,7 @@ namespace QuoteFlow.Core.Asset.Index
 
         public Document Build(IAsset entity)
         {
-            var doc = new Document()
-                .AddAllIndexers(entity, FieldIndexerManager.AllAssetIndexers);
-
-            return doc;
+            return new Document().AddAllIndexers(entity, FieldIndexerManager.AllAssetIndexers);
         }
 
         public IEnumerable<Document> Build(IEnumerable<IAsset> entities)
