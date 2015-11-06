@@ -1,9 +1,10 @@
 ﻿using QuoteFlow.Api.Asset.Search.Constants;
+using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Resolver;
 using QuoteFlow.Api.Models;
 
-namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
+namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
     /// <summary>
     /// The search input transformer for the manufacturer system field.

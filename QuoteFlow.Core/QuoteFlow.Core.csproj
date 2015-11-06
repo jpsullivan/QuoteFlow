@@ -223,6 +223,13 @@
     <Compile Include="Asset\Search\SearchContextHelper.cs" />
     <Compile Include="Asset\Search\Searchers\Renderer\CatalogSearchRenderer.cs" />
     <Compile Include="Asset\Search\Searchers\Renderer\ManufacturerSearchRenderer.cs" />
+    <Compile Include="Asset\Search\Searchers\Transformer\AssetConstantSearchInputTransformer.cs" />
+    <Compile Include="Asset\Search\Searchers\Transformer\DateSearchInputTransformer.cs" />
+    <Compile Include="Asset\Search\Searchers\Transformer\EnhancedUserSearchInputTransformer.cs" />
+    <Compile Include="Asset\Search\Searchers\Transformer\IdIndexedSearchInputTransformer.cs" />
+    <Compile Include="Asset\Search\Searchers\Transformer\ManufacturerSearchInputTransformer.cs" />
+    <Compile Include="Asset\Search\Searchers\Transformer\UserSearchInput.cs" />
+    <Compile Include="Asset\Search\Searchers\Transformer\UserSearchInputTransformer.cs" />
     <Compile Include="Asset\Search\Searchers\Util\SearchContextRenderHelper.cs" />
     <Compile Include="Auditing\AuditService.cs" />
     <Compile Include="Configuration\Lucene\IndexingConfiguration.cs" />

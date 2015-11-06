@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Web.Hosting;
+﻿using System.Collections.Generic;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Transport;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Models;
 using RazorEngine;
-using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using StackExchange.Profiling;
 
@@ -55,7 +51,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
         {
             // measure how long this takes to render
             var profiler = MiniProfiler.Current; // it's ok if this is null
-            using (profiler.Step(string.Format("Rendering the {0} template", templateName))) 
+            using (profiler.Step($"Rendering the {templateName} template")) 
             {
                 var result = Engine.Razor.RunCompile(templateName, null, templateParams);
                 return result;

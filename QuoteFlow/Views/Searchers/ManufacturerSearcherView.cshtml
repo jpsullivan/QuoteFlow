@@ -8,12 +8,12 @@
                 var manufacturer = Model["selectedManufacturers"][i];
                 if (Model["invalidManufacturers"] != null && Model["invalidManufacturers"].Contains(manufacturer))
                 {
-                    <span class="invalid_sel">@manufacturer.Name</span>
+                    <span class="invalid_sel">@manufacturer</span>
                 }
                 else
                 {
-                    <a href="#" title="@manufacturer.Name">
-                        @manufacturer.Name
+                    <a href="#" title="@manufacturer">
+                        @manufacturer
                         @if (i < Model["selectedManufacturers"].Count - 1)
                         {
                             <text>,</text>

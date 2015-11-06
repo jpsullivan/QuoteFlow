@@ -8,6 +8,7 @@ using QuoteFlow.Api.Asset.Search.Searchers.Renderer;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.CustomFields.Searchers.Information;
+using QuoteFlow.Core.Asset.Search.Searchers.Transformer;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers
 {

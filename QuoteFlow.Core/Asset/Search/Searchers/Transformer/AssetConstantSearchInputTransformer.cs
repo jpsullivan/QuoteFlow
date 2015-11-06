@@ -1,9 +1,12 @@
 ﻿using System;
+using QuoteFlow.Api.Asset;
+using QuoteFlow.Api.Asset.Search;
+using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Search.Searchers.Util;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Resolver;
 
-namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
+namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
     /// <summary>
     /// An assset-constant-specific <see cref="IdIndexedSearchInputTransformer"/>.

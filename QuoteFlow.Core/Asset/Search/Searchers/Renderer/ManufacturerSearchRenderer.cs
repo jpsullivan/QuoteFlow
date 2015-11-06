@@ -32,12 +32,23 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 
         public void AddEditParameters(IFieldValuesHolder fieldValuesHolder, ISearchContext searchContext, User user, IDictionary<string, object> templateParameters)
         {
-            var options = new HashSet<string>();
+            var options = new List<string>();
             object selectedOptions;
             if (fieldValuesHolder.TryGetValue(DocumentConstants.ManufacturerId, out selectedOptions))
             {
-                // attempt to cast the selectedOptions into a list
-                options = (HashSet<string>) selectedOptions;
+                // check if this is a HashSet and crudely cast it to a list
+                var set = selectedOptions as HashSet<string>;
+                if (set != null)
+                {
+                    var casted = set;
+                    options = casted.ToList();
+                }
+                else
+                {
+                    // attempt to cast the selectedOptions string array into a list
+                    var casted = (string[]) selectedOptions;
+                    options = casted.ToList();
+                }
             }
 
             templateParameters.Add("selectedOptions", options);
@@ -261,7 +272,19 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             object ids;
             if (fieldValuesHolder.TryGetValue(DocumentConstants.ManufacturerId, out ids))
             {
-                manufacturerIds = new List<int>((IList<int>)ids);
+                // check if this is a HashSet and crudely cast it to a list
+                var set = ids as HashSet<string>;
+                if (set != null)
+                {
+                    var casted = set;
+                    manufacturerIds = casted.Select(id => Convert.ToInt32(id)).ToList();
+                }
+                else
+                {
+                    // attempt to cast the selectedOptions string array into a list
+                    var casted = (string[]) ids;
+                    manufacturerIds = casted.Select(id => Convert.ToInt32(id)).ToList();
+                }
             }
 
             // The IDs of all valid options in the search context

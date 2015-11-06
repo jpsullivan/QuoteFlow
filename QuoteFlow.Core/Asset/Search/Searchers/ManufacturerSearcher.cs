@@ -13,6 +13,7 @@ using QuoteFlow.Core.Asset.CustomFields.Searchers.Information;
 using QuoteFlow.Core.Asset.Fields;
 using QuoteFlow.Core.Asset.Index.Indexers;
 using QuoteFlow.Core.Asset.Search.Searchers.Renderer;
+using QuoteFlow.Core.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Core.Jql.Resolver;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers

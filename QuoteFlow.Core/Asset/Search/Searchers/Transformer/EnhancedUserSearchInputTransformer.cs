@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using QuoteFlow.Api.Asset.Fields;
+using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
+using QuoteFlow.Api.Asset.Search.Searchers;
+using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Transport;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Function;
@@ -13,7 +16,7 @@ using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using Wintellect.PowerCollections;
 
-namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
+namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
     /// <summary>
     /// A search input transformer for user/group fields with Kickass modifications.

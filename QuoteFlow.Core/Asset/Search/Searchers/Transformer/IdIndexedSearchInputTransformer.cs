@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using QuoteFlow.Api.Asset.Search;
+using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Search.Searchers.Util;
 using QuoteFlow.Api.Asset.Transport;
 using QuoteFlow.Api.Jql.Operand;
@@ -9,7 +11,7 @@ using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Resolver;
 using QuoteFlow.Api.Models;
 
-namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
+namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
     /// <summary>
     /// A SearchInputTransformer that handles any field that is represented by its id in the Lucene document, and hence

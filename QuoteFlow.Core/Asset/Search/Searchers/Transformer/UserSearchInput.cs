@@ -2,7 +2,7 @@
 using QuoteFlow.Api.Asset.Comparator;
 using QuoteFlow.Api.Models;
 
-namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
+namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
     /// <summary>
     /// A value entered into a user searcher (e.g. current user, a specific user).

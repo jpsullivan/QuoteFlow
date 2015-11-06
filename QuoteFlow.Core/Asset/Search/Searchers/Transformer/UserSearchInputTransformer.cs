@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using QuoteFlow.Api.Asset.CustomFields.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Fields;
+using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Transport;
@@ -14,7 +15,7 @@ using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Api.Util;
 
-namespace QuoteFlow.Api.Asset.Search.Searchers
+namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
     /// <summary>
     /// An search input transformer for asset type

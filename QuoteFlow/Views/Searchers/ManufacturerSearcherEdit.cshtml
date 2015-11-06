@@ -1,20 +1,21 @@
-﻿<select class="select js-default-checkboxmultiselect" data-placeholder-text="Find Manufacturers..." id="searcher-type" multiple="multiple" name="type" size="1">
-    <optgroup label="Manufacturers">
+﻿<div class="field-group aui-field-manufacturer">
+    <label for="searcher-manufacturerId">Manufacturer</label>
+    <select class="select js-default-checkboxmultiselect" data-placeholder-text="Find Manufacturers..." id="searcher-manufacturerId" multiple="multiple" name="manufacturerId" size="1">
+        <optgroup label="Manufacturers">
         @foreach (var option in Model["visibleManufacturers"])
         {
             var isInvalid = Model["invalidOptions"].Contains(option);
             var invalidClass = isInvalid ? "invalid_sel" : string.Empty;
 
-            var isSelected = Model.ContainsKey("selectedOptions") && Model["selectedOptions"].Contains(option.ToString());
+            var isSelected = Model.ContainsKey("selectedOptions") && Model["selectedOptions"].Contains(option.Id.ToString());
             var selectedAttr = isSelected ? "selected=\"selected\"" : string.Empty;
 
             var name = option.Name;
 
-            <option class="@invalidClass" id="type_@option.Id" @selectedAttr title="@name" value="@option.Id">
+            <option class="@invalidClass" id="manufacturer_@option.Id" @selectedAttr title="@name" value="@option.Id">
                 @name
             </option>
         }
-    </optgroup>
-</select>
-
-
+        </optgroup>
+    </select>
+</div>
