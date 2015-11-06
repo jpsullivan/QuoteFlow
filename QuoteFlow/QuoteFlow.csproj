@@ -1245,6 +1245,7 @@
     <Content Include="Views\Shared\User\_ManageLayout.cshtml" />
     <Content Include="Views\Users\ChangeUsername.cshtml" />
     <Content Include="Views\Users\ChangePassword.cshtml" />
+    <Content Include="Views\Searchers\ManufacturerSearcherView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

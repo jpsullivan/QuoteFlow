@@ -10,7 +10,7 @@ namespace QuoteFlow.Core.Services
 {
     public class CatalogService : ICatalogService
     {
-        #region IoC
+        #region DI
 
         private IAuditService AuditService { get; set; }
         private ICatalogImportSummaryRecordsService CatalogSummaryService { get; set; }
@@ -146,6 +146,16 @@ namespace QuoteFlow.Core.Services
 
             const string sql = "select * from Catalogs where OrganizationId in @orgs";
             return Current.DB.Query<Catalog>(sql, new { @orgs = orgs.Select(org => org.Id).ToArray() });
+        }
+
+        public IEnumerable<Manufacturer> GetManufacturers(int catalogId)
+        {
+            const string sql = @"select distinct m.* from Assets a
+                                left join Manufacturers m on a.ManufacturerId = m.Id
+                                where a.CatalogId = @catalogId
+                                order by m.Name asc";
+
+            return Current.DB.Query<Manufacturer>(sql, new {catalogId});
         }
     }
 }

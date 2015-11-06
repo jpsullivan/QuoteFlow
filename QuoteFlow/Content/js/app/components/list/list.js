@@ -7,6 +7,7 @@ var Control = require('../control/control');
 var GroupDescriptor = require('./group-descriptor');
 var ItemDescriptor = require('./item-descriptor');
 var Mouse = require('../input/mouse');
+var Utils = require('../../util/utils');
 
 var List = Control.extend({
     MAX_RESULT_LIMIT: 2000,
@@ -502,12 +503,9 @@ var List = Control.extend({
     },
 
     _filterAndAddOptions: function (options, container, query) {
-
         var regexEscapedQuery, labelRegex;
-
         if (query) {
-
-            regexEscapedQuery = RegExp.escape(query);
+            regexEscapedQuery = Utils.regExpEscape(query);
             labelRegex = new RegExp(AJS.format(this.options.matchingStrategy, regexEscapedQuery), "i");
             options = this._filterOptions(options, regexEscapedQuery, labelRegex);
         }
@@ -528,7 +526,6 @@ var List = Control.extend({
     },
 
     _generateOptGroup: function (groupDescriptor, query) {
-
         var res = jQuery(),
                 optContainer = this._render("suggestionGroup", groupDescriptor),
                 options = groupDescriptor.items(),

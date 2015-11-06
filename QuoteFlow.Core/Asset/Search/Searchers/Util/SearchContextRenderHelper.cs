@@ -22,10 +22,13 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Util
             templateParams.Add("contextCatalogNames", catalogNames);
 
             var manufacturerNames = new List<string>();
-            var contextManufacturers = searchContext.Manufacturers.ToList();
-            if (contextManufacturers.Any())
+            if (searchContext.Manufacturers != null)
             {
-                manufacturerNames.AddRange(contextManufacturers.Select(m => HttpUtility.HtmlEncode(m.Name)));
+                var contextManufacturers = searchContext.Manufacturers.ToList();
+                if (contextManufacturers.Any())
+                {
+                    manufacturerNames.AddRange(contextManufacturers.Select(m => HttpUtility.HtmlEncode(m.Name)));
+                }
             }
 
             templateParams.Add("contextManufacturerNames", manufacturerNames);

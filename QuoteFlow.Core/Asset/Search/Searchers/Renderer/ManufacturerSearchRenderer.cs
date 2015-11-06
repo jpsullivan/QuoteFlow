@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,12 +32,13 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 
         public void AddEditParameters(IFieldValuesHolder fieldValuesHolder, ISearchContext searchContext, User user, IDictionary<string, object> templateParameters)
         {
+            var options = new HashSet<string>();
             object selectedOptions;
-            if (!fieldValuesHolder.TryGetValue(DocumentConstants.ManufacturerId, out selectedOptions)) return;
-
-            // attempt to cast the selectedOptions into a list
-            //var options = (List<string>)selectedOptions;
-            var options = new List<string>();
+            if (fieldValuesHolder.TryGetValue(DocumentConstants.ManufacturerId, out selectedOptions))
+            {
+                // attempt to cast the selectedOptions into a list
+                options = (HashSet<string>) selectedOptions;
+            }
 
             templateParameters.Add("selectedOptions", options);
 
@@ -46,12 +48,13 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             var invalidOptions = GetInvalidOptions(user, options, validOptions);
             SearchContextRenderHelper.AddSearchContextParams(searchContext, templateParameters);
 
-            var processed = ProcessOptions(validOptions, invalidOptions);
-            foreach (var o in processed)
-            {
-                templateParameters.Add(o.Key, o.Value);
-            }
+//            var processed = ProcessOptions(validOptions, invalidOptions);
+//            foreach (var o in processed)
+//            {
+//                templateParameters.Add(o.Key, o.Value);
+//            }
 
+            templateParameters.Add("visibleManufacturers", validOptions);
             templateParameters.Add("invalidOptions", invalidOptions);
         }
 
@@ -72,17 +75,19 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 
         public override bool IsShown(User user, ISearchContext searchContext)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override string GetViewHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters)
         {
-            throw new NotImplementedException();
+            var templateParameters = GetDisplayParams(user, searchContext, fieldValuesHolder, displayParameters);
+            AddViewParameters(fieldValuesHolder, searchContext, user, templateParameters);
+            return RenderEditTemplate("ManufacturerSearcherView", templateParameters);
         }
 
         public override bool IsRelevantForQuery(User user, IQuery query)
         {
-            throw new NotImplementedException();
+            return IsRelevantForQuery(SystemSearchConstants.ForManufacturer().JqlClauseNames, query);
         }
 
         /// <summary>
@@ -92,8 +97,6 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         private ICollection<IOption> GetAllOptions()
         {
             var allOptions = new List<IOption>();
-            allOptions.Add(new TextOption(Constants.ALL_STANDARD_MANUFACTURERS, "All Standard Asset Types"));
-
             var allManufacturers = ManufacturerService.GetManufacturers(1); // todo organization fix
             allOptions.AddRange(allManufacturers.Select(manufacturer => new AssetConstantOption(manufacturer)));
 
@@ -125,8 +128,8 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         /// <summary>
         /// Constructs a mapping of issue type options to their CSS classes.
         /// </summary>
-        /// <param name="options"> The issue type options. </param>
-        /// <returns> A map of options to CSS classes. </returns>
+        /// <param name="options">The manufacturer options.</param>
+        /// <returns>A map of options to CSS classes.</returns>
         private IDictionary<IOption, string> GetOptionCssClasses(IEnumerable<IOption> options)
         {
             var optionClassesMap = new Dictionary<IOption, string>();
@@ -147,23 +150,18 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             return optionClassesMap;
         }
 
-        /// <param name="searchContext"> The search context. </param>
-        /// <param name="user"> The user performing the search. </param>
-        /// <returns> All manufacturer options visible in the given search context. </returns>
-        protected virtual ICollection<IOption> GetOptionsInSearchContext(ISearchContext searchContext, User user)
+        /// <param name="searchContext">The search context.</param>
+        /// <param name="user">The user performing the search.</param>
+        /// <returns>All manufacturer options visible in the given search context.</returns>
+        private IEnumerable<IOption> GetOptionsInSearchContext(ISearchContext searchContext, User user)
         {
             var options = new List<IOption>();
-//            ICollection<FieldConfig> fieldConfigs = GetCatalogFieldConfigs(GetCatalogsInSearchContext(searchContext, user));
-//
-//            foreach (FieldConfig fieldConfig in fieldConfigs)
-//            {
-//                OptionSet optionSet = optionSetManager.getOptionsForConfig(fieldConfig);
-//                options.addAll(optionSet.Options);
-//            }
+            var manufacturers = GetCatalogManufacturers(GetCatalogsInSearchContext(searchContext, user));
 
-            // just shove these greasy bastards in there
-            var allManufacturers = ManufacturerService.GetManufacturers(1); // todo organization fix
-            options.AddRange(allManufacturers.Select(manufacturer => new AssetConstantOption(manufacturer)));
+            foreach (var manufacturer in manufacturers)
+            {
+                options.Add(new AssetConstantOption(manufacturer));
+            }
 
             return options;
         }
@@ -174,11 +172,26 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             var optionsInSearchContext = GetOptionsInSearchContext(searchContext, user);
 
             // Add the "All Standard Manufacturers" option and the standard types.
-            options.Add(new TextOption(Constants.ALL_STANDARD_MANUFACTURERS, "All Standard Manufacturers"));
             options.AddRange(optionsInSearchContext);
 
             return options;
         }
+
+        private IEnumerable<Manufacturer> GetCatalogManufacturers(IEnumerable<Catalog> catalogs)
+        {
+            var manufacturers = new HashSet<Manufacturer>();
+            foreach (var catalog in catalogs)
+            {
+                var catalogManufacturers = CatalogService.GetManufacturers(catalog.Id);
+                foreach (var manufacturer in catalogManufacturers)
+                {
+                    manufacturers.Add(manufacturer);
+                }
+            }
+
+            var sorted = manufacturers.OrderBy(m => m.Name);
+            return sorted;
+        } 
 
         /// <summary>
         /// todo: actually do something useful here
@@ -188,7 +201,19 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         /// <returns></returns>
         private IEnumerable<Catalog> GetCatalogsInSearchContext(ISearchContext searchContext, User user)
         {
-            return CatalogService.GetCatalogs(user.Organizations.First().Id);
+            var allCatalogs = CatalogService.GetCatalogs(1).ToList(); // todo org fix
+            var catalogs = new List<Catalog>(allCatalogs.Count);
+            foreach (var catalog in allCatalogs)
+            {
+                var isVisibleCatalog = searchContext.IsForAnyCatalogs() ||
+                                       searchContext.CatalogIds.Contains(catalog.Id);
+                if (isVisibleCatalog)
+                {
+                    catalogs.Add(catalog);
+                }
+            }
+
+            return catalogs;
         }
 
         private IDictionary<string, object> ProcessOptions(IEnumerable<IOption> validOptions, IEnumerable<IOption> invalidOptions)
@@ -218,6 +243,48 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             //result["subtaskOptions"] = CollectionUtils.select(options, IssueConstantOption.SUB_TASK_OPTIONS_PREDICATE);
 
             return result;
+        }
+
+        /// <summary>
+        /// Construct view HTML parameters and add them to a template parameters map.
+        /// </summary>
+        /// <param name="fieldValuesHolder">Contains the values the user has selected.</param>
+        /// <param name="searchContext">The search context.</param>
+        /// <param name="user">The user performing the search/</param>
+        /// <param name="templateParameters">The template parameters.</param>
+        private void AddViewParameters(IFieldValuesHolder fieldValuesHolder, ISearchContext searchContext, User user, IDictionary<string, object> templateParameters)
+        {
+            var manufacturers = new List<string>();
+            var manufacturerIds = new List<int>();
+            var invalidManufacturers = new List<string>();
+
+            object ids;
+            if (fieldValuesHolder.TryGetValue(DocumentConstants.ManufacturerId, out ids))
+            {
+                manufacturerIds = new List<int>((IList<int>)ids);
+            }
+
+            // The IDs of all valid options in the search context
+            var validOptionIds = GetVisibleOptions(user, searchContext).Select(o => o.Id).ToList();
+
+            if (!manufacturerIds.Any())
+            {
+                return;
+            }
+
+            var mfgs = manufacturerIds.Select(id => ManufacturerService.GetManufacturer(id)).ToList();
+            foreach (var manufacturer in mfgs)
+            {
+                manufacturers.Add(manufacturer.Name);
+                if (!validOptionIds.Contains(manufacturer.Id.ToString()))
+                {
+                    invalidManufacturers.Add(manufacturer.Name);
+                }
+            }
+
+            templateParameters.Add("invalidManufacturers", invalidManufacturers);
+            templateParameters.Add("selectedManufacturers", manufacturers);
+            SearchContextRenderHelper.AddSearchContextParams(searchContext, templateParameters);
         }
     }
 }

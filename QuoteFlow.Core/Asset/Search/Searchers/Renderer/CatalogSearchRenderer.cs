@@ -47,16 +47,19 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 
             // if there is no search request in session and no catalog has been specified in the params,
             // add the single visible catalog to the list
-            if (noCurrentSearchRequest && allCatalogs.Count() == 1 &&
+            if (noCurrentSearchRequest && allCatalogs.Count == 1 &&
                 !fieldValuesHolder.ContainsKey(SystemSearchConstants.ForCatalog().UrlParameter))
             {
                 var singleCatalogId = allCatalogs.First().Id;
-                templateParams.Add("selectedCatalogs", new List<int>() {singleCatalogId});
+                templateParams.Add("selectedCatalogs", new List<int> {singleCatalogId});
             }
             else
             {
                 object catalogs;
-                if (!fieldValuesHolder.TryGetValue(SystemSearchConstants.ForCatalog().UrlParameter, out catalogs)) return;
+                if (!fieldValuesHolder.TryGetValue(SystemSearchConstants.ForCatalog().UrlParameter, out catalogs))
+                {
+                    return;
+                }
 
                 // attempt to cast the catalogs into a list
                 var resolvedCatalogs = (IList) catalogs;

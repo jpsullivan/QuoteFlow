@@ -57,5 +57,12 @@ namespace QuoteFlow.Api.Services
         /// <param name="orgs"></param>
         /// <returns></returns>
         IEnumerable<Catalog> GetCatalogsWithinOrganizations(ICollection<Organization> orgs);
+
+        /// <summary>
+        /// Fetches all of the manufacturers within a single catalog.
+        /// </summary>
+        /// <param name="catalogId">The ID of the catalog to get manufacturers from.</param>
+        /// <returns></returns>
+        IEnumerable<Manufacturer> GetManufacturers(int catalogId);
     }
 }

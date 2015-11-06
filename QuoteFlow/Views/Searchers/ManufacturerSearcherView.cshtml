@@ -1,0 +1,26 @@
+﻿@if (Model["selectedManufacturers"] != null && Model["selectedManufacturers"].Count > 0)
+{
+    <div class="searcherValue">
+        <label class="fieldLabel" for="fieldcatalogid">Manufacturer:</label>
+        <span id="fieldcatalogid" class="fieldValue">
+            @for (int i = 0; i < Model["selectedManufacturers"].Count; i++)
+            {
+                var manufacturer = Model["selectedManufacturers"][i];
+                if (Model["invalidManufacturers"] != null && Model["invalidManufacturers"].Contains(manufacturer))
+                {
+                    <span class="invalid_sel">@manufacturer.Name</span>
+                }
+                else
+                {
+                    <a href="#" title="@manufacturer.Name">
+                        @manufacturer.Name
+                        @if (i < Model["selectedManufacturers"].Count - 1)
+                        {
+                            <text>,</text>
+                        }
+                    </a>
+                }
+            }
+        </span>
+    </div>
+}

@@ -43,7 +43,7 @@ namespace QuoteFlow.Core.Asset.Search
         /// </summary>
         public bool IsForAnyCatalogs()
         {
-            return CatalogIds.AnySafe();
+            return !CatalogIds.AnySafe();
         }
 
         /// <summary>
@@ -52,15 +52,15 @@ namespace QuoteFlow.Core.Asset.Search
         /// <returns></returns>
         public bool IsForAnyManufacturers()
         {
-            return (ManufacturerIds.AnySafe());
+            return !ManufacturerIds.AnySafe();
         }
 
         /// <summary>
         /// Returns true if there is exactly one Catalog in this SearchContext.
         /// </summary>
-        public bool IsSingleCatalogContext() 
+        public bool IsSingleCatalogContext()
         {
-            return CatalogIds.AnySafe();
+            return CatalogIds != null && CatalogIds.Count == 1;
         }
 
         /// <summary>

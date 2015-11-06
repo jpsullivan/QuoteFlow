@@ -7,6 +7,12 @@ var Utils = {
         } catch (ex) {
             return defaultVal;
         }
+    },
+
+    regExpEscape: function (str) {
+      // Note: This escapes str for regex literal sequences -- not within character classes
+      var SPECIAL_CHARS = /[.*+?|^$()[\]{\\]/g;
+        return str.replace(SPECIAL_CHARS, "\\$&");
     }
 };
 
