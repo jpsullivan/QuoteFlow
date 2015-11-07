@@ -23,6 +23,8 @@ namespace QuoteFlow.Core.Lucene.Index
                 public override int MaxMergeDocs => 5000;
                 public override int MaxBufferedDocs => 300;
                 public override int MaxFieldLength => MAX_FIELD_LENGTH;
+                public override IndexEngine.FlushPolicy FlushPolicy => IndexEngine.FlushPolicy.Flush;
+                public override long CommitFrequency => 30000;
             }
 
             public static readonly WriterSettings Batch = new BatchWriterSettings();
@@ -32,6 +34,8 @@ namespace QuoteFlow.Core.Lucene.Index
                 public override int MaxMergeDocs => int.MaxValue;
                 public override int MaxBufferedDocs => 300;
                 public override int MaxFieldLength => MAX_FIELD_LENGTH;
+                public override IndexEngine.FlushPolicy FlushPolicy => IndexEngine.FlushPolicy.Flush;
+                public override long CommitFrequency => 30000;
             }
 
             public static readonly IndexWriterConfiguration WriterConfiguration = new IndexWriterConfiguration();

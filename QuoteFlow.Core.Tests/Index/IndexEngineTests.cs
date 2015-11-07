@@ -29,11 +29,13 @@ namespace QuoteFlow.Core.Tests.Index
 
             _indexSearcherSupplier = mockSupplier.Object;
             var searcherFactory = ToFactory(mockSupplier.Object);
+            var writerWrapper = new WriterWrapper(configuration, UpdateMode.Interactive, _indexSearcherSupplier);
+            var engine = new IndexEngine(searcherFactory, writerWrapper, configuration);
 
             var writer = new Mock<IWriter>();
             writer.Setup(x => x.Get(UpdateMode.Interactive))
                 .Callback(() => new WriterWrapper(configuration, UpdateMode.Interactive, _indexSearcherSupplier));
-            var engine = new IndexEngine(searcherFactory, writer.Object, configuration, IndexEngine.FlushPolicy.None);
+            
 
             var searcher = engine.GetSearcher();
 
@@ -49,9 +51,12 @@ namespace QuoteFlow.Core.Tests.Index
         public void TestWriterNotFlushedForWritePolicyNone()
         {
             var configuration = new IndexConfiguration(new RAMDirectory(), new StandardAnalyzer(LuceneVersion.Get()));
+            var writerWrapper = new DummyWriterWrapper(configuration, _indexSearcherSupplier);
+            writerWrapper.FlushPolicy = IndexEngine.FlushPolicy.None;
             var mockWriterWrapper = new Mock<IWriter>();
-            mockWriterWrapper.Setup(x => x.Get(It.IsAny<UpdateMode>())).Returns(new DummyWriterWrapper(configuration, _indexSearcherSupplier));
-            var engine = new IndexEngine(new DummySearcherFactory(), mockWriterWrapper.Object, configuration, IndexEngine.FlushPolicy.None);
+            mockWriterWrapper.Setup(x => x.Get(It.IsAny<UpdateMode>())).Returns(writerWrapper);
+            mockWriterWrapper.Setup(x => x.FlushPolicy).Returns(IndexEngine.FlushPolicy.None);
+            var engine = new IndexEngine(new DummySearcherFactory(), mockWriterWrapper.Object, configuration);
 
             Touch(engine);
         }
@@ -83,9 +88,11 @@ namespace QuoteFlow.Core.Tests.Index
         {
             var configuration = new IndexConfiguration(new RAMDirectory(), new StandardAnalyzer(LuceneVersion.Get()));
             var writerWrapper = new DisposeCountingWriterWrapper(configuration, _indexSearcherSupplier);
+            writerWrapper.FlushPolicy = IndexEngine.FlushPolicy.Close;
             var mockWriterWrapper = new Mock<IWriter>();
             mockWriterWrapper.Setup(x => x.Get(It.IsAny<UpdateMode>())).Returns(writerWrapper);
-            var engine = new IndexEngine(new DummySearcherFactory(), mockWriterWrapper.Object, configuration, IndexEngine.FlushPolicy.Close);
+            mockWriterWrapper.Setup(x => x.FlushPolicy).Returns(IndexEngine.FlushPolicy.Close);
+            var engine = new IndexEngine(new DummySearcherFactory(), mockWriterWrapper.Object, configuration);
 
             Touch(engine);
 
@@ -130,6 +137,7 @@ namespace QuoteFlow.Core.Tests.Index
                 var directory = new RAMDirectory();
                 var configuration = new IndexConfiguration(directory, new StandardAnalyzer(LuceneVersion.Get()));
                 var writerWrapper = new DisposeCountingWriterWrapper(configuration, _indexSearcherSupplier);
+                writerWrapper.FlushPolicy = IndexEngine.FlushPolicy.Close;
 
                 // instead of create helper classes, lets just mock the neceessary functionality to count disposals
                 var mockSupplier = new Mock<ISupplier<IndexSearcher>>();
@@ -137,11 +145,12 @@ namespace QuoteFlow.Core.Tests.Index
 
                 var mockWriter = new Mock<IWriter>();
                 mockWriter.Setup(x => x.Get(It.IsAny<UpdateMode>())).Returns(writerWrapper);
+                mockWriter.Setup(x => x.FlushPolicy).Returns(IndexEngine.FlushPolicy.Close);
 
                 _indexSearcherSupplier = mockSupplier.Object;
                 var searcherFactory = ToFactory(mockSupplier.Object);
 
-                var engine = new IndexEngine(searcherFactory, mockWriter.Object, configuration, IndexEngine.FlushPolicy.Close);
+                var engine = new IndexEngine(searcherFactory, mockWriter.Object, configuration);
 
                 Touch(engine);
 
@@ -151,11 +160,11 @@ namespace QuoteFlow.Core.Tests.Index
                 var searcher = engine.GetSearcher();
                 searcher.Dispose();
                 searcher.Dispose();
-                Assert.Equal(2, writerWrapper.CloseCount);
+                Assert.Equal(1, writerWrapper.CloseCount);
                 Assert.Equal(0, SearcherDisposeCount.Get());
 
                 engine.Dispose();
-                Assert.Equal(2, writerWrapper.CloseCount);
+                Assert.Equal(1, writerWrapper.CloseCount);
                 Assert.Equal(1, SearcherDisposeCount.Get());
             }
 
@@ -193,7 +202,8 @@ namespace QuoteFlow.Core.Tests.Index
                 var configuration = new IndexConfiguration(directory, analyzer);
                 var mockWriterWrapper = new Mock<IWriter>();
                 mockWriterWrapper.Setup(x => x.Get(It.IsAny<UpdateMode>())).Callback(() => Assert.True(false, "no writer required"));
-                var engine = new IndexEngine(new DummySearcherFactory(), mockWriterWrapper.Object, configuration, IndexEngine.FlushPolicy.None);
+                mockWriterWrapper.Setup(x => x.FlushPolicy).Returns(IndexEngine.FlushPolicy.None);
+                var engine = new IndexEngine(new DummySearcherFactory(), mockWriterWrapper.Object, configuration);
 
                 Assert.Equal(1, new IndexSearcher(directory).IndexReader.NumDocs());
                 engine.Clean();

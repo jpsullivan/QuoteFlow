@@ -21,14 +21,20 @@ namespace QuoteFlow.Core.Lucene.Index
         private readonly ISupplier<IndexSearcher> _indexSearchSupplier;
 
         // for testing, can't make this accept an IndexWriter without making main constructor throw IOException
-        public WriterWrapper(ISupplier<IndexWriter> writerFactory, ISupplier<IndexSearcher> indexSearcherSupplier)
+        public WriterWrapper(ISupplier<IndexWriter> writerFactory, ISupplier<IndexSearcher> indexSearcherSupplier, 
+            IndexEngine.FlushPolicy flushPolicy, long commitFrequency)
         {
             _writer = writerFactory.Get();
             _indexSearchSupplier = indexSearcherSupplier;
+            FlushPolicy = flushPolicy;
+            CommitFrequency = commitFrequency;
         }
 
         public WriterWrapper(IIndexConfiguration configuration, UpdateMode mode,
-            ISupplier<IndexSearcher> indexSearcherSupplier) : this(new ConfiguredIndexWriter(configuration, mode), indexSearcherSupplier)
+            ISupplier<IndexSearcher> indexSearcherSupplier) 
+            : this(new ConfiguredIndexWriter(configuration, mode), indexSearcherSupplier, 
+                  configuration.GetWriterSettings(mode).FlushPolicy, 
+                  configuration.GetWriterSettings(mode).CommitFrequency)
         {
         }
 
@@ -72,7 +78,12 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public IWriter Get(UpdateMode mode)
         {
-            throw new NotImplementedException();
+            return this;
+        }
+
+        public IndexWriter GetLuceneWriter()
+        {
+            return _writer;
         }
 
         public void AddDocuments(IEnumerable<Document> documents)
@@ -153,6 +164,10 @@ namespace QuoteFlow.Core.Lucene.Index
                 throw ex;
             }
         }
+
+        public IndexEngine.FlushPolicy FlushPolicy { get; set; }
+
+        public long CommitFrequency { get; private set; }
 
         [Obsolete("Use Dispose() instead.")]
         public void Close()

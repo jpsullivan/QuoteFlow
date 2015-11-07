@@ -16,6 +16,8 @@ namespace QuoteFlow.Core.Lucene.Index
     {
         IWriter Get(UpdateMode mode);
 
+        IndexWriter GetLuceneWriter();
+
         void AddDocuments(IEnumerable<Document> documents);
 
         void DeleteDocuments(Term identifyingTerm);
@@ -37,5 +39,9 @@ namespace QuoteFlow.Core.Lucene.Index
         void Close();
 
         void Commit();
+
+        IndexEngine.FlushPolicy FlushPolicy { get; }
+
+        long CommitFrequency { get; }
     }
 }

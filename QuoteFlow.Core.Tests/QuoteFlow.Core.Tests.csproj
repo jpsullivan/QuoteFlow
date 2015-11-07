@@ -117,6 +117,7 @@
     <Compile Include="Caching\MemoryCacheService.cs" />
     <Compile Include="Caching\MockQueryCache.cs" />
     <Compile Include="Index\AssetIndexHelperTests.cs" />
+    <Compile Include="Index\DelegateSearcherTests.cs" />
     <Compile Include="Index\IndexEngineTests.cs" />
     <Compile Include="Index\IndexesTests.cs" />
     <Compile Include="Index\OperationsTests.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using Lucene.Net.Analysis;
 using Lucene.Net.Documents;
@@ -36,13 +37,12 @@ namespace QuoteFlow.Core.Lucene.Index
         /// <param name="configuration">The <see cref="Directory"/> and <see cref="Analyzer"/>.</param>
         /// <param name="writePolicy">When to flush writes.</param>
         public IndexEngine(IIndexConfiguration configuration, FlushPolicy writePolicy)
-            : this(new SearcherFactory(configuration), null, configuration, writePolicy)
+            : this(new SearcherFactory(configuration), null, configuration)
         {
         }
 
-        public IndexEngine(ISearcherFactory searcherFactory, IWriter writerFactory, IIndexConfiguration configuration, FlushPolicy writePolicy)
+        public IndexEngine(ISearcherFactory searcherFactory, IWriter writerFactory, IIndexConfiguration configuration)
         {
-            _writePolicy = writePolicy;
             _configuration = configuration;
             _searcherFactory = searcherFactory;
             _searcherReference = new SearcherReference(searcherFactory);
@@ -61,9 +61,13 @@ namespace QuoteFlow.Core.Lucene.Index
 
         public void Write(Operation operation)
         {
-            using (_searcherReference)
+            try
             {
-                _writePolicy.Perform(operation, _writerReference);
+                _writerReference.Get(operation.Mode()).FlushPolicy.Perform(operation, _writerReference);
+            }
+            finally
+            {
+                _searcherReference.Dispose();
             }
         }
 
@@ -138,7 +142,6 @@ namespace QuoteFlow.Core.Lucene.Index
                 _searcherSupplier = searcherSupplier;
             }
 
-
             protected override void DoClose(DelayCloseSearcher element)
             {
                 element.CloseWhenDone();
@@ -146,10 +149,6 @@ namespace QuoteFlow.Core.Lucene.Index
 
             protected override DelayCloseSearcher DoCreate(UpdateMode mode)
             {
-                // To create a valid searcher, we need a valid writer.
-                // Getting the writer reference here, ensures that.
-                _writerReference.Get(mode);
-                _writePolicy.Commit(_writerReference);
                 return new DelayCloseSearcher(_searcherSupplier.Get());
             }
 
@@ -183,9 +182,20 @@ namespace QuoteFlow.Core.Lucene.Index
 
             public virtual void Commit()
             {
-                if (!IsNull)
+                if (IsNull)
+                {
+                    return;
+                }
+
+                try
                 {
                     Get().Commit();
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("Hit an exception committing writes to the index; discarding the current writer");
+                    Dispose();
+                    throw;
                 }
             }
 
@@ -224,6 +234,11 @@ namespace QuoteFlow.Core.Lucene.Index
                 return new WriterWrapper(_configuration, mode, new WriterFactorySupplier(_outerClass));
             }
 
+            public IndexWriter GetLuceneWriter()
+            {
+                throw new NotImplementedException();
+            }
+
             public void AddDocuments(IEnumerable<Document> documents)
             {
                 throw new NotImplementedException();
@@ -258,6 +273,9 @@ namespace QuoteFlow.Core.Lucene.Index
             {
                 throw new NotImplementedException();
             }
+
+            public FlushPolicy FlushPolicy { get { throw new NotImplementedException(); } }
+            public long CommitFrequency { get { throw new NotImplementedException(); } }
 
             public void Dispose()
             {
@@ -325,6 +343,7 @@ namespace QuoteFlow.Core.Lucene.Index
                     }
                     catch (Exception ex)
                     {
+                        Debug.WriteLine("Already closed");
                         // swallow the exception
                     }
                 }
@@ -378,7 +397,7 @@ namespace QuoteFlow.Core.Lucene.Index
                                 }
                                 catch (Exception ex)
                                 {
-                                    //log.debug("Tried to close an already closed reader.");
+                                    Debug.WriteLine("Tried to close an already closed reader.");
                                     throw ex;
                                 }
                             }
@@ -388,13 +407,13 @@ namespace QuoteFlow.Core.Lucene.Index
                             // Really this shouldn't happen unless someone closes the reader from outside all
                             // the inscrutable code in this class (and its friends) but
                             // don't worry, we will just open a new one in that case.
-                            //log.warn("Tried to reopen the IndexReader, but it threw AlreadyClosedException. Opening a fresh IndexReader.");
-                            reader = IndexReader.Open(Configuration.Directory, true);
+                            Debug.WriteLine("Tried to reopen the IndexReader, but it threw AlreadyClosedException. Opening a fresh IndexReader.");
+                            reader = OpenIndexReader();
                         }
                     }
                     else
                     {
-                        reader = IndexReader.Open(Configuration.Directory, true);
+                        reader = OpenIndexReader();
                     }
 
                     _oldReader = reader;
@@ -404,6 +423,13 @@ namespace QuoteFlow.Core.Lucene.Index
                 {
                     throw ex;
                 }
+            }
+
+            private IndexReader OpenIndexReader()
+            {
+                // ensure all writes have been committed
+                _writerReference.Get(UpdateMode.Interactive).GetLuceneWriter().Commit();
+                return IndexReader.Open(Configuration.Directory, true);
             }
 
             public void Release()

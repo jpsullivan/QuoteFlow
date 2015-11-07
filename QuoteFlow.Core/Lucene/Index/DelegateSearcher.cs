@@ -17,7 +17,7 @@ namespace QuoteFlow.Core.Lucene.Index
     {
         private readonly IndexSearcher _searcher;
 
-        protected DelegateSearcher(IndexSearcher searcher) : base(searcher.IndexReader)
+        public DelegateSearcher(IndexSearcher searcher) : base(searcher.IndexReader)
         {
             if (searcher == null)
             {
@@ -157,6 +157,11 @@ namespace QuoteFlow.Core.Lucene.Index
         public override int GetHashCode()
         {
             return _searcher.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return _searcher.ToString();
         }
     }
 }

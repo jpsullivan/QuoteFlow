@@ -1,5 +1,6 @@
 ﻿using Lucene.Net.Analysis;
 using QuoteFlow.Api.Lucene.Index;
+using QuoteFlow.Core.Lucene.Index;
 
 namespace QuoteFlow.Core.Configuration.Lucene
 {
@@ -43,5 +44,11 @@ namespace QuoteFlow.Core.Configuration.Lucene
 
         /// @deprecated Not really relevant for Lucene 3.2+ . 
         public abstract int MaxFieldLength { get; }
+
+        /// Commit policy
+        public abstract IndexEngine.FlushPolicy FlushPolicy { get; }
+
+        /// Commit frequency in milliseconds.
+        public abstract long CommitFrequency { get; }
     }
 }

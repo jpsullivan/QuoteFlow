@@ -101,7 +101,7 @@ namespace QuoteFlow.Core.Tests.Lucene.Index
 
         private static WriterWrapper CreateWriterWrapper(IndexWriter writer)
         {
-            return new WriterWrapper(new WriterWrapperSupplier(writer), null);
+            return new WriterWrapper(new WriterWrapperSupplier(writer), null, IndexEngine.FlushPolicy.Flush, 1L);
         }
 
         private class WriterWrapperSupplier : ISupplier<IndexWriter>
