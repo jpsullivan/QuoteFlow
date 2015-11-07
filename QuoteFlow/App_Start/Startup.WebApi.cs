@@ -20,9 +20,9 @@ namespace QuoteFlow
             config.MapHttpAttributeRoutes();
 
             // enable these to view information about the deserialization process and what not
-            SystemDiagnosticsTraceWriter traceWriter = config.EnableSystemDiagnosticsTracing();
-            traceWriter.IsVerbose = true;
-            traceWriter.MinimumLevel = TraceLevel.Debug;
+//            SystemDiagnosticsTraceWriter traceWriter = config.EnableSystemDiagnosticsTracing();
+//            traceWriter.IsVerbose = true;
+//            traceWriter.MinimumLevel = TraceLevel.Debug;
 
             // Incorporate extra Get methods while still maintaining original WebAPI REST functionality
             //config.Routes.MapHttpRoute("ApiWithAction", "Api/{controller}/{id}/{action}", new {id = RouteParameter.Optional});

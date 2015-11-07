@@ -67,7 +67,7 @@ namespace QuoteFlow.Core.Asset.Index
                 {
                     return Manager.AssetIndexer.OpenAssetSearcher();
                 }
-                catch (SystemException ex)
+                catch (Exception ex)
                 {
                     throw ex;
                 }
