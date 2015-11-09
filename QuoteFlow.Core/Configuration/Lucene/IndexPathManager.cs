@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Web.Hosting;
 using Lucene.Net.Store;
 using QuoteFlow.Api.Configuration;

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reactive.Disposables;
 using Lucene.Net.Search;
+using QuoteFlow.Api.Infrastructure.Helpers;
 
 namespace QuoteFlow.Core.Lucene.Index
 {
@@ -9,14 +10,15 @@ namespace QuoteFlow.Core.Lucene.Index
     {
         private readonly DelayDisposableHelper _helper;
 
-        public DelayCloseSearcher(IndexSearcher searcher) : base(searcher)
+        public DelayCloseSearcher(IndexSearcher searcher) 
+            : base(Preconditions.CheckNotNull(searcher))
         {
             _helper = new DelayDisposableHelper(new SearcherCloser(searcher));
         }
 
-        public DelayCloseSearcher(IndexSearcher searcher, IDisposable closeAction) : base(searcher)
+        public DelayCloseSearcher(IndexSearcher searcher, Action closeAction) : base(searcher)
         {
-            _helper = new DelayDisposableHelper(new CompositeDisposable(closeAction, new SearcherCloser(searcher)));
+            _helper = new DelayDisposableHelper(new CompositeDisposable(Disposable.Create(closeAction), new SearcherCloser(searcher)));
         }
 
         public void Open()

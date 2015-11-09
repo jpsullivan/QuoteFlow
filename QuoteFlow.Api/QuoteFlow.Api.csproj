@@ -297,6 +297,7 @@
     <Compile Include="Infrastructure\Helpers\PagedList.cs" />
     <Compile Include="Infrastructure\Helpers\PageNumber.cs" />
     <Compile Include="Infrastructure\Helpers\PageSizer.cs" />
+    <Compile Include="Infrastructure\Helpers\Preconditions.cs" />
     <Compile Include="Infrastructure\IoC\ComponentAccessor.cs" />
     <Compile Include="Infrastructure\Services\IServiceOutcome.cs" />
     <Compile Include="Infrastructure\Lucene\IIndexLifecycleManager.cs" />

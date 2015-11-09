@@ -120,6 +120,9 @@
     <Compile Include="Index\DelegateSearcherTests.cs" />
     <Compile Include="Index\IndexEngineTests.cs" />
     <Compile Include="Index\IndexesTests.cs" />
+    <Compile Include="Index\IndexTests.cs" />
+    <Compile Include="Index\MockIndexEngine.cs" />
+    <Compile Include="Index\MockOperation.cs" />
     <Compile Include="Index\OperationsTests.cs" />
     <Compile Include="Jql\Builder\BuilderOperatorTests.cs" />
     <Compile Include="Jql\Builder\ConditionBuilderTests.cs" />
