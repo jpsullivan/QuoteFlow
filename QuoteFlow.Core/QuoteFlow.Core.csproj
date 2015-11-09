@@ -235,6 +235,7 @@
     <Compile Include="Configuration\Lucene\IndexingConfiguration.cs" />
     <Compile Include="DependencyResolution\HangfireContainer.cs" />
     <Compile Include="DependencyResolution\ServiceBindings.cs" />
+    <Compile Include="Diagnostics\DebugTextWriter.cs" />
     <Compile Include="Diagnostics\Glimpse\Timeline.cs" />
     <Compile Include="Diagnostics\Glimpse\TimelineCapture.cs" />
     <Compile Include="Diagnostics\Glimpse\TimelineMessage.cs" />

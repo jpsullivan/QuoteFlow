@@ -9,6 +9,7 @@ using Lucene.Net.Index;
 using Lucene.Net.Search;
 using QuoteFlow.Api.Lucene.Index;
 using QuoteFlow.Api.Util;
+using QuoteFlow.Core.Diagnostics;
 
 namespace QuoteFlow.Core.Lucene.Index
 {
@@ -63,6 +64,8 @@ namespace QuoteFlow.Core.Lucene.Index
                     writer.MaxMergeDocs = writerSettings.MaxMergeDocs;
                     writer.MergeFactor = writerSettings.MergeFactor;
                     writer.SetMaxBufferedDocs(writerSettings.MaxBufferedDocs);
+                    writer.SetInfoStream(new DebugTextWriter());
+                    writer.SetMergePolicy(writerSettings.GetMergePolicy(writer));
 
 //                    return new IndexWriter(_configuration.Directory, _configuration.Analyzer, true,
 //                        new IndexWriter.MaxFieldLength(writerSettings.MaxFieldLength));

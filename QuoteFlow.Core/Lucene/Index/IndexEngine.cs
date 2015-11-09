@@ -428,7 +428,10 @@ namespace QuoteFlow.Core.Lucene.Index
             private IndexReader OpenIndexReader()
             {
                 // ensure all writes have been committed
-                _writerReference.Get(UpdateMode.Interactive).GetLuceneWriter().Commit();
+                var writerRef = _writerReference.Get(UpdateMode.Interactive).GetLuceneWriter();
+                var reader = writerRef.GetReader();
+                writerRef.Commit();
+
                 return IndexReader.Open(Configuration.Directory, true);
             }
 
