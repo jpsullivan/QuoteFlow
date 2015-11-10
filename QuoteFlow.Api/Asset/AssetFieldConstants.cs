@@ -13,6 +13,7 @@ namespace QuoteFlow.Api.Asset
         public const string THUMBNAIL = "thumbnail";
         public const string LAST_VIEWED = "lastViewed";
         public const string Summary = "summary";
+        public const string Sku = "sku";
         public const string Created = "created";
         public const string Updated = "updated";
 
@@ -22,6 +23,7 @@ namespace QuoteFlow.Api.Asset
             result[Description] = "Description";
             result[Created] = "Created";
             result[Summary] = "Summary";
+            result[Sku] = "Sku";
             FieldIdsToLabels = new Dictionary<string, string>(result);
         }
 
@@ -29,7 +31,7 @@ namespace QuoteFlow.Api.Asset
 
         public static bool IsRequiredField(string field)
         {
-            return ("summary".Equals(field) || "manufacturer".Equals(field));
+            return "summary".Equals(field) || "manufacturer".Equals(field);
         }
     }
 }

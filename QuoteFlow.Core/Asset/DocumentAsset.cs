@@ -43,7 +43,11 @@ namespace QuoteFlow.Core.Asset
             set { throw new NotImplementedException(); }
         }
 
-        public override string SKU { get; set; }
+        public override string SKU
+        {
+            get { return Document.Get(DocumentConstants.AssetSku); }
+            set { throw new NotImplementedException(); }
+        }
         public override string Type { get; set; }
 
         public override string Description

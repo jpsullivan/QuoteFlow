@@ -24,6 +24,7 @@ namespace QuoteFlow.Core.Asset.Index.Managers
                 typeof (DescriptionIndexer),
                 typeof (AssetIdIndexer),
                 typeof (AssetNameIndexer),
+                typeof (AssetSkuIndexer),
                 typeof (CatalogIdIndexer),
                 typeof (ManufacturerIndexer),
                 typeof (SummaryIndexer)

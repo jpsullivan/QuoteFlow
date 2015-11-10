@@ -2,7 +2,6 @@
 using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Asset.Index.Indexers.Phrase;
 using QuoteFlow.Api.Asset.Search.Constants;
-using QuoteFlow.Api.Models;
 
 namespace QuoteFlow.Core.Asset.Index.Indexers
 {

@@ -27,6 +27,13 @@ namespace QuoteFlow.Api.Asset.Search.Constants
 			return Summary;
 		}
 
+        private static readonly SimpleFieldSearchConstants Sku = new SimpleFieldSearchConstants(DocumentConstants.AssetSku, AssetFieldConstants.Sku, "sku", AssetFieldConstants.Sku, AssetFieldConstants.Sku, OperatorClasses.EqualityOperatorsWithEmpty, QuoteFlowDataTypes.Text);
+
+        public static SimpleFieldSearchConstants ForSku()
+        {
+            return Sku;
+        }
+
         private static readonly SimpleFieldSearchConstants Manufacturer = new SimpleFieldSearchConstants(DocumentConstants.ManufacturerId, AssetFieldConstants.Manufacturer, "manufacturerId", AssetFieldConstants.Manufacturer, AssetFieldConstants.Manufacturer, OperatorClasses.EqualityOperatorsWithEmpty, QuoteFlowDataTypes.Manufacturer);
         public static SimpleFieldSearchConstants ForManufacturer()
         {

@@ -209,6 +209,7 @@
     <Compile Include="Asset\Index\IndexDirectoryFactory.cs" />
     <Compile Include="Asset\Index\Indexers\AssetIdIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\AssetNameIndexer.cs" />
+    <Compile Include="Asset\Index\Indexers\AssetSkuIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\BaseFieldIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\CatalogIdIndexer.cs" />
     <Compile Include="Asset\Index\Indexers\CreatedDateIndexer.cs" />
