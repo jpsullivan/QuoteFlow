@@ -428,10 +428,7 @@ namespace QuoteFlow.Core.Lucene.Index
             private IndexReader OpenIndexReader()
             {
                 // ensure all writes have been committed
-                var writerRef = _writerReference.Get(UpdateMode.Interactive).GetLuceneWriter();
-                var reader = writerRef.GetReader();
-                writerRef.Commit();
-
+                //_writerReference.Get(UpdateMode.Interactive).GetLuceneWriter().Commit();
                 return IndexReader.Open(Configuration.Directory, true);
             }
 
@@ -468,7 +465,7 @@ namespace QuoteFlow.Core.Lucene.Index
             }
         }
 
-        public static void Commit(this IndexEngine.FlushPolicy policy, IndexEngine.WriterReference writer)
+        private static void Commit(this IndexEngine.FlushPolicy policy, IndexEngine.WriterReference writer)
         {
             switch (policy)
             {
@@ -480,6 +477,8 @@ namespace QuoteFlow.Core.Lucene.Index
                     break;
                 case IndexEngine.FlushPolicy.None:
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(policy), policy, null);
             }
         }
     }

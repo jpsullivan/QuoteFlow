@@ -3,8 +3,6 @@
 var $ = require('jquery');
 var _ = require('underscore');
 
-var Marionette = require('backbone.marionette');
-
 var AssetCacheManager = require('./cache/asset-cache-manager');
 var AssetNavCustomRouter = require('../router-custom');
 var AssetsApi = require('./assets-api');
@@ -127,7 +125,7 @@ var AssetNavCreator = {
         //searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
 
         searchHeaderModule.registerSearch(searchModule);
-        //searchHeaderModule.createToolsView(issueNavToolsElement);
+        searchHeaderModule.createToolsView(issueNavToolsElement);
 
         // Router
         var issueNavRouter = this.assetNavRouter = new AssetNavCustomRouter({

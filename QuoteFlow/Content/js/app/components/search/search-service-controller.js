@@ -1,5 +1,6 @@
 ﻿"use strict";
 
+var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 /**
@@ -121,7 +122,9 @@ var SearchServiceController = Marionette.Controller.extend({
      * @param {number} startIndex Position of the asset in the page
      */
     goToPage: function (startIndex) {
-        if (this.searchInProgress) return;
+        if (this.searchInProgress) {
+            return;
+        }
         this.searchResults.goToPage(startIndex);
     },
 
@@ -133,7 +136,9 @@ var SearchServiceController = Marionette.Controller.extend({
      * @param {string} fieldId ID of the field to sort by
      */
     sort: function (fieldId) {
-        if (this.searchInProgress) return;
+        if (this.searchInProgress) {
+            return;
+        }
 
         var allSorts = this.searchModule.getResults().getColumnSortJql();
         var sortJql = allSorts[fieldId];
@@ -148,7 +153,9 @@ var SearchServiceController = Marionette.Controller.extend({
      * This method will do nothing if a search is already in progress
      */
     runCurrentSearch: function () {
-        if (this.searchInProgress) return;
+        if (this.searchInProgress) {
+            return;
+        }
 
         if (JIRA.Issues.Application.request("assetEditor:canDismissComment")) {
             JIRA.Issues.Application.execute("analytics:trigger", "kickass.assetTableRefresh");
@@ -163,7 +170,9 @@ var SearchServiceController = Marionette.Controller.extend({
      * This method will do nothing if a search is already in progress.
      */
     updateExitingResults: function () {
-        if (this.searchInProgress) return;
+        if (this.searchInProgress) {
+            return;
+        }
 
         if (JIRA.Issues.Application.request("assetEditor:canDismissComment")) {
             JIRA.Issues.Application.execute("analytics:trigger", "kickass.assetTableRefresh");

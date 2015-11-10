@@ -349,6 +349,7 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     _handleSearchResultsChange: function (model, options) {
+        debugger;
         options = options || {};
         options.replace ?
                 this.assetNavRouter.replaceState(this.getState()) :
@@ -679,7 +680,7 @@ var SearchPageModule = Brace.Model.extend({
                 if (xhr.status == 400 && options.selectedIssueKey) {
                     this.reset({ selectedIssueKey: options.selectedIssueKey }, { replace: true });
                 } else {
-                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedIssueKey"), this.searchResults.defaults));
+                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedIssueId"), this.searchResults.defaults));
                     this.issueTableSearchError(xhr);
                 }
             }

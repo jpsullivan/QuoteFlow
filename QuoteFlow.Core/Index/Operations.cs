@@ -67,7 +67,7 @@ namespace QuoteFlow.Core.Index
         /// <summary>
         /// Holds a an identifying <see cref="Term"/> so we can delete pre-existing documents.
         /// </summary>
-        internal sealed class Delete : Operation
+        private sealed class Delete : Operation
         {
             public Term Term { get; private set; }
             private readonly UpdateMode _mode;
@@ -93,7 +93,7 @@ namespace QuoteFlow.Core.Index
         /// <summary>
         /// Holds <see cref="Document"/> to be created.
         /// </summary>
-        internal sealed class Create : Operation
+        private sealed class Create : Operation
         {
             public IEnumerable<Document> Documents { get; private set; } 
             private readonly UpdateMode _mode;
@@ -209,10 +209,7 @@ namespace QuoteFlow.Core.Index
                 }
                 finally
                 {
-                    if (_completionJob != null)
-                    {
-                        _completionJob.Execute();
-                    }
+                    _completionJob?.Execute();
                 }
             }
 

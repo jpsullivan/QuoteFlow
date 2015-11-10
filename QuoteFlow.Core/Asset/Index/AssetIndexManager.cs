@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using Glimpse.Core.Model;
 using Lucene.Net.Analysis;
 using Lucene.Net.Search;
 using Ninject;
@@ -41,6 +42,7 @@ namespace QuoteFlow.Core.Asset.Index
         #endregion
 
         private static readonly object IndexReaderLock = new object();
+        private static readonly object IndexWriterLock = new object();
 
         public Analyzer AnalyzerForSearching => QuoteFlowAnalyzer.AnalyzerForSearching;
         public Analyzer AnalyzerForIndexing => QuoteFlowAnalyzer.AnalyzerForIndexing;
@@ -181,11 +183,18 @@ namespace QuoteFlow.Core.Asset.Index
             }
             else
             {
-                DoStopTheWorldReindex();
+                lock (IndexWriterLock)
+                {
+                    DoStopTheWorldReindex();
+                }
+
+                using (Timeline.Capture("Flush thread local searchers after world stop"))
+                {
+                    FlushThreadLocalSearchers();
+                }
             }
 
             stopWatch.Stop();
-
             return stopWatch.Elapsed.Seconds;
         }
 

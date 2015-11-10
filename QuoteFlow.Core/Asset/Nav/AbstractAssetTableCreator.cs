@@ -210,17 +210,10 @@ namespace QuoteFlow.Core.Asset.Nav
                 var idCollector = CollectAssets(selectedAssetKey);
                 AssetDocumentAndIdCollector.Result collectedResult = idCollector.ComputeResult();
 
-                // todo remove this fake data after lucene 4.8 upgrade
-                var firstCatalog = CatalogService.GetCatalogs(1).First();
-                var fakeAssets = AssetService.GetAssets(firstCatalog.Id).Take(3).ToList();
-                var fakeAssetIds = fakeAssets.Select(asset => asset.Id).Select(dummy => (int?) dummy).ToList();
-
-                //_assetIds = collectedResult.AssetIds;
-                _assetIds = fakeAssetIds;
+                _assetIds = collectedResult.AssetIds;
                 _assetKeys = collectedResult.IssueKeys;
                 SearchResults = new SearchResults(
-                    //ConvertDocumentsToAssets(collectedResult.Documents),
-                    fakeAssets,
+                    ConvertDocumentsToAssets(collectedResult.Documents),
                     collectedResult.Total,
                     _configuration.NumberToShow,
                     collectedResult.Start

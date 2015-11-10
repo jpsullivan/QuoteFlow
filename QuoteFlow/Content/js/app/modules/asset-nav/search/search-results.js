@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var Brace = require('backbone-brace');
 
+var ModelUtils = require('../util/model-utils');
 var SimpleAsset = require('./asset/simple-asset');
 
 /**
@@ -47,7 +48,7 @@ var SearchResults = Brace.Model.extend({
     ],
 
     initialize: function (attr, options) {
-        //ModelUtils.makeTransactional(this, "resetFromSearch", "selectNextAsset", "selectPrevAsset");
+        ModelUtils.makeTransactional(this, "resetFromSearch", "selectNextAsset", "selectPrevAsset");
         this.assetUpdateCallbacks = [];
         this._assetSearchManager = options.assetSearchManager;
         this._initialSelectedIssue = options.initialSelectedIssue;
@@ -224,7 +225,7 @@ var SearchResults = Brace.Model.extend({
 
         var id = this._getAssetIdForKey(key);
 
-        if (!id || id == -1) {
+        if (!id || id === -1) {
             this._unhighlightAsset();
 
             this.getSelectedAsset().set({
@@ -336,9 +337,9 @@ var SearchResults = Brace.Model.extend({
         this.getSelectedAsset().set({ id: null });
         this.set({ sortBy: null });
         this.set("startIndex", state.startIndex, { silent: true });
-        this.set(_.pick(state, this.properties));
-        if (typeof state.selectedIssueKey === 'string') {
-            this.selectAssetByKey(state.selectedIssueKey);
+        this.set(_.pick(state, Object.keys(this.namedAttributes)));
+        if (typeof state.selectedAssetId === 'string') {
+            this.selectAssetByKey(state.selectedAssetId);
         } else {
             if (this.hasAssets()) {
                 this.highlightFirstInPage();
@@ -417,7 +418,7 @@ var SearchResults = Brace.Model.extend({
     },
 
     applyState: function (state) {
-        this.set(_.pick(state, this.properties));
+        this.set(_.pick(state, Object.keys(this.namedAttributes)));
     },
 
     unselectAsset: function (options) {
@@ -672,7 +673,7 @@ var SearchResults = Brace.Model.extend({
 
     getNextAssetForId: function (id) {
         var nextId = this._getNextAssetId(id);
-        return { id: nextId }
+        return { id: nextId };
     },
 
     getNextAssetForSelectedAsset: function () {

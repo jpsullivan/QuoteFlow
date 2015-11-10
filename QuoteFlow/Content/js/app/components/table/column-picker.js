@@ -88,14 +88,14 @@ var ColumnPicker = ColumnPickerComponent.extend({
                     //Need to retrieve the user columns and set that as the selected columns
                     if (this.userColumns.has("columns")) {
                         var deferred = jQuery.Deferred();
-                        deferred.resolve(_.map(this.userColumns.getColumns(), function (item) { return { value: item } }));
+                        deferred.resolve(_.map(this.userColumns.getColumns(), function (item) { return { value: item }; }));
                         return deferred.promise();
                     } else {
                         return jQuery.ajax(this.userColumns.url()).promise();
                     }
                 }, this)
             }
-        )
+        );
     },
 
     _getSystemColumnProvider: function () {

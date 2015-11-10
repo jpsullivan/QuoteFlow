@@ -203,6 +203,7 @@ namespace QuoteFlow.Core.Services
             {
                 finalQuery = new MatchAllDocsQuery();
             }
+
             try
             {
                 searcher.Search(finalQuery, permissionsFilter, collector);
@@ -216,9 +217,7 @@ namespace QuoteFlow.Core.Services
         private Query CreateLuceneQuery(IQuery searchQuery, Query andQuery, User searchUser, bool overrideSecurity)
         {
             string jqlSearchQuery = searchQuery.ToString();
-
             Query finalQuery = andQuery;
-
             if (searchQuery.WhereClause != null)
             {
                 QueryCreationContext context = new QueryCreationContext(searchUser, overrideSecurity);
@@ -240,12 +239,7 @@ namespace QuoteFlow.Core.Services
             }
 
             // NOTE: we do this because when you are searching for everything the query is null
-            if (finalQuery == null)
-            {
-                finalQuery = new MatchAllDocsQuery();
-            }
-
-            return finalQuery;
+            return finalQuery ?? new MatchAllDocsQuery();
         }
 
         private SearchResults Search(IQuery query, User searcher, IPagerFilter pager, Query andQuery, bool overrideSecurity)
@@ -255,23 +249,23 @@ namespace QuoteFlow.Core.Services
 
             try
             {
-                List<Api.Models.Asset> matches;
-                int totalIssueCount = luceneMatches == null ? 0 : luceneMatches.TotalHits;
+                List<IAsset> matches;
+                int totalIssueCount = luceneMatches?.TotalHits ?? 0;
                 if ((luceneMatches != null) && (luceneMatches.TotalHits >= pager.Start))
                 {
                     int end = Math.Min(pager.End, luceneMatches.TotalHits);
-                    matches = new List<Api.Models.Asset>();
+                    matches = new List<IAsset>();
                     for (int i = pager.Start; i < end; i++)
                     {
                         Document doc = issueSearcher.Doc(luceneMatches.ScoreDocs[i].Doc);
-                        matches.Add((Api.Models.Asset) _asssetService.GetAsset(doc));
+                        matches.Add(_asssetService.GetAsset(doc));
                     }
                 }
                 else
                 {
-                    //if there were no lucene-matches, or the length of the matches is less than the page start index
-                    //return an empty list of issues.
-                    matches = new List<Api.Models.Asset>();
+                    // if there were no lucene-matches, or the length of the matches is 
+                    // less than the page start index return an empty list of issues.
+                    matches = new List<IAsset>();
                 }
 
                 return new SearchResults(matches, totalIssueCount, pager);
@@ -286,9 +280,9 @@ namespace QuoteFlow.Core.Services
         {
             try
             {
-                IndexSearcher issueSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.AssetIndex);
+                var assetSearcher = searchProviderFactory.GetSearcher(SearchProviderTypes.AssetIndex);
 
-                TopDocs hits = GetHits(query, user, GetSearchSorts(user, query), null, overrideSecurity, issueSearcher, pagerFilter);
+                var hits = GetHits(query, user, GetSearchSorts(user, query), null, overrideSecurity, assetSearcher, pagerFilter);
                 if (hits != null)
                 {
                     if (collector is ITotalHitsAwareCollector)
@@ -296,14 +290,16 @@ namespace QuoteFlow.Core.Services
                         ((ITotalHitsAwareCollector)collector).TotalHits = hits.TotalHits;
                     }
 
-                    if (hits.TotalHits >= pagerFilter.Start)
+                    if (hits.TotalHits < pagerFilter.Start)
                     {
-                        int end = Math.Min(pagerFilter.End, hits.TotalHits);
-                        collector.SetNextReader(issueSearcher.IndexReader, 0);
-                        for (int i = pagerFilter.Start; i < end; i++)
-                        {
-                            collector.Collect(hits.ScoreDocs[i].Doc);
-                        }
+                        return;
+                    }
+
+                    int end = Math.Min(pagerFilter.End, hits.TotalHits);
+                    collector.SetNextReader(assetSearcher.IndexReader, 0);
+                    for (int i = pagerFilter.Start; i < end; i++)
+                    {
+                        collector.Collect(hits.ScoreDocs[i].Doc);
                     }
                 }
             }

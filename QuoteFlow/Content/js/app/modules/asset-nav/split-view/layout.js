@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 var _ = require('underscore');
+var $ = require('jquery');
 var ScrollIntoView = require('jquery-scroll-into-view');
 var jqUi = require('jquery-ui');
 var jqUiSidebar = require('jquery-ui-sidebar');
@@ -64,12 +65,12 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         QuoteFlow.Interactive.onVerticalResize(this._updateSidebarPosition);
 
         this.listenTo(options.search, "beforeSearch", this._showPending, this);
-        this.listenTo(this.searchResults, "issueDeleted", this._onAssetDeleted, this);
+        this.listenTo(this.searchResults, "assetDeleted", this._onAssetDeleted, this);
         this.listenTo(this.searchResults, "newPayload", this._hidePending, this);
         this.listenTo(this.searchResults, "newPayload", this._updateSortBy, this);
         this.listenTo(this.searchResults, "newPayload", this.render, this);
         this.listenTo(this.searchResults, "startIndexChange", this._onStartIndexChange, this);
-        this.listenTo(this.searchResults, "highlightedIssueChange", this._onHighlightedAssetChange, this);
+        this.listenTo(this.searchResults, "highlightedAssetChange", this._onHighlightedAssetChange, this);
         this.listenTo(this.searchResults, "selectedIssueChange", this._onSelectedIssueChange, this);
         this.listenTo(this.searchResults, "startIndexChange", this._renderEverythingExceptListView, this);
         this.search.onSearchError(this._onSearchFail, this);
@@ -379,6 +380,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @return {SplitScreenLayout} <tt>this</tt>
      */
      onRender: function () {
+         debugger;
          var hasIssues = this.searchResults.hasAssets(),
             isInitialRender = this._isInitialRender();
 
@@ -388,6 +390,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         //     this._activateIOSSpecificBehaviour();
         // }
 
+        debugger;
         if (hasIssues) {
             this._handleInitialIssueSelection();
             this.navigatorContent.removeClass("empty-results");

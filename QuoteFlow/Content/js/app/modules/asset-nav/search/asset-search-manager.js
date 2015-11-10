@@ -99,7 +99,7 @@ var AssetSearchManager = Brace.Evented.extend({
         return deferred.pipe(function (data) {
             if (data.assetTable) {
                 // Only AssetSearchManager uses these.
-                delete data.assetTable.assetKeys;
+                //delete data.assetTable.assetIds;
             }
 
             return data;
@@ -129,7 +129,6 @@ var AssetSearchManager = Brace.Evented.extend({
             return jQuery.Deferred().reject(response).promise();
         }
 
-        debugger;
         return jQuery.ajax({
             type: "POST",
             url: QuoteFlow.RootUrl + "api/assetTable",
