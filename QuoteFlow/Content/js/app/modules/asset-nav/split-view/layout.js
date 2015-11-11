@@ -8,8 +8,12 @@ var jqUiSidebar = require('jquery-ui-sidebar');
 
 var Marionette = require('backbone.marionette');
 
+var EndOfStableMessageView = require('../../../components/asset-table/views/end-of-stable-message');
+var EventTypes = require('../util/types');
 var EmptyResultsView = require('../../../components/asset-table/views/empty-results');
 var OrderByComponent = require('../orderby/component');
+var PaginationView = require('../../../components/asset-table/views/pagination');
+var RefreshResultsView = require('../../../components/asset-table/views/refresh-results');
 var SplitScreenDetailView = require('./detail-view');
 var SplitScreenListView = require('./list-view');
 var Utilities = require('../../../components/utilities');
@@ -66,16 +70,16 @@ var SplitScreenLayout = Marionette.ItemView.extend({
 
         this.listenTo(options.search, "beforeSearch", this._showPending, this);
         this.listenTo(this.searchResults, "assetDeleted", this._onAssetDeleted, this);
-        this.listenTo(this.searchResults, "newPayload", this._hidePending, this);
-        this.listenTo(this.searchResults, "newPayload", this._updateSortBy, this);
-        this.listenTo(this.searchResults, "newPayload", this.render, this);
+        this.listenTo(this.searchResults, "change:resultsId", this._hidePending, this);
+        this.listenTo(this.searchResults, "change:resultsId", this._updateSortBy, this);
+        this.listenTo(this.searchResults, "change:resultsId", this.render, this);
         this.listenTo(this.searchResults, "startIndexChange", this._onStartIndexChange, this);
         this.listenTo(this.searchResults, "highlightedAssetChange", this._onHighlightedAssetChange, this);
         this.listenTo(this.searchResults, "selectedIssueChange", this._onSelectedIssueChange, this);
         this.listenTo(this.searchResults, "startIndexChange", this._renderEverythingExceptListView, this);
         this.search.onSearchError(this._onSearchFail, this);
 
-        QuoteFlow.application.on("issueEditor:loadError", this._onIssueLoadError, this);
+        QuoteFlow.application.on("assetEditor:loadError", this._onIssueLoadError, this);
         this.listView.searchPromise.done(_.bind(function () {
             this._makeVisible();
         }, this));
@@ -180,7 +184,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         //QuoteFlow.Interactive.restoreScrollIntoViewForNormal();
 
         jQuery("body").removeClass("page-type-split");
-        QuoteFlow.application.off("issueEditor:loadError", this._onIssueLoadError, this);
+        QuoteFlow.application.off("assetEditor:loadError", this._onIssueLoadError, this);
         this.navigatorContent.addClass("pending").css("height", "");
         this.orderBy.offSort(this._handleSort, this);
         this.search.offSearchError(this._onSearchFail, this);
@@ -250,7 +254,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         //TF-729: Ensure we put the appropriate width classes on first render to ensure the sidebar picks up the correct width.
         this._applyWidthClass();
 
-        JIRA.trigger(JIRA.Events.LAYOUT_RENDERED);
+        QuoteFlow.trigger(EventTypes.LAYOUT_RENDERED);
         this.applyResponsiveDesign();
     },
 
@@ -366,7 +370,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     refreshSearch: function () {
-        if (QuoteFlow.application.request("issueEditor:canDismissComment")) {
+        if (QuoteFlow.application.request("assetEditor:canDismissComment")) {
             QuoteFlow.application.execute("analytics:trigger", "kickass.issueTableRefresh");
             QuoteFlow.application.execute("assetNav:refreshSearch");
         }
@@ -380,17 +384,15 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @return {SplitScreenLayout} <tt>this</tt>
      */
      onRender: function () {
-         debugger;
          var hasIssues = this.searchResults.hasAssets(),
             isInitialRender = this._isInitialRender();
 
-        jQuery("body").addClass("page-type-split");
+        $("body").addClass("page-type-split");
 
         // if (this._isIOS()) {
         //     this._activateIOSSpecificBehaviour();
         // }
 
-        debugger;
         if (hasIssues) {
             this._handleInitialIssueSelection();
             this.navigatorContent.removeClass("empty-results");
@@ -406,7 +408,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             this._renderEndOfStableSearch();
             this._renderRefreshResults();
             this._activateSubviews();
-            this.detailsView.render();
+            //this.detailsView.render();
             this.listView.render();
         } else {
             this._hidePending();
@@ -421,13 +423,13 @@ var SplitScreenLayout = Marionette.ItemView.extend({
 
     _renderPagination: function () {
         if (this.paginationView) {
-            this.paginationView.close();
+            this.paginationView.destroy();
         }
-        this.paginationView = new JIRA.Components.IssueNavigator.Views.Pagination({
+        this.paginationView = new PaginationView({
             startIndex: this.searchResults.getStartIndex(),
             pageSize: this.searchResults.getPageSize(),
             total: this.searchResults.getTotal(),
-            currentSearch: JIRA.Issues.Application.request("issueNav:currentSearchRequest")
+            currentSearch: QuoteFlow.application.request("assetNav:currentSearchRequest")
         });
         this.listenTo(this.paginationView, "goToPage", this.goToPage);
         this.paginationView.render();
@@ -436,9 +438,9 @@ var SplitScreenLayout = Marionette.ItemView.extend({
 
     _renderEndOfStableSearch: function () {
         if (this.endOfStableSearchView) {
-            this.endOfStableSearchView.close();
+            this.endOfStableSearchView.destroy();
         }
-        this.endOfStableSearchView = new JIRA.Components.IssueNavigator.Views.EndOfStableMessage({
+        this.endOfStableSearchView = new EndOfStableMessageView({
             total: this.searchResults.getTotal(),
             displayableTotal: this.searchResults.getDisplayableTotal(),
             pageNumber: this.searchResults.getPageNumber(),
@@ -451,9 +453,9 @@ var SplitScreenLayout = Marionette.ItemView.extend({
 
     _renderRefreshResults: function () {
         if (this.refreshResultsView) {
-            this.refreshResultsView.close();
+            this.refreshResultsView.destroy();
         }
-        this.refreshResultsView = new JIRA.Components.IssueNavigator.Views.RefreshResults();
+        this.refreshResultsView = new RefreshResultsView();
         this.listenTo(this.refreshResultsView, "refresh", this.refreshSearch);
         this.refreshResultsView.render();
         this.$(".refresh-container").empty().append(this.refreshResultsView.$el);
@@ -487,7 +489,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @private
      */
     _setIssueModuleContainer: function () {
-        QuoteFlow.application.execute("issueEditor:setContainer", this.$(".split-view .detail-panel > div"));
+        QuoteFlow.application.execute("assetEditor:setContainer", this.$(".split-view .detail-panel > div"));
     },
 
     _showPending: function () {

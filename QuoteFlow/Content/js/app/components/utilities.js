@@ -113,6 +113,43 @@ var Utilities = {
     },
 
     /**
+     * A debounce implementation the differs from the undercore one. This implementation:
+     * 1. Executes the supplied method straight away
+     * 2. Using underscore debounce, postpones its execution until 300ms since the last time it was invoked.
+     * 3. After the debounced invocation, waits 500ms before restoring to the original state (step 1).
+     *
+     * @param {Object} ctx
+     * @param {String} method
+     * @param {...} arguments for first invocation.
+     */
+    debounce: function (ctx, method) {
+        var args = Array.prototype.slice.call(arguments, 2);
+
+        if (!ctx) {
+            console.error("QuoteFlow custom debounce: ctx must be defined");
+        }
+
+        clearTimeout(ctx[method + "DebounceTimeout"]);
+
+        // Invoke method, first time this will happen straight away. Subsequent times it will be calling the debounced
+        // method.
+        ctx[method].apply(ctx, args);
+
+        if (!ctx[method + "DebounceTimeout"]) {
+            ctx[method + "Original"] = ctx[method];
+            ctx[method] = _.debounce(function () {
+                return ctx[method + "Original"].apply(ctx, arguments);
+            }, 300);
+        }
+
+        // After 500 ms or recieving input, get rid of debounced version.
+        ctx[method + "DebounceTimeout"] = setTimeout(function () {
+            ctx[method] = ctx[method + "Original"];
+            ctx[method + "DebounceTimeout"] = null;
+        }, 500);
+    },
+
+    /**
      * Produces optional, URL-friendly version of a title, "like-this-one".
      * Totally copied from the UrlHelpers class and seems to work fine.
      */

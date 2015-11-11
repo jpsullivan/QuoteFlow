@@ -24,7 +24,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
      * @param {SearchModule} options.search The application's <tt>SearchModule</tt>.
      */
     initialize: function (options) {
-        _.bindAll(this, "adjustHeight", "_renderIssue");
+        _.bindAll(this, "adjustHeight", "_renderAsset");
 
         Utilities.initializeResizeHooks();
 
@@ -32,8 +32,8 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
         this.search = options.search;
         this.searchResults = options.search.getResults();
 
-        QuoteFlow.application.on("issueEditor:fieldSubmitted", this.focus, this);
-        QuoteFlow.application.on("issueEditor:replacedFocusedPanel", this.focus, this);
+        QuoteFlow.application.on("assetEditor:fieldSubmitted", this.focus, this);
+        QuoteFlow.application.on("assetEditor:replacedFocusedPanel", this.focus, this);
         this.adjustHeight = _.debounce(this.adjustHeight, options.easeOff);
     },
 
@@ -83,22 +83,22 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
             instance.focused = false;
         });
 
-        this.listenTo(this.searchResults, "selectedIssueChange", this.render, this);
-        this.listenTo(this.searchResults, "issueUpdated", this.onAssetUpdated, this);
-        this.listenTo(this.searchResults, "issueDoesNotExist", this._onAssetDoesNotExist, this);
+        this.listenTo(this.searchResults, "selectedAssetChange", this.render, this);
+        this.listenTo(this.searchResults, "assetUpdated", this.onAssetUpdated, this);
+        this.listenTo(this.searchResults, "assetDoesNotExist", this._onAssetDoesNotExist, this);
 
         QuoteFlow.bind(EventTypes.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
 
         QuoteFlow.Interactive.onVerticalResize(this.adjustHeight);
-        QuoteFlow.application.on("issueEditor:loadComplete", this.adjustHeight, this);
+        QuoteFlow.application.on("assetEditor:loadComplete", this.adjustHeight, this);
         this.isActive = true;
         return this;
     },
 
     onBeforeDestroy: function () {
-        QuoteFlow.application.execute("issueEditor:abortPending");
+        QuoteFlow.application.execute("assetEditor:abortPending");
         QuoteFlow.Interactive.offVerticalResize(this.adjustHeight);
-        QuoteFlow.application.off("issueEditor:loadComplete", this.adjustHeight);
+        QuoteFlow.application.off("assetEditor:loadComplete", this.adjustHeight);
         QuoteFlow.unbind(EventTypes.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
         //JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
         this.isActive = false;
@@ -126,7 +126,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
 
     onAssetUpdated: function (id, entity, reason) {
         if (reason.action !== JIRA.Issues.Actions.INLINE_EDIT && reason.action !== JIRA.Issues.Actions.ROW_UPDATE) {
-            return QuoteFlow.application.request("issueEditor:refreshIssue", reason);
+            return QuoteFlow.application.request("assetEditor:refreshAsset", reason);
         } else {
             return jQuery.Deferred().resolve();
         }
@@ -136,8 +136,8 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
         options = options || {};
         if (this.searchResults.hasAssets() && !this.search.isStandAloneAsset() && options.reason !== "issueLoaded") {
             if (this.searchResults.hasSelectedAsset()) {
-                QuoteFlow.application.execute("issueEditor:abortPending");
-                JIRA.Issues.Utils.debounce(this, "_renderAsset", this.searchResults.getSelectedAsset());
+                QuoteFlow.application.execute("assetEditor:abortPending");
+                Utilities.debounce(this, "_renderAsset", this.searchResults.getSelectedAsset());
             } else {
                 this._renderNoAsset();
             }
@@ -146,10 +146,9 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
         return this;
     },
 
-    _renderIssue: function (selectedAsset) {
-        QuoteFlow.application.request("issueEditor:loadIssue", {
+    _renderAsset: function (selectedAsset) {
+        QuoteFlow.application.request("assetEditor:loadIssue", {
             id: selectedAsset.get("id"),
-            key: selectedAsset.get("key"),
             detailView: true
         }).always(_.bind(function () {
             QuoteFlow.application.execute("pager:update", _.extend({}, this.searchResults.getPager(), { isSplitView: true }));
@@ -175,7 +174,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
 
     _onAssetDoesNotExist: function () {
         this._renderNoAsset();
-        QuoteFlow.application.execute("issueEditor:setContainer", this.$el);
+        QuoteFlow.application.execute("assetEditor:setContainer", this.$el);
         this.render();
     },
 

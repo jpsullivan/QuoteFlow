@@ -51,7 +51,7 @@ var AssetNavCreator = {
         });
 
 //        JIRA.bind(JIRA.Events.ISSUE_TABLE_REORDER, function(e) {
-//            if (!JIRA.Issues.Application.request("issueEditor:canDismissComment")) {
+//            if (!JIRA.Issues.Application.request("assetEditor:canDismissComment")) {
 //                e.preventDefault();
 //            }
 //        });
@@ -62,20 +62,20 @@ var AssetNavCreator = {
         });
         this.layoutSwitcherView.render();
 
-        var issueModule = QuoteFlow.application.request("issueEditor");
+        var issueModule = QuoteFlow.application.request("assetEditor");
 
-        QuoteFlow.application.on("issueEditor:render", function (regions) {
+        QuoteFlow.application.on("assetEditor:render", function (regions) {
             QuoteFlow.application.execute("pager:render", regions.pager);
         });
         QuoteFlow.application.commands.setHandler("returnToSearch", function () {
-            QuoteFlow.application.execute("issueEditor:close");
+            QuoteFlow.application.execute("assetEditor:close");
         });
 
         // Initialize event bubbling
-        QuoteFlow.application.on("issueEditor:saveSuccess", function (props) {
+        QuoteFlow.application.on("assetEditor:saveSuccess", function (props) {
             QuoteFlow.application.vent.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
         });
-        QuoteFlow.application.on("issueEditor:saveError", function (props) {
+        QuoteFlow.application.on("assetEditor:saveError", function (props) {
             if (!props.deferred) {
                 QuoteFlow.application.vent.trigger(JIRA.Events.ISSUE_REFRESHED, [props.issueId]);
             }

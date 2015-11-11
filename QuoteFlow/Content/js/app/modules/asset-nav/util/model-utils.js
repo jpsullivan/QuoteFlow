@@ -3,9 +3,8 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 
+var transax = undefined;
 var ModelUtils = {
-
-    transax: undefined,
 
     /**
      * A collection of events that *weren't* emitted.
@@ -74,7 +73,7 @@ var ModelUtils = {
         var model = this;
 
         if (name === "change" || name.indexOf("change:") === 0) {
-            this.transax.log.captureEvent(model, _.toArray(arguments));
+            transax.log.captureEvent(model, _.toArray(arguments));
         } else {
             Backbone.Events.trigger.apply(model, arguments);
         }
@@ -84,24 +83,24 @@ var ModelUtils = {
         // if there is a batch already in progress then just piggy-back onto that one. this is
         // necessary so that changes to multiple Backbone models are all published as part of
         // a single batch.
-        if (this.transax) {
+        if (transax) {
             return {
                 commit: function () {} // the outer batch will publish everything
             };
         }
 
-        this.transax = {
+        transax = {
             log: new this.EventLog()
         };
 
-        var restoreTrigger = this.patch(Backbone.Model.prototype, "trigger", _.bind(this.filteredTrigger, this));
+        var restoreTrigger = this.patch(Backbone.Model.prototype, "trigger", this.filteredTrigger);
 
         return {
-            commit: _.bind(function () {
+            commit: function () {
                 restoreTrigger();
-                this.transax.log.replayEvents();
-                this.transax = null;
-            }, this)
+                transax.log.replayEvents();
+                transax = null;
+            }
         };
     },
 

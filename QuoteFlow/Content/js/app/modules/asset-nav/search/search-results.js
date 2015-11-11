@@ -643,6 +643,7 @@ var SearchResults = Brace.Model.extend({
 
     onNewPayload: function (func, context) {
         this.on("change:resultsId", func, context);
+        //this.on("change:resultsId", function () { debugger; }, context);
     },
 
     offNewPayload: function (func, context) {

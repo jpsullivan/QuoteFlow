@@ -100,7 +100,7 @@ var FullScreenAsset = Marionette.ItemView.extend({
             this.assetContainer.insertBefore(this.searchContainer);
             this.searchContainer.detach();
 
-            //QuoteFlow.trace("jira.psycho.issue.refreshed", { id: JIRA.Issues.Application.request("issueEditor:getIssueId") });
+            //QuoteFlow.trace("jira.psycho.issue.refreshed", { id: JIRA.Issues.Application.request("assetEditor:getIssueId") });
             QuoteFlow.application.trigger(EventTypes.NEW_CONTENT_ADDED, [this.assetContainer, ContentAddedReason.pageLoad]);
         }
     },

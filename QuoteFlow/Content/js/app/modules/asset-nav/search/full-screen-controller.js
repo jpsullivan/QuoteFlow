@@ -77,7 +77,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
         this.assetTable.close();
         this.searchService.close();
 
-        Application.off("issueEditor:loadError", this.onLoadError, this);
+        Application.off("assetEditor:loadError", this.onLoadError, this);
 
         delete this.fullScreenAsset;
         delete this.assetTable;

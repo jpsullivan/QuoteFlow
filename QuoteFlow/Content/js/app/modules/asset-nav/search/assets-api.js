@@ -33,7 +33,7 @@ var AssetsApi = {
             permitted = field && field.isEditable();
 
         if (permitted && this.searchPageModule) {
-            JIRA.Issues.Application.execute("issueEditor:editField", field);
+            JIRA.Issues.Application.execute("assetEditor:editField", field);
         }
 
         return permitted;

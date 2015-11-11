@@ -120,7 +120,7 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
     },
 
     _navigateUsingState: function (state) {
-        // if (QuoteFlow.application.request("issueEditor:canDismissComment")) {
+        // if (QuoteFlow.application.request("assetEditor:canDismissComment")) {
         //     this._setStatePermalink(state);
         //     this.navigate(UrlSerializer.getURLFromState(state), { replace: true, trigger: false });
         //     this.searchPageModule.updateFromRouter(state);

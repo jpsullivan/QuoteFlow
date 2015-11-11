@@ -18,3 +18,5 @@ var RefreshResultsView = Marionette.ItemView.extend({
         "click a": "refresh"
     }
 });
+
+module.exports = RefreshResultsView;

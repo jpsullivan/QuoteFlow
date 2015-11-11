@@ -53,7 +53,6 @@ var SearchServiceController = Marionette.Controller.extend({
         _.bindAll(this, "_onAssetUpdated", "_onHighlightedAssetChange", "_onSelectedAssetChange");
 
         this.listenTo(this.searchResults, "change:resultsId change:startIndex stableUpdate assetDeleted", function () {
-            debugger;
             this._doSearch();
         });
 
@@ -98,18 +97,18 @@ var SearchServiceController = Marionette.Controller.extend({
             jql: this.searchModule.getEffectiveJql(),
             filterId: filterId
         })
-            .always(_.bind(function () {
-                this.searchInProgress = false;
-            }, this))
-            .done(_.bind(function (table) {
-                if (!this.searchResults.hasHighlightedAsset()) {
-                    this.searchResults.highlightFirstInPage();
-                }
-                this.trigger("search", table, this.searchResults);
-            }, this))
-            .fail(_.bind(function () {
-                this.trigger("error:search");
-            }, this));
+        .always(_.bind(function () {
+            this.searchInProgress = false;
+        }, this))
+        .done(_.bind(function (table) {
+            if (!this.searchResults.hasHighlightedAsset()) {
+                this.searchResults.highlightFirstInPage();
+            }
+            this.trigger("search", table, this.searchResults);
+        }, this))
+        .fail(_.bind(function () {
+            this.trigger("error:search");
+        }, this));
     },
 
     /**

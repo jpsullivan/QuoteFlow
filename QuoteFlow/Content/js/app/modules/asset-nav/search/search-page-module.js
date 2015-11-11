@@ -343,13 +343,12 @@ var SearchPageModule = Brace.Model.extend({
 
         this.searchResults.onSelectedAssetChange(_.bind(function (issue) {
             if (!issue.hasAsset()) {
-                JIRA.Issues.Application.execute("assetEditor:removeAssetMetadata");
+                QuoteFlow.application.execute("assetEditor:removeAssetMetadata");
             }
         }, this));
     },
 
     _handleSearchResultsChange: function (model, options) {
-        debugger;
         options = options || {};
         options.replace ?
                 this.assetNavRouter.replaceState(this.getState()) :
@@ -644,7 +643,7 @@ var SearchPageModule = Brace.Model.extend({
         };
 
         if (this.standalone) {
-            state.selectedIssueKey = QuoteFlow.application.request("issueEditor:getIssueKey");
+            state.selectedIssueKey = QuoteFlow.application.request("assetEditor:getIssueKey");
         } else {
             _.extend(state, this.search.getResults().getState());
         }
@@ -761,7 +760,7 @@ var SearchPageModule = Brace.Model.extend({
     _navigateToState: function (state, isReset, options) {
         options = options || {};
 
-        // if (!QuoteFlow.application.request("issueEditor:canDismissComment")) {
+        // if (!QuoteFlow.application.request("assetEditor:canDismissComment")) {
         //     this.queryModule.queryChanged();
         //     InlineLayer.current && InlineLayer.current.hide();
         //     return null;

@@ -17,7 +17,7 @@ var AssetTable = Marionette.Controller.extend({
         this._createSearchService(options);
         this._createTableController(options);
 
-        //JIRA.Issues.Application.on("issueEditor:loadError", this._handleIssueLoadError, this);
+        //JIRA.Issues.Application.on("assetEditor:loadError", this._handleIssueLoadError, this);
     },
 
     _createSearchService: function (options) {
@@ -115,7 +115,7 @@ var AssetTable = Marionette.Controller.extend({
     close: function () {
         this.assetTableController.close();
         this.stopListening(this.searchService);
-        //JIRA.Issues.Application.off("issueEditor:loadError", this._handleIssueLoadError, this);
+        //JIRA.Issues.Application.off("assetEditor:loadError", this._handleIssueLoadError, this);
         delete this.assetTableController;
         delete this.searchService;
     },
