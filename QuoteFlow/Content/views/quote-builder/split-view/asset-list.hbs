@@ -1,9 +1,8 @@
 ﻿<ol class="issue-list">
     {{#each assets}}
+    {{debug}}
     <li {{#if isHighlighted}}class="focused"{{/if}} data-id="{{id}}" title="{{name}}">
         <a class="splitview-issue-link" data-asset-id="{{id}}" href="{{AssetUrl}}">
-            <img height="16" width="16" alt="@asset.Manufacturer.Name" title="" src="/images/icons/issuetypes/improvement.png">
-            &nbsp;
             <span class="issue-link-sku">{{sku}}</span><br />
             <span class="issue-link-summary">{{name}}</span>
         </a>

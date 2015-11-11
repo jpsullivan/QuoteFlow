@@ -1,0 +1,81 @@
+<div class="aui-group issue-body">
+    <div class="aui-item issue-main-column">
+        {{#if serverRenderedViewAsset}}
+            {{#each panels.leftPanels}}
+            {{#if renderHeader}}
+                <div id={{id}} class="module toggle-wrap">
+                    <div id="{{id}}_heading" class="mod-header">
+                        <ul class="ops">
+                            {{#each headerLinks.links}}
+                            <li>
+                                <a
+                                    {{#if id}} id="{{id}}"{{/if}}
+                                    href="{{#if href}}{{href}}{{else}}#{{/if}}"
+                                    {{#if styleClass}}
+                                        class="{{styleClass}}"
+                                    {{/if}}
+                                    {{#if title}}
+                                        title="{{title}}"
+                                    {{/if}}
+                                    >
+                                    <span>{{label}}</span>
+                                </a>
+                            </li>
+                            {{/each}}
+                        {{#if headerLinks.groups}}
+                            <li class="drop">
+                                <div class="aui-dd-parent">
+                                    <a href="#" class="icon drop-menu js-default-dropdown" title="Options">
+                                        <span>Options</span>
+                                    </a>
+                                    <div class="aui-dropdown-content aui-list">
+                                        {{each headerLinks.groups}}
+                                        <h5>{{header.label}}</h5>
+                                        <ul id="{{header.id}}" class="aui-list-section">
+                                            {{#each group.links}}
+                                            <li class="aui-list-item">
+                                                 <a
+                                                     {{#if id}} id="{{id}}"{{/if}}
+                                                     href="{{#if href}}{{href}}{{else}}#{{/if}}"
+                                                     {{#if styleClass}}
+                                                         class="{{styleClass}} aui-list-item-link"
+                                                     {{/if}}
+                                                     {{#if title}}
+                                                         title="{{title}}"
+                                                     {{/if}}
+                                                     >
+                                                     <span>{{label}}</span>
+                                                 </a>
+                                            </li>
+                                            {{/each}}
+                                        </ul>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </li>
+                        {{/if}}
+                        </ul>
+                        {{#if subpanelHtmls}}
+                        <div class="mod-header-panels">
+                            {{#each subpanelHtmls}}
+                            <div class="mod-header-panel">
+                                {{{this}}}
+                            </div>
+                            {{/each}}
+                        </div>
+                        {{/if}}
+                        <h2 class="toggle-title">{{label}}</h2>
+                    </div>
+                    <div class="mod-content">
+                        {{{html}}}
+                    </div>
+                </div>
+            {{else}}
+                {{{html}}}
+            {{/if}}
+            {{/each}}
+        {{/if}}
+    </div>
+    <div id="viewissuesidebar" class="aui-item issue-side-column">
+    </div>
+</div>

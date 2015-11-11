@@ -550,6 +550,7 @@
     <Content Include="Content\images\quote-status\intro-help-progress.png" />
     <Content Include="Content\images\quoteflow_logo.png" />
     <Content Include="Content\js\app\app.js" />
+    <Content Include="Content\js\app\base\app-module.js" />
     <Content Include="Content\js\app\base\controller.js" />
     <Content Include="Content\js\app\base\mixins.js" />
     <Content Include="Content\js\app\collections\asset\searcher.js" />
@@ -622,6 +623,9 @@
     <Content Include="Content\js\app\components\jqui-widget_sidebar.js" />
     <Content Include="Content\js\app\helpers\underscore_helpers.js" />
     <Content Include="Content\js\app\init.js" />
+    <Content Include="Content\js\app\mixins\marionette-link-region.js" />
+    <Content Include="Content\js\app\mixins\marionette-replace-region.js" />
+    <Content Include="Content\js\app\mixins\marionette.js" />
     <Content Include="Content\js\app\models\asset\criteria.js" />
     <Content Include="Content\js\app\models\asset\details.js" />
     <Content Include="Content\js\app\models\asset\navigator.js" />
@@ -648,11 +652,27 @@
     <Content Include="Content\js\app\modules\asset-nav\router-custom.js" />
     <Content Include="Content\js\app\modules\asset-nav\searchers\initSparklers.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-api.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-editor\app-module.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-editor\asset-editor.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-navigator-api.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-search-manager.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\app-module.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\asset-model.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\asset-viewer.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\controllers\asset-controller.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\controllers\error-controller.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\legacy\asset-event-bus.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\legacy\asset-field-util.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\legacy\async-data.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\legacy\view-asset-data.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\services\asset-loader.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\views\asset\asset-body-layout.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\views\asset\asset-header-layout.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\views\asset\asset-layout.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\views\error\error-generic-view.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\views\error\error-layout.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\views\error\error-no-permission-view.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\views\error\error-not-found-view.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\assets-api.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset\full-screen-asset.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset\simple-asset.js" />
@@ -706,6 +726,8 @@
     <Content Include="Content\js\app\util\dialog-cleanup.js" />
     <Content Include="Content\js\app\util\events.js" />
     <Content Include="Content\js\app\util\jquery\CatchExceptions.js" />
+    <Content Include="Content\js\app\util\jquery\concurrent-deferred.js" />
+    <Content Include="Content\js\app\util\jquery\getOptionsFromAttributes.js" />
     <Content Include="Content\js\app\util\jquery\hasFixedParent.js" />
     <Content Include="Content\js\app\util\jquery\RecurringPromise.js" />
     <Content Include="Content\js\app\util\meta.js" />
@@ -1140,6 +1162,12 @@
     <Content Include="Content\less\mixins\border-box.less" />
     <Content Include="Content\less\mixins\clearfix.less" />
     <Content Include="Content\less\modules.less" />
+    <Content Include="Content\views\asset-viewer\asset\body.hbs" />
+    <Content Include="Content\views\asset-viewer\asset\header.hbs" />
+    <Content Include="Content\views\asset-viewer\asset\layout.hbs" />
+    <Content Include="Content\views\asset-viewer\error\does-not-exist.hbs" />
+    <Content Include="Content\views\asset-viewer\error\generic.hbs" />
+    <Content Include="Content\views\asset-viewer\error\no-permission.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1253,6 +1281,7 @@
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
     <Folder Include="Content\fonts\" />
+    <Folder Include="Content\js\app\modules\asset-nav\search\asset-viewer\entities\" />
     <Folder Include="Infrastructure\Exceptions\Antlr\" />
     <Folder Include="Infrastructure\Exceptions\Search\" />
     <Folder Include="Views\QueryRendererEdit\" />

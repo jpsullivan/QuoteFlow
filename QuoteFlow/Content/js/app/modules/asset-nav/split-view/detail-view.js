@@ -114,13 +114,13 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
     fixMentionsDropdownInMentionableFields: function (event, $context, reason) {
         if (reason === ContentAddedReason.panelRefreshed || reason === ContentAddedReason.inlineEditStarted) {
             // Search for mentionable elements, add markup to force Mentions drop down
-            // to follow the scroll of .split-view .issue-container
-            $context.find(".mentionable:not([data-follow-scroll])").attr("follow-scroll", ".split-view .issue-container");
+            // to follow the scroll of .split-view .asset-container
+            $context.find(".mentionable:not([data-follow-scroll])").attr("follow-scroll", ".split-view .asset-container");
 
             // Search for mentionable elements, add markup to force Mentions drop down
-            // to push the scroll of .issue-body-content if there is not enough room to
+            // to push the scroll of .asset-body-content if there is not enough room to
             // display the drop down
-            $context.find(".mentionable:not([data-push-scroll])").attr("push-scroll", ".issue-body-content");
+            $context.find(".mentionable:not([data-push-scroll])").attr("push-scroll", ".asset-body-content");
         }
     },
 

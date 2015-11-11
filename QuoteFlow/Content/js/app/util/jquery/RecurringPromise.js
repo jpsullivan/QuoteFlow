@@ -1,9 +1,11 @@
-﻿/**
- * @param [parent]
- */
-jQuery.RecurringPromise = function (parent) {
-    if (!(this instanceof jQuery.RecurringPromise)) {
-        return new jQuery.RecurringPromise();
+"use strict";
+
+var _ = require('underscore');
+var jQuery = require('jquery');
+
+var RecurringPromise = function (parent) {
+    if (!(this instanceof RecurringPromise)) {
+        return new RecurringPromise();
     }
 
     this._parent = parent;
@@ -12,7 +14,7 @@ jQuery.RecurringPromise = function (parent) {
     this._alwaysCallbacks = jQuery.Callbacks();
 };
 
-jQuery.RecurringPromise.prototype = {
+RecurringPromise.prototype = {
     add: function (deferred) {
         var wrapperDeferred = jQuery.Deferred();
         wrapperDeferred.original = deferred;
@@ -64,7 +66,7 @@ jQuery.RecurringPromise.prototype = {
     },
 
     sub: function () {
-        return new jQuery.RecurringPromise(this);
+        return new RecurringPromise(this);
     },
 
     _getPending: function () {
@@ -90,3 +92,7 @@ jQuery.RecurringPromise.prototype = {
         }
     }
 };
+
+jQuery.RecurringPromise = RecurringPromise;
+
+module.exports = RecurringPromise;

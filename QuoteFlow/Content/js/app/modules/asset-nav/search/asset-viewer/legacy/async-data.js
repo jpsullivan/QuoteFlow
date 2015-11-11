@@ -1,14 +1,9 @@
-﻿"use strict";
+"use strict";
 
 var _ = require('underscore');
 var $ = require('jquery');
 var Brace = require('backbone-brace');
 
-var ConcurrentDeferred = require('../../../util/jquery/concurrent-deferred');
-
-/**
- *
- */
 var AsyncData = Brace.Evented.extend({
     namedEvents: ["change"],
 
@@ -16,7 +11,7 @@ var AsyncData = Brace.Evented.extend({
      * @param options
      * @param {Boolean} options.disableCache A flag to indicate whether to cache the data
      */
-    initialize: function (options) {
+    initialize: function(options) {
         this.data = {};
         this.pendings = {};
         this.accessIndex = 0;
@@ -36,17 +31,17 @@ var AsyncData = Brace.Evented.extend({
      * If the fetch fails, the last successful value is kept (null if there is no previous success),
      * and metadata is updated to indicate an error.
      *
-     * @return {jQuery.Promise} resolves when fetch() succeeds or fails, and cache has been updated.
+     * @return {$.Promise} resolves when fetch() succeeds or fails, and cache has been updated.
      */
-    get: function (id, forceFetch, options) {
-        var deferred = $.Deferred();
+    get: function(id, forceFetch, options) {
+        var deferred = new $.Deferred();
         var data = this.disableCache ? {} : this.data; // Keep a reference to the data object at the time the get() is called
 
-        var resolveWith = _.bind(function (meta, additionalMeta) {
-            var changedData = this._set(data, id, _.defaults(meta, { accessIndex: this.accessIndex++ }), true, options);
+        var resolveWith = _.bind(function(meta, additionalMeta) {
+            var changedData = this._set(data, id, _.defaults(meta, {accessIndex: this.accessIndex++}), true, options);
 
             // combinedMeta is what is passed to the deferred callbacks
-            var combinedMeta = _.defaults({ changed: changedData }, additionalMeta, data[id]);
+            var combinedMeta = _.defaults({changed: changedData}, additionalMeta, data[id]);
             if (options && options.mergeIntoCurrent) {
                 combinedMeta.mergeIntoCurrent = true;
             }
@@ -58,16 +53,16 @@ var AsyncData = Brace.Evented.extend({
             }
         }, this);
 
-        var resolveAfterFetch = _.bind(function (initialLoad) {
+        var resolveAfterFetch = _.bind(function(initialLoad) {
             var fetchPromise = this.fetch(id, options);
 
-            this.setPending(id, fetchPromise, function (value) {
+            this.setPending(id, fetchPromise, function(value) {
                 resolveWith({
                     value: value,
                     error: false,
                     updated: new Date()
-                }, { initialLoad: initialLoad });
-            }, function (value) {
+                }, {initialLoad: initialLoad});
+            }, function(value) {
                 var meta = {
                     error: true,
                     updated: new Date()
@@ -82,11 +77,11 @@ var AsyncData = Brace.Evented.extend({
             });
         }, this);
 
-        var resolveFromCache = function () {
-            resolveWith({}, { fromCache: true });
+        var resolveFromCache = function() {
+            resolveWith({}, {fromCache: true});
         };
 
-        var resolveAfterPending = _.bind(function () {
+        var resolveAfterPending = _.bind(function() {
             this.pendings[id].always(_.bind(resolveWith, this, {}, {
                 // resolveAfterPending is used to resolve deferreds that have piggy-backed onto a fetch() call that's
                 // already in progress (i.e. a "pending"). therefore, the correct thing is to resolve the deferred with
@@ -109,15 +104,15 @@ var AsyncData = Brace.Evented.extend({
         return deferred.promise();
     },
 
-    setPending: function (id, task, doneCallback, failCallback) {
+    setPending: function(id, task, doneCallback, failCallback) {
         if (this.hasPending(id)) {
             this.pendings[id].update(task);
         } else {
-            this.pendings[id] = $.ConcurrentDeferred(task);
+            this.pendings[id] = new $.ConcurrentDeferred(task);
         }
-        return this.pendings[id].done(function (value) {
+        return this.pendings[id].done(function(value) {
             doneCallback(value);
-        }).fail(function (value) {
+        }).fail(function(value) {
             failCallback(value);
         });
     },
@@ -127,7 +122,7 @@ var AsyncData = Brace.Evented.extend({
      *
      * @return {String|null} id of the value. Can be null to indicate not found.
      */
-    getIdByValue: function (value) {
+    getIdByValue: function(value) {
         var id;
         for (id in this.data) {
             if (this.data[id].value === value) {
@@ -146,13 +141,13 @@ var AsyncData = Brace.Evented.extend({
      *     error: {Boolean}
      * }
      */
-    getMeta: function (id) {
+    getMeta: function(id) {
         return this.data[id] || {};
     },
 
-    getAllCached: function () {
+    getAllCached: function() {
         var obj = {};
-        _.each(this.data, function (value, id) {
+        _.each(this.data, function(value, id) {
             obj[id] = value.value;
         });
         return obj;
@@ -161,7 +156,7 @@ var AsyncData = Brace.Evented.extend({
     /**
      * @return {Boolean} whether or not a value/error for the given id is already in the cache
      */
-    hasCached: function (id) {
+    hasCached: function(id) {
         var meta = this.getMeta(id);
         return meta.value !== undefined || meta.error === true;
     },
@@ -169,7 +164,7 @@ var AsyncData = Brace.Evented.extend({
     /**
      * @return {Boolean} whether or not the given id has an error set on it
      */
-    hasError: function (id) {
+    hasError: function(id) {
         var meta = this.getMeta(id);
         return meta.error === true;
     },
@@ -177,7 +172,7 @@ var AsyncData = Brace.Evented.extend({
     /**
      * @return {Boolean} whether or not a request is currently in progress for the given id
      */
-    hasPending: function (id) {
+    hasPending: function(id) {
         var pending = this.pendings[id];
         return pending ? pending.isPending() : false;
     },
@@ -188,7 +183,7 @@ var AsyncData = Brace.Evented.extend({
      *
      * @return {Boolean} whether the value changed
      */
-    set: function (id, value) {
+    set: function(id, value) {
         return this._set(this.data, id, {
             value: value,
             updated: new Date()
@@ -200,7 +195,7 @@ var AsyncData = Brace.Evented.extend({
      * @param id
      * @return {Boolean} whether an item was removed
      */
-    remove: function (id) {
+    remove: function(id) {
         if (this.data[id]) {
             delete this.data[id];
             this.triggerChange();
@@ -218,7 +213,7 @@ var AsyncData = Brace.Evented.extend({
      *
      * @return {Boolean} whether the error state or value changed
      */
-    setError: function (id, value) {
+    setError: function(id, value) {
         var meta = {
             error: true,
             updated: new Date()
@@ -238,10 +233,10 @@ var AsyncData = Brace.Evented.extend({
      *         error: {Object}
      * @return {Boolean} whether any value changed
      */
-    setMultiple: function (map) {
+    setMultiple: function(map) {
         var updated = new Date();
         var changed = false;
-        _.each(map, _.bind(function (meta, id) {
+        _.each(map, _.bind(function(meta, id) {
             meta = _.pick(meta, 'value', 'error');
             meta.updated = updated;
             if (this._set(this.data, id, meta, false)) {
@@ -257,7 +252,7 @@ var AsyncData = Brace.Evented.extend({
     /**
      * Resets the cached data. Optionally, ids and values can be passed in to set initial values.
      */
-    reset: function (map) {
+    reset: function(map) {
         this.data = {};
         this.pendings = {};
         this.accessIndex = 0;
@@ -283,7 +278,7 @@ var AsyncData = Brace.Evented.extend({
      *  - when get() resolves it shouldn't add its results to the new `data`,
      *    but it should have access to the `data` at the time it was initiated.
      */
-    _set: function (data, id, metaValues, triggerChange, options) {
+    _set: function(data, id, metaValues, triggerChange, options) {
         if (this.disableCache && data === this.data) {
             data = {}; // Don't modify the cache
         }
@@ -308,7 +303,7 @@ var AsyncData = Brace.Evented.extend({
         return changedData;
     },
 
-    _dropItem: function (data) {
+    _dropItem: function(data) {
         // Drop the least-recently accessed item
         var leastRecentKey = null;
         for (var key in data) {
@@ -328,9 +323,9 @@ var AsyncData = Brace.Evented.extend({
      * Override to specify fetch behaviour.
      * @return {jQuery.Promise}
      */
-    fetch: function (id, options) {
+    fetch: function(id) {
         var meta = this.getMeta(id);
-        var deferred = $.Deferred();
+        var deferred = new jQuery.Deferred();
         if (!this.hasCached(id) || meta.error) {
             deferred.reject(meta.value);
         } else {
@@ -339,7 +334,7 @@ var AsyncData = Brace.Evented.extend({
         return deferred.promise();
     },
 
-    mergeFetchedAndCached: function (toResolve, fetched, options, inCache) {
+    mergeFetchedAndCached: function(toResolve, fetched, options, inCache) {
         _.extend(toResolve, fetched);
 
         return !inCache || inCache.value !== toResolve.value || inCache.error !== toResolve.error;

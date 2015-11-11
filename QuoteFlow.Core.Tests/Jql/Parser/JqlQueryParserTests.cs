@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Antlr.Runtime;
+using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Operand;
@@ -495,6 +498,21 @@ namespace QuoteFlow.Core.Tests.Jql.Parser
             Evaluate(jql, expectedClause);
         }
 
+        private static readonly List<JqlParseErrorMessage> InvalidParsingInputMessages = new List<JqlParseErrorMessage>()
+        {
+            JqlParseErrorMessages.IllegalCharacter('\f', 2, 1), // 0
+            JqlParseErrorMessages.BadOperator(CreateEofToken(1, 3)) // 1
+        };
+
+        [Theory]
+        [InlineData("Tabs and Spaces string", "  \t  \n\r\f   ", 0)]
+        [InlineData("Bare field", "foo", 1)]
+        public void Tests_For_Invalid_Parsing_Input(string desc, string jql, int index)
+        {
+            var expectedParseError = InvalidParsingInputMessages.ElementAt(index);
+            EvaluateError(desc, jql, expectedParseError);
+        }
+
         private static void Evaluate(string jql, IClause expectedClause)
         {
             var parser = new JqlQueryParser();
@@ -503,6 +521,36 @@ namespace QuoteFlow.Core.Tests.Jql.Parser
             Assert.Same(jql, query.QueryString);
             Assert.Equal(expectedClause, whereClause);
             //Assert.Equal(orderBy, query.OrderByClause);
+        }
+
+        private static void EvaluateError(string desc, string inputJql, JqlParseErrorMessage parseError)
+        {
+            var parser = new JqlQueryParser();
+            try
+            {
+                var query = parser.ParseQuery(inputJql);
+                Assert.True(false, $"Expected exception on input '{inputJql}' but got query '{query}'");
+            }
+            catch (JqlParseException ex)
+            {
+                var actual = ex.ParseErrorMessage;
+                Assert.Equal(parseError, actual);
+            }
+        }
+
+        private static IToken CreateEofToken(int line, int position)
+        {
+            return CreateToken(null, line, position, TokenTypes.EndOfFile);
+        }
+
+        private static IToken CreateToken(string text, int line, int position, int type = 10)
+        {
+            return new CommonToken(type)
+            {
+                Line = line,
+                CharPositionInLine = position,
+                Text = text
+            };
         }
     }
 }

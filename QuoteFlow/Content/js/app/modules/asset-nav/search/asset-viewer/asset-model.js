@@ -89,7 +89,7 @@ var AssetModel = Brace.Model.extend({
     updateFromEntity: function (entity) {
         this.set({
             id: entity.id,
-            key: entity.key,
+            sku: entity.sku,
             entity: entity
         });
     },
@@ -114,15 +114,15 @@ var AssetModel = Brace.Model.extend({
     },
 
     /**
-     * Updates the model with a new issueQuery
+     * Updates the model with a new assetQuery
      *
      * @param {string} query New query
      */
     updateAssetQuery: function(query) {
-        if (!this.hasIssue()) {
+        if (!this.hasAsset()) {
             return;
         }
-        this.getEntity().viewIssueQuery = query;
+        this.getEntity().viewAssetQuery = query;
     }
 });
 

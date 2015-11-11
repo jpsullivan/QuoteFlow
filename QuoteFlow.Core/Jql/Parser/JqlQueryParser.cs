@@ -112,20 +112,17 @@ namespace QuoteFlow.Core.Jql.Parser
         {
             try
             {
-                try
-                {
-                    return CreateJqlParser(clauseString).query();
-                }
-                catch (RecognitionException e)
-                {
-                    throw new JqlParseException(JqlParseErrorMessages.GenericParseError(e.Token), e);
-                }
+                return CreateJqlParser(clauseString).query();
             }
             catch (RuntimeRecognitionException e)
             {
                 //Our code throws this exception when we really want ANTLR to stop working. At the moment ANTLR produces a
                 //lexer will not quit on errors, but will rather drop input. We use this RuntimeException as a workaround.
                 throw new JqlParseException(e.ParseErrorMessage, e);
+            }
+            catch (RecognitionException e)
+            {
+                throw new JqlParseException(JqlParseErrorMessages.GenericParseError(e.Token), e);
             }
         }
 

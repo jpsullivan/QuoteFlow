@@ -1,0 +1,28 @@
+<div id="issue-content" class="form-body">
+    <header class="issue-header">
+        <div class="issue-header-content">
+            <header class="aui-page-header">
+                <div class="aui-page-header-inner">
+                    <div class="aui-page-header-main">
+                        <h1>Unexpected Error</h1>
+                    </div>
+                    <div class="aui-page-header-actions">
+                        <div id="issue-header-pager"></div>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </header>
+    <div class="asset-body-content">
+        <div class="aui-message error">
+            <span class="aui-icon icon-error"></span>
+            <p>There was an unexpected error while loading the asset.</p>
+            <p>If you think this message is wrong, please contact your <a href="/secure/ContactAdministrators!default.jspa">QuoteFlow administrator</a>.</p>
+            {{#if returnToSearch}}
+            <p>
+                <a id="return-to-search" class="push-state" href="/assets/" title="Return to search">Return to search</a>
+            </p>
+            {{/if}}
+        </div>
+    </div>
+</div>
