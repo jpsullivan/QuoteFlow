@@ -650,6 +650,9 @@
     <Content Include="Content\js\app\modules\asset-nav\search\asset-api.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-navigator-api.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-search-manager.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\app-module.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\asset-model.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\asset-viewer.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\assets-api.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset\full-screen-asset.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset\simple-asset.js" />
