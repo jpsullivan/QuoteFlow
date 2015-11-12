@@ -11,6 +11,7 @@ var AssetLoaderService = require('./services/asset-loader');
 var AssetModel = require('./asset-model');
 var ErrorController = require('./controllers/error-controller');
 var EventTypes = require('../../util/types');
+var MetadataService = require('./services/metadata-service');
 var ViewAssetData = require('./legacy/view-asset-data');
 
 /**
@@ -71,8 +72,8 @@ var AssetViewer = Marionette.Controller.extend({
         });
         this._buildIssueController();
 
-        QuoteFlow.bind(EventTypes.REFRESH_ASSET_PAGE, _.bind(function (e, issueId, options) {
-            if (this.model.isCurrentIssue(issueId)) {
+        QuoteFlow.bind(EventTypes.REFRESH_ASSET_PAGE, _.bind(function (e, assetId, options) {
+            if (this.model.isCurrentIssue(assetId)) {
                 this.refreshIssue(options);
             }
         }, this));
@@ -88,7 +89,7 @@ var AssetViewer = Marionette.Controller.extend({
 
         this.listenTo(this.assetLoader, "error", function(reason, props) {
             this.trigger("loadError", props);
-            this.errorController.render(reason, props.issueKey);
+            this.errorController.render(reason, props.assetSku);
             this.removeAssetMetadata();
 
             // Traces
@@ -140,7 +141,7 @@ var AssetViewer = Marionette.Controller.extend({
             this.errorController.close();
             this.trigger("render", regions, options);
 
-            QuoteFlow.trace("jira.psycho.issue.refreshed", { id: this.model.getId() });
+            QuoteFlow.trace("jira.psycho.asset.refreshed", { id: this.model.getId() });
         });
         this.listenAndRethrow(this.assetController, "replacedFocusedPanel");
         this.listenTo(this.assetController, "panelRendered", function(panel, $ctx) {
@@ -162,7 +163,7 @@ var AssetViewer = Marionette.Controller.extend({
     },
 
     /**
-     * Handler for issueLoaded, when an issue has been loaded by IssueLoader service
+     * Handler for assetLoaded, when an asset has been loaded by IssueLoader service
      *
      * @param {Object} data
      * @param {Object} meta
@@ -199,7 +200,7 @@ var AssetViewer = Marionette.Controller.extend({
         // Display the controller
         this.assetController.show();
 
-        // Refresh the issue if it is loaded from the cache
+        // Refresh the asset if it is loaded from the cache
         if (isPrefetchEnabled && meta.fromCache) {
             this.refreshIssue(assetEntity, {
                 fromCache: true,
@@ -208,8 +209,8 @@ var AssetViewer = Marionette.Controller.extend({
             });
         }
 
-        // Save issue metadata
-        JIRA.Components.IssueViewer.Services.Metadata.addIssueMetadata(this.model);
+        // Save asset metadata
+        MetadataService.addAssetMetadata(this.model);
 
         //TODO This should be moved to assetController. Also, assetEntity has no business with bringToFocus
         if (assetEntity.bringToFocus) {
@@ -218,7 +219,7 @@ var AssetViewer = Marionette.Controller.extend({
 
         this.trigger("loadComplete", this.model, {
             isNewIssue: isNewIssue,
-            issueId: assetEntity.id,
+            assetId: assetEntity.id,
             duration: meta.loadDuration,
             loadReason: meta.fromCache?'issues-cache-refresh':undefined,
             fromCache: meta.fromCache
@@ -231,7 +232,7 @@ var AssetViewer = Marionette.Controller.extend({
         } else {
             QuoteFlow.trace('quoteflow.asset.loadFromServer', traceData);
         }
-        QuoteFlow.trace("jira.issue.refreshed", traceData);
+        QuoteFlow.trace("quoteflow.asset.refreshed", traceData);
 
         // QuoteFlow Events
         QuoteFlow.trigger(EventTypes.ASSET_REFRESHED, [assetEntity.id]);
@@ -254,7 +255,7 @@ var AssetViewer = Marionette.Controller.extend({
     },
 
     /**
-     * Clean up before hiding an issue (hide UI widgets, remove metadata, etc.).
+     * Clean up before hiding an asset (hide UI widgets, remove metadata, etc.).
      */
     beforeHide: function () {
         JIRA.Components.IssueViewer.Utils.hideLightbox();
@@ -264,55 +265,55 @@ var AssetViewer = Marionette.Controller.extend({
     },
 
     /**
-     * Prepare for an issue to be shown.
+     * Prepare for an asset to be shown.
      */
     beforeShow: function () {
-        JIRA.Components.IssueViewer.Services.Metadata.addIssueMetadata(this.model);
+        MetadataService.addAssetMetadata(this.model);
     },
 
     /**
-     * @return {null|number} the current issue's ID or null if no valid issue is selected.
+     * @return {null|number} the current asset's ID or null if no valid asset is selected.
      */
     getAssetId: function () {
         return this.model.getEntity().id || null;
     },
 
     /**
-     * Loads an issue already rendered by the server.
+     * Loads an asset already rendered by the server.
      *
      * @param {Object} assetEntity
      */
     _loadIssueFromDom: function(assetEntity) {
-        // Many places in KickAss use the presence of an issue ID / key to determine if an issue is selected. We
-        // can't extract either from an error message, so pass a dud ID to make it look like an issue is selected.
+        // Many places in KickAss use the presence of an asset ID / SKU to determine if an asset is selected. We
+        // can't extract either from an error message, so pass a dud ID to make it look like an asset is selected.
         if (!assetEntity.id || assetEntity.id == -1) {
-            this.errorController.applyToDom("notfound", assetEntity.key);
+            this.errorController.applyToDom("notfound", assetEntity.sku);
             this.trigger("loadError");
         } else {
             this.assetController.applyToDom({
                 id: assetEntity.id || -1,
-                key: assetEntity.key,
-                viewIssueQuery: assetEntity.viewIssueQuery
+                sku: assetEntity.sku,
+                viewAssetQuery: assetEntity.viewAssetQuery
             });
         }
 
-        // After initial load, the server rendered view issue page will be the same as
-        // regular ajax view issue page. Thus removing the meta so it can resume
+        // After initial load, the server rendered view asset page will be the same as
+        // regular ajax view asset page. Thus removing the meta so it can resume
         // to work regularly.
         AJS.Meta.set("serverRenderedViewIssue", null);
 
-        var traceData = { id: this.getIssueId() };
-        //TODO These traces should be inside IssueController, as it has more knowledge about when the issue is loaded
-        QuoteFlow.trace("jira.issue.refreshed", traceData);
+        var traceData = { id: this.getAssetId() };
+        //TODO These traces should be inside IssueController, as it has more knowledge about when the asset is loaded
+        QuoteFlow.trace("quoteflow.asset.refreshed", traceData);
     },
 
     /**
-     * Load an issue and show it in the container.
+     * Load an asset and show it in the container.
      *
      * @param {Object} assetEntity
-     * @param {number} assetEntity.id The issue's ID.
-     * @param {string} assetEntity.key The issue's key.
-     * @param {string} [assetEntity.viewIssueQuery] The query string that was provided
+     * @param {number} assetEntity.id The asset's ID.
+     * @param {string} assetEntity.sku The asset's SKU.
+     * @param {string} [assetEntity.viewAssetQuery] The query string that was provided
      *
      * @returns {jQuery.Promise}
      */
@@ -320,11 +321,11 @@ var AssetViewer = Marionette.Controller.extend({
         var isServerRendered = AJS.Meta.get("serverRenderedViewAsset");
 
         if (isServerRendered) {
-            assetEntity.id = issueKey.attr("rel") || -1;
+            assetEntity.id = assetSku.attr("rel") || -1;
             this._loadIssueFromDom(assetEntity);
             return $.Deferred().resolve().promise();
         } else {
-            if (!this.canDismissComment() || !assetEntity.key) {
+            if (!this.canDismissComment() || !assetEntity.sku) {
                 return $.Deferred().reject();
             }
 
@@ -337,11 +338,11 @@ var AssetViewer = Marionette.Controller.extend({
     },
 
     /**
-     * Refresh the content of the issue, by merging changes from the server.
+     * Refresh the content of the asset, by merging changes from the server.
      *
      * The returned promise is:
-     * - resolved when the selected issue is refreshed, or if there is no selected issue
-     * - rejected *only* when refreshing the selected issue fails
+     * - resolved when the selected asset is refreshed, or if there is no selected asset
+     * - rejected *only* when refreshing the selected asset fails
      *
      * @param {boolean} [options.mergeIntoCurrent] Whether the refresh should merge the retrieved data into the current model
      * @param {function} [options.complete] a function to call after the update has finished
@@ -374,16 +375,16 @@ var AssetViewer = Marionette.Controller.extend({
     },
 
     /**
-     * Remove the issue metadata
+     * Remove the asset metadata
      */
     removeAssetMetadata: function() {
-        JIRA.Components.IssueViewer.Services.Metadata.removeAssetMetadata(this.model);
+        MetadataService.removeAssetMetadata(this.model);
     },
 
     /**
-     * Set the container that the issue should be rendered into.
+     * Set the container that the asset should be rendered into.
      *
-     * @param {jQuery} container The container the issue should be rendered into.
+     * @param {jQuery} container The container the asset should be rendered into.
      */
     setContainer: function (container) {
         this.errorController.setElement(container);
@@ -391,8 +392,8 @@ var AssetViewer = Marionette.Controller.extend({
     },
 
     /**
-     * Returns a deferred that is resolved once issue has loaded.
-     * Or straight away if you there are no issue loading in progress.
+     * Returns a deferred that is resolved once asset has loaded.
+     * Or straight away if you there are no asset loading in progress.
      *
      * @return {boolean}
      */
@@ -401,7 +402,7 @@ var AssetViewer = Marionette.Controller.extend({
     },
 
     /**
-     * Updates the current issue with a new ViewIssueQuery
+     * Updates the current asset with a new ViewIssueQuery
      *
      * @param query {Object} New query to use for the request
      */

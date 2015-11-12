@@ -21,7 +21,7 @@ var QueryStringParser = require('./query-string-parser');
  * An object describing the state of the issue navigator.
  *
  * @typedef {object} UrlSerializer.state
- * @property {string} selectedIssueKey
+ * @property {string} selectedAssetSku
  * @property {(string|null)} filterJql
  * @property {(string|null)} filter
  * @property {(string|null)} jql
@@ -42,8 +42,8 @@ var UrlSerializer = {
         var query = [];
         var base;
 
-        if (state.selectedIssueKey) {
-            base = BASE_BROWSE + state.selectedIssueKey;
+        if (state.selectedAssetSku) {
+            base = BASE_BROWSE + state.selectedAssetSku;
         } else {
             base = BASE_ASSETS;
         }
@@ -55,7 +55,7 @@ var UrlSerializer = {
             query.push('jql=' + encodeURIComponent(state.jql));
         }
 
-        if (state.startIndex && !state.selectedIssueKey) {
+        if (state.startIndex && !state.selectedAssetSku) {
             query.push('startIndex=' + state.startIndex);
         }
         return base + (query.length ? '?' + query.join('&') : "");
@@ -75,12 +75,12 @@ var UrlSerializer = {
         var state = {
             filter: null,
             jql: null,
-            selectedIssueKey: null,
+            selectedAssetSku: null,
             startIndex: 0
         };
 
         if (url.indexOf(BASE_BROWSE) == 0) {
-            state.selectedIssueKey = path.split("/")[1];
+            state.selectedAssetSku = path.split("/")[1];
         }
 
         if (url.indexOf("?") !== -1) {
@@ -90,9 +90,9 @@ var UrlSerializer = {
             //Need to keep a record of these and pass them along down to view issue
             //so that the correct element can be scrolled into view.
             //These can be trashed afterward with no side effect.
-            var viewIssueQuery = _.pick(parameters, 'focusedCommentId', 'attachmentSortBy', 'attachmentOrder');
-            if (!_.isEmpty(viewIssueQuery)) {
-                state.viewIssueQuery = viewIssueQuery;
+            var viewAssetQuery = _.pick(parameters, 'focusedCommentId', 'attachmentSortBy', 'attachmentOrder');
+            if (!_.isEmpty(viewAssetQuery)) {
+                state.viewAssetQuery = viewAssetQuery;
             }
         }
 

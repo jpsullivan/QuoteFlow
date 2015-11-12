@@ -141,7 +141,7 @@ var ErrorController = Marionette.Controller.extend({
             pager: this.view.$(this.view.pager.el)
         },{
             loadedFromDom: false,
-            issueId: null
+            assetId: null
         });
     },
 
@@ -165,7 +165,7 @@ var ErrorController = Marionette.Controller.extend({
             pager: this.view.$(this.view.pager.el)
         },{
             loadedFromDom: true,
-            issueId: null
+            assetId: null
         });
     }
 });

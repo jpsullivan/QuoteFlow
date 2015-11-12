@@ -55,7 +55,7 @@ QuoteFlow.trigger = Events.trigger;
 
 window.QuoteFlow = QuoteFlow;
 
-var AssetEditorModule = require('./modules/asset-nav/search/asset-editor/app-module');
+var NoInlineAssetEditorModule = require('./modules/asset-nav/search/asset-editor/app-module-no-inline');
 var AssetModule = require('./modules/asset/module');
 var AssetTableModule = require('./modules/asset-nav/module');
 var CatalogModule = require('./modules/catalog/module');
@@ -191,7 +191,7 @@ QuoteFlow.application.on("start", function (options) {
 });
 
 QuoteFlow.application.module("asset", AssetModule);
-QuoteFlow.application.module("assetEditor", new AssetEditorModule().definition);
+QuoteFlow.application.module("assetEditor", new NoInlineAssetEditorModule().definition);
 QuoteFlow.application.module("asset-table", AssetTableModule);
 QuoteFlow.application.module("catalog", CatalogModule);
 QuoteFlow.application.module("quote-status", QuoteStatusModule);

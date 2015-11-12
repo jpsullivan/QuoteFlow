@@ -30,8 +30,8 @@ var FullScreenLayoutController = Marionette.Controller.extend({
         });
 
         this.listenTo(this.assetTable, {
-            "highlightIssue": function (issueId) {
-                this.searchService.highlightIssue(issueId);
+            "highlightIssue": function (assetId) {
+                this.searchService.highlightAsset(assetId);
             },
             "render": function () {
                 if (!this.searchService.hasSelectedAsset()) {

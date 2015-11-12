@@ -51,7 +51,7 @@ var SearchResults = Brace.Model.extend({
         ModelUtils.makeTransactional(this, "resetFromSearch", "selectNextAsset", "selectPrevAsset");
         this.assetUpdateCallbacks = [];
         this._assetSearchManager = options.assetSearchManager;
-        this._initialSelectedIssue = options.initialSelectedIssue;
+        this._initialSelectedAsset = options.initialSelectedIssue;
         this._columnConfig = options.columnConfig;
     },
 
@@ -704,8 +704,8 @@ var SearchResults = Brace.Model.extend({
     _getAssetIdForKey: function (key) {
         // this only happens if the selected asset is not in the search results (i.e. when the user
         // navigates to the selected asset directly but has a search context).
-        if (this._initialSelectedIssue && key === this._initialSelectedIssue.key) {
-            return this._initialSelectedIssue.id;
+        if (this._initialSelectedAsset && key === this._initialSelectedAsset.key) {
+            return this._initialSelectedAsset.id;
         }
 
         return this._getAssetKeysToIds()[key];
@@ -714,8 +714,8 @@ var SearchResults = Brace.Model.extend({
     _getAssetKeyForId: function (id) {
         // this only happens if the selected asset is not in the search results (i.e. when the user
         // navigates to the selected asset directly but has a search context).
-        if (this._initialSelectedIssue && id === this._initialSelectedIssue.id) {
-            return this._initialSelectedIssue.key;
+        if (this._initialSelectedAsset && id === this._initialSelectedAsset.id) {
+            return this._initialSelectedAsset.key;
         }
 
         return this._getAssetIdsToKeys()[id];

@@ -128,7 +128,7 @@ var AssetsApi = {
 
     /**
      * Select the previous issue.
-     * 
+     *
      * When in issue search, the previous issue is highlighted; when viewing
      * an issue, the previous one is loaded. No-op if an overlay is visible.
      */
@@ -211,13 +211,15 @@ var AssetsApi = {
      * View the issue that is currently highlighted in the issue table.
      */
     viewSelectedIssue: function () {
-        if (!JIRA.Issues.Api.isSelectedIssueAccessible()) return;
+        if (!JIRA.Issues.Api.isSelectedIssueAccessible()) {
+            return;
+        }
 
-        var issueKey = JIRA.Issues.Api.getSelectedIssueKey();
+        var assetSku = JIRA.Issues.Api.getSelectedAssetSku();
 
         if (!this.searchPageModule.isIssueVisible()) {
             this.searchPageModule.update({
-                selectedIssueKey: issueKey
+                selectedAssetSku: assetSku
             });
         }
     },

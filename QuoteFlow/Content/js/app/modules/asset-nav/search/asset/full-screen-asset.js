@@ -114,13 +114,13 @@ var FullScreenAsset = Marionette.ItemView.extend({
     updateAsset: function (assetUpdate) {
         var deferred;
 
-        var isVisibleAsset = assetUpdate.key === QuoteFlow.application.request("assetEditor:getAssetKey");
+        var isVisibleAsset = assetUpdate.sku === QuoteFlow.application.request("assetEditor:getAssetSku");
 
         if (this.isVisible()) {
             deferred = QuoteFlow.application.request("assetEditor:refreshAsset", assetUpdate);
             deferred.done(function () {
                 if (!isVisibleAsset && assetUpdate.message) {
-                    JIRA.Issues.showNotification(assetUpdate.message, assetUpdate.key);
+                    JIRA.Issues.showNotification(assetUpdate.message, assetUpdate.sku);
                 }
             });
         } else {

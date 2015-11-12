@@ -652,8 +652,11 @@
     <Content Include="Content\js\app\modules\asset-nav\router-custom.js" />
     <Content Include="Content\js\app\modules\asset-nav\searchers\initSparklers.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-api.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-editor\app-module-no-inline.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-editor\app-module.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-editor\asset-editor.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-editor\controllers\edit-asset.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-editor\services\save-in-progress-manager.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-navigator-api.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-search-manager.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\app-module.js" />
@@ -666,6 +669,7 @@
     <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\legacy\async-data.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\legacy\view-asset-data.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\services\asset-loader.js" />
+    <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\services\metadata-service.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\views\asset\asset-body-layout.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\views\asset\asset-header-layout.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-viewer\views\asset\asset-layout.js" />
@@ -686,6 +690,10 @@
     <Content Include="Content\js\app\modules\asset-nav\switcher\query-switcher-view-model.js" />
     <Content Include="Content\js\app\modules\asset-nav\switcher\view.js" />
     <Content Include="Content\js\app\modules\asset-nav\util\async-data.js" />
+    <Content Include="Content\js\app\modules\asset-nav\util\model-utils.js" />
+    <Content Include="Content\js\app\modules\asset-nav\util\reasons.js" />
+    <Content Include="Content\js\app\modules\asset-nav\util\resize.js" />
+    <Content Include="Content\js\app\modules\asset-nav\util\types.js" />
     <Content Include="Content\js\app\modules\asset\controller.js" />
     <Content Include="Content\js\app\modules\asset\module.js" />
     <Content Include="Content\js\app\modules\asset\queries\basic_query.js" />

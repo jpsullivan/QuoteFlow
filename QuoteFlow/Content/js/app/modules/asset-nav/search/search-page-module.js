@@ -66,8 +66,8 @@ var SearchPageModule = Brace.Model.extend({
                 this.searchResults.updateAssetById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() });
 
                 // Replace URL if issue updated successfully
-                if (model.getKey()) {
-                    var state = this._getUpdateState({ selectedIssueKey: model.getKey() });
+                if (model.getSku()) {
+                    var state = this._getUpdateState({ selectedAssetSku: model.getSku() });
                     if (this._validateNavigate(state)) {
                         this.assetNavRouter.replaceState(state);
                     }
@@ -76,7 +76,7 @@ var SearchPageModule = Brace.Model.extend({
         }, this);
 
         QuoteFlow.application.vent.on("assetEditor:saveSuccess", function (props) {
-            this.searchResults.updateAssetById({ id: props.issueId, action: "inlineEdit" }, { filter: this.getFilter() });
+            this.searchResults.updateAssetById({ id: props.assetId, action: "inlineEdit" }, { filter: this.getFilter() });
         }, this);
 
         Utilities.initializeResizeHooks();
@@ -462,7 +462,7 @@ var SearchPageModule = Brace.Model.extend({
      */
     _deleteIssue: function (assetUpdate) {
         var isFullScreen = this.fullScreenAsset.isVisible(),
-            isVisibleAsset = assetUpdate.key == QuoteFlow.application.request("assetEditor:getAssetKey");
+            isVisibleAsset = assetUpdate.key == QuoteFlow.application.request("assetEditor:getAssetSku");
 
         if (!isFullScreen) {
             return this.searchResults.updateAsset(assetUpdate);
@@ -495,7 +495,7 @@ var SearchPageModule = Brace.Model.extend({
 
         var issueModuleIssue = new SimpleAsset({
             id: QuoteFlow.application.request("assetEditor:getAssetId"),
-            key: QuoteFlow.application.request("assetEditor:getAssetKey")
+            key: QuoteFlow.application.request("assetEditor:getAssetSku")
         });
 
         if (this.standalone) {
@@ -617,7 +617,7 @@ var SearchPageModule = Brace.Model.extend({
         this.update({
             jql: jql,
             startIndex: 0,
-            selectedIssueKey: null,
+            selectedAssetSku: null,
             searchId: _.uniqueId()
         });
     },
@@ -629,7 +629,7 @@ var SearchPageModule = Brace.Model.extend({
     discardFilterChanges: function () {
         this.update({
             jql: null,
-            selectedIssueKey: null
+            selectedAssetSku: null
         }, true);
     },
 
@@ -643,7 +643,7 @@ var SearchPageModule = Brace.Model.extend({
         };
 
         if (this.standalone) {
-            state.selectedIssueKey = QuoteFlow.application.request("assetEditor:getIssueKey");
+            state.selectedAssetSku = QuoteFlow.application.request("assetEditor:getAssetSku");
         } else {
             _.extend(state, this.search.getResults().getState());
         }
@@ -676,10 +676,10 @@ var SearchPageModule = Brace.Model.extend({
             jQuery.event.trigger("updateOffsets.popout");
         }, this)).fail(_.bind(function (xhr) {
             if (xhr.statusText !== "abort") {
-                if (xhr.status == 400 && options.selectedIssueKey) {
-                    this.reset({ selectedIssueKey: options.selectedIssueKey }, { replace: true });
+                if (xhr.status == 400 && options.selectedAssetSku) {
+                    this.reset({ selectedAssetSku: options.selectedAssetSku }, { replace: true });
                 } else {
-                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedIssueId"), this.searchResults.defaults));
+                    this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedAssetId"), this.searchResults.defaults));
                     this.issueTableSearchError(xhr);
                 }
             }
@@ -724,11 +724,11 @@ var SearchPageModule = Brace.Model.extend({
             searchPromise = this._doSearch(newState);
         } else {
             searchPromise = jQuery.Deferred().resolve();
-            if ("selectedIssueKey" in state) {
-                this.searchResults.selectAssetByKey(state.selectedIssueKey);
+            if ("selectedAssetSku" in state) {
+                this.searchResults.selectAssetByKey(state.selectedAssetSku);
             }
             // If an issue is selected, its position in the results determines the page and we can ignore startIndex.
-            if ("startIndex" in state && !state.selectedIssueKey) {
+            if ("startIndex" in state && !state.selectedAssetSku) {
                 this.searchResults.goToPage(state.startIndex);
             }
         }
@@ -753,7 +753,7 @@ var SearchPageModule = Brace.Model.extend({
 
     refreshSearch: function () {
         return this._doSearch(_.extend({}, this.getState(), {
-            selectedIssueKey: undefined
+            selectedAssetSku: undefined
         }));
     },
 
@@ -809,8 +809,8 @@ var SearchPageModule = Brace.Model.extend({
         this.set(this.defaults());
         this.standalone = true;
         this.fullScreenAsset.show({
-            key: state.selectedIssueKey,
-            viewIssueQuery: state.viewIssueQuery
+            key: state.selectedAssetSku,
+            viewAssetQuery: state.viewAssetQuery
         });
     },
 
@@ -916,8 +916,8 @@ var SearchPageModule = Brace.Model.extend({
 
     /**
      * @param {Object} issueProps. Either id or key needs to be present.
-     * @param issueProps.issueId
-     * @param issueProps.issueKey
+     * @param issueProps.assetId
+     * @param issueProps.assetSku
      */
     setAsInaccessible: function (issueProps) {
         this.issueTableModule.setAsInaccessible(issueProps);
@@ -925,8 +925,8 @@ var SearchPageModule = Brace.Model.extend({
 
     /**
      * @param {Object|null} issueProps. If null/undefined, use currently selected issue.
-     * @param issueProps.issueId
-     * @param issueProps.issueKey
+     * @param issueProps.assetId
+     * @param issueProps.assetSku
      */
     showInlineIssueLoadError: function (issueProps) {
         var html = JIRA.Components.IssueViewer.Templates.Body.errorsLoading();

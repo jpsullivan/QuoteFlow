@@ -1,9 +1,12 @@
 "use strict";
 
 var _ = require('underscore');
-var AssetViewer = require('../asset-viewer/asset-viewer');
+var MarionetteMixins = require('../../../../mixins/marionette');
 
+var AssetViewer = require('../asset-viewer/asset-viewer');
+var EditAssetController = require('./controllers/edit-asset');
 var EventTypes = require('../../util/types');
+var SaveInProgressManager = require('./services/save-in-progress-manager');
 
 var AssetEditor = AssetViewer.extend({
     namedEvents: [
@@ -77,27 +80,27 @@ var AssetEditor = AssetViewer.extend({
         this.listenTo(this.fieldsLoader, "fieldsLoaded", function(result) {
             this.viewIssueData.updateIssue(result.assetSku, result);
 
-            // Ensure issueID is a number, otherwise some checks might fail
+            // Ensure assetID is a number, otherwise some checks might fail
             result.assetId = Number(result.assetId);
 
             var editable = result.fields && result.fields.length;
             if (editable) {
-                this.editIssueController.update(result);
+                this.editAssetController.update(result);
             } else {
-                this.editIssueController.reset();
+                this.editAssetController.reset();
             }
 
-            JIRA.trace("jira.issue.fields.loaded", {id: result.assetId});
+            QuoteFlow.trace("quoteflow.asset.fields.loaded", {id: result.assetId});
         });
 
         this.listenTo(this.fieldsLoader, "fieldsError", function(result) {
             this.fieldsController.showError(result.errorCollection, result.isTimeout);
-            JIRA.trace("jira.issue.fields.loaded", {id: result.assetId});
+            QuoteFlow.trace("quoteflow.asset.fields.loaded", {id: result.assetId});
         });
     },
 
     _buildIssueSaver: function() {
-        this.saveInProgressManager = new JIRA.Components.IssueEditor.Services.SaveInProgressManager();
+        this.saveInProgressManager = new SaveInProgressManager();
 
         this.issueSaver = new JIRA.Components.IssueEditor.Services.IssueSaver({
             saveInProgressManager: this.saveInProgressManager,
@@ -125,7 +128,7 @@ var AssetEditor = AssetViewer.extend({
             // if no longer editable, reload our model
             var isEditable = response && response.fields && response.fields.length;
             if (!isEditable && response) {
-                this.editIssueController.reset();
+                this.editAssetController.reset();
                 this.model.update(response, {
                     fieldsSaved: [],
                     fieldsInProgress: []
@@ -138,7 +141,7 @@ var AssetEditor = AssetViewer.extend({
                 deferred: false
             });
 
-            JIRA.trace("jira.issue.refreshed", {id: assetId});
+            QuoteFlow.trace("quoteflow.asset.refreshed", {id: assetId});
         });
 
         this.listenTo(this.issueSaver, "saveStarted", function(assetId, savedFieldIds) {
@@ -162,31 +165,31 @@ var AssetEditor = AssetViewer.extend({
                 // Update the model with the new data, including the list of fields still in progress
                 this.model.update(response, {
                     fieldsSaved: savedFieldIds,
-                    fieldsInProgress: this.editIssueController.getEditsInProgress()
+                    fieldsInProgress: this.editAssetController.getEditsInProgress()
                 });
 
-                JIRA.trace("jira.psycho.issue.refreshed", {id: assetId});
+                QuoteFlow.trace("quoteflow.psycho.issue.refreshed", {id: assetId});
 
                 // Don't check for the meta value if the page is standalone view issue page
                 // because it doesn't exist
                 var editable = response.fields && response.fields.length;
                 if (editable) {
-                    this.editIssueController.update({
+                    this.editAssetController.update({
                         fields: response.fields,
                         assetId: assetId,
                         assetSku: assetSku
                     }, {
                         editable: true,
-                        editIssueController: this.editIssueController,
+                        editAssetController: this.editAssetController,
                         issueModel: this.model,
                         assetId: assetId,
                         fieldsSaved: savedFieldIds,
                         initialize: false,
-                        fieldsInProgress: this.editIssueController.getEditsInProgress()
+                        fieldsInProgress: this.editAssetController.getEditsInProgress()
                     });
                 }
 
-                QuoteFlow.trace("jira.issue.refreshed", {id: assetId});
+                QuoteFlow.trace("quoteflow.asset.refreshed", {id: assetId});
             }
             this.trigger("saveSuccess", {
                 assetId: assetId,
@@ -198,17 +201,17 @@ var AssetEditor = AssetViewer.extend({
     },
 
     _buildEditIssueController: function() {
-        this.editIssueController = new JIRA.Components.IssueEditor.Controllers.EditIssue({
+        this.editAssetController = new EditAssetController({
             issueEventBus: this.eventBus
         });
-        this.listenTo(this.editIssueController, "save", function(assetId, assetSku, toSaveIds, params, ajaxProperties) {
+        this.listenTo(this.editAssetController, "save", function(assetId, assetSku, toSaveIds, params, ajaxProperties) {
             //Make sure we don't skip the SaveIssueHandler
             //While the save request is being processed, this handler will be set to being skipped if the ViewIssue
             //module has been closed
             this.issueSaver.setSkipSaveIssueSuccessHandler(false);
             this.issueSaver.save(assetId, assetSku, toSaveIds, params, ajaxProperties);
         });
-        this.listenAndRethrow(this.editIssueController, "editField");
+        this.listenAndRethrow(this.editAssetController, "editField");
     },
 
     _buildFieldsController: function() {
@@ -229,7 +232,7 @@ var AssetEditor = AssetViewer.extend({
 
         var initialize = !meta.mergeIntoCurrent && options.initialize !== false;
         if (!meta.isUpdate || initialize) {
-            this.editIssueController.reset();
+            this.editAssetController.reset();
         }
         AssetViewer.prototype._onAssetLoaded.call(this, data, meta, options);
 
@@ -237,7 +240,7 @@ var AssetEditor = AssetViewer.extend({
         // This needs to be done after calling the original onIssueLoaded, as that method can reset
         // the editIssue controller
         if (data.fields) {
-            this.editIssueController.update({
+            this.editAssetController.update({
                 fields: data.fields,
                 assetId: data.asset.id,
                 assetSku: data.asset.sku
@@ -249,7 +252,7 @@ var AssetEditor = AssetViewer.extend({
     _handleUnload: function() {
         var unloadHandler = _.bind(function() {
             var result;
-            if (this.editIssueController.getDirtyEditsInProgress().length > 0) {
+            if (this.editAssetController.getDirtyEditsInProgress().length > 0) {
                 result = AJS.I18n.getText("viewissue.editing.leave");
             }
             return result;
@@ -263,17 +266,17 @@ var AssetEditor = AssetViewer.extend({
     },
 
     _updateModel: function(data, options) {
-        // Update editIssueController when whe update the model
+        // Update editAssetController when whe update the model
         var editable = data.fields && data.fields.length;
         if (editable) {
-            this.editIssueController.update(data.fields, {
-                fieldsInProgress: this.editIssueController.getEditsInProgress(),
+            this.editAssetController.update(data.fields, {
+                fieldsInProgress: this.editAssetController.getEditsInProgress(),
                 changed: options.changed
             });
         }
 
         options = _.extend({}, options, {
-            fieldsInProgress: this.editIssueController.getEditsInProgress()
+            fieldsInProgress: this.editAssetController.getEditsInProgress()
         });
         AssetViewer.prototype._updateModel.call(this, data, options);
     },
@@ -281,8 +284,8 @@ var AssetEditor = AssetViewer.extend({
     _loadIssueFromDom: function(assetEntity) {
         if (AJS.Meta.get("server-view-issue-is-editable")) {
             // Edit Issue Controller
-            this.editIssueController.setIssueId(assetEntity.id);
-            this.editIssueController.setIssueKey(assetEntity.sku);
+            this.editAssetController.setIssueId(assetEntity.id);
+            this.editAssetController.setIssueKey(assetEntity.sku);
 
             this.fieldsLoader.load({
                 viewIssueData: this.viewIssueData,
@@ -349,17 +352,17 @@ var AssetEditor = AssetViewer.extend({
      * @param {element} container The container the issue should be rendered into.
      */
     setContainer: function(container) {
-        this.editIssueController.setIssueViewContext(container);
+        this.editAssetController.setIssueViewContext(container);
         AssetViewer.prototype.setContainer.call(this, container);
     },
 
     dismiss: function() {
-        this.editIssueController.reset();
+        this.editAssetController.reset();
         AssetViewer.prototype.dismiss.call(this);
     },
 
     getFields: function() {
-        return this.editIssueController.getFields();
+        return this.editAssetController.getFields();
     },
 
     hasSavesInProgress: function() {

@@ -27,7 +27,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     /**
      * @param {object} options
      * @param {JIRA.Issues.FullScreenIssue} options.fullScreenIssue The application's <tt>FullScreenIssue</tt>.
-     * @param {JIRA.Components.IssueViewer} options.issueModule The application's <tt>IssueModule</tt>.
+     * @param {JIRA.Components.IssueViewer} options.assetModule The application's <tt>AssetModule</tt>.
      * @param {JIRA.Issues.SearchModule} options.search The layout's interface to the rest of the application.
      * @param {jQuery} options.searchContainer The element in which search results are to be rendered.
      */
@@ -75,7 +75,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this.listenTo(this.searchResults, "change:resultsId", this.render, this);
         this.listenTo(this.searchResults, "startIndexChange", this._onStartIndexChange, this);
         this.listenTo(this.searchResults, "highlightedAssetChange", this._onHighlightedAssetChange, this);
-        this.listenTo(this.searchResults, "selectedIssueChange", this._onSelectedIssueChange, this);
+        this.listenTo(this.searchResults, "selectedAssetChange", this._onSelectedAssetChange, this);
         this.listenTo(this.searchResults, "startIndexChange", this._renderEverythingExceptListView, this);
         this.search.onSearchError(this._onSearchFail, this);
 
@@ -204,7 +204,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             delete this._scrollLayoutOnZoom;
         }
 
-        //If the selected issue is not in the list of downloaded assets go to first asset in page.
+        //If the selected asset is not in the list of downloaded assets go to first asset in page.
         if (!this.searchResults.hasAsset(this.searchResults.getSelectedAsset().get('id'))) {
             this.searchResults.selectFirstInPage();
         }
@@ -279,11 +279,11 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     /**
-     * Synchronise the highlighted and selected issue.
+     * Synchronise the highlighted and selected asset.
      *
-     * @param {JIRA.Issues.SimpleIssue} model The application's highlighted issue model.
+     * @param {JIRA.Issues.SimpleIssue} model The application's highlighted asset model.
      * @param {object} [options]
-     * @param {boolean} [options.replace=true] Whether selecting the issue should be a "replace" operation.
+     * @param {boolean} [options.replace=true] Whether selecting the asset should be a "replace" operation.
      * @private
      */
     _onHighlightedAssetChange: function (model, options) {
@@ -296,13 +296,13 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     /**
-     * Render the issue list or empty results message after issue deletion.
+     * Render the asset list or empty results message after asset deletion.
      *
      * @private
      */
-    _onAssetDeleted: function (issue) {
-        //Locally hide the issue to be deleted immediately so there is no delay in the UI before the new issue table
-        this.listView.getAssetById(issue.id).hide();
+    _onAssetDeleted: function (asset) {
+        //Locally hide the asset to be deleted immediately so there is no delay in the UI before the new asset table
+        this.listView.getAssetById(asset.id).hide();
         this._showPending();
         if (this.searchResults.hasAssets()) {
             this.listView.render();
@@ -315,19 +315,19 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     /**
-     * Handle the failure to load an issue.
+     * Handle the failure to load an asset.
      * <p/>
-     * Update the issue list, etc.
+     * Update the asset list, etc.
      *
      * @param {object} entity
-     * @param {number} entity.issueId The issue's ID.
-     * @param {string} entity.issueKey The issue's key.
+     * @param {number} entity.assetId The asset's ID.
+     * @param {string} entity.assetSku The asset's SKU.
      * @param {object} entity.pager Pager data.
      * @param {object} entity.response The data returned from the cache/server.
      */
-    _onIssueLoadError: function (entity) {
+    _onAssetLoadError: function (entity) {
         if (entity.response.status === 404) {
-            this.listView.markIssueInaccessible(entity.issueId);
+            this.listView.markAssetInaccessible(entity.assetId);
         }
     },
 
@@ -336,8 +336,8 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this._hidePending();
     },
 
-    _onSelectedIssueChange: function () {
-        this._setIssueModuleContainer();
+    _onSelectedAssetChange: function () {
+        this._setAssetModuleContainer();
     },
 
     _onStartIndexChange: function () {
@@ -398,7 +398,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             this.navigatorContent.removeClass("empty-results");
 
             // if this is the initial render then we need to create the structure for the list and details view
-            // to render into before handling initial issue selection.
+            // to render into before handling initial asset selection.
             if (isInitialRender) {
                 this.$el.children().detach();
                 this.$el.html(JST["quote-builder/split-view/structure"]());
@@ -484,11 +484,11 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     /**
-     * Set the issue container element so issues render correctly.
+     * Set the asset container element so assets render correctly.
      *
      * @private
      */
-    _setIssueModuleContainer: function () {
+    _setAssetModuleContainer: function () {
         QuoteFlow.application.execute("assetEditor:setContainer", this.$(".split-view .detail-panel > div"));
     },
 
@@ -505,7 +505,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this.detailsView.setElement(this.$(".detail-panel")).activate();
         this.orderBy.setElement(this.$('.list-ordering'));
         this.listView.setElement(this.$(".list-content"));
-        this._setIssueModuleContainer();
+        this._setAssetModuleContainer();
     },
 
     handleLeft: function () {
@@ -516,7 +516,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this.detailsView.focus();
     },
 
-    isIssueViewActive: function () {
+    isAssetViewActive: function () {
         return this.detailsView.hasFocus();
     }
 });

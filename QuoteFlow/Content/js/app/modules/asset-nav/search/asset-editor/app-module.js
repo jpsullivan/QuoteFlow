@@ -22,7 +22,7 @@ var AssetEditorAppModule = AssetViewerAppModule.extend({
         var viewerCommands = AssetViewerAppModule.prototype.commands.call(this, module);
         return _.extend(viewerCommands, {
             "editField": true
-        })
+        });
     },
 
     requests: function(module) {

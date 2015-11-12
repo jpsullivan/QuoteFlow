@@ -26,7 +26,7 @@ var AssetNavController = Marionette.Controller.extend({
             initialIssueTableState: options.initialIssueTableState,
             initialSearcherCollectionState: options.initialSearcherCollectionState,
             initialSessionSearchState: options.initialSessionSearchState,
-            initialSelectedIssue: options.selectedIssue,
+            initialSelectedIssue: options.selectedAsset,
             initialIssueIds: options.initialIssueIds,
             systemFilters: options.systemFilters
         });
@@ -103,7 +103,7 @@ var AssetNavController = Marionette.Controller.extend({
         }
 
         var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
-        var selectedIssue = $navigatorContent.data("selected-issue");
+        var selectedAsset = $navigatorContent.data("selected-issue");
 
         var criteriaJson = jQuery("#criteriaJson").text();
         var systemFiltersJson = jQuery("#systemFiltersJson").text();
@@ -112,9 +112,9 @@ var AssetNavController = Marionette.Controller.extend({
         var systemFilters = _.isEmpty(systemFiltersJson) ? null : JSON.parse(systemFiltersJson);
 
         var options = _.extend({}, {
-            initialIssueTableState: initialIssueTableState,
-            initialIssueIds: initialIssueIds,
-            selectedIssue: selectedIssue,
+            initialAssetTableState: initialIssueTableState,
+            initialAssetIds: initialIssueIds,
+            selectedAsset: selectedAsset,
             initialSearcherCollectionState: initialSearcherCollectionState,
             initialSessionSearchState: initialSessionSearchState,
             systemFilters: systemFilters

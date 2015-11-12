@@ -3,7 +3,7 @@
         {{#if serverRenderedViewAsset}}
             {{#each panels.leftPanels}}
             {{#if renderHeader}}
-                <div id={{id}} class="module toggle-wrap">
+                <div id="{{id}}" class="module toggle-wrap">
                     <div id="{{id}}_heading" class="mod-header">
                         <ul class="ops">
                             {{#each headerLinks.links}}
@@ -22,14 +22,14 @@
                                 </a>
                             </li>
                             {{/each}}
-                        {{#if headerLinks.groups}}
+                            {{#if headerLinks.groups}}
                             <li class="drop">
                                 <div class="aui-dd-parent">
                                     <a href="#" class="icon drop-menu js-default-dropdown" title="Options">
                                         <span>Options</span>
                                     </a>
                                     <div class="aui-dropdown-content aui-list">
-                                        {{each headerLinks.groups}}
+                                        {{#each headerLinks.groups}}
                                         <h5>{{header.label}}</h5>
                                         <ul id="{{header.id}}" class="aui-list-section">
                                             {{#each group.links}}

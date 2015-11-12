@@ -14,7 +14,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
     template: JST["quote-builder/split-view/asset-list"],
 
     events: {
-        "simpleClick .issue-list li": "_onClickAsset"
+        "click .issue-list li": "_onClickAsset"
     },
 
     /**
@@ -125,7 +125,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
      *
      * @param {number} id The asset ID.
      */
-    markIssueInaccessible: function (id) {
+    markAssetInaccessible: function (id) {
         this.getAssetById(id).replaceWith(this.inaccessibleIssueRowTemplate({
             isHighlighted: this.searchResults.getHighlightedAsset().getId() === id,
             assetId: id
@@ -143,7 +143,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
 
     _onAssetUpdated: function (id, entity) {
         if (entity.table[0] === null) {
-            this.markIssueInaccessible(id);
+            this.markAssetInaccessible(id);
         } else {
             this.getAssetById(id).html(JIRA.Templates.SplitView.issueRow(entity.table[0]));
         }

@@ -141,9 +141,9 @@ var EnhanceLinks = {
 
             var searchResults = options.searchPageModule.searchResults;
 
-            var issueKey = AJS.$(e.target).closest("a").data("issue-key");
-            var issueIdAsString = searchResults._getIssueIdForKey(issueKey);
-            var issueId = parseInt(issueIdAsString, 10);
+            var assetSku = AJS.$(e.target).closest("a").data("asset-sku");
+            var assetIdAsString = searchResults._getAssetIdForKey(assetSku);
+            var assetId = parseInt(assetIdAsString, 10);
 
             // Check if it is a link from the results table
             var isFromResultsTable = AJS.$(e.target).is(issueFromTableSelector);
@@ -151,17 +151,17 @@ var EnhanceLinks = {
             var isIssueTableDropdown = EnhanceLinks.isIssueTableDropdown(issueFromTableSelector);
             if ((isFromResultsTable && !isLinkToParentIssue) || isIssueTableDropdown) {
                 QuoteFlow.application.execute("analytics:trigger", "kickass.openIssueFromTable", {
-                    issueId: issueIdAsString,
+                    assetId: assetIdAsString,
                     // these are 1-based indices
-                    absolutePosition: searchResults.getPositionOfIssueInSearchResults(issueId) + 1,
-                    relativePosition: searchResults.getPositionOfIssueInPage(issueId) + 1
+                    absolutePosition: searchResults.getPositionOfIssueInSearchResults(assetId) + 1,
+                    relativePosition: searchResults.getPositionOfIssueInPage(assetId) + 1
                 });
                 options.searchPageModule.update({
-                    selectedIssueKey: issueKey
+                    selectedAssetSku: assetSku
                 });
             } else {
                 options.searchPageModule.reset({
-                    selectedIssueKey: issueKey
+                    selectedAssetSku: assetSku
                 });
             }
         });

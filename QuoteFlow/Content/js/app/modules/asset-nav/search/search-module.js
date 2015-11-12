@@ -34,7 +34,7 @@ var SearchModule = Brace.Evented.extend({
             this._searchPageModule.update({
                 jql: jql,
                 startIndex: null,
-                selectedIssueKey: null
+                selectedAssetSku: null
             }, true);
         }
     },
@@ -73,7 +73,7 @@ var SearchModule = Brace.Evented.extend({
      */
     isStandAloneAsset: function (state) {
         state = state || this._searchPageModule.getState();
-        return !!state.selectedIssueKey && !_.isString(state.jql) && !state.filter;
+        return !!state.selectedAssetSku && !_.isString(state.jql) && !state.filter;
     },
 
     /**

@@ -133,7 +133,14 @@ var AssetController = Marionette.Controller.extend({
             this.bodyView.rightPanels.show(this.rightPanelsView);
             this.bodyView.infoPanels.show(this.infoPanelsView);
 
-            this.trigger("render", {pager: this.view.$(this.headerView.pager.el)}, {loadedFromDom: false, issueId: this.model.getId()});
+            this.trigger("render",
+            {
+                pager: this.view.$(this.headerView.pager.el)
+            },
+            {
+                loadedFromDom: false,
+                assetId: this.model.getId()
+            });
         });
     },
 
@@ -168,7 +175,12 @@ var AssetController = Marionette.Controller.extend({
             updateRegionFromDom(this.bodyView.rightPanels, this.rightPanelsView, this.bodyView.$el.find(this.bodyView.rightPanels.el));
             updateRegionFromDom(this.bodyView.infoPanels, this.infoPanelsView, this.bodyView.$el.find(this.bodyView.infoPanels.el));
 
-            this.trigger("render", {pager: this.view.$(this.headerView.pager.el)}, {loadedFromDom: true, issueId: this.model.getId()});
+            this.trigger("render", {
+                pager: this.view.$(this.headerView.pager.el)
+            }, {
+                loadedFromDom: true,
+                assetId: this.model.getId()
+            });
         });
     },
 
@@ -204,7 +216,13 @@ var AssetController = Marionette.Controller.extend({
             this.createView();
             this.view.render();
         } else {
-            this.trigger("render", {pager: this.view.$(this.headerView.pager.el)}, {loadedFromDom: false, issueId: this.model.getId()});
+            this.trigger("render", {
+                pager: this.view.$(this.headerView.pager.el)
+            }, {
+                loadedFromDom: false,
+                assetId:
+                this.model.getId()
+            });
         }
         this.view.hideLoading();
 

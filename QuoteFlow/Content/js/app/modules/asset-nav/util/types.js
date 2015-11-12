@@ -5,10 +5,11 @@
  */
 var EventTypes = {
 	ASSET_REFRESHED: "assetRefreshed",
-	NEW_CONTENT_ADDED: "newContentAdded",
-	REFRESH_TOGGLE_BLOCKS: "refreshToggleBlocks",
 	CHECKBOXMULTISELECT_READY: "checkboxMultiSelectReady",
-	LAYOUT_RENDERED: "layoutRendered"
+	INLINE_EDIT_SAVE_COMPLETE: "inlineEditSaveComplete",
+	LAYOUT_RENDERED: "layoutRendered",
+	NEW_CONTENT_ADDED: "newContentAdded",
+	REFRESH_TOGGLE_BLOCKS: "refreshToggleBlocks"
 };
 
 module.exports = EventTypes;
