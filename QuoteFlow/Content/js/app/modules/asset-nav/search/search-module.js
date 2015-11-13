@@ -8,12 +8,13 @@ var SearchResults = require('./search-results');
  *
  */
 var SearchModule = Brace.Evented.extend({
+
     initialize: function (options) {
         this._assetSearchManager = options.assetSearchManager;
         this._searchPageModule = options.searchPageModule;
         this._searchResults = new SearchResults(null, {
             assetSearchManager: this._assetSearchManager,
-            initialSelectedIssue: options.initialSelectedIssue,
+            initialSelectedAsset: options.initialSelectedAsset,
             columnConfig: this._searchPageModule.columnConfig
         });
 
@@ -64,7 +65,7 @@ var SearchModule = Brace.Evented.extend({
         return {
             jql: this.getJql(),
             filterId: this.getFilterId()
-        }
+        };
     },
 
     /**
@@ -83,7 +84,8 @@ var SearchModule = Brace.Evented.extend({
      * @param {object} context The context in which to execute.
      */
     onBeforeSearch: function (callback, context) {
-        this._assetSearchManager.bindBeforeSearch(callback, context);
+        this._assetSearchManager.on("beforeSearch", callback, context);
+        //this._assetSearchManager.bindBeforeSearch(callback, context);
     },
 
     /**
@@ -93,7 +95,8 @@ var SearchModule = Brace.Evented.extend({
      * @param {object} context The callback's context.
      */
     offBeforeSearch: function (callback, context) {
-        this._assetSearchManager.unbindBeforeSearch(callback, context);
+        this._assetSearchManager.off("beforeSearch", callback, context);
+        //this._assetSearchManager.unbindBeforeSearch(callback, context);
     },
 
     /**

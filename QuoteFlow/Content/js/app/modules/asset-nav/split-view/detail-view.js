@@ -83,7 +83,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
             instance.focused = false;
         });
 
-        this.listenTo(this.searchResults, "selectedAssetChange", this.render, this);
+        this.listenTo(this.searchResults, "change:selectedAsset", this.render, this);
         this.listenTo(this.searchResults, "assetUpdated", this.onAssetUpdated, this);
         this.listenTo(this.searchResults, "assetDoesNotExist", this._onAssetDoesNotExist, this);
 

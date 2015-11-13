@@ -23,17 +23,19 @@ var AssetNavController = Marionette.Controller.extend({
 
         var options = this.initOptions();
         var creator = AssetNavCreator.create(AJS.$(document), {
-            initialIssueTableState: options.initialIssueTableState,
+            initialAssetTableState: options.initialAssetTableState,
             initialSearcherCollectionState: options.initialSearcherCollectionState,
             initialSessionSearchState: options.initialSessionSearchState,
-            initialSelectedIssue: options.selectedAsset,
-            initialIssueIds: options.initialIssueIds,
+            initialSelectedAsset: options.selectedAsset,
+            initialAssetIds: options.initialAssetIds,
             systemFilters: options.systemFilters
         });
 
         /**
-         * Some shenanigans to get get table to resize with window gracefully. Sets the width of the issue navigator results
-         * wrapper. Keeps the right hand page elements within the browser view when the results table is wider than the browser view.
+         * Some shenanigans to get get table to resize with window gracefully.
+         * Sets the width of the asset navigator results wrapper.
+         * Keeps the right hand page elements within the browser view when the
+         * results table is wider than the browser view.
          */
         var bodyMinWidth = parseInt(jQuery('body').css('minWidth'), 10);
         jQuery(document).bind('resultsWidthChanged', function () {
@@ -57,7 +59,7 @@ var AssetNavController = Marionette.Controller.extend({
        AJS.$(document).trigger("resultsWidthChanged");
 
        QuoteFlow.Interactive.onVerticalResize(function () {
-           jQuery.event.trigger("updateOffsets.popout");
+           $.event.trigger("updateOffsets.popout");
        });
 
     //    // When switching layouts we need to update the height of sidebar
@@ -96,13 +98,13 @@ var AssetNavController = Marionette.Controller.extend({
          * This prevents us from having to populate the HTML twice in the dom. Once in the HTML and another time in the
          * JSON. It also prevents us needing to ensure there are no XSS vulnerabilities in the JSON HTML string.
          */
-        var initialIssueTableState = $navigatorContent.data("issue-table-model-state");
-        if (initialIssueTableState && !initialIssueTableState.table) {
+        var initialAssetTableState = $navigatorContent.data("issue-table-model-state");
+        if (initialAssetTableState && !initialAssetTableState.table) {
             var wrapper = AJS.$("<div></div>").append($navigatorContent.children().clone());
-            initialIssueTableState.table = wrapper.html();
+            initialAssetTableState.table = wrapper.html();
         }
 
-        var initialIssueIds = AJS.$('#stableSearchIds').data('ids');
+        var initialAssetIds = AJS.$('#stableSearchIds').data('ids');
         var selectedAsset = $navigatorContent.data("selected-issue");
 
         var criteriaJson = jQuery("#criteriaJson").text();
@@ -112,8 +114,8 @@ var AssetNavController = Marionette.Controller.extend({
         var systemFilters = _.isEmpty(systemFiltersJson) ? null : JSON.parse(systemFiltersJson);
 
         var options = _.extend({}, {
-            initialAssetTableState: initialIssueTableState,
-            initialAssetIds: initialIssueIds,
+            initialAssetTableState: initialAssetTableState,
+            initialAssetIds: initialAssetIds,
             selectedAsset: selectedAsset,
             initialSearcherCollectionState: initialSearcherCollectionState,
             initialSessionSearchState: initialSessionSearchState,

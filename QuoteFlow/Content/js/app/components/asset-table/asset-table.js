@@ -6,7 +6,7 @@ var AssetTableController = require('./controllers/asset-table');
 var TableView = require('../table/asset-table-view');
 
 /**
- * 
+ *
  */
 var AssetTable = Marionette.Controller.extend({
 

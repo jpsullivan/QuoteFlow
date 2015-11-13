@@ -23,7 +23,7 @@ var AssetNavCreator = {
 
     create: function($el, options) {
         var searchPageModule = this.searchPageModule = new SearchPageModule({}, {
-          initialIssueTableState: options.initialIssueTableState
+          initialAssetTableState: options.initialAssetTableState
         });
         searchPageModule.registerViewContainers({
             assetContainer: $(".issue-container"),
@@ -83,16 +83,16 @@ var AssetNavCreator = {
 
         //FocusShifter.init();
 
-        var issueSearchManager = new AssetSearchManager({
-            initialIssueTableState: options.initialIssueTableState,
-            initialIssueIds: options.initialIssueIds
+        var assetSearchManager = new AssetSearchManager({
+            initialAssetTableState: options.initialAssetTableState,
+            initialAssetIds: options.initialAssetIds
         });
 
         var searchModule = new SearchModule({
             searchPageModule: searchPageModule,
             queryModule: queryModule,
-            assetSearchManager: issueSearchManager,
-            initialSelectedIssue: options.initialSelectedIssue
+            assetSearchManager: assetSearchManager,
+            initialSelectedAsset: options.initialSelectedAsset
         });
 
 //        var viewIssueData = issueModule.viewAssetData;
@@ -120,7 +120,7 @@ var AssetNavCreator = {
         searchPageModule.registerQueryModule(queryModule);
 
         searchPageModule.registerFullScreenAsset(fullScreenIssue);
-        searchPageModule.registerIssueSearchManager(issueSearchManager);
+        searchPageModule.registerIssueSearchManager(assetSearchManager);
         searchPageModule.registerIssueCacheManager(issueCacheManager);
         //searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
 

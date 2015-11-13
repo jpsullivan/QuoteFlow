@@ -68,15 +68,15 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         QuoteFlow.Interactive.onHorizontalResize(this._updateSidebarPosition);
         QuoteFlow.Interactive.onVerticalResize(this._updateSidebarPosition);
 
-        this.listenTo(options.search, "beforeSearch", this._showPending, this);
-        this.listenTo(this.searchResults, "assetDeleted", this._onAssetDeleted, this);
+        this.addListener(options.search, "beforeSearch", this._showPending, this);
+        this.addListener(this.searchResults, "assetDeleted", this._onAssetDeleted, this);
         this.listenTo(this.searchResults, "change:resultsId", this._hidePending, this);
         this.listenTo(this.searchResults, "change:resultsId", this._updateSortBy, this);
         this.listenTo(this.searchResults, "change:resultsId", this.render, this);
-        this.listenTo(this.searchResults, "startIndexChange", this._onStartIndexChange, this);
-        this.listenTo(this.searchResults, "highlightedAssetChange", this._onHighlightedAssetChange, this);
-        this.listenTo(this.searchResults, "selectedAssetChange", this._onSelectedAssetChange, this);
-        this.listenTo(this.searchResults, "startIndexChange", this._renderEverythingExceptListView, this);
+        this.addListener(this.searchResults, "startIndexChange", this._onStartIndexChange, this);
+        this.addListener(this.searchResults, "highlightedAssetChange", this._onHighlightedAssetChange, this);
+        this.addListener(this.searchResults, "selectedAssetChange", this._onSelectedAssetChange, this);
+        this.addListener(this.searchResults, "startIndexChange", this._renderEverythingExceptListView, this);
         this.search.onSearchError(this._onSearchFail, this);
 
         QuoteFlow.application.on("assetEditor:loadError", this._onIssueLoadError, this);

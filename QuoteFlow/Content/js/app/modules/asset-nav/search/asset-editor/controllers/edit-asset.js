@@ -326,4 +326,4 @@ var EditAssetController = Brace.Model.extend({
             }
         }
     });
-});
+});m,
