@@ -260,18 +260,18 @@ var AssetController = Marionette.Controller.extend({
      */
     canDismissComment: function () {
         var dirtyMessage;
-        var commentForm = JIRA.Issue.CommentForm;
-        if (!commentForm.getForm().data("dismissed")) {
-            dirtyMessage = commentForm.handleBrowseAway();
-            if (dirtyMessage) {
-                if (!confirm(dirtyMessage)) {
-                    commentForm.focus();
-                    return false;
-                } else {
-                    commentForm.getForm().data("dismissed", true);
-                }
-            }
-        }
+        // var commentForm = JIRA.Issue.CommentForm;
+        // if (!commentForm.getForm().data("dismissed")) {
+        //     dirtyMessage = commentForm.handleBrowseAway();
+        //     if (dirtyMessage) {
+        //         if (!confirm(dirtyMessage)) {
+        //             commentForm.focus();
+        //             return false;
+        //         } else {
+        //             commentForm.getForm().data("dismissed", true);
+        //         }
+        //     }
+        // }
         return true;
     }
 });

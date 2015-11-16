@@ -70,9 +70,9 @@ var SplitScreenLayout = Marionette.ItemView.extend({
 
         this.addListener(options.search, "beforeSearch", this._showPending, this);
         this.addListener(this.searchResults, "assetDeleted", this._onAssetDeleted, this);
-        this.listenTo(this.searchResults, "change:resultsId", this._hidePending, this);
-        this.listenTo(this.searchResults, "change:resultsId", this._updateSortBy, this);
-        this.listenTo(this.searchResults, "change:resultsId", this.render, this);
+        this.addListener(this.searchResults, "newPayload", this._hidePending, this);
+        this.addListener(this.searchResults, "newPayload", this._updateSortBy, this);
+        this.addListener(this.searchResults, "newPayload", this.render, this);
         this.addListener(this.searchResults, "startIndexChange", this._onStartIndexChange, this);
         this.addListener(this.searchResults, "highlightedAssetChange", this._onHighlightedAssetChange, this);
         this.addListener(this.searchResults, "selectedAssetChange", this._onSelectedAssetChange, this);
@@ -408,7 +408,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             this._renderEndOfStableSearch();
             this._renderRefreshResults();
             this._activateSubviews();
-            //this.detailsView.render();
+            this.detailsView.render();
             this.listView.render();
         } else {
             this._hidePending();

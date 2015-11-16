@@ -281,11 +281,12 @@ var AssetEditor = AssetViewer.extend({
         AssetViewer.prototype._updateModel.call(this, data, options);
     },
 
-    _loadIssueFromDom: function(assetEntity) {
+    _loadAssetFromDom: function(assetEntity) {
+        debugger;
         if (AJS.Meta.get("server-view-issue-is-editable")) {
             // Edit Issue Controller
-            this.editAssetController.setIssueId(assetEntity.id);
-            this.editAssetController.setIssueKey(assetEntity.sku);
+            this.editAssetController.setAssetId(assetEntity.id);
+            this.editAssetController.setAssetSku(assetEntity.sku);
 
             this.fieldsLoader.load({
                 viewIssueData: this.viewIssueData,

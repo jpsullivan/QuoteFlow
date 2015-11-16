@@ -83,9 +83,9 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
             instance.focused = false;
         });
 
-        this.listenTo(this.searchResults, "change:selectedAsset", this.render, this);
-        this.listenTo(this.searchResults, "assetUpdated", this.onAssetUpdated, this);
-        this.listenTo(this.searchResults, "assetDoesNotExist", this._onAssetDoesNotExist, this);
+        this.addListener(this.searchResults, "selectedAssetChange", this.render, this);
+        this.addListener(this.searchResults, "assetUpdated", this.onAssetUpdated, this);
+        this.addListener(this.searchResults, "assetDoesNotExist", this._onAssetDoesNotExist, this);
 
         QuoteFlow.bind(EventTypes.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
 
@@ -134,7 +134,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
 
     render: function (model, options) {
         options = options || {};
-        if (this.searchResults.hasAssets() && !this.search.isStandAloneAsset() && options.reason !== "issueLoaded") {
+        if (this.searchResults.hasAssets() && !this.search.isStandAloneAsset() && options.reason !== "assetLoaded") {
             if (this.searchResults.hasSelectedAsset()) {
                 QuoteFlow.application.execute("assetEditor:abortPending");
                 Utilities.debounce(this, "_renderAsset", this.searchResults.getSelectedAsset());
@@ -147,7 +147,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
     },
 
     _renderAsset: function (selectedAsset) {
-        QuoteFlow.application.request("assetEditor:loadIssue", {
+        QuoteFlow.application.request("assetEditor:loadAsset", {
             id: selectedAsset.get("id"),
             detailView: true
         }).always(_.bind(function () {

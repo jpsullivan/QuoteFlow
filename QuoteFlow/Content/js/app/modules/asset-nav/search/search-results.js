@@ -4,6 +4,7 @@ var _ = require('underscore');
 var Brace = require('backbone-brace');
 
 var ModelUtils = require('../util/model-utils');
+var NumberFormatter = require('../../../helpers/number-formatter/number-formatter');
 var SimpleAsset = require('./asset/simple-asset');
 
 /**
@@ -77,8 +78,8 @@ var SearchResults = Brace.Model.extend({
             var resultCount = this.getTotal();
             var stableSearchLimit = assetIds.length;
             var pager = {
-                position: JIRA.NumberFormatter.format(position + 1),
-                resultCount: JIRA.NumberFormatter.format(resultCount)
+                position: NumberFormatter.format(position + 1),
+                resultCount: NumberFormatter.format(resultCount)
             };
             if (position > 0) {
                 var prevAssetId = this._getPrevAssetId(selectedId);
@@ -643,7 +644,6 @@ var SearchResults = Brace.Model.extend({
 
     onNewPayload: function (func, context) {
         this.on("change:resultsId", func, context);
-        //this.on("change:resultsId", function () { debugger; }, context);
     },
 
     offNewPayload: function (func, context) {
