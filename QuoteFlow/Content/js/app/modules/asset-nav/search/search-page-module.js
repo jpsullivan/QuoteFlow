@@ -241,7 +241,7 @@ var SearchPageModule = Brace.Model.extend({
         this.assetSearchManager = searchManger;
     },
 
-    registerIssueCacheManager: function (issueCacheManager) {
+    registerAssetCacheManager: function (issueCacheManager) {
         this.assetCacheManager = issueCacheManager;
     },
 
@@ -849,7 +849,7 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     hasSelectedAsset: function () {
-        return this.search.getResults().getSelectedAsset().getKey();
+        return this.search.getResults().getSelectedAsset().getSku();
     },
 
     /**

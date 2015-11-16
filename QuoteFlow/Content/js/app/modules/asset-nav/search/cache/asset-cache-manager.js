@@ -35,8 +35,8 @@ var AssetCacheManager = Brace.Evented.extend({
         }
     },
 
-    scheduleAssetToBePrefetched: function (issue) {
-        this._prefetchCandidate = issue;
+    scheduleAssetToBePrefetched: function (asset) {
+        this._prefetchCandidate = asset;
     },
 
     /**
@@ -78,10 +78,10 @@ var AssetCacheManager = Brace.Evented.extend({
     /**
      * Pre-fetches an asset by getting it from the cache.
      */
-    _prefetchAsset: function (issueKey) {
-        if (!JIRA.Issues.DarkFeatures.NO_PREFETCH.enabled()) {
-            this.viewAssetData.get(issueKey, false, { prefetch: true });
-        }
+    _prefetchAsset: function (assetSku) {
+        // if (!JIRA.Issues.DarkFeatures.NO_PREFETCH.enabled()) {
+        //     this.viewAssetData.get(assetSku, false, { prefetch: true });
+        // }
     }
 });
 

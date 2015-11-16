@@ -325,14 +325,14 @@ var AssetViewer = Marionette.Controller.extend({
             this._loadIssueFromDom(assetEntity);
             return $.Deferred().resolve().promise();
         } else {
-            if (!this.canDismissComment() || !assetEntity.sku) {
+            if (!this.canDismissComment() || !assetEntity.id) {
                 return $.Deferred().reject();
             }
 
             this.assetController.showLoading();
             return this.assetLoader.load({
                 assetEntity: assetEntity,
-                viewIssueData: this.viewIssueData
+                viewAssetData: this.viewIssueData
             });
         }
     },

@@ -6,11 +6,11 @@ var Brace = require('backbone-brace');
  *
  */
 var SimpleAsset = Brace.Model.extend({
-    namedAttributes: ["id", "key"],
+    namedAttributes: ["id", "sku"],
 
     defaults: {
         id: null,
-        key: null
+        sku: null
     },
     hasAsset: function () {
         return !!this.getId();

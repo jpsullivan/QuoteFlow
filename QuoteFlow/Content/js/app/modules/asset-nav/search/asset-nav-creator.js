@@ -95,14 +95,11 @@ var AssetNavCreator = {
             initialSelectedAsset: options.initialSelectedAsset
         });
 
-//        var viewIssueData = issueModule.viewAssetData;
-//        var issueCacheManager = new AssetCacheManager({
-//            searchResults: searchModule.getResults(),
-//            viewAssetData: viewIssueData
-//        });
-        var issueCacheManager = new AssetCacheManager({
-            searchResults: searchModule.getResults()
-        });
+       var viewAssetData = issueModule.viewAssetData;
+       var assetCacheManager = new AssetCacheManager({
+           searchResults: searchModule.getResults(),
+           viewAssetData: viewAssetData
+       });
 
         // TODO: FullScreenAsset will detach these elements, so get a reference now before they're not discoverable.
         var issueNavToolsElement = $el.find(".saved-search-selector");
@@ -110,7 +107,7 @@ var AssetNavCreator = {
         var fullScreenIssue = new FullScreenAsset({
             assetContainer: searchPageModule.assetContainer,
             searchContainer: searchPageModule.searchContainer,
-            assetCacheManager: issueCacheManager
+            assetCacheManager: assetCacheManager
         });
 
         // Register Modules
@@ -121,7 +118,7 @@ var AssetNavCreator = {
 
         searchPageModule.registerFullScreenAsset(fullScreenIssue);
         searchPageModule.registerIssueSearchManager(assetSearchManager);
-        searchPageModule.registerIssueCacheManager(issueCacheManager);
+        searchPageModule.registerAssetCacheManager(assetCacheManager);
         //searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
 
         searchHeaderModule.registerSearch(searchModule);

@@ -2,6 +2,10 @@
 
 var Marionette = require('backbone.marionette');
 
+var ErrorGenericView = require('../views/error/error-generic-view');
+var ErrorNoPermissionView = require('../views/error/error-no-permission-view');
+var ErrorNotFoundView = require('../views/error/error-not-found-view');
+
 /**
  * Controller for the error pages.
  * @extends Marionette.Controller
@@ -41,18 +45,18 @@ var ErrorController = Marionette.Controller.extend({
                 break;
 
             case "forbidden":
-                this._renderErrorView(new JIRA.Components.IssueViewer.Views.ErrorNoPermission());
+                this._renderErrorView(new ErrorNoPermissionView());
                 break;
 
             case "notfound":
-                this._renderErrorView(new JIRA.Components.IssueViewer.Views.ErrorNotFound({
+                this._renderErrorView(new ErrorNotFoundView({
                     showReturnToSearchOnError: this.showReturnToSearchOnError
                 }));
                 break;
 
             case "generic":
             default:
-                this._renderErrorView(new JIRA.Components.IssueViewer.Views.ErrorGeneric());
+                this._renderErrorView(new ErrorGenericView());
                 break;
         }
     },
@@ -70,18 +74,18 @@ var ErrorController = Marionette.Controller.extend({
                 break;
 
             case "forbidden":
-                this._renderErrorViewFromDom(new JIRA.Components.IssueViewer.Views.ErrorNoPermission());
+                this._renderErrorViewFromDom(new ErrorNoPermissionView());
                 break;
 
             case "notfound":
-                this._renderErrorViewFromDom(new JIRA.Components.IssueViewer.Views.ErrorNotFound({
+                this._renderErrorViewFromDom(new ErrorNotFoundView({
                     showReturnToSearchOnError: this.showReturnToSearchOnError
                 }));
                 break;
 
             case "generic":
             default:
-                this._renderErrorViewFromDom(new JIRA.Components.IssueViewer.Views.ErrorGeneric());
+                this._renderErrorViewFromDom(new ErrorGenericView());
                 break;
         }
     },
@@ -124,13 +128,13 @@ var ErrorController = Marionette.Controller.extend({
     /**
      * Renders an error view.
      *
-     * @param {JIRA.Components.IssueViewer.Views.Error} view View that needs to be rendered
+     * @param {ErrorView} view View that needs to be rendered
      * @private
      */
     _renderErrorView: function (view) {
         this.trigger("before:render");
 
-        JIRA.Components.IssueViewer.Utils.hideDropdown();
+        //JIRA.Components.IssueViewer.Utils.hideDropdown();
 
         this.view = view;
         this.view.setElement(this._$el);
@@ -148,13 +152,13 @@ var ErrorController = Marionette.Controller.extend({
     /**
      * Renders an error view.
      *
-     * @param {JIRA.Components.IssueViewer.Views.Error} view View that needs to be rendered
+     * @param {ErrorView} view View that needs to be rendered
      * @private
      */
     _renderErrorViewFromDom: function (view) {
         this.trigger("before:render");
 
-        JIRA.Components.IssueViewer.Utils.hideDropdown();
+        //JIRA.Components.IssueViewer.Utils.hideDropdown();
 
         this.view = view;
         this.view.setElement(this._$el);
