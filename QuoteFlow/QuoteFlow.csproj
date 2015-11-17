@@ -710,6 +710,11 @@
     <Content Include="Content\js\app\modules\catalog\controller.js" />
     <Content Include="Content\js\app\modules\catalog\module.js" />
     <Content Include="Content\js\app\modules\catalog\router.js" />
+    <Content Include="Content\js\app\modules\pager\component.js" />
+    <Content Include="Content\js\app\modules\pager\controller.js" />
+    <Content Include="Content\js\app\modules\pager\model.js" />
+    <Content Include="Content\js\app\modules\pager\module.js" />
+    <Content Include="Content\js\app\modules\pager\view.js" />
     <Content Include="Content\js\app\modules\quote-status\controller.js" />
     <Content Include="Content\js\app\modules\quote-status\module.js" />
     <Content Include="Content\js\app\modules\quote-status\router.js" />
@@ -1176,6 +1181,7 @@
     <Content Include="Content\views\asset-viewer\error\does-not-exist.hbs" />
     <Content Include="Content\views\asset-viewer\error\generic.hbs" />
     <Content Include="Content\views\asset-viewer\error\no-permission.hbs" />
+    <Content Include="Content\views\asset-viewer\asset\pager.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -79,9 +79,9 @@ var UrlSerializer = {
             startIndex: 0
         };
 
-        if (url.indexOf(BASE_BROWSE) == 0) {
-            state.selectedAssetId = path.split("/")[1];
-        }
+        // if (url.indexOf(BASE_BROWSE) == 0) {
+        //     state.selectedAssetId = path.split("/")[1];
+        // }
 
         if (url.indexOf("?") !== -1) {
             queryString = url.substr(url.indexOf("?"));
