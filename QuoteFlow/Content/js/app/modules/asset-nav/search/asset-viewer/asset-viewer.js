@@ -113,7 +113,7 @@ var AssetViewer = Marionette.Controller.extend({
         options = options || {};
 
         this.errorController = new ErrorController({
-            contextPath: QuoteFlow.rootUrl,
+            contextPath: QuoteFlow.RootUrl,
             showReturnToSearchOnError: options.showReturnToSearchOnError
         });
 
@@ -137,7 +137,7 @@ var AssetViewer = Marionette.Controller.extend({
             model: this.model
         });
         this.listenTo(this.assetController, "render", function(regions, options) {
-            JIRA.Components.IssueViewer.Utils.hideDropdown();
+            //JIRA.Components.IssueViewer.Utils.hideDropdown();
             this.errorController.close();
             this.trigger("render", regions, options);
 
@@ -148,7 +148,7 @@ var AssetViewer = Marionette.Controller.extend({
             this.eventBus.triggerPanelRendered(panel, $ctx);
         });
         this.listenTo(this.assetController, "close", function() {
-            JIRA.Components.IssueViewer.Utils.hideDropdown();
+            //JIRA.Components.IssueViewer.Utils.hideDropdown();
         });
     },
 
@@ -177,7 +177,7 @@ var AssetViewer = Marionette.Controller.extend({
         // TODO options.initialize, meta.mergeIntoCurrent and meta.isUpdate seems to represent the same thing
         //      Investigate if all of them are in use and are actually necessary
         var initialize = !meta.mergeIntoCurrent && options.initialize !== false;
-        var isNewIssue = !this.model.isCurrentIssue(assetEntity.id);
+        var isNewAsset = !this.model.isCurrentAsset(assetEntity.id);
         var detailView = !!assetEntity.detailView;
 
         // Clear previous model and errors if this is not an update or is the initial render
@@ -202,7 +202,7 @@ var AssetViewer = Marionette.Controller.extend({
 
         // Refresh the asset if it is loaded from the cache
         if (isPrefetchEnabled && meta.fromCache) {
-            this.refreshIssue(assetEntity, {
+            this.refreshAsset(assetEntity, {
                 fromCache: true,
                 mergeIntoCurrent: !meta.error, // If we previously showed error then load everything instead of merging.
                 detailView: detailView  // JRA-36659: keep track of whether we are in detail view
@@ -218,10 +218,10 @@ var AssetViewer = Marionette.Controller.extend({
         }
 
         this.trigger("loadComplete", this.model, {
-            isNewIssue: isNewIssue,
+            isNewAsset: isNewAsset,
             assetId: assetEntity.id,
             duration: meta.loadDuration,
-            loadReason: meta.fromCache?'issues-cache-refresh':undefined,
+            loadReason: meta.fromCache ? 'assets-cache-refresh' : undefined,
             fromCache: meta.fromCache
         });
 

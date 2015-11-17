@@ -79,7 +79,7 @@ var AssetLoaderService = Marionette.Controller.extend({
             };
         }
 
-        recurrantControl = this._updatingPromise.add(viewAssetData.get(assetEntity.key, true, {
+        recurrantControl = this._updatingPromise.add(viewAssetData.get(assetEntity.id, true, {
             assetEntity: assetEntity,
             loadingDeferred: deferred,
             mergeIntoCurrent: mergeIntoCurrent,
@@ -113,7 +113,7 @@ var AssetLoaderService = Marionette.Controller.extend({
         // Add the loading task to the recurring promise
         var deferred = new $.Deferred();
 
-        this._loadingPromise.add(viewAssetData.get(assetEntity.key, false, {
+        this._loadingPromise.add(viewAssetData.get(assetEntity.id, false, {
             assetEntity: assetEntity,
             loadFields: false,
             loadingDeferred: deferred,

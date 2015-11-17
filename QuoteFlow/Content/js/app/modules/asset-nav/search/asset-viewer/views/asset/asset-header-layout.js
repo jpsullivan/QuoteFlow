@@ -72,7 +72,7 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
      * Handler for render event, things to do after the template has been rendered
      */
     onRender: function () {
-        this.renderOpsBar();
+        //this.renderOpsBar();
         this._updateWindowTitle();
         this.trigger("panelRendered", "header", this.$el);
     },

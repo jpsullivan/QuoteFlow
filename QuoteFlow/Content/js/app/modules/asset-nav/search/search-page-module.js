@@ -725,7 +725,7 @@ var SearchPageModule = Brace.Model.extend({
         } else {
             searchPromise = jQuery.Deferred().resolve();
             if ("selectedAssetSku" in state) {
-                this.searchResults.selectAssetByKey(state.selectedAssetSku);
+                this.searchResults.selectAssetById(state.selectedAssetId);
             }
             // If an issue is selected, its position in the results determines the page and we can ignore startIndex.
             if ("startIndex" in state && !state.selectedAssetSku) {

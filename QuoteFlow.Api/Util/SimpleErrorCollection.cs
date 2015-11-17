@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using QuoteFlow.Api.Util;
 
-namespace QuoteFlow.Core.Util
+namespace QuoteFlow.Api.Util
 {
     [Serializable]
     public class SimpleErrorCollection : IErrorCollection

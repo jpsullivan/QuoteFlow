@@ -2,11 +2,13 @@
 using System.Net;
 using System.Web.Http;
 using Microsoft.Ajax.Utilities;
-using QuoteFlow.Api.Infrastructure.Services;
+using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.RequestModels;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Api.Util;
+using QuoteFlow.Core.Asset.Viewer;
 using QuoteFlow.Infrastructure.Enumerables;
 using Wintellect.PowerCollections;
 
@@ -33,6 +35,9 @@ namespace QuoteFlow.Controllers.Api
 
         #endregion
 
+        public AssetFields Fields { get; set; }
+        public bool LoadFields { get; set; } = true;
+
         public Asset Get(int id)
         {
             if (id == 0)
@@ -48,6 +53,44 @@ namespace QuoteFlow.Controllers.Api
         {
             return new List<Asset>();
             // todo: search controller logic, implement search service
+        }
+
+        [HttpGet]
+        public AssetFields GetAsset(int assetId, string decorator, bool prefetch, bool shouldUpdateCurrentCatalog, bool loadFields)
+        {
+            var errors = new SimpleErrorCollection();
+            var asset = AssetService.GetAsset(assetId);
+            var result = new AssetResult(asset, errors);
+
+            if (!result.IsValid() && result.Asset == null)
+            {
+                var errorCollection = result.ErrorCollection;
+                return new AssetFields("todo_generate_xsrf_token", errorCollection);
+            }
+
+            if (!prefetch)
+            {
+                // todo add asset to some sort of history tracker
+
+                // don't set the selected catalog if we are looking at the detail view in asset nav
+                if (shouldUpdateCurrentCatalog)
+                {
+                    // todo: set the selected catalog
+                }
+            }
+
+            PopulateAssetFields(asset, false, result.ErrorCollection);
+
+            Fields = new AssetFields("todo_changeme", result.ErrorCollection, new List<string>(), asset, null);
+
+            return Fields;
+        }
+
+        private void PopulateAssetFields(IAsset asset, bool retainValues, IErrorCollection errorCollection)
+        {
+            //var isEditable = AssetService.IsAssetEditable(asset, RequestContext.Principal.Identity.Name);
+
+            var editFields = new List<string>();
         }
 
         [HttpPost]
@@ -108,6 +151,16 @@ namespace QuoteFlow.Controllers.Api
         {
             public string Decorator { get; set; }
             public string Jql { get; set; }
+        }
+
+        public class FetchAssetParams
+        {
+            public int AssetId { get; set; }
+            public IAsset Asset { get; set; }
+            public string Decorator { get; set; }
+            public bool Prefetch { get; set; }
+            public bool ShouldUpdateCurrentCatalog { get; set; }
+            public long LastReadTime { get; set; }
         }
     }
 }

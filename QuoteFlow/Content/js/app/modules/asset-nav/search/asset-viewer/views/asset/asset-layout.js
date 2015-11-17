@@ -97,7 +97,7 @@ var AssetLayout = Marionette.LayoutView.extend({
         this.$el.attr("tabindex", "-1");
         this._bringViewIssueElementIntoView();
 
-        QuoteFlow.trigger(EventTypes.NEW_CONTENT_ADDED, [this.$el, Reasons.CONTENT_ADDED_REASON.pageLoad]);
+        QuoteFlow.trigger(EventTypes.NEW_CONTENT_ADDED, [this.$el, Reasons.pageLoad]);
         if (EventTypes.REFRESH_TOGGLE_BLOCKS) {
             QuoteFlow.trigger(EventTypes.REFRESH_TOGGLE_BLOCKS, [this.model.getId()]);
         }

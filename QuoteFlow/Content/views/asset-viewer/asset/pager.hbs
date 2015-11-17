@@ -1,0 +1,52 @@
+<ul class="ajax ops page-navigation">
+    <li class="previous">
+        {{#if previousAsset}}
+            {{#compare position "!=" 1}}
+            <a data-id="{{previousAsset.id}}"
+                    data-key="{{previousAsset.sku}}"
+                    href="#"
+                    id="previous-asset"
+                    rel="{{previousAsset.sku}}"
+                    title="Previous Asset '{{previousAsset.sku}}'">
+                <span class="icon icon-page-prev">
+                    <span>Previous Asset '{{previousIssue.sku}}'</span>
+                </span>
+            </a>
+            {{/compare}}
+            {{#if resultCount}}
+            <span class="icon icon-page-prev-deactivated" title="Not available - this is the first asset"></span>
+            {{/if}}
+        {{/if}}
+    </li>
+    <li class="showing">
+        {{#if position}}
+            {{#if resultCount}}
+                {{position}} of {{resultCount}}
+            {{/if}}
+        {{/if}}
+    </li>
+    <li class="next">
+        {{#if nextAsset}}
+            {{#compare position "!=" resultCount}}
+            <a data-id="{{nextAsset.id}}"
+                    data-key="{{nextAsset.sku}}"
+                    href="#"
+                    id="next-asset"
+                    rel="{{nextAsset.sku}}"
+                    title="Next Asset '{{nextAsset.sku}}'">
+                <span class="icon icon-page-next">
+                    <span>Next Asset '{{nextAsset.sku}}'</span>
+                </span>
+            </a>
+            {{/compare}}
+            {{#if resultCount}}
+            <span class="icon icon-page-next-deactivated" title="Not available - this is the last asset"></span>
+            {{/if}}
+        {{/if}}
+    </li>
+    {{#if hasSearchLink}}
+    <li class="return">
+        <a id="return-to-search" href="#" title="Return to search">Return to search</a>
+    </li>
+    {{/if}}
+</ul>

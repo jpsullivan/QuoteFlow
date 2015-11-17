@@ -46,9 +46,9 @@ var AssetController = Marionette.Controller.extend({
         this.view = this._createMainView();
         this.bodyView = this._createBodyView();
         this.headerView = this._createHeaderView();
-        this.leftPanelsView = this._createPanelsView(this.model.getPanels().getLeftPanels());
-        this.rightPanelsView = this._createPanelsView(this.model.getPanels().getRightPanels());
-        this.infoPanelsView = this._createPanelsView(this.model.getPanels().getInfoPanels());
+        // this.leftPanelsView = this._createPanelsView(this.model.getPanels().getLeftPanels());
+        // this.rightPanelsView = this._createPanelsView(this.model.getPanels().getRightPanels());
+        // this.infoPanelsView = this._createPanelsView(this.model.getPanels().getInfoPanels());
     },
 
     /**
@@ -129,9 +129,9 @@ var AssetController = Marionette.Controller.extend({
             this.view.header.show(this.headerView);
             this.view.body.show(this.bodyView);
 
-            this.bodyView.leftPanels.show(this.leftPanelsView);
-            this.bodyView.rightPanels.show(this.rightPanelsView);
-            this.bodyView.infoPanels.show(this.infoPanelsView);
+            // this.bodyView.leftPanels.show(this.leftPanelsView);
+            // this.bodyView.rightPanels.show(this.rightPanelsView);
+            // this.bodyView.infoPanels.show(this.infoPanelsView);
 
             this.trigger("render",
             {
@@ -233,7 +233,7 @@ var AssetController = Marionette.Controller.extend({
      */
     close: function () {
         if (this.view) {
-            this.view.close();
+            this.view.destroy();
         }
         this.hideLoading();
         delete this.view;

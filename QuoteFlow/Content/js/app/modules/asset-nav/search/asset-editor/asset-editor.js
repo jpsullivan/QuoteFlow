@@ -282,7 +282,6 @@ var AssetEditor = AssetViewer.extend({
     },
 
     _loadAssetFromDom: function(assetEntity) {
-        debugger;
         if (AJS.Meta.get("server-view-issue-is-editable")) {
             // Edit Issue Controller
             this.editAssetController.setAssetId(assetEntity.id);

@@ -151,6 +151,7 @@
   <ItemGroup>
     <Compile Include="Asset\AbstractAsset.cs" />
     <Compile Include="Asset\AssetFieldConstants.cs" />
+    <Compile Include="Asset\AssetResult.cs" />
     <Compile Include="Asset\Comparator\NullComparator.cs" />
     <Compile Include="Asset\Context\AssetContext.cs" />
     <Compile Include="Asset\Context\IAssetContext.cs" />
@@ -309,6 +310,7 @@
     <Compile Include="Infrastructure\Paging\IPagerFilter.cs" />
     <Compile Include="Infrastructure\Paging\PagerFilter.cs" />
     <Compile Include="Infrastructure\Services\IServiceResult.cs" />
+    <Compile Include="Infrastructure\Services\ServiceResult.cs" />
     <Compile Include="IQuoteFlowDataType.cs" />
     <Compile Include="Jql\Context\AllCatalogsContext.cs" />
     <Compile Include="Jql\Context\AllManufacturersContext.cs" />
@@ -552,6 +554,7 @@
     <Compile Include="Util\MessageSet.cs" />
     <Compile Include="Util\ParameterUtils.cs" />
     <Compile Include="Util\QueryString.cs" />
+    <Compile Include="Util\SimpleErrorCollection.cs" />
     <Compile Include="Util\Support\AtomicInteger.cs" />
     <Compile Include="Util\Support\BitSetSupport.cs" />
   </ItemGroup>

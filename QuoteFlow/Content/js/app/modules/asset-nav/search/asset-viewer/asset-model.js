@@ -25,10 +25,16 @@ var AssetModel = Brace.Model.extend({
         "entity",
 
         /**
-         * Issue id
+         * Asset id
          * @type {number}
          */
-        "id"
+        "id",
+
+        /**
+         * Asset SKU
+         * @type {string}
+         */
+        "sku"
     ],
 
     /**

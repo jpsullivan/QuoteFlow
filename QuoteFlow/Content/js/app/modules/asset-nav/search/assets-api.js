@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 var $ = require('jquery');
-
+var _ = require('underscore');
 
 var AssetsApi = {
     searchPageModule: null,
@@ -17,9 +17,9 @@ var AssetsApi = {
     },
 
     /**
-     * Initiate editing the value of a field on the selected issue.
+     * Initiate editing the value of a field on the selected asset.
      *
-     * It's not always possible for the user to edit a field, for example if the issue is currently not editable, or
+     * It's not always possible for the user to edit a field, for example if the asset is currently not editable, or
      * if the user doesn't have the correct permissions.
      *
      * For visible fields inline editing is used. For hidden fields, a modal dialog is used.
@@ -27,7 +27,7 @@ var AssetsApi = {
      * @param fieldId the ID of the field to edit
      * @return {boolean} true if the field editing did/will happen, otherwise false.
      */
-    editFieldOnSelectedIssue: function (fieldId) {
+    editFieldOnSelectedAsset: function (fieldId) {
         var fields = JIRA.Issues.Api.getFieldsOnSelectedIssue(),
             field = fields && fields.get(fieldId),
             permitted = field && field.isEditable();
@@ -45,25 +45,25 @@ var AssetsApi = {
      * In basic mode, the project criteria; in advanced mode, the JQL input.
      */
     focusSearch: function () {
-        AJS.$(".criteria-selector:first, #advanced-search").focus().select();
+        $(".criteria-selector:first, #advanced-search").focus().select();
     },
 
     /**
-     * @return {SimpleIssue} the currently selected issue.
+     * @return {SimpleIssue} the currently selected asset.
      */
     getSelectedIssue: function () {
         return this.searchPageModule.getEffectiveIssue();
     },
 
     /**
-     * @return {null|number} the ID of the selected issue or null.
+     * @return {null|number} the ID of the selected asset or null.
      */
-    getSelectedIssueId: function () {
-        return this.searchPageModule.getEffectiveIssueId();
+    getSelectedAssetId: function () {
+        return this.searchPageModule.getEffectiveAssetId();
     },
 
     /**
-     * @return {null|string} the key of the selected issue or <tt>null</tt>.
+     * @return {null|string} the key of the selected asset or <tt>null</tt>.
      */
     getSelectedIssueKey: function () {
         return this.searchPageModule.getEffectiveIssueKey();
@@ -101,20 +101,20 @@ var AssetsApi = {
     },
 
     /**
-     * @return {boolean} whether an issue is visible.
+     * @return {boolean} whether an asset is visible.
      */
-    issueIsVisible: function () {
-        return this.searchPageModule.isIssueVisible();
+    assetIsVisible: function () {
+        return this.searchPageModule.isAssetVisible();
     },
 
     /**
-     * Select the next issue.
-     * <p/>
-     * When in issue search, the next issue is highlighted; when viewing an
-     * issue, the next one is loaded. No-op if an overlay is visible.
+     * Select the next asset.
+     *
+     * When in asset search, the next asset is highlighted; when viewing an
+     * asset, the next one is loaded. No-op if an overlay is visible.
      */
-    nextIssue: function () {
-        this.searchPageModule.nextIssue();
+    nextAsset: function () {
+        this.searchPageModule.nextAsset();
     },
 
     /**
@@ -127,36 +127,36 @@ var AssetsApi = {
     },
 
     /**
-     * Select the previous issue.
+     * Select the previous asset.
      *
-     * When in issue search, the previous issue is highlighted; when viewing
-     * an issue, the previous one is loaded. No-op if an overlay is visible.
+     * When in asset search, the previous asset is highlighted; when viewing
+     * an asset, the previous one is loaded. No-op if an overlay is visible.
      */
-    prevIssue: function () {
-        this.searchPageModule.prevIssue();
+    prevAsset: function () {
+        this.searchPageModule.prevAsset();
     },
 
     /**
-     * Refresh the content of the selected issue, by merging changes from the server.
+     * Refresh the content of the selected asset, by merging changes from the server.
      *
      * @param {object} [options] Extra options to include in the internal triggerRefreshIssue() call
      * @returns {jQuery.Promise}
      *
      * The returned promise is:
-     * - resolved when the selected issue is refreshed, or if there is no selected issue
-     * - rejected *only* when refreshing the selected issue fails
+     * - resolved when the selected asset is refreshed, or if there is no selected asset
+     * - rejected *only* when refreshing the selected asset fails
      */
-    refreshSelectedIssue: function (options) {
+    refreshSelectedAsset: function (options) {
         return QuoteFlow.application.request("assetEditor:refreshAsset", options);
     },
 
     /**
-     * Return to issue search.
+     * Return to asset search.
      * <p/>
      * If a form is dirty, we ask the user to confirm navigation.
      *
      * @param {boolean} ignoreDirtiness Whether we should ignore dirtiness
-     *     (used, for example, to force return after deleting an issue).
+     *     (used, for example, to force return after deleting an asset).
      */
     returnToSearch: function (ignoreDirtiness) {
         this.searchPageModule.returnToSearch({
@@ -165,10 +165,10 @@ var AssetsApi = {
     },
 
     /**
-     * @param {Object|null} issueProps - if null/undefined, use currently selected issue
+     * @param {Object|null} asset - if null/undefined, use currently selected asset
      */
-    showInlineIssueLoadError: function (issueProps) {
-        this.searchPageModule.showInlineIssueLoadError(issueProps);
+    showInlineAssetLoadError: function (assetProps) {
+        this.searchPageModule.showInlineAssetLoadError(assetProps);
     },
 
     /**

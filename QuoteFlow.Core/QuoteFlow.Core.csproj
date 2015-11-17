@@ -180,6 +180,7 @@
     <Compile Include="Asset\CustomFields\Searchers\Transformer\CatalogSearchHandlerFactory.cs" />
     <Compile Include="Asset\CustomFields\Searchers\UserPickerSearcher.cs" />
     <Compile Include="Asset\DocumentAsset.cs" />
+    <Compile Include="Asset\Editor\EditFields.cs" />
     <Compile Include="Asset\Fields\AbstractField.cs" />
     <Compile Include="Asset\Fields\AbstractOrderableField.cs" />
     <Compile Include="Asset\Fields\AbstractOrderableNavigableField.cs" />
@@ -232,6 +233,8 @@
     <Compile Include="Asset\Search\Searchers\Transformer\UserSearchInput.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\UserSearchInputTransformer.cs" />
     <Compile Include="Asset\Search\Searchers\Util\SearchContextRenderHelper.cs" />
+    <Compile Include="Asset\Viewer\AssetFields.cs" />
+    <Compile Include="Asset\Viewer\AssetPager.cs" />
     <Compile Include="Auditing\AuditService.cs" />
     <Compile Include="Configuration\Lucene\IndexingConfiguration.cs" />
     <Compile Include="DependencyResolution\HangfireContainer.cs" />
@@ -325,7 +328,6 @@
     <Compile Include="Infrastructure\Helpers\DisposableAction.cs" />
     <Compile Include="Infrastructure\Mvc\QuoteFlowControllerFactory.cs" />
     <Compile Include="Infrastructure\Services\ServiceOutcome.cs" />
-    <Compile Include="Infrastructure\Services\ServiceResult.cs" />
     <Compile Include="Jql\AntlrGen\JqlLexer.cs" />
     <Compile Include="Jql\AntlrGen\JqlParser.cs" />
     <Compile Include="Jql\Builder\BuilderOperator.cs" />
@@ -481,7 +483,6 @@
     <Compile Include="Util\Lucene\ConstantScorePrefixQuery.cs" />
     <Compile Include="Util\ListOrderedMessageSet.cs" />
     <Compile Include="Util\LuceneUtils.cs" />
-    <Compile Include="Util\SimpleErrorCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Jql\Parser\Antlr\Jql.g">

@@ -36,9 +36,9 @@ var SplitScreenListView = Marionette.ItemView.extend({
         this.searchResults = options.search.getResults();
         this.serverRendered = !!options.serverRendered && this._assetsRendered(options);
 
-        this.listenTo(this.searchResults, "highlightedAssetChange", this._onHighlightedAssetChange, this);
-        this.listenTo(this.searchResults, "assetUpdated", this._onAssetUpdated, this);
-        this.listenTo(this.searchResults, "startIndexChange", this.render, this);
+        this.addListener(this.searchResults, "highlightedAssetChange", this._onHighlightedAssetChange, this);
+        this.addListener(this.searchResults, "assetUpdated", this._onAssetUpdated, this);
+        this.addListener(this.searchResults, "startIndexChange", this.render, this);
     },
 
     _assetsRendered: function (options) {
@@ -179,7 +179,6 @@ var SplitScreenListView = Marionette.ItemView.extend({
      * @private
      */
     _onSearchFail: function () {
-        debugger;
         var navigatorContent = this.searchContainer.find(".navigator-content");
         navigatorContent.html(JIRA.Templates.Issues.ComponentUtil.errorMessage({
             msg: AJS.I18n.getText("issue.nav.common.server.error")

@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-var BASE_BROWSE = "browse/",
+var BASE_BROWSE = "quote/3/test-quote/builder/", // omg noooo
     BASE_ASSETS = "quote/3/test-quote/builder/"; // todo: rip this shit out omg
 
 var returnAsIs = function(x) {
@@ -21,7 +21,7 @@ var QueryStringParser = require('./query-string-parser');
  * An object describing the state of the issue navigator.
  *
  * @typedef {object} UrlSerializer.state
- * @property {string} selectedAssetSku
+ * @property {string} selectedAssetId
  * @property {(string|null)} filterJql
  * @property {(string|null)} filter
  * @property {(string|null)} jql
@@ -42,8 +42,8 @@ var UrlSerializer = {
         var query = [];
         var base;
 
-        if (state.selectedAssetSku) {
-            base = BASE_BROWSE + state.selectedAssetSku;
+        if (state.selectedAssetId) {
+            base = BASE_BROWSE + state.selectedAssetId;
         } else {
             base = BASE_ASSETS;
         }
@@ -55,7 +55,7 @@ var UrlSerializer = {
             query.push('jql=' + encodeURIComponent(state.jql));
         }
 
-        if (state.startIndex && !state.selectedAssetSku) {
+        if (state.startIndex && !state.selectedAssetId) {
             query.push('startIndex=' + state.startIndex);
         }
         return base + (query.length ? '?' + query.join('&') : "");
@@ -75,12 +75,12 @@ var UrlSerializer = {
         var state = {
             filter: null,
             jql: null,
-            selectedAssetSku: null,
+            selectedAssetId: null,
             startIndex: 0
         };
 
         if (url.indexOf(BASE_BROWSE) == 0) {
-            state.selectedAssetSku = path.split("/")[1];
+            state.selectedAssetId = path.split("/")[1];
         }
 
         if (url.indexOf("?") !== -1) {

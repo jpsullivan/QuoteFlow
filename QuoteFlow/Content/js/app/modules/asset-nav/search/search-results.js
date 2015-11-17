@@ -340,7 +340,7 @@ var SearchResults = Brace.Model.extend({
         this.set("startIndex", state.startIndex, { silent: true });
         this.set(_.pick(state, Object.keys(this.namedAttributes)));
         if (typeof state.selectedAssetId === 'string') {
-            this.selectAssetByKey(state.selectedAssetId);
+            this.selectAssetById(state.selectedAssetId);
         } else {
             if (this.hasAssets()) {
                 this.highlightFirstInPage();

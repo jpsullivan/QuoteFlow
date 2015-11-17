@@ -1,8 +1,7 @@
 ﻿using System;
-using QuoteFlow.Api.Infrastructure.Services;
 using QuoteFlow.Api.Util;
 
-namespace QuoteFlow.Core.Infrastructure.Services
+namespace QuoteFlow.Api.Infrastructure.Services
 {
     /// <summary>
     /// Simple implementation of a validation result.
@@ -11,7 +10,11 @@ namespace QuoteFlow.Core.Infrastructure.Services
     {
         protected ServiceResult(IErrorCollection errorCollection)
         {
-            if (errorCollection == null) throw new ArgumentNullException(nameof(errorCollection));
+            if (errorCollection == null)
+            {
+                throw new ArgumentNullException(nameof(errorCollection));
+            }
+
             ErrorCollection = errorCollection;
         }
 

@@ -1,0 +1,84 @@
+<div class="asset-header-content">
+    <header class="aui-page-header">
+        <div class="aui-page-header-inner">
+            <div class="aui-page-header-image">
+                <span id="10000" class="aui-avatar aui-avatar-large">
+                    <span class="aui-avatar-inner">
+                        <img id="project-avatar" alt="Uploaded image for project: 'QuoteFlow'" src="http://localhost:8080/secure/projectavatar?avatarId=10011">
+                    </span>
+                </span>
+            </div><!-- .aui-page-header-image -->
+            <div class="aui-page-header-main">
+                <ol class="aui-nav aui-nav-breadcrumbs">
+                    <li><a id="project-name-val" href="#">{{asset.catalog.name}}</a></li>
+                    <li>
+                        <a class="issue-link" data-issue-key="{{asset.sku}}" href="#" id="sku-val" rel="{{asset.id}}">{{asset.sku}}</a>
+                    </li>
+                </ol>
+                <h1 id="summary-val">{{asset.name}}</h1>
+            </div><!-- .aui-page-header-main -->
+            <div class="aui-page-header-actions">
+                <div id="issue-header-pager">
+                    {{#if pager}}
+                        {{! todo: extract this into a partial call, or just use the existing pager.hbs}}
+                        <ul class="ajax ops page-navigation">
+                            <li class="previous">
+                                {{#if pager.previousAsset}}
+                                    {{#compare pager.position "!=" 1}}
+                                    <a data-id="{{pager.previousAsset.id}}"
+                                            data-key="{{pager.previousAsset.sku}}"
+                                            href="#"
+                                            id="previous-asset"
+                                            rel="{{pager.previousAsset.sku}}"
+                                            title="Previous Asset '{{pager.previousAsset.sku}}'">
+                                        <span class="icon icon-page-prev">
+                                            <span>Previous Asset '{{pager.previousIssue.sku}}'</span>
+                                        </span>
+                                    </a>
+                                    {{/compare}}
+                                    {{#if pager.resultCount}}
+                                    <span class="icon icon-page-prev-deactivated" title="Not available - this is the first asset"></span>
+                                    {{/if}}
+                                {{/if}}
+                            </li>
+                            <li class="showing">
+                                {{#if pager.position}}
+                                    {{#if pager.resultCount}}
+                                        {{pager.position}} of {{pager.resultCount}}
+                                    {{/if}}
+                                {{/if}}
+                            </li>
+                            <li class="next">
+                                {{#if pager.nextAsset}}
+                                    {{#compare pager.position "!=" pager.resultCount}}
+                                    <a data-id="{{pager.nextAsset.id}}"
+                                            data-key="{{pager.nextAsset.sku}}"
+                                            href="#"
+                                            id="next-asset"
+                                            rel="{{pager.nextAsset.sku}}"
+                                            title="Next Asset '{{pager.nextAsset.sku}}'">
+                                        <span class="icon icon-page-next">
+                                            <span>Next Asset '{{pager.nextAsset.sku}}'</span>
+                                        </span>
+                                    </a>
+                                    {{/compare}}
+                                    {{#if pager.resultCount}}
+                                    <span class="icon icon-page-next-deactivated" title="Not available - this is the last asset"></span>
+                                    {{/if}}
+                                {{/if}}
+                            </li>
+                            {{#if pager.hasSearchLink}}
+                            <li class="return">
+                                <a id="return-to-search" href="#" title="Return to search">Return to search</a>
+                            </li>
+                            {{/if}}
+                        </ul>
+                    {{/if}}
+                </div>
+            </div><!-- .aui-page-header-actions -->
+        </div><!-- .aui-page-header-inner -->
+    </header>
+    <div class="command-bar">
+        {{! todo: implement the command bar view}}
+    </div>
+</div>

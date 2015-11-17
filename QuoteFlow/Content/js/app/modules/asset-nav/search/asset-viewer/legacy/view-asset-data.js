@@ -72,9 +72,9 @@ var ViewAssetData = AsyncData.extend({
         }
 
         var jqXhr = $.ajax({
-            url: QuoteFlow.rootUrl + "/secure/AjaxIssueAction!default.jspa",
-            headers: {'X-SITEMESH-OFF': true},
+            url: QuoteFlow.RootUrl + "api/asset/GetAsset",
             data: data,
+            contentType: 'application/json',
             type: options.mergeIntoCurrent ? "POST" : "GET"
         });
         var deferred = jqXhr.pipe(function(data) {
