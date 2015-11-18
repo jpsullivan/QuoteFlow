@@ -93,7 +93,7 @@ var ErrorController = Marionette.Controller.extend({
     /**
      * Closes and deletes the view
      */
-    close: function () {
+    destroy: function () {
         if (this.view) {
             this.view.destroy();
             delete this.view;

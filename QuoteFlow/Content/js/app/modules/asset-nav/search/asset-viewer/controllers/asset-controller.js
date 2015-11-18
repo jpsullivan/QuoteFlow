@@ -126,8 +126,8 @@ var AssetController = Marionette.Controller.extend({
         // When main view is rendered, inject all the subviews
         // We need to wait until the main view is rendered because otherwise the regions are not defined
         this.listenTo(this.view, "render", function () {
-            this.view.header.show(this.headerView);
-            this.view.body.show(this.bodyView);
+            this.view.header.show(this.headerView, { preventDestroy: true });
+            this.view.body.show(this.bodyView, { preventDestroy: true });
 
             // this.bodyView.leftPanels.show(this.leftPanelsView);
             // this.bodyView.rightPanels.show(this.rightPanelsView);
@@ -220,8 +220,7 @@ var AssetController = Marionette.Controller.extend({
                 pager: this.view.$(this.headerView.pager.el)
             }, {
                 loadedFromDom: false,
-                assetId:
-                this.model.getId()
+                assetId: this.model.getId()
             });
         }
         this.view.hideLoading();
@@ -231,7 +230,7 @@ var AssetController = Marionette.Controller.extend({
     /**
      * Closes the view
      */
-    close: function () {
+    destroy: function () {
         if (this.view) {
             this.view.destroy();
         }

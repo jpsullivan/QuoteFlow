@@ -96,12 +96,16 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
     _updateWindowTitle: function () {
         var entity = this.model.getEntity();
         var sku = entity.sku;
-        var summary = entity.summary;
+        var summary = entity.name;
         var appTitle = "QuoteFlow";
 
         if (appTitle && summary && sku) {
             document.title = "[" + sku + "] " + summary + " - " + appTitle;
         }
+    },
+
+    onBeforeDestroy: function () {
+        debugger;
     }
 });
 

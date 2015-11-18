@@ -112,8 +112,8 @@ var AssetTable = Marionette.Controller.extend({
         }
     },
 
-    close: function () {
-        this.assetTableController.close();
+    destroy: function () {
+        this.assetTableController.destroy();
         this.stopListening(this.searchService);
         //JIRA.Issues.Application.off("assetEditor:loadError", this._handleIssueLoadError, this);
         delete this.assetTableController;

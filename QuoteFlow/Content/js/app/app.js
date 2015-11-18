@@ -10,6 +10,10 @@ Backbone.$ = $;
 var Events = require('./util/events');
 var Marionette = require('backbone.marionette');
 
+if (window.__agent) {
+  window.__agent.start(Backbone, Marionette);
+}
+
 // QuoteFlow Namespace (hold-over from non CommonJS method)
 var QuoteFlow = {
     application: {},

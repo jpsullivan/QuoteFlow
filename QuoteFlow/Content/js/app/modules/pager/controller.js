@@ -46,8 +46,8 @@ var PagerController = Marionette.Controller.extend({
     /**
      * When the controller is closed, also close the view
      */
-    onClose: function(){
-        this.pagerView.close();
+    onDestroy: function(){
+        this.pagerView.destroy();
     },
 
     /**

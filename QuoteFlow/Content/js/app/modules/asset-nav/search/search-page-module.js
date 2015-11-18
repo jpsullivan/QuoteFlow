@@ -131,8 +131,8 @@ var SearchPageModule = Brace.Model.extend({
             //     return;
             // }
 
-            if (previousLayout && previousLayout.close) {
-                previousLayout.close();
+            if (previousLayout && previousLayout.destroy) {
+                previousLayout.destroy();
                 // now unselect the selected issue. the assumption here is that we are switching to
                 // a mode that does not have an issue selected by default (i.e. list view).
                 this.searchResults.unselectAsset({ replace: true });
@@ -799,7 +799,7 @@ var SearchPageModule = Brace.Model.extend({
     _deactivateCurrentLayout: function () {
         var currentLayout = this.getCurrentLayout();
         if (currentLayout) {
-            currentLayout.close && currentLayout.close();
+            currentLayout.close && currentLayout.destroy();
             this.setCurrentLayout(null);
         }
     },

@@ -31,9 +31,9 @@ var PagerComponent = function(callbacks) {
         pagerController.show(container, element);
     };
 
-    this.close = function() {
+    this.destroy = function() {
         if (pagerController) {
-            pagerController.close();
+            pagerController.destroy();
         }
         pagerController = null;
         pagerModel.clear();

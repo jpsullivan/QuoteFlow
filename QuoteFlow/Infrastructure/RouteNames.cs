@@ -30,6 +30,7 @@
 
         public const string QuoteAccessControl = "Quote-AccessControl";
         public const string QuoteBuilder = "Quote-Builder";
+        public const string QuoteBuilderWithSelectedAsset = "Quote-Builder-With-Sel-Asset";
         public const string QuoteChangeHistory = "Quote-ChangeHistory";
         public const string QuoteIndex = "Quote-Index";
         public const string QuoteLineItems = "Quote-LineItems";

@@ -18,12 +18,10 @@ var AssetLayout = Marionette.LayoutView.extend({
 
     regions: {
         header: {
-            selector: ".asset-header-container",
-            regionType: Marionette.ReplaceRegion
+            selector: ".asset-header-container"
         },
         body: {
-            selector: ".asset-body-container",
-            regionType: Marionette.ReplaceRegion
+            selector: ".asset-body-container"
         }
     },
 

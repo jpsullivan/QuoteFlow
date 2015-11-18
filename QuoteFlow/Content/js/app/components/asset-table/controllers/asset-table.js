@@ -11,7 +11,7 @@ var RefreshResultsView = require('../views/refresh-results');
 var ResultsCountView = require('../views/results-count');
 
 /**
- * 
+ *
  */
 var AssetTableController = Marionette.Controller.extend({
     /**
@@ -144,9 +144,9 @@ var AssetTableController = Marionette.Controller.extend({
         return this.view && this.view instanceof AssetTableLayout;
     },
 
-    close: function () {
+    destroy: function () {
         if (this.view) {
-            this.view.close();
+            this.view.destroy();
             delete this.view;
         }
     },
@@ -213,7 +213,7 @@ var AssetTableController = Marionette.Controller.extend({
     _showTable: function (options) {
         options = options || {};
 
-        this.close();
+        this.destroy();
         this.view = this._createMainView();
         var table = this._createTableView(options.table, options.sortOptions);
         var resultsCount = this._createResultsCount({
@@ -255,7 +255,7 @@ var AssetTableController = Marionette.Controller.extend({
      * @param {boolean} options.quoteflowHasAssets Whether there are assets created in this QuoteFlow instance
      */
     _showEmptyResults: function (options) {
-        this.close();
+        this.destroy();
         this.view = this._createEmptyResultsView(options);
         this.view.render();
         this.$el.empty().append(this.view.$el);

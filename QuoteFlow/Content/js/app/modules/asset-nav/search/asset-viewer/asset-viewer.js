@@ -118,11 +118,11 @@ var AssetViewer = Marionette.Controller.extend({
         });
 
         this.listenTo(this.errorController, "before:render", function() {
-            this.assetController.close();
+            this.assetController.destroy();
         });
 
         this.listenTo(this.errorController, "returnToSearch", function() {
-            this.trigger("close");
+            this.trigger("destroy");
         });
 
         this.listenAndRethrow(this.errorController, "render");
@@ -138,7 +138,7 @@ var AssetViewer = Marionette.Controller.extend({
         });
         this.listenTo(this.assetController, "render", function(regions, options) {
             //JIRA.Components.IssueViewer.Utils.hideDropdown();
-            this.errorController.close();
+            this.errorController.destroy();
             this.trigger("render", regions, options);
 
             QuoteFlow.trace("jira.psycho.asset.refreshed", { id: this.model.getId() });
@@ -147,7 +147,7 @@ var AssetViewer = Marionette.Controller.extend({
         this.listenTo(this.assetController, "panelRendered", function(panel, $ctx) {
             this.eventBus.triggerPanelRendered(panel, $ctx);
         });
-        this.listenTo(this.assetController, "close", function() {
+        this.listenTo(this.assetController, "destroy", function() {
             //JIRA.Components.IssueViewer.Utils.hideDropdown();
         });
     },
@@ -183,7 +183,7 @@ var AssetViewer = Marionette.Controller.extend({
         // Clear previous model and errors if this is not an update or is the initial render
         if (!meta.isUpdate || initialize) {
             this.model.resetToDefault();
-            this.errorController.close();
+            this.errorController.destroy();
         }
 
         // Update the model with the new data
@@ -195,7 +195,7 @@ var AssetViewer = Marionette.Controller.extend({
 
         // Clear previous render if this is not an update or is the initial render
         if (!meta.isUpdate || initialize) {
-            this.assetController.close();
+            this.assetController.destroy();
         }
         // Display the controller
         this.assetController.show();
@@ -420,8 +420,8 @@ var AssetViewer = Marionette.Controller.extend({
      */
     dismiss: function() {
         this.model.resetToDefault();
-        this.errorController.close();
-        this.assetController.close();
+        this.errorController.destroy();
+        this.assetController.destroy();
     },
 
     close: function() {

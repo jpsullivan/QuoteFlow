@@ -4845,7 +4845,7 @@ define('aui/form-validation/validator-register',[], function() {
         },
 
         // abstract
-        close: function () {
+        destroy: function () {
             if (!this.opened()) return;
 
             var cid = this.containerId,
@@ -6215,7 +6215,7 @@ define('aui/form-validation/validator-register',[], function() {
         },
 
         // multi
-        close: function () {
+        destroy: function () {
             if (!this.opened()) return;
             this.parent.close.apply(this, arguments);
         },

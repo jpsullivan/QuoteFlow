@@ -177,7 +177,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     /**
      * Prepare to be removed, deactivating all subviews.
      */
-    close: function () {
+    destroy: function () {
         QuoteFlow.Interactive.offVerticalResize(this._adjustHeight);
         QuoteFlow.Interactive.offVerticalResize(this._adjustNoResultsMessageHeight);
         QuoteFlow.Interactive.offHorizontalResize(this._updateSidebarPosition);

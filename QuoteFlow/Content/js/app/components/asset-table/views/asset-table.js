@@ -70,7 +70,7 @@ var AssetTableView = Marionette.ItemView.extend({
         this._removeEmptyTextNodes();
     },
 
-    onClose: function () {
+    onDestroy: function () {
         this._removeDraggable();
     },
 

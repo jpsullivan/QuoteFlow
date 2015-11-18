@@ -208,7 +208,13 @@ namespace QuoteFlow.Controllers
             var model = new QuoteBuilderViewModel(quote, assetTable.AssetTable, visibleFieldNames, visibleFunctionNames,
                 jqlReservedWords, searchOutcome);
 
-            return quote.Name.UrlFriendly() != name ? PageNotFound() : View(model);
+            return quote.Name.UrlFriendly() != name ? PageNotFound() : View("ShowBuilder", model);
+        }
+
+        [QuoteFlowRoute("quote/{id:INT}/{name}/builder/{assetId:INT}", Name = RouteNames.QuoteBuilderWithSelectedAsset)]
+        public virtual ActionResult ShowBuilderWithSelectedAsset(int id, string name, int assetId, string jql)
+        {
+            return ShowBuilder(id, name, jql);
         }
     }
 }

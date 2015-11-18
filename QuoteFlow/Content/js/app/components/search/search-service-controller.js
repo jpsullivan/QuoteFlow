@@ -74,7 +74,7 @@ var SearchServiceController = Marionette.Controller.extend({
         this.trigger("assetHighlighted", asset.getId());
     },
 
-    close: function () {
+    destroy: function () {
         this.stopListening();
         this.searchResults.offAssetUpdated(this._onAssetUpdated);
         this.searchResults.offHighlightedAssetChange(this._onHighlightedAssetChange);
