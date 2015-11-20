@@ -83,11 +83,27 @@ var MarionetteMixins = {
                     cleanerUpper(); // un-register the listener
                 });
             }
+        },
+
+        applyToDom: function () {
+            this.delegateEvents();
+            this.bindUIElements();
+            this.triggerMethod("applyToDom");
+        }
+    },
+
+    layoutMixins: {
+        applyToDom: function () {
+            this.delegateEvents();
+            this.bindUIElements();
+            this._reInitializeRegions();
+            this.triggerMethod("applyToDom");
         }
     }
 };
 
 _.extend(Marionette.Controller.prototype, MarionetteMixins.controllerMixins);
 _.extend(Marionette.View.prototype, MarionetteMixins.viewMixins);
+_.extend(Marionette.LayoutView.prototype, MarionetteMixins.layoutMixins);
 
 module.exports = MarionetteMixins;

@@ -4,6 +4,8 @@ var _ = require('underscore');
 var $ = require('jquery');
 var Brace = require('backbone-brace');
 
+var ConcurrentDeferred = require('../../../../../util/jquery/concurrent-deferred');
+
 var AsyncData = Brace.Evented.extend({
     namedEvents: ["change"],
 

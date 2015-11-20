@@ -78,7 +78,7 @@ var AssetEditor = AssetViewer.extend({
         });
 
         this.listenTo(this.fieldsLoader, "fieldsLoaded", function(result) {
-            this.viewIssueData.updateIssue(result.assetSku, result);
+            this.viewAssetData.updateIssue(result.assetSku, result);
 
             // Ensure assetID is a number, otherwise some checks might fail
             result.assetId = Number(result.assetId);
@@ -160,7 +160,7 @@ var AssetEditor = AssetViewer.extend({
                 this.eventBus.triggerSaveSuccess(assetId, assetSku, savedFieldIds, response);
 
                 // Updating view issue cache with the new data we get back from a successful save.
-                this.viewIssueData.set(assetSku, response);
+                this.viewAssetData.set(assetSku, response);
 
                 // Update the model with the new data, including the list of fields still in progress
                 this.model.update(response, {
@@ -218,13 +218,13 @@ var AssetEditor = AssetViewer.extend({
         this.fieldsController = new JIRA.Components.IssueEditor.Controllers.Fields();
     },
 
-    _onIssueLoaded: function(data, meta, options) {
+    _onAssetLoaded: function(data, meta, options) {
         if (data.issue.isEditable) {
             // If this issue is NOT from the cache and this is NOT an update, request the fields from the server
             var isPrefetchEnabled = false;
             if (isPrefetchEnabled && !meta.error && !meta.fromCache) {
                 this.fieldsLoader.load({
-                    viewIssueData: this.viewIssueData,
+                    viewAssetData: this.viewAssetData,
                     issueEntity: options.issueEntity
                 });
             }
@@ -237,7 +237,7 @@ var AssetEditor = AssetViewer.extend({
         AssetViewer.prototype._onAssetLoaded.call(this, data, meta, options);
 
         // If we have fields data, update it
-        // This needs to be done after calling the original onIssueLoaded, as that method can reset
+        // This needs to be done after calling the original onAssetLoaded, as that method can reset
         // the editIssue controller
         if (data.fields) {
             this.editAssetController.update({
@@ -288,7 +288,7 @@ var AssetEditor = AssetViewer.extend({
             this.editAssetController.setAssetSku(assetEntity.sku);
 
             this.fieldsLoader.load({
-                viewIssueData: this.viewIssueData,
+                viewAssetData: this.viewAssetData,
                 assetEntity: assetEntity
             });
             AJS.Meta.set("server-view-issue-is-editable", null);

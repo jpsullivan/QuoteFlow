@@ -59,7 +59,7 @@ var AssetLoaderService = Marionette.Controller.extend({
      * @param {Object} options.assetEntity Asset entity to update
      * @param {boolean} options.mergeIntoCurrent whether the update should just merge into the current asset
      */
-    update: function(options) {
+    update: function (options) {
         var assetEntity = options.assetEntity,
             mergeIntoCurrent = options.mergeIntoCurrent,
             viewAssetData = options.viewAssetData,

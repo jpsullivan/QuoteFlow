@@ -61,6 +61,7 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
      * Handler for applyToDom event, things to do after $el has been loaded from the DOM
      */
     onApplyToDom: function () {
+        debugger;
         var view = new JIRA.Components.IssueViewer.Views.IssueOpsbar({model: this.model});
         // Since ops bar already is in the dom, we should use the current dom data as the view's element
         view.setElement(this.opsbar.el);

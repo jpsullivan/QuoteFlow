@@ -17,12 +17,8 @@ var AssetLayout = Marionette.LayoutView.extend({
     className: "asset-container",
 
     regions: {
-        header: {
-            selector: ".asset-header-container"
-        },
-        body: {
-            selector: ".asset-body-container"
-        }
+        header: ".asset-header-container",
+        body: ".asset-body-container"
     },
 
     modelEvents: {

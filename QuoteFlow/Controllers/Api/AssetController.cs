@@ -86,6 +86,13 @@ namespace QuoteFlow.Controllers.Api
             return Fields;
         }
 
+        [HttpPost]
+        public AssetFields GetAssetMergeCurrent(MergeIntoCurrent mic)
+        {
+            var ap = new FetchAssetParams();
+            return GetAsset(ap.AssetId, ap.Decorator, ap.Prefetch, ap.ShouldUpdateCurrentCatalog, false);
+        }
+
         private void PopulateAssetFields(IAsset asset, bool retainValues, IErrorCollection errorCollection)
         {
             //var isEditable = AssetService.IsAssetEditable(asset, RequestContext.Principal.Identity.Name);
@@ -157,6 +164,16 @@ namespace QuoteFlow.Controllers.Api
         {
             public int AssetId { get; set; }
             public IAsset Asset { get; set; }
+            public string Decorator { get; set; }
+            public bool Prefetch { get; set; }
+            public bool ShouldUpdateCurrentCatalog { get; set; }
+            public long LastReadTime { get; set; }
+        }
+
+        public class MergeIntoCurrent
+        {
+            public int AssetId { get; set; }
+            public string Asset { get; set; }
             public string Decorator { get; set; }
             public bool Prefetch { get; set; }
             public bool ShouldUpdateCurrentCatalog { get; set; }

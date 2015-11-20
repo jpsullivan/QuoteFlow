@@ -3,7 +3,7 @@
 var _ = require('underscore');
 var Brace = require('backbone-brace');
 
-var AsyncData = require('../util/async-data');
+var AsyncData = require('./asset-viewer/legacy/async-data');
 
 /**
  * Handles the AJAX asset search requests, including both jql search and stable update.
@@ -140,23 +140,23 @@ var AssetSearchManager = Brace.Evented.extend({
     },
 
     _updateAssetKeysOnSearchSuccess: function (searchResult) {
-        var assetIds = searchResult.assetIds;
-        var assetKeys = searchResult.assetKeys;
-        var assetKeyMapping;
+        var assetIds = searchResult.assetTable.assetIds;
+        var assetSkus = searchResult.assetTable.assetKeys;
+        var assetSkuMapping;
 
-        if (assetIds && assetKeys) {
-            assetKeyMapping = {};
+        if (assetIds && assetSkus) {
+            assetSkuMapping = {};
             _.each(assetIds, function (assetId, index) {
-                assetKeyMapping[assetId] = {
-                    value: assetKeys[index],
+                assetSkuMapping[assetId] = {
+                    value: assetSkus[index],
                     error: false
                 };
             });
-            this.assetKeys.reset(assetKeyMapping);
+            this.assetKeys.reset(assetSkuMapping);
         } else {
             // Stable search is off, resort to extracting keys for current page only from the table html
-            assetKeyMapping = AssetSearchManager._extractAssetKeysFromTable(searchResult.table);
-            this.assetKeys.reset(assetKeyMapping);
+            assetSkuMapping = AssetSearchManager._extractAssetKeysFromTable(searchResult.table);
+            this.assetKeys.reset(assetSkuMapping);
         }
     },
 

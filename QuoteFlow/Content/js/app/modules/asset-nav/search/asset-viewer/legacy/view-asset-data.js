@@ -2,13 +2,13 @@
 
 var _ = require('underscore');
 var $ = require('jquery');
-var AsyncData = require('../../../util/async-data');
+var AsyncData = require('../legacy/async-data');
 
 var ViewAssetData = AsyncData.extend({
 
     initialize: function(options) {
         AsyncData.prototype.initialize.call(this, _.defaults(options || {}, {
-            disableCache: true,
+            disableCache: false,
             maxCacheSize: +10
         }));
     },
@@ -35,7 +35,7 @@ var ViewAssetData = AsyncData.extend({
                     data.fields.push(field.id + ":" + field.contentId);
                 });
 
-                data.asset = ["summary:" + this.data[id].value.asset.summaryContentId];
+                data.asset = ["summary:" + this.data[id].value.asset.id];
 
                 data.links = [];
                 var collectGroupLinks = function(group) {
@@ -46,20 +46,20 @@ var ViewAssetData = AsyncData.extend({
                         collectGroupLinks(nestedGroup);
                     });
                 };
-                _.each(this.data[id].value.asset.operations.linkGroups, function(group) {
-                    collectGroupLinks(group);
-                });
-
-                data.panels = [];
-                var instance = this;
-                var collectPanels = function(location) {
-                    _.each(instance.data[id].value.panels[location], function(panel) {
-                        data.panels.push(panel.completeKey + ":" + panel.contentId);
-                    });
-                };
-                collectPanels("leftPanels");
-                collectPanels("rightPanels");
-                collectPanels("infoPanels");
+                // _.each(this.data[id].value.asset.operations.linkGroups, function(group) {
+                //     collectGroupLinks(group);
+                // });
+                //
+                // data.panels = [];
+                // var instance = this;
+                // var collectPanels = function(location) {
+                //     _.each(instance.data[id].value.panels[location], function(panel) {
+                //         data.panels.push(panel.completeKey + ":" + panel.contentId);
+                //     });
+                // };
+                // collectPanels("leftPanels");
+                // collectPanels("rightPanels");
+                // collectPanels("infoPanels");
             }
         }
 
@@ -72,7 +72,7 @@ var ViewAssetData = AsyncData.extend({
         }
 
         var jqXhr = $.ajax({
-            url: QuoteFlow.RootUrl + "api/asset/GetAsset",
+            url: options.mergeIntoCurrent ? QuoteFlow.RootUrl + "api/asset/GetAssetMergeCurrent" : QuoteFlow.RootUrl + "api/asset/GetAsset",
             data: data,
             contentType: 'application/json',
             type: options.mergeIntoCurrent ? "POST" : "GET"

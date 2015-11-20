@@ -61,20 +61,20 @@ var AssetViewer = Marionette.Controller.extend({
 
         this.model = new AssetModel();
         this.eventBus = new AssetEventBus();
-        this.viewIssueData = new ViewAssetData();
+        this.viewAssetData = new ViewAssetData();
 
         // Services
-        this._buildIssueLoader();
+        this._buildAssetLoader();
 
         // Controllers
         this._buildErrorController({
             showReturnToSearchOnError: options.showReturnToSearchOnError
         });
-        this._buildIssueController();
+        this._buildAssetController();
 
         QuoteFlow.bind(EventTypes.REFRESH_ASSET_PAGE, _.bind(function (e, assetId, options) {
-            if (this.model.isCurrentIssue(assetId)) {
-                this.refreshIssue(options);
+            if (this.model.isCurrentAsset(assetId)) {
+                this.refreshAsset(options);
             }
         }, this));
     },
@@ -84,7 +84,7 @@ var AssetViewer = Marionette.Controller.extend({
      *
      * @private
      */
-    _buildIssueLoader: function () {
+    _buildAssetLoader: function () {
         this.assetLoader = new AssetLoaderService();
 
         this.listenTo(this.assetLoader, "error", function(reason, props) {
@@ -132,7 +132,7 @@ var AssetViewer = Marionette.Controller.extend({
      * Builds the Asset controller, the main controller for viewing assets
      * @private
      */
-    _buildIssueController: function () {
+    _buildAssetController: function () {
         this.assetController = new AssetViewerController({
             model: this.model
         });
@@ -163,7 +163,7 @@ var AssetViewer = Marionette.Controller.extend({
     },
 
     /**
-     * Handler for assetLoaded, when an asset has been loaded by IssueLoader service
+     * Handler for assetLoaded, when an asset has been loaded by AssetLoader service
      *
      * @param {Object} data
      * @param {Object} meta
@@ -172,7 +172,7 @@ var AssetViewer = Marionette.Controller.extend({
      */
     _onAssetLoaded: function(data, meta, options) {
         //TODO Why assetEntity is not loaded from data?
-        var isPrefetchEnabled = false;
+        var isPrefetchEnabled = true;
         var assetEntity = options.assetEntity;
         // TODO options.initialize, meta.mergeIntoCurrent and meta.isUpdate seems to represent the same thing
         //      Investigate if all of them are in use and are actually necessary
@@ -283,7 +283,7 @@ var AssetViewer = Marionette.Controller.extend({
      *
      * @param {Object} assetEntity
      */
-    _loadIssueFromDom: function(assetEntity) {
+    _loadAssetFromDom: function(assetEntity) {
         // Many places in KickAss use the presence of an asset ID / SKU to determine if an asset is selected. We
         // can't extract either from an error message, so pass a dud ID to make it look like an asset is selected.
         if (!assetEntity.id || assetEntity.id == -1) {
@@ -300,10 +300,10 @@ var AssetViewer = Marionette.Controller.extend({
         // After initial load, the server rendered view asset page will be the same as
         // regular ajax view asset page. Thus removing the meta so it can resume
         // to work regularly.
-        AJS.Meta.set("serverRenderedViewIssue", null);
+        AJS.Meta.set("serverRenderedViewAsset", null);
 
         var traceData = { id: this.getAssetId() };
-        //TODO These traces should be inside IssueController, as it has more knowledge about when the asset is loaded
+        //TODO These traces should be inside AssetController, as it has more knowledge about when the asset is loaded
         QuoteFlow.trace("quoteflow.asset.refreshed", traceData);
     },
 
@@ -322,7 +322,7 @@ var AssetViewer = Marionette.Controller.extend({
 
         if (isServerRendered) {
             assetEntity.id = assetSku.attr("rel") || -1;
-            this._loadIssueFromDom(assetEntity);
+            this._loadAssetFromDom(assetEntity);
             return $.Deferred().resolve().promise();
         } else {
             if (!this.canDismissComment() || !assetEntity.id) {
@@ -332,7 +332,7 @@ var AssetViewer = Marionette.Controller.extend({
             this.assetController.showLoading();
             return this.assetLoader.load({
                 assetEntity: assetEntity,
-                viewAssetData: this.viewIssueData
+                viewAssetData: this.viewAssetData
             });
         }
     },
@@ -354,9 +354,9 @@ var AssetViewer = Marionette.Controller.extend({
             mergeIntoCurrent: true
         });
 
-        if (this.model.hasIssue()) {
+        if (this.model.hasAsset()) {
             promise = this.assetLoader.update({
-                viewIssueData: this.viewIssueData,
+                viewAssetData: this.viewAssetData,
                 assetEntity: this.model.getEntity(),
                 mergeIntoCurrent: options.mergeIntoCurrent,
                 detailView: options.detailView // JRA-36659: keep track of whether we are in detail view
@@ -402,21 +402,21 @@ var AssetViewer = Marionette.Controller.extend({
     },
 
     /**
-     * Updates the current asset with a new ViewIssueQuery
+     * Updates the current asset with a new ViewAssetQuery
      *
      * @param query {Object} New query to use for the request
      */
     updateAssetWithQuery: function(query) {
-        this.model.updateIssueQuery(query);
+        this.model.updateAssetQuery(query);
         this.assetLoader.update({
-            viewIssueData: this.viewIssueData,
+            viewAssetData: this.viewAssetData,
             assetEntity: this.model.getEntity(),
             mergeIntoCurrent: true
         });
     },
 
     /**
-     * Closes the IssueViewer, cleaning the model and closing all the views
+     * Closes the AssetViewer, cleaning the model and closing all the views
      */
     dismiss: function() {
         this.model.resetToDefault();
