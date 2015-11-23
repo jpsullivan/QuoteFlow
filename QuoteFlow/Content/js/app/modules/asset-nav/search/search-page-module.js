@@ -491,22 +491,22 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     getEffectiveAsset: function () {
-        var hasHighlightedIssue = this.searchResults.hasHighlightedAsset(),
+        var hasHighlightedAsset = this.searchResults.hasHighlightedAsset(),
             hasSelectedAsset = this.searchResults.hasSelectedAsset();
 
-        var issueModuleIssue = new SimpleAsset({
+        var asset = new SimpleAsset({
             id: QuoteFlow.application.request("assetEditor:getAssetId"),
             key: QuoteFlow.application.request("assetEditor:getAssetSku")
         });
 
         if (this.standalone) {
-            return issueModuleIssue;
+            return asset;
         } else if (hasSelectedAsset) {
             return this.searchResults.getSelectedAsset();
-        } else if (hasHighlightedIssue) {
+        } else if (hasHighlightedAsset) {
             return this.searchResults.getHighlightedAsset();
         } else {
-            return issueModuleIssue;
+            return asset;
         }
     },
 

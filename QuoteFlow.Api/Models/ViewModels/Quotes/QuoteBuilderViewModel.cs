@@ -7,7 +7,10 @@ namespace QuoteFlow.Api.Models.ViewModels.Quotes
 {
     public class QuoteBuilderViewModel
     {
-        public QuoteBuilderViewModel(Quote quote, AssetTable assetTable, IEnumerable<string> visibleFieldNames, IEnumerable<string> visibleFunctionNames, IEnumerable<string> jqlReservedWords, IServiceOutcome<QuerySearchResults> criteriaJqlOutcome)
+        public QuoteBuilderViewModel(Quote quote, AssetTable assetTable, 
+            IEnumerable<string> visibleFieldNames, IEnumerable<string> visibleFunctionNames, 
+            IEnumerable<string> jqlReservedWords, IServiceOutcome<QuerySearchResults> criteriaJqlOutcome, 
+            int? selectedAssetId)
         {
             Quote = quote;
             AssetTable = assetTable;
@@ -15,6 +18,7 @@ namespace QuoteFlow.Api.Models.ViewModels.Quotes
             VisibleFunctionNames = visibleFunctionNames;
             JqlReservedWords = jqlReservedWords;
             CriteriaJqlOutcome = criteriaJqlOutcome;
+            SelectedAssetId = selectedAssetId;
         }
 
         public Quote Quote { get; set; }
@@ -25,5 +29,7 @@ namespace QuoteFlow.Api.Models.ViewModels.Quotes
         public IEnumerable<string> JqlReservedWords { get; set; }
 
         public IServiceOutcome<QuerySearchResults> CriteriaJqlOutcome { get; set; } 
+
+        public int? SelectedAssetId { get; set; }
     }
 }

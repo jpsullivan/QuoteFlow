@@ -22,7 +22,7 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
 
         // equivalent to: "quote/:id/:name/builder/?:query"
         //this.route(/^(quote\/)([^\/\?]+)\/([^\/\?]+)\/(builder\/)\?([^\/\?]+)(\?.*)?$/, this._route);
-        this.route("quote/:id/:name/builder/?:query", this._route);
+        this.route("quote/:id/:name/builder/:selectedAssetId?:query", this._route);
 
         // equivalent to "quote/:id/:name/builder/"
         this.route(/^(quote)\/([^\/\?]+)\/([^\/\?]+)\/(builder)\/?$/, this._route);
@@ -55,10 +55,13 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
         this.navigate(UrlSerializer.getURLFromState(state), { trigger: false, replace: true });
     },
 
-    _restoreSessionSearch: function (quoteId, quoteName) {
-        var sessionSearch = this.initialSessionSearchState,
-            url = UrlSerializer.getURLFromState(sessionSearch || this.searchPageModule.getState());
+    _restoreSessionSearch: function (quoteId, quoteName, selectedAssetId) {
+        // todo: implement search saving before using this
+        // var sessionSearch = this.initialSessionSearchState,
+        //     url = UrlSerializer.getURLFromState(sessionSearch || this.searchPageModule.getState());
 
+        debugger;
+        var url = UrlSerializer.getURLFromState(this.searchPageModule.getState());
         this.navigate(url, { replace: true, trigger: true });
     },
 

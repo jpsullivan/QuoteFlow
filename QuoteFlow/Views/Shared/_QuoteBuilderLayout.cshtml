@@ -53,7 +53,11 @@
                             <div class="navigator-content"
                                  data-issue-table-model-state="@JSON.Serialize(Model.AssetTable)"
                                  data-session-search-state="{ 'id': 118780 '}"
-                                 data-selected-issue="{ 'id': 118780 '}">
+                                 @if (Model.SelectedAssetId.HasValue)
+                                 {
+                                     <text>data-selected-issue="{ 'id': @Model.SelectedAssetId.Value '}"</text>
+                                 }
+                                 >
 
                                 <!-- Render the split view here -->
                                 @Html.Partial("Partials/Quote/Builder/SplitView", Model.AssetTable)

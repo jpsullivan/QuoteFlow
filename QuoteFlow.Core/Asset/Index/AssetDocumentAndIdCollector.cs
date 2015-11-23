@@ -45,7 +45,7 @@ namespace QuoteFlow.Core.Asset.Index
 		private readonly IList<int?> _docIds;
 		private readonly int _maximumSize;
 		private readonly int _pageSize;
-		private readonly string _selectedAssetKey;
+		private readonly int? _selectedAssetId;
 		private int _startIndex;
 		private int _documentsCollected = 0;
 		private int _totalHits = 0;
@@ -56,15 +56,15 @@ namespace QuoteFlow.Core.Asset.Index
         /// <param name="issuesSearcher"> </param>
         /// <param name="maximumSize">The maximum number of asset IDs / keys to collect (the stable search limit).</param>
         /// <param name="pageSize">The number of issues to be shown on a page of the asset table.</param>
-        /// <param name="selectedAssetKey">The key of the selected asset (or {@code null}).</param>
-        /// <param name="startIndex">The index of the first asset to show (ignored if <param name="selectedAssetKey" /> is given).</param>
-        public AssetDocumentAndIdCollector(IndexSearcher issuesSearcher, int maximumSize, int pageSize, string selectedAssetKey, int startIndex)
+        /// <param name="selectedAssetId">The ID of the selected asset (or {@code null}).</param>
+        /// <param name="startIndex">The index of the first asset to show (ignored if <param name="selectedAssetId" /> is given).</param>
+        public AssetDocumentAndIdCollector(IndexSearcher issuesSearcher, int maximumSize, int pageSize, int? selectedAssetId, int startIndex)
 		{
 			_searcher = issuesSearcher;
 		    _docIds = new List<int?>(maximumSize);
 			_maximumSize = maximumSize;
 			_pageSize = pageSize;
-			_selectedAssetKey = selectedAssetKey;
+			_selectedAssetId = selectedAssetId;
 			_startIndex = NearestStartIndex(StartIndexWithinMaximumSize(startIndex, maximumSize), pageSize);
 		}
 
@@ -117,9 +117,9 @@ namespace QuoteFlow.Core.Asset.Index
             {
                 int pageStartIdx = NearestStartIndex(StartIndexWithinMaximumSize(_startIndex, _docIds.Count), _pageSize);
 
-                if (_selectedAssetKey != null)
+                if (_selectedAssetId.HasValue)
                 {
-                    TermDocs docs = _searcher.IndexReader.TermDocs(new Term(DocumentConstants.AssetSku, _selectedAssetKey));
+                    TermDocs docs = _searcher.IndexReader.TermDocs(new Term(DocumentConstants.AssetId, _selectedAssetId.Value.ToString()));
                     if (docs.Next())
                     {
                         int selectedDocId = docs.Doc;

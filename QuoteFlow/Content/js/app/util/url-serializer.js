@@ -36,7 +36,6 @@ var UrlSerializer = {
      * @return {string} A URL representation of <tt>state</tt>.
      */
     getURLFromState: function(state) {
-        console.warn("todo: fix hardcoded quote url");
         state = state || {};
 
         var query = [];

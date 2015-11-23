@@ -29,7 +29,7 @@ namespace QuoteFlow.Core.Configuration
         [DefaultValue(DEFAULT_NUM_TO_SHOW)]
         public int NumberToShow { get; set; }
 
-        public string SelectedAssetKey { get; set; }
+        public int? SelectedAssetId { get; set; }
 
         [DefaultValue(true)]
         public bool ShowActions { get; set; }

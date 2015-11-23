@@ -46,10 +46,10 @@ namespace QuoteFlow.Api.Configuration
         int NumberToShow { get; set; }
 
         /// <summary>
-        /// The key of the selected asset; if given, the page containing this
+        /// The ID of the selected asset; if given, the page containing this
         /// asset is rendered and start is ignored.
         /// </summary>
-        string SelectedAssetKey { get; set; }
+        int? SelectedAssetId { get; set; }
 
         /// <summary>
         /// Whether the actions (cog) column should be shown.

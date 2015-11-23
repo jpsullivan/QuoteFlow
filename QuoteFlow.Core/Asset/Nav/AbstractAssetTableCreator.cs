@@ -138,13 +138,13 @@ namespace QuoteFlow.Core.Asset.Nav
         /// <summary>
         /// Collect asset documents and IDs from Lucene.
         /// </summary>
-        /// <param name="selectedAssetKey">The selected asset's key.</param>
+        /// <param name="selectedAssetId">The selected asset's ID.</param>
         /// <returns>Asset documents and IDs</returns>
-        private AssetDocumentAndIdCollector CollectAssets(string selectedAssetKey)
+        private AssetDocumentAndIdCollector CollectAssets(int? selectedAssetId)
         {
             var assetSearcher = _searchProviderFactory.GetSearcher(SearchProviderTypes.AssetIndex);
             var idCollector = new AssetDocumentAndIdCollector(assetSearcher, StableSearchResultsLimit,
-                _configuration.NumberToShow, selectedAssetKey, _configuration.Start);
+                _configuration.NumberToShow, selectedAssetId, _configuration.Start);
 
             _searchProvider.SearchAndSort(_query, _user, idCollector, new PagerFilter<object>(0, StableSearchResultsLimit));
             return idCollector;
@@ -206,8 +206,8 @@ namespace QuoteFlow.Core.Asset.Nav
 
             if (_returnAssetIds)
             {
-                var selectedAssetKey = _configuration.SelectedAssetKey;
-                var idCollector = CollectAssets(selectedAssetKey);
+                var selectedAssetId = _configuration.SelectedAssetId;
+                var idCollector = CollectAssets(selectedAssetId);
                 AssetDocumentAndIdCollector.Result collectedResult = idCollector.ComputeResult();
 
                 _assetIds = collectedResult.AssetIds;
@@ -315,11 +315,11 @@ namespace QuoteFlow.Core.Asset.Nav
         private int GetStartIndex(IList<string> issueKeys)
         {
             int pageSize = _configuration.NumberToShow;
-            string selectedAssetKey = _configuration.SelectedAssetKey;
+            int? selectedAssetId = _configuration.SelectedAssetId;
 
-            if (selectedAssetKey != null)
+            if (selectedAssetId.HasValue)
             {
-                return Math.Max(issueKeys.IndexOf(selectedAssetKey), 0) / pageSize * pageSize;
+                return Math.Max(issueKeys.IndexOf(selectedAssetId.Value.ToString()), 0) / pageSize * pageSize;
             }
             
             return _configuration.Start;

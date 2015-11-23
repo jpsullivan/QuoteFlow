@@ -184,12 +184,17 @@ namespace QuoteFlow.Controllers
         }
 
         [QuoteFlowRoute("quote/{id:INT}/{name}/builder", Name = RouteNames.QuoteBuilder)]
-        public virtual ActionResult ShowBuilder(int id, string name, string jql)
+        public virtual ActionResult ShowBuilder(int id, string name, string jql, int? selectedAssetId)
         {
             var quote = QuoteService.GetQuote(id);
 
             // track that this quote has been visited
             UserTrackingService.UpdateRecentLinks(GetCurrentUser().Id, PageType.Quote, quote.Id, quote.Name);
+
+            if (selectedAssetId.HasValue)
+            {
+                AssetTableServiceConfiguration.SelectedAssetId = selectedAssetId.Value;
+            }
 
             var assetTableOutcome = AssetTableService.GetIssueTableFromFilterWithJql(GetCurrentUser(), null, jql, AssetTableServiceConfiguration, true);
             if (!assetTableOutcome.IsValid())
@@ -206,15 +211,15 @@ namespace QuoteFlow.Controllers
             var searchOutcome = SearcherService.SearchWithJql(GetCurrentUser(), jql ?? string.Empty, 0);
 
             var model = new QuoteBuilderViewModel(quote, assetTable.AssetTable, visibleFieldNames, visibleFunctionNames,
-                jqlReservedWords, searchOutcome);
+                jqlReservedWords, searchOutcome, selectedAssetId);
 
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View("ShowBuilder", model);
         }
 
-        [QuoteFlowRoute("quote/{id:INT}/{name}/builder/{assetId:INT}", Name = RouteNames.QuoteBuilderWithSelectedAsset)]
-        public virtual ActionResult ShowBuilderWithSelectedAsset(int id, string name, int assetId, string jql)
+        [QuoteFlowRoute("quote/{id:INT}/{name}/builder/{selectedAssetId:INT}", Name = RouteNames.QuoteBuilderWithSelectedAsset)]
+        public virtual ActionResult ShowBuilderWithSelectedAsset(int id, string name, int selectedAssetId, string jql)
         {
-            return ShowBuilder(id, name, jql);
+            return ShowBuilder(id, name, jql, selectedAssetId);
         }
     }
 }
