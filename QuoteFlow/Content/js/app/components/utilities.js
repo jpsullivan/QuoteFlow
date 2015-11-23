@@ -213,7 +213,7 @@ var Utilities = {
             }
             if (i == maxlen) break;
         }
-        return prevdash ? sb.substr(0, sb.length - 1) : sb.join("");
+        return prevdash ? sb.toString().substr(0, sb.length - 1) : sb.join("");
     }
 };
 

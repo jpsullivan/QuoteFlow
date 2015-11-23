@@ -1,7 +1,7 @@
 ﻿"use strict";
 
-var BASE_BROWSE = "assets/browse/", // omg noooo
-    BASE_ASSETS = "builder/"; // todo: rip this shit out omg
+var BASE_BROWSE = "assets/browse/",
+    BASE_ASSETS = "builder/";
 
 var returnAsIs = function(x) {
     return x;

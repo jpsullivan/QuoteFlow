@@ -635,12 +635,15 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     getState: function () {
+        var path = window.location.pathname.split("/");
         var filter = this.getFilter();
 
         var state = {
             filter: filter && filter.getId(),
             filterJql: filter && filter.getJql(),
-            jql: this.getJql()
+            jql: this.getJql(),
+            quoteId: path[2],
+            quoteSlug: path[3]
         };
 
         if (this.standalone) {
