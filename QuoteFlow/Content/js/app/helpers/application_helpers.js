@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 var md5 = require('MD5');
 var moment = require('moment');
@@ -7,14 +7,14 @@ var Routes = require('../components/routes');
 var ApplicationHelpers = {
 
     /**
-     * Just a wrapper method to allow for Handlebars templates to register.
-     */
+    * Just a wrapper method to allow for Handlebars templates to register.
+    */
     initialize: function() {
         /**
-          Determines a
+        Determines a
 
-          @method eachKeys
-          @for Handlebars
+        @method eachKeys
+        @for Handlebars
         **/
         Handlebars.registerHelper('eachkeys', function (context, options) {
             var fn = options.fn, inverse = options.inverse, ret = "", empty = true;
@@ -32,10 +32,10 @@ var ApplicationHelpers = {
         });
 
         /**
-          Allows an inline if statement to be performed within the markup
+        Allows an inline if statement to be performed within the markup
 
-          @method ifCond
-          @for Handlebars
+        @method ifCond
+        @for Handlebars
         **/
         Handlebars.registerHelper('ifCond', function (v1, v2, options) {
             if (v1 == v2) {
@@ -107,12 +107,12 @@ var ApplicationHelpers = {
         });
 
         /**
-         * Produces a url based on the route name and its values. The route name
-         * is just the name of the function within the routes.js file. The routeValues
-         * argument is taken in via an options hash (arg1=arg1) and sent through as a
-         * key-value object.
-         * Usage: {{#routeUrl 'showAsset' arg1=arg1 arg2=arg2 }}
-         */
+        * Produces a url based on the route name and its values. The route name
+        * is just the name of the function within the routes.js file. The routeValues
+        * argument is taken in via an options hash (arg1=arg1) and sent through as a
+        * key-value object.
+        * Usage: {{#routeUrl 'showAsset' arg1=arg1 arg2=arg2 }}
+        */
         Handlebars.registerHelper('routeUrl', function (routeName, routeValues) {
             return Routes[routeName](routeValues);
         });
@@ -132,49 +132,53 @@ var ApplicationHelpers = {
 
                 var f = dateFormats[format];
                 return moment(datetime).format(f);
-            }
-            else {
+            } else {
                 return datetime;
             }
         });
 
+        Handlebars.registerHelper("price", function (number) {
+            // adapted from http://stackoverflow.com/questions/2901102/how-to-print-number-with-commas-as-thousands-separators-in-javascript
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        });
+
         Handlebars.registerHelper('compare', function (lvalue, operator, rvalue, options) {
-          var operators, result;
+            var operators, result;
 
-          if (arguments.length < 3) {
-              throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
-          }
+            if (arguments.length < 3) {
+                throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+            }
 
-          if (options === undefined) {
-              options = rvalue;
-              rvalue = operator;
-              operator = "===";
-          }
+            if (options === undefined) {
+                options = rvalue;
+                rvalue = operator;
+                operator = "===";
+            }
 
-          operators = {
-              '==': function (l, r) { return l == r; },
-              '===': function (l, r) { return l === r; },
-              '!=': function (l, r) { return l != r; },
-              '!==': function (l, r) { return l !== r; },
-              '<': function (l, r) { return l < r; },
-              '>': function (l, r) { return l > r; },
-              '<=': function (l, r) { return l <= r; },
-              '>=': function (l, r) { return l >= r; },
-              'typeof': function (l, r) { return typeof l == r; }
-          };
+            operators = {
+                '==': function (l, r) { return l == r; },
+                '===': function (l, r) { return l === r; },
+                '!=': function (l, r) { return l != r; },
+                '!==': function (l, r) { return l !== r; },
+                '<': function (l, r) { return l < r; },
+                '>': function (l, r) { return l > r; },
+                '<=': function (l, r) { return l <= r; },
+                '>=': function (l, r) { return l >= r; },
+                'typeof': function (l, r) { return typeof l == r; }
+            };
 
-          if (!operators[operator]) {
-              throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
-          }
+            if (!operators[operator]) {
+                throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
+            }
 
-          result = operators[operator](lvalue, rvalue);
+            result = operators[operator](lvalue, rvalue);
 
-          if (result) {
-              return options.fn(this);
-          } else {
-              return options.inverse(this);
-          }
-      });
+            if (result) {
+                return options.fn(this);
+            } else {
+                return options.inverse(this);
+            }
+        });
     }
 };
 
