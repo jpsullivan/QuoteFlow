@@ -1,5 +1,7 @@
 ﻿@import "mixins/text-overflow";
 @import "mixins/content-box";
+@import "mixins/asset-responsive";
+
 
 .page-type-split {
     overflow-y: hidden;
@@ -132,6 +134,78 @@
                 .text-overflow();
                 display: block;
                 margin-top: 3px;
+            }
+        }
+    }
+}
+
+// reponsive components
+.skinny {
+    .split-view {
+        .responsive-links();
+
+        .list-results-panel {
+            width:250px;
+        }
+        .property-list {
+            &.two-cols {
+                > .item {
+                    width: 100%;
+                }
+                > .item-right {
+                    clear: both;
+                    float: left;
+                }
+            }
+        }
+
+        #viewissuesidebar {
+            width: 280px;
+
+            .responsive-item-details();
+
+            .responsive-time-tracking();
+
+        }
+
+        .issue-header {
+            .aui-toolbar .toolbar-group .toolbar-trigger,
+            .aui-toolbar .aui-dd-parent a.aui-dd-trigger {
+                font-size: 12px;
+                height:24px;
+                line-height: 24px;
+                padding: 0 6px;
+            }
+        }
+        #activitymodule {
+            #issue-tabs {
+                padding-left: 10px;
+            }
+        }
+    }
+}
+
+.very-skinny  {
+    .split-view {
+        .property-list {
+            .wrap {
+                padding:0;
+            }
+            .item {
+                .name {
+                    float: none;
+                    margin-left: 0;
+                    text-align: left;
+                    width: 100%;
+                }
+                .value {
+                    margin-left: -5px;
+                }
+            }
+        }
+        .issue-header {
+            .icon + .trigger-label {
+                display: none;
             }
         }
     }
