@@ -15,15 +15,15 @@ var AssetBodyLayout = Marionette.LayoutView.extend({
 
     regions: {
         leftPanels: {
-            selector: ".issue-main-column",
+            selector: ".asset-main-column",
             regionType: Marionette.LinkRegion
         },
         rightPanels: {
-            selector: ".issue-side-column",
+            selector: ".asset-side-column",
             regionType: Marionette.LinkRegion
         },
         infoPanels: {
-            selector: ".issue-body",
+            selector: ".asset-body",
             regionType: Marionette.LinkRegion
         }
     }

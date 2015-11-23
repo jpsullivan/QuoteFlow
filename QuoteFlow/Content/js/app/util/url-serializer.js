@@ -1,7 +1,7 @@
 ﻿"use strict";
 
-var BASE_BROWSE = "quote/3/test-quote/builder/", // omg noooo
-    BASE_ASSETS = "quote/3/test-quote/builder/"; // todo: rip this shit out omg
+var BASE_BROWSE = "assets/browse/", // omg noooo
+    BASE_ASSETS = "builder/"; // todo: rip this shit out omg
 
 var returnAsIs = function(x) {
     return x;
@@ -42,16 +42,17 @@ var UrlSerializer = {
         var query = [];
         var base;
 
+        var quoteUrl = "quote/" + state.quoteId + "/" + state.quoteSlug + "/";
         if (state.selectedAssetId) {
-            base = BASE_BROWSE + state.selectedAssetId;
+            base = quoteUrl + BASE_ASSETS + state.selectedAssetId;
         } else {
-            base = BASE_ASSETS;
+            base = quoteUrl + BASE_ASSETS;
         }
-        if (state.filter != null) {
+        if (state.filter !== null) {
             query.push('filter=' + state.filter);
         }
 
-        if (state.jql != null && (state.filterJql == null || state.jql !== state.filterJql)) {
+        if (state.jql !== null && (state.filterJql === null || state.jql !== state.filterJql)) {
             query.push('jql=' + encodeURIComponent(state.jql));
         }
 
@@ -65,7 +66,7 @@ var UrlSerializer = {
      * Extract state from a URL.
      *
      * @param {string} URL The URL.
-     * @return {JIRA.Issues.URLSerializer.state} The state object.
+     * @return {state} The state object.
      */
     getStateFromURL: function(url) {
         var parameters = {},
@@ -74,22 +75,30 @@ var UrlSerializer = {
 
         var state = {
             filter: null,
+            quoteId: 0,
+            quoteSlug: null,
             jql: null,
             selectedAssetId: null,
             startIndex: 0
         };
 
-        // if (url.indexOf(BASE_BROWSE) == 0) {
-        //     state.selectedAssetId = path.split("/")[1];
-        // }
+        var splitPath = path.split("/");
+
+        // set the quote id and slug from the url
+        state.quoteId = splitPath[1];
+        state.quoteSlug = splitPath[2];
+
+        if (url.indexOf(BASE_BROWSE) === 0) {
+            state.selectedAssetId = splitPath[4];
+        }
 
         if (url.indexOf("?") !== -1) {
             queryString = url.substr(url.indexOf("?"));
             parameters = QueryStringParser.parse(queryString);
 
-            //Need to keep a record of these and pass them along down to view issue
-            //so that the correct element can be scrolled into view.
-            //These can be trashed afterward with no side effect.
+            // Need to keep a record of these and pass them along down to view issue
+            // so that the correct element can be scrolled into view.
+            // These can be trashed afterward with no side effect.
             var viewAssetQuery = _.pick(parameters, 'focusedCommentId', 'attachmentSortBy', 'attachmentOrder');
             if (!_.isEmpty(viewAssetQuery)) {
                 state.viewAssetQuery = viewAssetQuery;

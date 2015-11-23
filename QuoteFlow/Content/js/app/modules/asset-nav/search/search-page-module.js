@@ -1,5 +1,6 @@
 ﻿"use strict";
 
+var $ = require('jquery');
 var _ = require('underscore');
 
 var Brace = require('backbone-brace');
@@ -629,7 +630,7 @@ var SearchPageModule = Brace.Model.extend({
     discardFilterChanges: function () {
         this.update({
             jql: null,
-            selectedAssetSku: null
+            selectedAssetId: null
         }, true);
     },
 
@@ -643,7 +644,7 @@ var SearchPageModule = Brace.Model.extend({
         };
 
         if (this.standalone) {
-            state.selectedAssetSku = QuoteFlow.application.request("assetEditor:getAssetSku");
+            state.selectedAssetId = QuoteFlow.application.request("assetEditor:getAssetId");
         } else {
             _.extend(state, this.search.getResults().getState());
         }
@@ -668,7 +669,7 @@ var SearchPageModule = Brace.Model.extend({
         var searchPromise = this.assetSearchManager.search(searchOptions);
 
         searchPromise.done(_.bind(function (results) {
-            if (this.fullScreenAsset.isVisible() && !AJS.Meta.get('serverRenderedViewIssue')) {
+            if (this.fullScreenAsset.isVisible() && !AJS.Meta.get('serverRenderedViewAsset')) {
                 QuoteFlow.application.execute("assetEditor:beforeHide");
             }
             this.searchResults.resetFromSearch(_.extend(options, results.assetTable));
@@ -712,7 +713,7 @@ var SearchPageModule = Brace.Model.extend({
         this.updateWindowTitle(this.getFilter());
 
         if (isReset) {
-            var jql = (state.filter && state.jql == null) ? state.filter.getJql() : state.jql;
+            var jql = (state.filter && state.jql === null) ? state.filter.getJql() : state.jql;
             this.queryModule.resetToQuery(jql, { focusQuery: options.isNewSearch }).always(_.bind(function() {
                 // Hide the query view for invalid filters.
                 this.queryModule.setVisible(!state.filter || state.filter.getIsValid());
@@ -724,11 +725,11 @@ var SearchPageModule = Brace.Model.extend({
             searchPromise = this._doSearch(newState);
         } else {
             searchPromise = jQuery.Deferred().resolve();
-            if ("selectedAssetSku" in state) {
+            if ("selectedAssetId" in state) {
                 this.searchResults.selectAssetById(state.selectedAssetId);
             }
             // If an issue is selected, its position in the results determines the page and we can ignore startIndex.
-            if ("startIndex" in state && !state.selectedAssetSku) {
+            if ("startIndex" in state && !state.selectedAssetId) {
                 this.searchResults.goToPage(state.startIndex);
             }
         }
@@ -928,7 +929,7 @@ var SearchPageModule = Brace.Model.extend({
      * @param issueProps.assetId
      * @param issueProps.assetSku
      */
-    showInlineIssueLoadError: function (issueProps) {
+    showInlineAssetLoadError: function (issueProps) {
         var html = JIRA.Components.IssueViewer.Templates.Body.errorsLoading();
         JIRA.Messages.showErrorMsg(html, { closeable: true });
     },
