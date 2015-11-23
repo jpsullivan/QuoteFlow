@@ -126,21 +126,23 @@ var AssetController = Marionette.Controller.extend({
         // When main view is rendered, inject all the subviews
         // We need to wait until the main view is rendered because otherwise the regions are not defined
         this.listenTo(this.view, "render", function () {
-            this.view.header.show(this.headerView);
-            this.view.body.show(this.bodyView);
+            if (!this.headerView.isDestroyed) {
+                this.view.header.show(this.headerView);
+                this.view.body.show(this.bodyView);
 
-            // this.bodyView.leftPanels.show(this.leftPanelsView);
-            // this.bodyView.rightPanels.show(this.rightPanelsView);
-            // this.bodyView.infoPanels.show(this.infoPanelsView);
+                // this.bodyView.leftPanels.show(this.leftPanelsView);
+                // this.bodyView.rightPanels.show(this.rightPanelsView);
+                // this.bodyView.infoPanels.show(this.infoPanelsView);
 
-            this.trigger("render",
-            {
-                pager: this.view.$(this.headerView.pager.el)
-            },
-            {
-                loadedFromDom: false,
-                assetId: this.model.getId()
-            });
+                this.trigger("render",
+                {
+                    pager: this.view.$(this.headerView.pager.el)
+                },
+                {
+                    loadedFromDom: false,
+                    assetId: this.model.getId()
+                });
+            }
         });
     },
 

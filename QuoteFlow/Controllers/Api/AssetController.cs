@@ -89,8 +89,7 @@ namespace QuoteFlow.Controllers.Api
         [HttpPost]
         public AssetFields GetAssetMergeCurrent(MergeIntoCurrent mic)
         {
-            var ap = new FetchAssetParams();
-            return GetAsset(ap.AssetId, ap.Decorator, ap.Prefetch, ap.ShouldUpdateCurrentCatalog, false);
+            return GetAsset(mic.AssetId, mic.Decorator, mic.Prefetch, mic.ShouldUpdateCurrentCatalog, false);
         }
 
         private void PopulateAssetFields(IAsset asset, bool retainValues, IErrorCollection errorCollection)

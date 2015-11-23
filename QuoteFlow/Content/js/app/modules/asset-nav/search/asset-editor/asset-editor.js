@@ -25,24 +25,24 @@ var AssetEditor = AssetViewer.extend({
          */
         "returnToSearch",
 
-    /**
-     * Triggered when inline edit is successful
-     * .. {number} the issue id
-     */
+        /**
+         * Triggered when inline edit is successful
+         * .. {number} the issue id
+         */
         "saveSuccess",
 
         "saveError",
 
         "editField",
 
-    /**
-     * Field has been submitted by user.
-     */
+        /**
+         * Field has been submitted by user.
+         */
         "fieldSubmitted",
 
-    /**
-     * The issue panel that previously had focus was replaced.
-     */
+        /**
+         * The issue panel that previously had focus was replaced.
+         */
         "replacedFocusedPanel"
     ],
 

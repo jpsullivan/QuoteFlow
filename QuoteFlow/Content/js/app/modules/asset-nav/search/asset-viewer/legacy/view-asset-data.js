@@ -74,7 +74,7 @@ var ViewAssetData = AsyncData.extend({
         var jqXhr = $.ajax({
             url: options.mergeIntoCurrent ? QuoteFlow.RootUrl + "api/asset/GetAssetMergeCurrent" : QuoteFlow.RootUrl + "api/asset/GetAsset",
             data: data,
-            contentType: 'application/json',
+            //contentType: 'application/json',
             type: options.mergeIntoCurrent ? "POST" : "GET"
         });
         var deferred = jqXhr.pipe(function(data) {
