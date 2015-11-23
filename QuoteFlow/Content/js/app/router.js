@@ -1,41 +1,32 @@
 "use strict";
 
-var $ = require('jquery');
-var Backbone = require('backbone');
-Backbone.$ = $;
+import Marionette from "backbone.marionette";
 
-// Pages
-var AssetPage = require('./pages/asset');
-var CatalogPage = require('./pages/catalog');
+// admin routers
+import AdminQuoteStatusRouter from "./modules/admin/quote-status/router";
 
-var Router = Backbone.Router.extend({
-    routes: {
-        "asset/*subroute": "asset"
-        //"catalog/*subroute": "catalog"
+// standard routers
+import AssetRouter from "./modules/asset/router";
+import AssetNavRouter from "./modules/asset-nav/router";
+import CatalogRouter from "./modules/catalog/router";
+/**
+ * The global router for Intra web. Handles spinning up every subrouter
+ * throughout the frontend and the management console.
+ * @extends {Marionette.AppRouter}
+ */
+export default Marionette.AppRouter.extend({
+    initialize (options) {
+        this._loadAdminRoutes(options);
+        this._loadStandardRoutes(options);
     },
 
-    asset: function() {
-        this.renderPage(function() {
-            return new AssetPage();
-        });
+    _loadAdminRoutes (options) {
+        new AdminQuoteStatusRouter({app: options.application, appRouter: this});
     },
 
-    catalog: function(subroute) {
-        return new CatalogPage.Router("catalog", { createTrailingSlashRoutes: false });
-    },
-
-    renderPage: function (pageConstructor) {
-        var existingView = {};
-        if (QuoteFlow.Page) {
-            existingView = QuoteFlow.Page;
-            QuoteFlow.Page.unbind && QuoteFlow.Page.unbind(); // old page might mutate global events $(document).keypress, so unbind before creating
-        }
-
-        var page = pageConstructor();
-
-        // remove the old view after the new one renders to prevent any paint flashes
-        existingView.remove && existingView.remove();
+    _loadStandardRoutes (options) {
+        new AssetRouter({app: options.application, appRouter: this});
+        new AssetNavRouter({app: options.application, appRouter: this});
+        new CatalogRouter({app: options.application, appRouter: this});
     }
 });
-
-module.exports = Router;

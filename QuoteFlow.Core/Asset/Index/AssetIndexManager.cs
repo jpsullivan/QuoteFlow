@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using Glimpse.Core.Model;
 using Lucene.Net.Analysis;
 using Lucene.Net.Search;
 using Ninject;

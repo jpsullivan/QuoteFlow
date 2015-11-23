@@ -1,7 +1,12 @@
 var gulp = require('gulp');
+var gulpSequence = require('gulp-sequence');
+var getEnabledTasks = require('../lib/getEnabledTasks');
 
-// Run this to compress all the things!
-gulp.task('production', function() {
-  // This runs only if the karma tests pass
-  gulp.start(['minifyCss', 'uglifyJs'])
-});
+var productionTask = function (cb) {
+    global.production = true;
+    var tasks = getEnabledTasks('production');
+    gulpSequence(tasks.assetTasks, tasks.codeTasks, 'size-report', cb);
+};
+
+gulp.task('production', productionTask);
+module.exports = productionTask;

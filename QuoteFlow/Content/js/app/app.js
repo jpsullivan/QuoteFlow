@@ -1,59 +1,23 @@
 "use strict";
 
-var $;
-window.jQuery = $ = require('jquery');
-var _ = require('underscore');
-var Backbone = require('backbone');
-var BackboneBrace = require('backbone-brace');
+import $ from "jquery";
+import _ from "underscore";
+import Backbone from "backbone";
 Backbone.$ = $;
+import Events from "./util/events";
+import Marionette from "backbone.marionette";
 
-var Events = require('./util/events');
-var Marionette = require('backbone.marionette');
+// so that aui works
+var jquery_browser = require('jquery.browser');
 
-// QuoteFlow Namespace (hold-over from non CommonJS method)
-var QuoteFlow = {
-    application: {},
-    Backbone: {},
-    Catalog: {},
-    Collection: {
-        Asset: {}
-    },
-    Components: {},
-    Debug: {
-        Collections: {},
-        Models: {},
-        Views: {}
-    },
-    Events: {},
-    Interactive: {},
-    Model: {
-        Asset: {}
-    },
-    Module: {
-        Asset: {}
-    },
-    Pages: {},
-    Routes: {},
-    trace: $.noop,
-    Utilities: {},
-    UI: {
-        Asset: {
-            Edit: {},
-            Navigator: {}
-        },
-        Catalog: {},
-        Common: {}
-    },
-    Views: {}
-};
+import AppRouter from "./router";
+import AppHeader from "./ui/app-header";
 
-// Bind these jquery-like event handlers on the global namespace for now
-QuoteFlow.bind = Events.bind;
-QuoteFlow.unbind = Events.unbind;
-QuoteFlow.one = Events.one;
-QuoteFlow.trigger = Events.trigger;
-
-window.QuoteFlow = QuoteFlow;
+// app-wide private variables
+let _rootUrl;
+let _applicationPath;
+let _currentOrganizationId;
+let _currentUserId;
 
 var AssetEditorModule = require('./modules/asset-nav/search/asset-editor/app-module-no-inline');
 var AssetModule = require('./modules/asset/module');
@@ -61,23 +25,14 @@ var AssetTableModule = require('./modules/asset-nav/module');
 var CatalogModule = require('./modules/catalog/module');
 var AssetNavigationModule = require('./modules/asset-nav/navigation/navigation-app-module');
 var PagerModule = require('./modules/pager/module');
-var QuoteStatusModule = require('./modules/quote-status/module');
+// var QuoteStatusModule = require('./modules/quote-status/module');
 
-// App Dependencies
-var jquery_browser = require('jquery.browser'); // so that aui works
-var Router = require('./router');
+const QuoteFlowApplication = Marionette.Application.extend({
+    initialize (options) {
+        this.router = new AppRouter({application: this});
+        this._mapGlobalsToQuoteFlowNamespace();
+        this._setUnderscoreMixins();
 
-// Helpers
-var ApplicationHelpers = require('./helpers/application_helpers');
-
-var _rootUrl, _applicationPath, _currentOrganizationId, _currentUserId;
-
-var Application = Marionette.Application.extend({
-
-    /**
-     *
-     */
-    initialize: function (options) {
         var parsedOrgId = parseInt(options.currentOrgId, 10);
         var parsedUserId;
 
@@ -87,33 +42,95 @@ var Application = Marionette.Application.extend({
             parsedUserId = parseInt(options.currentUser.Id, 10);
         }
 
-        _rootUrl = this.buildRootUrl(options.rootUrl);
+        _rootUrl = this._buildRootUrl(options.rootUrl);
         _applicationPath = options.applicationPath;
         _currentOrganizationId = parsedOrgId;
         _currentUserId = parsedUserId;
 
-        this.mapProperties();
+        this._mapProperties();
+        this._initModules();
+
+        new AppHeader();
     },
 
-    /**
-     *
-     */
-    buildRootUrl: function (context) {
-        if (context === "/") {
-            return context;
-        } else {
-            if (context.charAt(context.length - 1) === "/") {
-                return context;
-            } else {
-                return context + "/";
-            }
+    onStart () {
+        // so that webpack can hot reload changes and re-fire router events
+        if (Backbone.history && Backbone.History.started) {
+            Backbone.history.stop();
+        }
+
+        if (Backbone.history && !Backbone.History.started) {
+            Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
         }
     },
 
+    initModules () {
+        QuoteFlow.application.module("asset", AssetModule);
+        QuoteFlow.application.module("assetEditor", new AssetEditorModule().definition);
+        QuoteFlow.application.module("asset-table", AssetTableModule);
+        QuoteFlow.application.module("catalog", CatalogModule);
+        QuoteFlow.application.module("navigation", new AssetNavigationModule().definition);
+        QuoteFlow.application.module("pager", PagerModule);
+        QuoteFlow.application.module("quote-status", QuoteStatusModule);
+    },
+
     /**
-     *
+     * We need to do this here since bootstrapping data into
+     * browserify means bypassing the IIFE model. Map server vars
+     * to the global `window` object and remap them here.
+     * @private
      */
-    mapProperties: function () {
+    _mapGlobalsToQuoteFlowNamespace () {
+        // QuoteFlow Namespace (hold-over from non CommonJS method)
+        let QuoteFlow = {
+            application: {},
+            Backbone: {},
+            Catalog: {},
+            Collection: {
+                Asset: {}
+            },
+            Components: {},
+            Debug: {
+                Collections: {},
+                Models: {},
+                Views: {}
+            },
+            Events: {},
+            Interactive: {},
+            Model: {
+                Asset: {}
+            },
+            Module: {
+                Asset: {}
+            },
+            Pages: {},
+            Routes: {},
+            trace: $.noop,
+            Utilities: {},
+            UI: {
+                Asset: {
+                    Edit: {},
+                    Navigator: {}
+                },
+                Catalog: {},
+                Common: {}
+            },
+            Views: {}
+        };
+
+        // Bind these jquery-like event handlers on the global namespace for now
+        QuoteFlow.bind = Events.bind;
+        QuoteFlow.unbind = Events.unbind;
+        QuoteFlow.one = Events.one;
+        QuoteFlow.trigger = Events.trigger;
+
+        window.QuoteFlow = QuoteFlow;
+        QuoteFlow.rootUrl = window.rootUrl;
+        QuoteFlow.applicationPath = window.applicationPath;
+        QuoteFlow.currentUser = window.currentUser;
+    },
+
+    mapProperties () {
         Object.defineProperty(QuoteFlow, 'RootUrl', {
             get: function () {
                 return _rootUrl;
@@ -149,55 +166,53 @@ var Application = Marionette.Application.extend({
                 _currentUserId = value;
             }
         });
-    }
-});
+    },
 
-QuoteFlow.application = new Application({
-    rootUrl: window.rootUrl,
-    applicationPath: window.applicationPath,
-    currentOrgId: window.currentOrganization,
-    currentUser: window.currentUser
-});
+    /**
+     * Sets any Underscore mixins that are used throughout the app.
+     * @private
+     */
+    _setUnderscoreMixins () {
+        /**
+         * _.move - takes array and moves item at index and moves to another index.
+         */
+        _.mixin({
+            move: function (array, fromIndex, toIndex) {
+                array.splice(toIndex, 0, array.splice(fromIndex, 1)[0]);
+                return array;
+            },
+            lambda: function (x) {
+                return function () {
+                    return x;
+                };
+            },
+            isNotBlank: function (object) {
+                return Boolean(object);
+            },
+            bindObjectTo: function (obj, context) {
+                _.map(obj, function (value, key) {
+                    if (_.isFunction(value)) {
+                        obj[key] = _.bind(value, context);
+                    }
+                });
+            }
+        });
+    },
 
-QuoteFlow.application.on("before:start", function (options) {
-    // register all the handlebars helpers
-    ApplicationHelpers.initialize();
-
-    // add some mixins to underscore
-    _.mixin({
-        lambda: function (x) {
-            return function () { return x; };
-        },
-        isNotBlank: function (object) {
-            return !!object;
-        },
-        bindObjectTo: function (obj, context) {
-            _.map(obj, function (value, key) {
-                if (_.isFunction(value)) {
-                    obj[key] = _.bind(value, context);
-                }
-            });
+    /**
+     * @private
+     */
+    _buildRootUrl: function (context) {
+        if (context === "/") {
+            return context;
         }
-    });
-});
 
-/**
- * Autoload any modules that may exist
- */
-// var LoadedModules = require('./autoload/modules')(QuoteFlow.application);
+        if (context.charAt(context.length - 1) === "/") {
+            return context;
+        }
 
-QuoteFlow.application.on("start", function (options) {
-    if (Backbone.history) {
-        Backbone.history.start({ pushState: true, root: QuoteFlow.ApplicationPath });
+        return context + "/";
     }
 });
 
-QuoteFlow.application.module("asset", AssetModule);
-QuoteFlow.application.module("assetEditor", new AssetEditorModule().definition);
-QuoteFlow.application.module("asset-table", AssetTableModule);
-QuoteFlow.application.module("catalog", CatalogModule);
-QuoteFlow.application.module("navigation", new AssetNavigationModule().definition);
-QuoteFlow.application.module("pager", PagerModule);
-QuoteFlow.application.module("quote-status", QuoteStatusModule);
-
-module.exports = QuoteFlow.application;
+export default QuoteFlowApplication;

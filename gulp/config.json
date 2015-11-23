@@ -1,0 +1,85 @@
+{
+    "root": {
+        "src": "./QuoteFlow/Content",
+        "dest": "./QuoteFlow/Content/compiled"
+    },
+
+    "tasks": {
+        "browserSync": {
+            "server": {
+                "baseDir": "Content/compiled"
+            },
+            "open": false,
+            "cors": true,
+            "socket": {
+                "domain": "localhost:3000"
+            }
+        },
+
+        "static": {
+            "src": "static",
+            "dest": "./"
+        },
+
+        "js": {
+            "src": "js",
+            "dest": "js",
+            "entries": {
+                "app": "app/main.js",
+                "vendor": ["jquery"]
+            },
+            "extensions": ["js", "json"],
+            "babel": {
+                "presets": ["es2015", "stage-1"],
+                "plugins": []
+            },
+            "extractSharedJs": false
+        },
+
+        "templates": {
+            "src": "views",
+            "dest": "js",
+            "extensions": ["hbs", "handlebars"]
+        },
+
+        "css": {
+            "src": "less",
+            "dest": "css",
+            "autoprefixer": {
+                "browsers": ["last 3 versions"]
+            },
+            "sass": {
+                "indentedSyntax": true,
+                "includePaths": [
+                    "./node_modules/normalize.css"
+                ]
+            },
+            "less": {
+                "entryPoint": "app/bootstrap.less"
+            },
+            "extensions": ["less", "sass", "scss", "css"]
+        },
+
+        "images": {
+            "src": "images",
+            "dest": "images",
+            "extensions": ["jpg", "png", "svg", "gif"]
+        },
+
+        "fonts": {
+            "src": "fonts",
+            "dest": "fonts",
+            "extensions": ["woff2", "woff", "eot", "ttf", "svg"]
+        },
+
+        "svgSprite": {
+            "src": "icons",
+            "dest": "images",
+            "extensions": ["svg"]
+        },
+
+        "production": {
+            "rev": false
+        }
+    }
+}

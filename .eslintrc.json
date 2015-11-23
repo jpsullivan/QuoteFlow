@@ -1,31 +1,23 @@
 {
-    "extends": "google",
-    "installedESLint": true,
-
-    "rules": {
-        "indent": ["error", 4, { "SwitchCase": 1 }],
-        "linebreak-style": ["error", "windows"],
-        "max-len": ["warn", 130],
-        "no-lonely-if": 0,
-        "object-curly-spacing": 0,
-        "quote-props": 0,
-        "space-before-function-paren": ["error", "always"]
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
     },
-
-    "globals": {
-        "QuoteFlow": false,
-        "JST": false,
-        "jQuery": true,
-        "Handlebars": true,
-        "AJS": false,
-        "define": false,
-        "require": false,
-        "jasmine" : false,
-        "describe" : false,
-        "it" : false,
-        "expect" : false,
-        "beforeEach" : false,
-        "afterEach" : false,
-        "spyOn" : false
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-const-assign": "warn",
+        "no-this-before-super": "warn",
+        "no-undef": "warn",
+        "no-unreachable": "warn",
+        "no-unused-vars": "warn",
+        "constructor-super": "warn",
+        "valid-typeof": "warn"
     }
 }

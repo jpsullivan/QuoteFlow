@@ -1,9 +1,9 @@
 "use strict";
 
-var jQuery = require('jquery');
+import $ from "jquery";
 
-var ctx = jQuery(document);
-var Events = {
+const ctx = $(document);
+const Events = {
     /**
      * Subscribes to events
      *
@@ -11,7 +11,7 @@ var Events = {
      * @param data
      * @param fn
      */
-    bind: function (types, data, fn) {
+    bind (types, data, fn) {
         ctx.bind(types, data, fn);
     },
 
@@ -21,7 +21,7 @@ var Events = {
      * @param evt
      * @param handler
      */
-    one: function (evt, handler) {
+    one (evt, handler) {
         ctx.one(evt, handler);
     },
 
@@ -31,7 +31,7 @@ var Events = {
      * @param evt
      * @param handler
      */
-    unbind: function (evt, handler) {
+    unbind (evt, handler) {
         ctx.unbind(evt, handler);
     },
 
@@ -41,9 +41,9 @@ var Events = {
      * @param evt
      * @param args
      */
-    trigger: function (evt, args) {
+    trigger (evt, args) {
         ctx.trigger(evt, args);
     }
 };
 
-module.exports = Events;
+export default Events;
