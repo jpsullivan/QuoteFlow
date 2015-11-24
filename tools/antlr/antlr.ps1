@@ -8,10 +8,13 @@ $PSScriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
 Write-Output $PSScriptRoot
 
-$GrammarFilePath = (dir $$PSScriptRoot\..\..\..\QuoteFlow.Core\Jql\Parser\Antlr\Jql.g | select -first 1 -expand FullName)
-$AntlrGenPath = Join-Path $PSScriptRoot "..\..\..\QuoteFlow.Core\Jql\AntlrGen"
+$GrammarRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+$GrammarFilePath = Join-Path $GrammarRoot "..\..\QuoteFlow.Core\Jql\Parser\Antlr\Jql.g"
+$GrammarFilePath = Convert-Path $GrammarFilePath
+$AntlrGenPath = Join-Path $PSScriptRoot "..\..\QuoteFlow.Core\Jql\AntlrGen"
+$AntlrGenPath = Convert-Path $AntlrGenPath
 
-Write-Output $GrammarFilePath
-Write-Output $AntlrGenPath
+Write-Output "Grammar File Path: " $GrammarFilePath
+Write-Output "AntlrGen Path: " $AntlrGenPath
 
-& ./Antlr3.exe $GrammarFilePath -o $AntlrGenPath
+& "./Antlr3.exe" $GrammarFilePath -o $AntlrGenPath

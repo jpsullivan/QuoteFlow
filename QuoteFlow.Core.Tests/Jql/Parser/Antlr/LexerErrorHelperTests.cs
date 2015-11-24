@@ -4,7 +4,6 @@ using QuoteFlow.Api.Jql.Parser;
 using QuoteFlow.Core.Jql.AntlrGen;
 using QuoteFlow.Core.Jql.Parser;
 using QuoteFlow.Core.Jql.Parser.Antlr;
-using QuoteFlow.Models.Jql.AntlrGen;
 using Xunit;
 
 namespace QuoteFlow.Core.Tests.Jql.Parser.Antlr

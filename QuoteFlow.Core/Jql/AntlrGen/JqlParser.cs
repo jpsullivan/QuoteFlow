@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.5.0.2 C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g 2015-02-02 17:56:45
+// $ANTLR 3.5.0.2 C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g 2015-11-23 22:00:54
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -769,14 +769,14 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:269:7: LPAREN orClause RPAREN
 			{
 			DebugLocation(269, 7);
-			Match(input,LPAREN,Follow._LPAREN_in_subClause325); 
+			Match(input,LPAREN,Follow._LPAREN_in_subClause324); 
 			DebugLocation(269, 14);
-			PushFollow(Follow._orClause_in_subClause327);
+			PushFollow(Follow._orClause_in_subClause326);
 			orClause4=orClause();
 			PopFollow();
 
 			DebugLocation(269, 23);
-			Match(input,RPAREN,Follow._RPAREN_in_subClause329); 
+			Match(input,RPAREN,Follow._RPAREN_in_subClause328); 
 			DebugLocation(269, 30);
 			 clause = orClause4; 
 
@@ -838,12 +838,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:287:4: f= field op= operator ( (opand= operand (pred= historyPredicate )? ) | (chPred= historyPredicate )? )
 			{
 			DebugLocation(287, 6);
-			PushFollow(Follow._field_in_terminalClause370);
+			PushFollow(Follow._field_in_terminalClause369);
 			f=field();
 			PopFollow();
 
 			DebugLocation(287, 17);
-			PushFollow(Follow._operator_in_terminalClause376);
+			PushFollow(Follow._operator_in_terminalClause375);
 			op=@operator();
 			PopFollow();
 
@@ -881,7 +881,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:287:32: opand= operand (pred= historyPredicate )?
 				{
 				DebugLocation(287, 38);
-				PushFollow(Follow._operand_in_terminalClause386);
+				PushFollow(Follow._operand_in_terminalClause385);
 				opand=operand();
 				PopFollow();
 
@@ -904,7 +904,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:287:52: pred= historyPredicate
 					{
 					DebugLocation(287, 52);
-					PushFollow(Follow._historyPredicate_in_terminalClause391);
+					PushFollow(Follow._historyPredicate_in_terminalClause390);
 					pred=historyPredicate();
 					PopFollow();
 
@@ -944,7 +944,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:287:81: chPred= historyPredicate
 					{
 					DebugLocation(287, 81);
-					PushFollow(Follow._historyPredicate_in_terminalClause399);
+					PushFollow(Follow._historyPredicate_in_terminalClause398);
 					chPred=historyPredicate();
 					PopFollow();
 
@@ -1002,7 +1002,6 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			                    ReportError(JqlParseErrorMessages.BadOperand(e.Token), e);
 			                }
 			                clause = new TerminalClause((f!=null?((JqlParser.field_return)f).field:default(FieldReference)).Name, op, opand);
-			                var shit = clause.Clauses;
 			                supportsHistoryPredicate=false;
 			                if (pred != null)
 			                {
@@ -1103,7 +1102,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:364:5: p= terminalHistoryPredicate
 					{
 					DebugLocation(364, 7);
-					PushFollow(Follow._terminalHistoryPredicate_in_historyPredicate439);
+					PushFollow(Follow._terminalHistoryPredicate_in_historyPredicate438);
 					p=terminalHistoryPredicate();
 					PopFollow();
 
@@ -1177,12 +1176,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:429:4: historyPredicateOperator operand
 			{
 			DebugLocation(429, 4);
-			PushFollow(Follow._historyPredicateOperator_in_terminalHistoryPredicate463);
+			PushFollow(Follow._historyPredicateOperator_in_terminalHistoryPredicate462);
 			historyPredicateOperator5=historyPredicateOperator();
 			PopFollow();
 
 			DebugLocation(429, 29);
-			PushFollow(Follow._operand_in_terminalHistoryPredicate465);
+			PushFollow(Follow._operand_in_terminalHistoryPredicate464);
 			operand6=operand();
 			PopFollow();
 
@@ -1285,7 +1284,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:437:4: FROM
 				{
 				DebugLocation(437, 4);
-				Match(input,FROM,Follow._FROM_in_historyPredicateOperator484); 
+				Match(input,FROM,Follow._FROM_in_historyPredicateOperator483); 
 				DebugLocation(437, 9);
 				 oprator = Operator.FROM; 
 
@@ -1296,7 +1295,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:438:4: TO
 				{
 				DebugLocation(438, 4);
-				Match(input,TO,Follow._TO_in_historyPredicateOperator491); 
+				Match(input,TO,Follow._TO_in_historyPredicateOperator490); 
 				DebugLocation(438, 7);
 				oprator = Operator.TO; 
 
@@ -1307,7 +1306,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:439:4: BY
 				{
 				DebugLocation(439, 4);
-				Match(input,BY,Follow._BY_in_historyPredicateOperator498); 
+				Match(input,BY,Follow._BY_in_historyPredicateOperator497); 
 				DebugLocation(439, 7);
 				oprator = Operator.BY; 
 
@@ -1318,7 +1317,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:440:4: BEFORE
 				{
 				DebugLocation(440, 4);
-				Match(input,BEFORE,Follow._BEFORE_in_historyPredicateOperator505); 
+				Match(input,BEFORE,Follow._BEFORE_in_historyPredicateOperator504); 
 				DebugLocation(440, 11);
 				oprator = Operator.BEFORE; 
 
@@ -1329,7 +1328,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:441:4: AFTER
 				{
 				DebugLocation(441, 4);
-				Match(input,AFTER,Follow._AFTER_in_historyPredicateOperator512); 
+				Match(input,AFTER,Follow._AFTER_in_historyPredicateOperator511); 
 				DebugLocation(441, 10);
 				oprator = Operator.AFTER; 
 
@@ -1340,7 +1339,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:442:4: ON
 				{
 				DebugLocation(442, 4);
-				Match(input,ON,Follow._ON_in_historyPredicateOperator519); 
+				Match(input,ON,Follow._ON_in_historyPredicateOperator518); 
 				DebugLocation(442, 7);
 				oprator = Operator.ON; 
 
@@ -1351,7 +1350,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:443:4: DURING
 				{
 				DebugLocation(443, 4);
-				Match(input,DURING,Follow._DURING_in_historyPredicateOperator527); 
+				Match(input,DURING,Follow._DURING_in_historyPredicateOperator525); 
 				DebugLocation(443, 11);
 				oprator = Operator.DURING;
 
@@ -1553,7 +1552,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:451:4: EQUALS
 				{
 				DebugLocation(451, 4);
-				Match(input,EQUALS,Follow._EQUALS_in_operator548); 
+				Match(input,EQUALS,Follow._EQUALS_in_operator544); 
 				DebugLocation(451, 11);
 				 oprator = Operator.EQUALS; 
 
@@ -1564,7 +1563,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:452:4: NOT_EQUALS
 				{
 				DebugLocation(452, 4);
-				Match(input,NOT_EQUALS,Follow._NOT_EQUALS_in_operator555); 
+				Match(input,NOT_EQUALS,Follow._NOT_EQUALS_in_operator551); 
 				DebugLocation(452, 15);
 				 oprator = Operator.NOT_EQUALS; 
 
@@ -1575,7 +1574,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:453:4: LIKE
 				{
 				DebugLocation(453, 4);
-				Match(input,LIKE,Follow._LIKE_in_operator562); 
+				Match(input,LIKE,Follow._LIKE_in_operator558); 
 				DebugLocation(453, 9);
 				 oprator = Operator.LIKE; 
 
@@ -1586,7 +1585,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:454:4: NOT_LIKE
 				{
 				DebugLocation(454, 4);
-				Match(input,NOT_LIKE,Follow._NOT_LIKE_in_operator569); 
+				Match(input,NOT_LIKE,Follow._NOT_LIKE_in_operator565); 
 				DebugLocation(454, 13);
 				 oprator = Operator.NOT_LIKE; 
 
@@ -1597,7 +1596,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:455:4: LT
 				{
 				DebugLocation(455, 4);
-				Match(input,LT,Follow._LT_in_operator577); 
+				Match(input,LT,Follow._LT_in_operator572); 
 				DebugLocation(455, 7);
 				 oprator = Operator.LESS_THAN; 
 
@@ -1608,7 +1607,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:456:4: GT
 				{
 				DebugLocation(456, 4);
-				Match(input,GT,Follow._GT_in_operator584); 
+				Match(input,GT,Follow._GT_in_operator579); 
 				DebugLocation(456, 7);
 				 oprator = Operator.GREATER_THAN; 
 
@@ -1619,7 +1618,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:457:4: LTEQ
 				{
 				DebugLocation(457, 4);
-				Match(input,LTEQ,Follow._LTEQ_in_operator591); 
+				Match(input,LTEQ,Follow._LTEQ_in_operator586); 
 				DebugLocation(457, 9);
 				 oprator = Operator.LESS_THAN_EQUALS; 
 
@@ -1630,7 +1629,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:458:4: GTEQ
 				{
 				DebugLocation(458, 4);
-				Match(input,GTEQ,Follow._GTEQ_in_operator598); 
+				Match(input,GTEQ,Follow._GTEQ_in_operator593); 
 				DebugLocation(458, 9);
 				 oprator = Operator.GREATER_THAN_EQUALS; 
 
@@ -1641,7 +1640,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:459:4: IN
 				{
 				DebugLocation(459, 4);
-				Match(input,IN,Follow._IN_in_operator605); 
+				Match(input,IN,Follow._IN_in_operator600); 
 				DebugLocation(459, 7);
 				 oprator = Operator.IN; 
 
@@ -1652,9 +1651,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:460:4: IS NOT
 				{
 				DebugLocation(460, 4);
-				Match(input,IS,Follow._IS_in_operator612); 
+				Match(input,IS,Follow._IS_in_operator607); 
 				DebugLocation(460, 7);
-				Match(input,NOT,Follow._NOT_in_operator614); 
+				Match(input,NOT,Follow._NOT_in_operator609); 
 				DebugLocation(460, 11);
 				 oprator = Operator.IS_NOT; 
 
@@ -1665,7 +1664,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:461:4: IS
 				{
 				DebugLocation(461, 4);
-				Match(input,IS,Follow._IS_in_operator621); 
+				Match(input,IS,Follow._IS_in_operator616); 
 				DebugLocation(461, 7);
 				 oprator = Operator.IS; 
 
@@ -1676,9 +1675,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:462:4: NOT IN
 				{
 				DebugLocation(462, 4);
-				Match(input,NOT,Follow._NOT_in_operator628); 
+				Match(input,NOT,Follow._NOT_in_operator623); 
 				DebugLocation(462, 8);
-				Match(input,IN,Follow._IN_in_operator630); 
+				Match(input,IN,Follow._IN_in_operator625); 
 				DebugLocation(462, 11);
 				 oprator = Operator.NOT_IN; 
 
@@ -1689,7 +1688,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:463:4: WAS
 				{
 				DebugLocation(463, 4);
-				Match(input,WAS,Follow._WAS_in_operator637); 
+				Match(input,WAS,Follow._WAS_in_operator632); 
 				DebugLocation(463, 8);
 				 oprator = Operator.WAS; 
 
@@ -1700,9 +1699,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:464:4: WAS NOT
 				{
 				DebugLocation(464, 4);
-				Match(input,WAS,Follow._WAS_in_operator644); 
+				Match(input,WAS,Follow._WAS_in_operator639); 
 				DebugLocation(464, 8);
-				Match(input,NOT,Follow._NOT_in_operator646); 
+				Match(input,NOT,Follow._NOT_in_operator641); 
 				DebugLocation(464, 12);
 				 oprator = Operator.WAS_NOT; 
 
@@ -1713,9 +1712,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:465:7: WAS IN
 				{
 				DebugLocation(465, 7);
-				Match(input,WAS,Follow._WAS_in_operator656); 
+				Match(input,WAS,Follow._WAS_in_operator651); 
 				DebugLocation(465, 11);
-				Match(input,IN,Follow._IN_in_operator658); 
+				Match(input,IN,Follow._IN_in_operator653); 
 				DebugLocation(465, 14);
 				 oprator = Operator.WAS_IN; 
 
@@ -1726,11 +1725,11 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:466:7: WAS NOT IN
 				{
 				DebugLocation(466, 7);
-				Match(input,WAS,Follow._WAS_in_operator668); 
+				Match(input,WAS,Follow._WAS_in_operator663); 
 				DebugLocation(466, 11);
-				Match(input,NOT,Follow._NOT_in_operator670); 
+				Match(input,NOT,Follow._NOT_in_operator665); 
 				DebugLocation(466, 15);
-				Match(input,IN,Follow._IN_in_operator672); 
+				Match(input,IN,Follow._IN_in_operator667); 
 				DebugLocation(466, 18);
 				 oprator = Operator.WAS_NOT_IN; 
 
@@ -1741,7 +1740,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:467:7: CHANGED
 				{
 				DebugLocation(467, 7);
-				Match(input,CHANGED,Follow._CHANGED_in_operator682); 
+				Match(input,CHANGED,Follow._CHANGED_in_operator677); 
 				DebugLocation(467, 15);
 				 oprator = Operator.CHANGED; 
 
@@ -1868,12 +1867,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:522:5: num= numberString
 				{
 				DebugLocation(522, 9);
-				PushFollow(Follow._numberString_in_field746);
+				PushFollow(Follow._numberString_in_field741);
 				num=numberString();
 				PopFollow();
 
 				DebugLocation(522, 24);
-				 names.Add((num!=null?((JqlParser.numberString_return)num).stringValue:default(String))); 
+				 names.Add((num!=null?((JqlParser.numberString_return)num).stringValue:default(string))); 
 
 				}
 				break;
@@ -1915,7 +1914,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:526:13: str= string
 					{
 					DebugLocation(526, 17);
-					PushFollow(Follow._string_in_field788);
+					PushFollow(Follow._string_in_field783);
 					str=@string();
 					PopFollow();
 
@@ -1929,7 +1928,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:527:15: cf= customField
 					{
 					DebugLocation(527, 18);
-					PushFollow(Follow._customField_in_field810);
+					PushFollow(Follow._customField_in_field805);
 					cf=customField();
 					PopFollow();
 
@@ -1970,14 +1969,14 @@ public partial class JqlParser : Antlr.Runtime.Parser
 						// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:531:14: LBRACKET (reff= argument ) RBRACKET
 						{
 						DebugLocation(531, 14);
-						Match(input,LBRACKET,Follow._LBRACKET_in_field858); 
+						Match(input,LBRACKET,Follow._LBRACKET_in_field853); 
 						DebugLocation(532, 14);
 						// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:532:14: (reff= argument )
 						DebugEnterAlt(1);
 						// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:533:18: reff= argument
 						{
 						DebugLocation(533, 23);
-						PushFollow(Follow._argument_in_field896);
+						PushFollow(Follow._argument_in_field891);
 						reff=argument();
 						PopFollow();
 
@@ -1987,7 +1986,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 						}
 
 						DebugLocation(535, 14);
-						Match(input,RBRACKET,Follow._RBRACKET_in_field928); 
+						Match(input,RBRACKET,Follow._RBRACKET_in_field923); 
 
 						}
 
@@ -2014,7 +2013,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 								// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:538:14: reff= propertyArgument
 								{
 								DebugLocation(538, 19);
-								PushFollow(Follow._propertyArgument_in_field969);
+								PushFollow(Follow._propertyArgument_in_field964);
 								reff=propertyArgument();
 								PopFollow();
 
@@ -2134,13 +2133,13 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:573:7: CUSTOMFIELD LBRACKET posnum= POSNUMBER RBRACKET
 			{
 			DebugLocation(573, 7);
-			Match(input,CUSTOMFIELD,Follow._CUSTOMFIELD_in_customField1039); 
+			Match(input,CUSTOMFIELD,Follow._CUSTOMFIELD_in_customField1034); 
 			DebugLocation(573, 19);
-			Match(input,LBRACKET,Follow._LBRACKET_in_customField1041); 
+			Match(input,LBRACKET,Follow._LBRACKET_in_customField1036); 
 			DebugLocation(573, 35);
-			posnum=(IToken)Match(input,POSNUMBER,Follow._POSNUMBER_in_customField1047); 
+			posnum=(IToken)Match(input,POSNUMBER,Follow._POSNUMBER_in_customField1042); 
 			DebugLocation(573, 47);
-			Match(input,RBRACKET,Follow._RBRACKET_in_customField1049); 
+			Match(input,RBRACKET,Follow._RBRACKET_in_customField1044); 
 			DebugLocation(573, 56);
 			 field = JqlCustomFieldId.ToString(ParseInt(posnum)); 
 
@@ -2207,14 +2206,14 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:600:4: f= field EOF
 			{
 			DebugLocation(600, 6);
-			PushFollow(Follow._field_in_fieldCheck1091);
+			PushFollow(Follow._field_in_fieldCheck1086);
 			f=field();
 			PopFollow();
 
 			DebugLocation(600, 14);
 			 fieldRef = (f!=null?((JqlParser.field_return)f).field:default(FieldReference)); 
 			DebugLocation(600, 40);
-			Match(input,EOF,Follow._EOF_in_fieldCheck1095); 
+			Match(input,EOF,Follow._EOF_in_fieldCheck1090); 
 
 			}
 
@@ -2371,7 +2370,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:607:4: EMPTY
 				{
 				DebugLocation(607, 4);
-				Match(input,EMPTY,Follow._EMPTY_in_operand1112); 
+				Match(input,EMPTY,Follow._EMPTY_in_operand1107); 
 				DebugLocation(607, 10);
 				 operand = new EmptyOperand(); 
 
@@ -2382,12 +2381,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:608:4: str= string
 				{
 				DebugLocation(608, 8);
-				PushFollow(Follow._string_in_operand1123);
+				PushFollow(Follow._string_in_operand1118);
 				str=@string();
 				PopFollow();
 
 				DebugLocation(608, 17);
-				 operand = new SingleValueOperand((str!=null?((JqlParser.string_return)str).stringValue:default(String))); 
+				 operand = new SingleValueOperand((str!=null?((JqlParser.string_return)str).stringValue:default(string))); 
 
 				}
 				break;
@@ -2396,7 +2395,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:609:4: number= numberString
 				{
 				DebugLocation(609, 11);
-				PushFollow(Follow._numberString_in_operand1134);
+				PushFollow(Follow._numberString_in_operand1129);
 				number=numberString();
 				PopFollow();
 
@@ -2410,7 +2409,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:610:4: fn= func
 				{
 				DebugLocation(610, 7);
-				PushFollow(Follow._func_in_operand1145);
+				PushFollow(Follow._func_in_operand1140);
 				fn=func();
 				PopFollow();
 
@@ -2424,7 +2423,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:611:4: l= list
 				{
 				DebugLocation(611, 6);
-				PushFollow(Follow._list_in_operand1156);
+				PushFollow(Follow._list_in_operand1151);
 				l=list();
 				PopFollow();
 
@@ -2489,7 +2488,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 
 	private sealed partial class string_return : ParserRuleReturnScope<IToken>
 	{
-		public String stringValue;
+		public string stringValue;
 		public string_return(JqlParser grammar) {OnCreated(grammar);}
 		partial void OnCreated(JqlParser grammar);
 	}
@@ -2497,7 +2496,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_string();
 	partial void LeaveRule_string();
 	// $ANTLR start "string"
-	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:650:1: string returns [String stringValue] : (str= STRING |str= QUOTE_STRING |str= SQUOTE_STRING );
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:650:1: string returns [string stringValue] : (str= STRING |str= QUOTE_STRING |str= SQUOTE_STRING );
 	[GrammarRule("string")]
 	private JqlParser.string_return @string()
 	{
@@ -2549,7 +2548,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:651:4: str= STRING
 				{
 				DebugLocation(651, 8);
-				str=(IToken)Match(input,STRING,Follow._STRING_in_string1196); 
+				str=(IToken)Match(input,STRING,Follow._STRING_in_string1190); 
 				DebugLocation(651, 17);
 				 retval.stringValue = (str!=null?str.Text:default(string)); 
 
@@ -2560,7 +2559,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:652:4: str= QUOTE_STRING
 				{
 				DebugLocation(652, 8);
-				str=(IToken)Match(input,QUOTE_STRING,Follow._QUOTE_STRING_in_string1207); 
+				str=(IToken)Match(input,QUOTE_STRING,Follow._QUOTE_STRING_in_string1201); 
 				DebugLocation(652, 23);
 				 retval.stringValue = (str!=null?str.Text:default(string)); 
 
@@ -2571,7 +2570,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:653:4: str= SQUOTE_STRING
 				{
 				DebugLocation(653, 8);
-				str=(IToken)Match(input,SQUOTE_STRING,Follow._SQUOTE_STRING_in_string1218); 
+				str=(IToken)Match(input,SQUOTE_STRING,Follow._SQUOTE_STRING_in_string1212); 
 				DebugLocation(653, 24);
 				 retval.stringValue = (str!=null?str.Text:default(string)); 
 
@@ -2602,7 +2601,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 
 	private sealed partial class numberString_return : ParserRuleReturnScope<IToken>
 	{
-		public String stringValue;
+		public string stringValue;
 		public numberString_return(JqlParser grammar) {OnCreated(grammar);}
 		partial void OnCreated(JqlParser grammar);
 	}
@@ -2610,7 +2609,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_numberString();
 	partial void LeaveRule_numberString();
 	// $ANTLR start "numberString"
-	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:656:1: numberString returns [String stringValue] : num= ( POSNUMBER | NEGNUMBER ) ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:656:1: numberString returns [string stringValue] : num= ( POSNUMBER | NEGNUMBER ) ;
 	[GrammarRule("numberString")]
 	private JqlParser.numberString_return numberString()
 	{
@@ -2674,14 +2673,14 @@ public partial class JqlParser : Antlr.Runtime.Parser
 	partial void EnterRule_stringValueCheck();
 	partial void LeaveRule_stringValueCheck();
 	// $ANTLR start "stringValueCheck"
-	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:663:8: public stringValueCheck returns [String stringValue] : str= string EOF ;
+	// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:663:8: public stringValueCheck returns [string stringValue] : str= string EOF ;
 	[GrammarRule("stringValueCheck")]
-	public String stringValueCheck()
+	public string stringValueCheck()
 	{
 		EnterRule_stringValueCheck();
 		EnterRule("stringValueCheck", 18);
 		TraceIn("stringValueCheck", 18);
-		String stringValue = default(String);
+		string stringValue = default(string);
 
 
 		ParserRuleReturnScope<IToken> str = default(ParserRuleReturnScope<IToken>);
@@ -2695,14 +2694,14 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:664:4: str= string EOF
 			{
 			DebugLocation(664, 8);
-			PushFollow(Follow._string_in_stringValueCheck1270);
+			PushFollow(Follow._string_in_stringValueCheck1264);
 			str=@string();
 			PopFollow();
 
 			DebugLocation(664, 17);
-			 stringValue = (str!=null?((JqlParser.string_return)str).stringValue:default(String)); 
+			 stringValue = (str!=null?((JqlParser.string_return)str).stringValue:default(string)); 
 			DebugLocation(664, 54);
-			Match(input,EOF,Follow._EOF_in_stringValueCheck1274); 
+			Match(input,EOF,Follow._EOF_in_stringValueCheck1268); 
 
 			}
 
@@ -2753,9 +2752,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:678:4: LPAREN opnd= operand ( COMMA opnd= operand )* RPAREN
 			{
 			DebugLocation(678, 4);
-			Match(input,LPAREN,Follow._LPAREN_in_list1304); 
+			Match(input,LPAREN,Follow._LPAREN_in_list1297); 
 			DebugLocation(678, 16);
-			PushFollow(Follow._operand_in_list1310);
+			PushFollow(Follow._operand_in_list1303);
 			opnd=operand();
 			PopFollow();
 
@@ -2784,9 +2783,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:679:4: COMMA opnd= operand
 					{
 					DebugLocation(679, 4);
-					Match(input,COMMA,Follow._COMMA_in_list1318); 
+					Match(input,COMMA,Follow._COMMA_in_list1310); 
 					DebugLocation(679, 15);
-					PushFollow(Follow._operand_in_list1324);
+					PushFollow(Follow._operand_in_list1316);
 					opnd=operand();
 					PopFollow();
 
@@ -2807,7 +2806,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			} finally { DebugExitSubRule(18); }
 
 			DebugLocation(679, 54);
-			Match(input,RPAREN,Follow._RPAREN_in_list1330); 
+			Match(input,RPAREN,Follow._RPAREN_in_list1322); 
 			DebugLocation(679, 61);
 			list = new MultiValueOperand(args);
 
@@ -2869,12 +2868,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:697:4: fname= funcName LPAREN ( arglist )? RPAREN
 			{
 			DebugLocation(697, 10);
-			PushFollow(Follow._funcName_in_func1368);
+			PushFollow(Follow._funcName_in_func1356);
 			fname=funcName();
 			PopFollow();
 
 			DebugLocation(697, 21);
-			Match(input,LPAREN,Follow._LPAREN_in_func1370); 
+			Match(input,LPAREN,Follow._LPAREN_in_func1358); 
 			DebugLocation(697, 28);
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:697:28: ( arglist )?
 			int alt19=2;
@@ -2894,7 +2893,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:697:28: arglist
 				{
 				DebugLocation(697, 28);
-				PushFollow(Follow._arglist_in_func1372);
+				PushFollow(Follow._arglist_in_func1360);
 				arglist7=arglist();
 				PopFollow();
 
@@ -2906,7 +2905,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			} finally { DebugExitSubRule(19); }
 
 			DebugLocation(697, 37);
-			Match(input,RPAREN,Follow._RPAREN_in_func1375); 
+			Match(input,RPAREN,Follow._RPAREN_in_func1363); 
 			DebugLocation(698, 2);
 
 				    List<string> args = arglist7 == null ? new List<string>() : arglist7;
@@ -3005,7 +3004,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:732:4: string
 				{
 				DebugLocation(732, 4);
-				PushFollow(Follow._string_in_funcName1412);
+				PushFollow(Follow._string_in_funcName1399);
 				string8=@string();
 				PopFollow();
 
@@ -3019,12 +3018,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:733:4: num= numberString
 				{
 				DebugLocation(733, 8);
-				PushFollow(Follow._numberString_in_funcName1423);
+				PushFollow(Follow._numberString_in_funcName1410);
 				num=numberString();
 				PopFollow();
 
 				DebugLocation(733, 23);
-				 name = (num!=null?((JqlParser.numberString_return)num).stringValue:default(String)); 
+				 name = (num!=null?((JqlParser.numberString_return)num).stringValue:default(string)); 
 
 				}
 				break;
@@ -3073,14 +3072,14 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:740:4: fname= funcName EOF
 			{
 			DebugLocation(740, 10);
-			PushFollow(Follow._funcName_in_funcNameCheck1449);
+			PushFollow(Follow._funcName_in_funcNameCheck1435);
 			fname=funcName();
 			PopFollow();
 
 			DebugLocation(740, 21);
 			 name = fname; 
 			DebugLocation(740, 46);
-			Match(input,EOF,Follow._EOF_in_funcNameCheck1453); 
+			Match(input,EOF,Follow._EOF_in_funcNameCheck1439); 
 
 			}
 
@@ -3130,7 +3129,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:760:4: str= argument ( COMMA str= argument )*
 			{
 			DebugLocation(760, 8);
-			PushFollow(Follow._argument_in_arglist1486);
+			PushFollow(Follow._argument_in_arglist1472);
 			str=argument();
 			PopFollow();
 
@@ -3159,9 +3158,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:761:3: COMMA str= argument
 					{
 					DebugLocation(761, 3);
-					Match(input,COMMA,Follow._COMMA_in_arglist1492); 
+					Match(input,COMMA,Follow._COMMA_in_arglist1478); 
 					DebugLocation(761, 13);
-					PushFollow(Follow._argument_in_arglist1498);
+					PushFollow(Follow._argument_in_arglist1484);
 					str=argument();
 					PopFollow();
 
@@ -3237,7 +3236,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:765:4: a= argument
 			{
 			DebugLocation(765, 6);
-			PushFollow(Follow._argument_in_propertyArgument1522);
+			PushFollow(Follow._argument_in_propertyArgument1508);
 			a=argument();
 			PopFollow();
 
@@ -3330,12 +3329,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:790:4: str= string
 				{
 				DebugLocation(790, 8);
-				PushFollow(Follow._string_in_argument1544);
+				PushFollow(Follow._string_in_argument1530);
 				str=@string();
 				PopFollow();
 
 				DebugLocation(790, 17);
-				 arg = (str!=null?((JqlParser.string_return)str).stringValue:default(String)); 
+				 arg = (str!=null?((JqlParser.string_return)str).stringValue:default(string)); 
 
 				}
 				break;
@@ -3344,12 +3343,12 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:791:4: number= numberString
 				{
 				DebugLocation(791, 11);
-				PushFollow(Follow._numberString_in_argument1556);
+				PushFollow(Follow._numberString_in_argument1541);
 				number=numberString();
 				PopFollow();
 
 				DebugLocation(791, 26);
-				 arg = (number!=null?((JqlParser.numberString_return)number).stringValue:default(String)); 
+				 arg = (number!=null?((JqlParser.numberString_return)number).stringValue:default(string)); 
 
 				}
 				break;
@@ -3412,14 +3411,14 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:814:4: a= argument EOF
 			{
 			DebugLocation(814, 6);
-			PushFollow(Follow._argument_in_argumentCheck1589);
+			PushFollow(Follow._argument_in_argumentCheck1574);
 			a=argument();
 			PopFollow();
 
 			DebugLocation(814, 17);
 			 arg = a; 
 			DebugLocation(814, 36);
-			Match(input,EOF,Follow._EOF_in_argumentCheck1593); 
+			Match(input,EOF,Follow._EOF_in_argumentCheck1578); 
 
 			}
 
@@ -3469,11 +3468,11 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:824:4: ORDER BY f= searchSort ( COMMA f= searchSort )*
 			{
 			DebugLocation(824, 4);
-			Match(input,ORDER,Follow._ORDER_in_orderBy1617); 
+			Match(input,ORDER,Follow._ORDER_in_orderBy1602); 
 			DebugLocation(824, 10);
-			Match(input,BY,Follow._BY_in_orderBy1619); 
+			Match(input,BY,Follow._BY_in_orderBy1604); 
 			DebugLocation(824, 15);
-			PushFollow(Follow._searchSort_in_orderBy1625);
+			PushFollow(Follow._searchSort_in_orderBy1610);
 			f=searchSort();
 			PopFollow();
 
@@ -3502,9 +3501,9 @@ public partial class JqlParser : Antlr.Runtime.Parser
 					// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:825:4: COMMA f= searchSort
 					{
 					DebugLocation(825, 4);
-					Match(input,COMMA,Follow._COMMA_in_orderBy1632); 
+					Match(input,COMMA,Follow._COMMA_in_orderBy1617); 
 					DebugLocation(825, 12);
-					PushFollow(Follow._searchSort_in_orderBy1638);
+					PushFollow(Follow._searchSort_in_orderBy1623);
 					f=searchSort();
 					PopFollow();
 
@@ -3593,7 +3592,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 			// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:852:4: f= field (o= DESC |o= ASC )?
 			{
 			DebugLocation(852, 6);
-			PushFollow(Follow._field_in_searchSort1681);
+			PushFollow(Follow._field_in_searchSort1666);
 			f=field();
 			PopFollow();
 
@@ -3620,7 +3619,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:852:15: o= DESC
 				{
 				DebugLocation(852, 17);
-				o=(IToken)Match(input,DESC,Follow._DESC_in_searchSort1688); 
+				o=(IToken)Match(input,DESC,Follow._DESC_in_searchSort1673); 
 
 				}
 				break;
@@ -3629,7 +3628,7 @@ public partial class JqlParser : Antlr.Runtime.Parser
 				// C:\\Users\\jaysc_000\\Documents\\GitHub\\QuoteFlow\\QuoteFlow.Core\\Jql\\Parser\\Antlr\\Jql.g:852:26: o= ASC
 				{
 				DebugLocation(852, 28);
-				o=(IToken)Match(input,ASC,Follow._ASC_in_searchSort1696); 
+				o=(IToken)Match(input,ASC,Follow._ASC_in_searchSort1681); 
 
 				}
 				break;
@@ -3712,100 +3711,100 @@ public partial class JqlParser : Antlr.Runtime.Parser
 		public static readonly BitSet _notClause_in_notClause258 = new BitSet(new ulong[]{0x2UL});
 		public static readonly BitSet _subClause_in_notClause265 = new BitSet(new ulong[]{0x2UL});
 		public static readonly BitSet _terminalClause_in_notClause293 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LPAREN_in_subClause325 = new BitSet(new ulong[]{0xC14048400020200UL});
-		public static readonly BitSet _orClause_in_subClause327 = new BitSet(new ulong[]{0x80000000000000UL});
-		public static readonly BitSet _RPAREN_in_subClause329 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _field_in_terminalClause370 = new BitSet(new ulong[]{0x40001C1AD8402000UL});
-		public static readonly BitSet _operator_in_terminalClause376 = new BitSet(new ulong[]{0x2C14208404301412UL});
-		public static readonly BitSet _operand_in_terminalClause386 = new BitSet(new ulong[]{0x2000200004101412UL});
-		public static readonly BitSet _historyPredicate_in_terminalClause391 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _historyPredicate_in_terminalClause399 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _terminalHistoryPredicate_in_historyPredicate439 = new BitSet(new ulong[]{0x2000200004101412UL});
-		public static readonly BitSet _historyPredicateOperator_in_terminalHistoryPredicate463 = new BitSet(new ulong[]{0xC14008400200000UL});
-		public static readonly BitSet _operand_in_terminalHistoryPredicate465 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _FROM_in_historyPredicateOperator484 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _TO_in_historyPredicateOperator491 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _BY_in_historyPredicateOperator498 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _BEFORE_in_historyPredicateOperator505 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _AFTER_in_historyPredicateOperator512 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ON_in_historyPredicateOperator519 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _DURING_in_historyPredicateOperator527 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _EQUALS_in_operator548 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NOT_EQUALS_in_operator555 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LIKE_in_operator562 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NOT_LIKE_in_operator569 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LT_in_operator577 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _GT_in_operator584 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LTEQ_in_operator591 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _GTEQ_in_operator598 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IN_in_operator605 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IS_in_operator612 = new BitSet(new ulong[]{0x40000000000UL});
-		public static readonly BitSet _NOT_in_operator614 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IS_in_operator621 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NOT_in_operator628 = new BitSet(new ulong[]{0x40000000UL});
-		public static readonly BitSet _IN_in_operator630 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _WAS_in_operator637 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _WAS_in_operator644 = new BitSet(new ulong[]{0x40000000000UL});
-		public static readonly BitSet _NOT_in_operator646 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _WAS_in_operator656 = new BitSet(new ulong[]{0x40000000UL});
-		public static readonly BitSet _IN_in_operator658 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _WAS_in_operator668 = new BitSet(new ulong[]{0x40000000000UL});
-		public static readonly BitSet _NOT_in_operator670 = new BitSet(new ulong[]{0x40000000UL});
-		public static readonly BitSet _IN_in_operator672 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _CHANGED_in_operator682 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _numberString_in_field746 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _string_in_field788 = new BitSet(new ulong[]{0x100000002UL});
-		public static readonly BitSet _customField_in_field810 = new BitSet(new ulong[]{0x100000002UL});
-		public static readonly BitSet _LBRACKET_in_field858 = new BitSet(new ulong[]{0xC14008000000000UL});
-		public static readonly BitSet _argument_in_field896 = new BitSet(new ulong[]{0x20000000000000UL});
-		public static readonly BitSet _RBRACKET_in_field928 = new BitSet(new ulong[]{0xC14008100000002UL});
-		public static readonly BitSet _propertyArgument_in_field969 = new BitSet(new ulong[]{0xC14008100000002UL});
-		public static readonly BitSet _CUSTOMFIELD_in_customField1039 = new BitSet(new ulong[]{0x100000000UL});
-		public static readonly BitSet _LBRACKET_in_customField1041 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _POSNUMBER_in_customField1047 = new BitSet(new ulong[]{0x20000000000000UL});
-		public static readonly BitSet _RBRACKET_in_customField1049 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _field_in_fieldCheck1091 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_fieldCheck1095 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _EMPTY_in_operand1112 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _string_in_operand1123 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _numberString_in_operand1134 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _func_in_operand1145 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _list_in_operand1156 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _STRING_in_string1196 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _QUOTE_STRING_in_string1207 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _SQUOTE_STRING_in_string1218 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _set_in_numberString1239 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _string_in_stringValueCheck1270 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_stringValueCheck1274 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LPAREN_in_list1304 = new BitSet(new ulong[]{0xC14008400200000UL});
-		public static readonly BitSet _operand_in_list1310 = new BitSet(new ulong[]{0x80000000004000UL});
-		public static readonly BitSet _COMMA_in_list1318 = new BitSet(new ulong[]{0xC14008400200000UL});
-		public static readonly BitSet _operand_in_list1324 = new BitSet(new ulong[]{0x80000000004000UL});
-		public static readonly BitSet _RPAREN_in_list1330 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _funcName_in_func1368 = new BitSet(new ulong[]{0x400000000UL});
-		public static readonly BitSet _LPAREN_in_func1370 = new BitSet(new ulong[]{0xC94008000000000UL});
-		public static readonly BitSet _arglist_in_func1372 = new BitSet(new ulong[]{0x80000000000000UL});
-		public static readonly BitSet _RPAREN_in_func1375 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _string_in_funcName1412 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _numberString_in_funcName1423 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _funcName_in_funcNameCheck1449 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_funcNameCheck1453 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _argument_in_arglist1486 = new BitSet(new ulong[]{0x4002UL});
-		public static readonly BitSet _COMMA_in_arglist1492 = new BitSet(new ulong[]{0xC14008000000000UL});
-		public static readonly BitSet _argument_in_arglist1498 = new BitSet(new ulong[]{0x4002UL});
-		public static readonly BitSet _argument_in_propertyArgument1522 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _string_in_argument1544 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _numberString_in_argument1556 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _argument_in_argumentCheck1589 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_argumentCheck1593 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ORDER_in_orderBy1617 = new BitSet(new ulong[]{0x1000UL});
-		public static readonly BitSet _BY_in_orderBy1619 = new BitSet(new ulong[]{0xC14008000020000UL});
-		public static readonly BitSet _searchSort_in_orderBy1625 = new BitSet(new ulong[]{0x4002UL});
-		public static readonly BitSet _COMMA_in_orderBy1632 = new BitSet(new ulong[]{0xC14008000020000UL});
-		public static readonly BitSet _searchSort_in_orderBy1638 = new BitSet(new ulong[]{0x4002UL});
-		public static readonly BitSet _field_in_searchSort1681 = new BitSet(new ulong[]{0x40102UL});
-		public static readonly BitSet _DESC_in_searchSort1688 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASC_in_searchSort1696 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LPAREN_in_subClause324 = new BitSet(new ulong[]{0xC14048400020200UL});
+		public static readonly BitSet _orClause_in_subClause326 = new BitSet(new ulong[]{0x80000000000000UL});
+		public static readonly BitSet _RPAREN_in_subClause328 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _field_in_terminalClause369 = new BitSet(new ulong[]{0x40001C1AD8402000UL});
+		public static readonly BitSet _operator_in_terminalClause375 = new BitSet(new ulong[]{0x2C14208404301412UL});
+		public static readonly BitSet _operand_in_terminalClause385 = new BitSet(new ulong[]{0x2000200004101412UL});
+		public static readonly BitSet _historyPredicate_in_terminalClause390 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _historyPredicate_in_terminalClause398 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _terminalHistoryPredicate_in_historyPredicate438 = new BitSet(new ulong[]{0x2000200004101412UL});
+		public static readonly BitSet _historyPredicateOperator_in_terminalHistoryPredicate462 = new BitSet(new ulong[]{0xC14008400200000UL});
+		public static readonly BitSet _operand_in_terminalHistoryPredicate464 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _FROM_in_historyPredicateOperator483 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _TO_in_historyPredicateOperator490 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _BY_in_historyPredicateOperator497 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _BEFORE_in_historyPredicateOperator504 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _AFTER_in_historyPredicateOperator511 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ON_in_historyPredicateOperator518 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _DURING_in_historyPredicateOperator525 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _EQUALS_in_operator544 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NOT_EQUALS_in_operator551 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LIKE_in_operator558 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NOT_LIKE_in_operator565 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LT_in_operator572 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _GT_in_operator579 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LTEQ_in_operator586 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _GTEQ_in_operator593 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IN_in_operator600 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IS_in_operator607 = new BitSet(new ulong[]{0x40000000000UL});
+		public static readonly BitSet _NOT_in_operator609 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IS_in_operator616 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NOT_in_operator623 = new BitSet(new ulong[]{0x40000000UL});
+		public static readonly BitSet _IN_in_operator625 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _WAS_in_operator632 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _WAS_in_operator639 = new BitSet(new ulong[]{0x40000000000UL});
+		public static readonly BitSet _NOT_in_operator641 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _WAS_in_operator651 = new BitSet(new ulong[]{0x40000000UL});
+		public static readonly BitSet _IN_in_operator653 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _WAS_in_operator663 = new BitSet(new ulong[]{0x40000000000UL});
+		public static readonly BitSet _NOT_in_operator665 = new BitSet(new ulong[]{0x40000000UL});
+		public static readonly BitSet _IN_in_operator667 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _CHANGED_in_operator677 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _numberString_in_field741 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _string_in_field783 = new BitSet(new ulong[]{0x100000002UL});
+		public static readonly BitSet _customField_in_field805 = new BitSet(new ulong[]{0x100000002UL});
+		public static readonly BitSet _LBRACKET_in_field853 = new BitSet(new ulong[]{0xC14008000000000UL});
+		public static readonly BitSet _argument_in_field891 = new BitSet(new ulong[]{0x20000000000000UL});
+		public static readonly BitSet _RBRACKET_in_field923 = new BitSet(new ulong[]{0xC14008100000002UL});
+		public static readonly BitSet _propertyArgument_in_field964 = new BitSet(new ulong[]{0xC14008100000002UL});
+		public static readonly BitSet _CUSTOMFIELD_in_customField1034 = new BitSet(new ulong[]{0x100000000UL});
+		public static readonly BitSet _LBRACKET_in_customField1036 = new BitSet(new ulong[]{0x4000000000000UL});
+		public static readonly BitSet _POSNUMBER_in_customField1042 = new BitSet(new ulong[]{0x20000000000000UL});
+		public static readonly BitSet _RBRACKET_in_customField1044 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _field_in_fieldCheck1086 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_fieldCheck1090 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _EMPTY_in_operand1107 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _string_in_operand1118 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _numberString_in_operand1129 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _func_in_operand1140 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _list_in_operand1151 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _STRING_in_string1190 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _QUOTE_STRING_in_string1201 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _SQUOTE_STRING_in_string1212 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _set_in_numberString1233 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _string_in_stringValueCheck1264 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_stringValueCheck1268 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LPAREN_in_list1297 = new BitSet(new ulong[]{0xC14008400200000UL});
+		public static readonly BitSet _operand_in_list1303 = new BitSet(new ulong[]{0x80000000004000UL});
+		public static readonly BitSet _COMMA_in_list1310 = new BitSet(new ulong[]{0xC14008400200000UL});
+		public static readonly BitSet _operand_in_list1316 = new BitSet(new ulong[]{0x80000000004000UL});
+		public static readonly BitSet _RPAREN_in_list1322 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _funcName_in_func1356 = new BitSet(new ulong[]{0x400000000UL});
+		public static readonly BitSet _LPAREN_in_func1358 = new BitSet(new ulong[]{0xC94008000000000UL});
+		public static readonly BitSet _arglist_in_func1360 = new BitSet(new ulong[]{0x80000000000000UL});
+		public static readonly BitSet _RPAREN_in_func1363 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _string_in_funcName1399 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _numberString_in_funcName1410 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _funcName_in_funcNameCheck1435 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_funcNameCheck1439 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _argument_in_arglist1472 = new BitSet(new ulong[]{0x4002UL});
+		public static readonly BitSet _COMMA_in_arglist1478 = new BitSet(new ulong[]{0xC14008000000000UL});
+		public static readonly BitSet _argument_in_arglist1484 = new BitSet(new ulong[]{0x4002UL});
+		public static readonly BitSet _argument_in_propertyArgument1508 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _string_in_argument1530 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _numberString_in_argument1541 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _argument_in_argumentCheck1574 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_argumentCheck1578 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ORDER_in_orderBy1602 = new BitSet(new ulong[]{0x1000UL});
+		public static readonly BitSet _BY_in_orderBy1604 = new BitSet(new ulong[]{0xC14008000020000UL});
+		public static readonly BitSet _searchSort_in_orderBy1610 = new BitSet(new ulong[]{0x4002UL});
+		public static readonly BitSet _COMMA_in_orderBy1617 = new BitSet(new ulong[]{0xC14008000020000UL});
+		public static readonly BitSet _searchSort_in_orderBy1623 = new BitSet(new ulong[]{0x4002UL});
+		public static readonly BitSet _field_in_searchSort1666 = new BitSet(new ulong[]{0x40102UL});
+		public static readonly BitSet _DESC_in_searchSort1673 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASC_in_searchSort1681 = new BitSet(new ulong[]{0x2UL});
 	}
 	#endregion Follow sets
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Antlr.Runtime;
 using QuoteFlow.Api.Jql.Parser;
-using QuoteFlow.Models.Jql.AntlrGen;
+using QuoteFlow.Core.Jql.AntlrGen;
 
 namespace QuoteFlow.Core.Jql.Parser.Antlr
 {
@@ -10,8 +10,8 @@ namespace QuoteFlow.Core.Jql.Parser.Antlr
     /// </summary>
     public class LexerErrorHelper
     {
-        public ICharStream Stream { get; set; }
-        public AntlrPosition Position { get; set; }
+        public ICharStream Stream { get; private set; }
+        public AntlrPosition Position { get; private set; }
 
         public LexerErrorHelper(ICharStream stream, AntlrPosition position)
         {
@@ -192,9 +192,6 @@ namespace QuoteFlow.Core.Jql.Parser.Antlr
 			return ch == '\\';
 		}
 
-		private int Index
-		{
-			get { return Stream.Index; }
-		}
-	}
+		private int Index => Stream.Index;
+    }
 }

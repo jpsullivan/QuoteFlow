@@ -32,7 +32,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 
                 var visitor = new TextQueryValidatingVisitor(clauseNames.PrimaryName);
 
-                whereClause.Accept<object>(visitor);
+                bool ignoredResult = whereClause.Accept(visitor);
                 if (visitor.Valid)
                 {
                     string textQuery = visitor.GetTextTerminalValue(OperandResolver, user);
@@ -59,7 +59,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             var whereClause = query.WhereClause;
             var visitor = new TextQueryValidatingVisitor(clauseNames.PrimaryName);
 
-            whereClause.Accept<object>(visitor);
+            bool ignoredResult = whereClause.Accept(visitor);
             if (!visitor.Valid) return;
 
             string textQuery = visitor.GetTextTerminalValue(OperandResolver, user);

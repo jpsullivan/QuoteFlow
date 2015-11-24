@@ -32,10 +32,7 @@ namespace QuoteFlow.Core.Jql.Validator
 			return errors;
 		}
 
-        private static SupportedOperatorsValidator SupportedOperatorsValidator
-		{
-			get { return new SupportedOperatorsValidator(OperatorClasses.EqualityOperatorsWithEmpty); }
-		}
+        private static SupportedOperatorsValidator SupportedOperatorsValidator => new SupportedOperatorsValidator(OperatorClasses.EqualityOperatorsWithEmpty);
 
         private RawValuesExistValidator<Manufacturer> GetRawValuesValidator(ManufacturerResolver resolver, IJqlOperandResolver operandResolver)
 		{

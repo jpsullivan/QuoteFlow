@@ -12,7 +12,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
     /// of a standard query.
     /// </summary>
     /// //TODO: The NamedTerminalClauseCollectingVisitor is almost this. Do we need to merge or do something similar?
-    public class SimpleNavigatorCollectorVisitor : IClauseVisitor<object>
+    public class SimpleNavigatorCollectorVisitor : IClauseVisitor<bool>
     {
         private readonly IList<ITerminalClause> clauses = new List<ITerminalClause>();
         private readonly Set<string> clauseNames;
@@ -51,26 +51,26 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
             get { return valid; }
         }
 
-        public virtual object Visit(AndClause andClause)
+        public virtual bool Visit(AndClause andClause)
         {
             foreach (var clause in andClause.Clauses)
             {
                 clause.Accept(this);
             }
-            return null;
+            return true;
         }
 
-        public virtual object Visit(NotClause notClause)
+        public virtual bool Visit(NotClause notClause)
         {
             bool oldValidPath = validPath;
             validPath = false;
             notClause.SubClause.Accept(this);
             validPath = oldValidPath;
 
-            return null;
+            return true;
         }
 
-        public virtual object Visit(OrClause orClause)
+        public virtual bool Visit(OrClause orClause)
         {
             bool oldValidPath = validPath;
             validPath = false;
@@ -81,12 +81,15 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
             }
 
             validPath = oldValidPath;
-            return null;
+            return true;
         }
 
-        public object Visit(ITerminalClause clause)
+        public bool Visit(ITerminalClause clause)
         {
-            if (!Matches(clause)) return null;
+            if (!Matches(clause))
+            {
+                return false;
+            }
 
             clauses.Add(clause);
             if (!validPath)
@@ -94,17 +97,17 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
                 valid = false;
             }
 
-            return null;
+            return true;
         }
 
-        public object Visit(IWasClause clause)
+        public bool Visit(IWasClause clause)
         {
-            return null;
+            return true;
         }
 
-        public object Visit(IChangedClause clause)
+        public bool Visit(IChangedClause clause)
         {
-            return null;
+            return true;
         }
 
         //TODO: This probably need to be made protected or something to make this class extensible, maybe even incoprating

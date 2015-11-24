@@ -9,6 +9,7 @@ Backbone.$ = $;
 var AssetSearcherModel = require('../../models/asset/searcher');
 var GroupDescriptor = require('../../components/list/group-descriptor');
 var ItemDescriptor = require('../../components/list/item-descriptor');
+var TextQueryBuilder = require('../../modules/asset-nav/query/basic/text-query-builder');
 
 var SmartAjax = require('../../components/ajax/smart-ajax');
 
@@ -240,7 +241,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
             this._addOrSet(this.QUERY_ID, {
                 viewHtml: textQueryHtml,
                 editHtml: textQueryHtml,
-                jql: JIRA.Issues.TextQueryBuilder.buildJql(textQuery)
+                jql: TextQueryBuilder.buildJql(textQuery)
             });
         }
         else {

@@ -10,7 +10,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
     /// <summary>
     /// Checks that the query fits the expectations of the Search UI
     /// </summary>
-    internal class TextQueryValidatingVisitor : SimpleNavigatorCollectorVisitor, IClauseVisitor<object>
+    internal class TextQueryValidatingVisitor : SimpleNavigatorCollectorVisitor, IClauseVisitor<bool>
     {
         private bool _seenQueryClauses;
         private readonly string _clauseName;
@@ -27,15 +27,19 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             _clauseName = clauseName;
         }
 
-        public virtual void Visit(OrClause orClause)
+        public virtual bool Visit(OrClause orClause)
         {
             validPath = false;
+            return true;
         }
 
-        public virtual void Visit(ITerminalClause terminalClause)
+        public virtual bool Visit(ITerminalClause terminalClause)
         {
             base.Visit(terminalClause);
-            if (!terminalClause.Name.Equals(_clauseName, StringComparison.InvariantCultureIgnoreCase)) return;
+            if (!terminalClause.Name.Equals(_clauseName, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return false;
+            }
 
             if ((_seenQueryClauses) || terminalClause.Operator != Operator.LIKE)
             {
@@ -46,6 +50,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
                 _seenQueryClauses = true;
                 _terminal = !valid ? null : terminalClause;
             }
+            return true;
         }
 
         public virtual string GetTextTerminalValue(IJqlOperandResolver operandResolver, User user)

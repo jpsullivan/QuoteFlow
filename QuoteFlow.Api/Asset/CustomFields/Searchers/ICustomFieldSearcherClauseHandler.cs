@@ -42,6 +42,5 @@ namespace QuoteFlow.Api.Asset.CustomFields.Searchers
         /// </summary>
         /// <returns>The QuoteFlowDataType that this clause can handle.</returns>
         IQuoteFlowDataType DataType { get; }
-
     }
 }

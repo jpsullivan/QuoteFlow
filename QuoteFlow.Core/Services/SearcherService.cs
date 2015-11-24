@@ -289,6 +289,7 @@ namespace QuoteFlow.Core.Services
                         searchInputTransformer.ValidateParams(user, searchContext, fieldParams);
 
                         SearchContextWithFieldValues searchContextWithFieldValues;
+                        
                         if (searchRenderer.IsRelevantForQuery(user, query))
                         {
                             searchContextWithFieldValues = new SearchContextWithFieldValues(searchContext, fieldParams);

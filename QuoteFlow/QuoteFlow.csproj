@@ -1365,7 +1365,7 @@
   <Target Name="BeforeBuild" Condition="$(Configuration)==Release">
     <PropertyGroup>
       <GulpCmdPath>$(SolutionDir)</GulpCmdPath>
-      <GulpCommand>gulp</GulpCommand>
+      <GulpCommand>gulp production</GulpCommand>
       <QuoteFlowCoreDir>$(SolutionDir)QuoteFlow.Core</QuoteFlowCoreDir>
       <AntlrPath>$(SolutionDir)\tools\antlr</AntlrPath>
       <AntlrGrammerPath>$(QuoteFlowCoreDir)\Jql\Parser\Antlr\Jql.g</AntlrGrammerPath>
@@ -1373,7 +1373,8 @@
       <AntlrCommand>.\Antlr3.exe $(AntlrGrammerPath) -o $(AntlrOutPath)</AntlrCommand>
     </PropertyGroup>
     <Message Text="Bundling assets ... " Importance="high" />
-    <Exec Command="&quot;$(GulpCommand)&quot;" LogStandardErrorAsError="true" WorkingDirectory="$(GulpCmdPath)" />
+    <!-- <Exec Command="&quot;$(GulpCommand)&quot;" LogStandardErrorAsError="true" WorkingDirectory="$(GulpCmdPath)" /> -->
+    <Exec Command="gulp production" LogStandardErrorAsError="true" WorkingDirectory="$(ProjectDir)..\." />
     <Message Text="Building Antlr Parser/Lexer" Importance="high" />
     <Exec Command="&quot;$(AntlrCommand)&quot;" LogStandardErrorAsError="true" WorkingDirectory="$(AntlrPath)" />
   </Target>

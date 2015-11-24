@@ -6,7 +6,6 @@ using QuoteFlow.Api.Jql.Query.Order;
 using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Core.Jql.AntlrGen;
 using QuoteFlow.Core.Jql.Parser.Antlr;
-using QuoteFlow.Models.Jql.AntlrGen;
 
 namespace QuoteFlow.Core.Jql.Parser
 {
@@ -42,9 +41,7 @@ namespace QuoteFlow.Core.Jql.Parser
                     return true;
                 }
 
-                var parser = CreateJqlParser(fieldName);
-                var fieldCheck = parser.fieldCheck();
-                return fieldName == CreateJqlParser(fieldName).fieldCheck().Name;
+                return string.Equals(fieldName, CreateJqlParser(fieldName).fieldCheck().Name);
             }
             catch (RecognitionException e)
             {

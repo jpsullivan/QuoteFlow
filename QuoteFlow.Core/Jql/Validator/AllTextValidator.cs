@@ -36,7 +36,7 @@ namespace QuoteFlow.Core.Jql.Validator
         public AllTextValidator(CommentValidator @delegate, SupportedOperatorsValidator supportedOperatorsValidator)
         {
             _delegate = @delegate;
-            _supportedOperatorsValidator = supportedOperatorsValidator;
+            _supportedOperatorsValidator = SupportedOperatorsValidator;
         }
 
         public IMessageSet Validate(User searcher, ITerminalClause terminalClause)
@@ -45,10 +45,8 @@ namespace QuoteFlow.Core.Jql.Validator
             return messageSet.HasAnyErrors() ? messageSet : _delegate.Validate(searcher, terminalClause);
         }
 
-        private SupportedOperatorsValidator SupportedOperatorsValidator
-        {
-            get { return new SupportedOperatorsValidator(new[] {Operator.LIKE}); }
-        }
+        private static SupportedOperatorsValidator SupportedOperatorsValidator
+            => new SupportedOperatorsValidator(new[] {Operator.LIKE});
     }
 
 }

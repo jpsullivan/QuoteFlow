@@ -27,8 +27,8 @@ using QuoteFlow.Core.Jql.Util;
 }
 
 /* START HACK
- * The following code will basically tell ANTLR to freak out immediately on error rather than trying to recover. 
- * This seems to be a hack as the ANTLR runtime seems to change quite frequently between releases. For instance, 
+ * The following code will basically tell ANTLR to freak out immediately on error rather than trying to recover.
+ * This seems to be a hack as the ANTLR runtime seems to change quite frequently between releases. For instance,
  * the ANTLRv3 book tells us to overwrite the wrong methods.
  */
 @members {
@@ -140,14 +140,14 @@ using QuoteFlow.Core.Jql.Util;
     }
 
     /// <summary>
-    /// START HACK 
+    /// START HACK
     /// We need to get the "lexer" to fail when it detects errors. At the moment ANTLR just drops the input
     /// up until the error and tries again. This can leave antlr actually parsing JQL strings that are not
-    /// valid. For example, the string "priority = \kbjb" will actually be parsed as "priority = bjb". 
-    /// To stop this we throw a RuntimeRecognitionRuntimeException which the DefaultJqlParser is careful to catch. 
-    /// Throwing the RecognitionException  will not work as JqlLexer.nextToken catches this exception and tries 
+    /// valid. For example, the string "priority = \kbjb" will actually be parsed as "priority = bjb".
+    /// To stop this we throw a RuntimeRecognitionRuntimeException which the DefaultJqlParser is careful to catch.
+    /// Throwing the RecognitionException  will not work as JqlLexer.nextToken catches this exception and tries
     /// again (which will cause an infinite loop).
-    /// 
+    ///
     /// Antlr (check up to 3.1.3) does not seem to be able to handle the "catch" clause on lexer rules. It throws a RuntimeException
     /// when trying to process the grammar. To get around this we have hacked the error reporting using a "stack" to push
     /// on the rule we currently have an error in. We can use this information to produce a pretty good error message when
@@ -227,7 +227,7 @@ clause	returns [IClause clause]
 	;
 
 /*
- * Represents a set of 1..* JQL clauses combined by an 'OR'. 
+ * Represents a set of 1..* JQL clauses combined by an 'OR'.
  */
 orClause returns [IClause clause]
 	@init {
@@ -253,7 +253,7 @@ andClause returns [IClause clause]
 notClause returns [IClause clause]
 	: (NOT | BANG) nc = notClause { $clause = new NotClause($nc.clause); }
 	| subClause { $clause = $subClause.clause; }
-                      | terminalClause { $clause = $terminalClause.clause; } 
+                      | terminalClause { $clause = $terminalClause.clause; }
 	;
 	catch [NoViableAltException e]
 	{
@@ -377,22 +377,22 @@ orHistoryPredicate returns [HistoryPredicate predicate]
 	@init {
 		final List<HistoryPredicate> predicates = new List<HistoryPredicate>();
 	}
-	: p = andHistoryPredicate { predicates.Add($p.predicate);} ( OR p = andHistoryPredicate { predicates.Add($p.predicate);} )* 
+	: p = andHistoryPredicate { predicates.Add($p.predicate);} ( OR p = andHistoryPredicate { predicates.Add($p.predicate);} )*
 	{
 		$predicates.Count == 1 ? predicates.ElementAt(0) : new OrHistoryPredicate(predicates);
 	}
 	;
-	
+
 andHistoryPredicate returns [HistoryPredicate predicate]
 	@init {
 		final List<HistoryPredicate> predicates  = new List<HistoryPredicate>();
 	}
-	: p = notHistoryPredicate { predicates.Add($p.predicate);} (AND? p = notHistoryPredicate {predicates.Add($p.predicate);} )* 
+	: p = notHistoryPredicate { predicates.Add($p.predicate);} (AND? p = notHistoryPredicate {predicates.Add($p.predicate);} )*
 	{
 		$predicates.Count == 1 ? predicates.ElementAt(0) : new AndHistoryPredicate(predicates);
 	}
 	;
-	
+
 notHistoryPredicate returns [HistoryPredicate predicate]
 	@init {
 		final List<HistoryPredicate> predicates  = new List<HistoryPredicate>();
@@ -406,7 +406,7 @@ notHistoryPredicate returns [HistoryPredicate predicate]
 	    // not sure what this case suggests at this stage
 	    e.printStackTrace();
 	}
-	
+
 
 
 subHistoryPredicate returns [HistoryPredicate predicate]
@@ -439,10 +439,10 @@ historyPredicateOperator returns [Operator oprator]
 	| BY {$oprator = Operator.BY; }
 	| BEFORE {$oprator = Operator.BEFORE; }
 	| AFTER {$oprator = Operator.AFTER; }
-	| ON {$oprator = Operator.ON; } 
+	| ON {$oprator = Operator.ON; }
 	| DURING {$oprator = Operator.DURING;};
-	
-	
+
+
 
 /*
  * Parse the current operator.
@@ -451,7 +451,7 @@ operator returns [Operator oprator]
 	: EQUALS { $oprator = Operator.EQUALS; }
 	| NOT_EQUALS { $oprator = Operator.NOT_EQUALS; }
 	| LIKE { $oprator = Operator.LIKE; }
-	| NOT_LIKE { $oprator = Operator.NOT_LIKE; }	
+	| NOT_LIKE { $oprator = Operator.NOT_LIKE; }
 	| LT { $oprator = Operator.LESS_THAN; }
 	| GT { $oprator = Operator.GREATER_THAN; }
 	| LTEQ { $oprator = Operator.LESS_THAN_EQUALS; }
@@ -643,27 +643,27 @@ operand	returns [IOperand operand]
 	{
 	    ReportError(JqlParseErrorMessages.BadOperand(e.Token), e);
 	}
- 
+
 /*
  * Parse a String in JQL.
  */
-string returns [String stringValue]
+string returns [string stringValue]
 	: str = STRING { $stringValue = $str.text; }
 	| str = QUOTE_STRING { $stringValue = $str.text; }
 	| str = SQUOTE_STRING { $stringValue = $str.text; }
 	;
 
-numberString returns [String stringValue]
+numberString returns [string stringValue]
 	: num = (POSNUMBER | NEGNUMBER) { $stringValue = $num.text; }
 	;
 
 /*
- * 
+ *
  */
-public stringValueCheck returns [String stringValue]
+public stringValueCheck returns [string stringValue]
 	: str = string { $stringValue = $str.stringValue; } EOF
 	;
-	
+
 /*
  * Parse the JQL list structure used for the 'IN' operator.
  */
@@ -675,7 +675,7 @@ list returns [IOperand list]
 	@after {
 	    operandLevel--;
 	}
-	: LPAREN opnd = operand {args.Add($opnd.operand);} 
+	: LPAREN opnd = operand {args.Add($opnd.operand);}
 		(COMMA opnd = operand {args.Add($opnd.operand);})* RPAREN {$list = new MultiValueOperand(args);}
 	;
 	catch [MismatchedTokenException e]
@@ -689,7 +689,7 @@ list returns [IOperand list]
             throw e;
         }
     }
-    
+
 /*
  * Parse out the JQL function.
  */
@@ -727,7 +727,7 @@ func returns [FunctionOperand func]
 
 /*
  * Rule to match function names.
- */ 
+ */
 funcName returns [string name]
 	: string { $name = CheckFunctionName($string.start); }
 	| num = numberString { $name = $num.stringValue; }
@@ -735,7 +735,7 @@ funcName returns [string name]
 
 /*
  * Rule used to check the validity of a function name.
- */	
+ */
 public funcNameCheck returns [string name]
 	: fname = funcName { $name = $fname.name; } EOF
 	;
@@ -787,7 +787,7 @@ propertyArgument returns [string arg]
  * Parse out a JQL function argument. Must be strings for the time being.
  */
 argument returns [string arg]
-	: str = string { $arg = $str.stringValue; } 
+	: str = string { $arg = $str.stringValue; }
 	| number = numberString { $arg = $number.stringValue; }
 	;
 	catch [RecognitionException e]
@@ -910,11 +910,11 @@ LTEQ 		:	'<=';
 EQUALS		:	'=' ;
 NOT_EQUALS	:	'!=';
 LIKE		:	'~';
-NOT_LIKE	:	'!~';		
+NOT_LIKE	:	'!~';
 IN		:	('I'|'i')('N'|'n');
 IS		:	('I'|'i')('S'|'s');
 AND 		:	('A'|'a')('N'|'n')('D'|'d') | AMPER | AMPER_AMPER;
-OR		:	('O'|'o')('R'|'r') | PIPE | PIPE_PIPE;	
+OR		:	('O'|'o')('R'|'r') | PIPE | PIPE_PIPE;
 NOT		:	('N'|'n')('O'|'o')('T'|'t');
 EMPTY		:	('E'|'e')('M'|'m')('P'|'p')('T'|'t')('Y'|'y') | ('N'|'n')('U'|'u')('L'|'l')('L'|'l');
 
@@ -935,7 +935,7 @@ DURING		:	('D'|'d')('U'|'u')('R'|'r')('I'|'i')('N'|'n')('G'|'g');
  * Order by
  */
 ORDER	: ('o'|'O')('r'|'R')('d'|'D')('e'|'E')('r'|'R');
-BY	: ('b'|'B')('y'|'Y');	
+BY	: ('b'|'B')('y'|'Y');
 ASC	:	('a'|'A')('s'|'S')('c'|'C');
 DESC:	('d'|'D')('e'|'E')('s'|'S')('c'|'C');
 
@@ -957,7 +957,7 @@ CUSTOMFIELD
 /**
  * String handling in JQL.
  */
- 
+
 STRING
     @init { PushPosition(STRING); }
     @after { PopPosition(); }
@@ -978,7 +978,7 @@ QUOTE_STRING
 		//should not be called from other lexical rules.
 		StripAndSet();
 	};
-		
+
 SQUOTE_STRING
     @init { PushPosition(SQUOTE_STRING); }
     @after { PopPosition(); }
@@ -991,7 +991,7 @@ SQUOTE_STRING
 
 /**
  * Match any whitespace and then ignore it.
- */	
+ */
 MATCHWS  		:  	WS+ { $channel = Hidden; };
 
 /**
@@ -1039,11 +1039,11 @@ fragment SQUOTE 	:	'\'';
 fragment BSLASH		:	'\\';
 fragment NL		:	'\r';
 fragment CR		:	'\n';
-fragment SPACE		:	' ';	
+fragment SPACE		:	' ';
 fragment AMPER	:	'&';
 fragment AMPER_AMPER:	 '&&';
-fragment PIPE	:	'|';	
-fragment PIPE_PIPE	:	'||';	
+fragment PIPE	:	'|';
+fragment PIPE_PIPE	:	'||';
 
 
 /*
@@ -1055,10 +1055,10 @@ fragment ESCAPE
 	(
              	't'
              |  'n'
-             |  'r' 
-             |  QUOTE 
+             |  'r'
+             |  QUOTE
              |  SQUOTE
-             |  BSLASH 
+             |  BSLASH
              |  SPACE
              |	'u' HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT
 	) { PopPosition(); }
@@ -1068,14 +1068,14 @@ fragment ESCAPE
  * These are the Tokens that should not be included as a part of an unquoted string.
  */
 fragment STRINGSTOP
-	: CONTROLCHARS  
+	: CONTROLCHARS
 	| QUOTE | SQUOTE
-	| EQUALS 
-	| BANG 
+	| EQUALS
+	| BANG
 	| LT | GT
-	| LPAREN | RPAREN 
-	| LIKE 
-	| COMMA 
+	| LPAREN | RPAREN
+	| LIKE
+	| COMMA
 	| LBRACKET | RBRACKET
 	| PIPE
 	| AMPER
@@ -1083,7 +1083,7 @@ fragment STRINGSTOP
 	| NEWLINE;
 
 /*
- * These are control characters minus whitespace. We use the negation of this set as the set of 
+ * These are control characters minus whitespace. We use the negation of this set as the set of
  * characters that we allow in a string.
  *
  * NOTE: This list needs to be synchronised with JqlStringSupport.IsJqlControlCharacter.
@@ -1093,14 +1093,14 @@ fragment CONTROLCHARS
 	|   '\u000b'..'\u000c'  //Exclude '\r' (\u000d)
 	|   '\u000e'..'\u001f'
 	|	'\u007f'..'\u009f'
-	//The following are Unicode non-characters. We don't want to parse them. Importantly, we wish 
+	//The following are Unicode non-characters. We don't want to parse them. Importantly, we wish
 	//to ignore U+FFFF since ANTLR evilly uses this internally to represent EOF which can cause very
 	//strange behaviour. For example, the Lexer will incorrectly tokenise the POSNUMBER 1234 as a STRING
 	//when U+FFFF is not excluded from STRING.
 	//
 	//http://en.wikipedia.org/wiki/Unicode
 	| 	'\ufdd0'..'\ufdef'
-	|	'\ufffe'..'\uffff' 
+	|	'\ufffe'..'\uffff'
 	;
 
 fragment NEWLINE
@@ -1109,11 +1109,11 @@ fragment NEWLINE
 fragment HEXDIGIT
 	:	DIGIT | ('A'|'a') | ('B'|'b') | ('C'|'c') | ('D'|'d') | ('E'|'e') | ('F'|'f')
 	;
-	
+
 fragment DIGIT
 	:	'0'..'9'
 	;
 
-fragment WS 
+fragment WS
 	: 	(SPACE|'\t'|NEWLINE)
 	;

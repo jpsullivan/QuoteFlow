@@ -16,9 +16,9 @@ namespace QuoteFlow.Core.Jql.Query
     /// <p>
     /// For example, the query <code>text ~ "john"</code> is equivalent to <code>summary ~ "john" OR description ~ "john" OR ...</code>.
     /// </summary>
-    public class AllTextClauseQueryFactory : ClauseQueryFactory
+    public class AllTextClauseQueryFactory : IClauseQueryFactory
     {
-        private readonly ISearchHandlerManager searchHandlerManager;
+        private readonly ISearchHandlerManager _searchHandlerManager;
 
         public AllTextClauseQueryFactory(ISearchHandlerManager searchHandlerManager)
         {
@@ -27,10 +27,10 @@ namespace QuoteFlow.Core.Jql.Query
                 throw new ArgumentNullException(nameof(searchHandlerManager));
             }
 
-            this.searchHandlerManager = searchHandlerManager;
+            _searchHandlerManager = searchHandlerManager;
         }
 
-        public virtual QueryFactoryResult GetQuery(QueryCreationContext queryCreationContext, ITerminalClause terminalClause)
+        public virtual QueryFactoryResult GetQuery(IQueryCreationContext queryCreationContext, ITerminalClause terminalClause)
         {
             Operator @operator = terminalClause.Operator;
 
@@ -49,7 +49,7 @@ namespace QuoteFlow.Core.Jql.Query
             return QueryFactoryResult.MergeResultsWithShould(results); // TODO CJM kickass changes this
         }
 
-        internal virtual IList<IClauseQueryFactory> GetFactories(IQueryCreationContext queryCreationContext)
+        private IList<IClauseQueryFactory> GetFactories(IQueryCreationContext queryCreationContext)
         {
             var factoryCollectionBuilder = new List<IClauseQueryFactory>();
 
@@ -58,7 +58,7 @@ namespace QuoteFlow.Core.Jql.Query
             return factoryCollectionBuilder;
         }
 
-        internal virtual IEnumerable<IClauseQueryFactory> GetAllSystemFieldFactories(IQueryCreationContext queryCreationContext)
+        private IEnumerable<IClauseQueryFactory> GetAllSystemFieldFactories(IQueryCreationContext queryCreationContext)
         {
             var factories = new List<IClauseQueryFactory>();
             var systemFieldClauseNames = new List<string>
@@ -79,12 +79,9 @@ namespace QuoteFlow.Core.Jql.Query
 
         private IEnumerable<IClauseHandler> GetHandlersForClauseName(IQueryCreationContext queryCreationContext, string primaryClauseName)
         {
-            if (queryCreationContext.SecurityOverriden)
-            {
-                return searchHandlerManager.GetClauseHandler(primaryClauseName);
-            }
-            return searchHandlerManager.GetClauseHandler(queryCreationContext.User, primaryClauseName);
+            return queryCreationContext.SecurityOverriden
+                ? _searchHandlerManager.GetClauseHandler(primaryClauseName)
+                : _searchHandlerManager.GetClauseHandler(queryCreationContext.User, primaryClauseName);
         }
     }
-
 }

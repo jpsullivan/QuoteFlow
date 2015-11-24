@@ -37,10 +37,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
             _namedClauses = new List<ITerminalClause>();
         }
 
-        public virtual IEnumerable<ITerminalClause> NamedClauses
-        {
-            get { return _namedClauses; }
-        }
+        public virtual IEnumerable<ITerminalClause> NamedClauses => _namedClauses;
 
         public virtual bool ContainsNamedClause()
         {
