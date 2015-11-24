@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lucene.Net.Documents;
+using QuoteFlow.Api.Asset.Index;
 using QuoteFlow.Api.Asset.Index.Indexers;
 using QuoteFlow.Api.Models;
 
@@ -79,7 +80,7 @@ namespace QuoteFlow.Api.Lucene.Building
 		/// <returns>The input document object</returns>
 		public static Document AddField(this Document document, string fieldName, string value, bool caseSensitive, Field.Store store, Field.Index index)
 		{
-			if (value == null || String.IsNullOrEmpty(fieldName))
+			if (value == null || string.IsNullOrEmpty(fieldName))
 			{
 				return document;
 			}
@@ -98,6 +99,8 @@ namespace QuoteFlow.Api.Lucene.Building
         {
             var visibleDocumentFieldIds = indexers.Select(indexer => AddIndexer(document, asset, indexer)).ToList();
 
+            GenerateNonEmptyFieldIds(document);
+
             foreach (var fieldId in visibleDocumentFieldIds)
             {
                 document.AddField("visiblefieldids", fieldId, Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS);
@@ -108,24 +111,49 @@ namespace QuoteFlow.Api.Lucene.Building
 
         private static string AddIndexer(Document document, IAsset asset, IFieldIndexer indexer)
         {
-            string documentFieldId = null;
             var resolvedAsset = (Models.Asset) asset;
             try
             {
-                documentFieldId = indexer.DocumentFieldId;
+                var documentFieldId = indexer.DocumentFieldId;
                 indexer.AddIndex(document, resolvedAsset);
                 if (indexer.IsFieldVisibleAndInScope(resolvedAsset))
                 {
                     return documentFieldId;
                 }
             }
-            catch (Exception re)
+            catch (Exception ex)
             {
+                throw ex;
                 //DropField(documentFieldId, indexer, re);
             }
 
             return null;
         }
+
+        /// <summary>
+        /// Get all of the fields in the document and add a new field whose value is the
+        /// name of all the included fields.
+        /// </summary>
+        private static void GenerateNonEmptyFieldIds(Document doc)
+        {
+            foreach (var fieldName in GetNonEmptyFieldNames(doc))
+            {
+                doc.AddField(DocumentConstants.AssetNonEmptyFieldIds, fieldName, Field.Store.NO,
+                    Field.Index.NOT_ANALYZED_NO_NORMS);
+            }
+        }
+
+        private static IEnumerable<string> GetNonEmptyFieldNames(Document doc)
+        {
+            var fields = doc.GetFields();
+            var names = new List<string>(fields.Count);
+
+            // NOTE: we do not store the field value since we are never interested in 
+            // reading the value out of the document, we are just interested in searching it.
+            // This will keep us from adding to the size of the asset document.
+            names.AddRange(from field in fields where field.IsIndexed select field.Name);
+            return names;
+        } 
 
 		/// <summary>
 		/// Sets up an already existing document with the specified actions

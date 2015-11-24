@@ -41,5 +41,4 @@ namespace QuoteFlow.Api.Jql.Query
             return TermQueryFactory.NonEmptyQuery(fieldName);
         }
     }
-
 }
