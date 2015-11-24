@@ -89,7 +89,7 @@ namespace QuoteFlow.Api.Asset.Search
         /// </summary>
         public SearchRequest()
         {
-            Query = new Query(null, new OrderBy(), null);
+            Query = new Query(null, new Jql.Query.Order.OrderBy(), null);
             Modified = false;
             UseColumns = true;
         }

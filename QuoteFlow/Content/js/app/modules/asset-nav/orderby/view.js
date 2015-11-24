@@ -1,7 +1,11 @@
 ﻿"use strict";
 
 var $ = require('jquery');
+var _ = require('underscore');
 var Brace = require('backbone-brace');
+
+var EventTypes = require('../util/types');
+var OrderByDropDownView = require('./dropdown-view');
 
 /**
  * The order by view that's shown over the list of issues in split view.
@@ -43,10 +47,10 @@ var OrderByView = Brace.View.extend({
      * @param e
      */
     _onClickOrderBy: function (e) {
-        var event = new AJS.$.Event(QuoteFlow.Events.ISSUE_TABLE_REORDER);
-        JIRA.trigger(event);
+        var event = new $.Event(EventTypes.ASSET_TABLE_REORDER);
+        QuoteFlow.trigger(event);
         if (!event.isDefaultPrevented()) {
-            var fieldId = AJS.$(e.currentTarget).data('field-id');
+            var fieldId = $(e.currentTarget).data('field-id');
             if (fieldId) {
                 this.model.toggleSort();
             }
@@ -59,7 +63,7 @@ var OrderByView = Brace.View.extend({
     _toggleShowDropDown: function (e) {
         if (!this.orderByDropDown) {
             // lazy create
-            this.orderByDropDown = new JIRA.Issues.OrderByDropDownView({
+            this.orderByDropDown = new OrderByDropDownView({
                 model: this.model,
                 offsetTarget: this.$('a.order-by'),
                 onHideCallback: _.bind(function () { this.orderByDropDown = null; }, this)
@@ -68,7 +72,6 @@ var OrderByView = Brace.View.extend({
         this.orderByDropDown.toggle();
         e.preventDefault();
     }
-
 });
 
 module.exports = OrderByView;

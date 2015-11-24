@@ -389,6 +389,7 @@
     <Compile Include="Controllers\Api\AssetTableController.cs" />
     <Compile Include="Controllers\Api\AssetVarController.cs" />
     <Compile Include="Controllers\Api\AssetVarValueController.cs" />
+    <Compile Include="Controllers\Api\OrderByController.cs" />
     <Compile Include="Controllers\Api\QueryRendererEditController.cs" />
     <Compile Include="Controllers\Api\QuoteStatusController.cs" />
     <Compile Include="Controllers\AssetController.cs" />
@@ -635,6 +636,7 @@
     <Content Include="Content\js\app\modules\asset-nav\controller.js" />
     <Content Include="Content\js\app\modules\asset-nav\mixins\single-select.js" />
     <Content Include="Content\js\app\modules\asset-nav\module.js" />
+    <Content Include="Content\js\app\modules\asset-nav\orderby\dropdown-view.js" />
     <Content Include="Content\js\app\modules\asset-nav\orderby\model.js" />
     <Content Include="Content\js\app\modules\asset-nav\orderby\component.js" />
     <Content Include="Content\js\app\modules\asset-nav\orderby\view.js" />
@@ -1182,6 +1184,7 @@
     <Content Include="Content\views\asset-viewer\error\generic.hbs" />
     <Content Include="Content\views\asset-viewer\error\no-permission.hbs" />
     <Content Include="Content\views\asset-viewer\asset\pager.hbs" />
+    <Content Include="Content\views\quote-builder\split-view\orderby-options.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

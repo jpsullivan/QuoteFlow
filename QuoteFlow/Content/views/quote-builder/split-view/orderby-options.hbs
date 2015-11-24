@@ -1,0 +1,8 @@
+{{! Renders the order-by options select list.}}
+<select id="order-by-options" multiple="multiple" class="hidden">
+    <optgroup data-footer-text="{$footer}">
+        {{#each options}}
+        <option title="{{fieldName}}" value="{{fieldId}}" data-meta="{{meta}}">{{fieldName}}</option>
+        {{/each}}
+    </optgroup>
+</select>

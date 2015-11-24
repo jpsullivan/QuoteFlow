@@ -11,6 +11,7 @@ namespace QuoteFlow.Core.Asset.Fields
     {
         private readonly IDictionary<string, IField> _fields = new Dictionary<string, IField>(); 
         private readonly ICollection<IOrderableField> _orderableFields = new Collection<IOrderableField>();
+        private readonly ICollection<INavigableField> _navigableFields = new List<INavigableField>();
         private readonly List<ISearchableField> _searchableFields = new List<ISearchableField>(); 
 
         public FieldManager(CatalogSystemField catalogSystemField, SummarySystemField summarySystemField,
@@ -23,6 +24,8 @@ namespace QuoteFlow.Core.Asset.Fields
             // special case: CatalogSystemField is not orderable, even though it implements IOrderableField
             foreach (var field in _fields)
             {
+                _orderableFields.Add((IOrderableField) field.Value);
+                _navigableFields.Add((INavigableField) field.Value);
                 _searchableFields.Add((ISearchableField) field.Value);
             }
         }
@@ -98,7 +101,12 @@ namespace QuoteFlow.Core.Asset.Fields
             throw new NotImplementedException();
         }
 
-        public ISet<INavigableField> AllAvailableNavigableFields { get; private set; }
+        public ISet<INavigableField> AllAvailableNavigableFields()
+        {
+            var availableFields = new HashSet<INavigableField>(_navigableFields);
+            return availableFields;
+        }
+
         public ISet<INavigableField> GetAvailableNavigableFields(User remoteUser)
         {
             throw new NotImplementedException();

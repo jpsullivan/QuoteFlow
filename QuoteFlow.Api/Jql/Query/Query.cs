@@ -18,12 +18,12 @@ namespace QuoteFlow.Api.Jql.Query
 		}
 
         public Query(IClause whereClause)
-            : this(whereClause, new OrderBy(), null)
+            : this(whereClause, new Order.OrderBy(), null)
 		{
 		}
 
         public Query(IClause whereClause, string originalQuery)
-            : this(whereClause, new OrderBy(), originalQuery)
+            : this(whereClause, new Order.OrderBy(), originalQuery)
 		{
 		}
 

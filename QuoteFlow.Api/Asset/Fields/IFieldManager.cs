@@ -81,7 +81,7 @@ namespace QuoteFlow.Api.Asset.Fields
         /// <returns> custom fields in scope for the given issue </returns>
         ISet<ICustomField> GetAvailableCustomFields(User remoteUser, Models.Asset asset);
 
-        ISet<INavigableField> AllAvailableNavigableFields { get; }
+        ISet<INavigableField> AllAvailableNavigableFields();
 
         ISet<INavigableField> GetAvailableNavigableFields(User remoteUser);
 

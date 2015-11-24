@@ -176,7 +176,7 @@ namespace QuoteFlow.Api.Asset.Search.Util
                 }
             }
 
-            return new OrderBy(searchSorts);
+            return new Jql.Query.Order.OrderBy(searchSorts);
         }
 
         public IList<SearchSort> ConcatSearchSorts(IEnumerable<SearchSort> newSorts, IEnumerable<SearchSort> oldSorts, int maxLength)

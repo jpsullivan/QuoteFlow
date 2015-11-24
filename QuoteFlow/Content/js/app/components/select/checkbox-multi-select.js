@@ -169,7 +169,7 @@ var CheckboxMultiSelect = QueryableDropdownSelect.extend({
 
     _getPlaceholderText: function() {
         var placeholderText = jQuery.trim(this.model.$element.data("placeholder-text"));
-        return (placeholderText && placeholderText !== "") ? placeholderText : AJS.I18n.getText("common.concepts.search");
+        return (placeholderText && placeholderText !== "") ? placeholderText : "Search";
     },
 
     /**
