@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ninject;
 using QuoteFlow.Api.Asset.Context;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Core.DependencyResolution;
 
 namespace QuoteFlow.Core.Asset.Search
 {
@@ -16,20 +18,18 @@ namespace QuoteFlow.Core.Asset.Search
         protected ICatalogService CatalogService { get; set; }
         protected IManufacturerService ManufacturerService { get; set; }
 
+        // for tests
         public SearchContext()
         {
-        }
-
-        public SearchContext(ICatalogService catalogService, IManufacturerService manufacturerService)
-        {
-            CatalogService = catalogService;
-            ManufacturerService = manufacturerService;
         }
 
         public SearchContext(List<int?> catalogIds, List<int?> manufacturerIds)
         {
             CatalogIds = catalogIds;
             ManufacturerIds = manufacturerIds;
+
+            CatalogService = Container.Kernel.TryGet<ICatalogService>();
+            ManufacturerService = Container.Kernel.TryGet<IManufacturerService>();
         }
 
         #endregion

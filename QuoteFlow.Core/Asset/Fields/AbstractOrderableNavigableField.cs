@@ -11,9 +11,9 @@ namespace QuoteFlow.Core.Asset.Fields
     {
         public string ColumnHeadingKey { get; private set; }
         public string ColumnCssClass { get; private set; }
-        public string DefaultSortOrder { get; private set; }
+        public virtual string DefaultSortOrder { get; private set; }
         public ILuceneFieldSorter<object> Sorter { get; private set; }
-        public FieldComparatorSource SortComparatorSource { get { return new MappedSortComparator(Sorter); } }
+        public FieldComparatorSource SortComparatorSource => new MappedSortComparator(Sorter);
         public string HiddenFieldId { get; private set; }
 
         public AbstractOrderableNavigableField(string id, string name, ISearchHandlerFactory searcherHandlerFactory)

@@ -13,7 +13,7 @@ namespace QuoteFlow.Api.Asset.Statistics
         {
             public int Compare(string o1, string o2)
             {
-                return String.Compare(o1, o2, StringComparison.Ordinal);
+                return string.Compare(o1, o2, StringComparison.Ordinal);
             }
         }
 
@@ -28,6 +28,6 @@ namespace QuoteFlow.Api.Asset.Statistics
             return documentValue;
         }
 
-        public IComparer<string> Comparator { get { return StringComparer; } }
+        public IComparer<string> Comparator => StringComparer;
     }
 }

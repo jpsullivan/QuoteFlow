@@ -46,7 +46,7 @@ namespace QuoteFlow.Core.Jql.Query
             return CreateResult(fieldName, rawValues, oprator, _usesMainIndex);
         }
 
-        public virtual QueryFactoryResult CreateResult(string fieldName, IEnumerable<QueryLiteral> rawValues, Operator @operator, bool handleEmpty)
+        public QueryFactoryResult CreateResult(string fieldName, IEnumerable<QueryLiteral> rawValues, Operator @operator, bool handleEmpty)
         {
             IList<global::Lucene.Net.Search.Query> queries = GetQueries(fieldName, rawValues);
             if (queries == null || queries.Count == 0)

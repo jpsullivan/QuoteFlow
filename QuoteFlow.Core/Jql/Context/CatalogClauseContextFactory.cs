@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Operator;
@@ -9,7 +10,6 @@ using QuoteFlow.Api.Jql.Resolver;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Jql.Resolver;
-using Enumerable = System.Linq.Enumerable;
 
 namespace QuoteFlow.Core.Jql.Context
 {
@@ -23,14 +23,14 @@ namespace QuoteFlow.Core.Jql.Context
     public class CatalogClauseContextFactory : IClauseContextFactory
     {
         public ICatalogService CatalogService { get; protected set; }
-		private readonly CatalogIndexInfoResolver catalogIndexInfoResolver;
-		private readonly IJqlOperandResolver jqlOperandResolver;
+		private readonly CatalogIndexInfoResolver _catalogIndexInfoResolver;
+		private readonly IJqlOperandResolver _jqlOperandResolver;
 
         public CatalogClauseContextFactory(ICatalogService catalogService, IJqlOperandResolver jqlOperandResolver, INameResolver<Catalog> projectResolver)
         {
             CatalogService = catalogService;
-			this.jqlOperandResolver = jqlOperandResolver;
-            this.catalogIndexInfoResolver = new CatalogIndexInfoResolver(projectResolver);
+			_jqlOperandResolver = jqlOperandResolver;
+            _catalogIndexInfoResolver = new CatalogIndexInfoResolver(projectResolver);
 		}
 
         public IClauseContext GetClauseContext(User searcher, ITerminalClause terminalClause)
@@ -38,35 +38,35 @@ namespace QuoteFlow.Core.Jql.Context
             var @operator = terminalClause.Operator;
             if (!HandlesOperator(@operator))
             {
-                return Api.Jql.Context.ClauseContext.CreateGlobalClauseContext();
+                return ClauseContext.CreateGlobalClauseContext();
             }
 
-            var values = jqlOperandResolver.GetValues(searcher, terminalClause.Operand, terminalClause);
+            var values = _jqlOperandResolver.GetValues(searcher, terminalClause.Operand, terminalClause);
 
             // Find all the catalog that are in context for the provided project values and the projects that the user can see
-            ISet<Catalog> projectsInContext = GetProjectsInContext(values, searcher, IsNegationOperator(@operator));
-            if (Enumerable.Any(projectsInContext))
+            ISet<Catalog> catalogsInContext = GetCatalogsInContext(values, searcher, IsNegationOperator(@operator));
+            if (!catalogsInContext.Any())
             {
-                return Api.Jql.Context.ClauseContext.CreateGlobalClauseContext();
+                return ClauseContext.CreateGlobalClauseContext();
             }
 
             var contexts = new HashSet<ICatalogManufacturerContext>();
 
             // Now that we have all the projects in context we need to get all the issue types for each project and
             // create a ProjectIssueTypeContext for that project/issue type pair.
-            foreach (Catalog project in projectsInContext)
+            foreach (Catalog project in catalogsInContext)
             {
                 contexts.Add(new CatalogManufacturerContext(new CatalogContext(project.Id), AllManufacturersContext.Instance));
             }
 
-            return Enumerable.Any(contexts) ? new Api.Jql.Context.ClauseContext(contexts) : Api.Jql.Context.ClauseContext.CreateGlobalClauseContext();
+            return !contexts.Any() ? ClauseContext.CreateGlobalClauseContext() : new ClauseContext(contexts);
         }
 
-        /// <param name="values"> the query literals representing project Ids </param>
-        /// <param name="searcher"> the user performing the search </param>
-        /// <param name="negationOperator"> whether the clause contained a negation operator </param>
-        /// <returns> a set of projects which make up the context of these values; never null. </returns>
-        private ISet<Catalog> GetProjectsInContext(IEnumerable<QueryLiteral> values, User searcher, bool negationOperator)
+        /// <param name="values">The query literals representing catalog Ids</param>
+        /// <param name="searcher">The user performing the search</param>
+        /// <param name="negationOperator">Whether the clause contained a negation operator</param>
+        /// <returns>A set of catalogs which make up the context of these values; never null.</returns>
+        private ISet<Catalog> GetCatalogsInContext(IEnumerable<QueryLiteral> values, User searcher, bool negationOperator)
         {
             var catalogIds = new HashSet<string>();
             if (values != null)
@@ -75,14 +75,14 @@ namespace QuoteFlow.Core.Jql.Context
                 {
                     if (value.StringValue != null)
                     {
-                        foreach (var indexedValue in catalogIndexInfoResolver.GetIndexedValues(value.StringValue))
+                        foreach (var indexedValue in _catalogIndexInfoResolver.GetIndexedValues(value.StringValue))
                         {
                             catalogIds.Add(indexedValue);
                         }
                     }
                     else if (value.IntValue != null)
                     {
-                        foreach (var indexedValue in catalogIndexInfoResolver.GetIndexedValues(value.IntValue))
+                        foreach (var indexedValue in _catalogIndexInfoResolver.GetIndexedValues(value.IntValue))
                         {
                             catalogIds.Add(indexedValue);
                         }
@@ -98,7 +98,7 @@ namespace QuoteFlow.Core.Jql.Context
                 }
             }
 
-            if (!Enumerable.Any(catalogIds))
+            if (!catalogIds.Any())
             {
                 return new HashSet<Catalog>();
             }

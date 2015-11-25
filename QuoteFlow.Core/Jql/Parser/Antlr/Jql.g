@@ -992,7 +992,7 @@ SQUOTE_STRING
 /**
  * Match any whitespace and then ignore it.
  */
-MATCHWS  		:  	WS+ { $channel = Hidden; };
+MATCHWS  		:  	WS+ { $channel = HIDDEN; };
 
 /**
  * These are some characters that we do not use now but we want to reserve. We have not reserved MINUS because we

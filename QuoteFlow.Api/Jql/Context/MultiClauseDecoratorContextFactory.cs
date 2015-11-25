@@ -51,7 +51,7 @@ namespace QuoteFlow.Api.Jql.Context
             {
                 var operand = terminalClause.Operand;
                 var literals = jqlOperandResolver.GetValues(searcher, operand, terminalClause).ToList();
-                if (literals.AnySafe())
+                if (!literals.AnySafe())
                 {
                     return ClauseContext.CreateGlobalClauseContext();
                 }
