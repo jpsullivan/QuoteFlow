@@ -75,15 +75,15 @@
                         <li class="menu-item">
                             <a href="#asset_tab_all"><strong>All</strong></a>
                         </li>
-                        <li class="menu-item active-tab">
+                        <li class="menu-item">
                             <a href="#asset_tab_comments"><strong>Comments</strong></a>
                         </li>
-                        <li class="menu-item">
+                        <li class="menu-item active-tab">
                             <a href="#asset_tab_activity"><strong>Activity</strong></a>
                         </li>
                     </ul>
                     <div id="asset_tab_all" class="tabs-pane"></div>
-                    <div id="asset_tab_comments" class="tabs-pane active-pane">
+                    <div id="asset_tab_comments" class="tabs-pane">
                         {{#each entity.comments}}
                         <div id="comment-{{id}}" class="asset-data-block activity-comment">
                             <div class="action-head">
@@ -107,7 +107,9 @@
                         </div>
                         {{/each}}
                     </div>
-                    <div id="asset_tab_activity" class="tabs-pane"></div>
+                    <div id="asset_tab_activity" class="tabs-pane active-pane">
+                        {{{entity.assetHistoryHtml}}}
+                    </div>
                 </div>
             </div>
         </div>

@@ -418,6 +418,8 @@
     <Compile Include="Infrastructure\Enumerables\SingletonList.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Helpers\DateHelpers.cs" />
+    <Compile Include="Infrastructure\Helpers\RazorHelpers.cs" />
+    <Compile Include="Infrastructure\JsonCamelCaseResult.cs" />
     <Compile Include="Infrastructure\JsonContentNegotiator.cs" />
     <Compile Include="Infrastructure\QueryStringUniqueValueProviderFactory.cs" />
     <Compile Include="Infrastructure\Exceptions\ReadOnlyModeException.cs" />

@@ -72,7 +72,7 @@ var ViewAssetData = AsyncData.extend({
         }
 
         var jqXhr = $.ajax({
-            url: options.mergeIntoCurrent ? QuoteFlow.RootUrl + "api/asset/GetAssetMergeCurrent" : QuoteFlow.RootUrl + "api/asset/GetAsset",
+            url: options.mergeIntoCurrent ? QuoteFlow.RootUrl + "asset/builder/getAssetMergeCurrent" : QuoteFlow.RootUrl + "asset/builder/getAsset",
             data: data,
             //contentType: 'application/json',
             type: options.mergeIntoCurrent ? "POST" : "GET"

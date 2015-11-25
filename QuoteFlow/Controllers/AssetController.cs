@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Dapper;
+using QuoteFlow.Api.Asset;
 using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Auditing;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels.Assets;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Api.Util;
+using QuoteFlow.Core.Asset.Viewer;
 using QuoteFlow.Infrastructure;
 using QuoteFlow.Infrastructure.Attributes;
 using QuoteFlow.Infrastructure.Extensions;
+using QuoteFlow.Infrastructure.Helpers;
 
 namespace QuoteFlow.Controllers
 {
@@ -224,6 +229,65 @@ namespace QuoteFlow.Controllers
             AssetService.AddAssetComment(model.Comment, model.AssetId, GetCurrentUser().Id);
 
             return SafeRedirect(Url.Asset(assetId, assetName));
+        }
+
+        [QuoteFlowRoute("asset/builder/getAsset", HttpVerbs.Get)]
+        public ActionResult GetAsset(int assetId, string decorator, bool prefetch, bool shouldUpdateCurrentCatalog, bool loadFields)
+        {
+            var errors = new SimpleErrorCollection();
+            var asset = AssetService.GetAsset(assetId);
+            var history = AuditService.GetAssetAuditLogs(asset.Id);
+
+            var activityFeed = this.RenderRazorViewToString("Partials/Auditing/ActivityFeed", history);
+            asset.AssetHistoryHtml = activityFeed;
+
+            var result = new AssetResult(asset, errors);
+
+            if (!result.IsValid() && result.Asset == null)
+            {
+                var errorCollection = result.ErrorCollection;
+                return new JsonCamelCaseResult(new AssetFields("todo_generate_xsrf_token", errorCollection), JsonRequestBehavior.AllowGet);
+            }
+
+            if (!prefetch)
+            {
+                // todo add asset to some sort of history tracker
+
+                // don't set the selected catalog if we are looking at the detail view in asset nav
+                if (shouldUpdateCurrentCatalog)
+                {
+                    // todo: set the selected catalog
+                }
+            }
+
+            PopulateAssetFields(asset, false, result.ErrorCollection);
+
+            var fields = new AssetFields("todo_changeme", result.ErrorCollection, new List<string>(), asset, null);
+
+            return new JsonCamelCaseResult(fields, JsonRequestBehavior.AllowGet);
+        }
+
+        [QuoteFlowRoute("asset/builder/getAssetMergeCurrent", HttpVerbs.Post)]
+        public ActionResult GetAssetMergeCurrent(MergeIntoCurrent mic)
+        {
+            return GetAsset(mic.AssetId, mic.Decorator, mic.Prefetch, mic.ShouldUpdateCurrentCatalog, false);
+        }
+
+        private void PopulateAssetFields(IAsset asset, bool retainValues, IErrorCollection errorCollection)
+        {
+            //var isEditable = AssetService.IsAssetEditable(asset, RequestContext.Principal.Identity.Name);
+
+            var editFields = new List<string>();
+        }
+
+        public class MergeIntoCurrent
+        {
+            public int AssetId { get; set; }
+            public string Asset { get; set; }
+            public string Decorator { get; set; }
+            public bool Prefetch { get; set; }
+            public bool ShouldUpdateCurrentCatalog { get; set; }
+            public long LastReadTime { get; set; }
         }
     }
 }

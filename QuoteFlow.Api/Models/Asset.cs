@@ -50,6 +50,8 @@ namespace QuoteFlow.Api.Models
         public IEnumerable<AssetVar> AssetVars { get; set; } 
 
         public IEnumerable<AssetComment> Comments { get; set; }
+
+        public string AssetHistoryHtml { get; set; }
     }
 
     public class AssetTableRow
