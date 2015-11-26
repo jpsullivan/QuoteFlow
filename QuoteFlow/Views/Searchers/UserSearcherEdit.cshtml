@@ -1,11 +1,47 @@
 ﻿@using QuoteFlow.Api.Models
+@using QuoteFlow.Core.Asset.Search.Searchers.Transformer
+@{
+    var values = Model["values"] as List<UserSearchInput>;
+    var suggestedUsers = Model["suggestedUsers"] as List<User>;
+    string userField = Model["userField"];
+    bool hasCurrentUser = Model["hasCurrentUser"];
+    bool hasEmpty = Model["hasEmpty"];
+    string emptyValueKey = Model["emptyValueKey"];
+    string placeholderText = Model["placeholderText"];
+    bool hasPermissionToPickUsers = Model["hasPermissionToPickUsers"];
+
+}
 <div class="field-group aui-field-userlist">
     <label for="searcher-creator">Creator</label>
     <fieldset rel="creator" class="hidden user-group-searcher-params"></fieldset>
-    <select class="js-usergroup-checkboxmultiselect" multiple="multiple" id="searcher-creator" name="creator" data-placeholder-text="Find Users...">
-        <optgroup label="Suggested Users">
-            
-        </optgroup>
+    <select class="js-usergroup-checkboxmultiselect" multiple="multiple" id="@userField" name="@userField" data-placeholder-text="@placeholderText">
+        @if (hasPermissionToPickUsers && suggestedUsers != null && suggestedUsers.Any())
+        {
+            <optgroup label="Suggested Users">
+                @foreach (var user in suggestedUsers)
+                {
+                    <option data-icon="" value="@user.Username" title="@user.FullName">@user.FullName</option>
+                }
+            </optgroup>
+        }
     </select>
-    <input type="hidden" name="check_prev_creator" value="true">
+    @{
+        string prevName = string.Format("check_prev_{0}", userField);
+    }
+    <input type="hidden" name="@prevName" value="true">
+    @foreach (var userSearchInput in values)
+    {
+        // These hidden inputs submit back to the server all the previously
+        // selected values, so we know what changed
+
+        var prevField = string.Format("prev_{0}", userField);
+        if (userSearchInput.Group)
+        {
+            <input type="hidden" name="@prevField" value="group:@userSearchInput.Object.ToString()">
+        }
+        else if (userSearchInput.User)
+        {
+            <input type="hidden" name="@prevField" value="group:@userSearchInput.Object.ToString()">
+        }
+    }
 </div>
