@@ -10,7 +10,7 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
 {
     public abstract class BaseFieldIndexer : IFieldIndexer
     {
-        internal Field.Index Unanalyzed(Api.Models.Asset asset)
+        private Field.Index Unanalyzed(Api.Models.Asset asset)
         {
             return (IsFieldVisibleAndInScope(asset)) ? Field.Index.NOT_ANALYZED_NO_NORMS : Field.Index.NO;
         }

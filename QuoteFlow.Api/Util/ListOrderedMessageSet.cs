@@ -1,7 +1,6 @@
-﻿using QuoteFlow.Api.Util;
-using Wintellect.PowerCollections;
+﻿using Wintellect.PowerCollections;
 
-namespace QuoteFlow.Core.Util
+namespace QuoteFlow.Api.Util
 {
     /// <summary>
     /// Is a message set that keeps the messages and warnings in the order in which they were added.

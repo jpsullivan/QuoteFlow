@@ -4,8 +4,8 @@ using System.Linq;
 using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
-using QuoteFlow.Api.Asset.Search.Searchers;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
+using QuoteFlow.Api.Asset.Search.Searchers.Util;
 using QuoteFlow.Api.Asset.Transport;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Function;
@@ -24,19 +24,26 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
     public class EnhancedUserSearchInputTransformer : UserSearchInputTransformer
     {
 
-        public EnhancedUserSearchInputTransformer(UserFieldSearchConstantsWithEmpty searchConstants, IUserService userManager) : base(searchConstants, userManager)
+        public EnhancedUserSearchInputTransformer(UserFieldSearchConstantsWithEmpty searchConstants,
+            UserFitsNavigatorHelper userFitsNavigatorHelper, IUserService userManager) 
+            : base(searchConstants, userFitsNavigatorHelper, userManager)
         {
         }
 
-        public EnhancedUserSearchInputTransformer(UserFieldSearchConstants searchConstants, IUserService userManager) : base(searchConstants, userManager)
+        public EnhancedUserSearchInputTransformer(UserFieldSearchConstants searchConstants,
+            UserFitsNavigatorHelper userFitsNavigatorHelper, IUserService userManager) 
+            : base(searchConstants, userFitsNavigatorHelper, userManager)
         {
         }
 
-        public EnhancedUserSearchInputTransformer(UserFieldSearchConstants searchConstants, IUserService userManager, ICustomField customField) : base(searchConstants, userManager, customField)
+        public EnhancedUserSearchInputTransformer(UserFieldSearchConstants searchConstants,
+            UserFitsNavigatorHelper userFitsNavigatorHelper, IUserService userManager, ICustomField customField) 
+            : base(searchConstants, userFitsNavigatorHelper, userManager, customField)
         {
         }
 
-        protected internal EnhancedUserSearchInputTransformer(IUserService userService, string emptySelectFlag, UserFieldSearchConstants searchConstants, ICustomField customField) : base(userService, emptySelectFlag, searchConstants, customField)
+        protected internal EnhancedUserSearchInputTransformer(IUserService userService, string emptySelectFlag, UserFieldSearchConstants searchConstants, UserFitsNavigatorHelper userFitsNavigatorHelper, ICustomField customField) 
+            : base(userService, emptySelectFlag, searchConstants, userFitsNavigatorHelper, customField)
         {
         }
 
@@ -85,7 +92,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
                 {
                     values.Add(UserSearchInput.@group(parts[1]));
                 }
-                else if (parts[0].Equals("issue_current_user"))
+                else if (parts[0].Equals("asset_current_user"))
                 {
                     values.Add(UserSearchInput.currentUser());
                 }
@@ -100,6 +107,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 
         private void UpdateUsedUsers(User remoteUser, Set<UserSearchInput> newValues, Set<UserSearchInput> prevValues)
         {
+            Console.Write("shit");
 //            foreach (UserSearchInput input in Sets.difference(newValues, prevValues))
 //            {
 //                if (input.User)
@@ -129,7 +137,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             }
 
             var clauses = GetMatchingClauses(searchConstants.JqlClauseNames.JqlFieldNames, query);
-            var values = new Set<UserSearchInput>();
+            var values = new List<UserSearchInput>();
 
             foreach (ITerminalClause clause in clauses)
             {

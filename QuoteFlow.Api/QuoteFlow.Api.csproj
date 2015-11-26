@@ -153,6 +153,7 @@
     <Compile Include="Asset\AssetFieldConstants.cs" />
     <Compile Include="Asset\AssetResult.cs" />
     <Compile Include="Asset\Comparator\NullComparator.cs" />
+    <Compile Include="Asset\Comparator\UserCachingComparer.cs" />
     <Compile Include="Asset\Context\AssetContext.cs" />
     <Compile Include="Asset\Context\IAssetContext.cs" />
     <Compile Include="Asset\CustomFields\Searchers\ICustomFieldSearcherClauseHandler.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="Asset\Search\Searchers\Util\IndexedInputHelper.cs" />
     <Compile Include="Asset\Search\Searchers\Util\RecursiveClauseVisitor.cs" />
     <Compile Include="Asset\Search\Searchers\Util\TextTermEscaper.cs" />
+    <Compile Include="Asset\Search\Searchers\Util\UserFitsNavigatorHelper.cs" />
     <Compile Include="Asset\Search\SearchException.cs" />
     <Compile Include="Asset\Search\SearchHandler.cs" />
     <Compile Include="Asset\Search\SearchRequest.cs" />
@@ -254,9 +256,11 @@
     <Compile Include="Asset\Search\Util\ISearchSortUtil.cs" />
     <Compile Include="Asset\Search\Util\SearchSortUtil.cs" />
     <Compile Include="Asset\Statistics\AbstractConstantStatisticsMapper.cs" />
+    <Compile Include="Asset\Statistics\CreatorStatisticsMapper.cs" />
     <Compile Include="Asset\Statistics\IStatisticsMapper.cs" />
     <Compile Include="Asset\Statistics\ManufacturerStatisticsMapper.cs" />
     <Compile Include="Asset\Statistics\TextFieldSorter.cs" />
+    <Compile Include="Asset\Statistics\UserStatisticsMapper.cs" />
     <Compile Include="Asset\Transport\ActionParams.cs" />
     <Compile Include="Asset\Transport\FieldValuesHolder.cs" />
     <Compile Include="Asset\Transport\IActionParams.cs" />
@@ -424,10 +428,13 @@
     <Compile Include="Jql\Util\DateRange.cs" />
     <Compile Include="Jql\Util\IJqlStringSupport.cs" />
     <Compile Include="Jql\Util\JqlCustomFieldId.cs" />
+    <Compile Include="Jql\Validator\AbstractUserValidator.cs" />
+    <Compile Include="Jql\Validator\DataValuesExistValidator.cs" />
     <Compile Include="Jql\Validator\IClauseValidator.cs" />
     <Compile Include="Jql\Validator\IOperatorUsageValidator.cs" />
     <Compile Include="Jql\Validator\NumberOfArgumentsValidator.cs" />
     <Compile Include="Jql\Validator\SupportedOperatorsValidator.cs" />
+    <Compile Include="Jql\Validator\ValuesExistValidator.cs" />
     <Compile Include="Jql\Values\ClauseValueResult.cs" />
     <Compile Include="Jql\Values\ClauseValueResults.cs" />
     <Compile Include="Jql\Values\ClauseValuesGeneratorResult.cs" />
@@ -559,6 +566,7 @@
     <Compile Include="Util\IMessageSet.cs" />
     <Compile Include="Util\IShutdown.cs" />
     <Compile Include="Util\ISupplier.cs" />
+    <Compile Include="Util\ListOrderedMessageSet.cs" />
     <Compile Include="Util\MessageSet.cs" />
     <Compile Include="Util\ParameterUtils.cs" />
     <Compile Include="Util\QueryString.cs" />

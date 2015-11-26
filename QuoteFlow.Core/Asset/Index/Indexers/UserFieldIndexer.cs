@@ -7,11 +7,7 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
     /// </summary>
     public abstract class UserFieldIndexer : BaseFieldIndexer
     {
-        protected internal UserFieldIndexer()
-        {
-        }
-
-        protected internal virtual void IndexUserKey(Document doc, string indexField, string userkey, Api.Models.Asset asset)
+        protected void IndexUserKey(Document doc, string indexField, string userkey, Api.Models.Asset asset)
         {
             IndexKeyword(doc, indexField, userkey, asset);
         }
@@ -19,7 +15,7 @@ namespace QuoteFlow.Core.Asset.Index.Indexers
         /// <summary>
         /// Index a single userkey field (case intact), with a default if the field is not set 
         /// </summary>
-        protected internal virtual void IndexUserkeyWithDefault(Document doc, string indexField, string userkey, string defaultValue, Api.Models.Asset asset)
+        protected void IndexUserkeyWithDefault(Document doc, string indexField, string userkey, string defaultValue, Api.Models.Asset asset)
         {
             IndexKeywordWithDefault(doc, indexField, userkey, defaultValue, asset);
         }

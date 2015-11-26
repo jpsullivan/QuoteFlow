@@ -187,8 +187,10 @@
     <Compile Include="Asset\Fields\AbstractOrderableNavigableField.cs" />
     <Compile Include="Asset\Fields\AbstractTextSystemField.cs" />
     <Compile Include="Asset\Fields\CatalogSystemField.cs" />
+    <Compile Include="Asset\Fields\CreatorSystemField.cs" />
     <Compile Include="Asset\Fields\FieldManager.cs" />
     <Compile Include="Asset\Fields\ManufacturerSystemField.cs" />
+    <Compile Include="Asset\Fields\NavigableField.cs" />
     <Compile Include="Asset\Fields\Option\AssetConstantOption.cs" />
     <Compile Include="Asset\Fields\SummarySystemField.cs" />
     <Compile Include="Asset\Index\AssetBatcherFactory.cs" />
@@ -223,8 +225,11 @@
     <Compile Include="Asset\Index\IndexReconciler.cs" />
     <Compile Include="Asset\Index\Managers\FieldIndexerManager.cs" />
     <Compile Include="Asset\Index\Managers\IFieldIndexerManager.cs" />
+    <Compile Include="Asset\Search\Handlers\CreatorSearchHandlerFactory.cs" />
     <Compile Include="Asset\Search\SearchContextHelper.cs" />
+    <Compile Include="Asset\Search\Searchers\Renderer\AbstractUserSearchRenderer.cs" />
     <Compile Include="Asset\Search\Searchers\Renderer\CatalogSearchRenderer.cs" />
+    <Compile Include="Asset\Search\Searchers\Renderer\CreatorSearchRenderer.cs" />
     <Compile Include="Asset\Search\Searchers\Renderer\ManufacturerSearchRenderer.cs" />
     <Compile Include="Asset\Search\Searchers\Renderer\TextQuerySearchRenderer.cs" />
     <Compile Include="Asset\Search\Searchers\Transformer\AssetConstantSearchInputTransformer.cs" />
@@ -384,6 +389,7 @@
     <Compile Include="Jql\Query\ClauseTooComplexSearchException.cs" />
     <Compile Include="Jql\Query\Clause\ChangedClause.cs" />
     <Compile Include="Jql\Query\Clause\WasClause.cs" />
+    <Compile Include="Jql\Query\CreatorClauseQueryFactory.cs" />
     <Compile Include="Jql\Query\FreeTextClauseQueryFactory.cs" />
     <Compile Include="Jql\Query\HistoryPredicateQueryFactory.cs" />
     <Compile Include="Jql\Query\History\AndHistoryPredicate.cs" />
@@ -402,6 +408,8 @@
     <Compile Include="Jql\Resolver\CatalogIndexInfoResolver.cs" />
     <Compile Include="Jql\Resolver\CatalogResolver.cs" />
     <Compile Include="Jql\Resolver\ManufacturerResolver.cs" />
+    <Compile Include="Jql\Resolver\UserIndexInfoResolver.cs" />
+    <Compile Include="Jql\Resolver\UserResolver.cs" />
     <Compile Include="Jql\Util\FieldReference.cs" />
     <Compile Include="Jql\Util\JqlAssetIdSupport.cs" />
     <Compile Include="Jql\Util\JqlAssetSupport.cs" />
@@ -414,6 +422,7 @@
     <Compile Include="Jql\Validator\ChangedClauseValidator.cs" />
     <Compile Include="Jql\Validator\ClauseValidator.cs" />
     <Compile Include="Jql\Validator\CommentValidator.cs" />
+    <Compile Include="Jql\Validator\CreatorValidator.cs" />
     <Compile Include="Jql\Validator\FreeTextFieldValidator.cs" />
     <Compile Include="Jql\Validator\IValidatorRegistry.cs" />
     <Compile Include="Jql\Validator\ManufacturerValidator.cs" />
@@ -429,6 +438,7 @@
     <Compile Include="Jql\Values\CatalogClauseValuesGenerator.cs" />
     <Compile Include="Jql\Values\ManufacturerClauseValuesGenerator.cs" />
     <Compile Include="Jql\Values\SortJqlGenerator.cs" />
+    <Compile Include="Jql\Values\UserClauseValuesGenerator.cs" />
     <Compile Include="Lucene\AnalysisHelper.cs" />
     <Compile Include="Lucene\Index\AccumulatingResultBuilder.cs" />
     <Compile Include="Lucene\Index\DelayCloseSearcher.cs" />
@@ -483,7 +493,6 @@
     <Compile Include="UserTracking\UserTrackingService.cs" />
     <Compile Include="Util\Index\CompositeIndexLifecycleManager.cs" />
     <Compile Include="Util\Lucene\ConstantScorePrefixQuery.cs" />
-    <Compile Include="Util\ListOrderedMessageSet.cs" />
     <Compile Include="Util\LuceneUtils.cs" />
   </ItemGroup>
   <ItemGroup>

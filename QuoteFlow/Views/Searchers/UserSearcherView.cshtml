@@ -1,0 +1,17 @@
+﻿@using QuoteFlow.Api.Models
+@if (Model["values"] != null && Model["values"].Count > 0)
+{
+    <div class="searcherValue">
+        <label class="fieldLabel" for="fieldcreator">Creator:</label>
+        <span id="fieldcreator" class="fieldValue">
+            @for (int i = 0; i < Model["values"].Count; i++)
+            {
+                User user = Model["values"][i];
+                <a href="#" class="user-hover" rel="@user.EmailAddress">
+                    @user.FullName@if (i < Model["values"].Count - 1)
+                    {<text>,</text>}
+                </a>
+            }
+        </span>
+    </div>
+}

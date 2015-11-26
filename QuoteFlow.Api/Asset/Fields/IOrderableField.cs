@@ -22,7 +22,7 @@ namespace QuoteFlow.Api.Asset.Fields
         /// Checks to see if the (web) parameters contains a relevant value with which to populate the issue
         /// </summary>
         /// <param name="parameters">Map of HTTP request parameters ("Action parameters").</param>
-        bool HasParam(IDictionary<string, String[]> parameters);
+        bool HasParam(IDictionary<string, string[]> parameters);
 
         /// <summary>
         /// Populate the fieldValuesHolder with a value from (web) parameters.

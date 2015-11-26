@@ -12,23 +12,20 @@ namespace QuoteFlow.Core.Asset.Fields
 {
     public class SummarySystemField : AbstractTextSystemField, INavigableField<string>, ISummaryField
     {
-        private const string SUMMARY_NAME_KEY = "asset.field.summary";
+        private const string SummaryNameKey = "asset.field.summary";
         private static readonly ILuceneFieldSorter<string> SORTER = new TextFieldSorter(DocumentConstants.AssetSortName);
 
         public SummarySystemField(SummarySearchHandlerFactory searchHandlerFactory)
-            : base(AssetFieldConstants.Summary, SUMMARY_NAME_KEY, searchHandlerFactory)
+            : base(AssetFieldConstants.Summary, SummaryNameKey, searchHandlerFactory)
         {
         }
 
         void IOrderableField.PopulateFromAsset(IDictionary<string, object> fieldValuesHolder, Api.Models.Asset asset)
         {
-            fieldValuesHolder[base.Id] = asset.Name;
+            fieldValuesHolder[Id] = asset.Name;
         }
 
-        ILuceneFieldSorter<string> INavigableField<string>.Sorter
-        {
-            get { return SORTER; }
-        }
+        ILuceneFieldSorter<string> INavigableField<string>.Sorter => SORTER;
 
         IEnumerable<SortField> INavigableField.GetSortFields(bool sortOrder)
         {

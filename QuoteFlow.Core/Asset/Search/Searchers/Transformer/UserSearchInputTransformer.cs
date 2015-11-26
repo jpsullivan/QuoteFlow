@@ -5,6 +5,7 @@ using QuoteFlow.Api.Asset.Fields;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
+using QuoteFlow.Api.Asset.Search.Searchers.Util;
 using QuoteFlow.Api.Asset.Transport;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Jql.Function;
@@ -24,29 +25,35 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
     {
         //protected internal readonly UserHistoryManager userHistoryManager;
         protected readonly UserFieldSearchConstants searchConstants;
-        //protected internal readonly UserFitsNavigatorHelper userFitsNavigatorHelper;
+        protected readonly UserFitsNavigatorHelper userFitsNavigatorHelper;
         //protected internal readonly GroupManager groupManager;
         protected readonly IUserService userService;
         protected readonly string emptySelectFlag;
         private readonly ICustomField customField;
         private readonly ICustomFieldInputHelper customFieldInputHelper;
 
-        public UserSearchInputTransformer(UserFieldSearchConstantsWithEmpty searchConstants, IUserService userManager)
-            : this(userManager, searchConstants.EmptySelectFlag, searchConstants, null)
+        public UserSearchInputTransformer(UserFieldSearchConstantsWithEmpty searchConstants, 
+            UserFitsNavigatorHelper userFitsNavigatorHelper, IUserService userManager)
+            : this(userManager, searchConstants.EmptySelectFlag, searchConstants, userFitsNavigatorHelper, null)
         {
         }
 
-        public UserSearchInputTransformer(UserFieldSearchConstants searchConstants, IUserService userManager)
-            : this(userManager, null, searchConstants, null)
+        public UserSearchInputTransformer(UserFieldSearchConstants searchConstants,
+            UserFitsNavigatorHelper userFitsNavigatorHelper, IUserService userManager)
+            : this(userManager, null, searchConstants, userFitsNavigatorHelper, null)
         {
         }
 
-        public UserSearchInputTransformer(UserFieldSearchConstants searchConstants, IUserService userManager, ICustomField customField)
-            : this(userManager, null, searchConstants, customField)
+        public UserSearchInputTransformer(UserFieldSearchConstants searchConstants,
+            UserFitsNavigatorHelper userFitsNavigatorHelper, IUserService userManager, 
+            ICustomField customField)
+            : this(userManager, null, searchConstants, userFitsNavigatorHelper, customField)
         {
         }
 
-        protected internal UserSearchInputTransformer(IUserService userService, string emptySelectFlag, UserFieldSearchConstants searchConstants, ICustomField customField)
+        protected UserSearchInputTransformer(IUserService userService, 
+            string emptySelectFlag, UserFieldSearchConstants searchConstants,
+            UserFitsNavigatorHelper userFitsNavigatorHelper, ICustomField customField)
         {
             //this.groupManager = groupManager;
             this.userService = userService;
@@ -110,8 +117,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
                 {
                     var svop = (SingleValueOperand) operand;
                     string stringValue = svop.StringValue ?? svop.IntValue.ToString();
-                    //string user = userFitsNavigatorHelper.checkUser(stringValue);
-                    string user = null;
+                    string user = userFitsNavigatorHelper.CheckUser(stringValue);
                     if (user != null)
                     {
                         fieldValuesHolder.Add(searchConstants.FieldUrlParameter, user);
@@ -170,8 +176,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 
                 var svop = (SingleValueOperand) operand;
                 string user = svop.StringValue ?? svop.IntValue.ToString();
-                return false;
-                //return userFitsNavigatorHelper.checkUser(user) != null;
+                return userFitsNavigatorHelper.CheckUser(user) != null;
             }
             if (operand is FunctionOperand)
             {

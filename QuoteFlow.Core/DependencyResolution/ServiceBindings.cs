@@ -9,6 +9,7 @@ using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Asset.Search.Searchers.Transformer;
 using QuoteFlow.Api.Asset.Search.Util;
+using QuoteFlow.Api.Asset.Statistics;
 using QuoteFlow.Api.Auditing;
 using QuoteFlow.Api.Configuration.Lucene;
 using QuoteFlow.Api.Infrastructure.Lucene;
@@ -126,6 +127,7 @@ namespace QuoteFlow.Core.DependencyResolution
 
             Bind<INameResolver<Catalog>>().To<CatalogResolver>().InRequestScope();
             Bind<INameResolver<Manufacturer>>().To<ManufacturerResolver>().InRequestScope();
+            Bind<INameResolver<User>>().To<UserResolver>().InRequestScope();
 
             #endregion
 
@@ -139,6 +141,8 @@ namespace QuoteFlow.Core.DependencyResolution
 
             Bind<CatalogSystemField>().ToSelf().InRequestScope();
             Bind<SummarySystemField>().ToSelf().InRequestScope();
+            Bind<ManufacturerSystemField>().ToSelf().InRequestScope();
+            Bind<CreatorSystemField>().ToSelf().InRequestScope();
 
             #endregion
 
@@ -164,7 +168,16 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<SummarySearchHandlerFactory>().ToSelf().InRequestScope();
 
             // creator searching
+            Bind<CreatorClauseQueryFactory>().ToSelf().InRequestScope();
+            Bind<CreatorValidator>().ToSelf().InRequestScope();
+            Bind<CreatorSearchHandlerFactory>().ToSelf().InRequestScope();
             Bind<CreatorSearcher>().ToSelf().InRequestScope();
+
+            #endregion
+
+            #region Statistics Mappers
+
+            Bind<CreatorStatisticsMapper>().ToSelf();
 
             #endregion
 

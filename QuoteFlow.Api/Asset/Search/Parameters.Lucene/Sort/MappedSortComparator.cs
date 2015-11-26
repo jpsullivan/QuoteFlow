@@ -108,7 +108,7 @@ namespace QuoteFlow.Api.Asset.Search.Parameters.Lucene.Sort
 				values[slot] = GetDocumentValue(doc);
 		    }
 
-			internal void EnsureCapacity(int slot)
+		    private void EnsureCapacity(int slot)
 			{
 				if (values.Length <= slot)
 				{
@@ -123,7 +123,7 @@ namespace QuoteFlow.Api.Asset.Search.Parameters.Lucene.Sort
 				}
 			}
 
-			internal object GetDocumentValue(int doc)
+		    private object GetDocumentValue(int doc)
 			{
 				// We have 2 strategies for getting the document values
 				// If we get a large number of results we walk the Terms in the Index and only  convert terms to values
@@ -134,14 +134,11 @@ namespace QuoteFlow.Api.Asset.Search.Parameters.Lucene.Sort
 				resultsCount++;
 				try
 				{
-					if (resultsCount > fastDocThreshold)
+				    if (resultsCount > fastDocThreshold)
 					{
 						return hungryValueFinder.GetValue(doc);
 					}
-					else
-					{
-						return lazyValueFinder.GetValue(doc);
-					}
+				    return lazyValueFinder.GetValue(doc);
 				}
 				catch (IOException e)
 				{

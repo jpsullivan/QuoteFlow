@@ -29,7 +29,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
             _searcherNameKey = searcherNameKey;
         }
 
-        protected IDictionary<string, object> GetDisplayParams(User searcher, ISearchContext searchContext,
+        protected virtual IDictionary<string, object> GetDisplayParams(User searcher, ISearchContext searchContext,
             IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters)
         {
             var templateParams = new Dictionary<string, object>();
