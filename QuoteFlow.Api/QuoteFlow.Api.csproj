@@ -533,6 +533,7 @@
     <Compile Include="QuoteFlowDataTypes.cs" />
     <Compile Include="Search\SearchFilter.cs" />
     <Compile Include="Search\SearchResults.cs" />
+    <Compile Include="Search\UserSearchParams.cs" />
     <Compile Include="Services\IAssetService.cs" />
     <Compile Include="Services\IAssetVarService.cs" />
     <Compile Include="Services\ICacheService.cs" />
@@ -555,6 +556,7 @@
     <Compile Include="Services\ISearchProvider.cs" />
     <Compile Include="Services\ISearchService.cs" />
     <Compile Include="Services\IUploadFileService.cs" />
+    <Compile Include="Services\IUserSearcherHelperService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UserTracking\IUserTrackingService.cs" />

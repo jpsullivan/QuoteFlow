@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Search;
 
 namespace QuoteFlow.Api.Services
 {
@@ -234,5 +235,14 @@ namespace QuoteFlow.Api.Services
         /// <param name="asset">The <see cref="QuoteFlow.Core.Asset"/>.</param>
         /// <returns></returns>
         bool CanViewAsset(User user, Api.Models.Asset asset);
+
+        /// <summary>
+        /// Determine whether a user matches the search criteria specified in the 
+        /// <param name="searchParams"></param>.
+        /// </summary>
+        /// <param name="user">The user to be matched</param>
+        /// <param name="searchParams">The search criteria</param>
+        /// <returns>True if the user matches the search criteria</returns>
+        bool UserMatches(User user, UserSearchParams searchParams);
     }
 }

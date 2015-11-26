@@ -83,6 +83,7 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<IQuoteStatusService>().To<QuoteStatusService>().InRequestScope();
             Bind<ISearchService>().To<SearchService>().InRequestScope();
             Bind<ISearcherService>().To<SearcherService>().InRequestScope();
+            Bind<IUserSearcherHelperService>().To<UserSearcherHelperService>().InRequestScope();
             Bind<IUserService>().To<UserService>().InRequestScope();
             Bind<IUserTrackingService>().To<UserTrackingService>().InRequestScope();
 

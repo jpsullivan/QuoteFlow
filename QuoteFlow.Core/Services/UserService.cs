@@ -6,9 +6,11 @@ using Dapper;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Infrastructure.Extensions;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Search;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Auditing;
 using QuoteFlow.Core.Infrastructure.Exceptions;
+using QuoteFlow.Core.Search;
 using StackExchange.Profiling.Helpers.Dapper;
 using Crypto = QuoteFlow.Core.Services.CryptographyService;
 
@@ -604,6 +606,52 @@ namespace QuoteFlow.Core.Services
 
             UpdateUser(user);
             return true;
+        }
+
+        public bool UserMatches(User user, UserSearchParams searchParams)
+        {
+            var allowEmptyQueryParams = searchParams.AllowEmptyQuery
+                ? searchParams
+                : UserSearchParams.builder(searchParams).AllowEmptyQuery(true).Build();
+            return UserMatches(user, null, null, allowEmptyQueryParams);
+        }
+
+        private bool UserMatches(User user, string nameQuery, string emailQuery, UserSearchParams userSearchParams)
+        {
+            if (user == null)
+            {
+                return false;
+            }
+
+            // Allow empty queries?
+            if (AreQueriesNotAllowed(nameQuery, emailQuery, userSearchParams))
+            {
+                return false;
+            }
+
+            // check whether the user matches the queries
+            var userMatcher = new UserMatcherPredicate(ConvertQuery(nameQuery), ConvertQuery(emailQuery), userSearchParams.CanMatchEmail);
+            if (!UserMatchesQueries(user, userSearchParams, userMatcher))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool AreQueriesNotAllowed(string nameQuery, string emailQuery, UserSearchParams userSearchParams)
+        {
+            return !userSearchParams.AllowEmptyQuery && string.IsNullOrEmpty(nameQuery) && (!userSearchParams.CanMatchEmail || string.IsNullOrEmpty(emailQuery));
+        }
+
+        private bool UserMatchesQueries(User user, UserSearchParams userSearchParams, UserMatcherPredicate userMatcher)
+        {
+            return userSearchParams.IncludeActive && userMatcher.Invoke(user);
+        }
+
+        private static string ConvertQuery(string nameQuery)
+        {
+            return nameQuery?.ToLower().Trim() ?? string.Empty;
         }
     }
 }

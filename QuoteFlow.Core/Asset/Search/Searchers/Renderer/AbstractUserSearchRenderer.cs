@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Ninject;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Searchers.Renderer;
 using QuoteFlow.Api.Asset.Transport;
-using QuoteFlow.Api.Infrastructure.IoC;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
 using QuoteFlow.Core.Asset.Search.Searchers.Transformer;
+using QuoteFlow.Core.DependencyResolution;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 {
@@ -25,19 +26,22 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         private readonly string _emptySelectFlag;
         private readonly string _nameKey;
         private readonly IUserService _userService;
+        private readonly IUserSearcherHelperService _userSearcherHelperService;
 
         public AbstractUserSearchRenderer(UserFieldSearchConstantsWithEmpty searchConstants, string nameKey, IUserService userManager) 
-            : this(searchConstants, searchConstants.EmptySelectFlag, nameKey, userManager)
+            : this(searchConstants, searchConstants.EmptySelectFlag, nameKey, userManager, Container.Kernel.TryGet<IUserSearcherHelperService>())
         {
         }
 
-        private AbstractUserSearchRenderer(UserFieldSearchConstants searchConstants, string emptySelectFlag, string nameKey, IUserService userService) 
+        private AbstractUserSearchRenderer(UserFieldSearchConstants searchConstants, string emptySelectFlag, 
+            string nameKey, IUserService userService, IUserSearcherHelperService searchHelperService) 
             : base(searchConstants.SearcherId, nameKey)
         {
             _emptySelectFlag = emptySelectFlag;
             _searchConstants = searchConstants;
             _nameKey = nameKey;
             _userService = userService;
+            _userSearcherHelperService = searchHelperService;
         }
 
         public override string GetEditHtml(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters)
@@ -84,7 +88,15 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             var specialParams = GetSpecialDisplayParams(fieldValuesHolder, searcher, searchContext);
             foreach (var specialParam in specialParams)
             {
-                templateParams.Add(specialParam);
+                if (templateParams.ContainsKey(specialParam.Key))
+                {
+                    // update it
+                    templateParams[specialParam.Key] = specialParam.Value;
+                }
+                else
+                {
+                    templateParams.Add(specialParam.Key, specialParam.Value);
+                }
             }
 
             return templateParams;
@@ -106,6 +118,11 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             templateParams.Add("avatarSize", 16);
             templateParams.Add("hasCurrentUser", false);
             templateParams.Add("hasEmpty", false);
+
+            foreach (var suggestedUser in AddUserSuggestionParams(fieldValuesHolder, user, searchContext, ExtractUserNames(values)))
+            {
+                templateParams.Add(suggestedUser.Key, suggestedUser.Value);
+            }
 
             if (values != null)
             {
@@ -139,7 +156,26 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         protected IDictionary<string, object> AddUserSuggestionParams(IFieldValuesHolder fieldValuesHolder, User user,
             ISearchContext searchContext, List<string> selectedUsers)
         {
-            return new Dictionary<string, object>();
+            var templateParams = new Dictionary<string, object>();
+            _userSearcherHelperService.AddUserSuggestionParams(user, selectedUsers, templateParams);
+            return templateParams;
         }
+
+        private List<string> ExtractUserNames(IReadOnlyCollection<UserSearchInput> values)
+        {
+            var result = new List<string>();
+            if (values != null)
+            {
+                foreach (var userSearchInput in values)
+                {
+                    if (userSearchInput.User)
+                    {
+                        result.Add(userSearchInput.Value);
+                    }
+                }
+            }
+
+            return result;
+        } 
     }
 }
