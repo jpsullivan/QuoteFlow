@@ -493,6 +493,7 @@
     <Content Include="Content\compiled\css\app.css" />
     <Content Include="Content\compiled\css\app.min.css" />
     <Content Include="Content\compiled\js\bundle.js" />
+    <Content Include="Content\compiled\js\bundle.min.js" />
     <Content Include="Content\compiled\js\templates.min.js" />
     <Content Include="Content\css\lib\aui\aui-experimental.css" />
     <Content Include="Content\css\lib\aui\aui-experimental.min.css" />
@@ -625,8 +626,11 @@
     <Content Include="Content\js\app\helpers\application_helpers.js" />
     <Content Include="Content\js\app\helpers\backbone_helpers.js" />
     <Content Include="Content\js\app\components\jqui-widget_sidebar.js" />
+    <Content Include="Content\js\app\helpers\number-formatter\number-formatter-tests.js" />
+    <Content Include="Content\js\app\helpers\number-formatter\number-formatter.js" />
     <Content Include="Content\js\app\helpers\underscore_helpers.js" />
     <Content Include="Content\js\app\init.js" />
+    <Content Include="Content\js\app\mixins\events-mixin-creator.js" />
     <Content Include="Content\js\app\mixins\marionette-link-region.js" />
     <Content Include="Content\js\app\mixins\marionette-replace-region.js" />
     <Content Include="Content\js\app\mixins\marionette.js" />
@@ -656,6 +660,7 @@
     <Content Include="Content\js\app\modules\asset-nav\query\query-view.js" />
     <Content Include="Content\js\app\modules\asset-nav\router-custom.js" />
     <Content Include="Content\js\app\modules\asset-nav\searchers\initSparklers.js" />
+    <Content Include="Content\js\app\modules\asset-nav\searchers\initUserSparkler.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-api.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-editor\app-module-no-inline.js" />
     <Content Include="Content\js\app\modules\asset-nav\search\asset-editor\app-module.js" />
@@ -694,7 +699,6 @@
     <Content Include="Content\js\app\modules\asset-nav\switcher\model.js" />
     <Content Include="Content\js\app\modules\asset-nav\switcher\query-switcher-view-model.js" />
     <Content Include="Content\js\app\modules\asset-nav\switcher\view.js" />
-    <Content Include="Content\js\app\modules\asset-nav\util\async-data.js" />
     <Content Include="Content\js\app\modules\asset-nav\util\model-utils.js" />
     <Content Include="Content\js\app\modules\asset-nav\util\reasons.js" />
     <Content Include="Content\js\app\modules\asset-nav\util\resize.js" />
@@ -772,165 +776,6 @@
     <Content Include="Content\js\lib\jquery-scrolllock.min.js" />
     <Content Include="Content\js\lib\jquery.scrollIntoView.js" />
     <Content Include="Content\js\lib\md5.js" />
-    <Content Include="Content\less\asset-navigator.css">
-      <DependentUpon>asset-navigator.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\asset-navigator.min.css">
-      <DependentUpon>asset-navigator.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\asset-nav\asset-nav.css">
-      <DependentUpon>asset-nav.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\asset-nav\asset-nav.min.css">
-      <DependentUpon>asset-nav.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\asset-nav\split-view.css">
-      <DependentUpon>split-view.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\asset-nav\split-view.min.css">
-      <DependentUpon>split-view.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\asset.css">
-      <DependentUpon>asset.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\asset.min.css">
-      <DependentUpon>asset.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\aui-experimental-restfultable.css">
-      <DependentUpon>aui-experimental-restfultable.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\aui-experimental-restfultable.min.css">
-      <DependentUpon>aui-experimental-restfultable.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\bootstrap.css">
-      <DependentUpon>bootstrap.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\bootstrap.min.css">
-      <DependentUpon>bootstrap.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\catalog.css">
-      <DependentUpon>catalog.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\catalog.min.css">
-      <DependentUpon>catalog.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\forms.min.css">
-      <DependentUpon>forms.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\get-started.css">
-      <DependentUpon>get-started.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\get-started.min.css">
-      <DependentUpon>get-started.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\focused.css">
-      <DependentUpon>focused.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\footer.css">
-      <DependentUpon>footer.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\forms.css">
-      <DependentUpon>forms.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\header.css">
-      <DependentUpon>header.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\header.min.css">
-      <DependentUpon>header.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\history-feed.css">
-      <DependentUpon>history-feed.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\history-feed.min.css">
-      <DependentUpon>history-feed.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\intro-message.css">
-      <DependentUpon>intro-message.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\intro-message.min.css">
-      <DependentUpon>intro-message.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\layout.css">
-      <DependentUpon>layout.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\layout.min.css">
-      <DependentUpon>layout.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\lists.css">
-      <DependentUpon>lists.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\lists.min.css">
-      <DependentUpon>lists.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\messages.css">
-      <DependentUpon>messages.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\messages.min.css">
-      <DependentUpon>messages.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\misc.css">
-      <DependentUpon>misc.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\misc.min.css">
-      <DependentUpon>misc.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\operations-buttons.css">
-      <DependentUpon>operations-buttons.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\operations-buttons.min.css">
-      <DependentUpon>operations-buttons.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\operations-lists.css">
-      <DependentUpon>operations-lists.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\operations-lists.min.css">
-      <DependentUpon>operations-lists.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\quote-list-table.css">
-      <DependentUpon>quote-list-table.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\quote-list-table.min.css">
-      <DependentUpon>quote-list-table.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\aui-theme\component-variables.css">
-      <DependentUpon>component-variables.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\aui-theme\component-variables.min.css">
-      <DependentUpon>component-variables.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\aui-theme\components\restful-table.css">
-      <DependentUpon>restful-table.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\aui-theme\components\restful-table.min.css">
-      <DependentUpon>restful-table.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\aui-theme\core-variables.css">
-      <DependentUpon>core-variables.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\aui-theme\core-variables.min.css">
-      <DependentUpon>core-variables.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\aui-theme\core\colors.css">
-      <DependentUpon>colors.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\aui-theme\core\colors.min.css">
-      <DependentUpon>colors.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\global.css">
-      <DependentUpon>global.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\global.min.css">
-      <DependentUpon>global.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\typography.css">
-      <DependentUpon>typography.less</DependentUpon>
-    </Content>
-    <Content Include="Content\less\typography.min.css">
-      <DependentUpon>typography.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\user.css">
-      <DependentUpon>user.less</DependentUpon>
-    </Content>
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -998,78 +843,29 @@
     <Content Include="Content\js\lib\async-file-upload.js" />
     <Content Include="Content\less\bootstrap.less" />
     <Content Include="Content\less\misc.less" />
-    <Content Include="Content\less\misc.css.map">
-      <DependentUpon>misc.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\bootstrap.css.map">
-      <DependentUpon>bootstrap.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\forms.less" />
-    <Content Include="Content\less\forms.css.map">
-      <DependentUpon>forms.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\header.less" />
-    <Content Include="Content\less\header.css.map">
-      <DependentUpon>header.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\layout.less" />
-    <Content Include="Content\less\layout.css.map">
-      <DependentUpon>layout.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\footer.less" />
-    <Content Include="Content\less\footer.css.map">
-      <DependentUpon>footer.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\lists.less" />
-    <Content Include="Content\less\lists.css.map">
-      <DependentUpon>lists.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\focused.less" />
-    <Content Include="Content\less\focused.css.map">
-      <DependentUpon>focused.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\typography.less" />
-    <Content Include="Content\less\typography.css.map">
-      <DependentUpon>typography.css</DependentUpon>
-    </Content>
     <Content Include="Content\views\common\panel-table.hbs" />
     <Content Include="Content\views\catalog\select-asset-var-modal.hbs" />
     <Content Include="Content\views\catalog\import-asset-var-row.hbs" />
     <Content Include="Content\less\catalog.less" />
-    <Content Include="Content\less\catalog.css.map">
-      <DependentUpon>catalog.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\asset.less" />
-    <Content Include="Content\less\asset.css.map">
-      <DependentUpon>asset.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\user.less" />
-    <Content Include="Content\less\user.css.map">
-      <DependentUpon>user.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\asset-navigator.less" />
-    <Content Include="Content\less\asset-navigator.css.map">
-      <DependentUpon>asset-navigator.css</DependentUpon>
-    </Content>
     <Content Include="Content\views\asset\details.hbs" />
     <Content Include="Content\views\asset\edit\asset-var-edit-row.hbs" />
     <Content Include="Content\less\get-started.less" />
-    <Content Include="Content\less\get-started.css.map">
-      <DependentUpon>get-started.css</DependentUpon>
-    </Content>
     <Content Include="Content\compiled\js\bundle.js.map" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Content Include="Content\views\asset\nav-search\layout-switcher.hbs" />
-    <Content Include="Content\less\quote-list-table.less" />
     <Content Include="Content\less\static\global.less" />
     <Content Include="Content\less\static\global-mixins.less" />
-    <Content Include="Content\less\quote-list-table.css.map">
-      <DependentUpon>quote-list-table.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\messages.less" />
-    <Content Include="Content\less\messages.css.map">
-      <DependentUpon>messages.css</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
@@ -1081,53 +877,20 @@
     <Content Include="Content\less\static\aui-theme\core-variables.less" />
     <Content Include="Content\less\static\aui-theme\core\borders.less" />
     <Content Include="Content\less\static\aui-theme\core\colors.less" />
-    <Content Include="Content\less\static\aui-theme\core\colors.css.map">
-      <DependentUpon>colors.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\aui-theme\core-variables.css.map">
-      <DependentUpon>core-variables.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\static\global.css.map">
-      <DependentUpon>global.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\static\aui-theme\components\restful-table.less" />
-    <Content Include="Content\less\static\aui-theme\components\restful-table.css.map">
-      <DependentUpon>restful-table.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\static\aui-theme\component-variables.less" />
-    <Content Include="Content\less\static\aui-theme\component-variables.css.map">
-      <DependentUpon>component-variables.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\aui-experimental-restfultable.css.map">
-      <DependentUpon>aui-experimental-restfultable.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\intro-message.less" />
-    <Content Include="Content\less\intro-message.css.map">
-      <DependentUpon>intro-message.css</DependentUpon>
-    </Content>
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.eot" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.ttf" />
     <Content Include="Content\css\lib\aui\fonts\atlassian-icons.woff" />
     <Content Include="Content\less\asset-nav\split-view.less" />
     <Content Include="Content\less\asset-nav\mixins\content-box.less" />
     <Content Include="Content\less\asset-nav\mixins\text-overflow.less" />
-    <Content Include="Content\less\asset-nav\split-view.css.map">
-      <DependentUpon>split-view.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\asset-nav\asset-nav.less" />
-    <Content Include="Content\less\asset-nav\asset-nav.css.map">
-      <DependentUpon>asset-nav.css</DependentUpon>
-    </Content>
     <Content Include="Content\views\quote-builder\split-view\structure.hbs" />
     <Content Include="Content\views\quote-builder\split-view\asset-row.hbs" />
     <Content Include="Content\less\operations-buttons.less" />
     <Content Include="Content\less\operations-lists.less" />
-    <Content Include="Content\less\operations-lists.css.map">
-      <DependentUpon>operations-lists.css</DependentUpon>
-    </Content>
-    <Content Include="Content\less\operations-buttons.css.map">
-      <DependentUpon>operations-buttons.css</DependentUpon>
-    </Content>
     <Content Include="Content\less\mixins\buttons.less" />
     <Content Include="Content\views\quote-builder\split-view\asset-details-no-selection.hbs" />
     <Content Include="Content\views\quote-builder\split-view\asset-list.hbs" />
@@ -1143,9 +906,6 @@
     <Content Include="Areas\Admin\Views\Indexing\Index.cshtml" />
     <Compile Include="App_Start\Startup.Hangfire.cs" />
     <Content Include="Content\less\history-feed.less" />
-    <Content Include="Content\less\history-feed.css.map">
-      <DependentUpon>history-feed.css</DependentUpon>
-    </Content>
     <Content Include="Content\views\quote-builder\split-view\orderby.hbs" />
     <Content Include="Content\js\lib\jquery.scroll-into-view.js" />
     <Content Include="Content\views\quote-builder\query\jql-query-view.hbs" />
@@ -1188,6 +948,9 @@
     <Content Include="Content\views\asset-viewer\error\no-permission.hbs" />
     <Content Include="Content\views\asset-viewer\asset\pager.hbs" />
     <Content Include="Content\views\quote-builder\split-view\orderby-options.hbs" />
+    <Content Include="Content\less\asset-nav\mixins\asset-responsive.less" />
+    <Content Include="Content\views\quote-builder\query\basic\lozenge-dropdown-cannot-edit.hbs" />
+    <Content Include="Content\views\quote-builder\query\basic\lozenge-dropdown-content.hbs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
