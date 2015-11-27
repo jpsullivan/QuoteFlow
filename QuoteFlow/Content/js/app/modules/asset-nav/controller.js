@@ -11,6 +11,7 @@ var SmartAjax = require('../../components/ajax/smart-ajax');
 
 // component initializers
 var InitSparklers = require('./searchers/initSparklers');
+var InitUserSparkler = require('./searchers/initUserSparkler');
 
 /**
  * Contains callbacks for the asset module router.
@@ -20,6 +21,7 @@ var AssetNavController = Marionette.Controller.extend({
     builder: function (query) {
         // initialize renderable components here (such as sparklers)
         InitSparklers.register();
+        InitUserSparkler.register();
 
         var options = this.initOptions();
         var creator = AssetNavCreator.create(AJS.$(document), {

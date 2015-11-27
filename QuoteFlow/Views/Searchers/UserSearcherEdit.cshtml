@@ -1,20 +1,22 @@
 ﻿@using QuoteFlow.Api.Models
 @using QuoteFlow.Core.Asset.Search.Searchers.Transformer
+@model IDictionary<string, object>
 @{
+    string id = (string) Model["userSelect"];
+    var name = (string) Model["name"];
+    var fieldName = (string) Model["userField"];
+    bool hasEmpty = (bool) Model["hasEmpty"];
     var values = Model["values"] as List<UserSearchInput>;
     var suggestedUsers = Model["suggestedUsers"] as List<User>;
-    string userField = Model["userField"];
-    bool hasCurrentUser = Model["hasCurrentUser"];
-    bool hasEmpty = Model["hasEmpty"];
-    string emptyValueKey = Model["emptyValueKey"];
-    string placeholderText = Model["placeholderText"];
-    bool hasPermissionToPickUsers = Model["hasPermissionToPickUsers"];
-
+    bool hasCurrentUser = (bool) Model["hasCurrentUser"];
+    string emptyValueKey = (string) Model["emptyValueKey"];
+    string placeholderText = (string) Model["placholderText"];
+    bool hasPermissionToPickUsers = (bool) Model["hasPermissionToPickUsers"];
 }
 <div class="field-group aui-field-userlist">
-    <label for="searcher-creator">Creator</label>
-    <fieldset rel="creator" class="hidden user-group-searcher-params"></fieldset>
-    <select class="js-usergroup-checkboxmultiselect" multiple="multiple" id="@userField" name="@userField" data-placeholder-text="@placeholderText">
+    <label for="searcher-@id">Creator</label>
+    <fieldset rel="@fieldName" class="hidden user-group-searcher-params"></fieldset>
+    <select class="js-user-checkboxmultiselect" multiple="multiple" id="@fieldName" name="@fieldName" data-placeholder-text="@placeholderText">
         @if (hasPermissionToPickUsers && suggestedUsers != null && suggestedUsers.Any())
         {
             <optgroup label="Suggested Users">
@@ -26,7 +28,7 @@
         }
     </select>
     @{
-        string prevName = string.Format("check_prev_{0}", userField);
+        string prevName = string.Format("check_prev_{0}", fieldName);
     }
     <input type="hidden" name="@prevName" value="true">
     @foreach (var userSearchInput in values)
@@ -34,7 +36,7 @@
         // These hidden inputs submit back to the server all the previously
         // selected values, so we know what changed
 
-        var prevField = string.Format("prev_{0}", userField);
+        var prevField = string.Format("prev_{0}", fieldName);
         if (userSearchInput.Group)
         {
             <input type="hidden" name="@prevField" value="group:@userSearchInput.Object.ToString()">
