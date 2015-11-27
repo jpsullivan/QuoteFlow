@@ -26,7 +26,7 @@ var AssetNavCreator = {
           initialAssetTableState: options.initialAssetTableState
         });
         searchPageModule.registerViewContainers({
-            assetContainer: $(".issue-container"),
+            assetContainer: $(".asset-container"),
             searchContainer: $(".navigator-container")
         });
 

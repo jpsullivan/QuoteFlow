@@ -22,7 +22,7 @@ var DropdownSelect = Control.extend({
         this.dropdownController = InlineLayerFactory.createInlineLayers({
             alignment: "left",
             width: 200,
-            hideOnScroll: ".issue-container",
+            hideOnScroll: ".asset-container",
             content: jQuery(".aui-list", this.$container)
         });
 

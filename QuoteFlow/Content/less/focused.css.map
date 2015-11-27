@@ -1,9 +1,0 @@
-{
-  "version": 3,
-  "file": "focused.css",
-  "sources": [
-    "focused.less"
-  ],
-  "names": [],
-  "mappings": "AAAA,iBAEI;EACI,kBAAA;EACA,SAAA;EACA,WAAA;;AALR,iBAQI;EACI,YAAA;EACA,iBAAA;;AAVR,iBAaI;EACI,6BAAA;EACA,oBAAA;EACA,mBAAA"
-}

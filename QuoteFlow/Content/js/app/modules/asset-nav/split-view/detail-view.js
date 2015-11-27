@@ -49,7 +49,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
     },
 
     getAssetContainer: function () {
-        return this.$el.find(".issue-container");
+        return this.$el.find(".asset-container");
     },
 
     scrollToTop: function () {
