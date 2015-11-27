@@ -48,5 +48,4 @@ namespace QuoteFlow.Core.Jql.Validator
         private static SupportedOperatorsValidator SupportedOperatorsValidator
             => new SupportedOperatorsValidator(new[] {Operator.LIKE});
     }
-
 }

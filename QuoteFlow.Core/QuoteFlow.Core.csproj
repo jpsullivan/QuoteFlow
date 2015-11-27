@@ -390,6 +390,7 @@
     <Compile Include="Jql\Query\Clause\ChangedClause.cs" />
     <Compile Include="Jql\Query\Clause\WasClause.cs" />
     <Compile Include="Jql\Query\CreatorClauseQueryFactory.cs" />
+    <Compile Include="Jql\Query\EqualityWithSpecifiedEmptyValueQueryFactory.cs" />
     <Compile Include="Jql\Query\FreeTextClauseQueryFactory.cs" />
     <Compile Include="Jql\Query\HistoryPredicateQueryFactory.cs" />
     <Compile Include="Jql\Query\History\AndHistoryPredicate.cs" />

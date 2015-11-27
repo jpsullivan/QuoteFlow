@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Ninject;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
@@ -106,12 +107,12 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             ISearchContext searchContext)
         {
             string key = _searchConstants.FieldUrlParameter;
-            var values = new List<UserSearchInput>();
+            var values = new HashSet<UserSearchInput>();
 
             object fieldValue;
             if (fieldValuesHolder.TryGetValue(key, out fieldValue))
             {
-                values = fieldValue as List<UserSearchInput>;
+                values = fieldValue as HashSet<UserSearchInput>;
             }
 
             var templateParams = new Dictionary<string, object>();
@@ -128,25 +129,26 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             {
                 foreach (var userSearchInput in values)
                 {
-                    if (userSearchInput.CurrentUser)
+                    if (userSearchInput.IsCurrentUser)
                     {
                         templateParams["hasCurrentUser"] = true;
                     }
-                    if (userSearchInput.Empty)
+                    if (userSearchInput.IsEmpty)
                     {
                         templateParams["hasEmpty"] = true;
                     }
-                    if (userSearchInput.Group)
+                    if (userSearchInput.IsGroup)
                     {
                         // todo when groups are a thing
                     }
-                    if (userSearchInput.User)
+                    if (userSearchInput.IsUser)
                     {
-                        userSearchInput.Object = _userService.GetUser(userSearchInput.Value);
+                        userSearchInput.Object = _userService.GetUser(userSearchInput.Value, null);
                     }
                 }
 
-                values.Sort();
+//                var resolvedValues = values.ToList();
+//                resolvedValues.Sort();
             }
 
             templateParams.Add("values", values);
@@ -168,7 +170,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             {
                 foreach (var userSearchInput in values)
                 {
-                    if (userSearchInput.User)
+                    if (userSearchInput.IsUser)
                     {
                         result.Add(userSearchInput.Value);
                     }

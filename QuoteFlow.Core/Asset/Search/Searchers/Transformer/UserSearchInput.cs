@@ -17,38 +17,50 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             USER
         }
 
-        private object @object;
-        private readonly InputType type;
-        private readonly string value;
+        private object _object;
+        private readonly InputType _type;
 
         private UserSearchInput(InputType type, string value)
         {
-            this.type = type;
-            this.value = value;
+            _type = type;
+            Value = value;
         }
 
-        /// <returns> An instance representing the "currentUser()" value. </returns>
-        public static UserSearchInput currentUser()
+        /// <summary>
+        /// An instance representing the "currentUser()" value.
+        /// </summary>
+        /// <returns></returns>
+        public static UserSearchInput CurrentUser()
         {
             return new UserSearchInput(InputType.CURRENT_USER, null);
         }
 
-        /// <returns> An instance representing the "empty" value (e.g. unassigned). </returns>
-        public static UserSearchInput empty()
+        /// <summary>
+        /// An instance representing the "empty" value (e.g. unassigned).
+        /// </summary>
+        /// <returns></returns>
+        public static UserSearchInput Empty()
         {
             return new UserSearchInput(InputType.EMPTY, null);
         }
 
-        /// <param name="name"> The name of the group. </param>
-        /// <returns> An instance representing a particular group. </returns>
-        public static UserSearchInput group(string name)
+
+        /// <summary>
+        /// An instance representing a particular group.
+        /// </summary>
+        /// <param name="name">The name of the group</param>
+        /// <returns></returns>
+        public static UserSearchInput Group(string name)
         {
             return new UserSearchInput(InputType.GROUP, name);
         }
 
-        /// <param name="name"> The user's username. </param>
-        /// <returns> An instance representing a particular user. </returns>
-        public static UserSearchInput user(string name)
+        /// <summary>
+        /// An instance representing a particular user.
+        /// </summary>
+        /// <param name="name">The user's username.</param>
+        /// <returns></returns>
+        public static UserSearchInput User(string name)
         {
             return new UserSearchInput(InputType.USER, name);
         }
@@ -56,30 +68,32 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         public virtual int CompareTo(UserSearchInput other)
         {
             // Groups and users should be shown together.
-            bool bothGroupsOrUsers = (type == InputType.GROUP || type == InputType.USER) && (other.type == InputType.GROUP || other.type == InputType.USER);
-
+            bool bothGroupsOrUsers = (_type == InputType.GROUP || _type == InputType.USER) &&
+                                     (other._type == InputType.GROUP || other._type == InputType.USER);
             if (!bothGroupsOrUsers)
             {
-                return type.CompareTo(other.type);
+                return _type.CompareTo(other._type);
             }
 
-            return (new NullComparator()).Compare(CompareValue, other.CompareValue);
+            return new NullComparator().Compare(CompareValue, other.CompareValue);
         }
 
-        /// <returns> The "comparison" value to be used in {@code compareTo}. </returns>
+        /// <summary>
+        /// The "comparison" value to be used in CompareTo().
+        /// </summary>
         private string CompareValue
         {
             get
             {
-                if (@object != null)
+                if (_object != null)
                 {
-//                    if (Group)
+//                    if (IsGroup)
 //                    {
-//                        return ((Group)@object).Name.ToLower();
+//                        return ((IsGroup)@_object).Name.ToLower();
 //                    }
-                    if (User)
+                    if (IsUser)
                     {
-                        return ((User) @object).Username.ToLower();
+                        return ((User) _object).Username.ToLower();
                     }
                 }
 
@@ -87,49 +101,44 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             }
         }
 
-        /// <returns> The actual object that corresponds to the user's input (i.e. the
-        ///     group/user object with the given name/username). </returns>
+        /// <summary>
+        /// The actual _object that corresponds to the user's input (i.e. the user 
+        /// _object with the given name/username).
+        /// </summary>
         public virtual object Object
         {
-            get { return @object; }
-            set { this.@object = value; }
+            get { return _object; }
+            set { _object = value; }
         }
 
-        /// <returns> The type of the input value (i.e. current user, empty, etc.). </returns>
-        public virtual InputType Type
-        {
-            get { return type; }
-        }
+        /// <summary>
+        /// The _type of the input value (i.e. current user, empty, etc.).
+        /// </summary>
+        public virtual InputType Type => _type;
 
-        /// <returns> The input value (i.e. the name of the group/user). </returns>
-        public virtual string Value
-        {
-            get { return value; }
-        }
+        /// <summary>
+        /// The input value (i.e. the name of the group/user).
+        /// </summary>
+        public virtual string Value { get; }
 
-        /// <returns> Whether the instance represents the "currentUser()" value. </returns>
-        public virtual bool CurrentUser
-        {
-            get { return type == InputType.CURRENT_USER; }
-        }
+        /// <summary>
+        /// Whether the instance represents the "currentUser()" value.
+        /// </summary>
+        public virtual bool IsCurrentUser => _type == InputType.CURRENT_USER;
 
-        /// <returns> Whether the instance represents the "empty" value. </returns>
-        public virtual bool Empty
-        {
-            get { return type == InputType.EMPTY; }
-        }
+        /// <summary>
+        /// Whether the instance represents the "empty" value.
+        /// </summary>
+        public virtual bool IsEmpty => _type == InputType.EMPTY;
 
-        /// <returns> Whether the instance represents a particular group. </returns>
-        public virtual bool Group
-        {
-            get { return type == InputType.GROUP; }
-        }
+        /// <summary>
+        /// Whether the instance represents a particular group.
+        /// </summary>
+        public virtual bool IsGroup => _type == InputType.GROUP;
 
-        /// <returns> Whether the instance represents a particular user. </returns>
-        public virtual bool User
-        {
-            get { return type == InputType.USER; }
-        }
-
+        /// <summary>
+        /// Whether the instance represents a particular user.
+        /// </summary>
+        public virtual bool IsUser => _type == InputType.USER;
     }
 }

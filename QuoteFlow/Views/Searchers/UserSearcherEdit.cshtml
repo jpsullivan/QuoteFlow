@@ -47,11 +47,11 @@
             // selected values, so we know what changed
 
             var prevField = string.Format("prev_{0}", fieldName);
-            if (userSearchInput.Group)
+            if (userSearchInput.IsGroup)
             {
                 <input type="hidden" name="@prevField" value="group:@userSearchInput.Object.ToString()">
             }
-            else if (userSearchInput.User)
+            else if (userSearchInput.IsUser)
             {
                 <input type="hidden" name="@prevField" value="group:@userSearchInput.Object.ToString()">
             }

@@ -29,7 +29,7 @@ var EmptyResultsView = Marionette.ItemView.extend({
         } else {
             message = "No assets were found to match your search";
             hint = createAssetPerm
-                ? "Try modifying your search criteria or <a>creating a new asset</a>"
+                ? "Try modifying your search criteria or <a href='#'>creating a new asset</a>"
                 : "Try modifying your search criteria"
             cssClass = "no-results-message";
             this.linkType = 'create';

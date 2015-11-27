@@ -159,6 +159,7 @@
     <Compile Include="Jql\Query\Clause\TerminalClauseTests.cs" />
     <Compile Include="Jql\Query\Clause\WasClauseTests.cs" />
     <Compile Include="Jql\Query\EqualityQueryFactoryTests.cs" />
+    <Compile Include="Jql\Query\EqualityWithSpecifiedEmptyValueQueryFactoryTests.cs" />
     <Compile Include="Jql\Query\LikeQueryFactoryTests.cs" />
     <Compile Include="Jql\Query\LuceneQueryBuilderTests.cs" />
     <Compile Include="Jql\Query\ManufacturerClauseQueryFactoryTests.cs" />

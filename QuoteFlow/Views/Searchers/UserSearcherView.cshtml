@@ -1,16 +1,51 @@
 ﻿@using QuoteFlow.Api.Models
-@if (Model["values"] != null && Model["values"].Count > 0)
+@using QuoteFlow.Core.Asset.Search.Searchers.Transformer
+@model IDictionary<string, object>
+@{
+    var values = new HashSet<UserSearchInput>();
+    object unresolvedValues;
+    if (Model.TryGetValue("values", out unresolvedValues))
+    {
+        values = unresolvedValues as HashSet<UserSearchInput>;
+    }
+}
+
+@if (values != null && values.Count > 0)
 {
     <div class="searcherValue">
         <label class="fieldLabel" for="fieldcreator">Creator:</label>
         <span id="fieldcreator" class="fieldValue">
-            @for (int i = 0; i < Model["values"].Count; i++)
+            @for (int i = 0; i < values.Count; i++)
             {
-                User user = Model["values"][i];
-                <a href="#" class="user-hover" rel="@user.EmailAddress">
-                    @user.FullName@if (i < Model["values"].Count - 1)
-                    {<text>,</text>}
-                </a>
+                var value = values.ElementAt(i);
+                if (value.IsCurrentUser)
+                {
+                }
+                else if (value.IsEmpty)
+                {
+                    if (i < values.Count - 1)
+                    {
+                        <text>IsEmpty,</text>
+                    }
+                    else
+                    {
+                        <text>IsEmpty</text>
+                    }
+                }
+                else if (value.IsGroup)
+                {
+                }
+                else if (value.IsUser)
+                {
+                    var user = value.Object as User;
+                    if (user != null)
+                    {
+                        <a href="#" class="user-hover" rel="@user.EmailAddress">
+                            @user.FullName@if (i < values.Count - 1)
+                            {<text>,</text>}
+                        </a>
+                    }
+                }
             }
         </span>
     </div>

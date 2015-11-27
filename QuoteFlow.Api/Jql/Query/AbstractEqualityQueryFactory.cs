@@ -7,8 +7,7 @@ using QuoteFlow.Api.Jql.Resolver;
 
 namespace QuoteFlow.Api.Jql.Query
 {
-    public abstract class AbstractEqualityQueryFactory<T> : AbstractOperatorQueryFactory<T>,
-        IOperatorSpecificQueryFactory
+    public abstract class AbstractEqualityQueryFactory<T> : AbstractOperatorQueryFactory<T>, IOperatorSpecificQueryFactory
     {
         public AbstractEqualityQueryFactory(IIndexInfoResolver<T> indexInfoResolver) : base(indexInfoResolver)
         {
@@ -50,7 +49,7 @@ namespace QuoteFlow.Api.Jql.Query
             return QueryFactoryResult.CreateFalseResult();
         }
 
-        public QueryFactoryResult CreateQueryForEmptyOperand(string fieldName, Operator oprator)
+        public virtual QueryFactoryResult CreateQueryForEmptyOperand(string fieldName, Operator oprator)
         {
             throw new NotImplementedException();
         }

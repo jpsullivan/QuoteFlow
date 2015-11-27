@@ -30,7 +30,7 @@ namespace QuoteFlow.Core.Jql.Resolver
             var user = UserService.GetUser(name, null);
             if (user != null)
             {
-                return new List<string>(user.Id);
+                return new List<string> { user.Id.ToString() };
             }
 
             return GetUsersFromFullNameOrEmail(name);

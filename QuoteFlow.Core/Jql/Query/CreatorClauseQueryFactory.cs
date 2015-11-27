@@ -4,6 +4,7 @@ using QuoteFlow.Api.Jql.Operand;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Resolver;
+using QuoteFlow.Api.Models;
 using QuoteFlow.Core.Jql.Resolver;
 
 namespace QuoteFlow.Core.Jql.Query
@@ -21,6 +22,9 @@ namespace QuoteFlow.Core.Jql.Query
             var searchConstants = SystemSearchConstants.ForCreator();
             var operatorFactories = new List<IOperatorSpecificQueryFactory>();
             var indexInfoResolver = new UserIndexInfoResolver(userResolver);
+
+            operatorFactories.Add(new EqualityWithSpecifiedEmptyValueQueryFactory<User>(indexInfoResolver, searchConstants.EmptyIndexValue));
+            _delegateClauseQueryFactory = new GenericClauseQueryFactory(searchConstants.IndexField, operatorFactories, operandResolver);
         }
 
         public QueryFactoryResult GetQuery(IQueryCreationContext queryCreationContext, ITerminalClause terminalClause)

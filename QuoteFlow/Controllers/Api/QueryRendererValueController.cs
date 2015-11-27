@@ -2,12 +2,11 @@
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 using Microsoft.Ajax.Utilities;
 using QuoteFlow.Api.Jql;
-using QuoteFlow.Api.Models.RequestModels.Api.Query;
 using QuoteFlow.Api.Services;
-using QuoteFlow.Infrastructure.Enumerables;
 using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Controllers.Api
@@ -38,18 +37,11 @@ namespace QuoteFlow.Controllers.Api
             }
 
             var dataArray = data.Split('&');
-            var dataList = new ListWithDuplicates();
-            foreach (var arg in dataArray)
-            {
-                var args = arg.Split('=');
-                dataList.Add(args[0], args[1]);
-            }
-
             var multiDict = new MultiDictionary<string, string[]>(true);
             foreach (var arg in dataArray)
             {
                 var args = arg.Split('=');
-                multiDict.Add(args[0], new[] { args[1] });
+                multiDict.Add(args[0], new[] { HttpUtility.UrlDecode(args[1]) });
             }
 
             // also get the user

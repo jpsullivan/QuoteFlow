@@ -78,27 +78,30 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             var @params = actionParams.GetValuesForKey(paramName);
             var values = new HashSet<UserSearchInput>();
 
-            if (@params == null) return values;
+            if (@params == null)
+            {
+                return values;
+            }
 
             foreach (string param in @params)
             {
-                //string[] parts = param.Split(new []{ ':' }, 2);
-                string[] parts = param.Split(new[] { "%3A" }, StringSplitOptions.None); // because ':' has been html-encoded...
-                if (parts[0].Equals("empty"))
+                string[] parts = param.Split(new []{ ':' }, 2);
+                //string[] parts = param.Split(new[] { "%3A" }, StringSplitOptions.None); // because ':' has been html-encoded...
+                if (parts[0].Equals("Empty"))
                 {
-                    values.Add(UserSearchInput.empty());
+                    values.Add(UserSearchInput.Empty());
                 }
                 else if (parts[0].Equals("group"))
                 {
-                    values.Add(UserSearchInput.@group(parts[1]));
+                    values.Add(UserSearchInput.Group(parts[1]));
                 }
                 else if (parts[0].Equals("asset_current_user"))
                 {
-                    values.Add(UserSearchInput.currentUser());
+                    values.Add(UserSearchInput.CurrentUser());
                 }
                 else if (parts[0].Equals("user"))
                 {
-                    values.Add(UserSearchInput.user(parts[1]));
+                    values.Add(UserSearchInput.User(parts[1]));
                 }
             }
             
@@ -110,7 +113,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             Console.Write("shit");
 //            foreach (UserSearchInput input in Sets.difference(newValues, prevValues))
 //            {
-//                if (input.User)
+//                if (input.IsUser)
 //                {
 //                    User user = userService.GetUser(input.Value);
 //                    if (user != null)
@@ -141,7 +144,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 
             foreach (ITerminalClause clause in clauses)
             {
-                parseOperand(clause.Operand, values);
+                ParseOperand(clause.Operand, values);
             }
 
             fieldValuesHolder.Add(searchConstants.FieldUrlParameter, values);
@@ -165,21 +168,21 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             {
                 foreach (UserSearchInput value in values)
                 {
-                    if (value.CurrentUser)
+                    if (value.IsCurrentUser)
                     {
                         string name = CurrentUserFunction.FUNCTION_CURRENT_USER;
                         operands.Add(new FunctionOperand(name));
                     }
-                    else if (value.Empty)
+                    else if (value.IsEmpty)
                     {
                         operands.Add(EmptyOperand.Empty);
                     }
-                    else if (value.Group)
+                    else if (value.IsGroup)
                     {
                         string name = MembersOfFunction.FUNCTION_MEMBERSOF;
                         operands.Add(new FunctionOperand(name, value.Value));
                     }
-                    if (value.User)
+                    if (value.IsUser)
                     {
                         operands.Add(new SingleValueOperand(value.Value));
                     }
@@ -333,11 +336,11 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         /// </summary>
         /// <param name="operand"> The operand from which values are to be extracted. </param>
         /// <param name="values"> The collection to add the extracted values to. </param>
-        private void parseOperand(IOperand operand, ICollection<UserSearchInput> values)
+        private void ParseOperand(IOperand operand, ICollection<UserSearchInput> values)
         {
             if (operand is EmptyOperand)
             {
-                values.Add(UserSearchInput.empty());
+                values.Add(UserSearchInput.Empty());
             }
             else if (operand is SingleValueOperand)
             {
@@ -352,7 +355,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
                 var multiValueOperand = (MultiValueOperand) operand;
                 foreach (var value in multiValueOperand.Values)
                 {
-                    parseOperand(value, values);
+                    ParseOperand(value, values);
                 }
             }
         }
@@ -387,11 +390,11 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         {
             if (IsCurrentUser(operand))
             {
-                values.Add(UserSearchInput.currentUser());
+                values.Add(UserSearchInput.CurrentUser());
             }
             else if (IsMembersOf(operand))
             {
-                values.Add(UserSearchInput.group(operand.Args[0]));
+                values.Add(UserSearchInput.Group(operand.Args[0]));
             }
         }
 
