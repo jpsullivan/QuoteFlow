@@ -448,8 +448,7 @@ var AssetSearcherCollection = Brace.Collection.extend({
             type: "POST",
             data: data,
             processData: false,
-            //url: QuoteFlow.ApplicationPath + "api/asset/FindAsset",
-            url: QuoteFlow.RootUrl + "api/queryRendererEditt",
+            url: QuoteFlow.RootUrl + "api/queryRendererValue",
             success:_.bind(function(data) {
                 var model = this.get(id);
                 if (model) {

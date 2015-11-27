@@ -14,7 +14,6 @@ using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Operand;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
-using Wintellect.PowerCollections;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
@@ -64,26 +63,27 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             }
 
             string paramName = searchConstants.FieldUrlParameter;
-            Set<UserSearchInput> newValues = GetFromParams(actionParams, paramName);
+            ISet<UserSearchInput> newValues = GetFromParams(actionParams, paramName);
             fieldValuesHolder.Add(paramName, newValues);
 
             if (actionParams.ContainsKey("check_prev_" + paramName)) // if there are no prev_ params, it prob wasn't a user-submitted form
             {
-                Set<UserSearchInput> prevValues = GetFromParams(actionParams, "prev_" + paramName);
+                ISet<UserSearchInput> prevValues = GetFromParams(actionParams, "prev_" + paramName);
                 UpdateUsedUsers(user, newValues, prevValues);
             }
         }
 
-        private Set<UserSearchInput> GetFromParams(IActionParams actionParams, string paramName)
+        private ISet<UserSearchInput> GetFromParams(IActionParams actionParams, string paramName)
         {
             var @params = actionParams.GetValuesForKey(paramName);
-            var values = new Set<UserSearchInput>();
+            var values = new HashSet<UserSearchInput>();
 
             if (@params == null) return values;
 
             foreach (string param in @params)
             {
-                string[] parts = param.Split(new []{ ':' }, 2);
+                //string[] parts = param.Split(new []{ ':' }, 2);
+                string[] parts = param.Split(new[] { "%3A" }, StringSplitOptions.None); // because ':' has been html-encoded...
                 if (parts[0].Equals("empty"))
                 {
                     values.Add(UserSearchInput.empty());
@@ -105,7 +105,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             return values;
         }
 
-        private void UpdateUsedUsers(User remoteUser, Set<UserSearchInput> newValues, Set<UserSearchInput> prevValues)
+        private void UpdateUsedUsers(User remoteUser, ISet<UserSearchInput> newValues, ISet<UserSearchInput> prevValues)
         {
             Console.Write("shit");
 //            foreach (UserSearchInput input in Sets.difference(newValues, prevValues))

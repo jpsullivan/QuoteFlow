@@ -391,6 +391,7 @@
     <Compile Include="Controllers\Api\AssetVarValueController.cs" />
     <Compile Include="Controllers\Api\OrderByController.cs" />
     <Compile Include="Controllers\Api\QueryRendererEditController.cs" />
+    <Compile Include="Controllers\Api\QueryRendererValueController.cs" />
     <Compile Include="Controllers\Api\QuoteStatusController.cs" />
     <Compile Include="Controllers\AssetController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />

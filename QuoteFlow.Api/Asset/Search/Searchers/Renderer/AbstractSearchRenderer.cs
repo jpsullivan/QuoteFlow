@@ -60,7 +60,13 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Renderer
 
         protected string RenderViewTemplate(string templateName, object templateParams)
         {
-            return string.Empty;
+            // measure how long this takes to render
+            var profiler = MiniProfiler.Current; // it's ok if this is null
+            using (profiler.Step($"Rendering the {templateName} template"))
+            {
+                var result = Engine.Razor.RunCompile(templateName, null, templateParams);
+                return result;
+            }
         }
 
         protected bool IsRelevantForQuery(ClauseNames clauseNames, IQuery query)
