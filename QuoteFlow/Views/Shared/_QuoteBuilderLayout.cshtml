@@ -26,7 +26,7 @@
 
     <section id="content" role="main">
         <div class="navigator-container">
-            <div class="navigator-sidebar" id="navigator_sidebar"></div>
+            <div class="navigator-sidebar" id="navigator-sidebar"></div>
             <div class="navigator-body">
                 <div class="contained-content">
                     <header class="saved-search-selector">
@@ -79,7 +79,8 @@
 <div id="jqlReservedWordz" style="display:none;">@JSON.Serialize(Model.JqlReservedWords)</div>
 @*<div id="criteriaJson" style="display:none;">@JSON.Serialize(Model.CriteriaJqlOutcome.ReturnedValue)</div>*@
 <div id="criteriaJson" style="display:none;">@JSON.SerializeDynamic(Model.CriteriaJqlOutcome.ReturnedValue)</div>
-<div id="systemFiltersJson" style="display:none;"></div>
+<div id="systemFiltersJson" style="display: none;"></div>
+<div id="lineItemsJson" style="display:none;">@JSON.Serialize(Model.LineItems, Options.CamelCase)</div>
 
 <script>
     // set the global application vars

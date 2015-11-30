@@ -207,10 +207,11 @@ namespace QuoteFlow.Controllers
             var visibleFieldNames = new List<string>();
             var visibleFunctionNames = new List<string>();
             var jqlReservedWords = JqlStringSupport.GetJqlReservedWords();
+            var lineItems = QuoteLineItemService.GetLineItems(quote.Id);
 
             var searchOutcome = SearcherService.SearchWithJql(GetCurrentUser(), jql ?? string.Empty, 0);
 
-            var model = new QuoteBuilderViewModel(quote, assetTable.AssetTable, visibleFieldNames, visibleFunctionNames,
+            var model = new QuoteBuilderViewModel(quote, assetTable.AssetTable, lineItems, visibleFieldNames, visibleFunctionNames,
                 jqlReservedWords, searchOutcome, selectedAssetId);
 
             return quote.Name.UrlFriendly() != name ? PageNotFound() : View("ShowBuilder", model);

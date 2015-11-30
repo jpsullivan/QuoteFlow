@@ -30,7 +30,8 @@ var AssetNavController = Marionette.Controller.extend({
             initialSessionSearchState: options.initialSessionSearchState,
             initialSelectedAsset: options.selectedAsset,
             initialAssetIds: options.initialAssetIds,
-            systemFilters: options.systemFilters
+            systemFilters: options.systemFilters,
+            lineItems: options.lineItems
         });
 
         /**
@@ -111,9 +112,12 @@ var AssetNavController = Marionette.Controller.extend({
 
         var criteriaJson = jQuery("#criteriaJson").text();
         var systemFiltersJson = jQuery("#systemFiltersJson").text();
+        var lineItemsJson = jQuery("#lineItemsJson").text();
+
         var initialSearcherCollectionState = _.isEmpty(criteriaJson) ? null : JSON.parse(criteriaJson);
         var initialSessionSearchState = $navigatorContent.data("session-search-state");
         var systemFilters = _.isEmpty(systemFiltersJson) ? null : JSON.parse(systemFiltersJson);
+        var lineItems = _.isEmpty(lineItemsJson) ? null : JSON.parse(lineItemsJson);
 
         var options = _.extend({}, {
             initialAssetTableState: initialAssetTableState,
@@ -121,7 +125,8 @@ var AssetNavController = Marionette.Controller.extend({
             selectedAsset: selectedAsset,
             initialSearcherCollectionState: initialSearcherCollectionState,
             initialSessionSearchState: initialSessionSearchState,
-            systemFilters: systemFilters
+            systemFilters: systemFilters,
+            lineItems: lineItems
         });
 
         return options;

@@ -13,11 +13,7 @@
                 else
                 {
                     <a href="#" title="@manufacturer">
-                        @manufacturer
-                        @if (i < Model["selectedManufacturers"].Count - 1)
-                        {
-                            <text>,</text>
-                        }
+                        @manufacturer@if (i < Model["selectedManufacturers"].Count - 1){<text>,</text>}
                     </a>
                 }
             }

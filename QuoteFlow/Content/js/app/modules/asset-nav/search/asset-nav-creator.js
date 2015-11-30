@@ -15,6 +15,7 @@ var QueryComponent = require('../../../components/query.js');
 var SearchHeaderModule = require('./search-header-module');
 var SearchModule = require('./search-module');
 var SearchPageModule = require('./search-page-module');
+var SidebarModule = require('./../sidebar/sidebar-module');
 
 /**
  *
@@ -36,10 +37,13 @@ var AssetNavCreator = {
             searchPageModule: searchPageModule
         });
 
-//        var filterModule = new JIRA.Issues.FilterModule({
-//            searchPageModule: searchPageModule,
-//            systemFilters: searchPageModule.addOwnerToSystemFilters(options.systemFilters)
-//        });
+       var filterModule = new SidebarModule({
+           searchPageModule: searchPageModule,
+           lineItems: options.lineItems
+       });
+       filterModule.createView({
+           $filterPanelEl: $el.find(".navigator-sidebar")
+       });
 
         var queryModule = QueryComponent().create({
             el: $el.find("form.navigator-search"),
@@ -113,7 +117,7 @@ var AssetNavCreator = {
         // Register Modules
         searchPageModule.registerSearch(searchModule);
         searchPageModule.registerSearchHeaderModule(searchHeaderModule);
-        //searchPageModule.registerFilterModule(filterModule);
+        searchPageModule.registerFilterModule(filterModule);
         searchPageModule.registerQueryModule(queryModule);
 
         searchPageModule.registerFullScreenAsset(fullScreenIssue);

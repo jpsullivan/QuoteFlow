@@ -7,13 +7,14 @@ namespace QuoteFlow.Api.Models.ViewModels.Quotes
 {
     public class QuoteBuilderViewModel
     {
-        public QuoteBuilderViewModel(Quote quote, AssetTable assetTable, 
+        public QuoteBuilderViewModel(Quote quote, AssetTable assetTable, IEnumerable<QuoteLineItem> lineItems,
             IEnumerable<string> visibleFieldNames, IEnumerable<string> visibleFunctionNames, 
             IEnumerable<string> jqlReservedWords, IServiceOutcome<QuerySearchResults> criteriaJqlOutcome, 
             int? selectedAssetId)
         {
             Quote = quote;
             AssetTable = assetTable;
+            LineItems = lineItems;
             VisibleFieldNames = visibleFieldNames;
             VisibleFunctionNames = visibleFunctionNames;
             JqlReservedWords = jqlReservedWords;
@@ -23,6 +24,7 @@ namespace QuoteFlow.Api.Models.ViewModels.Quotes
 
         public Quote Quote { get; set; }
         public AssetTable AssetTable { get; set; }
+        public IEnumerable<QuoteLineItem> LineItems { get; set; } 
 
         public IEnumerable<string> VisibleFieldNames { get; set; }
         public IEnumerable<string> VisibleFunctionNames { get; set; } 
