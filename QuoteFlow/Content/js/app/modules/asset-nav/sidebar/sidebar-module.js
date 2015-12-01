@@ -40,7 +40,7 @@ var QuoteSidebarModule = Brace.Evented.extend({
 
         this.filtersComponent.on("savedFilter", function(filterModel) {
             this._searchPageModule.setSessionSearch(filterModel);
-            this.filtersComponent.highlightFilter(filterModel);
+            this.filtersComponent.highlightLineItem(filterModel);
         }, this);
 
         this._searchPageModule.on('change changeFilterProps', function() {
@@ -87,10 +87,9 @@ var QuoteSidebarModule = Brace.Evented.extend({
             easeOff: (!!jQuery.browser.msie && jQuery.browser.version <= 8) ? 500 : 0
         });
 
-        this.filterPanelView.on("renderOpen", function() {
+        this.filterPanelView.on("render", function() {
             this.filtersComponent.showLineItems(this.filterPanelView.$el.find(".quote-panel-line-items-container"));
             this._markFilterAsActive();
-            this.filterPanelView.adjustFavouriteFiltersHeight();
         }, this);
 
         this.filterPanelView.on("filterSelected", this._onFilterSelected, this);
@@ -102,7 +101,7 @@ var QuoteSidebarModule = Brace.Evented.extend({
 
     _markFilterAsActive: function() {
         var activeLineItem = this.filterPanelModel.get("activeLineItem");
-        this.filtersComponent.highlightFilter(activeLineItem);
+        this.filtersComponent.highlightLineItem(activeLineItem);
     },
 
     _onFilterSelected: function(filterId) {

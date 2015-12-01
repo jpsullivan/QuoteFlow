@@ -1,4 +1,5 @@
-﻿@import "../mixins/border-box";
+@import "mixins/text-overflow";
+@import "../mixins/border-box";
 @import "../mixins/clearfix";
 
 // zero the min-width so the content-contained js has something to work with.
@@ -385,8 +386,7 @@ body {min-width: 0;}
 }
 .quote-pricing {
     border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    margin: 10px 0;
+    margin: 10px 0 3px 0;
 
     h3 {
         margin: 3px 0;
@@ -421,7 +421,7 @@ body {min-width: 0;}
     }
 }
 
-.filter-panel-section {
+.quote-panel-section {
     border-top: 1px solid #ddd;
     padding: 10px 0;
     h4 {
@@ -441,6 +441,13 @@ body {min-width: 0;}
             overflow: hidden;
             text-overflow: ellipsis;
             display: block;
+
+            .filter-link-name {
+                .text-overflow();
+                display: block;
+                margin-top: 3px;
+            }
+
             &:hover,
             &:active,
             &.active,

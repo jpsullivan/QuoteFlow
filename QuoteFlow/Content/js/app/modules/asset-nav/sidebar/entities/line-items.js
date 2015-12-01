@@ -1,6 +1,7 @@
 "use strict";
 
 var _ = require('underscore');
+var $ = require('jquery');
 var Brace = require('backbone-brace');
 var LineItemModel = require('./line-item');
 
@@ -16,7 +17,21 @@ var LineItemsCollection = Brace.Collection.extend({
         this.fetchState = options.fetchState;
     },
 
+    _setFetchState: function(state) {
+        var isNewSate = state !== this.fetchState;
+
+        this.fetchState = state;
+        if (isNewSate) {
+            this.trigger("change:fetchState", this.fetchState);
+        }
+    },
+
     fetch: function () {
+        if (this.length > 0) {
+            this._setFetchState("fetched");
+            return $.Deferred().resolve();
+        }
+
         var promise = Brace.Collection.prototype.fetch.apply(this, arguments);
 
         promise.done(_.bind(function () {

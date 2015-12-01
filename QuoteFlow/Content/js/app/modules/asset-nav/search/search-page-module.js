@@ -11,6 +11,7 @@ var ContentAddedReason = require('../util/reasons');
 var EventTypes = require('../util/types');
 var FullScreenLayout = require('./full-screen-controller');
 var InlineLayer = require('../../../components/layer/inline-layer');
+var LineItemModel = require('../sidebar/entities/line-item');
 var SimpleAsset = require('./asset/simple-asset');
 var SplitScreenLayout = require('../split-view/layout');
 var UrlSerializer = require('../../../util/url-serializer');
@@ -820,13 +821,11 @@ var SearchPageModule = Brace.Model.extend({
 
     applyState: function (state, isReset, options) {
         var filterRequest;
-        //var systemFiltersRequest = this.initSystemFilters();
+        var shouldFetchFilter = state.filter && !(state.filter instanceof LineItemModel);
+        var systemFiltersRequest = this.initSystemFilters();
 
         QuoteFlow.application.execute("assetEditor:abortPending");
         this.createLayout();
-
-        console.warn('todo: remove false constant');
-        var shouldFetchFilter = false;
 
         if (shouldFetchFilter) {
             // Wait for the system filters request to finish as state.filter may refer to a system filter.

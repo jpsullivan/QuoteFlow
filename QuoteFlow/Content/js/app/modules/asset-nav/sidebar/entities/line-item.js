@@ -11,6 +11,10 @@ var LineItemModel = Brace.Model.extend({
         "sku",
         "price",
         "quantity",
+        "assetId",
+        "quoteId",
+        "createdUtc",
+        "asset",
         "jql"
     ],
 

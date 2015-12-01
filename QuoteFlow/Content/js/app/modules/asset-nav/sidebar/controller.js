@@ -3,7 +3,7 @@
 var Marionette = require('backbone.marionette');
 
 var LineItemsCollection = require('./entities/line-items');
-var LineItemsList = require('./line-items-list');
+var LineItemsListController = require('./list/list');
 
 /**
  * This controller is the main entry point for the quote sidebar component.
@@ -34,7 +34,7 @@ var QuoteSidebarController = Marionette.Controller.extend({
     },
 
     _initializeLineItemsController: function() {
-        this.systemFiltersController = new LineItemsList({
+        this.systemFiltersController = new LineItemsListController({
             collection: this.lineItemsCollection,
             className: "system-filters",
             errorMessage: "Failed to retrieve the line items from the server",
@@ -82,7 +82,7 @@ var QuoteSidebarController = Marionette.Controller.extend({
 
         this.listenTo(this.headerController, "favourite", function(filterModel) {
             filterModel = this._addFavouriteFilter(filterModel);
-            this.highlightFilter(filterModel);
+            this.highlightLineItem(filterModel);
             this.trigger("fitlerFavourited", filterModel);
         });
     },
@@ -156,12 +156,8 @@ var QuoteSidebarController = Marionette.Controller.extend({
             },this));
     },
 
-    showSystemFilters: function(el) {
+    showLineItems: function(el) {
         this.systemFiltersController.show(el);
-    },
-
-    showFavouriteFilters: function(el){
-        this.favouriteFiltersController.show(el);
     },
 
     showFilterHeader: function(options) {
@@ -179,9 +175,8 @@ var QuoteSidebarController = Marionette.Controller.extend({
         // });
     },
 
-    highlightFilter: function(filterModel) {
-        this.systemFiltersController.highlightFilter(filterModel);
-        this.favouriteFiltersController.highlightFilter(filterModel);
+    highlightLineItem: function(filterModel) {
+        this.systemFiltersController.highlightLineItem(filterModel);
     },
 
     markFilterHeaderAsInvalid: function() {

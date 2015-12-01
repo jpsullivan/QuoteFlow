@@ -9,8 +9,8 @@ var LineItemView = require('./line-item-view');
  */
 var LineItemsList = Marionette.CompositeView.extend({
     template: JST["quote-builder/sidebar/list"],
-    itemView: LineItemView,
-    itemViewContainer: ".filter-list",
+    childView: LineItemView,
+    childViewContainer: ".filter-list",
 
     onRender: function() {
         this.unwrapTemplate();
@@ -32,7 +32,7 @@ var LineItemsList = Marionette.CompositeView.extend({
      *
      * @param {LineItem} filterModel Model to highlight
      */
-    highlightFilter: function(filterModel) {
+    highlightLineItem: function(filterModel) {
         var itemView = this.children.findByModel(filterModel);
         if (itemView) {
             itemView.highlight();
