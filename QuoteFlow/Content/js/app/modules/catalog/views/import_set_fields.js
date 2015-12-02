@@ -5,10 +5,11 @@ var _ = require('underscore');
 var Brace = require('backbone-brace');
 var Marionette = require('backbone.marionette');
 
+var AuiSelect2 = require('@atlassian/aui/lib/js/aui/select2');
 var PanelTable = require('../../../ui/common/panel-table');
 
 /**
- * 
+ *
  */
 var CatalogImportSetFields = Marionette.ItemView.extend({
     el: '.aui-page-panel-content',
@@ -42,8 +43,8 @@ var CatalogImportSetFields = Marionette.ItemView.extend({
     },
 
     /**
-     * Determines if a random sample of the CSV rows passes the value type check. 
-     * This is of course a dirty check that doesn't guarantee 100% exact results, 
+     * Determines if a random sample of the CSV rows passes the value type check.
+     * This is of course a dirty check that doesn't guarantee 100% exact results,
      * but assuming that the input data isn't total garbage, should yield correct estimations.
      */
     validateHeaderSelection: function(index, valueType) {
@@ -87,7 +88,7 @@ var CatalogImportSetFields = Marionette.ItemView.extend({
     },
 
     /**
-     * 
+     *
      */
     getSampleRowData: function(index) {
         return _.sample(this.rows.pluck(index), 3);

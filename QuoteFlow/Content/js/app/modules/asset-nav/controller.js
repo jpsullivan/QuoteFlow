@@ -19,6 +19,13 @@ var InitUserSparkler = require('./searchers/initUserSparkler');
 var AssetNavController = Marionette.Controller.extend({
 
     builder: function (query) {
+        // a horrible, horrible hack to prevent this from loading
+        // on other pages besides the quote builder
+        var shouldStart = $('#startAssetNav').length > 0;
+        if (!shouldStart) {
+            return;
+        }
+
         // initialize renderable components here (such as sparklers)
         InitSparklers.register();
         InitUserSparkler.register();

@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 var Marionette = require('backbone.marionette');
+var DatePicker = require('@atlassian/aui/lib/js/aui/date-picker');
 var SortableTable = require('@atlassian/aui/lib/js/aui/tables-sortable');
 
 var AsyncFileUploadManager = require('../../../lib/async-file-upload');

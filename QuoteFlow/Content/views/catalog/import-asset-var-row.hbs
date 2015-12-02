@@ -1,20 +1,20 @@
-﻿<td data-assetvar-id="{{assetVar.Id}}">
-    <input type="hidden" name="AssetVarId_{{assetVar.Id}}" value="{{assetVar.Id}}"/>
-    {{assetVar.Name}}
+<td data-assetvar-id="{{assetVar.id}}">
+    <input type="hidden" name="AssetVarId_{{assetVar.id}}" value="{{assetVar.id}}"/>
+    {{assetVar.name}}
 </td>
 <td>
-    <select class="select" id="{{assetVar.Id}}_HeaderId" name="HeaderId_{{assetVar.Id}}">
+    <select class="select" id="{{assetVar.id}}_HeaderId" name="HeaderId_{{assetVar.id}}">
         <option value="-1">Select a header</option>
         {{#each catalogHeaders}}
-        <option value="{{Value}}">{{Text}}</option>
+            <option value="{{Value}}">{{Text}}</option>
         {{/each}}
     </select>
 </td>
 <td>
-    <button aria-owns="assetvar_row_actions_{{assetVar.Id}}" aria-haspopup="true" class="aui-button aui-button-compact aui-button-subtle aui-dropdown2-trigger aui-dropdown2-trigger-arrowless">
+    <button aria-owns="assetvar_row_actions_{{assetVar.id}}" aria-haspopup="true" class="aui-button aui-button-compact aui-button-subtle aui-dropdown2-trigger aui-dropdown2-trigger-arrowless">
         <span class="aui-icon aui-icon-small aui-iconfont-more">More</span>
     </button>
-    <div id="assetvar_row_actions_{{assetVar.Id}}" class="aui-dropdown2 aui-style-default" aria-hidden="false" data-dropdown2-alignment="right">
+    <div id="assetvar_row_actions_{{assetVar.id}}" class="aui-dropdown2 aui-style-default" data-dropdown2-alignment="right">
         <ul class="aui-list-truncate">
             <li>
                 <a href="#" class="active show-preview">

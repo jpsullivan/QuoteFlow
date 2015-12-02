@@ -1,71 +1,85 @@
 ﻿"use strict";
 
 var _ = require('underscore');
-
+var $ = require('jquery');
 var Brace = require('backbone-brace');
 var Marionette = require('backbone.marionette');
 
+var AuiSelect2 = require('@atlassian/aui/lib/js/aui/select2');
+var Dialog2 = require('@atlassian/aui/lib/js/aui/dialog2');
+var Tooltip = require('@atlassian/aui/lib/js/aui/tooltip');
+
 var AssetVarCollection = require('../../../collections/asset_vars');
 var AssetVarModel = require('../../../models/asset_var');
-
 var ImportAssetVarRow = require('./import_asset_var_row');
 var PanelTable = require('../../../ui/common/panel-table');
 var SelectAssetVarModal = require('./select_asset_var_modal');
 
 /**
- *
+ * [extend description]
+ * @extends Marionette.ItemView
  */
 var ImportSetOptionalFields = Marionette.ItemView.extend({
     el: '.aui-page-panel-content',
 
-    options: {
-        headers: null,
-        rawRows: null
+    ui: {
+        newAssetVarFieldButton: "#new_asset_var_field",
+        fieldGroupDropdown: ".field-group select",
+        tooltip: ".tooltip"
     },
 
     events: {
-        "click #new_asset_var_field": "showAssetVarFieldSelectionModal",
-        "change .field-group select": "changeHeader",
-        "click .tooltip": "showPreview"
+        "click @ui.newAssetVarFieldButton": "showAssetVarFieldSelectionModal",
+        "change @ui.fieldGroupDropdown": "changeHeader",
+        "click @ui.tooltip": "showPreview"
     },
 
-    presenter: function() {
-        return _.extend(this.defaultPresenter(), {});
-    },
-
+    /**
+     * [function description]
+     * @param  {[type]} options.headers [description]
+     * @param  {[type]} options.rawRows [description]
+     * @return {[type]}         [description]
+     */
     initialize: function(options) {
-        this.options = options || {};
+        this.headers = options.headers;
 
         _.bindAll(this, 'addAssetVarRow');
 
         this.rows = new Brace.Collection().reset(options.rawRows);
 
         this.assetVarFieldsList = this.$('table#asset_var_fields tbody');
-        this.assetVarSelectionModalContainer = this.$('#asset_var_selection_container');
+        this._initDialogs();
 
         AJS.$(".tooltip").tooltip();
         AJS.$('select').auiSelect2();
     },
 
-    getAssetVarSelectionModalView: function() {
-        // todo: dispose the existing modal object if exists
-        return new SelectAssetVarModal({
-            okFunc: this.addAssetVarRow
+    _initDialogs: function () {
+        var selectAssetDialogView = new SelectAssetVarModal({
+            el: "#asset-var-selection-dialog",
+            dialogSubmitFn: _.bind(this.addAssetVarRow, this)
         });
+        this.selectAssetDialog = AJS.dialog2("#asset-var-selection-dialog");
+        this.selectAssetDialog.on("show", _.bind(function () {
+            selectAssetDialogView.render();
+        }, this));
+        this.listenTo(selectAssetDialogView, "cancel-requested", _.bind(function () {
+            // required to wrap this in a dumb bind fn or else it never hides
+            this.selectAssetDialog.hide();
+        }, this));
     },
 
     showAssetVarFieldSelectionModal: function() {
-        // forcefull render the select asset var modal to reset form fields
-        this.assetVarSelectionModal = this.getAssetVarSelectionModalView();
-        this.$('#asset_var_selection_container').html(this.assetVarSelectionModal.render().el);
-        this.assetVarSelectionModal.showModal();
+        return this.selectAssetDialog.show();
     },
 
     changeHeader: function(e) {
         var el = $(e.currentTarget);
         var index = el.prop('selectedIndex');
 
-        if (index === 0) return;
+        if (index === 0) {
+            return;
+        }
 
         var valueType = el.parent('.field-group').data('value-type');
 
@@ -73,11 +87,13 @@ var ImportSetOptionalFields = Marionette.ItemView.extend({
     },
 
     /**
-     * Determines if a random sample of the CSV rows passes the value type check. 
-     * This is of course a dirty check that doesn't guarantee 100% exact results, 
+     * Determines if a random sample of the CSV rows passes the value type check.
+     * This is of course a dirty check that doesn't guarantee 100% exact results,
      * but assuming that the input data isn't total garbage, should yield correct estimations.
      */
-    validateHeaderSelection: function(index, valueType) {},
+    validateHeaderSelection: function(index, valueType) {
+
+    },
 
     /**
      * Gathers a random collection of data from the selected
@@ -116,7 +132,7 @@ var ImportSetOptionalFields = Marionette.ItemView.extend({
     },
 
     /**
-     * 
+     *
      */
     getSampleRowData: function(index) {
         return _.sample(this.rows.pluck(index), 3);
@@ -131,7 +147,7 @@ var ImportSetOptionalFields = Marionette.ItemView.extend({
         }
 
         var view = new ImportAssetVarRow({
-            headers: this.options.headers,
+            headers: this.headers,
             assetVar: assetVar
         });
 

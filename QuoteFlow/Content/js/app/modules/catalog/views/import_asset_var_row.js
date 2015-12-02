@@ -2,35 +2,33 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-var Backbone = require('backbone');
-Backbone.$ = $;
+var Marionette = require('backbone.marionette');
+var AuiSelect2 = require('@atlassian/aui/lib/js/aui/select2');
 
-var BaseView = require('../../../view');
+var PanelTable = require('../../../ui/common/panel-table');
 
 /**
- *
+ * [extend description]
+ * @extends Marionette.ItemView
  */
-var ImportAssetVarRow = BaseView.extend({
+var ImportAssetVarRow = Marionette.ItemView.extend({
     tagName: 'tr',
 
-    templateName: 'catalog/import-asset-var-row',
+    template: JST['catalog/import-asset-var-row'],
 
-    options: {
-        headers: null,
-        rawRows: null,
-        assetVar: null
+    initialize: function (options) {
+        this.headers = options.headers;
+        this.assetVar = options.assetVar;
     },
 
-    events: {},
-
-    presenter: function() {
-        return _.extend(this.defaultPresenter(), {
-            assetVar: this.options.assetVar.toJSON(),
-            catalogHeaders: this.options.headers
-        });
+    serializeData: function () {
+        return {
+            assetVar: this.assetVar.toJSON(),
+            catalogHeaders: this.headers
+        };
     },
 
-    postRenderTemplate: function() {
+    onRender: function() {
         _.defer(function() {
             AJS.$('select').auiSelect2();
         });
@@ -40,7 +38,9 @@ var ImportAssetVarRow = BaseView.extend({
         var el = $(e.currentTarget);
         var index = el.prop('selectedIndex');
 
-        if (index === 0) return;
+        if (index === 0) {
+            return;
+        }
 
         var valueType = el.parent('.field-group').data('value-type');
 
@@ -48,14 +48,13 @@ var ImportAssetVarRow = BaseView.extend({
     },
 
     /**
-     * Determines if a random sample of the CSV rows
-     * passes the value type check. This is of course
-     * a dirty check that doesn't guarantee 100% exact
-     * results, but assuming that the input data isn't 
-     * total garbage, should yield correct estimations.
+     * Determines if a random sample of the CSV rows passes the value type check.
+     * This is of course a dirty check that doesn't guarantee 100% exact
+     * results, but assuming that the input data isn't total garbage, should
+     * yield correct estimations.
      */
     validateHeaderSelection: function(index, valueType) {
-
+        // ahem...
     },
 
     /**
@@ -84,7 +83,7 @@ var ImportAssetVarRow = BaseView.extend({
 
         index = index - 1; // -1 to compensate for the default select opt
 
-        var panelView = new QuoteFlow.UI.Common.PanelTable({
+        var panelView = new PanelTable({
             leftHeader: "Asset Key",
             rightHeader: "Sample Values",
             rowKey: panelKey,
@@ -95,7 +94,7 @@ var ImportAssetVarRow = BaseView.extend({
     },
 
     /**
-     * 
+     *
      */
     getSampleRowData: function(index) {
         return _.sample(this.rows.pluck(index), 3);
@@ -105,7 +104,7 @@ var ImportAssetVarRow = BaseView.extend({
      * Removes the asset var row from the table. Disposes the view.
      */
     removeRow: function() {
-        this.remove();
+        this.destroy();
     }
 });
 
