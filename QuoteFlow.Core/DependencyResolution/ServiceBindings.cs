@@ -178,6 +178,7 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<CostValidator>().ToSelf().InRequestScope();
             Bind<CostClauseQueryFactory>().ToSelf().InRequestScope();
             Bind<CostSearchHandlerFactory>().ToSelf().InRequestScope();
+            Bind<CostSystemField>().ToSelf().InRequestScope();
 
             #endregion
 

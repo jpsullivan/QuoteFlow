@@ -1,18 +1,24 @@
-﻿@{
-    IDictionary<string, string> model = Model;
+﻿@using QuoteFlow.Api.Asset.Transport
+@model IDictionary<string, object>
+@{
+    FieldValuesHolder fieldValuesHolder = (FieldValuesHolder) Model["fieldValuesHolder"];
+    string searcherId = (string) Model["searcherId"];
+    string searcherNameKey = (string) Model["searcherNameKey"];
+    bool minGreaterThanMax = (bool) Model["minGreaterThanMax"];
+    string minField = (string) Model["minField"];
+    string maxField = (string)Model["maxField"];
 }
-
 <div class="field-group aui-field-cost">
-    @foreach (var something in model)
+    @foreach (var something in Model)
     {
         <span>@something.Key, @something.Value</span>
     }
     <div class="workratio-min">
-        <label for="searcher-${minField}">${i18n.getText('navigator.filter.workratio.min')}</label>
-        <input class="text" id="searcher-${minField}" name="${minField}" type="text" value="$!fieldValuesHolder.getEscaped($minField)"/>
+        <label for="searcher-@minField">Min</label>
+        <input class="text" id="searcher-@minField" name="@minField" type="text" value="@minField"/>
     </div>
     <div class="workratio-max">
-        <label for="searcher-${maxField}">${i18n.getText('navigator.filter.workratio.max')}</label>
-        <input class="text" id="searcher-${maxField}" name="${maxField}" type="text" value="$!fieldValuesHolder.getEscaped($maxField)"/>
+        <label for="searcher-@maxField">Max</label>
+        <input class="text" id="searcher-@maxField" name="@maxField" type="text" value="@maxField"/>
     </div>
 </div>

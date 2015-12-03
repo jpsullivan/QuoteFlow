@@ -1,11 +1,11 @@
-﻿using System;
-using QuoteFlow.Api.Jql;
-using QuoteFlow.Api.Jql.Context;
+﻿using QuoteFlow.Api.Asset.Fields;
+using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Jql.Permission;
-using QuoteFlow.Api.Jql.Query;
-using QuoteFlow.Api.Jql.Validator;
-using QuoteFlow.Api.Jql.Values;
+using QuoteFlow.Core.Asset.Search.Searchers;
+using QuoteFlow.Core.Jql.Context;
 using QuoteFlow.Core.Jql.Permission;
+using QuoteFlow.Core.Jql.Query;
+using QuoteFlow.Core.Jql.Validator;
 
 namespace QuoteFlow.Core.Asset.Search.Handlers
 {
@@ -14,8 +14,30 @@ namespace QuoteFlow.Core.Asset.Search.Handlers
     /// </summary>
     public class CostSearchHandlerFactory : SimpleSearchHandlerFactory
     {
-        public CostSearchHandlerFactory(IClauseInformation information, Type searcherClass, IClauseQueryFactory queryFactory, IClauseValidator clauseValidator, FieldClausePermissionChecker.IFactory clausePermissionFactory, IClauseContextFactory clauseContextFactory, IClauseValuesGenerator clauseValuesGenerator, IClauseSanitizer sanitizer = null) : base(information, searcherClass, queryFactory, clauseValidator, clausePermissionFactory, clauseContextFactory, clauseValuesGenerator, sanitizer)
+        public CostSearchHandlerFactory(CostClauseQueryFactory costClauseQueryFactory, CostValidator costValidator, FieldClausePermissionChecker.IFactory clausePermissionFactory)
+            : base(SystemSearchConstants.ForCost(), typeof(CostSearcher), costClauseQueryFactory, costValidator, new CostClausePermissionCheckerFactory(clausePermissionFactory),
+                new SimpleClauseContextFactory(), null)
         {
+        }
+
+        private class CostClausePermissionCheckerFactory : FieldClausePermissionChecker.IFactory
+        {
+            private readonly FieldClausePermissionChecker.IFactory _clausePermissionFactory;
+
+            public CostClausePermissionCheckerFactory(FieldClausePermissionChecker.IFactory clausePermissionFactory)
+            {
+                _clausePermissionFactory = clausePermissionFactory;
+            }
+
+            public IClausePermissionChecker CreatePermissionChecker(IField field)
+            {
+                return null;
+            }
+
+            public IClausePermissionChecker CreatePermissionChecker(string fieldId)
+            {
+                return null;
+            }
         }
     }
 }

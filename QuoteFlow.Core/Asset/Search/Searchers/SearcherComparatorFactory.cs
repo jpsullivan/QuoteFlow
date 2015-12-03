@@ -21,7 +21,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers
             mapBuilder.Add(SearcherGroupType.Text, typeof(TextQuerySearcher), typeof(SummaryQuerySearcher));
             mapBuilder.Add(SearcherGroupType.Context, typeof(CatalogSearcher), typeof(ManufacturerSearcher));
             mapBuilder.Add(SearcherGroupType.Catalog);
-            mapBuilder.Add(SearcherGroupType.Asset);
+            mapBuilder.Add(SearcherGroupType.Asset, typeof(CostSearcher));
             mapBuilder.Add(SearcherGroupType.Date);
 
 //			mapBuilder.Add(SearcherGroupType.Text, typeof(TextQuerySearcher), typeof(SummaryQuerySearcher), typeof(DescriptionQuerySearcher), typeof(EnvironmentQuerySearcher), typeof(CommentQuerySearcher));

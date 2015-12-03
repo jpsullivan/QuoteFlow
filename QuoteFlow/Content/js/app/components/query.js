@@ -9,6 +9,7 @@ var QueryComponent = function () {
     var clauses = {
         catalog: "Catalog",
         manufacturer: "Manufacturer",
+        cost: "Cost",
         creator: "Creator",
         description: "Description",
         created: "Created Date",
@@ -16,7 +17,7 @@ var QueryComponent = function () {
     };
 
     return {
-        DEFAULT_CLAUSES: ["catalog", "manufacturer", "creator"],
+        DEFAULT_CLAUSES: ["catalog", "manufacturer", "cost", "creator"],
 
         create: function (options) {
 

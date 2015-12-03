@@ -258,10 +258,12 @@
     <Compile Include="Asset\Search\Util\SearchSortUtil.cs" />
     <Compile Include="Asset\Statistics\AbstractConstantStatisticsMapper.cs" />
     <Compile Include="Asset\Statistics\CreatorStatisticsMapper.cs" />
+    <Compile Include="Asset\Statistics\IntegerFieldStatisticsMapper.cs" />
     <Compile Include="Asset\Statistics\IStatisticsMapper.cs" />
     <Compile Include="Asset\Statistics\ManufacturerStatisticsMapper.cs" />
     <Compile Include="Asset\Statistics\TextFieldSorter.cs" />
     <Compile Include="Asset\Statistics\UserStatisticsMapper.cs" />
+    <Compile Include="Asset\Statistics\Util\IntegerComparer.cs" />
     <Compile Include="Asset\Transport\ActionParams.cs" />
     <Compile Include="Asset\Transport\FieldValuesHolder.cs" />
     <Compile Include="Asset\Transport\IActionParams.cs" />

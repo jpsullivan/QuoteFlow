@@ -90,8 +90,19 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         {
             if (fieldValuesHolder == null) throw new ArgumentNullException(nameof(fieldValuesHolder));
 
-            var minValue = (string) fieldValuesHolder[_config.Min];
-            var maxValue = (string) fieldValuesHolder[_config.Max];
+            var minValue = string.Empty;
+            var maxValue = string.Empty;
+
+            object minResult;
+            if (fieldValuesHolder.TryGetValue(_config.Min, out minResult))
+            {
+                minValue = (string) minResult;
+            }
+            object maxResult;
+            if (fieldValuesHolder.TryGetValue(_config.Max, out maxResult))
+            {
+                maxValue = (string) maxResult;
+            }
 
             var builder = JqlQueryBuilder.NewClauseBuilder();
             IClause result;

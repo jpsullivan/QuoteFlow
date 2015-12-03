@@ -15,12 +15,14 @@ namespace QuoteFlow.Core.Asset.Fields
         private readonly List<ISearchableField> _searchableFields = new List<ISearchableField>(); 
 
         public FieldManager(CatalogSystemField catalogSystemField, SummarySystemField summarySystemField,
-            ManufacturerSystemField manufacturerSystemField, CreatorSystemField creatorSystemField)
+            ManufacturerSystemField manufacturerSystemField, CreatorSystemField creatorSystemField,
+            CostSystemField costSystemField)
         {
             _fields.Add(catalogSystemField.Id, catalogSystemField);
             _fields.Add(summarySystemField.Id, summarySystemField);
             _fields.Add(manufacturerSystemField.Id, manufacturerSystemField);
             _fields.Add(creatorSystemField.Id, creatorSystemField);
+            _fields.Add(costSystemField.Id, costSystemField);
 
             // special case: CatalogSystemField is not orderable, even though it implements IOrderableField
             foreach (var field in _fields)

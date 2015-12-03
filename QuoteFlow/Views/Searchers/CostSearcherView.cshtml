@@ -1,1 +1,37 @@
-﻿
+﻿@using QuoteFlow.Api.Asset.Transport
+@model IDictionary<string, object>
+@{
+    FieldValuesHolder fieldValuesHolder = (FieldValuesHolder)Model["fieldValuesHolder"];
+    string searcherId = (string)Model["searcherId"];
+    string searcherNameKey = (string)Model["searcherNameKey"];
+    bool minGreaterThanMax = (bool)Model["minGreaterThanMax"];
+    string minField = (string)Model["minField"];
+    string maxField = (string)Model["maxField"];
+
+    string minInvalidSel = string.Empty;
+    string maxInvalidSel = string.Empty;
+
+    if (minGreaterThanMax)
+    {
+        minInvalidSel = "invalid_sel";
+        maxInvalidSel = "invalid_sel";
+    }
+}
+
+@foreach (var something in Model)
+{
+    <span>@something.Key, @something.Value</span><br/>
+}
+
+@if (fieldValuesHolder.ContainsKey(minField))
+{
+    <div class="searcherValue">
+        <span id="fieldcost:min" class="fieldValue ">$@Convert.ToString(fieldValuesHolder[minField])</span>
+    </div>
+}
+@if (fieldValuesHolder.ContainsKey(maxField))
+{
+    <div class="searcherValue">
+        <span id="fieldcost:max" class="fieldValue ">$@Convert.ToString(fieldValuesHolder[maxField])</span>
+    </div>
+}

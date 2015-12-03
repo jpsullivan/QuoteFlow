@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using QuoteFlow.Api.Asset.Search;
 using QuoteFlow.Api.Asset.Search.Constants;
 using QuoteFlow.Api.Asset.Search.Searchers.Renderer;
@@ -47,6 +48,32 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
         public override bool IsRelevantForQuery(User user, IQuery query)
         {
             return IsRelevantForQuery(_constants.JqlClauseNames, query);
+        }
+
+        protected override IDictionary<string, object> GetDisplayParams(User searcher, ISearchContext searchContext,
+            IFieldValuesHolder fieldValuesHolder, IDictionary<string, object> displayParameters)
+        {
+            var templateParameters = base.GetDisplayParams(searcher, searchContext, fieldValuesHolder, displayParameters);
+            templateParameters.Add("minField", _config.Min);
+            templateParameters.Add("maxField", _config.Max);
+
+            // special case for when min > max to highlight both values as red
+            try
+            {
+                int min = Convert.ToInt32((string) fieldValuesHolder[_config.Min]);
+                int max = Convert.ToInt32((string) fieldValuesHolder[_config.Max]);
+
+                if (min > max)
+                {
+                    templateParameters.Add("minGreaterThanMax", true);
+                }
+            }
+            catch (Exception)
+            {
+                // swallow the exception
+            }
+
+            return templateParameters;
         }
     }
 }

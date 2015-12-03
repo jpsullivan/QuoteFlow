@@ -187,6 +187,7 @@
     <Compile Include="Asset\Fields\AbstractOrderableNavigableField.cs" />
     <Compile Include="Asset\Fields\AbstractTextSystemField.cs" />
     <Compile Include="Asset\Fields\CatalogSystemField.cs" />
+    <Compile Include="Asset\Fields\CostSystemField.cs" />
     <Compile Include="Asset\Fields\CreatorSystemField.cs" />
     <Compile Include="Asset\Fields\FieldManager.cs" />
     <Compile Include="Asset\Fields\ManufacturerSystemField.cs" />
