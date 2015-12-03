@@ -56,6 +56,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
             var templateParameters = base.GetDisplayParams(searcher, searchContext, fieldValuesHolder, displayParameters);
             templateParameters.Add("minField", _config.Min);
             templateParameters.Add("maxField", _config.Max);
+            templateParameters.Add("minGreaterThanMax", false);
 
             // special case for when min > max to highlight both values as red
             try
@@ -65,7 +66,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Renderer
 
                 if (min > max)
                 {
-                    templateParameters.Add("minGreaterThanMax", true);
+                    templateParameters["minGreaterThanMax"] =  true;
                 }
             }
             catch (Exception)

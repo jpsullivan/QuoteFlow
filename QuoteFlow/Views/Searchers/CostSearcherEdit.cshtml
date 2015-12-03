@@ -9,16 +9,14 @@
     string maxField = (string)Model["maxField"];
 }
 <div class="field-group aui-field-cost">
-    @foreach (var something in Model)
-    {
-        <span>@something.Key, @something.Value</span>
-    }
-    <div class="workratio-min">
+    <label>&nbsp;</label>
+    <div class="cost-min">
         <label for="searcher-@minField">Min</label>
-        <input class="text" id="searcher-@minField" name="@minField" type="text" value="@minField"/>
+        <input class="text" id="searcher-@minField" name="@minField" type="text" value=""/>
     </div>
-    <div class="workratio-max">
+    <div class="cost-max">
         <label for="searcher-@maxField">Max</label>
-        <input class="text" id="searcher-@maxField" name="@maxField" type="text" value="@maxField"/>
+        <input class="text" id="searcher-@maxField" name="@maxField" type="text" value=""/>
     </div>
+    <div class="description">Enter a minimum, maximum or range limit</div>
 </div>

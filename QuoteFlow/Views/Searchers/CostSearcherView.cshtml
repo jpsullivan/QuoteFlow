@@ -8,6 +8,20 @@
     string minField = (string)Model["minField"];
     string maxField = (string)Model["maxField"];
 
+    string minValue = string.Empty;
+    object unresolvedMinValue;
+    if (fieldValuesHolder.ContainsKey(minField) && fieldValuesHolder.TryGetValue(minField, out unresolvedMinValue))
+    {
+        minValue = (string) unresolvedMinValue;
+    }
+
+    string maxValue = string.Empty;
+    object unresolvedMaxValue;
+    if (fieldValuesHolder.ContainsKey(maxField) && fieldValuesHolder.TryGetValue(maxField, out unresolvedMaxValue))
+    {
+        maxValue = (string) unresolvedMaxValue;
+    }
+
     string minInvalidSel = string.Empty;
     string maxInvalidSel = string.Empty;
 
@@ -18,20 +32,15 @@
     }
 }
 
-@foreach (var something in Model)
-{
-    <span>@something.Key, @something.Value</span><br/>
-}
-
 @if (fieldValuesHolder.ContainsKey(minField))
 {
     <div class="searcherValue">
-        <span id="fieldcost:min" class="fieldValue ">$@Convert.ToString(fieldValuesHolder[minField])</span>
+        <span id="fieldcost:min" class="fieldValue ">$@minValue</span>
     </div>
 }
 @if (fieldValuesHolder.ContainsKey(maxField))
 {
     <div class="searcherValue">
-        <span id="fieldcost:max" class="fieldValue ">$@Convert.ToString(fieldValuesHolder[maxField])</span>
+        <span id="fieldcost:max" class="fieldValue ">$@maxValue</span>
     </div>
 }
