@@ -73,6 +73,16 @@ namespace QuoteFlow.Api.Asset.Search.Constants
 			return Creator;
 		}
 
+        private static readonly SimpleFieldSearchConstants Cost =
+            new SimpleFieldSearchConstants(DocumentConstants.AssetCost, AssetFieldConstants.Cost,
+                AssetFieldConstants.Cost, AssetFieldConstants.Cost, AssetFieldConstants.Cost,
+                OperatorClasses.EqualityAndRelationalWithEmpty, QuoteFlowDataTypes.Number);
+
+        public static SimpleFieldSearchConstants ForCost()
+        {
+            return Cost;
+        }
+
 //		public static SavedFilterSearchConstants ForSavedFilter()
 //		{
 //			return SavedFilterSearchConstants.Instance;

@@ -414,6 +414,7 @@
     <Compile Include="Jql\Query\QueryCreationContext.cs" />
     <Compile Include="Jql\Query\QueryFactoryResult.cs" />
     <Compile Include="Jql\Query\QuerySearchResults.cs" />
+    <Compile Include="Jql\Query\RangeQueryFactory.cs" />
     <Compile Include="Jql\Query\Searcher.cs" />
     <Compile Include="Jql\Query\Searchers.cs" />
     <Compile Include="Jql\Query\TermQueryFactory.cs" />

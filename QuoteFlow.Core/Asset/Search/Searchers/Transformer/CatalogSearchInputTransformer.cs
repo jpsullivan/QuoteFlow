@@ -12,6 +12,7 @@ using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Operand;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Api.Util;
 using QuoteFlow.Core.Jql.Resolver;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
@@ -42,7 +43,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             fieldValuesHolder.Add(url, @params == null ? null : new List<string>(@params));
         }
 
-        public void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
+        public void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IErrorCollection errors)
         {
             // We currently dont do anything
         }

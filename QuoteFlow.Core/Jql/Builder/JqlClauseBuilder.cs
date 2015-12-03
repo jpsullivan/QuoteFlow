@@ -170,6 +170,11 @@ namespace QuoteFlow.Core.Jql.Builder
             return new ConditionBuilder(SystemSearchConstants.ForCatalog().JqlClauseNames.PrimaryName, this);
         }
 
+        public IConditionBuilder Cost()
+        {
+            return new ConditionBuilder(SystemSearchConstants.ForCost().JqlClauseNames.PrimaryName, this);
+        }
+
         public IJqlClauseBuilder CreatedAfter(DateTime startDate)
         {
             return AddDateCondition(SystemSearchConstants.ForCreatedDate().JqlClauseNames.PrimaryName, Operator.GREATER_THAN_EQUALS, startDate);

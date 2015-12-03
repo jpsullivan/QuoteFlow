@@ -257,6 +257,13 @@ namespace QuoteFlow.Core.Jql.Builder
         IConditionBuilder Catalog();
 
         /// <summary>
+        /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL 
+        /// condition for an asset's cost.
+        /// </summary>
+        /// <returns>A reference to a IConditionBuilder for asset costs</returns>
+        IConditionBuilder Cost();
+
+        /// <summary>
         /// Add a condition to the query that finds the issues that were created after the passed date. This essentially
         /// adds the query {@code created &gt;= startDate} to the query being built.
         /// </summary>

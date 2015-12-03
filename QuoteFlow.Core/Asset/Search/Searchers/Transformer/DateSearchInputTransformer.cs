@@ -12,13 +12,12 @@ using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Util;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Util;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
     /// <summary>
     /// A SearchInputTransformer for Dates.
-    /// 
-    /// @since v4.0
     /// </summary>
     public class DateSearchInputTransformer : ISearchInputTransformer
     {
@@ -55,7 +54,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             fieldValuesHolder[dateSearcherConfig.NextField] = actionParams.GetFirstValueForKey(dateSearcherConfig.NextField);
         }
 
-        public virtual void ValidateParams(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
+        public virtual void ValidateParams(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IErrorCollection errors)
         {
             if (fieldValuesHolder == null)
             {

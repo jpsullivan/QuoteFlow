@@ -10,6 +10,7 @@ using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Resolver;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Util;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
@@ -48,7 +49,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             fieldValuesHolder[urlParameterName] = actionParams.GetValuesForKey(urlParameterName);
         }
 
-        public virtual void ValidateParams(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
+        public virtual void ValidateParams(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IErrorCollection errors)
         {
             // Currently doesn't do nudda (data entered through select lists)
         }

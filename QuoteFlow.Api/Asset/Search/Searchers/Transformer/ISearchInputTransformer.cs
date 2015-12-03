@@ -2,6 +2,7 @@
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Models;
+using QuoteFlow.Api.Util;
 
 namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
 {
@@ -33,7 +34,7 @@ namespace QuoteFlow.Api.Asset.Search.Searchers.Transformer
         /// <param name="searchContext">The context of the search (i.e. projects and issue types selected). </param>
         /// <param name="fieldValuesHolder"> contains values populated by the populate methods of this input transformer. </param>
         /// <param name="errors"> the ErrorCollection that contains the messages we want to display to the users. </param>
-        void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder);
+        void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IErrorCollection errors);
 
         /// <summary>
         /// This method transforms any query information contained in the query that is relevant to this

@@ -286,7 +286,7 @@ namespace QuoteFlow.Core.Services
                             searchInputTransformer.PopulateFromQuery(user, fieldParams, new Query(clause.Clause), searchContext);
                         }
 
-                        searchInputTransformer.ValidateParams(user, searchContext, fieldParams);
+                        searchInputTransformer.ValidateParams(user, searchContext, fieldParams, null);
 
                         SearchContextWithFieldValues searchContextWithFieldValues;
                         

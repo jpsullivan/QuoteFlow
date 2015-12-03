@@ -1080,6 +1080,8 @@
     <Content Include="Views\Searchers\ManufacturerSearcherView.cshtml" />
     <Content Include="Views\Searchers\UserSearcherEdit.cshtml" />
     <Content Include="Views\Searchers\UserSearcherView.cshtml" />
+    <Content Include="Views\Searchers\CostSearcherEdit.cshtml" />
+    <Content Include="Views\Searchers\CostSearcherView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

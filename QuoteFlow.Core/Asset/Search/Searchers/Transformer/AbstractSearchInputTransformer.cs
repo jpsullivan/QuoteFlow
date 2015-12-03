@@ -87,7 +87,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             return null;
         }
 
-        public void ValidateParams(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
+        public void ValidateParams(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IErrorCollection errors)
         {
             string query = (string)fieldValuesHolder[Id];
 
@@ -95,9 +95,9 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             {
 
                 IMessageSet validationResult = _textQueryValidator.Validate(CreateQueryParser(), query, Id, null, true);
-                foreach (String errorMessage in validationResult.ErrorMessages)
+                foreach (string errorMessage in validationResult.ErrorMessages)
                 {
-                    //errors.AddError(id, errorMessage);
+                    errors.AddError(Id, errorMessage);
                 }
             }
         }

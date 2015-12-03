@@ -6,6 +6,7 @@ namespace QuoteFlow.Api.Asset
     {
         public const string Catalog = "catalog";
         public const string FORM_TOKEN = "formToken";
+        public const string Cost = "cost";
         public const string Creator = "creator";
         public const string Comment = "comment";
         public const string Description = "description";
@@ -24,6 +25,7 @@ namespace QuoteFlow.Api.Asset
             result[Created] = "Created";
             result[Summary] = "Summary";
             result[Sku] = "Sku";
+            result[Cost] = "Cost";
             FieldIdsToLabels = new Dictionary<string, string>(result);
         }
 

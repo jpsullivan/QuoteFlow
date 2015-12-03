@@ -14,6 +14,7 @@ using QuoteFlow.Api.Jql.Query.Clause;
 using QuoteFlow.Api.Jql.Query.Operand;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Services;
+using QuoteFlow.Api.Util;
 
 namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 {
@@ -124,7 +125,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
 //            }
         }
 
-        public override void ValidateParams(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
+        public override void ValidateParams(User user, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IErrorCollection errors)
         {
             // nothing to do here
         }

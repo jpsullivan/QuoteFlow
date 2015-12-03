@@ -78,25 +78,29 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             fieldValuesHolder.Add(searchConstants.FieldUrlParameter, actionParams.GetFirstValueForKey(searchConstants.FieldUrlParameter));
         }
 
-        public virtual void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder)
+        public virtual void ValidateParams(User searcher, ISearchContext searchContext, IFieldValuesHolder fieldValuesHolder, IErrorCollection errors)
         {
             string user = (string)fieldValuesHolder[searchConstants.FieldUrlParameter];
-            if (user.HasValue())
+            if (!user.HasValue())
             {
-                string userTypeSelectList = (string)fieldValuesHolder[searchConstants.SelectUrlParameter];
-                if (searchConstants.SpecificUserSelectFlag.Equals(userTypeSelectList))
+                return;
+            }
+
+            string userTypeSelectList = (string)fieldValuesHolder[searchConstants.SelectUrlParameter];
+            if (searchConstants.SpecificUserSelectFlag.Equals(userTypeSelectList))
+            {
+                if (!UserExists(user))
                 {
-                    if (!UserExists(user))
-                    {
-                        //errors.Errors.Add(string.Format("admin.errors.could.not.find.username: {0}", user));
-                    }
+                    errors.AddError(searchConstants.FieldUrlParameter,
+                        $"admin.errors.could.not.find.username: {user}");
                 }
-                else if (searchConstants.SpecificGroupSelectFlag.Equals(userTypeSelectList))
+            }
+            else if (searchConstants.SpecificGroupSelectFlag.Equals(userTypeSelectList))
+            {
+                if (!GroupExists(user))
                 {
-                    if (!GroupExists(user))
-                    {
-                        //errors.Errors.Add(string.Format("admin.errors.abstractusersearcher.could.not.find.group: {0}", user));
-                    }
+                    errors.AddError(searchConstants.FieldUrlParameter,
+                        $"admin.errors.abstractusersearcher.could.not.find.group: {user}");
                 }
             }
         }
@@ -227,7 +231,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             return null;
         }
 
-        protected internal virtual string GetClauseName(User user)
+        protected virtual string GetClauseName(User user)
         {
             if (null == customField)
             {
@@ -236,7 +240,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             return customFieldInputHelper.GetUniqueClauseName(user, searchConstants.JqlClauseNames.PrimaryName, customField.Name);
         }
 
-        protected internal virtual IEnumerable<ITerminalClause> GetMatchingClauses(IEnumerable<string> jqlClauseNames, IQuery query)
+        protected virtual IEnumerable<ITerminalClause> GetMatchingClauses(IEnumerable<string> jqlClauseNames, IQuery query)
         {
             var clauseVisitor = new NamedTerminalClauseCollectingVisitor(jqlClauseNames);
             if (query.WhereClause != null)
@@ -252,13 +256,13 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             return user != null;
         }
 
-        internal virtual bool GroupExists(string user)
+        protected virtual bool GroupExists(string user)
         {
             return false;
             //return groupManager.groupExists(user);
         }
 
-        internal virtual bool UserExists(string user)
+        protected virtual bool UserExists(string user)
         {
             return userService.GetUser(user) != null;
         }

@@ -174,6 +174,11 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<CreatorSearchHandlerFactory>().ToSelf().InRequestScope();
             Bind<CreatorSearcher>().ToSelf().InRequestScope();
 
+            // cost searching
+            Bind<CostValidator>().ToSelf().InRequestScope();
+            Bind<CostClauseQueryFactory>().ToSelf().InRequestScope();
+            Bind<CostSearchHandlerFactory>().ToSelf().InRequestScope();
+
             #endregion
 
             #region Statistics Mappers

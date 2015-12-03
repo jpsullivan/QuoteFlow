@@ -1,0 +1,18 @@
+﻿@{
+    IDictionary<string, string> model = Model;
+}
+
+<div class="field-group aui-field-cost">
+    @foreach (var something in model)
+    {
+        <span>@something.Key, @something.Value</span>
+    }
+    <div class="workratio-min">
+        <label for="searcher-${minField}">${i18n.getText('navigator.filter.workratio.min')}</label>
+        <input class="text" id="searcher-${minField}" name="${minField}" type="text" value="$!fieldValuesHolder.getEscaped($minField)"/>
+    </div>
+    <div class="workratio-max">
+        <label for="searcher-${maxField}">${i18n.getText('navigator.filter.workratio.max')}</label>
+        <input class="text" id="searcher-${maxField}" name="${maxField}" type="text" value="$!fieldValuesHolder.getEscaped($maxField)"/>
+    </div>
+</div>
