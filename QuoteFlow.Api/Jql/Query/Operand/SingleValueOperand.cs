@@ -7,21 +7,27 @@ namespace QuoteFlow.Api.Jql.Query.Operand
     {
         public const string OperandName = "SingleValueOperand";
 
-        private readonly int? _intValue;
-        private readonly string _stringValue;
-
         public SingleValueOperand(string stringValue)
         {
             if (stringValue == null) throw new ArgumentNullException(nameof(stringValue));
 
-            _stringValue = stringValue;
-            _intValue = null;
+            StringValue = stringValue;
+            IntValue = null;
+            DecimalValue = null;
         }
 
         public SingleValueOperand(int? intValue)
         {
-            _intValue = intValue;
-            _stringValue = null;
+            IntValue = intValue;
+            DecimalValue = null;
+            StringValue = null;
+        }
+
+        public SingleValueOperand(decimal? decimalValue)
+        {
+            DecimalValue = decimalValue;
+            IntValue = null;
+            StringValue = null;
         }
 
         /// <summary>
@@ -33,13 +39,13 @@ namespace QuoteFlow.Api.Jql.Query.Operand
         {
             if (literal.IntValue != null)
             {
-                _intValue = literal.IntValue;
-                _stringValue = null;
+                IntValue = literal.IntValue;
+                StringValue = null;
             }
             else if (literal.StringValue != null)
             {
-                _stringValue = literal.StringValue;
-                _intValue = null;
+                StringValue = literal.StringValue;
+                IntValue = null;
             }
             else
             {
@@ -47,17 +53,17 @@ namespace QuoteFlow.Api.Jql.Query.Operand
             }
         }
 
-        public string Name { get { return OperandName; } }
+        public string Name => OperandName;
 
         public string DisplayString
         {
             get
             {
-                if (_intValue == null)
+                if (IntValue == null)
                 {
-                    return "\"" + _stringValue + "\"";
+                    return "\"" + StringValue + "\"";
                 }
-                return _intValue.ToString();
+                return IntValue.ToString();
             }
         }
 
@@ -66,9 +72,11 @@ namespace QuoteFlow.Api.Jql.Query.Operand
             return visitor.Visit(this);
         }
 
-        public int? IntValue { get { return _intValue; } }
+        public int? IntValue { get; }
 
-        public string StringValue { get { return _stringValue; } }
+        public decimal? DecimalValue { get; }
+
+        public string StringValue { get; }
 
         public override bool Equals(object obj)
         {
@@ -83,11 +91,11 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
             var that = (SingleValueOperand) obj;
 
-            if (_intValue != null ? !_intValue.Equals(that._intValue) : that._intValue != null)
+            if (!IntValue?.Equals(that.IntValue) ?? that.IntValue != null)
             {
                 return false;
             }
-            if (_stringValue != null ? !_stringValue.Equals(that._stringValue) : that._stringValue != null)
+            if (!StringValue?.Equals(that.StringValue) ?? that.StringValue != null)
             {
                 return false;
             }
@@ -97,8 +105,8 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
         public override int GetHashCode()
         {
-            int result = (_intValue != null ? _intValue.GetHashCode() : 0);
-            result = 31 * result + (_stringValue != null ? _stringValue.GetHashCode() : 0);
+            int result = IntValue?.GetHashCode() ?? 0;
+            result = 31 * result + (StringValue?.GetHashCode() ?? 0);
             return result;
         }
 

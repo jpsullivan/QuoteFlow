@@ -37,13 +37,23 @@ namespace QuoteFlow.Api.Jql.Operand
             SourceOperand = sourceOperand;
             StringValue = null;
             IntValue = null;
+            DecimalValue = null;
         }
 
         public QueryLiteral(IOperand sourceOperand, int? intValue)
         {
             SourceOperand = sourceOperand;
             StringValue = null;
+            DecimalValue = null;
             IntValue = intValue;
+        }
+
+        public QueryLiteral(IOperand sourceOperand, decimal? decimalValue)
+        {
+            SourceOperand = sourceOperand;
+            StringValue = null;
+            IntValue = null;
+            DecimalValue = decimalValue;
         }
 
         public QueryLiteral(IOperand sourceOperand, string stringValue)
@@ -51,6 +61,7 @@ namespace QuoteFlow.Api.Jql.Operand
             SourceOperand = sourceOperand;
             StringValue = stringValue;
             IntValue = null;
+            DecimalValue = null;
         }
 
         public QueryLiteral(IOperand sourceOperand, DateTime dateValue)
@@ -59,6 +70,7 @@ namespace QuoteFlow.Api.Jql.Operand
             DateValue = dateValue;
             StringValue = null;
             IntValue = null;
+            DecimalValue = null;
         }
 
         /// <summary>
@@ -74,6 +86,11 @@ namespace QuoteFlow.Api.Jql.Operand
         /// <summary>
         /// 
         /// </summary>
+        public decimal? DecimalValue { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime DateValue { get; set; }
 
         /// <summary>
@@ -84,10 +101,7 @@ namespace QuoteFlow.Api.Jql.Operand
         /// <summary>
         /// 
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return StringValue == null && IntValue == null; }
-        }
+        public bool IsEmpty => StringValue == null && IntValue == null;
 
         /// <summary>
         /// 
@@ -95,7 +109,7 @@ namespace QuoteFlow.Api.Jql.Operand
         /// <returns></returns>
         public string AsString()
         {
-            return IntValue != null ? IntValue.ToString() : StringValue;
+            return IntValue?.ToString() ?? StringValue;
         }
 
         protected bool Equals(QueryLiteral other)
@@ -121,7 +135,7 @@ namespace QuoteFlow.Api.Jql.Operand
 
         public override string ToString()
         {
-            return (IntValue != null) ? IntValue.ToString() : Convert.ToString(StringValue);
+            return IntValue?.ToString() ?? Convert.ToString(StringValue);
         }
     }
 }

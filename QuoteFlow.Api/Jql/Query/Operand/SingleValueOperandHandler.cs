@@ -17,9 +17,20 @@ namespace QuoteFlow.Api.Jql.Query.Operand
         public IEnumerable<QueryLiteral> GetValues(IQueryCreationContext queryCreationContext, SingleValueOperand operand, ITerminalClause terminalClause)
         {
             var svo = operand;
-            var value = svo.IntValue == null
-                ? new QueryLiteral(svo, svo.StringValue)
-                : new QueryLiteral(svo, svo.IntValue);
+            QueryLiteral value;
+            if (svo.IntValue != null)
+            {
+                value = new QueryLiteral(svo, svo.IntValue);
+                
+            }
+            else if (svo.DecimalValue != null)
+            {
+                value = new QueryLiteral(svo, svo.DecimalValue);
+            }
+            else
+            {
+                value = new QueryLiteral(svo, svo.StringValue);
+            }
 
             return new List<QueryLiteral> { value };
         }

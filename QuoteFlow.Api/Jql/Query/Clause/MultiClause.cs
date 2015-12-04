@@ -36,7 +36,7 @@ namespace QuoteFlow.Api.Jql.Query.Clause
                     sb.Append(" )");
                 }
 
-                if (i != (Clauses.Count() - 1))
+                if (i != Clauses.Count() - 1)
                 {
                     sb.Append(" ").Append(Name).Append(" ");
                 }

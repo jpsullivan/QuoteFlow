@@ -541,7 +541,84 @@ namespace QuoteFlow.Core.Jql.Builder
             return AddTerminalClause(clauseName, @operator, new MultiValueOperand(clauseValues.ToArray()));
         }
 
+        public IJqlClauseBuilder AddNumberCondition(string clauseName, decimal? clauseValue)
+        {
+            return AddNumberCondition(clauseName, Operator.EQUALS, clauseValue);
+        }
+
+        public IJqlClauseBuilder AddNumberCondition(string clauseName, params decimal?[] clauseValues)
+        {
+            if ((clauseValues != null) && (clauseValues.Length == 1))
+            {
+                return AddNumberCondition(clauseName, Operator.EQUALS, clauseValues[0]);
+            }
+
+            return AddNumberCondition(clauseName, Operator.IN, clauseValues);
+        }
+
+        public IJqlClauseBuilder AddNumberCondition(string clauseName, ICollection<decimal?> clauseValues)
+        {
+            if ((clauseValues != null) && (clauseValues.Count == 1))
+            {
+                return AddNumberCondition(clauseName, Operator.EQUALS, clauseValues.First());
+            }
+
+            return AddNumberCondition(clauseName, Operator.IN, clauseValues);
+        }
+
+        public IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, decimal? clauseValue)
+        {
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (clauseValue == null) throw new ArgumentNullException(nameof(clauseValue));
+
+            return AddTerminalClause(clauseName, @operator, new SingleValueOperand(clauseValue));
+        }
+
+        public IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, params decimal?[] clauseValues)
+        {
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (clauseValues == null) throw new ArgumentNullException(nameof(clauseValues));
+
+            if (!clauseValues.Any())
+            {
+                throw new ArgumentException("clauseValues must not be empty.");
+            }
+
+            if (clauseValues.Any(clauseValue => clauseValue == null))
+            {
+                throw new ArgumentException("No nulls are allowed", nameof(clauseValues));
+            }
+
+            return AddTerminalClause(clauseName, @operator, new MultiValueOperand(clauseValues));
+        }
+
+        public IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, ICollection<decimal?> clauseValues)
+        {
+            if (clauseName == null) throw new ArgumentNullException(nameof(clauseName));
+            if (clauseValues == null) throw new ArgumentNullException(nameof(clauseValues));
+
+            if (!clauseValues.Any())
+            {
+                throw new ArgumentException("clauseValues must not be empty.");
+            }
+
+            if (clauseValues.Any(clauseValue => clauseValue == null))
+            {
+                throw new ArgumentException("No nulls are allowed", nameof(clauseValues));
+            }
+
+            return AddTerminalClause(clauseName, @operator, new MultiValueOperand(clauseValues.ToArray()));
+        }
+
         public IJqlClauseBuilder AddNumberRangeCondition(string clauseName, int? start, int? end)
+        {
+            IOperand startClause = start == null ? null : new SingleValueOperand(start);
+            IOperand endClause = end == null ? null : new SingleValueOperand(end);
+
+            return AddRangeCondition(clauseName, startClause, endClause);
+        }
+
+        public IJqlClauseBuilder AddNumberRangeCondition(string clauseName, decimal? start, decimal? end)
         {
             IOperand startClause = start == null ? null : new SingleValueOperand(start);
             IOperand endClause = end == null ? null : new SingleValueOperand(end);

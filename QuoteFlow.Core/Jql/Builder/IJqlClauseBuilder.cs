@@ -690,19 +690,99 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, ICollection<int?> clauseValues);
 
         /// <summary>
-        /// Add a condition range condition to the current query for the passed values. This essentially adds the query {@code
-        /// clauseName &gt;= start AND clauseName &lt;= end} to the query being built. </p> It is also
-        /// possible to create an open interval by passing one of the arguments as {@code null}. Passing a non-null {@code
-        /// start} with a null {@code end} will add the condition {@code clauseName &gt;=
-        /// start}. Passing a non-null {@code end} with a null {@code start} will add the
-        /// condition {@code clauseName &lt;= end}. Passing a null {@code start} and null {@code
-        /// end} is illegal.
+        /// Add the JQL condition {@code clauseName = clauseValue} to the query being built.
         /// </summary>
-        /// <param name="clauseName">Name of the clause in the condition. Must not be null. </param>
-        /// <param name="start">The start of the range. May be null if {@code end} is not null. </param>
-        /// <param name="end">The end of the range. May be null if {@code start} is not null. </param>
+        /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
+        /// <param name="clauseValue"> long value for the condition. Must not be null. </param>
+        /// <returns> a reference to the current builder. </returns>
+        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
+        /// builder. </exception>
+        IJqlClauseBuilder AddNumberCondition(string clauseName, decimal? clauseValue);
+
+        /// <summary>
+        /// Add the JQL condition {@code clauseName in (clauseValues)} to the query being built.
+        /// </summary>
+        /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
+        /// <param name="clauseValues"> long values. Must not be null, empty or contain any null values. </param>
+        /// <returns> a reference to the current builder. </returns>
+        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
+        /// builder. </exception>
+        IJqlClauseBuilder AddNumberCondition(string clauseName, params decimal?[] clauseValues);
+
+        /// <summary>
+        /// Add the JQL condition {@code clauseName in (clauseValues)} to the query being built.
+        /// </summary>
+        /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
+        /// <param name="clauseValues"> long values for the condition. Must not be null, empty or contain any null values. </param>
+        /// <returns> a reference to the current builder. </returns>
+        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
+        /// builder. </exception>
+        IJqlClauseBuilder AddNumberCondition(string clauseName, ICollection<decimal?> clauseValues);
+
+        /// <summary>
+        /// Add the JQL condition {@code clauseName operator clauseValue} to the query being built.
+        /// </summary>
+        /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
+        /// <param name="clauseValue"> long value for the condition. Must not be null. </param>
+        /// <returns> a reference to the current builder. </returns>
+        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
+        /// builder. </exception>
+        IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, decimal? clauseValue);
+
+        /// <summary>
+        /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
+        /// </summary>
+        /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
+        /// <param name="clauseValues"> long values for the condition. Must not be null, empty or contain any null values. </param>
+        /// <returns> a reference to the current builder. </returns>
+        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
+        /// builder. </exception>
+        IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, params decimal?[] clauseValues);
+
+        /// <summary>
+        /// Add the JQL condition {@code clauseName operator (clauseValues)} to the query being built.
+        /// </summary>
+        /// <param name="clauseName"> name of the clause in the condition. Must not be null. </param>
+        /// <param name="operator"> one of the enumerated <see cref="Operator"/>s. Must not be null. </param>
+        /// <param name="clauseValues"> long values for the condition. Must not be null, empty or contain any null values. </param>
+        /// <returns> a reference to the current builder. </returns>
+        /// <exception cref="IllegalStateException"> if it is not possible to add a JQL condition given the current state of the
+        /// builder. </exception>
+        IJqlClauseBuilder AddNumberCondition(string clauseName, Operator @operator, ICollection<decimal?> clauseValues);
+
+        /// <summary>
+        /// Add a condition range condition to the current query for the passed values. This essentially adds the query {@code
+        /// clauseName &gt;= start AND clauseName &lt;= end} to the query being built. 
+        /// 
+        /// It is also possible to create an open interval by passing one of the arguments as null. 
+        /// Passing a non-null {@code start} with a null {@code end} will add the condition 
+        /// {@code clauseName &gt;=start}. Passing a non-null {@code end} with a null {@code start} 
+        /// will add the condition {@code clauseName &lt;= end}. Passing a null {@code start} and 
+        /// null {@code end} is illegal.
+        /// </summary>
+        /// <param name="clauseName">Name of the clause in the condition. Must not be null.</param>
+        /// <param name="start">The start of the range. May be null if {@code end} is not null.</param>
+        /// <param name="end">The end of the range. May be null if {@code start} is not null.</param>
         /// <returns>A reference to the current builder.</returns>
         IJqlClauseBuilder AddNumberRangeCondition(string clauseName, int? start, int? end);
+
+        /// <summary>
+        /// Add a condition range condition to the current query for the passed values. This essentially adds the query {@code
+        /// clauseName &gt;= start AND clauseName &lt;= end} to the query being built. 
+        /// 
+        /// It is also possible to create an open interval by passing one of the arguments as null. 
+        /// Passing a non-null {@code start} with a null {@code end} will add the condition 
+        /// {@code clauseName &gt;=start}. Passing a non-null {@code end} with a null {@code start} 
+        /// will add the condition {@code clauseName &lt;= end}. Passing a null {@code start} and 
+        /// null {@code end} is illegal.
+        /// </summary>
+        /// <param name="clauseName">Name of the clause in the condition. Must not be null.</param>
+        /// <param name="start">The start of the range. May be null if {@code end} is not null.</param>
+        /// <param name="end">The end of the range. May be null if {@code start} is not null.</param>
+        /// <returns>A reference to the current builder.</returns>
+        IJqlClauseBuilder AddNumberRangeCondition(string clauseName, decimal? start, decimal? end);
 
         /// <summary>
         /// Return a <see cref="IConditionBuilder"/> that can be used to build a JQL condition for

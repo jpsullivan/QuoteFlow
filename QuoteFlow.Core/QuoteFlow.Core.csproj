@@ -438,7 +438,7 @@
     <Compile Include="Jql\Validator\CostValidator.cs" />
     <Compile Include="Jql\Validator\CreatorValidator.cs" />
     <Compile Include="Jql\Validator\FreeTextFieldValidator.cs" />
-    <Compile Include="Jql\Validator\IntegerValueValidator.cs" />
+    <Compile Include="Jql\Validator\DecimalValueValidator.cs" />
     <Compile Include="Jql\Validator\IValidatorRegistry.cs" />
     <Compile Include="Jql\Validator\ManufacturerValidator.cs" />
     <Compile Include="Jql\Validator\OperatorUsageValidator.cs" />

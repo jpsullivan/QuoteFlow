@@ -261,6 +261,11 @@ namespace QuoteFlow.Core.Jql.Builder
             return _builder.AddNumberCondition(_clauseName, Operator.LESS_THAN_EQUALS, value);
         }
 
+        public IJqlClauseBuilder LtEq(decimal? value)
+        {
+            return _builder.AddNumberCondition(_clauseName, Operator.LESS_THAN_EQUALS, value);
+        }
+
         public virtual IJqlClauseBuilder LtEq(IOperand operand)
         {
             return _builder.AddCondition(_clauseName, Operator.LESS_THAN_EQUALS, operand);
@@ -337,6 +342,11 @@ namespace QuoteFlow.Core.Jql.Builder
         }
 
         public virtual IJqlClauseBuilder GtEq(int? value)
+        {
+            return _builder.AddNumberCondition(_clauseName, Operator.GREATER_THAN_EQUALS, value);
+        }
+
+        public IJqlClauseBuilder GtEq(decimal? value)
         {
             return _builder.AddNumberCondition(_clauseName, Operator.GREATER_THAN_EQUALS, value);
         }
@@ -497,6 +507,11 @@ namespace QuoteFlow.Core.Jql.Builder
         }
 
         public virtual IJqlClauseBuilder Range(int? start, int? end)
+        {
+            return _builder.AddNumberRangeCondition(_clauseName, start, end);
+        }
+
+        public IJqlClauseBuilder Range(decimal? start, decimal? end)
         {
             return _builder.AddNumberRangeCondition(_clauseName, start, end);
         }

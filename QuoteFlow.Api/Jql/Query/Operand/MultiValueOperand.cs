@@ -46,6 +46,18 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 			HashCode = CalculateHashCode(Values);
 		}
 
+        public MultiValueOperand(IEnumerable<decimal?> decimals)
+        {
+            Values = new List<IOperand>(GetLongOperands(decimals));
+            HashCode = CalculateHashCode(Values);
+        }
+
+        public MultiValueOperand(params decimal?[] decimals)
+        {
+            Values = new List<IOperand>(GetLongOperands(decimals.ToList()));
+            HashCode = CalculateHashCode(Values);
+        }
+
         public MultiValueOperand(IEnumerable<IOperand> operands) : this(operands.ToList())
         {
         }
@@ -90,7 +102,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
         private static int CalculateHashCode(IEnumerable<IOperand> values)
         {
-            return values != null ? values.GetHashCode() : 0;
+            return values?.GetHashCode() ?? 0;
         }
 
         private static IEnumerable<IOperand> GetLongOperands(IEnumerable<int?> operands)
@@ -100,10 +112,14 @@ namespace QuoteFlow.Api.Jql.Query.Operand
             return tmpValues;
         }
 
-        public string Name
+        private static IEnumerable<IOperand> GetLongOperands(IEnumerable<decimal?> operands)
         {
-            get { return OperandName; }
+            var tmpValues = new List<IOperand>(operands.Count());
+            tmpValues.AddRange(operands.Select(intValue => new SingleValueOperand(intValue)));
+            return tmpValues;
         }
+
+        public string Name => OperandName;
 
         public string DisplayString
         {
@@ -146,7 +162,7 @@ namespace QuoteFlow.Api.Jql.Query.Operand
 
             MultiValueOperand that = (MultiValueOperand) obj;
 
-            if (Values != null ? !Values.SequenceEqual(that.Values) : that.Values != null)
+            if (!Values?.SequenceEqual(that.Values) ?? that.Values != null)
             {
                 return false;
             }

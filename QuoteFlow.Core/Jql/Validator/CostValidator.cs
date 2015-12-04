@@ -10,12 +10,12 @@ namespace QuoteFlow.Core.Jql.Validator
     public sealed class CostValidator : IClauseValidator
     {
         private readonly SupportedOperatorsValidator _supportedOperatorsValidator;
-        private readonly IntegerValueValidator _integerValueValidator; 
+        private readonly DecimalValueValidator _decimalValueValidator; 
 
         public CostValidator(IJqlOperandResolver operandResolver)
         {
             _supportedOperatorsValidator = SupportedOperatorsValidator;
-            _integerValueValidator = GetIntegerValueValidator(operandResolver);
+            _decimalValueValidator = GetIntegerValueValidator(operandResolver);
 
         }
 
@@ -24,7 +24,7 @@ namespace QuoteFlow.Core.Jql.Validator
             var errors = _supportedOperatorsValidator.Validate(searcher, terminalClause);
             if (!errors.HasAnyErrors())
             {
-                errors = _integerValueValidator.Validate(searcher, terminalClause);
+                errors = _decimalValueValidator.Validate(searcher, terminalClause);
             }
             return errors;
         }
@@ -34,9 +34,9 @@ namespace QuoteFlow.Core.Jql.Validator
                 new SupportedOperatorsValidator(OperatorClasses.EqualityOperatorsWithEmpty,
                     OperatorClasses.RelationalOnlyOperators);
 
-        private static IntegerValueValidator GetIntegerValueValidator(IJqlOperandResolver operandResolver)
+        private static DecimalValueValidator GetIntegerValueValidator(IJqlOperandResolver operandResolver)
         {
-            return new IntegerValueValidator(operandResolver);
+            return new DecimalValueValidator(operandResolver);
         }
     }
 }

@@ -79,6 +79,10 @@ namespace QuoteFlow.Core.Jql.Util
 			{
 				return singleValueOperand.IntValue.ToString();
 			}
+		    if (singleValueOperand.DecimalValue != null)
+		    {
+		        return singleValueOperand.DecimalValue.ToString();
+		    }
 		    return Support.EncodeStringValue(singleValueOperand.StringValue);
 		}
 

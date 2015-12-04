@@ -41,7 +41,7 @@ namespace QuoteFlow.Controllers.Api
             foreach (var arg in dataArray)
             {
                 var args = arg.Split('=');
-                multiDict.Add(args[0], new[] { HttpUtility.UrlDecode(args[1]) });
+                multiDict.Add(HttpUtility.UrlDecode(args[0]), new[] { HttpUtility.UrlDecode(args[1]) });
             }
 
             // also get the user

@@ -62,32 +62,32 @@ namespace QuoteFlow.Api.Jql.Query.Operand
             {
                 get
                 {
-                    if (singleValueOperand.IntValue == null)
+                    if (singleValueOperand.IntValue != null)
                     {
-                        return new List<QueryLiteral>()
+                        return new List<QueryLiteral>
                         {
-                            new QueryLiteral(singleValueOperand, singleValueOperand.StringValue)
+                            new QueryLiteral(singleValueOperand, singleValueOperand.IntValue)
+                        };   
+                    }
+
+                    if (singleValueOperand.DecimalValue != null)
+                    {
+                        return new List<QueryLiteral>
+                        {
+                            new QueryLiteral(singleValueOperand, singleValueOperand.DecimalValue)
                         };
                     }
 
-                    return new List<QueryLiteral>() {new QueryLiteral(singleValueOperand, singleValueOperand.IntValue)};
+                    return new List<QueryLiteral>
+                    {
+                        new QueryLiteral(singleValueOperand, singleValueOperand.StringValue)
+                    };
                 }
             }
 
-            bool IPredicateOperandHandler.Empty
-            {
-                get { return false; }
-            }
-
-            bool IPredicateOperandHandler.List
-            {
-                get { return false; }
-            }
-
-            bool IPredicateOperandHandler.Function
-            {
-                get { return false; }
-            }
+            bool IPredicateOperandHandler.Empty => false;
+            bool IPredicateOperandHandler.List => false;
+            bool IPredicateOperandHandler.Function => false;
         }
 
 //        internal sealed class EmptyPredicateOperandHandler : IPredicateOperandHandler

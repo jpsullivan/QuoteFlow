@@ -7,13 +7,13 @@ using QuoteFlow.Api.Util;
 namespace QuoteFlow.Core.Jql.Validator
 {
     /// <summary>
-    /// Validates integer values.
+    /// Validates decimal values.
     /// </summary>
-    public class IntegerValueValidator
+    public class DecimalValueValidator
     {
         private readonly IJqlOperandResolver _operandResolver;
 
-        public IntegerValueValidator(IJqlOperandResolver operandResolver)
+        public DecimalValueValidator(IJqlOperandResolver operandResolver)
         {
             if (operandResolver == null) throw new ArgumentNullException(nameof(operandResolver));
             _operandResolver = operandResolver;
@@ -40,7 +40,7 @@ namespace QuoteFlow.Core.Jql.Validator
                     {
                         try
                         {
-                            var i = Convert.ToInt32(str);
+                            var d = Convert.ToDecimal(str);
                         }
                         catch (FormatException)
                         {
@@ -48,20 +48,21 @@ namespace QuoteFlow.Core.Jql.Validator
                         }
                     }
 
-                    if (!isValid)
+                    if (isValid)
                     {
-                        string msg;
-                        if (_operandResolver.IsFunctionOperand(queryLiteral.SourceOperand))
-                        {
-                            msg = string.Format("quoteflow.jql.clause.integer.format.invalid.from.func: {0}",
-                                queryLiteral.SourceOperand.Name);
-                        }
-                        else
-                        {
-                            msg = $"quoteflow.jql.clause.integer.format.invalid: {str}, {fieldName}";
-                        }
-                        messages.AddErrorMessage(msg);
+                        continue;
                     }
+
+                    string msg;
+                    if (_operandResolver.IsFunctionOperand(queryLiteral.SourceOperand))
+                    {
+                        msg = $"quoteflow.jql.clause.integer.format.invalid.from.func: {queryLiteral.SourceOperand.Name}";
+                    }
+                    else
+                    {
+                        msg = $"quoteflow.jql.clause.integer.format.invalid: {str}, {fieldName}";
+                    }
+                    messages.AddErrorMessage(msg);
                 }
             }
 

@@ -263,11 +263,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         /// </summary>
         private bool CheckSingleValueClause(Operator @operator, SingleValueOperand operand)
         {
-            string value = operand.StringValue;
-            if (value == null)
-            {
-                value = operand.IntValue.ToString();
-            }
+            string value = operand.StringValue ?? (operand.IntValue?.ToString() ?? operand.DecimalValue.ToString());
 
             //For it to fit the operator it must be equals, the user must be a username not a fullname or email and the user
             //must exist.
@@ -368,17 +364,13 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         /// <param name="values"> The collection to add the extracted value to. </param>
         private void ParseSingleValueOperand(SingleValueOperand operand, ICollection<UserSearchInput> values)
         {
-            string value = operand.StringValue;
-            if (value == null)
-            {
-                value = operand.IntValue.ToString();
-            }
+            string value = operand.StringValue ?? (operand.IntValue?.ToString() ?? operand.DecimalValue.ToString());
 
-//            value = userFitsNavigatorHelper.checkUser(value);
-//            if (value != null)
-//            {
-//                values.Add(UserSearchInput.user(value));
-//            }
+            //            value = userFitsNavigatorHelper.checkUser(value);
+            //            if (value != null)
+            //            {
+            //                values.Add(UserSearchInput.user(value));
+            //            }
         }
 
         /// <summary>

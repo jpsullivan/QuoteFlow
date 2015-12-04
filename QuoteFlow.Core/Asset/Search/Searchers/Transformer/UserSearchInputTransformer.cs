@@ -120,7 +120,20 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
                 if (operand is SingleValueOperand)
                 {
                     var svop = (SingleValueOperand) operand;
-                    string stringValue = svop.StringValue ?? svop.IntValue.ToString();
+                    string stringValue;
+                    if (svop.StringValue != null)
+                    {
+                        stringValue = svop.StringValue;
+                    }
+                    else if (svop.DecimalValue != null)
+                    {
+                        stringValue = svop.DecimalValue.ToString();
+                    }
+                    else
+                    {
+                        stringValue = svop.IntValue.ToString();
+                    }
+
                     string user = userFitsNavigatorHelper.CheckUser(stringValue);
                     if (user != null)
                     {
@@ -179,7 +192,20 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
                 if (@operator != Operator.EQUALS) return false;
 
                 var svop = (SingleValueOperand) operand;
-                string user = svop.StringValue ?? svop.IntValue.ToString();
+                string user;
+                if (svop.StringValue != null)
+                {
+                    user = svop.StringValue;
+                }
+                else if (svop.DecimalValue != null)
+                {
+                    user = svop.DecimalValue.ToString();
+                }
+                else
+                {
+                    user = svop.IntValue.ToString();
+                }
+
                 return userFitsNavigatorHelper.CheckUser(user) != null;
             }
             if (operand is FunctionOperand)

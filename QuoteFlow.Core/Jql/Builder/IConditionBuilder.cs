@@ -429,6 +429,14 @@ namespace QuoteFlow.Core.Jql.Builder
 
         /// <summary>
         /// Create the JQL condition with the {@link Operator#LESS_THAN_EQUALS less than equals
+        /// operator} and the passed value. It essentially creates the JQL condition {@code name &lt;= value}.
+        /// </summary>
+        /// <param name="value">The value of the condition. Cannot be null.</param>
+        /// <returns>The <see cref="IJqlClauseBuilder"/> that created the condition.</returns>
+        IJqlClauseBuilder LtEq(decimal? value);
+
+        /// <summary>
+        /// Create the JQL condition with the {@link Operator#LESS_THAN_EQUALS less than equals
         /// operator} and the passed value. It essentially creates the JQL condition {@code name &lt;= operand}.
         /// </summary>
         /// <param name="operand"> the value of the condition. Cannot be null. </param>
@@ -561,6 +569,14 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <param name="value">The value of the condition. Cannot be null.</param>
         /// <returns>The <see cref="IJqlClauseBuilder"/> that created the condition.</returns>
         IJqlClauseBuilder GtEq(int? value);
+
+        /// <summary>
+        /// Create the JQL condition with the {@link Operator#GREATER_THAN_EQUALS greater than
+        /// equals operator} and the passed value. It essentially creates the JQL condition {@code name &gt;= value}.
+        /// </summary>
+        /// <param name="value">The value of the condition. Cannot be null.</param>
+        /// <returns>The <see cref="IJqlClauseBuilder"/> that created the condition.</returns>
+        IJqlClauseBuilder GtEq(decimal? value);
 
         /// <summary>
         /// Create the JQL condition with the {@link Operator#GREATER_THAN_EQUALS greater than
@@ -818,8 +834,9 @@ namespace QuoteFlow.Core.Jql.Builder
         IJqlClauseBuilder Range(DateTime start, DateTime end);
 
         /// <summary>
-        /// Add a condition range condition to the current query for the passed values. This essentially
-        /// adds the query {@code clauseName &gt;= start AND clauseName &lt;= end} to the query being built.
+        /// Add a condition range condition to the current query for the passed values. 
+        /// This essentially adds the query {@code clauseName &gt;= start AND clauseName &lt;= end} 
+        /// to the query being built.
         /// 
         /// It is also possible to create an open interval by passing one of the arguments as {@code null}. Passing a non-null
         /// {@code start} with a null {@code end} will add the condition {@code clauseName &gt;= start}. Passing
@@ -842,6 +859,19 @@ namespace QuoteFlow.Core.Jql.Builder
         /// <param name="start">The value for the start of the range. May be null if {@code end} is not null.</param>
         /// <param name="end">The value for the end of the range. May be null if {@code start} is not null.</param>
         IJqlClauseBuilder Range(int? start, int? end);
+
+        /// <summary>
+        /// Add a condition range condition to the current query for the passed values. This essentially
+        /// adds the query {@code clauseName &gt;= start AND clauseName &lt;= end} to the query being built.
+        /// 
+        /// It is also possible to create an open interval by passing one of the arguments as {@code null}. Passing a non-null
+        /// {@code start} with a null {@code end} will add the condition {@code clauseName &gt;= start}. Passing
+        /// a non-null {@code end} with a null {@code start} will add the condition {@code clauseName &lt;= end}.
+        /// Passing a null {@code start} and null {@code end} is illegal.
+        /// </summary>
+        /// <param name="start">The value for the start of the range. May be null if {@code end} is not null.</param>
+        /// <param name="end">The value for the end of the range. May be null if {@code start} is not null.</param>
+        IJqlClauseBuilder Range(decimal? start, decimal? end);
 
         /// <summary>
         /// Add a condition range condition to the current query for the passed values. This essentially

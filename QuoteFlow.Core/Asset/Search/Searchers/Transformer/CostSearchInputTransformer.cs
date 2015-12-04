@@ -90,31 +90,31 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         {
             if (fieldValuesHolder == null) throw new ArgumentNullException(nameof(fieldValuesHolder));
 
-            var minValue = string.Empty;
-            var maxValue = string.Empty;
+            decimal? minValue = null;
+            decimal? maxValue = null;
 
             object minResult;
             if (fieldValuesHolder.TryGetValue(_config.Min, out minResult))
             {
-                minValue = (string) minResult;
+                minValue = Convert.ToDecimal(minResult);
             }
             object maxResult;
             if (fieldValuesHolder.TryGetValue(_config.Max, out maxResult))
             {
-                maxValue = (string) maxResult;
+                maxValue = Convert.ToDecimal(maxResult);
             }
 
             var builder = JqlQueryBuilder.NewClauseBuilder();
             IClause result;
-            if (!string.IsNullOrWhiteSpace(minValue) && !string.IsNullOrWhiteSpace(maxValue))
+            if (minValue.HasValue && maxValue.HasValue)
             {
-                result = builder.Cost().Range(minValue, maxValue).BuildClause();
+                result = builder.Cost().Range(minValue.Value, maxValue.Value).BuildClause();
             }
-            else if (!string.IsNullOrWhiteSpace(minValue))
+            else if (minValue.HasValue)
             {
-                result = builder.Cost().GtEq(minValue).BuildClause();
+                result = builder.Cost().GtEq(minValue.Value).BuildClause();
             }
-            else if (!string.IsNullOrWhiteSpace(maxValue))
+            else if (maxValue.HasValue)
             {
                 result = builder.Cost().LtEq(maxValue).BuildClause();
             }
@@ -126,15 +126,21 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             return result;
         }
 
-        private int? ValidateRatioField(IFieldValuesHolder fieldValuesHolder, string fieldId, IErrorCollection errors, string errorKey)
+        private decimal? ValidateRatioField(IFieldValuesHolder fieldValuesHolder, string fieldId, IErrorCollection errors, string errorKey)
         {
-            var input = (string) fieldValuesHolder[fieldId];
-            int? limitValue = null;
+            var input = string.Empty;
+            object unresolvedValue;
+            if (fieldValuesHolder.TryGetValue(fieldId, out unresolvedValue))
+            {
+                input = (string) unresolvedValue;
+            }
+
+            decimal? limitValue = null;
             if (!string.IsNullOrEmpty(input))
             {
                 try
                 {
-                    limitValue = Convert.ToInt32(input);
+                    limitValue = Convert.ToDecimal(input);
                 }
                 catch (FormatException)
                 {
