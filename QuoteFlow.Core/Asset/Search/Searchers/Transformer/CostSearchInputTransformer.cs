@@ -93,16 +93,7 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             decimal? minValue = null;
             decimal? maxValue = null;
 
-            object minResult;
-            if (fieldValuesHolder.TryGetValue(_config.Min, out minResult))
-            {
-                minValue = Convert.ToDecimal(minResult);
-            }
-            object maxResult;
-            if (fieldValuesHolder.TryGetValue(_config.Max, out maxResult))
-            {
-                maxValue = Convert.ToDecimal(maxResult);
-            }
+            TryGetBothValues(fieldValuesHolder, ref minValue, ref maxValue);
 
             var builder = JqlQueryBuilder.NewClauseBuilder();
             IClause result;
@@ -158,6 +149,35 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
         private string GetMaxField()
         {
             return _config.Max;
+        }
+
+        private void TryGetBothValues(IFieldValuesHolder fieldValuesHolder, ref decimal? minValue, ref decimal? maxValue)
+        {
+            object minResult;
+            if (fieldValuesHolder.TryGetValue(_config.Min, out minResult))
+            {
+                try
+                {
+                    minValue = Convert.ToDecimal(minResult);
+                }
+                catch (FormatException)
+                {
+                    // don't care, ignore it.
+                }
+
+            }
+            object maxResult;
+            if (fieldValuesHolder.TryGetValue(_config.Max, out maxResult))
+            {
+                try
+                {
+                    maxValue = Convert.ToDecimal(maxResult);
+                }
+                catch (FormatException)
+                {
+                    // don't care, ignore it.
+                }
+            }
         }
 
         protected virtual CostSearcherInputHelper CreateCostSearcherInputHelper()
