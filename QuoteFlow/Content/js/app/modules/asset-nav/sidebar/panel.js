@@ -23,6 +23,16 @@ var QuoteSidebarPanelView = Marionette.ItemView.extend({
     },
 
     onRender: function () {
+        // this.$el.sidebar({
+        //     id: "quoteview",
+        //     minWidth: function (ui) {
+        //         return 200;
+        //     },
+        //     maxWidth: _.bind(function () {
+        //         return this.$el[0].clientWidth - 500;
+        //     }, this)
+        // });
+
         this.panelReady.resolve();
     }
 });

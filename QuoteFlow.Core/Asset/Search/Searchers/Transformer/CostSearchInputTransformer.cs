@@ -158,7 +158,10 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             {
                 try
                 {
-                    minValue = Convert.ToDecimal(minResult);
+                    if (minResult != null)
+                    {
+                        minValue = Convert.ToDecimal(minResult);
+                    }
                 }
                 catch (FormatException)
                 {
@@ -171,7 +174,10 @@ namespace QuoteFlow.Core.Asset.Search.Searchers.Transformer
             {
                 try
                 {
-                    maxValue = Convert.ToDecimal(maxResult);
+                    if (maxResult != null)
+                    {
+                        maxValue = Convert.ToDecimal(maxResult);
+                    }
                 }
                 catch (FormatException)
                 {
