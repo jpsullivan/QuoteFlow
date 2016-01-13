@@ -16,7 +16,7 @@ namespace QuoteFlow
             var sqlServerOpts = new SqlServerStorageOptions {InvisibilityTimeout = TimeSpan.FromHours(2)};
             GlobalConfiguration.Configuration.UseSqlServerStorage("QuoteFlow.SqlServer", sqlServerOpts);
 
-            GlobalConfiguration.Configuration.UseElmahLogProvider();
+            //GlobalConfiguration.Configuration.UseElmahLogProvider();
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();

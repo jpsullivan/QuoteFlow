@@ -245,18 +245,28 @@ namespace QuoteFlow.Core.Asset.Index
         {
             using (strategy)
             {
-                if (assets == null) throw new ArgumentNullException(nameof(assets));
-
+                if (assets == null)
+                {
+                    throw new ArgumentNullException(nameof(assets));
+                }
+                 
                 // thread-safe handler for the asynchronous Result
                 var builder = new AccumulatingResultBuilder();
 
-                // perform the operation for every asset in the collection
-                foreach (var asset in assets)
+                Parallel.ForEach(assets, asset =>
                 {
                     var supplier = new PerformSupplier(operation, asset);
                     var result = strategy.Get(supplier);
                     builder.Add("Asset", asset.Id, result);
-                }
+                });
+
+                // perform the operation for every asset in the collection
+//                foreach (var asset in assets)
+//                {
+//                    var supplier = new PerformSupplier(operation, asset);
+//                    var result = strategy.Get(supplier);
+//                    builder.Add("Asset", asset.Id, result);
+//                }
 
                 return builder.ToResult();
             }

@@ -1,5 +1,6 @@
 "use strict";
 
+var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var LineItemsCollection = require('./entities/line-items');
