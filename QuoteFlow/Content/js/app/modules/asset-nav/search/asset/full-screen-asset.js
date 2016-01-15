@@ -113,7 +113,6 @@ var FullScreenAsset = Marionette.ItemView.extend({
      */
     updateAsset: function (assetUpdate) {
         var deferred;
-
         var isVisibleAsset = assetUpdate.sku === QuoteFlow.application.request("assetEditor:getAssetSku");
 
         if (this.isVisible()) {

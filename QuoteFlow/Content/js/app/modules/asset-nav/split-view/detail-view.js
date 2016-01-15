@@ -73,7 +73,9 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
      */
     activate: function () {
         // if this view is already activated, do nothing
-        if (this.isActive) return this;
+        if (this.isActive) {
+            return this;
+        }
 
         var instance = this;
         this.$el.focusin(function () {
