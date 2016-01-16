@@ -1083,6 +1083,8 @@
     <Content Include="Views\Searchers\UserSearcherView.cshtml" />
     <Content Include="Views\Searchers\CostSearcherEdit.cshtml" />
     <Content Include="Views\Searchers\CostSearcherView.cshtml" />
+    <Content Include="Views\Shared\_FullWidthLayout.cshtml" />
+    <Content Include="Views\Shared\Partials\Header\_CustomHeader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />

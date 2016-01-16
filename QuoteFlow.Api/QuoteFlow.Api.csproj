@@ -501,6 +501,8 @@
     <Compile Include="Models\ViewModels\Customers\CustomersViewModel.cs" />
     <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\ViewModels\ForgotPasswordViewModel.cs" />
+    <Compile Include="Models\ViewModels\Layout\CustomHeader.cs" />
+    <Compile Include="Models\ViewModels\Layout\FullWidthLayoutViewModel.cs" />
     <Compile Include="Models\ViewModels\LogOnViewModel.cs" />
     <Compile Include="Models\ViewModels\Manufacturers\EditManufacturerRequest.cs" />
     <Compile Include="Models\ViewModels\Manufacturers\ManufacturerShowModel.cs" />

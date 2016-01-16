@@ -1,0 +1,35 @@
+﻿@model QuoteFlow.Api.Models.ViewModels.Layout.CustomHeader
+
+@{
+    var backgroundColorCss = string.Empty;
+    if (!string.IsNullOrEmpty(Model.BackgroundColor))
+    {
+        backgroundColorCss = string.Format("background-color: {0};", Model.BackgroundColor);
+    }
+
+    var borderColorCss = string.Empty;
+    if (!string.IsNullOrEmpty(Model.BorderBottomColor))
+    {
+        borderColorCss = string.Format("border-bottom: 1px solid {0};", Model.BorderBottomColor);
+    }
+
+    var paddingCss = string.Empty;
+    if (!string.IsNullOrEmpty(Model.PaddingCss))
+    {
+        paddingCss = string.Format("padding: {0};", Model.PaddingCss);
+    }
+}
+
+<header style="@backgroundColorCss @paddingCss @borderColorCss">
+    @if (string.IsNullOrEmpty(Model.HeaderLink.ToString()))
+    {
+        <img src="@Model.HeaderImage" alt="" />
+    }
+    else
+    {
+        <a href="@Model.HeaderLink">
+            <img src="@Model.HeaderImage" alt="" />
+        </a>
+    }
+
+</header>

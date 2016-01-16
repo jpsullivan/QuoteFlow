@@ -1,0 +1,79 @@
+﻿@using QuoteFlow.Api.Infrastructure.Extensions
+@using QuoteFlow.Html
+@using QuoteFlow.Infrastructure.Extensions
+@using StackExchange.Profiling
+@model QuoteFlow.Api.Models.ViewModels.Layout.FullWidthLayoutViewModel
+
+@{
+    string layoutType = string.Format("{0} {1}", "aui-layout", Model.LayoutType.ToDescription());
+}
+
+<!DOCTYPE html>
+<html style="height: 100%;">
+<!-- remove this after ditching the core UI -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Html.RenderCssBundle("app.css", BundleOptions.MinifiedAndCombined)
+</head>
+<body class="@layoutType" style="height: 100%;">
+    <!-- remove this after ditching the core UI -->
+    <div id="page">
+        @if (Model.LogoOnly)
+        {
+            @Html.Partial("Partials/Header/_LogoOnlyHeader")
+            ;
+        }
+        else if (!Model.ShowHeader)
+        {
+            // don't render anything
+        }
+        else
+        {
+            @(User.Identity.IsAuthenticated ? Html.Partial("_AuthenticatedHeader") : Html.Partial("_UnauthenticatedHeader"))
+        }
+
+        @if (Model.CustomHeader != null)
+        {
+            // look like we have specified a custom header. Render it here.
+            @Html.Partial("Partials/Header/_CustomHeader", Model.CustomHeader)
+        }
+
+        <section id="content" role="main">
+            <div class="aui-page-panel">
+                <div class="aui-page-panel-inner">
+                    <section class="aui-page-panel-content">
+                        @RenderBody()
+                    </section>
+                </div>
+            </div>
+        </section>
+
+        @if (Model.ShowFooter)
+        {
+            @Html.Partial("_Footer")
+        }
+    </div>
+
+    <script>
+        // set the global application vars
+        window.rootUrl = '@Url.SiteRoot()';
+        window.applicationPath = '@Context.Request.ApplicationPath.EnsureTrailingSlash()';
+        @if (Request.IsAuthenticated)
+        {
+            <text>window.currentOrganization = '@CurrentOrganization.Id.ToString()';</text>
+            <text>window.currentUser = @ViewHelpers.JsEncode(CurrentUser);</text>
+        }
+    </script>
+
+    <script type="text/javascript" src="@Url.Content("~/Content/js/lib/handlebars.min.js")"></script>
+    @Html.RenderJsBundle("templates.js", BundleOptions.MinifiedAndCombined)
+    @RenderSection("scripts", false)
+    @RenderSection("bootstrap", false)
+    @Html.RenderJsBundle("bundle.js", BundleOptions.BuildConfigDependent)
+    @RenderSection("secondaryScripts", false)
+
+    @MiniProfiler.RenderIncludes()
+</body>
+</html>

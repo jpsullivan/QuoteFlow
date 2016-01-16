@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
@@ -20,6 +21,21 @@ namespace QuoteFlow.Api.Infrastructure.Extensions
                            .First()
                            .GetCustomAttribute<DisplayAttribute>()
                            .Name;
+        }
+
+        /// <summary>
+        /// An alternative to <see cref="GetDisplayAttributeFrom"/>, this will return the
+        /// string value of whatever is defined within the [Display(Name = "blah")] attribute.
+        /// </summary>
+        /// <param name="enumeration"></param>
+        /// <returns></returns>
+        public static string ToDescription(this Enum enumeration)
+        {
+            string name = enumeration.ToString();
+            DescriptionAttribute[] descriptionAttributeArray = enumeration.GetType().GetField(name).GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
+            if (descriptionAttributeArray == null || descriptionAttributeArray.Length == 0)
+                return string.Empty;
+            return descriptionAttributeArray[0].Description;
         }
 
         /// <summary>
