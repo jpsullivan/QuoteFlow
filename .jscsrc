@@ -1,0 +1,11 @@
+{
+    "preset": "google",
+    "disallowMultipleVarDecl": false,
+    "disallowSpacesInAnonymousFunctionExpression": false,
+    "disallowSpacesInFunctionExpression": false,
+    "disallowSpacesInsideObjectBrackets": false,
+    "disallowTrailingWhitespace": false,
+    "maximumLineLength": 500,
+    "validateIndentation": 4,
+    "validateQuoteMarks": false,
+}

@@ -39,7 +39,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             "applyResponsiveDesign");
 
         if (options.easeOff) {
-            this.applyResponsiveDesign = jQuery.noop;
+            this.applyResponsiveDesign = $.noop;
             _.debounce(this._adjustHeight, options.easeOff);
         }
 
@@ -100,7 +100,6 @@ var SplitScreenLayout = Marionette.ItemView.extend({
 
         this._updateSortBy();
     },
-
 
     _updateSortBy: function () {
         this.orderBy.setJql(this.search.getEffectiveJql());
@@ -183,7 +182,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         QuoteFlow.Interactive.offHorizontalResize(this._updateSidebarPosition);
         //QuoteFlow.Interactive.restoreScrollIntoViewForNormal();
 
-        jQuery("body").removeClass("page-type-split");
+        $("body").removeClass("page-type-split");
         QuoteFlow.application.off("assetEditor:loadError", this._onIssueLoadError, this);
         this.navigatorContent.addClass("pending").css("height", "");
         this.orderBy.offSort(this._handleSort, this);
@@ -198,9 +197,9 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this.detailsView.destroy();
         this.listView.destroy();
 
-        jQuery(window).off('resize', this.applyResponsiveDesign);
+        $(window).off('resize', this.applyResponsiveDesign);
         if (this._scrollLayoutOnZoom) {
-            jQuery(window).off('resize', this._scrollLayoutOnZoom);
+            $(window).off('resize', this._scrollLayoutOnZoom);
             delete this._scrollLayoutOnZoom;
         }
 
@@ -249,7 +248,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             }, this),
             resize: this.applyResponsiveDesign
         });
-        jQuery(window).on('resize', this.applyResponsiveDesign);
+        $(window).on('resize', this.applyResponsiveDesign);
 
         //TF-729: Ensure we put the appropriate width classes on first render to ensure the sidebar picks up the correct width.
         this._applyWidthClass();
@@ -262,7 +261,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         var $sidebar = this.$el.find(".list-results-panel");
 
         // only do this if the sidear is already initialized
-        if($sidebar.data('ui-sidebar')) {
+        if ($sidebar.data('ui-sidebar')) {
             $sidebar.sidebar("updatePosition");
         }
     },
@@ -383,8 +382,8 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      *
      * @return {SplitScreenLayout} <tt>this</tt>
      */
-     onRender: function () {
-         var hasIssues = this.searchResults.hasAssets(),
+    onRender: function () {
+        var hasIssues = this.searchResults.hasAssets(),
             isInitialRender = this._isInitialRender();
 
         $("body").addClass("page-type-split");
@@ -449,7 +448,6 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         this.endOfStableSearchView.render();
         this.$(".end-of-stable-message-container").empty().append(this.endOfStableSearchView.$el);
     },
-
 
     _renderRefreshResults: function () {
         if (this.refreshResultsView) {
