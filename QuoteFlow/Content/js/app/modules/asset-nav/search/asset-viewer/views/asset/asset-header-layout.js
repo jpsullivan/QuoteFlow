@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
+var AssetToolbar = require('./asset-toolbar');
 var EventTypes = require('../../../../util/types');
 var Reasons = require('../../../../util/reasons');
 
@@ -27,8 +28,7 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
     },
 
     /**
-     * Extract the data from the model in the format needed by the template
-     *
+     * Extract the data from the model in the format needed by the template     *
      * @returns {Object} Data to be rendered by the template
      */
     serializeData: function () {
@@ -39,8 +39,7 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
     },
 
     /**
-     * Update this view with new data
-     *
+     * Update this view with new data     *
      * @param options
      */
     update: function (options) {
@@ -72,25 +71,23 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
      * Handler for render event, things to do after the template has been rendered
      */
     onRender: function () {
-        //this.renderOpsBar();
+        this.renderOpsBar();
         this._updateWindowTitle();
         this.trigger("panelRendered", "header", this.$el);
     },
 
     /**
      * Render the operations bar
-     *
-     * //TODO This composition should be done by the AssetController
+     * TODO This composition should be done by the AssetController
      */
     renderOpsBar: function () {
-        this.opsbar.show(new JIRA.Components.IssueViewer.Views.IssueOpsbar({model: this.model}));
+        this.opsbar.show(new AssetToolbar({model: this.model}));
         //TODO This event should be thrown by the AssetController
-        QuoteFlow.trigger(EventTypes.NEW_CONTENT_ADDED, [this.$el, Reasons.CONTENT_ADDED_REASON.panelRefreshed]);
+        QuoteFlow.trigger(EventTypes.NEW_CONTENT_ADDED, [this.$el, Reasons.panelRefreshed]);
     },
 
     /**
-     * Updates the window title to contain information about the issue
-     *
+     * Updates the window title to contain information about the asset.     *
      * @private
      */
     _updateWindowTitle: function () {
