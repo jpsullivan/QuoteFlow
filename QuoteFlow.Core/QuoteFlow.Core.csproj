@@ -366,6 +366,7 @@
     <Compile Include="Jql\Builder\PrecedenceSimpleClauseBuilder.cs" />
     <Compile Include="Jql\Builder\SingleMutableClause.cs" />
     <Compile Include="Jql\Builder\ValueBuilder.cs" />
+    <Compile Include="Jql\Context\AssetIdClauseContextFactory.cs" />
     <Compile Include="Jql\Function\AbstractDateFunction.cs" />
     <Compile Include="Jql\Function\LastLoginFunction.cs" />
     <Compile Include="Jql\Function\NowFunction.cs" />
