@@ -1054,25 +1054,136 @@ namespace QuoteFlow.Core.Tests.Jql.Builder
             [Fact]
             public void VarArgs()
             {
-                
+                var builder = new JqlClauseBuilder();
+                try
+                {
+                    builder.AddCondition(null, new SingleValueOperand(5), new SingleValueOperand(6));
+                    Assert.True(false, "Expected exception.");
+                }
+                catch (Exception)
+                {
+                }
+
+                try
+                {
+                    builder.AddCondition("cool", (IOperand[]) null);
+                    Assert.True(false, "Expected exception.");
+                }
+                catch (Exception)
+                {
+                }
+
+                try
+                {
+                    builder.AddCondition("cool", new SingleValueOperand(6), null, new SingleValueOperand(681237));
+                    Assert.True(false, "Expected exception.");
+                }
+                catch (Exception)
+                {
+                }
+
+                const string clauseName = "name";
+
+                var clauseBuilder = new Mock<ISimpleClauseBuilder>();
+                clauseBuilder.Setup(x => x.Clause(new TerminalClause(clauseName, Operator.IN, new MultiValueOperand(6)))).Returns(clauseBuilder.Object);
+                clauseBuilder.Setup(x => x.Clause(new TerminalClause(clauseName, Operator.IN, new MultiValueOperand(6, 8)))).Returns(clauseBuilder.Object);
+
+                builder = CreateBuilder(clauseBuilder.Object);
+                Assert.Equal(builder, builder.AddCondition(clauseName, new IOperand[] { new SingleValueOperand(6) }));
+                Assert.Equal(builder, builder.AddCondition(clauseName, new SingleValueOperand(6), new SingleValueOperand(8)));
+
+                clauseBuilder.Verify();
             }
 
             [Fact]
             public void Collection()
             {
-                
+                var builder = new JqlClauseBuilder();
+                try
+                {
+                    builder.AddCondition(null, new SingleValueOperand(51), new SingleValueOperand(61));
+                    Assert.True(false, "Expected exception.");
+                }
+                catch (Exception)
+                {
+                }
+
+                try
+                {
+                    builder.AddCondition("cool", (List<IOperand>) null);
+                    Assert.True(false, "Expected exception.");
+                }
+                catch (Exception)
+                {
+                }
+
+                try
+                {
+                    builder.AddCondition("cool", new List<IOperand> { new SingleValueOperand(5), null });
+                    Assert.True(false, "Expected exception.");
+                }
+                catch (Exception)
+                {
+                }
+
+                const string clauseName = "name";
+
+                var clauseBuilder = new Mock<ISimpleClauseBuilder>();
+                clauseBuilder.Setup(x => x.Clause(new TerminalClause(clauseName, Operator.IN, new MultiValueOperand(5)))).Returns(clauseBuilder.Object);
+                clauseBuilder.Setup(x => x.Clause(new TerminalClause(clauseName, Operator.IN, new MultiValueOperand(6, 758474)))).Returns(clauseBuilder.Object);
+
+                builder = CreateBuilder(clauseBuilder.Object);
+                Assert.Equal(builder, builder.AddCondition(clauseName, new List<IOperand> { new SingleValueOperand(5) }));
+                Assert.Equal(builder, builder.AddCondition(clauseName, new List<IOperand> { new SingleValueOperand(6), new SingleValueOperand(758474) }));
+
+                clauseBuilder.Verify();
             }
 
             [Fact]
             public void SingleOperator()
             {
-                
+                var builder = new JqlClauseBuilder();
+                try
+                {
+                    builder.AddCondition(null, Operator.IN, new SingleValueOperand(6));
+                    Assert.True(false, "Expected exception.");
+                }
+                catch (Exception)
+                {
+                }
+
+                try
+                {
+                    builder.AddCondition("cool", null, new SingleValueOperand(5));
+                    Assert.True(false, "Expected exception.");
+                }
+                catch (Exception)
+                {
+                }
+
+                try
+                {
+                    builder.AddCondition("cool", Operator.LESS_THAN, (IOperand) null);
+                    Assert.True(false, "Expected exception.");
+                }
+                catch (Exception)
+                {
+                }
+
+                const string clauseName = "name";
+
+                var clauseBuilder = new Mock<ISimpleClauseBuilder>();
+                clauseBuilder.Setup(x => x.Clause(new TerminalClause(clauseName, Operator.LIKE, 6))).Returns(clauseBuilder.Object);
+
+                builder = CreateBuilder(clauseBuilder.Object);
+                Assert.Equal(builder, builder.AddCondition(clauseName, Operator.LIKE, new SingleValueOperand(6)));
+
+                clauseBuilder.Verify();
             }
 
             [Fact]
             public void MultipleOperator()
             {
-                
             }
 
             [Fact]
