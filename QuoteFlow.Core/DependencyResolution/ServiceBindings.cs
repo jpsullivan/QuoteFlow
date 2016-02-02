@@ -104,7 +104,6 @@ namespace QuoteFlow.Core.DependencyResolution
 
             #region Jql Support
 
-            Bind<IJqlAssetIdSupport>().To<JqlAssetIdSupport>().InRequestScope();
             Bind<IJqlClauseBuilderFactory>().To<JqlClauseBuilderFactory>().InRequestScope();
             Bind<IJqlDateSupport>().To<JqlDateSupport>().InRequestScope();
             Bind<IJqlFunctionHandlerRegistry>().To<LazyResettableJqlFunctionHandlerRegistry>().InRequestScope();
@@ -180,6 +179,13 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<CostClauseQueryFactory>().ToSelf().InRequestScope();
             Bind<CostSearchHandlerFactory>().ToSelf().InRequestScope();
             Bind<CostSystemField>().ToSelf().InRequestScope();
+
+            // asset id/sku searching
+            Bind<AssetIdClauseQueryFactory>().ToSelf().InRequestScope();
+            Bind<AssetIdClauseContextFactory>().ToSelf().InRequestScope();
+            Bind<AssetIdValidator>().ToSelf().InRequestScope();
+            Bind<IJqlAssetIdSupport>().To<JqlAssetIdSupport>().InRequestScope();
+            Bind<IJqlAssetSupport>().To<JqlAssetSupport>().InRequestScope();
 
             #endregion
 

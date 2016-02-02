@@ -40,5 +40,10 @@ namespace QuoteFlow.Core.Jql.Util
         {
             throw new NotImplementedException();
         }
+
+        public ISet<string> GetSkusOfMissingAssets(ISet<string> assetSkus)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

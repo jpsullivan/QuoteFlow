@@ -166,7 +166,7 @@ namespace QuoteFlow.Api.Jql.Query.Clause
         {
             //The '{' brackets in this method are designed to make this method return invalid JQL so that we know when
             //we call this method. This method is only here for debugging and should not be used in production.
-            StringBuilder sb = (new StringBuilder("{")).Append(Name);
+            var sb = new StringBuilder("{").Append(Name);
 
             if (Property != null)
             {

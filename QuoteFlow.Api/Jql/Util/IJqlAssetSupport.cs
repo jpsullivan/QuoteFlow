@@ -37,8 +37,15 @@ namespace QuoteFlow.Api.Jql.Util
         /// <summary>
         /// Check existence of assets for the given set of IDs.
         /// </summary>
-        /// <param name="issueIds">Set of asset IDs.</param>
+        /// <param name="assetIds">Set of asset IDs.</param>
         /// <returns>Set of IDs that don't represent an asset.</returns>
-        ISet<int> GetIdsOfMissingAssets(ISet<int> issueIds);
+        ISet<int> GetIdsOfMissingAssets(ISet<int> assetIds);
+
+        /// <summary>
+        /// Check existance of assets for the given set of SKU's.
+        /// </summary>
+        /// <param name="assetSkus"></param>
+        /// <returns></returns>
+        ISet<string> GetSkusOfMissingAssets(ISet<string> assetSkus);
     }
 }

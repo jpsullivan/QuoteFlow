@@ -433,6 +433,7 @@
     <Compile Include="Jql\Util\JqlStringSupport.cs" />
     <Compile Include="Jql\Util\ToJqlStringVisitor.cs" />
     <Compile Include="Jql\Validator\AllTextValidator.cs" />
+    <Compile Include="Jql\Validator\AssetIdValidator.cs" />
     <Compile Include="Jql\Validator\CatalogValidator.cs" />
     <Compile Include="Jql\Validator\CatalogValuesExistValidator.cs" />
     <Compile Include="Jql\Validator\ChangedClauseValidator.cs" />
