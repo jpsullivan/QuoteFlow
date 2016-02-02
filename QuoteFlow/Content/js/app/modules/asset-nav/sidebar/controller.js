@@ -18,6 +18,10 @@ var QuoteSidebarController = Marionette.Controller.extend({
         this._initializeCollections(options);
         this._initializeLineItemsController();
         //this._initializeFilterHeaderController();
+
+        // QuoteFlow.application.on("assetEditor:loadComplete", function (model, props) {
+        //     console.warning("hook asset events into sidebar");
+        // }, this);
     },
 
     _initializeCollections: function(options) {
@@ -35,7 +39,7 @@ var QuoteSidebarController = Marionette.Controller.extend({
     },
 
     _initializeLineItemsController: function() {
-        this.systemFiltersController = new LineItemsListController({
+        this.lineItemsController = new LineItemsListController({
             collection: this.lineItemsCollection,
             className: "system-filters",
             errorMessage: "Failed to retrieve the line items from the server",
@@ -44,7 +48,7 @@ var QuoteSidebarController = Marionette.Controller.extend({
             //loginMessage: "You must be {0}logged in{1} to view the line items", '<a class="login-link" href="#"', '</a>')
         });
 
-        this.systemFiltersController.on("selectFilter", function (filterModel) {
+        this.lineItemsController.on("selectFilter", function (filterModel) {
             this.headerController.closeDetails();
             this.trigger("filterSelected", filterModel.id);
         }, this);
@@ -158,7 +162,7 @@ var QuoteSidebarController = Marionette.Controller.extend({
     },
 
     showLineItems: function(el) {
-        this.systemFiltersController.show(el);
+        this.lineItemsController.show(el);
     },
 
     showFilterHeader: function(options) {
@@ -177,7 +181,7 @@ var QuoteSidebarController = Marionette.Controller.extend({
     },
 
     highlightLineItem: function(filterModel) {
-        this.systemFiltersController.highlightLineItem(filterModel);
+        this.lineItemsController.highlightLineItem(filterModel);
     },
 
     markFilterHeaderAsInvalid: function() {

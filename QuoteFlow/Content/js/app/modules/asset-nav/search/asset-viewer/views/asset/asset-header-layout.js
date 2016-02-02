@@ -28,7 +28,7 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
     },
 
     /**
-     * Extract the data from the model in the format needed by the template     *
+     * Extract the data from the model in the format needed by the template.
      * @returns {Object} Data to be rendered by the template
      */
     serializeData: function () {
@@ -39,7 +39,7 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
     },
 
     /**
-     * Update this view with new data     *
+     * Update this view with new data.
      * @param options
      */
     update: function (options) {

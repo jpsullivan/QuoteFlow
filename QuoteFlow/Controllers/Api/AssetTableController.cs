@@ -5,6 +5,7 @@ using System.Web.Http;
 using QuoteFlow.Api.Asset.Fields.Layout.Column;
 using QuoteFlow.Api.Asset.Nav;
 using QuoteFlow.Api.Configuration;
+using QuoteFlow.Api.Infrastructure.Services;
 using QuoteFlow.Api.Models;
 using QuoteFlow.Api.Models.ViewModels.Assets.Nav;
 using QuoteFlow.Core.Configuration;
@@ -16,14 +17,16 @@ namespace QuoteFlow.Controllers.Api
         #region DI
 
         public IAssetTableService AssetTableService { get; protected set; }
+        public IStableSearchService StableSearchService { get; protected set; }
 
         public AssetTableController()
         {
         }
 
-        public AssetTableController(IAssetTableService assetTableService)
+        public AssetTableController(IAssetTableService assetTableService, IStableSearchService stableSearchService)
         {
             AssetTableService = assetTableService;
+            StableSearchService = stableSearchService;
         }
 
         #endregion
@@ -47,6 +50,21 @@ namespace QuoteFlow.Controllers.Api
             var errors = outcome.ErrorCollection;
             throw new HttpResponseException(HttpStatusCode.BadRequest);
         }
+
+        [HttpPost]
+        public StableSearchResult Stable([FromBody] AssetTableRequest request)
+        {
+            var config = BuildConfiguration(request, null);
+            var outcome = StableSearchService.GetAssetTableFromAssetIds(request.FilterId.ToString(), request.Jql, request.Id, config);
+            if (outcome.IsValid())
+            {
+                return outcome.ReturnedValue;
+                //return Response.ok(outcome.getReturnedValue()).cacheControl(never()).build();
+            }
+
+            var errors = outcome.ErrorCollection;
+            throw new HttpResponseException(HttpStatusCode.BadRequest);
+        } 
 
         private static IAssetTableServiceConfiguration CreateConfig(AssetTableRequest model, ColumnConfig columnConfig, List<string> columnNames)
         {
@@ -96,5 +114,6 @@ namespace QuoteFlow.Controllers.Api
         public int StartIndex { get; set; }
         public string LayoutKey { get; set; }
         public string ColumnConfig { get; set; }
+        public List<int?> Id { get; set; } 
     }
 }

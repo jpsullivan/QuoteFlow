@@ -61,8 +61,8 @@ var SearchPageModule = Brace.Model.extend({
         this._onFilterChanged();
         this.on("change:filter", this._onFilterChanged, this);
 
-        QuoteFlow.application.vent.on("assetEditor:close", this.returnToSearch, this);
-        QuoteFlow.application.vent.on("assetEditor:loadComplete", function (model, props) {
+        QuoteFlow.application.on("assetEditor:close", this.returnToSearch, this);
+        QuoteFlow.application.on("assetEditor:loadComplete", function (model, props) {
             if (!this.standalone && !props.reason) {
                 this.searchResults.selectAssetById(model.getId(), { reason: "assetLoaded" });
                 this.searchResults.updateAssetById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() });
@@ -77,7 +77,7 @@ var SearchPageModule = Brace.Model.extend({
             }
         }, this);
 
-        QuoteFlow.application.vent.on("assetEditor:saveSuccess", function (props) {
+        QuoteFlow.application.on("assetEditor:saveSuccess", function (props) {
             this.searchResults.updateAssetById({ id: props.assetId, action: "inlineEdit" }, { filter: this.getFilter() });
         }, this);
 
@@ -829,7 +829,7 @@ var SearchPageModule = Brace.Model.extend({
 
         if (shouldFetchFilter) {
             // Wait for the system filters request to finish as state.filter may refer to a system filter.
-            filterRequest = jQuery.Deferred();
+            filterRequest = $.Deferred();
             systemFiltersRequest.always(_.bind(function () {
                 this.filterModule.getFilterById(state.filter).always(function (filterModel) {
                     state.filter = filterModel;
@@ -838,7 +838,7 @@ var SearchPageModule = Brace.Model.extend({
             }, this));
         }
 
-        jQuery.when(filterRequest).always(_.bind(function () {
+        $.when(filterRequest).always(_.bind(function () {
             this._applyState(state, isReset, options);
         }, this));
     },
@@ -856,14 +856,13 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     /**
-     * Reset the application state to match a given filter.
-     *
-     * @param {number|JIRA.Components.Filters.Models.Filter} filter The (id of) the filter to reset to.
+     * Reset the application state to match a given asset.
+     * @param {number} filter The (id of) the asset to reset to.
      */
     resetToFilter: function (filter) {
         //Selecting a filter should always attempt to use the filter columns by default
         //This will ensure request are being made with the specified behaviour above
-        //Returning issue table request will contain the actual columns being used and
+        //Returning asset table request will contain the actual columns being used and
         //  the preference state will be updated accordingly
         this.reset({
             filter: filter,

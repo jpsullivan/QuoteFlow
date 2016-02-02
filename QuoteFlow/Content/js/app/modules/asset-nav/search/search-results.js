@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 var _ = require('underscore');
+var $ = require('jquery');
 var Brace = require('backbone-brace');
 
 var ModelUtils = require('../util/model-utils');
@@ -163,7 +164,7 @@ var SearchResults = Brace.Model.extend({
      * @return {jQuery.Deferred} A deferred that is resolved when the update completes.
      */
     updateAsset: function (assetUpdate, options) {
-        var isDelete = assetUpdate.action === JIRA.Issues.Actions.DELETE,
+        var isDelete = assetUpdate.action === "delete",
             assetId = assetUpdate.id,
             promises = [];
 
@@ -175,7 +176,7 @@ var SearchResults = Brace.Model.extend({
         if (isDelete) {
             this.removeAsset(assetId);
             options.showMessage && this._notifyOfAssetUpdate(assetUpdate);
-            return jQuery.Deferred().resolve().promise();
+            return $.Deferred().resolve().promise();
         } else {
             return this.getResultForId(assetId, options.filter).done(_.bind(function (entity) {
                 _.each(this.assetUpdateCallbacks, function (callback) {

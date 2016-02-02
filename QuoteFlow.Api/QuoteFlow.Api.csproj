@@ -195,6 +195,7 @@
     <Compile Include="Asset\Nav\AssetTableCreator.cs" />
     <Compile Include="Asset\Nav\IAssetTableCreatorFactory.cs" />
     <Compile Include="Asset\Nav\IAssetTableService.cs" />
+    <Compile Include="Asset\Nav\IStableSearchService.cs" />
     <Compile Include="Asset\Search\ClauseNames.cs" />
     <Compile Include="Asset\Search\Constants\AllTextSearchConstants.cs" />
     <Compile Include="Asset\Search\Constants\AssetIdConstants.cs" />
@@ -490,6 +491,7 @@
     <Compile Include="Models\ViewModels\Assets\EditAssetRequest.cs" />
     <Compile Include="Models\ViewModels\Assets\InteractiveAssetNavigatorViewModel.cs" />
     <Compile Include="Models\ViewModels\Assets\Nav\AssetTableViewModel.cs" />
+    <Compile Include="Asset\Nav\StableSearchResult.cs" />
     <Compile Include="Models\ViewModels\Assets\NewAssetCommentViewModel.cs" />
     <Compile Include="Models\ViewModels\CatalogModels.cs" />
     <Compile Include="Models\ViewModels\Catalogs\CatalogHeader.cs" />

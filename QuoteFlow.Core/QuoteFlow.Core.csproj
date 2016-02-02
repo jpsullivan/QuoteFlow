@@ -229,6 +229,7 @@
     <Compile Include="Asset\Index\IndexReconciler.cs" />
     <Compile Include="Asset\Index\Managers\FieldIndexerManager.cs" />
     <Compile Include="Asset\Index\Managers\IFieldIndexerManager.cs" />
+    <Compile Include="Asset\Nav\StableSearchService.cs" />
     <Compile Include="Asset\Search\Handlers\CostSearchHandlerFactory.cs" />
     <Compile Include="Asset\Search\Handlers\CreatorSearchHandlerFactory.cs" />
     <Compile Include="Asset\Search\SearchContextHelper.cs" />

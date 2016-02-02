@@ -24,13 +24,6 @@ var AssetToolbarView = Marionette.ItemView.extend({
     },
 
     /**
-     * Handler for applyToDom event, things to do after $el has been loaded from the DOM
-     */
-    onApplyToDom: function () {
-        this.onRender();
-    },
-
-    /**
      * Handler for render event, things to do after the template has been rendered
      */
     onRender: function () {

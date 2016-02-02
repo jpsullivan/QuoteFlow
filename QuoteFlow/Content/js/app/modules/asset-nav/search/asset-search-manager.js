@@ -162,11 +162,11 @@ var AssetSearchManager = Brace.Evented.extend({
 
     /**
      * Retrieve asset table information for the assets matching the given IDs.
-     *
      * @param {number[]} ids The asset IDs.
      * @return {jQuery.Deferred} A deferred that is resolved when the request completes.
      */
     getRowsForIds: function (ids, searchOptions) {
+        debugger;
         if (!ids.length) {
             // Don't need to make a request, respond with an empty results set
             return jQuery.Deferred().resolve({}).promise();

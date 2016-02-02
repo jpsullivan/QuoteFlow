@@ -94,6 +94,7 @@ namespace QuoteFlow.Core.DependencyResolution
 
             Bind<IAssetTableCreatorFactory>().To<AssetTableCreatorFactory>().InRequestScope();
             Bind<IAssetTableService>().To<AssetTableService>().InRequestScope();
+            Bind<IStableSearchService>().To<StableSearchService>();
             Bind<FieldClausePermissionChecker.IFactory>().To<FieldClausePermissionChecker.Factory>().InRequestScope();
             Bind<ICustomFieldInputHelper>().To<CustomFieldInputHelper>().InRequestScope();
             Bind<IFieldFlagOperandRegistry>().To<FieldFlagOperandRegistry>().InRequestScope();

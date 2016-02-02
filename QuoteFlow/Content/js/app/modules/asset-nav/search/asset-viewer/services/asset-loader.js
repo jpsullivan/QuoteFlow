@@ -164,9 +164,7 @@ var AssetLoaderService = Marionette.Controller.extend({
 
     /**
      * Handler for updating:done, when an asset has been updated.
-     *
      * This method does virtually nothing, just call _onLoadingDone with meta.isUpdate=true
-     *
      * @param {Object[]} args
      * @private
      */
@@ -219,10 +217,8 @@ var AssetLoaderService = Marionette.Controller.extend({
     },
 
     /**
-     * Handler for updating:reject, when there are errors updating an asset
-     *
-     * This method does virtually nothing, just call _onLoadingError with the right params
-     *
+     * Handler for updating:reject, when there are errors updating an asset.
+     * This method does virtually nothing, just call _onLoadingError with the right params.
      * @param {Object[]} args
      * @private
      */

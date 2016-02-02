@@ -4,6 +4,7 @@ using Moq;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Query.Operand;
 using QuoteFlow.Core.Jql.Builder;
+using QuoteFlow.Core.Jql.Query.Operand;
 using Xunit;
 
 namespace QuoteFlow.Core.Tests.Jql.Builder
@@ -625,6 +626,94 @@ namespace QuoteFlow.Core.Tests.Jql.Builder
 
                 var builder = new ConditionBuilder(name, mockJqlClauseBuilder.Object);
                 Assert.Same(mockJqlClauseBuilder.Object, builder.InStrings(values));
+
+                mockJqlClauseBuilder.Verify();
+            }
+
+            [Fact]
+            public void TestInts()
+            {
+                const string name = "fieldName";
+                const int value1 = 5;
+                const int value2 = 98273213;
+
+                var mockJqlClauseBuilder = new Mock<IJqlClauseBuilder>();
+                mockJqlClauseBuilder.Setup(x => x.AddNumberCondition(name, Operator.IN, value1, value2))
+                    .Returns(mockJqlClauseBuilder.Object);
+
+                var builder = new ConditionBuilder(name, mockJqlClauseBuilder.Object);
+                Assert.Same(mockJqlClauseBuilder.Object, builder.In(value1, value2));
+
+                mockJqlClauseBuilder.Verify();
+            }
+
+            [Fact]
+            public void TestIntCollection()
+            {
+                const string name = "fieldName";
+                const int value1 = 5;
+                const int value2 = 98273213;
+                var values = new List<int?>() { value1, value2 };
+
+                var mockJqlClauseBuilder = new Mock<IJqlClauseBuilder>();
+                mockJqlClauseBuilder.Setup(x => x.AddNumberCondition(name, Operator.IN, values))
+                    .Returns(mockJqlClauseBuilder.Object);
+
+                var builder = new ConditionBuilder(name, mockJqlClauseBuilder.Object);
+                Assert.Same(mockJqlClauseBuilder.Object, builder.InNumbers(values));
+
+                mockJqlClauseBuilder.Verify();
+            }
+
+            [Fact]
+            public void TestOperands()
+            {
+                const string name = "fieldName";
+                IOperand value1 = Operands.ValueOf(5);
+
+                var mockJqlClauseBuilder = new Mock<IJqlClauseBuilder>();
+                mockJqlClauseBuilder.Setup(x => x.AddCondition(name, Operator.IN, new[] { value1 }))
+                    .Returns(mockJqlClauseBuilder.Object);
+
+                var builder = new ConditionBuilder(name, mockJqlClauseBuilder.Object);
+                Assert.Same(mockJqlClauseBuilder.Object, builder.In(value1));
+
+                mockJqlClauseBuilder.Verify();
+            }
+
+            [Fact]
+            public void TestOperandsCollection()
+            {
+                const string name = "fieldName";
+                IOperand value1 = Operands.ValueOf(5);
+                IOperand value2 = Operands.ValueOf(98273213);
+                var values = new List<IOperand>() { value1, value2 };
+
+                var mockJqlClauseBuilder = new Mock<IJqlClauseBuilder>();
+                mockJqlClauseBuilder.Setup(x => x.AddCondition(name, Operator.IN, values))
+                    .Returns(mockJqlClauseBuilder.Object);
+
+                var builder = new ConditionBuilder(name, mockJqlClauseBuilder.Object);
+                Assert.Same(mockJqlClauseBuilder.Object, builder.InOperands(values));
+
+                mockJqlClauseBuilder.Verify();
+            }
+
+            [Fact]
+            public void TestBuilder()
+            {
+                const string name = "fieldName";
+                const int value = 5;
+
+                var mockJqlClauseBuilder = new Mock<IJqlClauseBuilder>();
+
+                mockJqlClauseBuilder.Setup(x => x.AddNumberCondition(name, Operator.IN, new int?[] { value }))
+                    .Returns(mockJqlClauseBuilder.Object);
+
+                var builder = new ConditionBuilder(name, mockJqlClauseBuilder.Object);
+                var valueBuilder = builder.In();
+                Assert.NotNull(valueBuilder);
+                Assert.Same(mockJqlClauseBuilder.Object, valueBuilder.Numbers(value));
 
                 mockJqlClauseBuilder.Verify();
             }

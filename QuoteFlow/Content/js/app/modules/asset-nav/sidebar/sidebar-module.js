@@ -59,9 +59,7 @@ var QuoteSidebarModule = Brace.Evented.extend({
 
     /**
      * Retrieve system filter information via AJAX.
-     * <p/>
-     * System filter information is not present on the stand alone view issue page.
-     *
+     * System filter information is not present on the stand alone view asset page.
      * @return {jQuery.Deferred} a deferred that is resolved after system filter information has been retrieved.
      */
     initSystemFilters: function() {

@@ -32,7 +32,7 @@ namespace QuoteFlow.Api.Asset.Nav
         /// <param name="ids"></param>
         /// <param name="config"></param>
         /// <returns></returns>
-        AssetTableViewModel GetAssetTableFromAssetIds(User user, string filterId, string jql, List<int> ids,
+        IServiceOutcome<AssetTableViewModel> GetAssetTableFromAssetIds(User user, string filterId, string jql, List<int?> ids,
             IAssetTableServiceConfiguration config);
     }
 }

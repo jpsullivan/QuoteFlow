@@ -199,8 +199,7 @@ var AssetController = Marionette.Controller.extend({
     },
 
     /**
-     * Loads a view from server-rendered markup
-     *
+     * Loads a view from server-rendered markup.
      * @param {Object} issueEntity
      */
     applyToDom: function (issueEntity) {
@@ -256,7 +255,6 @@ var AssetController = Marionette.Controller.extend({
 
     /**
      * Shows a dirty form warning if the comment field has been modified.
-     *
      * @return {boolean} If user has opted to dismiss comment or not.
      */
     canDismissComment: function () {

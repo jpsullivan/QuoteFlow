@@ -66,9 +66,20 @@ namespace QuoteFlow.Core.Asset.Nav
             return GetAssetTable(user, config, parseResult.Query, isStableSearchFirstHit, null);
         }
 
-        public AssetTableViewModel GetAssetTableFromAssetIds(User user, string filterId, string jql, List<int> ids, IAssetTableServiceConfiguration config)
+        public IServiceOutcome<AssetTableViewModel> GetAssetTableFromAssetIds(User user, string filterId, string jql, List<int?> ids, IAssetTableServiceConfiguration config)
         {
-            throw new NotImplementedException();
+            // todo: possible filter action. Keeping the params in here because it'll most likely happen
+            var searchRequest = new SearchRequest();
+
+            IQuery query = null;
+            if (jql != null)
+            {
+                var parseResult = SearchService.ParseQuery(user, jql);
+                query = parseResult.IsValid() ? parseResult.Query : null;
+            }
+
+            PreferredLayoutKey = config;
+            return CreateAssetTableFromCreator(AssetTableCreatorFactory.GetStableAssetTableCreator(user, config, query, ids, searchRequest));
         }
 
         private IServiceOutcome<AssetTableViewModel> GetAssetTableFromJql(User user, string jql, IAssetTableServiceConfiguration config, bool returnMatchingAssetIds)

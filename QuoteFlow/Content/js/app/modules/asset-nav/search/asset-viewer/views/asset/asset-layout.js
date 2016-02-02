@@ -40,8 +40,7 @@ var AssetLayout = Marionette.LayoutView.extend({
     },
 
     /**
-     * Focus a comment
-     *
+     * Focus a comment.
      * @param {string} commentId Comment to focus
      */
     focusComment: function (commentId) {
@@ -51,8 +50,7 @@ var AssetLayout = Marionette.LayoutView.extend({
     },
 
     /**
-     * Update this view with the data form the model
-     *
+     * Update this view with the data form the model.
      * @param props
      */
     update: function (props) {
@@ -102,8 +100,7 @@ var AssetLayout = Marionette.LayoutView.extend({
     },
 
     /**
-     * Bring some parts of the asset into view (eg: scrolls to focused comment)
-     *
+     * Bring some parts of the asset into view (eg: scrolls to focused comment).
      * @private
      */
     _bringViewIssueElementIntoView: function () {

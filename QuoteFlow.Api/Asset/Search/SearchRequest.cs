@@ -147,7 +147,11 @@ namespace QuoteFlow.Api.Asset.Search
         public SearchRequest(IQuery query, User owner, string name, string description, int id)
             : this()
         {
-            OwnerId = owner.Id;
+            if (owner != null)
+            {
+                OwnerId = owner.Id;
+            }
+
             Name = name;
             Description = description;
             Query = query;

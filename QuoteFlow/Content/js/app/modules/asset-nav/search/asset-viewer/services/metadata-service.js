@@ -25,7 +25,7 @@ var MetadataService = {
     /**
      * Add all the issue meta data such as issue key into AJS.Meta
      *
-     * @param {JIRA.Components.IssueViewer.Models.Issue} model Model used to extract the values to add
+     * @param {AssetModel} model Model used to extract the values to add
      */
     addAssetMetadata: function(model) {
         var assetEntity = model.getEntity();
