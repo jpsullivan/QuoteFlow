@@ -39,7 +39,7 @@ namespace QuoteFlow.Api.Jql.Util
         /// </summary>
         /// <param name="assetIds">Set of asset SKUs</param>
         /// <returns>Catalog ID / Manufacturer pairs</returns>
-        ISet<KeyValuePair<int, string>> GetCatalogManufacutrerPairsBySkus(ISet<string> assetIds);
+        ISet<KeyValuePair<int, string>> GetCatalogManufacturerPairsBySkus(ISet<string> assetIds);
 
             /// <summary>
         /// Check existence of assets for the given set of IDs.

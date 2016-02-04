@@ -38,5 +38,10 @@
                 return ((CatalogContext != null ? CatalogContext.GetHashCode() : 0)*397) ^ (ManufacturerContext != null ? ManufacturerContext.GetHashCode() : 0);
             }
         }
+
+        public override string ToString()
+        {
+            return $"CatalogContext: {CatalogContext}, ManufacturerContext: {ManufacturerContext}";
+        }
     }
 }

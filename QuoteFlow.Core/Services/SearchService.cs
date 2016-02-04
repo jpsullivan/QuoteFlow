@@ -16,6 +16,7 @@ using QuoteFlow.Api.Services;
 using QuoteFlow.Api.Util;
 using QuoteFlow.Core.Asset.Search;
 using QuoteFlow.Core.Jql.Context;
+using QuoteFlow.Core.Jql.Permission;
 using QuoteFlow.Core.Jql.Validator;
 
 namespace QuoteFlow.Core.Services
@@ -235,6 +236,41 @@ namespace QuoteFlow.Core.Services
             return JqlStringSupport.GenerateJqlString(query);
         }
 
+        public IQuery SanitizeSearchQuery(User searcher, IQuery query)
+        {
+            return Process(query, CreateClauseSanitizingVisitor(searcher));
+        }
+
+        private IQuery Process(IQuery query, IClauseVisitor<IClause> visitor)
+        {
+            if (query == null) throw new ArgumentNullException(nameof(query));
+
+            var clause = query.WhereClause;
+            if (clause == null)
+            {
+                return query;
+            }
+
+            var sanitizedClause = clause.Accept(visitor);
+            if (!clause.Equals(sanitizedClause))
+            {
+                return new Query(sanitizedClause, query.OrderByClause, null);
+            }
+
+            return query;
+        }
+
+        private ClauseSanitizingVisitor CreateClauseSanitizingVisitor(User searcher)
+        {
+            return new ClauseSanitizingVisitor(SearchHandlerManager, JqlOperandResolver, searcher);
+        }
+
+        /// <summary>
+        /// Used for testing since building a SearchContext bring up the entire world :)
+        /// </summary>
+        /// <param name="catalogs"></param>
+        /// <param name="manufacturers"></param>
+        /// <returns></returns>
         public ISearchContext CreateSearchContext(List<int?> catalogs, List<int?> manufacturers)
         {
             return new SearchContext(catalogs, manufacturers);

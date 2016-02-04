@@ -146,5 +146,16 @@ namespace QuoteFlow.Api.Services
         /// <returns> the generated JQL string representation of the passed query. </returns>
         string GetGeneratedJqlString(IQuery query);
 
+        /// <summary>
+        /// Returns an equivalent <see cref="IQuery"/> with all the potential "information leaks" 
+        /// removed, with regards to the specific user. For example, if the query contains the
+        /// clause "catatalog = Invisible", and the user specified user does not have permission 
+        /// for catalog "Invisible", the sanitized query will replace this clause with 
+        /// "catalog = 12345" (where 123245 is the id of the catalog).
+        /// </summary>
+        /// <param name="searcher">The user performing the search.</param>
+        /// <param name="query">The query to sanitize; must not be null.</param>
+        /// <returns>The sanitized query; never null.</returns>
+        IQuery SanitizeSearchQuery(User searcher, IQuery query);
     }
 }

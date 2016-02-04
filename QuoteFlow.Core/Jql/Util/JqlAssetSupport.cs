@@ -36,7 +36,7 @@ namespace QuoteFlow.Core.Jql.Util
             throw new NotImplementedException();
         }
 
-        public ISet<KeyValuePair<int, string>> GetCatalogManufacutrerPairsBySkus(ISet<string> assetIds)
+        public ISet<KeyValuePair<int, string>> GetCatalogManufacturerPairsBySkus(ISet<string> assetIds)
         {
             throw new NotImplementedException();
         }

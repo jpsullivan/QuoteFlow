@@ -39,5 +39,10 @@ namespace QuoteFlow.Core.Jql.Context
         {
             return CatalogId.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return $"CatalogId: {CatalogId}";
+        }
     }
 }

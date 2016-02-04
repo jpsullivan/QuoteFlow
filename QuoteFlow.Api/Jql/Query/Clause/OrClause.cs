@@ -15,7 +15,7 @@ namespace QuoteFlow.Api.Jql.Query.Clause
         {
         }
 
-        public OrClause(IList<IClause> clauses) : base(clauses)
+        public OrClause(ICollection<IClause> clauses) : base(clauses)
         {
             if (!clauses.Any())
             {
@@ -23,12 +23,9 @@ namespace QuoteFlow.Api.Jql.Query.Clause
             }
         }
 
-		public override string Name
-		{
-			get { return Or; }
-		}
+		public override string Name => Or;
 
-		public override T Accept<T>(IClauseVisitor<T> visitor)
+        public override T Accept<T>(IClauseVisitor<T> visitor)
 		{
 			return visitor.Visit(this);
 		}

@@ -1,4 +1,5 @@
 ﻿using QuoteFlow.Api.Jql.Context;
+using QuoteFlow.Api.Jql.Permission;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Validator;
 
@@ -26,7 +27,7 @@ namespace QuoteFlow.Api.Jql
         /// A permission handler that will check the users who is executing the queries 
         /// permission to include the clause.
         /// </summary>
-        //ClausePermissionHandler PermissionHandler { get; }
+        IClausePermissionHandler PermissionHandler { get; }
 
         /// <summary>
         /// A clause context factory that will be able to generate the clause context.

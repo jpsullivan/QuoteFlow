@@ -22,17 +22,21 @@ namespace QuoteFlow.Core.Jql
         public IClauseInformation Information { get; private set; }
         public IClauseQueryFactory Factory { get; private set; }
         public IClauseValidator Validator { get; private set; }
+        public IClausePermissionHandler PermissionHandler { get; private set; }
         public IClauseContextFactory ClauseContextFactory { get; private set; }
 
-        private readonly ClausePermissionHandler clausePermissionHandler;
-
-        public NoOpClauseHandler(ClausePermissionHandler clausePermissionHandler, string fieldId, ClauseNames clauseNames)
+        public NoOpClauseHandler(IClausePermissionHandler clausePermissionHandler, string fieldId, ClauseNames clauseNames)
         {
-            this.clausePermissionHandler = clausePermissionHandler;
+            PermissionHandler = clausePermissionHandler;
             Information = new ClauseInformation(fieldId, clauseNames, fieldId, new HashSet<Operator>(), QuoteFlowDataTypes.All);
             Factory = new ClauseQueryFactory();
             Validator = new ClauseValidator();
             ClauseContextFactory = new SimpleClauseContextFactory();
+        }
+
+        public override string ToString()
+        {
+            return "NoOpClauseHandler";
         }
     }
 }

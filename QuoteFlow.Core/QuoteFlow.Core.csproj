@@ -394,6 +394,7 @@
     <Compile Include="Jql\Parser\JqlQueryParser.cs" />
     <Compile Include="Jql\Permission\CatalogClauseValueSanitizer.cs" />
     <Compile Include="Jql\Permission\CatalogLiteralSanitizer.cs" />
+    <Compile Include="Jql\Permission\ClauseSanitizingVisitor.cs" />
     <Compile Include="Jql\Permission\FieldClausePermissionChecker.cs" />
     <Compile Include="Jql\Query\AllTextClauseQueryFactory.cs" />
     <Compile Include="Jql\Query\AssetIdCollector.cs" />

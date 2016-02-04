@@ -65,11 +65,11 @@ namespace QuoteFlow.Core.Asset.Search.Handlers
             IClauseHandler clauseHandler;
             if (clauseValuesGenerator == null)
             {
-                clauseHandler = new ClauseHandler(clauseInformation, queryFactory, clauseValidator, _clauseContextFactory);
+                clauseHandler = new ClauseHandler(clauseInformation, queryFactory, clauseValidator, CreateClausePermissionHandler(field), _clauseContextFactory);
             }
             else
             {
-                clauseHandler = new ValuesGeneratingClauseHandler(clauseInformation, queryFactory, clauseValidator, _clauseContextFactory, clauseValuesGenerator);
+                clauseHandler = new ValuesGeneratingClauseHandler(clauseInformation, queryFactory, clauseValidator, _clauseContextFactory, CreateClausePermissionHandler(field), clauseValuesGenerator);
             }
             
             var registration = new SearchHandler.ClauseRegistration(clauseHandler);

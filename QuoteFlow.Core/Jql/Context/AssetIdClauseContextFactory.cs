@@ -78,7 +78,7 @@ namespace QuoteFlow.Core.Jql.Context
 
             if (stringLiterals.Any())
             {
-                foreach (var pair in _jqlAssetSupport.GetCatalogManufacutrerPairsBySkus(stringLiterals))
+                foreach (var pair in _jqlAssetSupport.GetCatalogManufacturerPairsBySkus(stringLiterals))
                 {
                     catalogManufacturers.Add(pair);
                 }

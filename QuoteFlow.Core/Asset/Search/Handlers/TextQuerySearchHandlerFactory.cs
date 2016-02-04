@@ -7,6 +7,7 @@ using QuoteFlow.Api.Asset.Search.Managers;
 using QuoteFlow.Api.Jql;
 using QuoteFlow.Api.Jql.Context;
 using QuoteFlow.Api.Jql.Operand;
+using QuoteFlow.Api.Jql.Permission;
 using QuoteFlow.Api.Jql.Query;
 using QuoteFlow.Api.Jql.Validator;
 using QuoteFlow.Core.Jql;
@@ -57,7 +58,7 @@ namespace QuoteFlow.Core.Asset.Search.Handlers
         public virtual SearchHandler CreateHandler()
         {
             var searcher = new TextQuerySearcher(operandResolver);
-            var clauseHandler = new ClauseHandler(clauseInfo, clauseQueryFactory, clauseValidator, clauseContextFactory);
+            var clauseHandler = new ClauseHandler(clauseInfo, clauseQueryFactory, clauseValidator, ClausePermissionHandler.NoopClausePermissionHandler,  clauseContextFactory);
             var searcherRegistration = new SearchHandler.SearcherRegistration(searcher, clauseHandler);
             var relatedIndexers = searcher.SearchInformation.RelatedIndexers;
             return new SearchHandler(relatedIndexers, searcherRegistration);

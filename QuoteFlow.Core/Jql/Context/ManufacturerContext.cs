@@ -39,5 +39,10 @@ namespace QuoteFlow.Core.Jql.Context
         {
             return ManufacturerId.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return $"ManufacturerId: {ManufacturerId}";
+        }
     }
 }
