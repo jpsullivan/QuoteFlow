@@ -38,5 +38,26 @@ namespace QuoteFlow.Api.Jql.Permission
         {
             return permissionChecker.HasPermissionToUseClause(user);
         }
+
+        protected bool Equals(ClausePermissionHandler other)
+        {
+            return Equals(permissionChecker, other.permissionChecker) && Equals(sanitizer, other.sanitizer);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((ClausePermissionHandler) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((permissionChecker != null ? permissionChecker.GetHashCode() : 0)*397) ^ (sanitizer != null ? sanitizer.GetHashCode() : 0);
+            }
+        }
     }
 }

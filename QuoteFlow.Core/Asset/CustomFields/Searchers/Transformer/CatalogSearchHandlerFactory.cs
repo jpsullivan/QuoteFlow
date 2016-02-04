@@ -17,9 +17,9 @@ namespace QuoteFlow.Core.Asset.CustomFields.Searchers.Transformer
     {
         public CatalogSearchHandlerFactory(
             CatalogClauseQueryFactory clauseFactory, CatalogValidator caluseValidator, 
-            ICatalogService catalogService, IJqlOperandResolver jqlOperandResolver, 
-            CatalogResolver catalogResolver, MultiClauseDecoratorContextFactory.Factory multiFactory
-        ) : base(SystemSearchConstants.ForCatalog(), typeof(CatalogSearcher), clauseFactory, caluseValidator, null,
+            ICatalogService catalogService, IJqlOperandResolver jqlOperandResolver,
+            FieldClausePermissionChecker.IFactory clausePermissionFactory, CatalogResolver catalogResolver, MultiClauseDecoratorContextFactory.Factory multiFactory
+        ) : base(SystemSearchConstants.ForCatalog(), typeof(CatalogSearcher), clauseFactory, caluseValidator, clausePermissionFactory,
                 multiFactory.Create(new CatalogClauseContextFactory(catalogService, jqlOperandResolver, catalogResolver)), 
                 new CatalogClauseValuesGenerator(catalogService),
                 new CatalogClauseValueSanitizer(catalogService, jqlOperandResolver, catalogResolver))

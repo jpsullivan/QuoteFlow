@@ -732,8 +732,8 @@ namespace QuoteFlow.Core.Jql.Builder
 
         /// <summary>
         /// This is the state of the builder when it is expecting a clause, sub-clause or a NOT clause. This is slightly
-        /// different from the <see cref="PrecedenceSimpleClauseBuilder.StartState"/> as building is illegal and that this must
-        /// happen after the bulider was in the <see cref="PrecedenceSimpleClauseBuilder.OperatorState"/>.
+        /// different from the <see cref="StartState"/> as building is illegal and that this must
+        /// happen after the bulider was in the <see cref="OperatorState"/>.
         /// </summary>
         private class ClauseState : IBuilderState
         {
@@ -750,7 +750,7 @@ namespace QuoteFlow.Core.Jql.Builder
             }
 
             /// <summary>
-            /// When NOT is called we transition to the <see cref="PrecedenceSimpleClauseBuilder.NotState"/> expecting 
+            /// When NOT is called we transition to the <see cref="NotState"/> expecting 
             /// a NOT clause to be added.
             /// </summary>
             /// <param name="stacks">Current stacks for the builder.</param>

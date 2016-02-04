@@ -183,6 +183,7 @@
     <Compile Include="Jql\Util\Searchers\MockSearcherFactory.cs" />
     <Compile Include="Jql\Util\ToJqlStringVisitorTests.cs" />
     <Compile Include="Jql\Validator\AllTextValidatorTests.cs" />
+    <Compile Include="Jql\Validator\MockClausePermissionChecker.cs" />
     <Compile Include="Jql\Validator\MockClauseValidator.cs" />
     <Compile Include="Jql\Validator\MockJqlFunctionHandlerRegistry.cs" />
     <Compile Include="Jql\Validator\MockJqlOperandResolver.cs" />
