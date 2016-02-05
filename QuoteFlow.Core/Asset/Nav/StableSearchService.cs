@@ -24,7 +24,10 @@ namespace QuoteFlow.Core.Asset.Nav
             var assetTableOutcome = AssetTableService.GetAssetTableFromAssetIds(null, filterId, jql, ids, config);
             var errorCollection = new SimpleErrorCollection();
             var result = new StableSearchResult(assetTableOutcome);
-            errorCollection.AddErrorCollection(assetTableOutcome.ErrorCollection);
+            if (assetTableOutcome.ErrorCollection != null)
+            {
+                errorCollection.AddErrorCollection(assetTableOutcome.ErrorCollection);
+            }
 
             return new ServiceOutcome<StableSearchResult>(errorCollection, result);
         }

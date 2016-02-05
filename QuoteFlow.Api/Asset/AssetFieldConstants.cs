@@ -4,6 +4,7 @@ namespace QuoteFlow.Api.Asset
 {
     public class AssetFieldConstants
     {
+        public const string Id = "assetId";
         public const string Catalog = "catalog";
         public const string FORM_TOKEN = "formToken";
         public const string Cost = "cost";

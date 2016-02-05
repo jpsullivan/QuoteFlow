@@ -38,6 +38,7 @@ using QuoteFlow.Core.Asset.Search.Handlers;
 using QuoteFlow.Core.Asset.Search.Managers;
 using QuoteFlow.Core.Asset.Search.Searchers;
 using QuoteFlow.Core.Asset.Search.Util;
+using QuoteFlow.Core.Asset.Statistics;
 using QuoteFlow.Core.Auditing;
 using QuoteFlow.Core.Configuration.Lucene;
 using QuoteFlow.Core.Index;
@@ -121,6 +122,8 @@ namespace QuoteFlow.Core.DependencyResolution
             Bind<QueryContextVisitor.QueryContextVisitorFactory>().ToSelf();
             Bind<ValidatorVisitor.ValidatorVisitorFactory>().ToSelf().InRequestScope();
             Bind<ContextSetUtil>().ToConstant(ContextSetUtil.Instance);
+            Bind<SearchHandlerBuilderFactory>().ToSelf();
+            Bind<MultiClauseDecoratorContextFactory.Factory>().ToSelf();
 
             #endregion
 
@@ -140,6 +143,7 @@ namespace QuoteFlow.Core.DependencyResolution
 
             #region System Fields
 
+            Bind<IdSystemField>().ToSelf().InRequestScope();
             Bind<CatalogSystemField>().ToSelf().InRequestScope();
             Bind<SummarySystemField>().ToSelf().InRequestScope();
             Bind<ManufacturerSystemField>().ToSelf().InRequestScope();
@@ -192,6 +196,7 @@ namespace QuoteFlow.Core.DependencyResolution
             #region Statistics Mappers
 
             Bind<CreatorStatisticsMapper>().ToSelf();
+            //Bind<AssetIdStatisticsMapper>().ToSelf();
 
             #endregion
 

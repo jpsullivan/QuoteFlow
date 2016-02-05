@@ -28,7 +28,7 @@ namespace QuoteFlow.Core.Asset.Fields
 
         public FieldComparatorSource SortComparatorSource => Sorter == null ? null : new MappedSortComparator(Sorter);
 
-        public IEnumerable<SortField> GetSortFields(bool sortOrder)
+        public virtual IEnumerable<SortField> GetSortFields(bool sortOrder)
         {
             throw new System.NotImplementedException();
         }

@@ -153,6 +153,7 @@
     <Compile Include="Asset\AbstractAsset.cs" />
     <Compile Include="Asset\AssetFieldConstants.cs" />
     <Compile Include="Asset\AssetResult.cs" />
+    <Compile Include="Asset\Comparator\IdComparator.cs" />
     <Compile Include="Asset\Comparator\NullComparator.cs" />
     <Compile Include="Asset\Comparator\UserCachingComparer.cs" />
     <Compile Include="Asset\Context\AssetContext.cs" />
@@ -253,7 +254,6 @@
     <Compile Include="Asset\Search\SearchHandler.cs" />
     <Compile Include="Asset\Search\SearchRequest.cs" />
     <Compile Include="Asset\Search\SearchResult.cs" />
-    <Compile Include="Asset\Search\SystemClauseHandlerFactory.cs" />
     <Compile Include="Asset\Search\Util\FreeTextVisitor.cs" />
     <Compile Include="Asset\Search\Util\ISearchSortUtil.cs" />
     <Compile Include="Asset\Search\Util\SearchSortUtil.cs" />

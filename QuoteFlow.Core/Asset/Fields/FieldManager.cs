@@ -14,11 +14,12 @@ namespace QuoteFlow.Core.Asset.Fields
         private readonly ICollection<INavigableField> _navigableFields = new List<INavigableField>();
         private readonly List<ISearchableField> _searchableFields = new List<ISearchableField>(); 
 
-        public FieldManager(CatalogSystemField catalogSystemField, SummarySystemField summarySystemField,
-            ManufacturerSystemField manufacturerSystemField, CreatorSystemField creatorSystemField,
-            CostSystemField costSystemField)
+        public FieldManager(CatalogSystemField catalogSystemField, IdSystemField idSystemField, 
+            SummarySystemField summarySystemField, ManufacturerSystemField manufacturerSystemField, 
+            CreatorSystemField creatorSystemField, CostSystemField costSystemField)
         {
             _fields.Add(catalogSystemField.Id, catalogSystemField);
+            _fields.Add(idSystemField.Id, idSystemField);
             _fields.Add(summarySystemField.Id, summarySystemField);
             _fields.Add(manufacturerSystemField.Id, manufacturerSystemField);
             _fields.Add(creatorSystemField.Id, creatorSystemField);
@@ -33,8 +34,17 @@ namespace QuoteFlow.Core.Asset.Fields
                     _orderableFields.Add(orderableField);
                 }
 
-                _navigableFields.Add((INavigableField) field.Value);
-                _searchableFields.Add((ISearchableField) field.Value);
+                var value = field.Value as INavigableField;
+                if (value != null)
+                {
+                    _navigableFields.Add(value);
+                }
+
+                var item = field.Value as ISearchableField;
+                if (item != null)
+                {
+                    _searchableFields.Add(item);
+                }
             }
         }
 

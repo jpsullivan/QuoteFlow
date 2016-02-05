@@ -192,6 +192,7 @@
     <Compile Include="Asset\Fields\CostSystemField.cs" />
     <Compile Include="Asset\Fields\CreatorSystemField.cs" />
     <Compile Include="Asset\Fields\FieldManager.cs" />
+    <Compile Include="Asset\Fields\IdSystemField.cs" />
     <Compile Include="Asset\Fields\ManufacturerSystemField.cs" />
     <Compile Include="Asset\Fields\NavigableField.cs" />
     <Compile Include="Asset\Fields\Option\AssetConstantOption.cs" />
@@ -252,6 +253,9 @@
     <Compile Include="Asset\Search\Searchers\Util\CostSearcherInputHelper.cs" />
     <Compile Include="Asset\Search\Searchers\Util\ICostSearcherInputHelper.cs" />
     <Compile Include="Asset\Search\Searchers\Util\SearchContextRenderHelper.cs" />
+    <Compile Include="Asset\Search\SearchHandlerBuilderFactory.cs" />
+    <Compile Include="Asset\Search\SystemClauseHandlerFactory.cs" />
+    <Compile Include="Asset\Statistics\AssetIdStatisticsMapper.cs" />
     <Compile Include="Asset\Viewer\AssetFields.cs" />
     <Compile Include="Asset\Viewer\AssetPager.cs" />
     <Compile Include="Auditing\AuditService.cs" />
@@ -392,6 +396,8 @@
     <Compile Include="Jql\Parser\Antlr\LexerErrorHelper.cs" />
     <Compile Include="Jql\Parser\JqlParseErrorMessages.cs" />
     <Compile Include="Jql\Parser\JqlQueryParser.cs" />
+    <Compile Include="Jql\Permission\AssetClauseValueSanitizer.cs" />
+    <Compile Include="Jql\Permission\AssetLiteralSanitizer.cs" />
     <Compile Include="Jql\Permission\CatalogClauseValueSanitizer.cs" />
     <Compile Include="Jql\Permission\CatalogLiteralSanitizer.cs" />
     <Compile Include="Jql\Permission\ClauseSanitizingVisitor.cs" />
