@@ -16,7 +16,7 @@ var AssetToolbarView = Marionette.ItemView.extend({
     },
 
     /**
-     * Extract the data from the model in the format needed by the template     *
+     * Extract the data from the model in the format needed by the template.
      * @returns {Object} Data to be rendered by the template
      */
     serializeData: function () {

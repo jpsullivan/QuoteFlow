@@ -141,7 +141,7 @@ var AssetViewer = Marionette.Controller.extend({
             this.errorController.destroy();
             this.trigger("render", regions, options);
 
-            QuoteFlow.trace("jira.psycho.asset.refreshed", { id: this.model.getId() });
+            QuoteFlow.trace("quoteflow.psycho.asset.refreshed", { id: this.model.getId() });
         });
         this.listenAndRethrow(this.assetController, "replacedFocusedPanel");
         this.listenTo(this.assetController, "panelRendered", function(panel, $ctx) {

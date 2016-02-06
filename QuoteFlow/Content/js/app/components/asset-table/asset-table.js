@@ -36,7 +36,7 @@ var AssetTable = Marionette.Controller.extend({
                     pageNumber: searchResults.getPageNumber(),
                     numberOfPages: searchResults.getNumberOfPages(),
                     totalAssets: searchResults.getTotal(),
-                    currentSearch: JIRA.Issues.Application.request("issueNav:currentSearchRequest"),
+                    currentSearch: QuoteFlow.application.request("assetNav:currentSearchRequest"),
                     quoteflowHasAssets: searchResults.getQuoteflowHasAssets(),
                     hasAssets: searchResults.hasAssets()
                 };

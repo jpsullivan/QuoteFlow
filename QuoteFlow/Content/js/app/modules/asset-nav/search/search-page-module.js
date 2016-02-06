@@ -27,7 +27,8 @@ var SearchPageModule = Brace.Model.extend({
         "layouts",
         "filter",
         "jql",
-        "searchId"
+        "searchId",
+        "quoteId"
     ],
 
     defaults: {
