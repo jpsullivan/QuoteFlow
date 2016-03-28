@@ -45,13 +45,13 @@ var QuoteSidebarModule = Brace.Evented.extend({
 
         this._searchPageModule.on('change changeFilterProps', function() {
             this.filtersComponent.updateFilterHeader({
-                model: this._searchPageModule.getFilter(),
+                model: this._searchPageModule.getQuote(),
                 isDirty: this._searchPageModule.isDirty()
             });
         }, this);
 
         this.filterPanelModel.bind("change:activeLineItem", this._markFilterAsActive, this);
-        this.filterPanelModel.set("activeLineItem", this._searchPageModule.getFilter());
+        this.filterPanelModel.set("activeLineItem", this._searchPageModule.getQuote());
         this._searchPageModule.bind("change:lineItem", function(searchPageModule, newFilter) {
             this.filterPanelModel.set("activeLineItem", newFilter);
         }, this);

@@ -85,12 +85,9 @@ namespace QuoteFlow.Core.Infrastructure.Services
 		/// Returns the value that was returned by the service, or null.
 		/// </summary>
 		/// <returns> the value returned by the service, or null </returns>
-		public virtual T ReturnedValue
-		{
-			get { return _value; }
-		}
+		public virtual T ReturnedValue => _value;
 
-		/// <summary>
+        /// <summary>
 		/// Returns the value that was returned by the service, or null.
 		/// </summary>
 		/// <returns> the value returned by the service, or null </returns>

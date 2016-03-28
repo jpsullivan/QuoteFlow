@@ -3,8 +3,8 @@
 namespace QuoteFlow.Api.Infrastructure.Services
 {
     /// <summary>
-    /// This interface defines a service method call result in QuoteFlow that can contain human readable errors. New service
-    /// methods should prefer the generic <seealso cref="IServiceOutcome{T}"/>.
+    /// This interface defines a service method call result in QuoteFlow that can contain 
+    /// human readable errors. New service methods should prefer the generic <seealso cref="IServiceOutcome{T}"/>.
     /// </summary>
     public interface IServiceResult
     {

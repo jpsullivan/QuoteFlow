@@ -40,8 +40,8 @@ var SearchModule = Brace.Evented.extend({
         }
     },
 
-    getFilterId: function () {
-        var filter = this._searchPageModule.getFilter();
+    getQuoteId: function () {
+        var filter = this._searchPageModule.getQuote();
         return filter && filter.getId();
     },
 
@@ -64,7 +64,7 @@ var SearchModule = Brace.Evented.extend({
     getCurrentSearchRequest: function () {
         return {
             jql: this.getJql(),
-            filterId: this.getFilterId()
+            quoteId: this.getQuoteId()
         };
     },
 

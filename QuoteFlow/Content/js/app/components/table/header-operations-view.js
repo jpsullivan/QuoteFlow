@@ -42,7 +42,7 @@ var AssetTableHeaderOperationsView = Marionette.ItemView.extend({
         //     trigger: AJS.$(".header-views", this.$el),
         //     ajaxOptions: function() {
         //         var data = {jql: searchPageModule.getEffectiveJql()},
-        //             filter = searchPageModule.getFilter();
+        //             filter = searchPageModule.getQuote();
         //
         //         if (filter && !filter.getIsSystem()) {
         //             data.filterId = filter.getId();
@@ -104,7 +104,7 @@ var AssetTableHeaderOperationsView = Marionette.ItemView.extend({
         //     trigger: AJS.$(".header-tools", instance.$el),
         //     ajaxOptions: function() {
         //         var data,
-        //             filter = searchPageModule.getFilter();
+        //             filter = searchPageModule.getQuote();
         //
         //         data = {
         //             jql: searchPageModule.getEffectiveJql(),
@@ -169,8 +169,8 @@ var AssetTableHeaderOperationsView = Marionette.ItemView.extend({
 
         $fieldset.empty();
 
-        if (searchPageModule.getFilter() && !searchPageModule.isDirty()) {
-            AJS.$('<input type="hidden" id="filterId" />').val(searchPageModule.getFilter().getId()).appendTo($fieldset);
+        if (searchPageModule.getQuote() && !searchPageModule.isDirty()) {
+            AJS.$('<input type="hidden" id="filterId" />').val(searchPageModule.getQuote().getId()).appendTo($fieldset);
             AJS.$('<input type="hidden" id="jql" />').val("").appendTo($fieldset);
         }
         else {
@@ -181,7 +181,7 @@ var AssetTableHeaderOperationsView = Marionette.ItemView.extend({
         // The gadgets and share plugins (possibly others) get the current
         // filter/JQL from this metadata. Both plugins ignore filter-jql if
         // filter-id is set, so we only set the latter for modified filters.
-        var filter = searchPageModule.getFilter(),
+        var filter = searchPageModule.getQuote(),
             filterID = filter && filter.getId();
 
         if (filterID && !filter.getIsSystem() && !searchPageModule.isDirty()) {
