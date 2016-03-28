@@ -25,14 +25,14 @@ var SearchPageModule = Brace.Model.extend({
     namedAttributes: [
         "currentLayout",
         "layouts",
-        "filter",
+        "quote",
         "jql",
         "searchId",
-        "quoteId"
+        "selectedAsset"
     ],
 
     defaults: {
-        filter: null,
+        quote: null,
         jql: null
     },
 
@@ -42,7 +42,7 @@ var SearchPageModule = Brace.Model.extend({
         this.registerColumnPicker();
 
         // This is here instead of in defaults, because we use the defaults
-        // to reset this module's state (filter and jql) but we don't want to
+        // to reset this module's state (quote and jql) but we don't want to
         // reset the layouts.
         this.set({
             layouts: {}
@@ -59,14 +59,14 @@ var SearchPageModule = Brace.Model.extend({
             iconClass: 'icon-view-split',
             view: SplitScreenLayout
         });
-        this._onFilterChanged();
-        this.on("change:filter", this._onFilterChanged, this);
+        this._onSelectedAssetChanged();
+        this.on("change:selectedAsset", this._onSelectedAssetChanged, this);
 
         QuoteFlow.application.on("assetEditor:close", this.returnToSearch, this);
         QuoteFlow.application.on("assetEditor:loadComplete", function (model, props) {
             if (!this.standalone && !props.reason) {
                 this.searchResults.selectAssetById(model.getId(), { reason: "assetLoaded" });
-                this.searchResults.updateAssetById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getFilter() });
+                this.searchResults.updateAssetById({ id: model.getId(), action: "rowUpdate" }, { filter: this.getQuote() });
 
                 // Replace URL if issue updated successfully
                 if (model.getSku()) {
@@ -79,7 +79,7 @@ var SearchPageModule = Brace.Model.extend({
         }, this);
 
         QuoteFlow.application.on("assetEditor:saveSuccess", function (props) {
-            this.searchResults.updateAssetById({ id: props.assetId, action: "inlineEdit" }, { filter: this.getFilter() });
+            this.searchResults.updateAssetById({ id: props.assetId, action: "inlineEdit" }, { filter: this.getQuote() });
         }, this);
 
         Utilities.initializeResizeHooks();
@@ -180,15 +180,15 @@ var SearchPageModule = Brace.Model.extend({
         }
     },
 
-    _onFilterChanged: function () {
-        var previousFilter = this.previous('filter');
-        if (previousFilter) {
-            previousFilter.off('change', this.triggerChangeFilterProps, this);
+    _onSelectedAssetChanged: function () {
+        var previousAsset = this.previous('selectedAsset');
+        if (previousAsset) {
+            previousAsset.off('change', this.triggerChangeSelectedAssetProps, this);
         }
 
-        var currentFilter = this.getFilter();
-        if (currentFilter) {
-            currentFilter.on('change', this.triggerChangeFilterProps, this);
+        var currentAsset = this.getSelectedAsset();
+        if (currentAsset) {
+            currentAsset.on('change', this.triggerChangeSelectedAssetProps, this);
         }
     },
 
@@ -295,7 +295,7 @@ var SearchPageModule = Brace.Model.extend({
 
         this.filterModule = newFilterModule;
         this.filterModule.on('filterRemoved', function (props) {
-            var currentFilter = this.getFilter();
+            var currentFilter = this.getQuote();
             if (currentFilter && props.filterId === currentFilter.getId()) {
                 this.resetToBlank();
             }
@@ -366,7 +366,7 @@ var SearchPageModule = Brace.Model.extend({
         this.fullScreenAsset = fullScreenIssue;
     //     this.fullScreenAsset.bindAssetHidden(function () {
     //         QuoteFlow.application.execute("assetEditor:dismiss");
-    //         this.updateWindowTitle(this.getFilter());
+    //         this.updateWindowTitle(this.getQuote());
     //         QuoteFlow.trigger(EventTypes.NEW_CONTENT_ADDED, [this.searchContainer, ContentAddedReason.returnToSearch]);
     //    }, this);
     },
@@ -449,10 +449,10 @@ var SearchPageModule = Brace.Model.extend({
                 // If it's not a standalone issue, then we also need to update the search results.
                 //
                 // Things break if these requests are made in parallel, so force them to be serial.
-                !this.standalone && this.searchResults.updateAsset(assetUpdate, { showMessage: false, filter: this.getFilter() });
+                !this.standalone && this.searchResults.updateAsset(assetUpdate, { showMessage: false, filter: this.getQuote() });
             }, this));
         } else {
-            return this.searchResults.updateAsset(assetUpdate, { filter: this.getFilter() });
+            return this.searchResults.updateAsset(assetUpdate, { filter: this.getQuote() });
         }
     },
 
@@ -638,7 +638,7 @@ var SearchPageModule = Brace.Model.extend({
 
     getState: function () {
         var path = window.location.pathname.split("/");
-        var filter = this.getFilter();
+        var filter = this.getQuote();
 
         var state = {
             filter: filter && filter.getId(),
@@ -660,7 +660,7 @@ var SearchPageModule = Brace.Model.extend({
     _doSearch: function (options) {
         options = options || {};
         var searchOptions = {};
-        var filter = this.getFilter();
+        var filter = this.getQuote();
         searchOptions.startIndex = options.startIndex;
         if (filter) {
             searchOptions.filterId = filter.getId();
@@ -715,7 +715,7 @@ var SearchPageModule = Brace.Model.extend({
         var stateToApply = _.pick(state, Object.keys(this.namedAttributes));
         this.set(stateToApply);
         var newState = _.extend(this.toJSON(), state);
-        this.updateWindowTitle(this.getFilter());
+        this.updateWindowTitle(this.getQuote());
 
         if (isReset) {
             var jql = (state.filter && state.jql === null) ? state.filter.getJql() : state.jql;
@@ -883,7 +883,7 @@ var SearchPageModule = Brace.Model.extend({
      * @return {boolean} whether the current search is dirty (a modified filter).
      */
     isDirty: function () {
-        var filter = this.getFilter();
+        var filter = this.getQuote();
         return !!filter && filter.getJql() !== this.getEffectiveJql();
     },
 
@@ -943,7 +943,7 @@ var SearchPageModule = Brace.Model.extend({
      * @return {string} the effective JQL.
      */
     getEffectiveJql: function () {
-        var filter = this.getFilter(),
+        var filter = this.getQuote(),
             jql = this.getJql();
 
         if (_.isString(jql)) {
