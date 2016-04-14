@@ -24,7 +24,7 @@ var AssetNavCreator = {
 
     create: function($el, options) {
         var searchPageModule = this.searchPageModule = new SearchPageModule({}, {
-          initialAssetTableState: options.initialAssetTableState
+            initialAssetTableState: options.initialAssetTableState
         });
         searchPageModule.registerViewContainers({
             assetContainer: $(".asset-container"),
@@ -37,7 +37,7 @@ var AssetNavCreator = {
             searchPageModule: searchPageModule
         });
 
-       var filterModule = new SidebarModule({
+        var filterModule = new SidebarModule({
            searchPageModule: searchPageModule,
            lineItems: options.lineItems
        });

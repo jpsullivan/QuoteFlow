@@ -37,7 +37,6 @@ namespace QuoteFlow.Api.Util
             set { _errorMessages = new List<string>(value); }
         }
 
-
         public virtual ICollection<string> FlushedErrorMessages
         {
             get

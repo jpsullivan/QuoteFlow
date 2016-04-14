@@ -105,11 +105,11 @@ var AssetLayout = Marionette.LayoutView.extend({
      */
     _bringViewIssueElementIntoView: function () {
         var viewAssetQuery = this.model.get("entity").viewAssetQuery;
-        if(viewAssetQuery) {
+        if (viewAssetQuery) {
             var elementSelector;
-            if(viewAssetQuery.focusedCommentId) {
+            if (viewAssetQuery.focusedCommentId) {
                 elementSelector = "#comment-" + viewAssetQuery.focusedCommentId;
-            } else if(viewAssetQuery.attachmentSortBy || viewAssetQuery.attachmentOrder) {
+            } else if (viewAssetQuery.attachmentSortBy || viewAssetQuery.attachmentOrder) {
                 elementSelector = "#attachmentmodule";
             }
 

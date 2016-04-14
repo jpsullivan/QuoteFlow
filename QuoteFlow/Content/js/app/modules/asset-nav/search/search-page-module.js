@@ -220,10 +220,11 @@ var SearchPageModule = Brace.Model.extend({
 
     /**
      * Get jql but make sure that any requests to get jql have completed.
-     * @return {jQuery.Deferred}
+     *
+     * @return {$.Deferred}
      */
     getJqlDeferred: function () {
-        var deferred = jQuery.Deferred();
+        var deferred = $.Deferred();
         var instance = this;
         // I am adding a settimeout to fix the following case and avoid similar ones in the future.
         // I open a searcher, make some changes. Clicking the "Save" button to update the filter, I want to
@@ -409,8 +410,9 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     /**
-     * Is there an issue currently being loaded
-     * @return Boolean
+     * Is there an asset currently being loaded?
+     *
+     * @return {Boolean}
      */
     isCurrentlyLoadingAsset: function () {
         return QuoteFlow.application.request("assetEditor:isCurrentlyLoading");
@@ -435,7 +437,7 @@ var SearchPageModule = Brace.Model.extend({
     /**
      * Update the UI in response to an asset update.
      *
-     * @param {object} issueUpdate An asset update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @param {object} assetUpdate An asset update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
      * @return {jQuery.Deferred} A deferred that is resolved when the refresh completes.
      */
     updateAsset: function (assetUpdate) {
@@ -459,7 +461,7 @@ var SearchPageModule = Brace.Model.extend({
     /**
      * Update the UI in response to asset deletion.
      *
-     * @param {object} issueUpdate An asset update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
+     * @param {object} assetUpdate An asset update object (see <tt>JIRA.Issues.Utils.getUpdateCommandForDialog</tt>).
      * @return {jQuery.Deferred} A deferred that is resolved when the update completes.
      * @private
      */
@@ -534,6 +536,7 @@ var SearchPageModule = Brace.Model.extend({
         } else {
             QuoteFlow.trace("quoteflow.returned.to.search");
         }
+
         jQuery.event.trigger("updateOffsets.popout");
     },
 

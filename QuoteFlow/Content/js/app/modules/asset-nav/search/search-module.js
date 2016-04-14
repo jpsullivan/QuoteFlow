@@ -26,9 +26,7 @@ var SearchModule = Brace.Evented.extend({
     /**
      * Sorts this search using the specified JQL or fieldId.
      *
-     * @param {object} sortOptions
-     * @param {string} sortOptions.fieldId
-     * @param {string} sortOptions.jql
+     * @param {string} jql
      */
     doSort: function (jql) {
         if (jql) {

@@ -211,7 +211,9 @@ var Utilities = {
                 }
                 prevdash = false;
             }
-            if (i == maxlen) break;
+            if (i == maxlen) {
+                break;
+            }
         }
         return prevdash ? sb.toString().substr(0, sb.length - 1) : sb.join("");
     }
