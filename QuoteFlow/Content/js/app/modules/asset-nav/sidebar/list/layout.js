@@ -26,14 +26,14 @@ var SidebarListLayout = Marionette.LayoutView.extend({
      * @param {Object} options Options
      * @param {string} [options.title] Title of the module. If not provided, the module will be rendered without title markup.
      */
-    initialize: function(options) {
+    initialize: function (options) {
         options = _.defaults({}, options, {
             title: ""
         });
         this.title = options.title;
     },
 
-    templateHelpers: function() {
+    templateHelpers: function () {
         return {
             title: this.title
         };

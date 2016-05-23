@@ -40,7 +40,7 @@ var ImportSetOptionalFields = Marionette.ItemView.extend({
      * @param  {[type]} options.rawRows [description]
      * @return {[type]}         [description]
      */
-    initialize: function(options) {
+    initialize: function (options) {
         this.headers = options.headers;
 
         _.bindAll(this, 'addAssetVarRow');
@@ -69,11 +69,11 @@ var ImportSetOptionalFields = Marionette.ItemView.extend({
         }, this));
     },
 
-    showAssetVarFieldSelectionModal: function() {
+    showAssetVarFieldSelectionModal: function () {
         return this.selectAssetDialog.show();
     },
 
-    changeHeader: function(e) {
+    changeHeader: function (e) {
         var el = $(e.currentTarget);
         var index = el.prop('selectedIndex');
 
@@ -91,7 +91,7 @@ var ImportSetOptionalFields = Marionette.ItemView.extend({
      * This is of course a dirty check that doesn't guarantee 100% exact results,
      * but assuming that the input data isn't total garbage, should yield correct estimations.
      */
-    validateHeaderSelection: function(index, valueType) {
+    validateHeaderSelection: function (index, valueType) {
 
     },
 
@@ -99,7 +99,7 @@ var ImportSetOptionalFields = Marionette.ItemView.extend({
      * Gathers a random collection of data from the selected
      * header group and displays it in a table.
      */
-    showPreview: function(e) {
+    showPreview: function (e) {
         var el = $(e.currentTarget);
         var fieldGroup = el.parent();
 
@@ -134,14 +134,14 @@ var ImportSetOptionalFields = Marionette.ItemView.extend({
     /**
      *
      */
-    getSampleRowData: function(index) {
+    getSampleRowData: function (index) {
         return _.sample(this.rows.pluck(index), 3);
     },
 
     /**
      * Adds an asset var row based on the select asset var modal result.
      */
-    addAssetVarRow: function(assetVar) {
+    addAssetVarRow: function (assetVar) {
         if (assetVar === null) {
             // todo: throw some kind of validation failure
         }

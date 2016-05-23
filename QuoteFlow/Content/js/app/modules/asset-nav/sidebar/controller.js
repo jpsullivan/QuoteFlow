@@ -11,20 +11,20 @@ var LineItemsListController = require('./list/list');
  * @extends {Marionette.Controller}
  */
 var QuoteSidebarController = Marionette.Controller.extend({
-    initialize: function(options) {
-        //this._initializeDialogController();
+    initialize: function (options) {
+        // this._initializeDialogController();
         this.searchPageModule = options.searchPageModule;
 
         this._initializeCollections(options);
         this._initializeLineItemsController();
-        //this._initializeFilterHeaderController();
+        // this._initializeFilterHeaderController();
 
         // QuoteFlow.application.on("assetEditor:loadComplete", function (model, props) {
         //     console.warning("hook asset events into sidebar");
         // }, this);
     },
 
-    _initializeCollections: function(options) {
+    _initializeCollections: function (options) {
         this.lineItemsCollection = new LineItemsCollection(options.lineItems);
         this.listenTo(this.lineItemsCollection, {
             "change:favourite": function (filterModel, isFavourite) {
@@ -32,20 +32,20 @@ var QuoteSidebarController = Marionette.Controller.extend({
                     this.lineItemsCollection.remove(filterModel);
                 }
             },
-            "remove": function(filterModel) {
+            "remove": function (filterModel) {
                 this.trigger('filterRemoved', { filterId: filterModel.getId() });
             }
         });
     },
 
-    _initializeLineItemsController: function() {
+    _initializeLineItemsController: function () {
         this.lineItemsController = new LineItemsListController({
             collection: this.lineItemsCollection,
             className: "system-filters",
             errorMessage: "Failed to retrieve the line items from the server",
             loadingMessage: "Loading line items...",
             emptyMessage: "There are no line items."
-            //loginMessage: "You must be {0}logged in{1} to view the line items", '<a class="login-link" href="#"', '</a>')
+            // loginMessage: "You must be {0}logged in{1} to view the line items", '<a class="login-link" href="#"', '</a>')
         });
 
         this.lineItemsController.on("selectFilter", function (filterModel) {
@@ -54,26 +54,26 @@ var QuoteSidebarController = Marionette.Controller.extend({
         }, this);
     },
 
-    _initializeFilterHeaderController: function() {
+    _initializeFilterHeaderController: function () {
         this.headerController = new JIRA.Components.Filters.Controllers.Header();
 
-        this.listenTo(this.headerController, "saveAs", function(filterModel) {
+        this.listenTo(this.headerController, "saveAs", function (filterModel) {
             this.showSaveAsDialog(filterModel);
         });
 
-        this.listenTo(this.headerController, "save", function(filterModel) {
+        this.listenTo(this.headerController, "save", function (filterModel) {
             var filterName = AJS.escapeHtml(filterModel.getName());
 
             filterModel.saveFilter(this.searchPageModule.getEffectiveJql())
-                .done(_.bind(function() {
+                .done(_.bind(function () {
                     JIRA.Messages.showSuccessMsg(
                         AJS.I18n.getText('issuenav.filters.save.success.msg', filterName),
                         JIRA.Issues.getDefaultMessageOptions()
                     );
 
                     this.trigger("savedFilter", filterModel);
-                },this))
-                .fail(function() {
+                }, this))
+                .fail(function () {
                     JIRA.Messages.showErrorMsg(
                         AJS.I18n.getText('issuenav.filters.save.error.msg', filterName),
                         JIRA.Issues.getDefaultMessageOptions()
@@ -81,22 +81,22 @@ var QuoteSidebarController = Marionette.Controller.extend({
                 });
         });
 
-        this.listenTo(this.headerController, "discard", function() {
+        this.listenTo(this.headerController, "discard", function () {
             this.trigger("filterDiscarded");
         });
 
-        this.listenTo(this.headerController, "favourite", function(filterModel) {
+        this.listenTo(this.headerController, "favourite", function (filterModel) {
             filterModel = this._addFavouriteFilter(filterModel);
             this.highlightLineItem(filterModel);
             this.trigger("fitlerFavourited", filterModel);
         });
     },
 
-    _addFavouriteFilter: function(filterModel) {
-        var isFavourite = !!filterModel.getFavourite();
-        var isInFavouriteCollection = !!this.favouriteFiltersCollection.get(filterModel.getId());
+    _addFavouriteFilter: function (filterModel) {
+        var isFavourite = Boolean(filterModel.getFavourite());
+        var isInFavouriteCollection = Boolean(this.favouriteFiltersCollection.get(filterModel.getId()));
 
-        if ( isFavourite && !isInFavouriteCollection) {
+        if (isFavourite && !isInFavouriteCollection) {
             this.favouriteFiltersCollection.add(filterModel);
         }
 
@@ -112,7 +112,7 @@ var QuoteSidebarController = Marionette.Controller.extend({
         } else {
             var model = new JIRA.Components.Filters.Models.Filter({ id: filterId });
             model.fetch({
-                success: _.bind(function() {
+                success: _.bind(function () {
                     if (model.getFavourite()) {
                         this.favouriteFiltersCollection.add(model, {merge: true});
 
@@ -125,8 +125,8 @@ var QuoteSidebarController = Marionette.Controller.extend({
                     } else {
                         deferred.resolve(model);
                     }
-                },this),
-                error: function() {
+                }, this),
+                error: function () {
                     model.setIsValid(false);
                     deferred.reject.apply(this, arguments);
                 }
@@ -136,36 +136,36 @@ var QuoteSidebarController = Marionette.Controller.extend({
         return deferred.promise();
     },
 
-    showDeleteDialog: function(filterId) {
-        this.getFilterById(filterId).done(_.bind(function(filterModel) {
+    showDeleteDialog: function (filterId) {
+        this.getFilterById(filterId).done(_.bind(function (filterModel) {
             this.dialogController.showDeleteDialog(filterModel);
         }, this));
     },
 
-    showRenameDialog: function(filterId) {
-        this.getFilterById(filterId).done(_.bind(function(filterModel) {
+    showRenameDialog: function (filterId) {
+        this.getFilterById(filterId).done(_.bind(function (filterModel) {
             this.dialogController.showRenameDialog(filterModel);
         }, this));
     },
 
-    showCopyDialog: function(filterId) {
-        this.getFilterById(filterId).done(_.bind(function(filterModel) {
+    showCopyDialog: function (filterId) {
+        this.getFilterById(filterId).done(_.bind(function (filterModel) {
             this.dialogController.showCopyDialog(filterModel);
         }, this));
     },
 
-    showSaveAsDialog: function(filterModel) {
+    showSaveAsDialog: function (filterModel) {
         this.searchPageModule.getJqlDeferred()
-            .done(_.bind(function(jql) {
+            .done(_.bind(function (jql) {
                 this.dialogController.showSaveAsDialog(filterModel, jql);
-            },this));
+            }, this));
     },
 
-    showLineItems: function(el) {
+    showLineItems: function (el) {
         this.lineItemsController.show(el);
     },
 
-    showFilterHeader: function(options) {
+    showFilterHeader: function (options) {
         this.headerController.show({
             el: options.el,
             model: options.model,
@@ -173,24 +173,24 @@ var QuoteSidebarController = Marionette.Controller.extend({
         });
     },
 
-    updateFilterHeader: function(options) {
+    updateFilterHeader: function (options) {
         // this.headerController.update({
         //     model: options.model,
         //     isDirty: options.isDirty
         // });
     },
 
-    highlightLineItem: function(filterModel) {
+    highlightLineItem: function (filterModel) {
         this.lineItemsController.highlightLineItem(filterModel);
     },
 
-    markFilterHeaderAsInvalid: function() {
+    markFilterHeaderAsInvalid: function () {
         this.headerController.markAsInvalid();
     },
 
-    fetchSystemFilters: function() {
+    fetchSystemFilters: function () {
         return this.lineItemsCollection.fetch();
-    },
+    }
 });
 
 module.exports = QuoteSidebarController;

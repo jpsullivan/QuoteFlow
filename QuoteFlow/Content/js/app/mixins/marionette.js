@@ -24,10 +24,10 @@ var MarionetteMixins = {
          * @param {Backbone.Events} source Object that will fire the events
          * @param {string|string[]} events Event or list of events to listen for
          */
-        listenAndRethrow: function(source, events) {
+        listenAndRethrow: function (source, events) {
             events = [].concat(events);
-            _.each(events, function(event) {
-                this.listenTo(source, event, function() {
+            _.each(events, function (event) {
+                this.listenTo(source, event, function () {
                     this.trigger.apply(this, [event].concat(_.toArray(arguments)));
                 }, this);
             }, this);
@@ -44,7 +44,7 @@ var MarionetteMixins = {
          * @param callback the callback
          * @param context an optional context to use when running the callback
          */
-        addListener: function(other, event, callback, context) {
+        addListener: function (other, event, callback, context) {
             if (arguments.length < 3) { throw "The 'other', 'event', and 'callback' arguments are mandatory"; }
 
             var capitalisedEvent = event.charAt(0).toUpperCase() + event.slice(1);
@@ -59,27 +59,33 @@ var MarionetteMixins = {
                 // listener for methods
                 finalRegisterName = registerMethodName;
                 finalUnRegisterName = unregisterMethodName || braceUnregisterMethodName;
-                if (typeof other[finalRegisterName] !== 'function') { throw "object does not have method " + registerMethodName + "'"; }
-                //if (typeof other[finalUnRegisterName] !== 'function') { throw "object does not have method " + unregisterMethodName + "'"; }
+                if (typeof other[finalRegisterName] !== 'function') {
+                    throw "object does not have method " + registerMethodName + "'";
+                }
+                // if (typeof other[finalUnRegisterName] !== 'function') { throw "object does not have method " + unregisterMethodName + "'"; }
             } else {
                 // listener for brace events
                 finalRegisterName = braceRegisterMethodName;
                 finalUnRegisterName = braceUnregisterMethodName;
-                if (typeof other[finalRegisterName] !== 'function') { throw "object does not have event [" + event + "] registered'"; }
+                if (typeof other[finalRegisterName] !== 'function') {
+                    throw "object does not have event [" + event + "] registered'";
+                }
             }
 
             // register using the listen method and add to the list so we can clean up in removeListeners()
             other[finalRegisterName](callback, context);
             this._cleanerUppers = this._cleanerUppers || [];
-            this._cleanerUppers.push(function() { other[finalUnRegisterName](callback, context); });
+            this._cleanerUppers.push(function () {
+                other[finalUnRegisterName](callback, context);
+            });
         },
 
         /**
          * Removes all listeners added using <code>addListener()</code>.
          */
-        removeListeners: function() {
+        removeListeners: function () {
             if (this._cleanerUppers) {
-                _.each(this._cleanerUppers, function(cleanerUpper) {
+                _.each(this._cleanerUppers, function (cleanerUpper) {
                     cleanerUpper(); // un-register the listener
                 });
             }
@@ -98,7 +104,7 @@ var MarionetteMixins = {
          * method, you can get rid of that <div>, so the main element in your template will be the
          * root element in your template.
          */
-        unwrapTemplate: function() {
+        unwrapTemplate: function () {
             if (this.$el.parent().length) {
                 // If the template is already rendered in the page
                 var children = this.$el.children();

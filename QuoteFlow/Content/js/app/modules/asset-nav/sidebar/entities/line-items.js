@@ -12,12 +12,12 @@ var LineItemModel = require('./line-item');
 var LineItemsCollection = Brace.Collection.extend({
     model: LineItemModel,
 
-    initialize: function(models, options) {
+    initialize: function (models, options) {
         options = options || {};
         this.fetchState = options.fetchState;
     },
 
-    _setFetchState: function(state) {
+    _setFetchState: function (state) {
         var isNewSate = state !== this.fetchState;
 
         this.fetchState = state;

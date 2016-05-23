@@ -12,9 +12,9 @@ var SimpleAsset = Brace.Model.extend({
         id: null,
         sku: null
     },
-    
+
     hasAsset: function () {
-        return !!this.getId();
+        return Boolean(this.getId());
     }
 });
 

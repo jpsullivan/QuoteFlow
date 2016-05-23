@@ -4,7 +4,7 @@ var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var PagerView = Marionette.ItemView.extend({
-    template: function(data) {
+    template: function (data) {
         return _.isEmpty(data) ? "" : JST["asset-viewer/asset/pager"];
     },
 
@@ -27,7 +27,7 @@ var PagerView = Marionette.ItemView.extend({
         "change": "render"
     },
 
-    onRender: function() {
+    onRender: function () {
         if (AJS.activeShortcuts) {
             AJS.activeShortcuts["j"] && AJS.activeShortcuts["j"]._addShortcutTitle(this.$el.find(this.ui.nextAsset));
             AJS.activeShortcuts["k"] && AJS.activeShortcuts["k"]._addShortcutTitle(this.$el.find(this.ui.previousAsset));
@@ -39,9 +39,9 @@ var PagerView = Marionette.ItemView.extend({
         e.preventDefault();
         this.trigger("goBack");
 
-        //IE8 and IE9 do not return focus back to the body after pressing the Return to Search link
-        //Thus any subsequent shortcut operations will not work because the focus is wrong
-        //This is to return focus back to body
+        // IE8 and IE9 do not return focus back to the body after pressing the Return to Search link
+        // Thus any subsequent shortcut operations will not work because the focus is wrong
+        // This is to return focus back to body
         $("body").focus();
     }
 });

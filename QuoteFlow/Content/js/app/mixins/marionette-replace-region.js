@@ -57,7 +57,7 @@ var Marionette = require('backbone.marionette');
  * @extends Marionette.Region
  */
 var ReplaceRegion = Marionette.Region.extend({
-    onShow: function(view, region, options) {
+    onShow: function (view, region, options) {
         // the `view` has been shown
         this.$el.replaceWith(view.el);
     }

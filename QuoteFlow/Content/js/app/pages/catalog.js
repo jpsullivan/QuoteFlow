@@ -27,7 +27,7 @@ var CatalogPage = BaseView.extend({
     postRenderTemplate: function () { },
 
     /**
-     * 
+     *
      */
     showAssetsInteractive: function (catalogId, catalogName) {
         var view = new ShowAssetsInteractive();

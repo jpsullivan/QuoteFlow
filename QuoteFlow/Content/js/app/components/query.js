@@ -20,7 +20,6 @@ var QueryComponent = function () {
         DEFAULT_CLAUSES: ["catalog", "manufacturer", "cost", "creator"],
 
         create: function (options) {
-
             options = _.defaults(options, {
                 primaryClauses : this.DEFAULT_CLAUSES,
                 without: [],

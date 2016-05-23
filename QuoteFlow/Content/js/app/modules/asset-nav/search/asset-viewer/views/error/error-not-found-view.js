@@ -16,7 +16,7 @@ var ErrorNotFoundView = ErrorLayout.extend({
      * @param options
      * @param {boolean|function} [options.showReturnToSearchOnError=false] Whether the error views should display a 'Return to Search' link
      */
-    initialize: function(options) {
+    initialize: function (options) {
         options = options || {};
         this.showReturnToSearchOnError = options.showReturnToSearchOnError;
     },
@@ -25,9 +25,9 @@ var ErrorNotFoundView = ErrorLayout.extend({
         "click #return-to-search": "returnToSearch"
     },
 
-    serializeData: function() {
+    serializeData: function () {
         var showReturnToSearchOnError = this.showReturnToSearchOnError;
-        if (_.isFunction(showReturnToSearchOnError)){
+        if (_.isFunction(showReturnToSearchOnError)) {
             showReturnToSearchOnError = showReturnToSearchOnError();
         }
 

@@ -28,16 +28,16 @@ var AssetPage = BaseView.extend({
     postRenderTemplate: function () { },
 
     /**
-     * 
+     *
      */
-    show: function(assetId, assetName) {
+    show: function (assetId, assetName) {
         var view = new ShowAsset();
     },
 
     /**
-     * 
+     *
      */
-    edit: function(assetId, assetName) {
+    edit: function (assetId, assetName) {
         // get the bootstrapped data
         var data = window.editAssetData;
         if (data) {
@@ -52,7 +52,7 @@ var AssetPage = BaseView.extend({
 
         AJS.$(document).ready(function () {
             AJS.$('select').auiSelect2();
-        }); 
+        });
     }
 });
 
@@ -66,7 +66,7 @@ AssetPage.Router = Backbone.SubRoute.extend({
         return new AssetPage().show(assetId, assetName);
     },
 
-    edit: function(assetId, assetName) {
+    edit: function (assetId, assetName) {
         return new AssetPage().edit(assetId, assetName);
     }
 });

@@ -6,7 +6,7 @@ var CatalogController = require('./controller');
 var CatalogRouter = require('./router');
 
 /**
- * 
+ *
  */
 var CatalogModule = Marionette.Module.extend({
 
@@ -14,7 +14,7 @@ var CatalogModule = Marionette.Module.extend({
         return this.startMediator();
     },
 
-    startMediator: function() {
+    startMediator: function () {
         this.controller = new CatalogController();
 
         return new CatalogRouter({ controller: this.controller });

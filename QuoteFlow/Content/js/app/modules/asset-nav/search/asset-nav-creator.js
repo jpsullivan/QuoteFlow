@@ -22,7 +22,7 @@ var SidebarModule = require('./../sidebar/sidebar-module');
  */
 var AssetNavCreator = {
 
-    create: function($el, options) {
+    create: function ($el, options) {
         var searchPageModule = this.searchPageModule = new SearchPageModule({}, {
             initialAssetTableState: options.initialAssetTableState
         });
@@ -38,12 +38,12 @@ var AssetNavCreator = {
         });
 
         var filterModule = new SidebarModule({
-           searchPageModule: searchPageModule,
-           lineItems: options.lineItems
-       });
-       filterModule.createView({
-           $filterPanelEl: $el.find(".navigator-sidebar")
-       });
+            searchPageModule: searchPageModule,
+            lineItems: options.lineItems
+        });
+        filterModule.createView({
+            $filterPanelEl: $el.find(".navigator-sidebar")
+        });
 
         var queryModule = QueryComponent().create({
             el: $el.find("form.navigator-search"),
@@ -85,7 +85,7 @@ var AssetNavCreator = {
             }
         });
 
-        //FocusShifter.init();
+        // FocusShifter.init();
 
         var assetSearchManager = new AssetSearchManager({
             initialAssetTableState: options.initialAssetTableState,
@@ -99,11 +99,11 @@ var AssetNavCreator = {
             initialSelectedAsset: options.initialSelectedAsset
         });
 
-       var viewAssetData = issueModule.viewAssetData;
-       var assetCacheManager = new AssetCacheManager({
-           searchResults: searchModule.getResults(),
-           viewAssetData: viewAssetData
-       });
+        var viewAssetData = issueModule.viewAssetData;
+        var assetCacheManager = new AssetCacheManager({
+            searchResults: searchModule.getResults(),
+            viewAssetData: viewAssetData
+        });
 
         // TODO: FullScreenAsset will detach these elements, so get a reference now before they're not discoverable.
         var issueNavToolsElement = $el.find(".saved-search-selector");
@@ -123,7 +123,7 @@ var AssetNavCreator = {
         searchPageModule.registerFullScreenAsset(fullScreenIssue);
         searchPageModule.registerIssueSearchManager(assetSearchManager);
         searchPageModule.registerAssetCacheManager(assetCacheManager);
-        //searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
+        // searchPageModule.registerLayoutSwitcher(this.layoutSwitcherView);
 
         searchHeaderModule.registerSearch(searchModule);
         searchHeaderModule.createToolsView(issueNavToolsElement);
@@ -171,7 +171,7 @@ var AssetNavCreator = {
          * If we are inline editing the summary then open the edit dialog, we want to be sure that the summary has been
          * updated on the server first, otherwise we will be showing stale data in the edit dialog.
          */
-        //JIRA.Dialogs.BeforeShowIssueDialogHandler.add(JIRA.Issues.Api.waitForSavesToComplete);
+        // JIRA.Dialogs.BeforeShowIssueDialogHandler.add(JIRA.Issues.Api.waitForSavesToComplete);
 
 //        JIRA.Issues.overrideIssueDialogs({
 //            getIssueId: _.bind(searchPageModule.getEffectiveIssueId, searchPageModule),
@@ -185,13 +185,13 @@ var AssetNavCreator = {
         // Keyboard shortcuts ?
 
         $(document).keydown(function (e) {
-            var dialogIsVisible = $("div.aui-blanket").length > 0,
-                wasSupportedKey = (e.which === $.ui.keyCode.ENTER || e.which === $.ui.keyCode.LEFT ||
+            var dialogIsVisible = $("div.aui-blanket").length > 0;
+            var wasSupportedKey = (e.which === $.ui.keyCode.ENTER || e.which === $.ui.keyCode.LEFT ||
                     e.which === $.ui.keyCode.UP || e.which === $.ui.keyCode.RIGHT || e.which === $.ui.keyCode.DOWN);
 
             if (!dialogIsVisible && wasSupportedKey) {
-                var target = $(e.target),
-                    targetIsValid = target.is(":not(:input)");
+                var target = $(e.target);
+                var targetIsValid = target.is(":not(:input)");
 
                 if (_.isUndefined(target) || targetIsValid) {
                     if (e.which === $.ui.keyCode.ENTER) {
@@ -229,7 +229,7 @@ var AssetNavCreator = {
     /**
      * change the login url to the current state.
      */
-    changeLoginUrl: function() {
+    changeLoginUrl: function () {
         // var url = JIRA.Issues.LoginUtils.redirectUrlToCurrent();
         // $('.login-link').attr('href', url);
     }

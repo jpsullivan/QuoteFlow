@@ -27,7 +27,7 @@ var AssetToolbarView = Marionette.ItemView.extend({
      * Handler for render event, things to do after the template has been rendered
      */
     onRender: function () {
-        //TODO Why do we need to mess with the DOM here? Can we move these changes to the template?
+        // TODO Why do we need to mess with the DOM here? Can we move these changes to the template?
 
         // Ensure the comment button does not display the add comment dialog
         this.ui.commentButton.addClass("inline-comment");

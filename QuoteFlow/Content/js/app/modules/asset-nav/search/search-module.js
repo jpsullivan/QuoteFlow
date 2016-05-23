@@ -72,7 +72,7 @@ var SearchModule = Brace.Evented.extend({
      */
     isStandAloneAsset: function (state) {
         state = state || this._searchPageModule.getState();
-        return !!state.selectedAssetSku && !_.isString(state.jql) && !state.filter;
+        return Boolean(state.selectedAssetSku) && !_.isString(state.jql) && !state.filter;
     },
 
     /**
@@ -83,7 +83,7 @@ var SearchModule = Brace.Evented.extend({
      */
     onBeforeSearch: function (callback, context) {
         this._assetSearchManager.on("beforeSearch", callback, context);
-        //this._assetSearchManager.bindBeforeSearch(callback, context);
+        // this._assetSearchManager.bindBeforeSearch(callback, context);
     },
 
     /**
@@ -94,7 +94,7 @@ var SearchModule = Brace.Evented.extend({
      */
     offBeforeSearch: function (callback, context) {
         this._assetSearchManager.off("beforeSearch", callback, context);
-        //this._assetSearchManager.unbindBeforeSearch(callback, context);
+        // this._assetSearchManager.unbindBeforeSearch(callback, context);
     },
 
     /**
@@ -105,7 +105,7 @@ var SearchModule = Brace.Evented.extend({
      */
     onSearchError: function (callback, context) {
         this._assetSearchManager.on('searchError', callback, context);
-        //this._assetSearchManager.bindSearchError(callback, context);
+        // this._assetSearchManager.bindSearchError(callback, context);
     },
 
     /**
@@ -116,7 +116,7 @@ var SearchModule = Brace.Evented.extend({
      */
     offSearchError: function (callback, context) {
         this._assetSearchManager.off('searchError', callback, context);
-        //this._assetSearchManager.unbindSearchError(callback, context);
+        // this._assetSearchManager.unbindSearchError(callback, context);
     },
 
     refresh: function () {

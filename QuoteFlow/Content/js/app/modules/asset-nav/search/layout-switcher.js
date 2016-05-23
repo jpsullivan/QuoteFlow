@@ -12,11 +12,11 @@ var EventTypes = require('../util/types');
 var LayoutSwitcherView = Marionette.ItemView.extend({
     template: JST["asset/nav-search/layout-switcher"],
 
-    serializeData: function() {
+    serializeData: function () {
         return {
             layouts: this.searchPageModule.getSortedLayouts(),
             activeLayout: this.searchPageModule.getActiveLayout()
-        }
+        };
     },
 
     /**
@@ -82,14 +82,14 @@ var LayoutSwitcherView = Marionette.ItemView.extend({
      * @private
      */
     _addLayoutSwitcherTooltip: function () {
-        function getTooltipMessage() {
+        function getTooltipMessage () {
             // If there is no shortcut for this action, just display the regular text. (i.e. without the 'Type X' part)
             var shortcut = AJS.KeyboardShortcut.getKeyboardShortcutKeys('switch.search.layouts');
             if (shortcut) {
                 return AJS.I18n.getText("issuenav.layoutswitcher.button.tooltip", AJS.KeyboardShortcut.getKeyboardShortcutKeys('switch.search.layouts'));
-            } else {
-                return AJS.I18n.getText("issuenav.layoutswitcher.button.tooltip.whitout.kb.shortcut");
             }
+
+            return AJS.I18n.getText("issuenav.layoutswitcher.button.tooltip.whitout.kb.shortcut");
         }
 
         // new JIRA.Issues.Tipsy({

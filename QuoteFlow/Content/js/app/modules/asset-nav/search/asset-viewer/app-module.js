@@ -8,9 +8,11 @@ var AssetViewerAppModule = AppModule.extend({
     name: "assetViewer",
     generateMasterRequest: true,
 
-    create: function(options) {
+    create: function (options) {
         options = _.defaults({}, options, {
-            showReturnToSearchOnError: function() { return false;}
+            showReturnToSearchOnError: function () {
+                return false;
+            }
         });
 
         return new AssetViewerController({
@@ -18,7 +20,7 @@ var AssetViewerAppModule = AppModule.extend({
         });
     },
 
-    commands: function() {
+    commands: function () {
         return {
             abortPending: true,
             beforeHide: true,
@@ -31,7 +33,7 @@ var AssetViewerAppModule = AppModule.extend({
         };
     },
 
-    requests: function() {
+    requests: function () {
         return {
             loadAsset: true,
             canDismissComment: true,
@@ -41,7 +43,7 @@ var AssetViewerAppModule = AppModule.extend({
         };
     },
 
-    events: function() {
+    events: function () {
         return [
             "loadComplete",
             "loadError",

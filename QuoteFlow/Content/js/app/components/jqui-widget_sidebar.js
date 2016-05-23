@@ -10,16 +10,16 @@ var _ = require('underscore');
  * Depends:
  *   jquery.ui.widget.js
  */
-(function(a) {
+(function (a) {
     a.widget("ui.sidebar", {
 
         version: "0.1",
 
         options: {
-            minWidth: function(b) {
+            minWidth: function (b) {
                 return 50;
             },
-            maxWidth: function(b) {
+            maxWidth: function (b) {
                 return window.innerWidth;
             },
             resize: a.noop,
@@ -106,7 +106,7 @@ var _ = require('underscore');
             }
         },
 
-        updatePosition: function() {
+        updatePosition: function () {
             this._setHandlePosition();
             this._setWidth(this.handle.offset().left - this._elementLeft);
             this._persist();

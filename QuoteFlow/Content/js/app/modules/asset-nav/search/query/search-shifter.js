@@ -14,11 +14,11 @@ var Reasons = require('../../util/reasons');
  */
 var SearchShifter = Brace.Evented.extend({
 
-    initialize: function(options) {
+    initialize: function (options) {
         this.options = options;
     },
 
-    getSuggestions: function() {
+    getSuggestions: function () {
         var suggestions = options.searcherCollection.chain()
             .filter(this.shouldShow)
             .map(this.toSuggestion)
@@ -53,10 +53,10 @@ var SearchShifter = Brace.Evented.extend({
         return {
             label: searcherModel.getName(),
             value: searcherModel.getId()
-        }
+        };
     },
 
-    create: function() {
+    create: function () {
         // Only show suggestions if we're in basic mode and the search criteria are visible.
         if (!options.isBasicMode() || options.isFullScreenIssue()) {
             return null;

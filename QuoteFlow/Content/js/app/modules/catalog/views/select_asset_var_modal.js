@@ -78,10 +78,10 @@ var SelectAssetVarDialog = Marionette.ItemView.extend({
         var enabled = enable === undefined ? true : enable;
 
         this.ui.button.prop("disabled", !enabled);
-        this.ui.button.attr("aria-disabled", ""+!enabled);
+        this.ui.button.attr("aria-disabled", "" + !enabled);
     },
 
-    newAssetVarKeypressHandler: function(e) {
+    newAssetVarKeypressHandler: function (e) {
         var el = $(e.currentTarget);
 
         if (el.val() !== "") {
@@ -91,15 +91,15 @@ var SelectAssetVarDialog = Marionette.ItemView.extend({
         }
     },
 
-    _disableAssetVarsDropdown: function() {
+    _disableAssetVarsDropdown: function () {
         this.assetVarsSelect2Dropdown.select2("enable", false);
     },
 
-    _enableAssetVarsDropdown: function() {
+    _enableAssetVarsDropdown: function () {
         this.assetVarsSelect2Dropdown.select2("enable", true);
     },
 
-    _fetchAssetVars: function() {
+    _fetchAssetVars: function () {
         var assetVars = new AssetVarCollection();
         assetVars.fetch({
             data: $.param({ id: QuoteFlow.CurrentOrganizationId }),
@@ -109,7 +109,7 @@ var SelectAssetVarDialog = Marionette.ItemView.extend({
         return assetVars;
     },
 
-    _createAssetVar: function(assetVarName) {
+    _createAssetVar: function (assetVarName) {
         if (assetVarName === "") {
             // todo: return failed validation for empty string
         }
@@ -133,11 +133,11 @@ var SelectAssetVarDialog = Marionette.ItemView.extend({
         return this.assetVars.create(assetVar, { wait: true });
     },
 
-    getNewAssetVarName: function() {
+    getNewAssetVarName: function () {
         return this.ui.newAssetVarTextbox.val();
     },
 
-    getSelectedExistingAssetVar: function() {
+    getSelectedExistingAssetVar: function () {
         return this.assetVarsSelect2Dropdown.val();
     }
 });

@@ -19,7 +19,7 @@ var CatalogController = Marionette.Controller.extend({
         });
     },
 
-    importCatalog: function() {
+    importCatalog: function () {
         AsyncFileUploadManager.init(window.asyncActionUrl, 'uploadForm', window.asyncJqueryFallback);
     },
 
@@ -36,7 +36,7 @@ var CatalogController = Marionette.Controller.extend({
 
     assets: function () {},
 
-    showAssetsInteractive: function() {
+    showAssetsInteractive: function () {
         debugger;
     }
 });

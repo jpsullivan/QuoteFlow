@@ -66,11 +66,11 @@ var AssetNavController = Marionette.Controller.extend({
         });
 
        // Trigger the event on page load to make sure the controls are visible.
-       AJS.$(document).trigger("resultsWidthChanged");
+        AJS.$(document).trigger("resultsWidthChanged");
 
-       QuoteFlow.Interactive.onVerticalResize(function () {
-           $.event.trigger("updateOffsets.popout");
-       });
+        QuoteFlow.Interactive.onVerticalResize(function () {
+            $.event.trigger("updateOffsets.popout");
+        });
 
     //    // When switching layouts we need to update the height of sidebar
     //    JIRA.bind(JIRA.Events.LAYOUT_RENDERED, function () {
@@ -84,7 +84,7 @@ var AssetNavController = Marionette.Controller.extend({
          *
          * @param xhr XHR object from jQuery.ajax
          */
-        QuoteFlow.displayFailSearchMessage = function(xhr) {
+        QuoteFlow.displayFailSearchMessage = function (xhr) {
             if (xhr && xhr.statusText !== "abort") {
                 return Message.showErrorMsg(SmartAjax.buildSimpleErrorContent(xhr), {
                     closeable: true
@@ -137,7 +137,7 @@ var AssetNavController = Marionette.Controller.extend({
         });
 
         return options;
-    },
+    }
 });
 
 module.exports = AssetNavController;

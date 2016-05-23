@@ -101,15 +101,14 @@ var EnhanceLinks = {
      * @param options {Object} Options used by the enhancer
      */
     toIssue: function (options) {
-
         // Enhance Attachment options links
         AJS.$(document).on("simpleClick",
-            [
-                "#attachment-sorting-options a",
-                "#attachment-sorting-order-options a",
-                "#subtasks-show-all",
-                "#subtasks-show-open"
-            ].join(','),
+        [
+            "#attachment-sorting-options a",
+            "#attachment-sorting-order-options a",
+            "#subtasks-show-all",
+            "#subtasks-show-open"
+        ].join(','),
             function (e) {
                 if (this.href) {
                     e.preventDefault();

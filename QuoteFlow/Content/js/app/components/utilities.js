@@ -86,9 +86,9 @@ var Utilities = {
      * because they really shouldn't be used outside of a full-screen environment such
      * as the interactive asset viewer / quote builder.
      */
-    initializeResizeHooks: function() {
-        var horizontal = "horizontalResize",
-                vertical = "verticalResize";
+    initializeResizeHooks: function () {
+        var horizontal = "horizontalResize";
+        var vertical = "verticalResize";
 
         QuoteFlow.Interactive.offHorizontalResize = function (c) {
             AJS.$(document).off(horizontal, c);
@@ -159,10 +159,10 @@ var Utilities = {
         }
 
         var maxlen = 80,
-          len = title.length,
-          prevdash = false,
-          sb = [],
-          s, c;
+            len = title.length,
+            prevdash = false,
+            sb = [],
+            s, c;
 
         for (var i = 0; i < len; i++) {
             c = title[i];

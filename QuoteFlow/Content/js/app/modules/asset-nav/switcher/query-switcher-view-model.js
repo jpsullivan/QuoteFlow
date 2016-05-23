@@ -15,27 +15,27 @@ var QuerySwitcherViewModel = Brace.Model.extend({
 
     namedEvents: ["selectionChanged"],
 
-    initialize: function(attributes, options) {
+    initialize: function (attributes, options) {
         this.queryStateModel = options.queryStateModel;
-        this.queryStateModel.on("change:searchMode", _.bind(function() {
+        this.queryStateModel.on("change:searchMode", _.bind(function () {
             this.triggerSelectionChanged.apply(this, arguments);
         }, this));
     },
 
-    getSelected: function() {
+    getSelected: function () {
         var id = this.queryStateModel.getSearchMode();
         return id ? this.getCollection().get(id) : null;
     },
 
-    setSelected: function(selected) {
+    setSelected: function (selected) {
         this.queryStateModel.switchPreferredSearchMode(selected ? selected.id : null);
     },
 
-    enableSwitching: function() {
+    enableSwitching: function () {
         this.setDisabled(false);
     },
 
-    disableSwitching: function() {
+    disableSwitching: function () {
         this.setDisabled(true);
     }
 });

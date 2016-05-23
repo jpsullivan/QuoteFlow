@@ -23,7 +23,7 @@ var CatalogImportSetFields = Marionette.ItemView.extend({
         "click .tooltip": "showPreview"
     },
 
-    initialize: function(options) {
+    initialize: function (options) {
         this.rows = new Brace.Collection();
         this.rows.reset(options.rawRows);
 
@@ -31,7 +31,7 @@ var CatalogImportSetFields = Marionette.ItemView.extend({
         AJS.$('select').auiSelect2();
     },
 
-    changeHeader: function(e) {
+    changeHeader: function (e) {
         var el = $(e.currentTarget);
         var index = el.prop('selectedIndex');
 
@@ -47,7 +47,7 @@ var CatalogImportSetFields = Marionette.ItemView.extend({
      * This is of course a dirty check that doesn't guarantee 100% exact results,
      * but assuming that the input data isn't total garbage, should yield correct estimations.
      */
-    validateHeaderSelection: function(index, valueType) {
+    validateHeaderSelection: function (index, valueType) {
 
     },
 
@@ -55,7 +55,7 @@ var CatalogImportSetFields = Marionette.ItemView.extend({
      * Gathers a random collection of data from the selected
      * header group and displays it in a table.
      */
-    showPreview: function(e) {
+    showPreview: function (e) {
         var el = $(e.currentTarget);
         var fieldGroup = el.parent();
 
@@ -90,7 +90,7 @@ var CatalogImportSetFields = Marionette.ItemView.extend({
     /**
      *
      */
-    getSampleRowData: function(index) {
+    getSampleRowData: function (index) {
         return _.sample(this.rows.pluck(index), 3);
     }
 });

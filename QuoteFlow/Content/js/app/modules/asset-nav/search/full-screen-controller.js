@@ -72,7 +72,7 @@ var FullScreenLayoutController = Marionette.Controller.extend({
     },
 
     onDestroy: function () {
-        //this.fullScreenAsset.deactivate();
+        // this.fullScreenAsset.deactivate();
         this.fullScreenAsset.destroy();
         this.assetTable.destroy();
         this.searchService.destroy();

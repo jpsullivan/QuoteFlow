@@ -55,7 +55,7 @@ var AssetEditor = AssetViewer.extend({
      * @param {Object} options
      * @param {boolean|function} [options.showReturnToSearchOnError=false] Whether the error views should display a 'Return to Search' link
      */
-    initialize: function(options) {
+    initialize: function (options) {
         AssetViewer.prototype.initialize.call(this, options);
 
         // Services
@@ -72,12 +72,12 @@ var AssetEditor = AssetViewer.extend({
         this.listenAndRethrow(this.eventBus, "fieldSubmitted");
     },
 
-    _buildFieldsLoader: function() {
+    _buildFieldsLoader: function () {
         this.fieldsLoader = new JIRA.Components.IssueEditor.Services.FieldsLoader({
             contextPath: AJS.contextPath()
         });
 
-        this.listenTo(this.fieldsLoader, "fieldsLoaded", function(result) {
+        this.listenTo(this.fieldsLoader, "fieldsLoaded", function (result) {
             this.viewAssetData.updateIssue(result.assetSku, result);
 
             // Ensure assetID is a number, otherwise some checks might fail
@@ -93,13 +93,13 @@ var AssetEditor = AssetViewer.extend({
             QuoteFlow.trace("quoteflow.asset.fields.loaded", {id: result.assetId});
         });
 
-        this.listenTo(this.fieldsLoader, "fieldsError", function(result) {
+        this.listenTo(this.fieldsLoader, "fieldsError", function (result) {
             this.fieldsController.showError(result.errorCollection, result.isTimeout);
             QuoteFlow.trace("quoteflow.asset.fields.loaded", {id: result.assetId});
         });
     },
 
-    _buildIssueSaver: function() {
+    _buildIssueSaver: function () {
         this.saveInProgressManager = new SaveInProgressManager();
 
         this.issueSaver = new JIRA.Components.IssueEditor.Services.IssueSaver({
@@ -107,7 +107,7 @@ var AssetEditor = AssetViewer.extend({
             model: this.model
         });
 
-        this.listenTo(this.issueSaver, "error", function(options) {
+        this.listenTo(this.issueSaver, "error", function (options) {
             var assetId = options.assetId;
             var attemptedSavedIds = options.attemptedSavedIds;
             var response = options.response;
@@ -144,11 +144,11 @@ var AssetEditor = AssetViewer.extend({
             QuoteFlow.trace("quoteflow.asset.refreshed", {id: assetId});
         });
 
-        this.listenTo(this.issueSaver, "saveStarted", function(assetId, savedFieldIds) {
+        this.listenTo(this.issueSaver, "saveStarted", function (assetId, savedFieldIds) {
             this.eventBus.triggerSavingStarted(savedFieldIds);
         });
 
-        this.listenTo(this.issueSaver, "save", function(options) {
+        this.listenTo(this.issueSaver, "save", function (options) {
             var assetId = options.assetId;
             var assetSku = options.assetSku;
             var savedFieldIds = options.savedFieldIds;
@@ -200,25 +200,25 @@ var AssetEditor = AssetViewer.extend({
         });
     },
 
-    _buildEditIssueController: function() {
+    _buildEditIssueController: function () {
         this.editAssetController = new EditAssetController({
             issueEventBus: this.eventBus
         });
-        this.listenTo(this.editAssetController, "save", function(assetId, assetSku, toSaveIds, params, ajaxProperties) {
-            //Make sure we don't skip the SaveIssueHandler
-            //While the save request is being processed, this handler will be set to being skipped if the ViewIssue
-            //module has been closed
+        this.listenTo(this.editAssetController, "save", function (assetId, assetSku, toSaveIds, params, ajaxProperties) {
+            // Make sure we don't skip the SaveIssueHandler
+            // While the save request is being processed, this handler will be set to being skipped if the ViewIssue
+            // module has been closed
             this.issueSaver.setSkipSaveIssueSuccessHandler(false);
             this.issueSaver.save(assetId, assetSku, toSaveIds, params, ajaxProperties);
         });
         this.listenAndRethrow(this.editAssetController, "editField");
     },
 
-    _buildFieldsController: function() {
+    _buildFieldsController: function () {
         this.fieldsController = new JIRA.Components.IssueEditor.Controllers.Fields();
     },
 
-    _onAssetLoaded: function(data, meta, options) {
+    _onAssetLoaded: function (data, meta, options) {
         if (data.issue.isEditable) {
             // If this issue is NOT from the cache and this is NOT an update, request the fields from the server
             var isPrefetchEnabled = false;
@@ -249,8 +249,8 @@ var AssetEditor = AssetViewer.extend({
         }
     },
 
-    _handleUnload: function() {
-        var unloadHandler = _.bind(function() {
+    _handleUnload: function () {
+        var unloadHandler = _.bind(function () {
             var result;
             if (this.editAssetController.getDirtyEditsInProgress().length > 0) {
                 result = AJS.I18n.getText("viewissue.editing.leave");
@@ -260,12 +260,12 @@ var AssetEditor = AssetViewer.extend({
         this.unloadInterceptor = new JIRA.Components.IssueEditor.Services.UnloadInterceptor();
 
         this.unloadInterceptor.addAfterEvent(unloadHandler);
-        this.on("destroy", function() {
+        this.on("destroy", function () {
             this.unloadInterceptor.removeAfterEvent(unloadHandler);
         });
     },
 
-    _updateModel: function(data, options) {
+    _updateModel: function (data, options) {
         // Update editAssetController when whe update the model
         var editable = data.fields && data.fields.length;
         if (editable) {
@@ -281,7 +281,7 @@ var AssetEditor = AssetViewer.extend({
         AssetViewer.prototype._updateModel.call(this, data, options);
     },
 
-    _loadAssetFromDom: function(assetEntity) {
+    _loadAssetFromDom: function (assetEntity) {
         if (AJS.Meta.get("server-view-issue-is-editable")) {
             // Edit Issue Controller
             this.editAssetController.setAssetId(assetEntity.id);
@@ -301,7 +301,7 @@ var AssetEditor = AssetViewer.extend({
      *
      * @param {JIRA.Components.IssueEditor.Models.Field} field The field to edit.
      */
-    editField: function(field) {
+    editField: function (field) {
         if (!field.isEditable()) {
             return;
         }
@@ -309,7 +309,7 @@ var AssetEditor = AssetViewer.extend({
         var asset = this.model.getEntity();
         // Defer determining whether the field is present until
         // after the save completes; it may be removed by the save.
-        var execute = _.bind(function() {
+        var execute = _.bind(function () {
             if (field.matchesFieldSelector()) {
                 field.edit();
             } else {
@@ -324,7 +324,7 @@ var AssetEditor = AssetViewer.extend({
         if (!field.getSaving()) {
             execute();
         } else {
-            QuoteFlow.one(EventTypes.ISSUE_REFRESHED, function() {
+            QuoteFlow.one(EventTypes.ISSUE_REFRESHED, function () {
                 execute();
             });
         }
@@ -333,7 +333,7 @@ var AssetEditor = AssetViewer.extend({
     /**
      * Cancels any pending load so that their handlers aren't called
      */
-    abortPending: function() {
+    abortPending: function () {
         this.fieldsLoader.cancel();
         AssetViewer.prototype.abortPending.call(this);
     },
@@ -341,7 +341,7 @@ var AssetEditor = AssetViewer.extend({
     /**
      * Clean up before hiding an issue (hide UI widgets, remove metadata, etc.).
      */
-    beforeHide: function() {
+    beforeHide: function () {
         this.issueSaver.setSkipSaveIssueSuccessHandler(true);
         AssetViewer.prototype.beforeHide.call(this);
     },
@@ -351,21 +351,21 @@ var AssetEditor = AssetViewer.extend({
      *
      * @param {element} container The container the issue should be rendered into.
      */
-    setContainer: function(container) {
+    setContainer: function (container) {
         this.editAssetController.setIssueViewContext(container);
         AssetViewer.prototype.setContainer.call(this, container);
     },
 
-    dismiss: function() {
+    dismiss: function () {
         this.editAssetController.reset();
         AssetViewer.prototype.dismiss.call(this);
     },
 
-    getFields: function() {
+    getFields: function () {
         return this.editAssetController.getFields();
     },
 
-    hasSavesInProgress: function() {
+    hasSavesInProgress: function () {
         return this.saveInProgressManager.hasSavesInProgress();
     },
 
@@ -378,7 +378,7 @@ var AssetEditor = AssetViewer.extend({
      * @param {object} options.response An `IssueSaverService` response.
      * @private
      */
-    _showSaveError: function(options) {
+    _showSaveError: function (options) {
         var saveError, stopListening;
 
         saveError = new JIRA.Components.IssueEditor.Views.SaveError(options).render();
@@ -386,12 +386,12 @@ var AssetEditor = AssetViewer.extend({
 
         this.listenTo(saveError, {
             close: stopListening,
-            issueLinkClick: function(issueData) {
+            issueLinkClick: function (issueData) {
                 // Poor man preventable event
                 var ev = {
                     isPrevented: false,
-                    preventDefault: function(){ this.isPrevented = true; },
-                    isDefaultPrevented: function(){ return this.isPrevented === true; },
+                    preventDefault: function () { this.isPrevented = true; },
+                    isDefaultPrevented: function () { return this.isPrevented === true; },
                     issueData: issueData
                 };
                 this.trigger("linkInErrorMessage", ev);

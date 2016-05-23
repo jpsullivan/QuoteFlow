@@ -20,11 +20,11 @@ var LineItemModel = Brace.Model.extend({
 
     urlRoot: QuoteFlow.RootUrl + "/api/quote/lineitems",
 
-    url: function() {
+    url: function () {
         return this.urlRoot + encodeURIComponent(this.id);
     },
 
-    parse: function(response) {
+    parse: function (response) {
         return {
             id: response.id,
             name: response.name,
@@ -50,11 +50,11 @@ var LineItemModel = Brace.Model.extend({
         this.pendingRequest = SmartAjax.makeRequest({
             url: QuoteFlow.RootUrl + '/api/quote/lineitem/' + encodeURIComponent(this.getId()) + '/quantity',
             type: quantity > 0 ? 'PUT' : 'DELETE'
-        }).done(function(filterData) {
+        }).done(function (filterData) {
             instance.set(instance.parse(filterData));
         }).fail(function () {
             instance.setQuantity(prevState);
-        }).then(function() {
+        }).then(function () {
             delete instance.pendingRequest;
             QuoteFlow.trace("quoteflow.sidebar.lineitem.saved");
         });

@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using AnglicanGeek.MarkdownMailer;
 using Elmah;
 using Lucene.Net.Store;
-using Microsoft.WindowsAzure.ServiceRuntime;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Common;
@@ -123,22 +122,22 @@ namespace QuoteFlow.Core.DependencyResolution
 
         private void ConfigureForAzureStorage(ConfigurationService configuration)
         {
-            string instanceId;
-            try
-            {
-                instanceId = RoleEnvironment.CurrentRoleInstance.Id;
-            }
-            catch (Exception)
-            {
-                instanceId = Environment.MachineName;
-            }
-
-            var localIP = AuditActor.GetLocalIP().Result;
-
-            Bind<AuditingService>()
-                .ToMethod(_ => new CloudAuditingService(
-                    instanceId, localIP, configuration.Current.AzureStorageConnectionString, CloudAuditingService.AspNetActorThunk))
-                .InSingletonScope();
+//            string instanceId;
+//            try
+//            {
+//                instanceId = RoleEnvironment.CurrentRoleInstance.Id;
+//            }
+//            catch (Exception)
+//            {
+//                instanceId = Environment.MachineName;
+//            }
+//
+//            var localIP = AuditActor.GetLocalIP().Result;
+//
+//            Bind<AuditingService>()
+//                .ToMethod(_ => new CloudAuditingService(
+//                    instanceId, localIP, configuration.Current.AzureStorageConnectionString, CloudAuditingService.AspNetActorThunk))
+//                .InSingletonScope();
         }
     }
 }

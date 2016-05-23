@@ -11,7 +11,7 @@ var PagerController = Marionette.Controller.extend({
      * @param {Object} options Configuration object
      * @param {Backbone.Model} options.model Model used for the view
      */
-    initialize: function(options) {
+    initialize: function (options) {
         this.model = options.model;
     },
 
@@ -20,7 +20,7 @@ var PagerController = Marionette.Controller.extend({
      *
      * @returns {JIRA.Components.Pager.View}
      */
-    getView: function(container) {
+    getView: function (container) {
         if (!this.pagerView) {
             this.pagerView = new PagerView({
                 model: this.model,
@@ -39,21 +39,21 @@ var PagerController = Marionette.Controller.extend({
      *
      * @param {Marionette.Region|jQuery} container Container where the view should be rendered
      */
-    show: function(container) {
+    show: function (container) {
         this.getView(container).render();
     },
 
     /**
      * When the controller is closed, also close the view
      */
-    onDestroy: function(){
+    onDestroy: function () {
         this.pagerView.destroy();
     },
 
     /**
      * Unreference the view
      */
-    destroyView: function() {
+    destroyView: function () {
         delete this.pagerView;
     }
 });

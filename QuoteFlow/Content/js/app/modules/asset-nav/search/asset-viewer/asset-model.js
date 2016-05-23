@@ -107,7 +107,7 @@ var AssetModel = Brace.Model.extend({
      * @returns {boolean}
      */
     isCurrentAsset: function (assetId) {
-        return this.get("id") == assetId;
+        return this.get("id") === assetId;
     },
 
     /**
@@ -124,7 +124,7 @@ var AssetModel = Brace.Model.extend({
      *
      * @param {string} query New query
      */
-    updateAssetQuery: function(query) {
+    updateAssetQuery: function (query) {
         if (!this.hasAsset()) {
             return;
         }

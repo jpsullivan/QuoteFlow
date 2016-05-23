@@ -114,9 +114,9 @@ var SearchPageModule = Brace.Model.extend({
      * @param {boolean} [options.render=true] Whether to render the new layout.
      */
     changeLayout: function (key, options) {
-        var layout = this.getLayout(key),
-            newLayout,
-            previousLayout = this.getCurrentLayout();
+        var layout = this.getLayout(key);
+        var newLayout;
+        var previousLayout = this.getCurrentLayout();
 
         QuoteFlow.application.changingLayout = true;
 
@@ -141,7 +141,7 @@ var SearchPageModule = Brace.Model.extend({
                 this.searchResults.unselectAsset({ replace: true });
             }
 
-            //JIRA.Issues.LayoutPreferenceManager.setPreferredLayoutKey(key, options);
+            // JIRA.Issues.LayoutPreferenceManager.setPreferredLayoutKey(key, options);
 
             newLayout = new layout.view({
                 fullScreenAsset: this.fullScreenAsset,
@@ -175,7 +175,7 @@ var SearchPageModule = Brace.Model.extend({
     createLayout: function () {
         if (!this.getCurrentLayout()) {
             this.changeLayout("split-view", { render: false });
-            //this.fullScreenAsset.deactivate();
+            // this.fullScreenAsset.deactivate();
             this.fullScreenAsset.destroy();
         }
     },
@@ -316,16 +316,16 @@ var SearchPageModule = Brace.Model.extend({
 
         var columnConfig = this.columnConfig;
 
-        //TODO This event must be fired before searchResults.on*Change events in order to work
-        //Make sure that is a design feature and not a coincidence
+        // TODO This event must be fired before searchResults.on*Change events in order to work
+        // Make sure that is a design feature and not a coincidence
         this.on("change:filter", function () {
-            //When switch to another filter, clear the columns
+            // When switch to another filter, clear the columns
             columnConfig.clearFilterConfiguration();
         });
 
         this.searchResults.onColumnsChange(function (searchResults) {
             var configName = searchResults.getColumnConfig();
-            if (configName) { //There is no columnConfig on empty search
+            if (configName) { // There is no columnConfig on empty search
                 columnConfig.syncColumns(configName, searchResults.getColumns());
             }
         });
@@ -525,7 +525,7 @@ var SearchPageModule = Brace.Model.extend({
     returnToSearch: function () {
         if (this.standalone) {
             this.resetToBlank();
-            //QuoteFlow.trace("quoteflow.returned.to.search");
+            // QuoteFlow.trace("quoteflow.returned.to.search");
         } else if (this.fullScreenAsset.isVisible()) {
             this.searchResults.unselectAsset();
             QuoteFlow.application.execute("assetEditor:beforeHide");
@@ -551,7 +551,7 @@ var SearchPageModule = Brace.Model.extend({
     issueTableSearchError: function (response) {
         if (response.status !== 0) {
             // if we haven't aborted the request
-            //this.filterModule.filtersComponent.markFilterHeaderAsInvalid();
+            // this.filterModule.filtersComponent.markFilterHeaderAsInvalid();
             var errors;
             try {
                 errors = JSON.parse(response.responseText);
@@ -722,7 +722,7 @@ var SearchPageModule = Brace.Model.extend({
 
         if (isReset) {
             var jql = (state.filter && state.jql === null) ? state.filter.getJql() : state.jql;
-            this.queryModule.resetToQuery(jql, { focusQuery: options.isNewSearch }).always(_.bind(function() {
+            this.queryModule.resetToQuery(jql, { focusQuery: options.isNewSearch }).always(_.bind(function () {
                 // Hide the query view for invalid filters.
                 this.queryModule.setVisible(!state.filter || state.filter.getIsValid());
             }, this));
@@ -864,9 +864,9 @@ var SearchPageModule = Brace.Model.extend({
      * @param {number} filter The (id of) the asset to reset to.
      */
     resetToFilter: function (filter) {
-        //Selecting a filter should always attempt to use the filter columns by default
-        //This will ensure request are being made with the specified behaviour above
-        //Returning asset table request will contain the actual columns being used and
+        // Selecting a filter should always attempt to use the filter columns by default
+        // This will ensure request are being made with the specified behaviour above
+        // Returning asset table request will contain the actual columns being used and
         //  the preference state will be updated accordingly
         this.reset({
             filter: filter,
@@ -1042,7 +1042,7 @@ var SearchPageModule = Brace.Model.extend({
     /**
      * Remove all of the tipsies that are open.
      */
-    //removeOpenTipsies: JIRA.Issues.Tipsy.revalidate,
+    // removeOpenTipsies: JIRA.Issues.Tipsy.revalidate,
 
     _showIntroDialogs: function (searchPromise) {
         var filterPanelPromise = (this.filterModule && this.filterModule.filterPanelView) ? this.filterModule.filterPanelView.panelReady : undefined;

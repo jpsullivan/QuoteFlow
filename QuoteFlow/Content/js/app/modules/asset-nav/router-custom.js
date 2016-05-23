@@ -17,11 +17,11 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
         _.extend(this, options);
         _.bindAll(this, "_restoreSessionSearch", "_route");
 
-        //this.route(/^(.*?)([\?]{1}.*)?$/, this._route);
-        //this.route(/^(quote)\/([^\/\?]+)\/([^\/\?]+)\/(builder)(\?.*)?$/, this._route);
+        // this.route(/^(.*?)([\?]{1}.*)?$/, this._route);
+        // this.route(/^(quote)\/([^\/\?]+)\/([^\/\?]+)\/(builder)(\?.*)?$/, this._route);
 
         // equivalent to: "quote/:id/:name/builder/?:query"
-        //this.route(/^(quote\/)([^\/\?]+)\/([^\/\?]+)\/(builder\/)\?([^\/\?]+)(\?.*)?$/, this._route);
+        // this.route(/^(quote\/)([^\/\?]+)\/([^\/\?]+)\/(builder\/)\?([^\/\?]+)(\?.*)?$/, this._route);
         this.route("quote/:id/:name/builder/:selectedAssetId?:query", this._route);
 
         // equivalent to "quote/:id/:name/builder/"
@@ -35,7 +35,7 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
      * Overwrite Marionette.AppRouter, now it fires an event each time the URL changes
      */
     navigate: function () {
-        //this.searchPageModule.removeOpenTipsies();
+        // this.searchPageModule.removeOpenTipsies();
         this.trigger("navigate");
         Marionette.AppRouter.prototype.navigate.apply(this, arguments);
     },

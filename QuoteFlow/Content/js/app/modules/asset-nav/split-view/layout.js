@@ -85,7 +85,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         }, this));
 
         this.fullScreenAsset.hide();
-        //JIRA.Issues.overrideScrollIntoViewForSplit();
+        // JIRA.Issues.overrideScrollIntoViewForSplit();
         $.fn.scrollIntoViewForAuto();
 
         this.setElement(this.navigatorContent);
@@ -180,7 +180,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         QuoteFlow.Interactive.offVerticalResize(this._adjustHeight);
         QuoteFlow.Interactive.offVerticalResize(this._adjustNoResultsMessageHeight);
         QuoteFlow.Interactive.offHorizontalResize(this._updateSidebarPosition);
-        //QuoteFlow.Interactive.restoreScrollIntoViewForNormal();
+        // QuoteFlow.Interactive.restoreScrollIntoViewForNormal();
 
         $("body").removeClass("page-type-split");
         QuoteFlow.application.off("assetEditor:loadError", this._onIssueLoadError, this);
@@ -203,7 +203,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
             delete this._scrollLayoutOnZoom;
         }
 
-        //If the selected asset is not in the list of downloaded assets go to first asset in page.
+        // If the selected asset is not in the list of downloaded assets go to first asset in page.
         if (!this.searchResults.hasAsset(this.searchResults.getSelectedAsset().get('id'))) {
             this.searchResults.selectFirstInPage();
         }
@@ -250,7 +250,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
         });
         $(window).on('resize', this.applyResponsiveDesign);
 
-        //TF-729: Ensure we put the appropriate width classes on first render to ensure the sidebar picks up the correct width.
+        // TF-729: Ensure we put the appropriate width classes on first render to ensure the sidebar picks up the correct width.
         this._applyWidthClass();
 
         QuoteFlow.trigger(EventTypes.LAYOUT_RENDERED);
@@ -300,7 +300,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @private
      */
     _onAssetDeleted: function (asset) {
-        //Locally hide the asset to be deleted immediately so there is no delay in the UI before the new asset table
+        // Locally hide the asset to be deleted immediately so there is no delay in the UI before the new asset table
         this.listView.getAssetById(asset.id).hide();
         this._showPending();
         if (this.searchResults.hasAssets()) {

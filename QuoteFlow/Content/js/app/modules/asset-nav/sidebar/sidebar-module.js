@@ -20,7 +20,7 @@ var QuoteSidebarModule = Brace.Evented.extend({
             searchPageModule: this._searchPageModule
         });
 
-        this.filtersComponent.on("newFilter", function(newFilterModel){
+        this.filtersComponent.on("newFilter", function (newFilterModel) {
             this._searchPageModule.filterModuleSaved(newFilterModel);
 
             if (QuoteFlow.application.request("assetEditor:canDismissComment")) {
@@ -28,22 +28,22 @@ var QuoteSidebarModule = Brace.Evented.extend({
             }
         }, this);
 
-        this.filtersComponent.on("filterRemoved", function(args){
+        this.filtersComponent.on("filterRemoved", function (args) {
             this.trigger("filterRemoved", args);
         }, this);
 
         this.filtersComponent.on("filterSelected", this._onFilterSelected, this);
 
-        this.filtersComponent.on("filterDiscarded", function(){
+        this.filtersComponent.on("filterDiscarded", function () {
             this._searchPageModule.discardFilterChanges();
         }, this);
 
-        this.filtersComponent.on("savedFilter", function(filterModel) {
+        this.filtersComponent.on("savedFilter", function (filterModel) {
             this._searchPageModule.setSessionSearch(filterModel);
             this.filtersComponent.highlightLineItem(filterModel);
         }, this);
 
-        this._searchPageModule.on('change changeFilterProps', function() {
+        this._searchPageModule.on('change changeFilterProps', function () {
             this.filtersComponent.updateFilterHeader({
                 model: this._searchPageModule.getQuote(),
                 isDirty: this._searchPageModule.isDirty()
@@ -52,7 +52,7 @@ var QuoteSidebarModule = Brace.Evented.extend({
 
         this.filterPanelModel.bind("change:activeLineItem", this._markFilterAsActive, this);
         this.filterPanelModel.set("activeLineItem", this._searchPageModule.getQuote());
-        this._searchPageModule.bind("change:lineItem", function(searchPageModule, newFilter) {
+        this._searchPageModule.bind("change:lineItem", function (searchPageModule, newFilter) {
             this.filterPanelModel.set("activeLineItem", newFilter);
         }, this);
     },
@@ -62,14 +62,14 @@ var QuoteSidebarModule = Brace.Evented.extend({
      * System filter information is not present on the stand alone view asset page.
      * @return {jQuery.Deferred} a deferred that is resolved after system filter information has been retrieved.
      */
-    initSystemFilters: function() {
+    initSystemFilters: function () {
         return this.filtersComponent.fetchSystemFilters();
     },
 
     /**
      * Finds the filter with the given id. Attempts to fetch from the server if it does not exist. Returns a promise.
      */
-    getFilterById: function(filterId) {
+    getFilterById: function (filterId) {
         return this.filtersComponent.getFilterById(filterId);
     },
 
@@ -77,15 +77,15 @@ var QuoteSidebarModule = Brace.Evented.extend({
      * Creates a FilterPanelView and renders it into the provided elements
      * @param els - a map of elements
      */
-    createView: function(els) {
+    createView: function (els) {
         this.filterPanelView = new SidebarPanelView({
             el: els.$filterPanelEl,
             model: this.filterPanelModel,
             searchPageModule: this._searchPageModule,
-            easeOff: (!!jQuery.browser.msie && jQuery.browser.version <= 8) ? 500 : 0
+            easeOff: (Boolean(jQuery.browser.msie) && jQuery.browser.version <= 8) ? 500 : 0
         });
 
-        this.filterPanelView.on("render", function() {
+        this.filterPanelView.on("render", function () {
             this.filtersComponent.showLineItems(this.filterPanelView.$el.find(".quote-panel-line-items-container"));
             this._markFilterAsActive();
         }, this);
@@ -97,12 +97,12 @@ var QuoteSidebarModule = Brace.Evented.extend({
         return this.filterPanelView;
     },
 
-    _markFilterAsActive: function() {
+    _markFilterAsActive: function () {
         var activeLineItem = this.filterPanelModel.get("activeLineItem");
         this.filtersComponent.highlightLineItem(activeLineItem);
     },
 
-    _onFilterSelected: function(filterId) {
+    _onFilterSelected: function (filterId) {
         if (filterId === null) {
             this._searchPageModule.resetToBlank({isNewSearch: true});
         } else {

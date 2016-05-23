@@ -6,13 +6,13 @@ var AssetViewerAppModule = require('../asset-viewer/app-module');
 var NoInlineAppModule = AssetViewerAppModule.extend({
     name: "assetEditor",
 
-    requests: function(module) {
+    requests: function (module) {
         var viewerRequests = AssetViewerAppModule.prototype.requests.call(this, module);
         return _.extend(viewerRequests, {
-            "fields": function() {
+            "fields": function () {
                 return [];
             },
-            "hasSavesInProgress": function() {
+            "hasSavesInProgress": function () {
                 return false;
             }
         });

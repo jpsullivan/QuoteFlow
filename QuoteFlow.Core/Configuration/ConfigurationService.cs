@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
-using Microsoft.WindowsAzure.ServiceRuntime;
 using QuoteFlow.Api.Configuration;
 using QuoteFlow.Api.Configuration.Lucene;
 using QuoteFlow.Core.Configuration.Lucene;
@@ -210,14 +209,16 @@ namespace QuoteFlow.Core.Configuration
             string value = null;
             try
             {
-                if (RoleEnvironment.IsAvailable)
-                {
-                    value = RoleEnvironment.GetConfigurationSettingValue(settingName);
-                }
-                else
-                {
-                    _notInCloud = true;
-                }
+//                if (RoleEnvironment.IsAvailable)
+//                {
+//                    value = RoleEnvironment.GetConfigurationSettingValue(settingName);
+//                }
+//                else
+//                {
+//                    _notInCloud = true;
+//                }
+
+                _notInCloud = true;
             }
             catch (TypeInitializationException)
             {

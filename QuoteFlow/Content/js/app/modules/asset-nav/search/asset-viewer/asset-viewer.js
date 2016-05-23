@@ -87,7 +87,7 @@ var AssetViewer = Marionette.Controller.extend({
     _buildAssetLoader: function () {
         this.assetLoader = new AssetLoaderService();
 
-        this.listenTo(this.assetLoader, "error", function(reason, props) {
+        this.listenTo(this.assetLoader, "error", function (reason, props) {
             this.trigger("loadError", props);
             this.errorController.render(reason, props.assetSku);
             this.removeAssetMetadata();
@@ -117,11 +117,11 @@ var AssetViewer = Marionette.Controller.extend({
             showReturnToSearchOnError: options.showReturnToSearchOnError
         });
 
-        this.listenTo(this.errorController, "before:render", function() {
+        this.listenTo(this.errorController, "before:render", function () {
             this.assetController.destroy();
         });
 
-        this.listenTo(this.errorController, "returnToSearch", function() {
+        this.listenTo(this.errorController, "returnToSearch", function () {
             this.trigger("destroy");
         });
 
@@ -136,19 +136,19 @@ var AssetViewer = Marionette.Controller.extend({
         this.assetController = new AssetViewerController({
             model: this.model
         });
-        this.listenTo(this.assetController, "render", function(regions, options) {
-            //JIRA.Components.IssueViewer.Utils.hideDropdown();
+        this.listenTo(this.assetController, "render", function (regions, options) {
+            // JIRA.Components.IssueViewer.Utils.hideDropdown();
             this.errorController.destroy();
             this.trigger("render", regions, options);
 
             QuoteFlow.trace("quoteflow.psycho.asset.refreshed", { id: this.model.getId() });
         });
         this.listenAndRethrow(this.assetController, "replacedFocusedPanel");
-        this.listenTo(this.assetController, "panelRendered", function(panel, $ctx) {
+        this.listenTo(this.assetController, "panelRendered", function (panel, $ctx) {
             this.eventBus.triggerPanelRendered(panel, $ctx);
         });
-        this.listenTo(this.assetController, "destroy", function() {
-            //JIRA.Components.IssueViewer.Utils.hideDropdown();
+        this.listenTo(this.assetController, "destroy", function () {
+            // JIRA.Components.IssueViewer.Utils.hideDropdown();
         });
     },
 
@@ -170,15 +170,15 @@ var AssetViewer = Marionette.Controller.extend({
      * @param {Object} options
      * @private
      */
-    _onAssetLoaded: function(data, meta, options) {
-        //TODO Why assetEntity is not loaded from data?
+    _onAssetLoaded: function (data, meta, options) {
+        // TODO Why assetEntity is not loaded from data?
         var isPrefetchEnabled = true;
         var assetEntity = options.assetEntity;
         // TODO options.initialize, meta.mergeIntoCurrent and meta.isUpdate seems to represent the same thing
         //      Investigate if all of them are in use and are actually necessary
         var initialize = !meta.mergeIntoCurrent && options.initialize !== false;
         var isNewAsset = !this.model.isCurrentAsset(assetEntity.id);
-        var detailView = !!assetEntity.detailView;
+        var detailView = Boolean(assetEntity.detailView);
 
         // Clear previous model and errors if this is not an update or is the initial render
         if (!meta.isUpdate || initialize) {
@@ -212,7 +212,7 @@ var AssetViewer = Marionette.Controller.extend({
         // Save asset metadata
         MetadataService.addAssetMetadata(this.model);
 
-        //TODO This should be moved to assetController. Also, assetEntity has no business with bringToFocus
+        // TODO This should be moved to assetController. Also, assetEntity has no business with bringToFocus
         if (assetEntity.bringToFocus) {
             assetEntity.bringToFocus();
         }
@@ -283,7 +283,7 @@ var AssetViewer = Marionette.Controller.extend({
      *
      * @param {Object} assetEntity
      */
-    _loadAssetFromDom: function(assetEntity) {
+    _loadAssetFromDom: function (assetEntity) {
         // Many places in KickAss use the presence of an asset ID / SKU to determine if an asset is selected. We
         // can't extract either from an error message, so pass a dud ID to make it look like an asset is selected.
         if (!assetEntity.id || assetEntity.id == -1) {
@@ -303,7 +303,7 @@ var AssetViewer = Marionette.Controller.extend({
         AJS.Meta.set("serverRenderedViewAsset", null);
 
         var traceData = { id: this.getAssetId() };
-        //TODO These traces should be inside AssetController, as it has more knowledge about when the asset is loaded
+        // TODO These traces should be inside AssetController, as it has more knowledge about when the asset is loaded
         QuoteFlow.trace("quoteflow.asset.refreshed", traceData);
     },
 
@@ -324,17 +324,17 @@ var AssetViewer = Marionette.Controller.extend({
             assetEntity.id = assetSku.attr("rel") || -1;
             this._loadAssetFromDom(assetEntity);
             return $.Deferred().resolve().promise();
-        } else {
-            if (!this.canDismissComment() || !assetEntity.id) {
-                return $.Deferred().reject();
-            }
-
-            this.assetController.showLoading();
-            return this.assetLoader.load({
-                assetEntity: assetEntity,
-                viewAssetData: this.viewAssetData
-            });
         }
+
+        if (!this.canDismissComment() || !assetEntity.id) {
+            return $.Deferred().reject();
+        }
+
+        this.assetController.showLoading();
+        return this.assetLoader.load({
+            assetEntity: assetEntity,
+            viewAssetData: this.viewAssetData
+        });
     },
 
     /**
@@ -377,7 +377,7 @@ var AssetViewer = Marionette.Controller.extend({
     /**
      * Remove the asset metadata
      */
-    removeAssetMetadata: function() {
+    removeAssetMetadata: function () {
         MetadataService.removeAssetMetadata(this.model);
     },
 
@@ -406,7 +406,7 @@ var AssetViewer = Marionette.Controller.extend({
      *
      * @param query {Object} New query to use for the request
      */
-    updateAssetWithQuery: function(query) {
+    updateAssetWithQuery: function (query) {
         this.model.updateAssetQuery(query);
         this.assetLoader.update({
             viewAssetData: this.viewAssetData,
@@ -418,13 +418,13 @@ var AssetViewer = Marionette.Controller.extend({
     /**
      * Closes the AssetViewer, cleaning the model and closing all the views
      */
-    dismiss: function() {
+    dismiss: function () {
         this.model.resetToDefault();
         this.errorController.destroy();
         this.assetController.destroy();
     },
 
-    close: function() {
+    close: function () {
         if (this.canDismissComment()) {
             this.dismiss();
             this.trigger("close");

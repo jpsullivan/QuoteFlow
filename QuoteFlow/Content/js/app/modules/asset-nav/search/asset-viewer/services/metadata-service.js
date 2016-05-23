@@ -11,10 +11,10 @@ var MetadataService = {
      * Removes all the asset meta data such as asset sku from AJS.Meta
      * @param {AssetModel} model Model used to extract the values to remove
      */
-    removeAssetMetadata: function(model) {
+    removeAssetMetadata: function (model) {
         var assetEntity = model.getEntity();
         if (assetEntity.metadata) {
-            _.each(assetEntity.metadata, function(value, key) {
+            _.each(assetEntity.metadata, function (value, key) {
                 AJS.Meta.set(key, null);
             });
         } else if (AJS.Meta.get("asset-sku")) {
@@ -27,9 +27,9 @@ var MetadataService = {
      *
      * @param {AssetModel} model Model used to extract the values to add
      */
-    addAssetMetadata: function(model) {
+    addAssetMetadata: function (model) {
         var assetEntity = model.getEntity();
-        _.each(assetEntity.metadata, function(value, key) {
+        _.each(assetEntity.metadata, function (value, key) {
             AJS.Meta.set(key, value);
         });
     }

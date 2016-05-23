@@ -12,17 +12,17 @@ var LineItemsList = Marionette.CompositeView.extend({
     childView: LineItemView,
     childViewContainer: ".filter-list",
 
-    onRender: function() {
+    onRender: function () {
         this.unwrapTemplate();
     },
 
-    templateHelpers: function() {
+    templateHelpers: function () {
         return {
             className: this.className
         };
     },
 
-    unhighlightAllFilters: function() {
+    unhighlightAllFilters: function () {
         this.children.apply("unhighlight");
     },
 
@@ -32,7 +32,7 @@ var LineItemsList = Marionette.CompositeView.extend({
      *
      * @param {LineItem} filterModel Model to highlight
      */
-    highlightLineItem: function(filterModel) {
+    highlightLineItem: function (filterModel) {
         var itemView = this.children.findByModel(filterModel);
         if (itemView) {
             itemView.highlight();

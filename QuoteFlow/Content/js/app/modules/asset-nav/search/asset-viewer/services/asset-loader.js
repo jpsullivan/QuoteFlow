@@ -30,7 +30,7 @@ var AssetLoaderService = Marionette.Controller.extend({
     /**
      * @constructor
      */
-    initialize: function() {
+    initialize: function () {
         this._promiseManager = new $.RecurringPromise();
 
         this._updatingPromise = this._promiseManager.sub();
@@ -47,7 +47,7 @@ var AssetLoaderService = Marionette.Controller.extend({
     /**
      * Cancel all pending requests for our promises
      */
-    cancel: function() {
+    cancel: function () {
         this._promiseManager.reset();
     },
 
@@ -60,17 +60,17 @@ var AssetLoaderService = Marionette.Controller.extend({
      * @param {boolean} options.mergeIntoCurrent whether the update should just merge into the current asset
      */
     update: function (options) {
-        var assetEntity = options.assetEntity,
-            mergeIntoCurrent = options.mergeIntoCurrent,
-            viewAssetData = options.viewAssetData,
-            detailView = !!options.detailView;
+        var assetEntity = options.assetEntity;
+        var mergeIntoCurrent = options.mergeIntoCurrent;
+        var viewAssetData = options.viewAssetData;
+        var detailView = Boolean(options.detailView);
 
         // Add the updating task to the recurring promise
-        var deferred = new $.Deferred(),
-            recurrantControl;
+        var deferred = new $.Deferred();
+        var recurrantControl;
 
-        function genPromiseWrapper(taskKey) {
-            return function() {
+        function genPromiseWrapper (taskKey) {
+            return function () {
                 return {
                     taskKey: taskKey,
                     data: arguments,
@@ -87,7 +87,7 @@ var AssetLoaderService = Marionette.Controller.extend({
             detailView: detailView // JRA-36659: keep track of whether we are in detail view
         }).pipe(genPromiseWrapper("asset"), genPromiseWrapper("asset")));
 
-        recurrantControl.fail(function() {
+        recurrantControl.fail(function () {
             deferred.reject.apply(deferred, arguments);
         });
 
@@ -103,10 +103,10 @@ var AssetLoaderService = Marionette.Controller.extend({
 
      * @returns {jQuery.Promise}
      */
-    load: function(options) {
+    load: function (options) {
         var assetEntity = options.assetEntity;
         var viewAssetData = options.viewAssetData;
-        var detailView = !!assetEntity.detailView;
+        var detailView = Boolean(assetEntity.detailView);
 
         this._currentlyLoading = true;
 
@@ -128,7 +128,7 @@ var AssetLoaderService = Marionette.Controller.extend({
      * Checks if there is a loading in progress
      * @returns {boolean} Whether there is a loading operation in progress
      */
-    isLoading: function() {
+    isLoading: function () {
         return this._currentlyLoading;
     },
 
@@ -140,7 +140,7 @@ var AssetLoaderService = Marionette.Controller.extend({
      * @param {Object} options
      * @private
      */
-    _onLoadingDone: function(data, meta, options) {
+    _onLoadingDone: function (data, meta, options) {
         // Massage data
         var assetEntity = options.assetEntity;
         assetEntity.id = data.asset.id;
@@ -168,7 +168,7 @@ var AssetLoaderService = Marionette.Controller.extend({
      * @param {Object[]} args
      * @private
      */
-    _onUpdatingDone: function(args) {
+    _onUpdatingDone: function (args) {
         var meta = args.data[1];
         if (meta) {
             meta.isUpdate = true;
@@ -184,7 +184,7 @@ var AssetLoaderService = Marionette.Controller.extend({
      * @param {Object} options
      * @private
      */
-    _onLoadingError: function(data, meta, options) {
+    _onLoadingError: function (data, meta, options) {
         // Extract some data
         var assetEntity = options.assetEntity;
         var props = {
@@ -222,7 +222,7 @@ var AssetLoaderService = Marionette.Controller.extend({
      * @param {Object[]} args
      * @private
      */
-    _onUpdatingError: function(args) {
+    _onUpdatingError: function (args) {
         this._onLoadingError.apply(this, args.data);
     }
 });

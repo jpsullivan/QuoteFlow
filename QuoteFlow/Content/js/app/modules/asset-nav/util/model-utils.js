@@ -56,8 +56,10 @@ var ModelUtils = {
         };
 
         var methods = Array.prototype.slice.call(arguments, 1);
-        if (methods.length === 0) { methods = _.functions(object); }
-        _.each(methods, function(methodName) {
+        if (methods.length === 0) {
+            methods = _.functions(object);
+        }
+        _.each(methods, function (methodName) {
             // skip "private" methods
             if (methodName.indexOf('_') !== 0) {
                 object[methodName] = transactionalise(object[methodName]);
@@ -113,12 +115,12 @@ var ModelUtils = {
      * @return {Function} A 'restore' function that reverts the patch.
      */
     patch: function (object, name, replacement) {
-        var hadOriginal = object.hasOwnProperty(name),
-            original = object[name];
+        var hadOriginal = object.hasOwnProperty(name);
+        var original = object[name];
 
         object[name] = replacement;
 
-        return function restore() {
+        return function restore () {
             if (hadOriginal) {
                 object[name] = original;
             } else {

@@ -14,7 +14,7 @@ var AssetModule = Marionette.Module.extend({
         return this.startMediator();
     },
 
-    startMediator: function() {
+    startMediator: function () {
         this.controller = new QuoteStatusController();
 
         return new QuoteStatusRouter({ controller: this.controller });

@@ -14,12 +14,12 @@ var SaveInProgressManager = Brace.Model.extend({
 
     namedEvents: ["beforeSaving", "savingStarted", "saveSuccess", "saveError"],
 
-    initialize: function() {
+    initialize: function () {
         this.setSavesInProgress([]);
 
     },
 
-    saveIssue: function(assetId, assetSku, fieldsToSave, data, ajaxProperties) {
+    saveIssue: function (assetId, assetSku, fieldsToSave, data, ajaxProperties) {
         this.triggerBeforeSaving();
 
         var instance = this,
@@ -28,9 +28,9 @@ var SaveInProgressManager = Brace.Model.extend({
 
         allParams = _.extend(data, {
             assetId: assetId,
-            /*eslint-disable camelcase*/
+            /* eslint-disable camelcase*/
             atl_token: atl_token(),
-            /*eslint-enable camelcase*/
+            /* eslint-enable camelcase*/
             singleFieldEdit: true,
             fieldsToForcePresent: fieldsToSave
         });
@@ -39,10 +39,10 @@ var SaveInProgressManager = Brace.Model.extend({
             type: "POST",
             url: QuoteFlow.rootUrl + "/secure/AjaxIssueAction.jspa?decorator=none",
             headers: {'X-SITEMESH-OFF': true},
-            error: function(xhr) {
+            error: function (xhr) {
                 instance._handleSaveError(assetId, assetSku, fieldsToSave, xhr);
             },
-            success: function(resp, statusText, xhr, smartAjaxResult) {
+            success: function (resp, statusText, xhr, smartAjaxResult) {
                 var responseData = smartAjaxResult.data;
                 // Was the response HTML?
                 if (typeof responseData === "string") {
@@ -52,7 +52,7 @@ var SaveInProgressManager = Brace.Model.extend({
                     instance.triggerSaveSuccess(assetId, assetSku, fieldsToSave, responseData);
                 }
             },
-            complete: function() {
+            complete: function () {
                 instance.removeSaveInProgress(saveInProgress);
                 QuoteFlow.trigger(EventTypes.INLINE_EDIT_SAVE_COMPLETE);
             },
@@ -64,21 +64,21 @@ var SaveInProgressManager = Brace.Model.extend({
         this.triggerSavingStarted(assetId, fieldsToSave, data);
     },
 
-    hasSavesInProgress: function() {
+    hasSavesInProgress: function () {
         return this.getSavesInProgress().length > 0;
     },
 
-    removeSaveInProgress: function(saveInProgress) {
+    removeSaveInProgress: function (saveInProgress) {
         this.setSavesInProgress(_.without(this.getSavesInProgress(), saveInProgress));
     },
 
-    addSaveInProgress: function(saveInProgress) {
+    addSaveInProgress: function (saveInProgress) {
         var savesInProgress = this.getSavesInProgress();
         savesInProgress.push(saveInProgress);
         this.setSavesInProgress(savesInProgress);
     },
 
-    _handleHtmlResponse: function(assetId, assetSku, fieldsToSave, responseData) {
+    _handleHtmlResponse: function (assetId, assetSku, fieldsToSave, responseData) {
         var instance = this;
         var responseBody = AJS.$(AJS.extractBodyFromResponse(responseData));
         var updatedXSRFToken = responseBody.find("#atl_token").val();
@@ -96,7 +96,7 @@ var SaveInProgressManager = Brace.Model.extend({
         this.triggerSaveError(assetId, assetSku, fieldsToSave);
 
         // If clicking the XSRF dialog's "Retry" button worked, continue.
-        dialog._handleServerSuccess = function(xsrfResponseData) {
+        dialog._handleServerSuccess = function (xsrfResponseData) {
             dialog.hide();
             var data = instance._parseResponse(xsrfResponseData);
             if (data) {
@@ -106,7 +106,7 @@ var SaveInProgressManager = Brace.Model.extend({
         };
 
         // If clicking the XSRF dialog's "Retry" button didn't work, trigger a save error
-        dialog._handleServerError = function(xhr) {
+        dialog._handleServerError = function (xhr) {
             dialog.hide();
             var data = instance._parseResponse(xhr.responseText);
             if (data) {
@@ -118,7 +118,7 @@ var SaveInProgressManager = Brace.Model.extend({
         dialog.show();
     },
 
-    _handleSaveError: function(assetId, assetSku, fieldsToSave, xhr) {
+    _handleSaveError: function (assetId, assetSku, fieldsToSave, xhr) {
         var data = this._parseResponse(xhr.responseText);
         if (data) {
             AssetFieldUtil.transformFieldHtml(data);
@@ -130,7 +130,7 @@ var SaveInProgressManager = Brace.Model.extend({
      * Attempts to parse raw response to JSON. If parsing fails, shows a global error message and returns null
      * @param responseText raw http response data
      */
-    _parseResponse: function(responseText) {
+    _parseResponse: function (responseText) {
         try {
             return JSON.parse(responseText);
         } catch (e) {
@@ -140,7 +140,7 @@ var SaveInProgressManager = Brace.Model.extend({
         }
     },
 
-    _showFatalErrorMessage: function() {
+    _showFatalErrorMessage: function () {
         // TODO: would be nice to extract this error from smartAjax and make it uniform in JIRA
         var msg = '<p>' + AJS.I18n.getText("common.forms.ajax.error.dialog.heading") + '</p>' +
             '<p>' + AJS.I18n.getText("common.forms.ajax.error.dialog") + '</p>';

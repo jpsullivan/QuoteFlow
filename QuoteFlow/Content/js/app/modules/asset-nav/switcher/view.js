@@ -16,7 +16,7 @@ var SwitcherView = Brace.View.extend({
         "click .switcher-item": "_onSwitcherClick"
     },
 
-    initialize: function(options) {
+    initialize: function (options) {
         this.containerClass = options.containerClass;
         this.model = options.model;
         this.template = options.template;
@@ -28,7 +28,7 @@ var SwitcherView = Brace.View.extend({
     /**
      * Render the switcher and the currently selected item.
      */
-    render: function() {
+    render: function () {
         this._onSelect();
         this._render();
     },
@@ -52,15 +52,15 @@ var SwitcherView = Brace.View.extend({
         // });
     },
 
-    getSwitcherTrigger: function() {
+    getSwitcherTrigger: function () {
         return this.switchEl.find('.switcher-item.active');
     },
 
-    _onSelect: function() {
+    _onSelect: function () {
         var container = this.$el.find(this.containerClass).empty(),
             selected = this.model.getSelected();
         if (selected) {
-            container.attr("data-mode",selected.id);
+            container.attr("data-mode", selected.id);
             selected.getView().setElement(container).render();
         }
 
@@ -68,7 +68,7 @@ var SwitcherView = Brace.View.extend({
         this.triggerVerticalResize();
     },
 
-    _onSwitcherClick: function(event) {
+    _onSwitcherClick: function (event) {
         event.preventDefault();
         if (!this.model.getDisabled()) {
             this.model.next();
@@ -78,25 +78,25 @@ var SwitcherView = Brace.View.extend({
         }
     },
 
-    _setSwitching: function() {
+    _setSwitching: function () {
         if (this.model.getDisabled()) {
-            this.disableSwitching()
+            this.disableSwitching();
         } else {
             this.enableSwitching();
         }
     },
 
-    disableSwitching: function() {
+    disableSwitching: function () {
         this.switchEl.addClass("disabled");
-        this.getSwitcherTrigger().attr("original-title", AJS.I18n.getText("jira.jql.query.too.complex"))
+        this.getSwitcherTrigger().attr("original-title", AJS.I18n.getText("jira.jql.query.too.complex"));
     },
 
-    enableSwitching: function() {
+    enableSwitching: function () {
         this.switchEl.removeClass("disabled");
         var selected = this.model.getSelected();
-        //if we're currently in advanced mode and we're re-enabling the switcher we need to restore the original title to indicate
-        //that the link allows you to switch back to basic mode.
-        if(selected && selected.id === "advanced") {
+        // if we're currently in advanced mode and we're re-enabling the switcher we need to restore the original title to indicate
+        // that the link allows you to switch back to basic mode.
+        if (selected && selected.id === "advanced") {
             this.getSwitcherTrigger().attr("original-title", AJS.I18n.getText("issues.components.query.switchto.basic.description"));
         }
     },
@@ -106,7 +106,7 @@ var SwitcherView = Brace.View.extend({
      *
      * @param isVisible Whether the switcher should be visible.
      */
-    setVisible: function(isVisible) {
+    setVisible: function (isVisible) {
         this.switchEl.toggleClass("hidden", !isVisible);
     }
 });

@@ -72,20 +72,20 @@ var ColumnPicker = ColumnPickerComponent.extend({
                     return !instance.search.filterModule.canEditColumns();
                 },
                 shouldRefreshSearchOnActivation: function () {
-                    //If the filter has configured columns, refresh the search on activation
+                    // If the filter has configured columns, refresh the search on activation
                     return this.has("savedColumns");
                 },
                 shouldCloseOnActivation: function () {
-                    //If the filter has configured columns, close the column picker on activation
+                    // If the filter has configured columns, close the column picker on activation
                     return this.has("savedColumns");
                 },
                 shouldLoadDefaultsOnActivation: function () {
-                    //If the filter has not  configured columns, load the default columns
+                    // If the filter has not  configured columns, load the default columns
                     return !this.has("savedColumns");
                 },
                 defaultColumns: _.bind(function () {
-                    //If a filter doesn't have columns, then it will use the user columns by default
-                    //Need to retrieve the user columns and set that as the selected columns
+                    // If a filter doesn't have columns, then it will use the user columns by default
+                    // Need to retrieve the user columns and set that as the selected columns
                     if (this.userColumns.has("columns")) {
                         var deferred = jQuery.Deferred();
                         deferred.resolve(_.map(this.userColumns.getColumns(), function (item) { return { value: item }; }));
@@ -99,7 +99,7 @@ var ColumnPicker = ColumnPickerComponent.extend({
     },
 
     _getSystemColumnProvider: function () {
-        //Adding a toggle for 'system' columns if user is an admin
+        // Adding a toggle for 'system' columns if user is an admin
 
         return ColumnConfigModel.create(
             "system",
@@ -107,19 +107,19 @@ var ColumnPicker = ColumnPickerComponent.extend({
             {
                 url: _.lambda('/rest/api/2/settings/columns'),
                 defaultColumns: function () {
-                    //Load columns from our REST endpoint
+                    // Load columns from our REST endpoint
                     return jQuery.ajax(this.url()).promise();
                 },
                 shouldRefreshSearchOnActivation: function () {
-                    //Always refresh the search on activation
+                    // Always refresh the search on activation
                     return true;
                 },
                 shouldCloseOnActivation: function () {
-                    //Never close the column picker on activation
+                    // Never close the column picker on activation
                     return false;
                 },
                 shouldLoadDefaultsOnActivation: function () {
-                    //Always load the default columns
+                    // Always load the default columns
                     return true;
                 },
                 shouldRevertOnHide: function () {
@@ -140,7 +140,7 @@ var ColumnPicker = ColumnPickerComponent.extend({
     }
 });
 
-ColumnPicker.create = function(options) {
+ColumnPicker.create = function (options) {
     return new ColumnPicker(null, options);
 };
 

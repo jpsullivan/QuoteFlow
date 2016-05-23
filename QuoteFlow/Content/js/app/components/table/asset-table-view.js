@@ -1,5 +1,7 @@
 ﻿"use strict";
 
+var _ = require('underscore');
+var $ = require('jquery');
 var Marionette = require('backbone.marionette');
 
 /**
@@ -11,11 +13,11 @@ var TableView = Marionette.ItemView.extend({
         var isSystemMode = this.columnConfig.isSystemMode();
         if (isSystemMode && !currentMessage.length) {
             var $msg = JIRA.Messages.showWarningMsg(
-                //TODO Move to a template
+                // TODO Move to a template
                 AJS.I18n.getText("issues.components.column.config.system.warning.post"), {
                     id: "system-mode-warning-msg",
                     closeable: false,
-                    timeout: 0 //Don't close the message automatically
+                    timeout: 0 // Don't close the message automatically
                 }
             );
 
@@ -23,7 +25,6 @@ var TableView = Marionette.ItemView.extend({
                 e.preventDefault();
                 this.columnConfig.setCurrentColumnConfig("user");
             }, this));
-
         } else {
             currentMessage.remove();
         }

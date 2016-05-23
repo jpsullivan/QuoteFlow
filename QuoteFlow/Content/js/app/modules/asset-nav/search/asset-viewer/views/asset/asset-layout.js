@@ -95,7 +95,7 @@ var AssetLayout = Marionette.LayoutView.extend({
         }
     },
 
-    onApplyToDom: function() {
+    onApplyToDom: function () {
         this._bringViewIssueElementIntoView();
     },
 

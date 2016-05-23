@@ -20,7 +20,7 @@ var SidebarListController = Marionette.Controller.extend({
      * @param {Object} options
      * @param {LineItems} options.collection Collection of line items
      */
-    initialize: function(options) {
+    initialize: function (options) {
         this.collection = options.collection;
         this.title = options.title;
         this.className = options.className;
@@ -34,7 +34,7 @@ var SidebarListController = Marionette.Controller.extend({
      *
      * @param {jQuery} el Container for the filter's list
      */
-    show: function(el) {
+    show: function (el) {
         if (this.view) {
             this.destroy();
         }
@@ -49,7 +49,7 @@ var SidebarListController = Marionette.Controller.extend({
         this.listenTo(this.collection, "change:fetchState", this._showInternalView);
     },
 
-    destroy: function() {
+    destroy: function () {
         if (this.view) {
             this.stopListening(this.collection, "change:fetchState", this._showRegion);
             this.stopListening(this.view);
@@ -62,7 +62,7 @@ var SidebarListController = Marionette.Controller.extend({
      * Highlight a filter, unhighlights all the other filters     *
      * @param {LineItem} filterModel Model to highlight
      */
-    highlightLineItem: function(filterModel) {
+    highlightLineItem: function (filterModel) {
         if (this._listView) {
             this._listView.unhighlightAllFilters();
             if (filterModel) {
@@ -77,7 +77,7 @@ var SidebarListController = Marionette.Controller.extend({
      * @param {string} fetchState Fetch state of the collection, valid values are "error", "fetched" or ""
      * @private
      */
-    _showInternalView: function(fetchState) {
+    _showInternalView: function (fetchState) {
         switch (fetchState) {
             case "error":
                 this._showError();
@@ -91,21 +91,21 @@ var SidebarListController = Marionette.Controller.extend({
         }
     },
 
-    _showLoading: function() {
+    _showLoading: function () {
         this.view.content.show(new SidebarListMessage({
             className: this.className,
             text: this.loadingMessage
         }));
     },
 
-    _showError: function() {
+    _showError: function () {
         this.view.content.show(new SidebarListMessage({
             className: this.className,
             text: this.errorMessage
         }));
     },
 
-    _showList: function() {
+    _showList: function () {
         var collection = this.collection;
         if (collection.length) {
             this._showListWithItems();
@@ -114,11 +114,11 @@ var SidebarListController = Marionette.Controller.extend({
         }
     },
 
-    _getListViewConstructor: function() {
+    _getListViewConstructor: function () {
         return SidebarListView;
     },
 
-    _showListWithItems: function() {
+    _showListWithItems: function () {
         var ViewConstructor = this._getListViewConstructor();
         this._listView = new ViewConstructor({
             collection: this.collection,
@@ -128,31 +128,31 @@ var SidebarListController = Marionette.Controller.extend({
         this.trigger("render");
 
         // When we remove the last item from the collection, render the empty list
-        this.listenTo(this.collection, "remove", function f() {
+        this.listenTo(this.collection, "remove", function f () {
             if (!this.collection.length) {
                 this.stopListening(this.collection, "remove", f);
                 this._showEmptyList();
             }
         });
 
-        this.listenTo(this._listView, "itemview:selectFilter", function(itemView, args) {
+        this.listenTo(this._listView, "itemview:selectFilter", function (itemView, args) {
             this.trigger("selectFilter", args.model);
         });
-        this.listenTo(this._listView, "itemview:render", function() {
+        this.listenTo(this._listView, "itemview:render", function () {
             this.trigger("render");
         });
 
         this.triggerMethod("list:render", this._listView);
     },
 
-    _showEmptyList: function() {
+    _showEmptyList: function () {
         this.view.content.show(new SidebarListMessage({
             className: this.className,
             text: this.emptyMessage
         }));
 
         // When we add a new item to the collection, render the list with items
-        this.listenToOnce(this.collection, "add", function() {
+        this.listenToOnce(this.collection, "add", function () {
             this._showListWithItems();
         });
     }

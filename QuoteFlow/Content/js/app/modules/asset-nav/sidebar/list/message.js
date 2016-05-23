@@ -19,15 +19,15 @@ var ListMessage = Marionette.ItemView.extend({
      * @param {Object} options Options
      * @param {string} options.text Text to display in the message.
      */
-    initialize: function(options) {
+    initialize: function (options) {
         this.text = options.text;
     },
 
-    onRender: function() {
+    onRender: function () {
         this.unwrapTemplate();
     },
 
-    templateHelpers: function() {
+    templateHelpers: function () {
         return {
             text: this.text,
             className: this.className

@@ -37,8 +37,8 @@ var FullScreenAsset = Marionette.ItemView.extend({
             "selectedAssetChanged": function (selectedAsset) {
                 if (selectedAsset.hasAsset()) {
                     QuoteFlow.application.execute("assetEditor:abortPending");
-                    //TODO Why do we need to debounce this?
-                    //JIRA.Issues.Utils.debounce(this, "_loadIssue", issue);
+                    // TODO Why do we need to debounce this?
+                    // JIRA.Issues.Utils.debounce(this, "_loadIssue", issue);
                     this.show({
                         id: selectedAsset.getId(),
                         key: selectedAsset.getKey(),
@@ -52,8 +52,8 @@ var FullScreenAsset = Marionette.ItemView.extend({
 //                        QuoteFlow.trace("quoteflow.psycho.returned.to.search");
                         QuoteFlow.application.execute("analytics:trigger", 'kickass.returntosearch');
                     }
-                    //TODO Why the full $navigatorContent is marked as pending?
-                    //this.$navigatorContent.removeClass("pending");
+                    // TODO Why the full $navigatorContent is marked as pending?
+                    // this.$navigatorContent.removeClass("pending");
                 }
             }
         });
@@ -100,7 +100,7 @@ var FullScreenAsset = Marionette.ItemView.extend({
             this.assetContainer.insertBefore(this.searchContainer);
             this.searchContainer.detach();
 
-            //QuoteFlow.trace("jira.psycho.issue.refreshed", { id: JIRA.Issues.Application.request("assetEditor:getIssueId") });
+            // QuoteFlow.trace("jira.psycho.issue.refreshed", { id: JIRA.Issues.Application.request("assetEditor:getIssueId") });
             QuoteFlow.application.trigger(EventTypes.NEW_CONTENT_ADDED, [this.assetContainer, ContentAddedReason.pageLoad]);
         }
     },

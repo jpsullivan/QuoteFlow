@@ -28,13 +28,13 @@ var ImportAssetVarRow = Marionette.ItemView.extend({
         };
     },
 
-    onRender: function() {
-        _.defer(function() {
+    onRender: function () {
+        _.defer(function () {
             AJS.$('select').auiSelect2();
         });
     },
 
-    changeHeader: function(e) {
+    changeHeader: function (e) {
         var el = $(e.currentTarget);
         var index = el.prop('selectedIndex');
 
@@ -53,7 +53,7 @@ var ImportAssetVarRow = Marionette.ItemView.extend({
      * results, but assuming that the input data isn't total garbage, should
      * yield correct estimations.
      */
-    validateHeaderSelection: function(index, valueType) {
+    validateHeaderSelection: function (index, valueType) {
         // ahem...
     },
 
@@ -61,7 +61,7 @@ var ImportAssetVarRow = Marionette.ItemView.extend({
      * Gathers a random collection of data from the selected
      * header group and displays it in a table.
      */
-    showPreview: function(e) {
+    showPreview: function (e) {
         var el = $(e.currentTarget);
         var fieldGroup = el.parent();
 
@@ -96,14 +96,14 @@ var ImportAssetVarRow = Marionette.ItemView.extend({
     /**
      *
      */
-    getSampleRowData: function(index) {
+    getSampleRowData: function (index) {
         return _.sample(this.rows.pluck(index), 3);
     },
 
     /**
      * Removes the asset var row from the table. Disposes the view.
      */
-    removeRow: function() {
+    removeRow: function () {
         this.destroy();
     }
 });

@@ -47,7 +47,7 @@ var LinkRegion = Marionette.Region.extend({
      * Method used to open (i.e. inject a view) this region.
      * @param {Backbone.View} view View to inject
      */
-    open: function(view) {
+    open: function (view) {
         this.$el.append(view.$el.children());
         view.setElement(this.$el);
     }

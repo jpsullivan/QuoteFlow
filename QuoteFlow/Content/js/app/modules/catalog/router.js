@@ -1,7 +1,6 @@
 ﻿"use strict";
 
 var Marionette = require('backbone.marionette');
-var CatalogController = require('./controller');
 
 /**
  *

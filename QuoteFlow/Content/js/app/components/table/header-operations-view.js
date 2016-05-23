@@ -11,7 +11,7 @@ var Tipsy = require('@atlassian/aui/lib/js/aui/tipsy');
  */
 var AssetTableHeaderOperationsView = Marionette.ItemView.extend({
 
-    initialize: function(options) {
+    initialize: function (options) {
         _.bindAll(this,
             "_onSearchSuccess",
             "_updateFilterPageResources");
@@ -25,7 +25,7 @@ var AssetTableHeaderOperationsView = Marionette.ItemView.extend({
         this._results.onNewPayload(this._onSearchSuccess);
     },
 
-    initViews: function() {
+    initViews: function () {
         var searchPageModule = this.searchPageModule;
         searchPageModule.on("change", this._updateFilterPageResources);
         this._updateFilterPageResources();
@@ -73,18 +73,18 @@ var AssetTableHeaderOperationsView = Marionette.ItemView.extend({
     },
 
     initTools: function () {
-        var instance = this,
-            searchPageModule = this.searchPageModule;
+        var instance = this;
+        var searchPageModule = this.searchPageModule;
 
         // override use-cols click to use user columns
-        AJS.$("body").delegate("#use-cols", "click", function(e) {
+        AJS.$("body").delegate("#use-cols", "click", function (e) {
             e.preventDefault();
             instance.searchPageModule.columnConfig.setCurrentColumnConfig("user");
             instance.searchPageModule.columnConfig.refreshSearchWithColumns();
         });
 
         // override use-filter-cols click to use filter columns
-        AJS.$("body").delegate("#use-filter-cols", "click", function(e) {
+        AJS.$("body").delegate("#use-filter-cols", "click", function (e) {
             e.preventDefault();
             instance.searchPageModule.columnConfig.setCurrentColumnConfig("filter");
             instance.searchPageModule.columnConfig.refreshSearchWithColumns();
@@ -146,34 +146,33 @@ var AssetTableHeaderOperationsView = Marionette.ItemView.extend({
         // });
     },
 
-    initShare: function() {
-        //Init the tipsy tooltip for the share button
+    initShare: function () {
+        // Init the tipsy tooltip for the share button
         // new Tipsy({
         //     el: this.$el.find(".issuenav-share"),
         //     showCondition: ":not(.active)"
         // });
     },
 
-    _onSearchSuccess: function() {
-        //JRADEV-18219 Only hide header-tools. header-views should always be visible, even for searches with 0 results
+    _onSearchSuccess: function () {
+        // JRADEV-18219 Only hide header-tools. header-views should always be visible, even for searches with 0 results
         AJS.$(".header-tools").toggle(this.search.getResults().getDisplayableTotal() > 0);
     },
 
-    _updateFilterPageResources: function() {
+    _updateFilterPageResources: function () {
         // These hidden input params are used by javascript in com.atlassian.jira.gadgets:searchrequestview-charts
         // to load custom dialogs for chart / dashboard view menu items
         // The '.operations-view-data .parameters' element updates AJS.params, which is a legacy bus for passing
         // variables around the page
-        var $fieldset = this.$el.find('.operations-view-data > fieldset'),
-            searchPageModule = this.searchPageModule;
+        var $fieldset = this.$el.find('.operations-view-data > fieldset');
+        var searchPageModule = this.searchPageModule;
 
         $fieldset.empty();
 
         if (searchPageModule.getQuote() && !searchPageModule.isDirty()) {
             AJS.$('<input type="hidden" id="filterId" />').val(searchPageModule.getQuote().getId()).appendTo($fieldset);
             AJS.$('<input type="hidden" id="jql" />').val("").appendTo($fieldset);
-        }
-        else {
+        } else {
             AJS.$('<input type="hidden" id="filterId" />').val("");
             AJS.$('<input type="hidden" id="jql" />').val(searchPageModule.getJql()).appendTo($fieldset);
         }
@@ -181,8 +180,8 @@ var AssetTableHeaderOperationsView = Marionette.ItemView.extend({
         // The gadgets and share plugins (possibly others) get the current
         // filter/JQL from this metadata. Both plugins ignore filter-jql if
         // filter-id is set, so we only set the latter for modified filters.
-        var filter = searchPageModule.getQuote(),
-            filterID = filter && filter.getId();
+        var filter = searchPageModule.getQuote();
+        var filterID = filter && filter.getId();
 
         if (filterID && !filter.getIsSystem() && !searchPageModule.isDirty()) {
             AJS.Meta.set("filter-id", filterID);
@@ -196,21 +195,21 @@ var AssetTableHeaderOperationsView = Marionette.ItemView.extend({
     /**
      * Utility timeout keeper container for starting and ending the spinner icon on dropdown menu
      */
-    _spinnerTimeoutKeeper: function(element) {
+    _spinnerTimeoutKeeper: function (element) {
         var spinnerTimeout;
 
         return {
-            start: function() {
+            start: function () {
                 if (spinnerTimeout) {
                     spinnerTimeout = clearTimeout(spinnerTimeout);
                 }
-                spinnerTimeout = setTimeout(function() {
+                spinnerTimeout = setTimeout(function () {
                     spinnerTimeout = undefined;
                     AJS.$(element).addClass("spinner");
                 }, 1000);
             },
 
-            end: function() {
+            end: function () {
                 spinnerTimeout = clearTimeout(spinnerTimeout);
                 AJS.$(element).removeClass("spinner");
             }

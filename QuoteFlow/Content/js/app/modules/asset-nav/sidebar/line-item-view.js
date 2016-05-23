@@ -21,16 +21,16 @@ var LineItemView = Marionette.ItemView.extend({
         "change": "render"
     },
 
-    onRender: function() {
+    onRender: function () {
         this.unwrapTemplate();
     },
 
-    highlight: function() {
+    highlight: function () {
         this.ui.filterLink.addClass("active");
         this.ui.filterLink.scrollIntoView();
     },
 
-    unhighlight: function() {
+    unhighlight: function () {
         this.ui.filterLink.removeClass("active");
     }
 });

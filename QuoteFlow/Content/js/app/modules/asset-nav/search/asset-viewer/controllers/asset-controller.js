@@ -135,13 +135,13 @@ var AssetController = Marionette.Controller.extend({
                 // this.bodyView.infoPanels.show(this.infoPanelsView);
 
                 this.trigger("render",
-                {
-                    pager: this.view.$(this.headerView.pager.el)
-                },
-                {
-                    loadedFromDom: false,
-                    assetId: this.model.getId()
-                });
+                    {
+                        pager: this.view.$(this.headerView.pager.el)
+                    },
+                    {
+                        loadedFromDom: false,
+                        assetId: this.model.getId()
+                    });
             }
         });
     },
@@ -163,7 +163,7 @@ var AssetController = Marionette.Controller.extend({
              * @param {jQuery} el DOMElement that contains the pre-rendered markup for the view
              * @ignore
              */
-            function updateRegionFromDom(region, view, el) {
+            function updateRegionFromDom (region, view, el) {
                 view.setElement(el);
                 view.applyToDom();
                 region.attachView(view);

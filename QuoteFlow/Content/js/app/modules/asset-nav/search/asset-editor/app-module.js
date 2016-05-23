@@ -8,9 +8,9 @@ var AssetEditorAppModule = AssetViewerAppModule.extend({
     name: "assetEditor",
     generateMasterRequest: true,
 
-    create: function(options) {
+    create: function (options) {
         options = _.defaults({}, options, {
-            showReturnToSearchOnError: function() { return false;}
+            showReturnToSearchOnError: function () { return false;}
         });
 
         return new AssetViewerController({
@@ -18,14 +18,14 @@ var AssetEditorAppModule = AssetViewerAppModule.extend({
         });
     },
 
-    commands: function(module) {
+    commands: function (module) {
         var viewerCommands = AssetViewerAppModule.prototype.commands.call(this, module);
         return _.extend(viewerCommands, {
             "editField": true
         });
     },
 
-    requests: function(module) {
+    requests: function (module) {
         var viewerRequests = AssetViewerAppModule.prototype.requests.call(this, module);
         return _.extend(viewerRequests, {
             "fields": function () {
@@ -35,7 +35,7 @@ var AssetEditorAppModule = AssetViewerAppModule.extend({
         });
     },
 
-    events: function(module) {
+    events: function (module) {
         var viewerEvents = AssetViewerAppModule.prototype.events.call(this, module);
 
         return viewerEvents.concat([

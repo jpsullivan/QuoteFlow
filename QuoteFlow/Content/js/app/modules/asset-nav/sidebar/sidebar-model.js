@@ -53,11 +53,11 @@ var QuoteSidebarModel = Brace.Model.extend({
     },
 
     shouldShowDockIntro: function () {
-        return !this.isDocked() &&!this.isDockedPrefGiven();
+        return !this.isDocked() && !this.isDockedPrefGiven();
     },
 
     isExpanded: function () {
-        //Showing dock intro should collapse the filter panel
+        // Showing dock intro should collapse the filter panel
         return this.shouldShowDockIntro() ? false : this.isDocked();
     },
 
@@ -67,7 +67,7 @@ var QuoteSidebarModel = Brace.Model.extend({
      */
     isDocked: function () {
         var storage = this._getStorage();
-        //dock the sidebar by default or if the user has chosen to do so.
+        // dock the sidebar by default or if the user has chosen to do so.
         return storage.getItem(this.IS_DOCKED_STORAGE_KEY) === null || storage.getItem(this.IS_DOCKED_STORAGE_KEY) === "true";
     }
 });

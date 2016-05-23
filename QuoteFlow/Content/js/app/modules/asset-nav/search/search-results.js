@@ -122,9 +122,9 @@ var SearchResults = Brace.Model.extend({
     removeAsset: function (id) {
         id = parseInt(id, 10);
 
-        var isFirstAsset = this.getAssetIds()[0] === id,
-            isHighlighted = this.getHighlightedAsset().get("id") === id,
-            isLastAsset = _.last(this.getAssetIds()) === id;
+        var isFirstAsset = this.getAssetIds()[0] === id;
+        var isHighlighted = this.getHighlightedAsset().get("id") === id;
+        var isLastAsset = _.last(this.getAssetIds()) === id;
 
         if (isHighlighted) {
             if (!isLastAsset) {
@@ -164,9 +164,9 @@ var SearchResults = Brace.Model.extend({
      * @return {jQuery.Deferred} A deferred that is resolved when the update completes.
      */
     updateAsset: function (assetUpdate, options) {
-        var isDelete = assetUpdate.action === "delete",
-            assetId = assetUpdate.id,
-            promises = [];
+        var isDelete = assetUpdate.action === "delete";
+        var assetId = assetUpdate.id;
+        var promises = [];
 
         options = _.defaults({}, options, {
             showMessage: true,
@@ -177,20 +177,20 @@ var SearchResults = Brace.Model.extend({
             this.removeAsset(assetId);
             options.showMessage && this._notifyOfAssetUpdate(assetUpdate);
             return $.Deferred().resolve().promise();
-        } else {
-            return this.getResultForId(assetId, options.filter).done(_.bind(function (entity) {
-                _.each(this.assetUpdateCallbacks, function (callback) {
-                    var result = callback.handler.call(callback.ctx || window, assetId, entity, assetUpdate);
-                    if (result && result.promise) {
-                        promises.push(result);
-                    }
-                });
-
-                $.when(promises).done(_.bind(function () {
-                    options.showMessage && this._notifyOfAssetUpdate(assetUpdate);
-                }, this));
-            }, this));
         }
+
+        return this.getResultForId(assetId, options.filter).done(_.bind(function (entity) {
+            _.each(this.assetUpdateCallbacks, function (callback) {
+                var result = callback.handler.call(callback.ctx || window, assetId, entity, assetUpdate);
+                if (result && result.promise) {
+                    promises.push(result);
+                }
+            });
+
+            $.when(promises).done(_.bind(function () {
+                options.showMessage && this._notifyOfAssetUpdate(assetUpdate);
+            }, this));
+        }, this));
     },
 
     _notifyOfAssetUpdate: function (assetUpdate) {
@@ -278,10 +278,10 @@ var SearchResults = Brace.Model.extend({
     },
 
     selectAssetById: function (id, options) {
-        if (!id) {
-            this.unselectAsset();
-        } else {
+        if (id) {
             this._selectExistingAssetById(id, options);
+        } else {
+            this.unselectAsset();
         }
     },
 
@@ -380,7 +380,7 @@ var SearchResults = Brace.Model.extend({
 
         if (this.getTable()) {
             var result = this.getTable();
-            this.setTable(null, { silent: true }); //do not trigger a new search
+            this.setTable(null, { silent: true }); // do not trigger a new search
             _.defer(function () {
                 console.log('quoteflow.search.finished');
             });
@@ -400,9 +400,9 @@ var SearchResults = Brace.Model.extend({
         var deferred = $.Deferred();
         this._assetSearchManager.getRowsForIds(ids, options)
         .done(function (result) {
-            //HACK - The REST endpoint for splitview always returns columnConfig="user", which is very
-            //wrong. We can update the columnConfig only for listview, as that REST endpoint is the one
-            //returning the good values.
+            // HACK - The REST endpoint for splitview always returns columnConfig="user", which is very
+            // wrong. We can update the columnConfig only for listview, as that REST endpoint is the one
+            // returning the good values.
             var isSplitViewResponse = _.isArray(result.table);
             if (!isSplitViewResponse) {
                 instance.setColumnConfig(result.columnConfig);
@@ -433,11 +433,11 @@ var SearchResults = Brace.Model.extend({
     },
 
     hasSelectedAsset: function () {
-        return !!this.getSelectedAsset().get("id");
+        return Boolean(this.getSelectedAsset().get("id"));
     },
 
     hasHighlightedAsset: function () {
-        return !!this.getHighlightedAsset().get("id");
+        return Boolean(this.getHighlightedAsset().get("id"));
     },
 
     getPageAssetIds: function () {
@@ -585,7 +585,7 @@ var SearchResults = Brace.Model.extend({
 
         // Highlighting an asset updates the startIndex to ensure it is on the current page.
         var ID = this.getAssetIds()[startIndex];
-        if(!ID){
+        if (!ID) {
             // fallback
             return $.Deferred().resolve().promise();
         }
@@ -696,8 +696,8 @@ var SearchResults = Brace.Model.extend({
      * @private
      */
     _getStartIndexForAssetId: function (id) {
-        var assetIndex = _.indexOf(this.getAssetIds(), id),
-            pageSize = this._pageSize();
+        var assetIndex = _.indexOf(this.getAssetIds(), id);
+        var pageSize = this._pageSize();
 
         return Math.max(0, Math.floor(assetIndex / pageSize) * pageSize);
     },

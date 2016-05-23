@@ -65,7 +65,7 @@ var EditAssetController = Brace.Model.extend({
     /**
     * @constructor
     */
-    initialize: function() {
+    initialize: function () {
         _.bindAll(this,
             "_handleSaveError",
             "_handleSaveSuccess",
@@ -91,7 +91,7 @@ var EditAssetController = Brace.Model.extend({
         this.getIssueEventBus().onSave(this.cancelUneditedFields);
     },
 
-    _saveById: function(id) {
+    _saveById: function (id) {
         var model = this.getFields().get(id);
         if (model) {
             model.blurEdit();
@@ -107,12 +107,12 @@ var EditAssetController = Brace.Model.extend({
     * ... {Array} errorMessages
     * ... {Object} errors - Validation errors
     */
-    _handleSaveError: function(issueId, attemptedSavedIds, response) {
+    _handleSaveError: function (issueId, attemptedSavedIds, response) {
         var instance = this;
         if (response) {
             this.applyErrors(response);
         } else {
-            _.each(attemptedSavedIds, function(id) {
+            _.each(attemptedSavedIds, function (id) {
                 var model = instance.getFields().get(id);
                 if (model) {
                     model.handleSaveError();
@@ -127,8 +127,8 @@ var EditAssetController = Brace.Model.extend({
     * @param savingIds
     * @private
     */
-    _handleSavingStarted: function(savingIds) {
-        this.getFields().each(function(model) {
+    _handleSavingStarted: function (savingIds) {
+        this.getFields().each(function (model) {
             if (_.include(savingIds, model.id)) {
                 model.handleSaveStarted();
             }
@@ -141,7 +141,7 @@ var EditAssetController = Brace.Model.extend({
     *
     * @param {Object} fieldModel The field model that was updated.
     */
-    handleFieldUpdate: function(fieldModel) {
+    handleFieldUpdate: function (fieldModel) {
         // If a view has been created for the field, its trigger element (or
         // one of its descendants) will have the "editable-field" class.
         var trigger = jQuery(JIRA.Components.IssueViewer.Legacy.IssueFieldUtil.getFieldSelector(fieldModel.id));
@@ -155,12 +155,12 @@ var EditAssetController = Brace.Model.extend({
     *
     * @param errorCollection
     */
-    applyErrors: function(lastEditData, focusFirst) {
+    applyErrors: function (lastEditData, focusFirst) {
         var errorCollection = lastEditData.errorCollection;
         if (errorCollection && errorCollection.errors) {
-            this.getFields().each(function(model) {
+            this.getFields().each(function (model) {
                 if (errorCollection.errors[model.id]) {
-                    var updatedField = _.find(lastEditData.fields, function(field) {
+                    var updatedField = _.find(lastEditData.fields, function (field) {
                         return field.id === model.id;
                     });
                     if (updatedField) {
@@ -186,15 +186,15 @@ var EditAssetController = Brace.Model.extend({
     /**
     * Removes all field models and edital views
     */
-    reset: function() {
+    reset: function () {
         this.getFields().reset();
     },
 
     /**
     * Cancels any edit is progress
     */
-    cancelEdit: function() {
-        this.getFields().each(function(model) {
+    cancelEdit: function () {
+        this.getFields().each(function (model) {
             model.cancelEdit();
         });
     },
@@ -205,11 +205,11 @@ var EditAssetController = Brace.Model.extend({
     * @param {Number} issueId
     * @param {Array} savedFieldIds - Ids for successfully saved fields
     */
-    _handleSaveSuccess: function(issueId, issueKey, savedFieldIds) {
-        var savedFieldModels = this.getFields().filter(function(fieldModel) {
+    _handleSaveSuccess: function (issueId, issueKey, savedFieldIds) {
+        var savedFieldModels = this.getFields().filter(function (fieldModel) {
             return _.indexOf(savedFieldIds, fieldModel.id) >= 0;
         });
-        _.each(savedFieldModels, function(model) {
+        _.each(savedFieldModels, function (model) {
             model.handleSaveSuccess();
         });
     },
@@ -219,8 +219,8 @@ var EditAssetController = Brace.Model.extend({
     *
     * @return Array<String>
     */
-    getDirtyEditsInProgress: function() {
-        return _.pluck(this.getFields().filter(function(model) {
+    getDirtyEditsInProgress: function () {
+        return _.pluck(this.getFields().filter(function (model) {
             return model.getEditing() && model.isDirty();
         }), "id");
     },
@@ -230,8 +230,8 @@ var EditAssetController = Brace.Model.extend({
     *
     * @return Array<String>
     */
-    getEditsInProgress: function() {
-        return _.pluck(this.getFields().filter(function(model) {
+    getEditsInProgress: function () {
+        return _.pluck(this.getFields().filter(function (model) {
             return model.getEditing();
         }), "id");
     },
@@ -243,20 +243,20 @@ var EditAssetController = Brace.Model.extend({
     * @param model
     * @param ajaxProperties
     */
-    save: function(model, ajaxProperties) {
-
-        var params = {}, toSaveIds = [];
+    save: function (model, ajaxProperties) {
+        var params = {};
+        var toSaveIds = [];
 
         var toSave = [model];
         if (!model) {
-            toSave = this.getFields().filter(function(model) {
+            toSave = this.getFields().filter(function (model) {
                 return !model.getSaving() && model.getEditing() && model.isDirty();
             });
         } else if (!model.getEditing() || model.getSaving()) {
             return;
         }
 
-        _.each(toSave, function(model) {
+        _.each(toSave, function (model) {
             toSaveIds.push(model.getId());
             _.extend(params, model.getCurrentParams());
         });
@@ -269,8 +269,8 @@ var EditAssetController = Brace.Model.extend({
     /**
     * Cancels any fields which are not dirty (have not been edited) and have no validation errors.
     */
-    cancelUneditedFields: function() {
-        this.getFields().each(function(model) {
+    cancelUneditedFields: function () {
+        this.getFields().each(function (model) {
             if (model.getEditing() && !model.isDirty() && !model.hasValidationError()) {
                 model.cancelEdit();
             }
@@ -285,10 +285,10 @@ var EditAssetController = Brace.Model.extend({
     * @param {string}   [data.issueKey]
     * @param {Object[]} [data.fields]
     */
-    update: function(data, props) {
+    update: function (data, props) {
         if (data.fields) {
             if (props && props.fieldsInProgress) {
-                _.each(data.fields, function(fieldData) {
+                _.each(data.fields, function (fieldData) {
                     if (_.contains(props.fieldsInProgress, fieldData.id)) {
                         fieldData.editing = true;
                     }
@@ -311,8 +311,8 @@ var EditAssetController = Brace.Model.extend({
     *
     * @param {JIRA.Components.IssueEditor.Models.Field} fieldModel
     */
-    createFieldView: function(fieldModel) {
-        var editableFieldTrigger = jQuery(JIRA.Components.IssueViewer.Legacy.IssueFieldUtil.getFieldSelector(fieldModel.id), this.getIssueViewContext());
+    createFieldView: function (fieldModel) {
+        var editableFieldTrigger = $(JIRA.Components.IssueViewer.Legacy.IssueFieldUtil.getFieldSelector(fieldModel.id), this.getIssueViewContext());
         if (editableFieldTrigger.length === 1) {
             var field = new JIRA.Components.IssueEditor.Views.FieldView({
                 model: fieldModel,
@@ -320,9 +320,11 @@ var EditAssetController = Brace.Model.extend({
                 issueEventBus: this.getIssueEventBus()
             });
 
-            field.on("editField", _.bind(function(parameters) {
+            field.on("editField", _.bind(function (parameters) {
                 this.trigger("editField", parameters);
             }, this));
         }
     }
 });
+
+module.exports = EditAssetController;
