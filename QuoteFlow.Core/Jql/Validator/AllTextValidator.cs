@@ -17,10 +17,16 @@ namespace QuoteFlow.Core.Jql.Validator
     /// All free text fields ultimately validate in the same way, using <see cref="FreeTextFieldValidator"/>, so we only do one
     /// validation as opposed to going through each field and validating.
     /// </summary>
-    public sealed class AllTextValidator : IClauseValidator
+    public class AllTextValidator : IClauseValidator
     {
         private readonly CommentValidator _delegate;
-        private readonly SupportedOperatorsValidator _supportedOperatorsValidator;
+        private SupportedOperatorsValidator _supportedOperatorsValidator;
+
+        public virtual SupportedOperatorsValidator SupportedOperatorsValidator
+        {
+            get { return _supportedOperatorsValidator ?? new SupportedOperatorsValidator(new[] {Operator.LIKE}); }
+            set { _supportedOperatorsValidator = value; }
+        }
 
         public AllTextValidator(CommentValidator @delegate)
         {
@@ -36,7 +42,7 @@ namespace QuoteFlow.Core.Jql.Validator
         public AllTextValidator(CommentValidator @delegate, SupportedOperatorsValidator supportedOperatorsValidator)
         {
             _delegate = @delegate;
-            _supportedOperatorsValidator = SupportedOperatorsValidator;
+            _supportedOperatorsValidator = supportedOperatorsValidator;
         }
 
         public IMessageSet Validate(User searcher, ITerminalClause terminalClause)
@@ -44,8 +50,5 @@ namespace QuoteFlow.Core.Jql.Validator
             var messageSet = _supportedOperatorsValidator.Validate(searcher, terminalClause);
             return messageSet.HasAnyErrors() ? messageSet : _delegate.Validate(searcher, terminalClause);
         }
-
-        private static SupportedOperatorsValidator SupportedOperatorsValidator
-            => new SupportedOperatorsValidator(new[] {Operator.LIKE});
     }
 }

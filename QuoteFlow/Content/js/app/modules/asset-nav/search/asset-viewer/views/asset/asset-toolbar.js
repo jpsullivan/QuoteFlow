@@ -12,12 +12,17 @@ var AssetToolbarView = Marionette.ItemView.extend({
     ui: {
         shareButton: ".asset-share",
         exportButton: "#asset-export",
-        commentButton: "#comment-asset"
+        commentButton: "#comment-asset",
+        addToQuoteButton: "#add-to-quote"
+    },
+
+    triggers: {
+        "click @ui.addToQuoteButton": "addToQuote"
     },
 
     /**
      * Extract the data from the model in the format needed by the template.
-     * @returns {Object} Data to be rendered by the template
+     * @return {Object} Data to be rendered by the template
      */
     serializeData: function () {
         return {asset: this.model.getEntity()};

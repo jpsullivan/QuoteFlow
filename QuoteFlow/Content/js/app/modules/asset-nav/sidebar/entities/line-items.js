@@ -7,7 +7,7 @@ var LineItemModel = require('./line-item');
 
 /**
  * A collection of LineItemModel objects.
- * @extends Brace.Collection
+ * @extends {Brace.Collection}
  */
 var LineItemsCollection = Brace.Collection.extend({
     model: LineItemModel,

@@ -24,7 +24,10 @@ namespace QuoteFlow.Core.Tests.Jql.Validator
             supportedOperatorsValidator.Setup(x => x.Validate(Anonymous, clause)).Returns(messageSet);
 
             var commentValidator = new CommentValidator(MockJqlOperandResolver.CreateSimpleSupport());
-            var validator = new AllTextValidator(commentValidator, supportedOperatorsValidator.Object);
+
+            var mockValidator = new Mock<AllTextValidator>(commentValidator);
+            mockValidator.SetupGet(x => x.SupportedOperatorsValidator).Returns(supportedOperatorsValidator.Object);
+            var validator = mockValidator.Object;
 
             var result = validator.Validate(Anonymous, clause);
             Assert.Equal(messageSet, result);

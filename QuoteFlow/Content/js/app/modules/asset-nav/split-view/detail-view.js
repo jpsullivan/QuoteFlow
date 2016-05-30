@@ -11,11 +11,11 @@ var Utilities = require('../../../components/utilities');
  * The split view "asset panel" (where the asset is rendered).
  */
 var SplitScreenDetailView = Marionette.ItemView.extend({
+    assetDetailsNoSelectionTemplate: JST["quote-builder/split-view/asset-details-no-selection"],
+
     events: {
         "focus #addcomment textarea": "scrollToBottom"
     },
-
-    issueDetailsNoSelectionTemplate: JST["quote-builder/split-view/asset-details-no-selection"],
 
     /**
      * @param {object} options
@@ -39,11 +39,11 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
 
     adjustHeight: function () {
         _.defer(_.bind(function () {
-            var assetContainer = this.getAssetContainer(),
-                issueContainerTop;
+            var assetContainer = this.getAssetContainer();
+            var assetContainerTop;
             if (assetContainer.length) {
-                issueContainerTop = assetContainer.length && assetContainer.offset().top;
-                assetContainer.css("height", window.innerHeight - issueContainerTop);
+                assetContainerTop = assetContainer.length && assetContainer.offset().top;
+                assetContainer.css("height", window.innerHeight - assetContainerTop);
             }
         }, this));
     },
@@ -102,7 +102,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
         QuoteFlow.Interactive.offVerticalResize(this.adjustHeight);
         QuoteFlow.application.off("assetEditor:loadComplete", this.adjustHeight);
         QuoteFlow.unbind(EventTypes.NEW_CONTENT_ADDED, this.fixMentionsDropdownInMentionableFields);
-        //JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
+        // JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
         this.isActive = false;
     },
 
@@ -181,7 +181,7 @@ var SplitScreenDetailView = Marionette.ItemView.extend({
     },
 
     _renderNoAsset: function () {
-        this.$el.html(this.issueDetailsNoSelectionTemplate());
+        this.$el.html(this.assetDetailsNoSelectionTemplate());
     },
 
     hasFocus: function () {

@@ -10,7 +10,7 @@ var Utilities = require('../../../components/utilities');
  * The split view "asset panel" (where the asset is rendered).
  */
 var SplitScreenListView = Marionette.ItemView.extend({
-    //inaccessibleIssueRowTemplate: JIRA.Templates.SplitView.inaccessibleIssueRow,
+    // inaccessibleIssueRowTemplate: JIRA.Templates.SplitView.inaccessibleIssueRow,
     template: JST["quote-builder/split-view/asset-list"],
 
     events: {
@@ -58,7 +58,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
      */
     onBeforeDestroy: function () {
         this.searchPromise.reset();
-        //JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
+        // JIRA.Issues.BaseView.prototype.deactivate.apply(this, arguments);
     },
 
     /**
@@ -68,8 +68,8 @@ var SplitScreenListView = Marionette.ItemView.extend({
      * @private
      */
     _onClickAsset: function (e) {
-        var assetId = AJS.$(e.target).closest("[data-id]").data("id"),
-            isSelected = this.searchResults.getSelectedAsset().getId() === assetId;
+        var assetId = AJS.$(e.target).closest("[data-id]").data("id");
+        var isSelected = this.searchResults.getSelectedAsset().getId() === assetId;
 
         e.preventDefault();
 
@@ -121,8 +121,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
     },
 
     /**
-     * Mark an asset in the list as being inaccessible.
-     *
+     * Mark an asset in the list as being inaccessible.     *
      * @param {number} id The asset ID.
      */
     markAssetInaccessible: function (id) {
@@ -133,8 +132,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
     },
 
     /**
-     * Highlight the currently highlighted asset.
-     *
+     * Highlight the currently highlighted asset.     *
      * @private
      */
     _onHighlightedAssetChange: function () {
@@ -157,8 +155,8 @@ var SplitScreenListView = Marionette.ItemView.extend({
      * @private
      */
     _onSearchDone: function (result) {
-        //Depending on the default layout, anonymous user may have their layout preference set to the other layout
-        //if that's true, data given by the server on page load will not be compatible. Hence do a check here.
+        // Depending on the default layout, anonymous user may have their layout preference set to the other layout
+        // if that's true, data given by the server on page load will not be compatible. Hence do a check here.
         if (result instanceof Array) {
             if (this.searchResults.hasAssets()) {
                 this.$el.html(this.template({
@@ -174,8 +172,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
 
     /**
      * Display an error after a search fails.
-     * Called when an operation in <tt>searchPromise</tt> fails.
-     *
+     * Called when an operation in <tt>searchPromise</tt> fails.     *
      * @private
      */
     _onSearchFail: function () {

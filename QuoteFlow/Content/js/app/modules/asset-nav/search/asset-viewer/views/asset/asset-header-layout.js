@@ -27,9 +27,15 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
         pager: "#asset-header-pager"
     },
 
+    childEvents: {
+        "addToQuote": function (child, ev) {
+            this.trigger("addToQuote", ev);
+        }
+    },
+
     /**
      * Extract the data from the model in the format needed by the template.
-     * @returns {Object} Data to be rendered by the template
+     * @return {Object} Data to be rendered by the template
      */
     serializeData: function () {
         return {
@@ -57,7 +63,8 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
     },
 
     /**
-     * Handler for applyToDom event, things to do after $el has been loaded from the DOM
+     * Handler for applyToDom event, things to do after $el has been
+     * loaded from the DOM.
      */
     onApplyToDom: function () {
         var view = new JIRA.Components.IssueViewer.Views.IssueOpsbar({model: this.model});
@@ -68,7 +75,7 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
     },
 
     /**
-     * Handler for render event, things to do after the template has been rendered
+     * Handler for render event, things to do after the template has been rendered.
      */
     onRender: function () {
         this.renderOpsBar();
@@ -83,7 +90,7 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
     renderOpsBar: function () {
         debugger;
         this.opsbar.show(new AssetToolbar({model: this.model}));
-        //TODO This event should be thrown by the AssetController
+        // TODO This event should be thrown by the AssetController
         QuoteFlow.trigger(EventTypes.NEW_CONTENT_ADDED, [this.$el, Reasons.panelRefreshed]);
     },
 

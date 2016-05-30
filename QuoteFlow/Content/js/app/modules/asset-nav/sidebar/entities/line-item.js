@@ -1,6 +1,5 @@
 "use strict";
 
-var $ = require('jquery');
 var Brace = require('backbone-brace');
 var SmartAjax = require('../../../../components/ajax/smart-ajax');
 

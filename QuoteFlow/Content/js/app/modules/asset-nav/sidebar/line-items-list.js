@@ -5,7 +5,7 @@ var LineItemView = require('./line-item-view');
 
 /**
  * Displays a list of line items.
- * @extends Marionette.CompositeView
+ * @extends {Marionette.CompositeView}
  */
 var LineItemsList = Marionette.CompositeView.extend({
     template: JST["quote-builder/sidebar/list"],

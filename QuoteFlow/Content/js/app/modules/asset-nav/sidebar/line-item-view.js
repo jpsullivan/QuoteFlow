@@ -4,7 +4,7 @@ var Marionette = require('backbone.marionette');
 
 /**
  * Renders each individual line item in the quote sidebar list.
- * @extends Marionette.ItemView
+ * @extends {Marionette.ItemView}
  */
 var LineItemView = Marionette.ItemView.extend({
     template: JST["quote-builder/sidebar/line-item"],

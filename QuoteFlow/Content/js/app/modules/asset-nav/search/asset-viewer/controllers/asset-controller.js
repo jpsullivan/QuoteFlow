@@ -39,7 +39,6 @@ var AssetController = Marionette.Controller.extend({
 
     /**
      * Creates the main view and all the subviews
-     *
      * @private
      */
     _createViews: function () {
@@ -53,8 +52,7 @@ var AssetController = Marionette.Controller.extend({
 
     /**
      * Creates the main view. It is just a container for HeaderView and BodyView
-     *
-     * @returns {AssetViewLayout}
+     * @return {AssetViewLayout}
      * @private
      */
     _createMainView: function () {
@@ -67,8 +65,7 @@ var AssetController = Marionette.Controller.extend({
     /**
      * Creates the view for rendering the body of the asset.
      * It is just a collection of panels.
-     *
-     * @returns {AssetBodyLayout}
+     * @return {AssetBodyLayout}
      * @private
      */
     _createBodyView: function () {
@@ -79,8 +76,7 @@ var AssetController = Marionette.Controller.extend({
 
     /**
      * Creates the view for rendering the header. It includes regions for the opsbar and the pager
-     *
-     * @returns {AssetHeaderLayout}
+     * @return {AssetHeaderLayout}
      * @private
      */
     _createHeaderView: function () {
@@ -93,13 +89,16 @@ var AssetController = Marionette.Controller.extend({
             this.trigger("render", {pager: this.view.$(this.headerView.pager.el)}, {assetId: this.model.getId()});
         });
 
+        this.listenTo(view, "addToQuote", function (ev) {
+            debugger;
+        });
+
         return view;
     },
 
     /**
      * Creates the view for the panels. This view renders a collection of panels. The BodyView contains three
      * views of this kind: left panels, right panels and info panels.
-     *
      * @param {JIRA.Components.IssueViewer.Collections.Panels} collection Collection of panels to render
      * @returns {JIRA.Components.IssueViewer.Views.IssuePanels}
      * @private
@@ -200,11 +199,11 @@ var AssetController = Marionette.Controller.extend({
 
     /**
      * Loads a view from server-rendered markup.
-     * @param {Object} issueEntity
+     * @param {Object} assetEntity The asset entity object
      */
-    applyToDom: function (issueEntity) {
-        issueEntity.id = +issueEntity.id; // Ensure value grabbed from DOM is converted into a number
-        this.model.updateFromEntity(issueEntity);
+    applyToDom: function (assetEntity) {
+        issueEntity.id = +assetEntity.id; // Ensure value grabbed from DOM is converted into a number
+        this.model.updateFromEntity(assetEntity);
         this.createViewFromDom();
         this.view.applyToDom();
     },
@@ -213,19 +212,18 @@ var AssetController = Marionette.Controller.extend({
      * Displays the view
      */
     show: function () {
-        if (!this.view) {
-            this.createView();
-            this.view.render();
-        } else {
+        if (this.view) {
             this.trigger("render", {
                 pager: this.view.$(this.headerView.pager.el)
             }, {
                 loadedFromDom: false,
                 assetId: this.model.getId()
             });
+        } else {
+            this.createView();
+            this.view.render();
         }
         this.view.hideLoading();
-
     },
 
     /**

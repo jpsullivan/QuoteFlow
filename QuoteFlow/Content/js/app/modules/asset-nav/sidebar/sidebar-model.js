@@ -62,7 +62,6 @@ var QuoteSidebarModel = Brace.Model.extend({
     },
 
     /**
-     *
      * @return {boolean}
      */
     isDocked: function () {

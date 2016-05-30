@@ -110,8 +110,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     /**
-     * Recalculate the list's height.
-     *
+     * Recalculate the list's height.     *
      * @private
      */
     _adjustHeight: function () {
@@ -129,8 +128,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     /**
-     * Adjust the height of the no results message so it fills the screen.
-     *
+     * Adjust the height of the no results message so it fills the screen.     *
      * @private
      */
     _adjustNoResultsMessageHeight: function () {
@@ -280,7 +278,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     /**
      * Synchronise the highlighted and selected asset.
      *
-     * @param {JIRA.Issues.SimpleIssue} model The application's highlighted asset model.
+     * @param {SimpleAsset} model The application's highlighted asset model.
      * @param {object} [options]
      * @param {boolean} [options.replace=true] Whether selecting the asset should be a "replace" operation.
      * @private
@@ -295,8 +293,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     /**
-     * Render the asset list or empty results message after asset deletion.
-     *
+     * Render the asset list or empty results message after asset deletion.     *
      * @private
      */
     _onAssetDeleted: function (asset) {
@@ -383,8 +380,8 @@ var SplitScreenLayout = Marionette.ItemView.extend({
      * @return {SplitScreenLayout} <tt>this</tt>
      */
     onRender: function () {
-        var hasIssues = this.searchResults.hasAssets(),
-            isInitialRender = this._isInitialRender();
+        var hasIssues = this.searchResults.hasAssets();
+        var isInitialRender = this._isInitialRender();
 
         $("body").addClass("page-type-split");
 
@@ -482,8 +479,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     /**
-     * Set the asset container element so assets render correctly.
-     *
+     * Set the asset container element so assets render correctly.     *
      * @private
      */
     _setAssetModuleContainer: function () {
@@ -495,8 +491,7 @@ var SplitScreenLayout = Marionette.ItemView.extend({
     },
 
     /**
-     * Calls setElement on all the sub-views and activates them if necessary.
-     *
+     * Calls setElement on all the sub-views and activates them if necessary.     *
      * @private
      */
     _activateSubviews: function () {
