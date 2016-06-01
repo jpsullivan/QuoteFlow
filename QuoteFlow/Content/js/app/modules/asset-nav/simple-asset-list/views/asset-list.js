@@ -42,7 +42,7 @@ var AssetListView = Marionette.CompositeView.extend({
 
     /**
      * Updates the list with new data.
-     * @param {JIRA.Components.Search.Results} collection Data to use
+     * @param {SearchResults} collection Data to use
      */
     update: function (collection) {
         this.collection = collection;
@@ -54,7 +54,7 @@ var AssetListView = Marionette.CompositeView.extend({
      * Updates a single asset with new data.
      * @param {SearchResultModel} model The asset model
      */
-    updateIssue: function (model) {
+    updateAsset: function (model) {
         var view = this.children.findByModel(model);
 
         // Destroy existing view
@@ -73,17 +73,16 @@ var AssetListView = Marionette.CompositeView.extend({
     },
 
     /**
-     * Unselects an issue, if exists
-     *
-     * @param {Number} issueId Issue to unselect
+     * Unselects an asset, if exists.
+     * @param {Number} assetId Asset to unselect
      */
-    unselectIssue: function (issueId) {
+    unselectAsset: function (assetId) {
         // Depending on the network speed, this method could be called before having an actual collection.
         if (!this.collection) {
             return;
         }
 
-        var model = this.collection.get(issueId);
+        var model = this.collection.get(assetId);
         if (!model) {
             return;
         }
@@ -97,17 +96,16 @@ var AssetListView = Marionette.CompositeView.extend({
     },
 
     /**
-     * Selects an issue, if exists
-     *
-     * @param {Number} issueId Issue to select
+     * Selects an asset, if exists.
+     * @param {Number} assetId Asset to select
      */
-    selectIssue: function (issueId) {
+    selectAsset: function (assetId) {
         // Depending on the network speed, this method could be called before having an actual collection.
         if (!this.collection) {
             return;
         }
 
-        var model = this.collection.get(issueId);
+        var model = this.collection.get(assetId);
         if (!model) {
             return;
         }
@@ -120,7 +118,7 @@ var AssetListView = Marionette.CompositeView.extend({
         view.highlight();
     },
 
-    scrollSelectedIssueIntoView: function () {
+    scrollSelectedAssetIntoView: function () {
         // Depending on the network speed, this method could be called before having an actual collection.
         if (!this.collection) {
             return;

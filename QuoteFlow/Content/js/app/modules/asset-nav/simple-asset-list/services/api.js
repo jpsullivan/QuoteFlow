@@ -2,11 +2,14 @@
 
 var AssetsApi = {
     init: function (simpleAssetList) {
-        JIRA.API.Issues.nextIssue = function () {
+        QuoteFlow.API = {
+            Assets: {}
+        };
+        QuoteFlow.API.Assets.nextAsset = function () {
             simpleAssetList.selectNext();
         };
 
-        JIRA.API.Issues.previousIssue = function () {
+        QuoteFlow.API.Assets.previousAsset = function () {
             simpleAssetList.selectPrevious();
         };
     }

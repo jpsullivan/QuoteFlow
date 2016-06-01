@@ -12,7 +12,6 @@ var ViewContainer = require('./views/container');
 var ViewLayout = require('./views/layout');
 var ViewLoading = require('./views/loading');
 
-
 /**
  * Utility method to create a debounced version of a function. The generated function will have
  * the properties:
@@ -58,14 +57,14 @@ var variableDebounce = function (fn, initial, cooldown) {
 };
 
 var DetailsLayout = MarionetteViewManager.extend({
-    _buildIssueEditor: function () {
+    _buildassetEditor: function () {
         var editor = this.assetEditor = new AssetEditorController();
         var options = this.options;
 
-        this._loadAssetInEditor = variableDebounce(_.bind(function (issueData) {
+        this._loadAssetInEditor = variableDebounce(_.bind(function (assetData) {
             editor.loadAsset({
-                id: issueData.id,
-                sku: issueData.sku,
+                id: assetData.id,
+                sku: assetData.sku,
                 detailView: !options.shouldUpdateCurrentProject
             }).always(_.bind(function () {
                 this.hideLoading();
@@ -73,42 +72,41 @@ var DetailsLayout = MarionetteViewManager.extend({
         }, this), 100, 500);
 
         this.listenTo(editor, {
-            "loadError": function (issueData) {
-                this.simpleIssueList.disableIssue(issueData.issueId);
+            "loadError": function (assetData) {
+                this.simpleAssetList.disableAsset(assetData.assetId);
                 this.trigger("editorError");
             },
-            "loadComplete": function (issue, options) {
+            "loadComplete": function (asset, options) {
                 this.adjustSize();
 
-                // The editor model does not provide info about the issue type, we can't
+                // The editor model does not provide info about the asset type, we can't
                 // update that value on the list.
-                this.simpleIssueList.updateIssue(issue.id, {
-                    sku: issue.get('entity').sku,
-                    summary: issue.get('entity').summary,
-                    status: issue.get('entity').status.name
+                this.simpleAssetList.updateAsset(asset.id, {
+                    sku: asset.get('entity').sku,
+                    summary: asset.get('entity').name
                 });
 
                 var eventPayload = {
-                    assetSku: issue.get('entity').sku,
-                    assetId: issue.id,
-                    issueEditorOptions: options
+                    assetSku: asset.get('entity').sku,
+                    assetId: asset.id,
+                    assetEditorOptions: options
                 };
-                if (options && options.loadReason === "issues-cache-refresh") {
+                if (options && options.loadReason === "assets-cache-refresh") {
                     this.trigger("editorLoadedFromCache", eventPayload);
                 } else {
                     this.trigger("editorLoaded", eventPayload);
                 }
             },
             "saveSuccess": function (event) {
-                this.simpleIssueList.refreshIssue(event.issueId);
+                this.simpleAssetList.refreshAsset(event.assetId);
                 this.trigger("editor:saveSuccess", {
-                    event: event.issueId,
+                    event: event.assetId,
                     savedFieldIds: event.savedFieldIds,
                     duration: event.duration
                 });
             },
-            "linkToIssue": function (event) {
-                this.trigger("linkToIssue", event);
+            "linkToAsset": function (event) {
+                this.trigger("linkToAsset", event);
             },
             "refineViewer": function (event) {
                 event.preventDefault();
@@ -116,17 +114,17 @@ var DetailsLayout = MarionetteViewManager.extend({
             },
             "linkInErrorMessage": function (event) {
                 event.preventDefault();
-                this.simpleIssueList.selectIssue(event.issueData.id);
+                this.simpleAssetList.selectAsset(event.assetData.id);
             }
         });
     },
 
-    _buildSimpleIssueList: function () {
-        this.simpleIssueList = new SimpleAssetList({
+    _buildSimpleAssetList: function () {
+        this.simpleAssetList = new SimpleAssetList({
             baseURL: this.baseURL,
-            displayInlineIssueCreate: this.options.displayInlineIssueCreate
+            displayInlineAssetCreate: this.options.displayInlineAssetCreate
         });
-        this.listenTo(this.simpleIssueList, {
+        this.listenTo(this.simpleAssetList, {
             "select": function (assetData) {
                 this.trigger('select', assetData);
             },
@@ -157,8 +155,8 @@ var DetailsLayout = MarionetteViewManager.extend({
                 this.hideLoading();
                 this.trigger("error:loadpage", errorInfo);
             },
-            "assetCreated": function (issueInfo) {
-                this.trigger("assetCreated", issueInfo);
+            "assetCreated": function (assetInfo) {
+                this.trigger("assetCreated", assetInfo);
             }
         });
     },
@@ -226,8 +224,8 @@ var DetailsLayout = MarionetteViewManager.extend({
                     view.assetEditor._ensureElement();
                     this.assetEditor.setContainer(view.assetEditor.$el);
 
-                    view.issuesList._ensureElement();
-                    this.simpleIssueList.show(view.issuesList.$el);
+                    view.assetsList._ensureElement();
+                    this.simpleAssetList.show(view.assetsList.$el);
 
                     view.pager._ensureElement();
                     this.pager.show(view.pager.$el);
@@ -247,8 +245,8 @@ var DetailsLayout = MarionetteViewManager.extend({
     },
 
     _buildComponents: function () {
-        this._buildIssueEditor();
-        this._buildSimpleIssueList();
+        this._buildassetEditor();
+        this._buildSimpleAssetList();
         this._buildPager();
     },
 
@@ -291,7 +289,7 @@ var DetailsLayout = MarionetteViewManager.extend({
     onDestroy: function () {
         Marionette.ViewManager.prototype.onDestroy.call(this);
         this.assetEditor.close();
-        this.simpleIssueList.destroy();
+        this.simpleAssetList.destroy();
         this.hideView("layoutView");
         this.hideView("loadingView");
         this.hideView("emptyView");
@@ -306,23 +304,23 @@ var DetailsLayout = MarionetteViewManager.extend({
         this._hideLoadingView();
     },
 
-    load: function (searchResults, issueIdOrKey) {
+    load: function (searchResults, assetIdOrSku) {
         if (this.searchResults) {
             this.stopListening(this.searchResults);
             delete this.searchResults;
         }
         this.searchResults = searchResults;
         this.listenTo(this.searchResults, {
-            "issueDeleted": function () {
+            "assetDeleted": function () {
                 if (!this.searchResults.length) {
                     this._showEmptyView();
                 }
             },
-            "select selectIssueNotInList": function (issueModel) {
+            "select selectAssetNotInList": function (assetModel) {
                 this.showLoading();
                 this._loadAssetInEditor({
-                    id: issueModel.id,
-                    sku: issueModel.get('sku')
+                    id: assetModel.id,
+                    sku: assetModel.get('sku')
                 });
             }
         });
@@ -330,7 +328,7 @@ var DetailsLayout = MarionetteViewManager.extend({
         if (this.searchResults.isEmptySearch()) {
             this._showEmptyView();
         } else {
-            this.simpleIssueList.load(this.searchResults, issueIdOrKey);
+            this.simpleAssetList.load(this.searchResults, assetIdOrSku);
             this.pager.load(this.searchResults);
             this._showLayoutView();
         }
@@ -341,7 +339,7 @@ var DetailsLayout = MarionetteViewManager.extend({
     adjustSize: function () {
         _.defer(_.bind(function () {
             if (this.getView("layoutView")) {
-                this.simpleIssueList.adjustSize();
+                this.simpleAssetList.adjustSize();
                 this.getView("layoutView").maximizeDetailPanelHeight();
                 this.assetEditor.applyResponsiveDesign();
                 this.getView("layoutView").updateDraggable();
@@ -349,20 +347,20 @@ var DetailsLayout = MarionetteViewManager.extend({
 
             if (this.getView("emptyView")) {
                 var emptyViewContainer = this.getView("emptyView").$el;
-                var issueContainerTop = emptyViewContainer.length && emptyViewContainer.offset().top;
-                emptyViewContainer.css("height", window.innerHeight - issueContainerTop);
+                var assetContainerTop = emptyViewContainer.length && emptyViewContainer.offset().top;
+                emptyViewContainer.css("height", window.innerHeight - assetContainerTop);
             }
         }, this));
     },
 
-    refreshIssue: function (issueId) {
-        this.simpleIssueList.refreshIssue(issueId);
-        return this.assetEditor.refreshIssue();
+    refreshAsset: function (assetId) {
+        this.simpleAssetList.refreshAsset(assetId);
+        return this.assetEditor.refreshAsset();
     },
 
-    removeIssue: function (issueId) {
+    removeAsset: function (assetId) {
         this.showLoading();
-        return this.simpleIssueList.removeIssue(issueId)
+        return this.simpleAssetList.removeAsset(assetId)
                 .always(_.bind(function () {
                     this.hideLoading();
                 }, this))
@@ -373,20 +371,20 @@ var DetailsLayout = MarionetteViewManager.extend({
                 }, this));
     },
 
-    getActiveIssueId: function () {
-        return this.assetEditor.getIssueId();
+    getActiveAssetId: function () {
+        return this.assetEditor.getAssetId();
     },
 
-    getActiveIssueKey: function () {
-        return this.assetEditor.getIssueKey();
+    getActiveAssetSku: function () {
+        return this.assetEditor.getAssetSku();
     },
 
     selectNext: function () {
-        return this.simpleIssueList.selectNext();
+        return this.simpleAssetList.selectNext();
     },
 
     selectPrevious: function () {
-        return this.simpleIssueList.selectPrevious();
+        return this.simpleAssetList.selectPrevious();
     },
 
     updateEditor: function (params) {
@@ -394,7 +392,7 @@ var DetailsLayout = MarionetteViewManager.extend({
         this.listenToOnce(this.assetEditor, "loadComplete", function () {
             this.hideLoading();
         });
-        this.assetEditor.updateIssueWithQuery(params);
+        this.assetEditor.updateAssetWithQuery(params);
     },
 
     isLoading: function () {
@@ -425,8 +423,8 @@ var DetailsLayout = MarionetteViewManager.extend({
         return this.assetEditor.beforeShow();
     },
 
-    removeIssueMetadata: function () {
-        return this.assetEditor.removeIssueMetadata();
+    removeAssetMetadata: function () {
+        return this.assetEditor.removeAssetMetadata();
     },
 
     editField: function (field) {

@@ -12,14 +12,14 @@ var CriteriaView = Brace.View.extend({
     contentTemplate: JST["quote-builder/query/basic/criteria-button-content"],
 
     events: {
-        'click' : 'hideTipsy',
+        'click': 'hideTipsy',
         'click .criteria-selector': '_onClickCriteriaSelector',
         'click .remove-filter': '_onClickRemoveCriteria',
         'mousedown .remove-filter': '_preventFocusWhileDisabled',
         'keydown': '_onKeydown'
     },
 
-    initialize: function(options) {
+    initialize: function (options) {
         this.extended = options.extended; // Indicates that a valid criteria can be removed from the UI
         this.searcherCollection = options.searcherCollection;
         this.searcherCollection.onCollectionChanged(this.update, this);
@@ -33,7 +33,7 @@ var CriteriaView = Brace.View.extend({
     /**
      * Initial render, should only be called once
      */
-    render: function() {
+    render: function () {
         this.$el.html(this.template({
             id: this.model.getId()
         }));
@@ -48,7 +48,7 @@ var CriteriaView = Brace.View.extend({
     /**
      * Prepare the view before it is displayed: hook up event handlers, etc.
      */
-    prepareForDisplay: function() {
+    prepareForDisplay: function () {
         this._addTooltip();
         this.delegateEvents();
     },
@@ -62,7 +62,7 @@ var CriteriaView = Brace.View.extend({
     /**
      * Update view to reflect model changes
      */
-    update: function() {
+    update: function () {
         var noSearchers = this.searcherCollection.length === 0; // Searchers have not loaded, but render them anyway default 'All' value
         var searcher = this._getSearcher();
         var validSearcher = this._isValidSearcher();
@@ -96,19 +96,19 @@ var CriteriaView = Brace.View.extend({
      * As the name implies, this is a destructive operation, and the View should not be used afterwards (construct a new one if needed).
      * Meant for use with extended criteria - primary criteria should only be hidden, not destroyed.
      */
-    destroy: function() {
+    destroy: function () {
         this.hideTipsy();
         this.$el.remove();
     },
 
-    _getSearcher: function() {
+    _getSearcher: function () {
         return this.searcherCollection.get(this.model.getId());
     },
 
     /**
      * Searcher validity: returns true if there is no searcher, or searcher is valid
      */
-    _isValidSearcher: function() {
+    _isValidSearcher: function () {
         var searcher = this._getSearcher();
         return !searcher || !(searcher.getValidSearcher() === false); // Assume getValidSearcher()===undefined means valid searcher
     },
@@ -116,11 +116,11 @@ var CriteriaView = Brace.View.extend({
     /**
      * Value validity: returns true if there is an invalid value for the searcher
      */
-    _containsInvalidValue: function(searcher) {
+    _containsInvalidValue: function (searcher) {
         return (AJS.$(searcher.getViewHtml()).find('.invalid_sel').length > 0);
     },
 
-    _showDialog: function() {
+    _showDialog: function () {
         if (this.searcherCollection.isInteractive() && this._getSearcher() && this._isValidSearcher()) {
             QuoteFlow.SearcherDialog.instance.show(this._getSearcher());
         }
@@ -136,7 +136,7 @@ var CriteriaView = Brace.View.extend({
      *
      * If supplied, direction is either -1 (back) or 1 (forward)
      */
-    _removeCriteria: function(direction) {
+    _removeCriteria: function (direction) {
         var removable = this.extended || !this._isValidSearcher();
         if (this.searcherCollection.isInteractive() && removable) {
             this.searcherCollection.triggerBeforeCriteriaRemoved(this.model.getId(), direction);
@@ -156,7 +156,7 @@ var CriteriaView = Brace.View.extend({
      * @return the text to show in the searcher's tooltip.
      * @private
      */
-    _getTooltipText: function() {
+    _getTooltipText: function () {
         var searcherModel = this.searcherCollection.get(this.model.getId());
         var tooltipText;
 
@@ -188,23 +188,23 @@ var CriteriaView = Brace.View.extend({
         // });
     },
 
-    _handleInteractiveChanged: function(interactive) {
+    _handleInteractiveChanged: function (interactive) {
         this.$("button, .remove-filter").attr("aria-disabled", (interactive) ? null : "true");
     },
 
-    _onClickCriteriaSelector: function(event) {
+    _onClickCriteriaSelector: function (event) {
         if (this.searcherCollection.isInteractive() && this._getSearcher() && this._isValidSearcher()) {
             QuoteFlow.SearcherDialog.instance.toggle(this._getSearcher());
         }
         event.preventDefault();
     },
 
-    _onClickRemoveCriteria: function(event) {
+    _onClickRemoveCriteria: function (event) {
         this._removeCriteria();
         event.preventDefault();
     },
 
-    _onKeydown: function(event) {
+    _onKeydown: function (event) {
         switch (event.which) {
             case AJS.$.ui.keyCode.DOWN:
                 this._showDialog();
@@ -238,7 +238,7 @@ var CriteriaView = Brace.View.extend({
         }
     },
 
-    _preventFocusWhileDisabled: function(event) {
+    _preventFocusWhileDisabled: function (event) {
         if (jQuery(event.target).closest("[aria-disabled=true]").length > 0) {
             event.preventDefault();
         }

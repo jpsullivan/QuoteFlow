@@ -3,16 +3,19 @@
 var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
+var AssetsApi = require('./services/api');
+var ControllerList = require('./controllers/list');
+
 var SimpleAssetList = Marionette.Object.extend({
     initialize: function () {
-        if (this.options.displayInlineIssueCreate) {
-            this.inlineIssueCreate = new InlineIssueCreate();
-            this.listenTo(this.inlineIssueCreate, {
-                "issueCreated": function (issueInfo) {
-                    this.trigger("issueCreated", issueInfo);
+        if (this.options.displayInlineAssetCreate) {
+            this.inlineAssetCreate = new InlineAssetCreate();
+            this.listenTo(this.inlineAssetCreate, {
+                "assetCreated": function (assetInfo) {
+                    this.trigger("assetCreated", assetInfo);
                 },
                 "activated deactivated": function () {
-                        // We need to defer this because the Inline Issue Create component
+                        // We need to defer this because the Inline Asset Create component
                         // trigger those events *before* it is actually activated or deactivated
                     _.defer(_.bind(function () {
                         this.list.adjustSize();
@@ -23,7 +26,7 @@ var SimpleAssetList = Marionette.Object.extend({
 
         this.list = new ControllerList({
             baseURL: this.options.baseURL,
-            inlineIssueCreate: this.inlineIssueCreate
+            inlineAssetCreate: this.inlineAssetCreate
         });
         this.listenTo(this.list, {
             "goToPreviousPage": function () {
@@ -41,12 +44,12 @@ var SimpleAssetList = Marionette.Object.extend({
             "refresh": function () {
                 this.trigger('refresh');
             },
-            "selectIssue": function (event) {
+            "selectAsset": function (event) {
                 this.trigger("list:select", {
                     id: event.id,
                     key: event.key,
-                    absolutePosition: this.searchResults.getPositionOfIssueInSearchResults(event.id),
-                    relativePosition: this.searchResults.getPositionOfIssueInPage(event.id)
+                    absolutePosition: this.searchResults.getPositionOfAssetInSearchResults(event.id),
+                    relativePosition: this.searchResults.getPositionOfAssetInPage(event.id)
                 });
                 this.searchResults.select(event.id);
             },
@@ -57,18 +60,18 @@ var SimpleAssetList = Marionette.Object.extend({
                 this.trigger("update");
             }
         });
-        ServiceAPI.init(this);
+        AssetsApi.init(this);
     },
 
-    load: function (searchResults, issueIdOrKey) {
+    load: function (searchResults, assetIdOrSku) {
         if (this.searchResults) {
             this.stopListening(this.searchResults);
             delete this.searchResults;
         }
 
         this.searchResults = searchResults;
-        if (this.options.displayInlineIssueCreate) {
-            this.inlineIssueCreate.setJQL(this.searchResults.jql);
+        if (this.options.displayinlineAssetCreate) {
+            this.inlineAssetCreate.setJQL(this.searchResults.jql);
         }
 
         this.listenTo(this.searchResults, {
@@ -82,12 +85,12 @@ var SimpleAssetList = Marionette.Object.extend({
                 this.list.update(this.searchResults);
             },
             "unselect": function (unselectedModel) {
-                this.list.unselectIssue(unselectedModel.get("id"));
+                this.list.unselectAsset(unselectedModel.get("id"));
             },
             "select": function (selectedModel) {
                 var modelId = selectedModel.get("id") || null;
                 if (modelId) {
-                    this.list.selectIssue(selectedModel.get("id"));
+                    this.list.selectAsset(selectedModel.get("id"));
                 }
                 this.trigger("select", {
                     id: modelId,
@@ -95,15 +98,15 @@ var SimpleAssetList = Marionette.Object.extend({
                 });
             },
             "change": function (model) {
-                this.list.updateIssue(model);
+                this.list.updateAsset(model);
             }
         });
 
-        if (issueIdOrKey) {
-                // If we are looking for a specific key, jump to the page containing that key
-            searchResults.jumpToPageForIssue(issueIdOrKey);
+        if (assetIdOrSku) {
+            // If we are looking for a specific key, jump to the page containing that key
+            searchResults.jumpToPageForAsset(assetIdOrSku);
         } else {
-                // If we are not looking for a specific key, just load the first page
+            // If we are not looking for a specific key, just load the first page
             searchResults.jumpToPage("first");
         }
     },
@@ -128,26 +131,28 @@ var SimpleAssetList = Marionette.Object.extend({
         this.searchResults.selectPrev();
     },
 
-    selectIssue: function (issueId) {
-        this.searchResults.select(issueId);
+    selectAsset: function (assetId) {
+        this.searchResults.select(assetId);
     },
 
-    _getIssueById: function (issueId) {
+    _getAssetById: function (assetId) {
         if (!this.searchResults) {
             return;
         }
-        return this.searchResults.get(issueId);
+        return this.searchResults.get(assetId);
     },
 
-    refreshIssue: function (issueId) {
-        var model = this._getIssueById(issueId);
-        if (!model) return;
+    refreshAsset: function (assetId) {
+        var model = this._getAssetById(assetId);
+        if (!model) {
+            return;
+        }
 
         model.fetch();
     },
 
-    updateIssue: function (issueId, data) {
-        var model = this._getIssueById(issueId);
+    updateAsset: function (assetId, data) {
+        var model = this._getAssetById(assetId);
         if (!model) {
             return;
         }
@@ -158,16 +163,16 @@ var SimpleAssetList = Marionette.Object.extend({
         this.list.adjustSize();
     },
 
-    disableIssue: function (issueId) {
-        var model = this._getIssueById(issueId);
+    disableAsset: function (assetId) {
+        var model = this._getAssetById(assetId);
         if (!model) {
             return;
         }
         model.set("inaccessible", true);
     },
 
-    removeIssue: function (issueId) {
-        var model = this._getIssueById(issueId);
+    removeAsset: function (assetId) {
+        var model = this._getAssetById(assetId);
         if (!model) {
             return new jQuery.Deferred().reject().promise();
         }

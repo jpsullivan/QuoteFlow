@@ -7,6 +7,7 @@ var AssetListView = require('../views/asset-list');
 var EndStableSearch = require('../views/end-stable-search');
 var Layout = require('../views/layout');
 var Loading = require('../views/loading');
+var OrderBy = require('../../orderby/component');
 var Pagination = require('../views/pagination');
 var Refresh = require('../views/refresh');
 
@@ -83,9 +84,9 @@ var SimpleAssetListController = MarionetteViewManager.extend({
                     this.orderBy.setElement(this.getView("layout").getRegion("orderBy").$el);
                     this.orderBy.render();
 
-                    if (this.inlineIssueCreate) {
-                        this.getView("layout").inlineIssueCreateContainer._ensureElement();
-                        this.inlineIssueCreate.show(this.getView("layout").inlineIssueCreateContainer.$el);
+                    if (this.inlineAssetCreate) {
+                        this.getView("layout").inlineAssetCreateContainer._ensureElement();
+                        this.inlineAssetCreate.show(this.getView("layout").inlineAssetCreateContainer.$el);
                     }
                 }
             });
@@ -94,7 +95,7 @@ var SimpleAssetListController = MarionetteViewManager.extend({
     },
 
     _buildOrderBy: function () {
-        this.orderBy = JIRA.Components.OrderBy.create();
+        this.orderBy = OrderBy.create();
 
         this.orderBy.onSort(function (jql) {
             this.trigger("sort", jql);
@@ -119,7 +120,7 @@ var SimpleAssetListController = MarionetteViewManager.extend({
         // As OrderBy is not an internal view, we can create and reuse it when needed.
         this._buildOrderBy();
         this.baseURL = options.baseURL;
-        this.inlineIssueCreate = options.inlineIssueCreate;
+        this.inlineAssetCreate = options.inlineAssetCreate;
         this._buildViews();
     },
 
@@ -150,8 +151,8 @@ var SimpleAssetListController = MarionetteViewManager.extend({
         this.orderBy.render();
         this.orderBy.setJql(searchResults.jql);
 
-        if (this.inlineIssueCreate) {
-            this.inlineIssueCreate.render();
+        if (this.inlineAssetCreate) {
+            this.inlineAssetCreate.render();
         }
 
         // Make sure everything fits on the screen
@@ -174,16 +175,16 @@ var SimpleAssetListController = MarionetteViewManager.extend({
         });
     },
 
-    updateIssue: function (model) {
-        this.getView("list").updateIssue(model);
+    updateAsset: function (model) {
+        this.getView("list").updateAsset(model);
     },
 
-    unselectIssue: function (issueId) {
-        this.getView("list").unselectIssue(issueId);
+    unselectAsset: function (assetId) {
+        this.getView("list").unselectAsset(assetId);
     },
 
-    selectIssue: function (issueId) {
-        this.getView("list").selectIssue(issueId);
+    selectAsset: function (assetId) {
+        this.getView("list").selectAsset(assetId);
     },
 
     adjustSize: function () {
@@ -202,11 +203,11 @@ var SimpleAssetListController = MarionetteViewManager.extend({
         var paginationHeight = (paginationContainer ? paginationContainer.outerHeight() : 0);
         var windowHeight = window.innerHeight;
         var endOfStableSearchMessageHeight = (!this.getView("endOfStableSearch") ? 0 : this.getView("endOfStableSearch").$el.outerHeight());
-        var inlineIssueCreateHeight = this.getView("layout").inlineIssueCreateContainer.$el.outerHeight() || 0;
+        var inlineAssetCreateHeight = this.getView("layout").inlineAssetCreateContainer.$el.outerHeight() || 0;
 
-        listPanel.css("height", windowHeight - offsetTop - endOfStableSearchMessageHeight - paginationHeight - inlineIssueCreateHeight);
+        listPanel.css("height", windowHeight - offsetTop - endOfStableSearchMessageHeight - paginationHeight - inlineAssetCreateHeight);
 
-        this.getView("list").scrollSelectedIssueIntoView();
+        this.getView("list").scrollSelectedAssetIntoView();
     }
 });
 

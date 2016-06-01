@@ -811,14 +811,18 @@ var SearchPageModule = Brace.Model.extend({
 
     /** @deprecated use QuoteFlow.application.execute("navigation:navigate") **/
     update: deprecate(function (state, isReset, options) {
-        this._navigateToState(this._getUpdateState(state), isReset, options);
+        // this._navigateToState(this._getUpdateState(state), isReset, options);
+        QuoteFlow.application.execute("navigation:navigate", state, _.extend({}, options, {resetQuery: isReset}));
     }, 'use QuoteFlow.application.execute("navigation:navigate")'),
 
     /** @deprecated use QuoteFlow.application.execute("navigation:navigate") **/
     reset: deprecate(function (state, options) {
-        var resetState = _.extend({}, this.defaults(), state);
-        resetState.searchId = _.uniqueId();
-        this._navigateToState(resetState, true, options);
+        // var resetState = _.extend({}, this.defaults(), state);
+        // resetState.searchId = _.uniqueId();
+        // this._navigateToState(resetState, true, options);
+
+        state.searchId = _.uniqueId();
+        QuoteFlow.application.execute("navigation:navigate", state, _.extend({}, options, {reset: true, resetQuery: true}));
     }, 'use QuoteFlow.application.execute("navigation:navigate")'),
 
     _deactivateCurrentLayout: function () {

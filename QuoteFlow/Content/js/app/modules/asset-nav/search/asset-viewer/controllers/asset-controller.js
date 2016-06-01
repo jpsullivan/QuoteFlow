@@ -270,6 +270,16 @@ var AssetController = Marionette.Controller.extend({
         //     }
         // }
         return true;
+    },
+
+    applyResponsiveDesign: function () {
+        if (!this.$el) {
+            return;
+        }
+
+        var width = this.$el.width();
+        this.$el.toggleClass("skinny", width < 900);
+        this.$el.toggleClass("very-skinny", width < 600);
     }
 });
 

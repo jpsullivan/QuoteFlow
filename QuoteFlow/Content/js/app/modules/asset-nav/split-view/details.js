@@ -13,7 +13,7 @@ var SplitScreenDetailsView = Marionette.Object.extend({
         this._destroySearchResults();
 
         var searchResults = search.getResults();
-        var skus = searchResults._getAssetIdsToSkus();
+        var skus = searchResults._getAssetIdsToKeys();
         var ids = searchResults.get('assetIds');
         var assets = _.map(ids, function (id) {
             return {id: id, sku: skus[id]};
@@ -38,7 +38,7 @@ var SplitScreenDetailsView = Marionette.Object.extend({
 
     _buildDetailsLayout: function (searchPageModule) {
         var currentQuery = new URI().query();
-        var url = new URI(AJS.contextPath() + "/issues/").query(currentQuery).removeQuery("startIndex");
+        var url = new URI(QuoteFlow.ApplicationPath + "assets/").query(currentQuery).removeQuery("startIndex");
         this.detailsLayout = new DetailsLayout({
             baseURL: url.toString(),
             shouldUpdateCurrentProject: false
@@ -168,23 +168,23 @@ var SplitScreenDetailsView = Marionette.Object.extend({
         var assetSku;
 
         this._buildSearchResults(this.search);
-        if (this.search.getResults().hasSelectedIssue()) {
-            assetSku = this.search.getResults().getSelectedIssue().get('key');
+        if (this.search.getResults().hasSelectedAsset()) {
+            assetSku = this.search.getResults().getSelectedAsset().get('sku');
         } else if (this.search.getResults().get('startIndex') > 0) {
             assetSku = this.searchResults.getAssetSkuForIndex(this.search.getResults().get('startIndex'));
-        } else if (this.search.getResults().hasHighlightedIssue()) {
-            assetSku = this.search.getResults().getHighlightedIssue().get('key');
+        } else if (this.search.getResults().hasHighlightedAsset()) {
+            assetSku = this.search.getResults().getHighlightedAsset().get('sku');
         }
 
         this.detailsLayout.load(this.searchResults, assetSku);
     },
 
-    _handleRefreshIssue: function (assetId) {
-        this.detailsLayout.refreshIssue(assetId);
+    _handleRefreshAsset: function (assetId) {
+        this.detailsLayout.refreshAsset(assetId);
     },
 
     initialize: function (options) {
-        this._handleRefreshIssue = _.bind(this._handleRefreshIssue, this);
+        this._handleRefreshAsset = _.bind(this._handleRefreshAsset, this);
 
         this._buildDetailsLayout(options.searchPageModule);
         this._buildSearch(options.search);
@@ -195,7 +195,7 @@ var SplitScreenDetailsView = Marionette.Object.extend({
         this.container = this.detailsLayout.show(container);
         jQuery("body").addClass("page-type-split");
 
-        options.fullScreenIssue.hide();
+        options.fullScreenAsset.hide();
 
         ApplicationAdapter.init(this.detailsLayout);
     },
@@ -218,11 +218,11 @@ var SplitScreenDetailsView = Marionette.Object.extend({
         ApplicationAdapter.destroy();
     },
 
-    nextIssue: function () {
+    nextAsset: function () {
         this.detailsLayout.selectNext();
     },
 
-    prevIssue: function () {
+    prevAsset: function () {
         this.detailsLayout.selectPrevious();
     },
 
@@ -230,7 +230,7 @@ var SplitScreenDetailsView = Marionette.Object.extend({
         return this.detailsLayout.isLoading();
     },
 
-    isIssueViewActive: function () {
+    isAssetViewActive: function () {
         return false;
     }
 });

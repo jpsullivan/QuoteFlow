@@ -441,6 +441,10 @@ var AssetViewer = Marionette.Controller.extend({
             this.dismiss();
             this.trigger("close");
         }
+    },
+
+    applyResponsiveDesign: function () {
+        this.assetController.applyResponsiveDesign();
     }
 });
 

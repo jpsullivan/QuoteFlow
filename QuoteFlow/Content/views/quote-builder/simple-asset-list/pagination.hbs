@@ -12,16 +12,7 @@
         </a>
     {{/if}}
 
-    {call .numberLinksLogicBranch}
-        {param startPage: $pageNumber - floor($MAX_PAGES_DISPLAYED / 2) /}
-        {param endPage: $pageNumber + floor($MAX_PAGES_DISPLAYED / 2) /}
-        {param lastPage: $lastPage /}
-        {param urlFragment: $urlFragment /}
-        {param currentPage: $pageNumber + 1 /}
-        {param maxPagesDisplayed: $MAX_PAGES_DISPLAYED /}
-        {param pageSize: $pageSize /}
-        {param displayableTotal: $displayableTotal /}
-    {/call}
+    {{> quote-builder/simple-asset-list/_numberLinksLogicBranch }}
 
     {{#if hasAnotherPage}}
         <a href="{{urlFragment}}{{nextStartIndex}}" data-start-index="{{nextStartIndex}}" class="icon icon-next"

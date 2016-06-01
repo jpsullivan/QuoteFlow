@@ -32,8 +32,8 @@ var PagerView = Marionette.ItemView.extend({
 
     onRender: function () {
         if (AJS.activeShortcuts) {
-            if (AJS.activeShortcuts.j) { AJS.activeShortcuts.j._addShortcutTitle(this.$el.find(this.ui.nextIssue));}
-            if (AJS.activeShortcuts.k) { AJS.activeShortcuts.k._addShortcutTitle(this.$el.find(this.ui.previousIssue));}
+            if (AJS.activeShortcuts.j) { AJS.activeShortcuts.j._addShortcutTitle(this.$el.find(this.ui.nextAsset));}
+            if (AJS.activeShortcuts.k) { AJS.activeShortcuts.k._addShortcutTitle(this.$el.find(this.ui.previousAsset));}
         }
     },
 
@@ -45,25 +45,25 @@ var PagerView = Marionette.ItemView.extend({
             return;
         }
 
-        var currentIssuePosition = this.searchResults.getPositionOfIssueInSearchResults(this.searchResults.selected.id);
+        var currentAssetPosition = this.searchResults.getPositionOfAssetInSearchResults(this.searchResults.selected.id);
         var templateData = {
-            position: currentIssuePosition + 1,
-            resultCount: this.searchResults.getTotalIssues()
+            position: currentAssetPosition + 1,
+            resultCount: this.searchResults.getTotalAssets()
         };
 
-        var nextIssue = this.searchResults.getIssueAtGlobalIndex(currentIssuePosition + 1);
-        if (nextIssue) {
-            templateData.nextIssue = {
-                id: nextIssue.id,
-                key: nextIssue.key
+        var nextAsset = this.searchResults.getAssetAtGlobalIndex(currentAssetPosition + 1);
+        if (nextAsset) {
+            templateData.nextAsset = {
+                id: nextAsset.id,
+                sku: nextAsset.sku
             };
         }
 
-        var previousIssue = this.searchResults.getIssueAtGlobalIndex(currentIssuePosition - 1);
-        if (previousIssue) {
-            templateData.previousIssue = {
-                id: previousIssue.id,
-                sku: previousIssue.sku
+        var previousAsset = this.searchResults.getAssetAtGlobalIndex(currentAssetPosition - 1);
+        if (previousAsset) {
+            templateData.previousAsset = {
+                id: previousAsset.id,
+                sku: previousAsset.sku
             };
         }
 

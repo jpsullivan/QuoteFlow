@@ -16,31 +16,32 @@ var SearcherEditDialogView = Brace.View.extend({
 
     autoUpdate: [".js-default-checkboxmultiselect", ".js-default-checkboxmultiselectstatuslozenge", ".js-user-checkboxmultiselect", ".js-usergroup-checkboxmultiselect", ".js-group-checkboxmultiselect", ".js-label-checkboxmultiselect"],
 
-    events: function() {
-        var events = {
-            "click .cancel-update": "_onCancelClicked",
-            "click": "_stopPropagation",
-            "submit" : "_onSubmit",
-            'keydown': '_keyPressed'
-        };
-
-        if (this.queryStateModel.getBasicAutoUpdate()) {
-            events["selected " + this.autoUpdate.join(',')] = "applyChanges";
-            events["unselect " + this.autoUpdate.join(',')] = "applyChanges";
-        }
-
-        return events;
+    events: {
+        "click .cancel-update": "_onCancelClicked",
+        "click": "_stopPropagation",
+        "submit": "_onSubmit",
+        'keydown': '_keyPressed'
     },
 
     template: JST["quote-builder/query/basic/lozenge-dropdown-content"],
 
-    initialize: function(options) {
+    initialize: function (options) {
         this._formData = "";
         this.queryStateModel = options.queryStateModel;
         this.$el.scrollLock('.aui-list-scroll');
+
+        // extend the events object since access to this.queryStateModel
+        // is not valid after backbone 1.1.0 due to initialize() still not
+        // being called.
+        if (this.queryStateModel.getBasicAutoUpdate()) {
+            this.events = _.extend(this.events, {
+                ["selected " + this.autoUpdate.join(',')]: "applyChanges",
+                ["unselect " + this.autoUpdate.join(',')]: "applyChanges"
+            });
+        }
     },
 
-    renderDeferred: function() {
+    renderDeferred: function () {
         var deferred = jQuery.Deferred();
         // Ask the searcher to retrieve html (which will trigger readyForDisplay immediately if the editHtml is cached)
         this.model.retrieveEditHtml().done(_.bind(function (editHtml) {
@@ -53,7 +54,7 @@ var SearcherEditDialogView = Brace.View.extend({
         return this.queryStateModel.getBasicAutoUpdate() && jQuery(editHtml).find(this.autoUpdate.join(',')).length !== 0;
     },
 
-    render: function(editHtml) {
+    render: function (editHtml) {
         var containsEditContent = !(/^\s*$/.test(editHtml));
         var renderedContent;
         if (containsEditContent) {
@@ -62,7 +63,7 @@ var SearcherEditDialogView = Brace.View.extend({
                 displayUpdateCancel: !this.hasAutoUpdate(editHtml) && !jQuery(editHtml).hasClass("searchfilter-not-found")
             }));
         } else {
-            renderedContent = AJS.$(JST["quote-builder/query/basic/lozenge-dropdown-cannot-edit"]({fieldName : this.model.getName()}));
+            renderedContent = AJS.$(JST["quote-builder/query/basic/lozenge-dropdown-cannot-edit"]({fieldName: this.model.getName()}));
         }
 
         this.$el.html(renderedContent);
@@ -87,7 +88,7 @@ var SearcherEditDialogView = Brace.View.extend({
     /**
      * @return {Boolean}
      */
-    applyFilter: function() {
+    applyFilter: function () {
         var formData = this.$el.find("form").serialize();
         // Note: We can't compare formData to this.model.getSerializedParams() since this
         // is updated by the searcher HTML request, causing hasChanged to always evaluate
@@ -98,14 +99,14 @@ var SearcherEditDialogView = Brace.View.extend({
         return hasChanged;
     },
 
-    applyChanges: function() {
+    applyChanges: function () {
         if (this.applyFilter()) {
             this.model.createOrUpdateClauseWithQueryString();
         }
     },
 
     // For non-auto-updating searchers only. This is different to clicking on "clear" within the CheckboxMultiSelect.
-    _onCancelClicked: function(e) {
+    _onCancelClicked: function (e) {
         e.preventDefault();
         this.triggerHideRequested(AJS.HIDE_REASON.cancelClicked);
     },

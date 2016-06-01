@@ -2,13 +2,15 @@
 
 var _ = require('underscore');
 var Marionette = require('backbone.marionette');
+var jqUi = require('jquery-ui');
+var jqUiSidebar = require('jquery-ui-sidebar');
 
 var DetailsLayoutLayout = Marionette.LayoutView.extend({
     template: JST["quote-builder/details-layout/layout"],
 
     regions: {
-        issuesList: ".list-results-panel",
-        issueEditor: ".issue-container",
+        assetsList: ".list-results-panel",
+        assetEditor: ".issue-container",
         pager: ".pager-container"
     },
 
@@ -17,18 +19,18 @@ var DetailsLayoutLayout = Marionette.LayoutView.extend({
     },
 
     onRender: function () {
-        this.issuesList._ensureElement();
+        this.assetsList._ensureElement();
     },
 
     maximizeDetailPanelHeight: function () {
-        var issueContainerTop = this.ui.detailPanel.offset().top;
-        this.ui.detailPanel.css("height", window.innerHeight - issueContainerTop);
+        var assetContainerTop = this.ui.detailPanel.offset().top;
+        this.ui.detailPanel.css("height", window.innerHeight - assetContainerTop);
     },
 
     showDraggable: function () {
         var oldSize = 0;
 
-        this.issuesList.$el.sidebar({
+        this.assetsList.$el.sidebar({
             id: "layoutview-draggable",
             minWidth: function () {
                 return 250;
@@ -47,7 +49,7 @@ var DetailsLayoutLayout = Marionette.LayoutView.extend({
     },
 
     updateDraggable: function () {
-        this.issuesList.$el.sidebar("updatePosition");
+        this.assetsList.$el.sidebar("updatePosition");
     }
 });
 

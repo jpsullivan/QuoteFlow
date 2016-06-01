@@ -1,6 +1,7 @@
 "use strict";
 
 var Marionette = require('backbone.marionette');
+var ScrollIntoView = require('jquery-scroll-into-view');
 
 var AssetView = Marionette.ItemView.extend({
     template: JST["quote-builder/simple-asset-list/asset"],

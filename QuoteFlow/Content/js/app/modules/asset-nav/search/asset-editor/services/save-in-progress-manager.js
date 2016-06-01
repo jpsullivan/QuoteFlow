@@ -16,15 +16,14 @@ var SaveInProgressManager = Brace.Model.extend({
 
     initialize: function () {
         this.setSavesInProgress([]);
-
     },
 
-    saveIssue: function (assetId, assetSku, fieldsToSave, data, ajaxProperties) {
+    saveAsset: function (assetId, assetSku, fieldsToSave, data, ajaxProperties) {
         this.triggerBeforeSaving();
 
-        var instance = this,
-            saveInProgress,
-            allParams;
+        var instance = this;
+        var saveInProgress;
+        var allParams;
 
         allParams = _.extend(data, {
             assetId: assetId,

@@ -252,13 +252,13 @@ var AssetsApi = {
         }, 10);
     },
 
-    updateIssue: function (issue, message) {
+    updateAsset: function (asset, message) {
         message = message || "thanks_issue_updated";
 
-        return this.searchPageModule.updateIssue({
-            key: issue.key,
-            id: issue.id,
-            action: JIRA.Issues.Actions.UPDATE,
+        return this.searchPageModule.updateAsset({
+            sku: asset.key,
+            id: asset.id,
+            action: "UPDATE",
             message: message,
             meta: {}
         });

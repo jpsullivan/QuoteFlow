@@ -1,0 +1,10 @@
+{{#if isTimeout}}
+    The QuoteFlow server could not be contacted. This may be a temporary glitch or the server may be down.
+{{else}}
+    There were errors loading the asset.
+{{/if}}
+
+{{#if errorMessages}}
+    {{debug}}
+    <ul>{{#each errorMessages}}<li>{{msg}}</li>{{/each}}</ul>
+{{/if}}

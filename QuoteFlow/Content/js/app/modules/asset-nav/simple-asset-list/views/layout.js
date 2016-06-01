@@ -11,7 +11,7 @@ var SimpleAssetListLayout = Marionette.LayoutView.extend({
         searchResults: ".search-results",
         orderBy: ".list-ordering",
         endOfStableMessageContainer: '.end-of-stable-message-container',
-        inlineIssueCreateContainer: '.inline-issue-create-container'
+        inlineAssetCreateContainer: '.inline-asset-create-container'
     },
 
     ui: {

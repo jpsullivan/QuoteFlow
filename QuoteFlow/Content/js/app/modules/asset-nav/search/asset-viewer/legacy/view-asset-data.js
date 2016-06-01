@@ -6,7 +6,7 @@ var AsyncData = require('../legacy/async-data');
 
 var ViewAssetData = AsyncData.extend({
 
-    initialize: function(options) {
+    initialize: function (options) {
         AsyncData.prototype.initialize.call(this, _.defaults(options || {}, {
             disableCache: false,
             maxCacheSize: +10
@@ -16,7 +16,7 @@ var ViewAssetData = AsyncData.extend({
     /**
      * @param {String} id The id of the asset
      */
-    fetch: function(id, options) {
+    fetch: function (id, options) {
         var data = {
             assetId: id,
             decorator: "none",
@@ -31,18 +31,18 @@ var ViewAssetData = AsyncData.extend({
                 data.lastReadTime = this.data[id].value.readTime;
 
                 data.fields = [];
-                _.each(this.data[id].value.fields, function(field) {
+                _.each(this.data[id].value.fields, function (field) {
                     data.fields.push(field.id + ":" + field.contentId);
                 });
 
                 data.asset = ["summary:" + this.data[id].value.asset.id];
 
                 data.links = [];
-                var collectGroupLinks = function(group) {
-                    _.each(group.links, function(link) {
+                var collectGroupLinks = function (group) {
+                    _.each(group.links, function (link) {
                         data.links.push(link.id + ":" + link.contentId);
                     });
-                    _.each(group.groups, function(nestedGroup) {
+                    _.each(group.groups, function (nestedGroup) {
                         collectGroupLinks(nestedGroup);
                     });
                 };
@@ -74,21 +74,21 @@ var ViewAssetData = AsyncData.extend({
         var jqXhr = $.ajax({
             url: options.mergeIntoCurrent ? QuoteFlow.RootUrl + "asset/builder/getAssetMergeCurrent" : QuoteFlow.RootUrl + "asset/builder/getAsset",
             data: data,
-            //contentType: 'application/json',
+            // contentType: 'application/json',
             type: options.mergeIntoCurrent ? "POST" : "GET"
         });
-        var deferred = jqXhr.pipe(function(data) {
+        var deferred = jqXhr.pipe(function (data) {
             return data;
-        }, function(xhr) {
+        }, function (xhr) {
             return _.pick(xhr, 'status', 'responseText', 'statusText');
         });
-        deferred.abort = function() {
+        deferred.abort = function () {
             jqXhr.abort.apply(jqXhr, arguments);
         };
         return deferred;
     },
 
-    mergeFetchedAndCached: function(cachedData, fetchedData, options) {
+    mergeFetchedAndCached: function (cachedData, fetchedData, options) {
         if (this._skipMerging(cachedData, fetchedData, options)) {
             _.extend(cachedData, fetchedData);
 
@@ -96,7 +96,7 @@ var ViewAssetData = AsyncData.extend({
         }
 
         // Copy all properties except "value".
-        _.each(_.pairs(fetchedData), function(pair) {
+        _.each(_.pairs(fetchedData), function (pair) {
             if (pair[0] !== "value") {
                 cachedData[pair[0]] = pair[1];
             }
@@ -108,7 +108,7 @@ var ViewAssetData = AsyncData.extend({
         var fieldsKeysToRemove = [];
         var panelKeysToRemove = [];
         var linkKeysToRemove = [];
-        _.each(fetched.removedContentIds, function(keys, category) {
+        _.each(fetched.removedContentIds, function (keys, category) {
             var keysToRemove;
             if (category === "fields") {
                 keysToRemove = fieldsKeysToRemove;
@@ -119,7 +119,7 @@ var ViewAssetData = AsyncData.extend({
             }
 
             if (keysToRemove) {
-                _.each(keys, function(key) {
+                _.each(keys, function (key) {
                     keysToRemove.push(key);
                 });
             }
@@ -156,25 +156,25 @@ var ViewAssetData = AsyncData.extend({
         return changedData;
     },
 
-    _skipMerging: function(cachedData, fetchedData, options) {
+    _skipMerging: function (cachedData, fetchedData, options) {
         return _.isEmpty(cachedData) || !options.mergeIntoCurrent || !cachedData.value || !cachedData.value.issue ||
             fetchedData.error === true;
     },
 
-    _nothingChanged: function(fieldsKeysToRemove, panelKeysToRemove, linkKeysToRemove,
+    _nothingChanged: function (fieldsKeysToRemove, panelKeysToRemove, linkKeysToRemove,
                               fetchedFields, fetchedPanels, fetchedLinkGroups, fetchedSummary) {
         return fieldsKeysToRemove.length === 0 && panelKeysToRemove.length === 0 && linkKeysToRemove.length === 0 &&
             fetchedFields.length === 0 && fetchedLinkGroups.length === 0 &&
             fetchedPanels.leftPanels.length === 0 && fetchedPanels.rightPanels.length === 0 && fetchedPanels.infoPanels.length === 0 && !fetchedSummary;
     },
 
-    _mergeFields: function(fetchedFields, cached, changedData, keysToRemove) {
+    _mergeFields: function (fetchedFields, cached, changedData, keysToRemove) {
         changedData.added.fields = [];
         changedData.updated.fields = [];
         changedData.deleted.fields = [];
 
-        _.each(fetchedFields, function(fetchedField) {
-            var existing = _.find(cached.fields, function(cachedField) {
+        _.each(fetchedFields, function (fetchedField) {
+            var existing = _.find(cached.fields, function (cachedField) {
                 return cachedField.id === fetchedField.id;
             });
             if (existing) {
@@ -186,7 +186,7 @@ var ViewAssetData = AsyncData.extend({
 
         var newFields = fetchedFields;
 
-        _.each(cached.fields, function(oldField) {
+        _.each(cached.fields, function (oldField) {
             if (_.contains(keysToRemove, oldField.id)) {
                 changedData.deleted.fields.push(oldField.id);
             } else if (!_.contains(changedData.updated.fields, oldField.id)) {
@@ -197,25 +197,25 @@ var ViewAssetData = AsyncData.extend({
         cached.fields = newFields;
     },
 
-    _mergeSummary: function(fetched, cached, changedData) {
+    _mergeSummary: function (fetched, cached, changedData) {
         changedData.updated.asset = ["summary"];
 
         cached.aset.summary = fetched.asset.summary;
         cached.asset.summaryContentId = fetched.asset.summaryContentId;
     },
 
-    _mergePanels: function(fetchedPanels, cached, changedData, keysToRemove, comparator) {
+    _mergePanels: function (fetchedPanels, cached, changedData, keysToRemove, comparator) {
         changedData.added.panels = {};
         changedData.updated.panels = {};
         changedData.deleted.panels = {};
 
-        var storePanels = function(location) {
+        var storePanels = function (location) {
             changedData.added.panels[location] = [];
             changedData.updated.panels[location] = [];
             changedData.deleted.panels[location] = [];
 
-            _.each(fetchedPanels[location], function(fetchedPanel) {
-                var existing = _.find(cached.panels[location], function(cachedPanel) {
+            _.each(fetchedPanels[location], function (fetchedPanel) {
+                var existing = _.find(cached.panels[location], function (cachedPanel) {
                     return cachedPanel.id === fetchedPanel.id;
                 });
                 if (existing) {
@@ -227,7 +227,7 @@ var ViewAssetData = AsyncData.extend({
 
             var newPanels = fetchedPanels[location];
 
-            _.each(cached.panels[location], function(oldPanel) {
+            _.each(cached.panels[location], function (oldPanel) {
                 if (_.contains(keysToRemove, oldPanel.completeKey)) {
                     changedData.deleted.panels[location].push(oldPanel.id);
                 } else if (!_.contains(changedData.updated.panels[location], oldPanel.id)) {
@@ -245,7 +245,7 @@ var ViewAssetData = AsyncData.extend({
         storePanels("infoPanels");
     },
 
-    _mergeLinks: function(fetchedLinkGroups, cached, changedData, keysToRemove, comparator) {
+    _mergeLinks: function (fetchedLinkGroups, cached, changedData, keysToRemove, comparator) {
         changedData.added.groups = {};
         changedData.updated.groups = {};
         changedData.deleted.groups = {};
@@ -258,23 +258,23 @@ var ViewAssetData = AsyncData.extend({
         cached.asset.operations.linkGroups = newLinkGroups;
     },
 
-    _mergeOperationsLinks: function(fetchedLinkGroups, cached, newLinkGroups, changedData, keysToRemove, comparator) {
+    _mergeOperationsLinks: function (fetchedLinkGroups, cached, newLinkGroups, changedData, keysToRemove, comparator) {
         changedData.added.groups["view.asset.opsbar"] = [];
         changedData.updated.groups["view.asset.opsbar"] = [];
         changedData.deleted.groups["view.asset.opsbar"] = [];
 
-        var operationsGroupContainer = _.find(cached.asset.operations.linkGroups, function(group) {
+        var operationsGroupContainer = _.find(cached.asset.operations.linkGroups, function (group) {
             return "view.asset.opsbar" === group.id;
         });
-        var fetchedOperationsGroupContainer = _.find(fetchedLinkGroups, function(group) {
+        var fetchedOperationsGroupContainer = _.find(fetchedLinkGroups, function (group) {
             return "view.asset.opsbar" === group.id;
         });
 
         var fetchedLinkMapping = {};
         var fetchedLinkToGroupIdMapping = {};
         if (fetchedOperationsGroupContainer) {
-            _.each(fetchedOperationsGroupContainer.groups, function(fetchedOperationsGroup) {
-                var existingGroup = _.find(operationsGroupContainer.groups, function(group) {
+            _.each(fetchedOperationsGroupContainer.groups, function (fetchedOperationsGroup) {
+                var existingGroup = _.find(operationsGroupContainer.groups, function (group) {
                     return fetchedOperationsGroup.id === group.id;
                 });
                 if (existingGroup) {
@@ -283,7 +283,7 @@ var ViewAssetData = AsyncData.extend({
                     changedData.added.groups["view.asset.opsbar"].push(fetchedOperationsGroup.id);
                 }
 
-                _.each(fetchedOperationsGroup.links, function(link) {
+                _.each(fetchedOperationsGroup.links, function (link) {
                     fetchedLinkMapping[link.id] = link;
                     fetchedLinkToGroupIdMapping[link.id] = fetchedOperationsGroup.id;
                 });
@@ -291,8 +291,8 @@ var ViewAssetData = AsyncData.extend({
                 if (fetchedOperationsGroup.groups && fetchedOperationsGroup.groups.length > 0) {
                     var dropdown = fetchedOperationsGroup.groups[0];
 
-                    _.each(dropdown.groups, function(dropdownGroup) {
-                        _.each(dropdownGroup.links, function(link) {
+                    _.each(dropdown.groups, function (dropdownGroup) {
+                        _.each(dropdownGroup.links, function (link) {
                             fetchedLinkMapping[link.id] = link;
                             fetchedLinkToGroupIdMapping[link.id] = dropdownGroup.id;
                         });
@@ -305,7 +305,7 @@ var ViewAssetData = AsyncData.extend({
             var newOperationsGroups = [];
 
             if (fetchedOperationsGroupContainer) {
-                _.each(fetchedOperationsGroupContainer.groups, function(fetchedOperationsGroup) {
+                _.each(fetchedOperationsGroupContainer.groups, function (fetchedOperationsGroup) {
                     if (_.contains(changedData.added.groups["view.asset.opsbar"], fetchedOperationsGroup.id)) {
                         // There was no such group but now it was fetched.
                         newOperationsGroups.push(fetchedOperationsGroup);
@@ -313,18 +313,18 @@ var ViewAssetData = AsyncData.extend({
                 });
             }
 
-            _.each(operationsGroupContainer.groups, function(operationsGroup) {
+            _.each(operationsGroupContainer.groups, function (operationsGroup) {
                 var newGroupLinks = [];
 
                 var fetchedOperationsGroup = null;
                 if (fetchedOperationsGroupContainer) {
-                    fetchedOperationsGroup = _.find(fetchedOperationsGroupContainer.groups, function(group) {
+                    fetchedOperationsGroup = _.find(fetchedOperationsGroupContainer.groups, function (group) {
                         return operationsGroup.id === group.id;
                     });
 
                     if (fetchedOperationsGroup) {
-                        _.each(fetchedOperationsGroup.links, function(fetchedLink) {
-                            var existingLink = _.find(operationsGroup.links, function(link) {
+                        _.each(fetchedOperationsGroup.links, function (fetchedLink) {
+                            var existingLink = _.find(operationsGroup.links, function (link) {
                                 return fetchedLink.id === link.id;
                             });
                             if (!existingLink) {
@@ -337,8 +337,8 @@ var ViewAssetData = AsyncData.extend({
 
                 var groupUpdated = false;
 
-                var checkLinks = function(group, newLinks) {
-                    _.each(group.links, function(link) {
+                var checkLinks = function (group, newLinks) {
+                    _.each(group.links, function (link) {
                         var fetchedGroupId = fetchedLinkToGroupIdMapping[link.id];
                         if (fetchedGroupId && fetchedGroupId !== group.id) {
                             // Link moved from another group.
@@ -371,8 +371,8 @@ var ViewAssetData = AsyncData.extend({
                     var newDropdownGroups = [];
 
                     if (fetchedDropdown) {
-                        _.each(fetchedDropdown.groups, function(fetchedDropdownGroup) {
-                            var existingDropdownGroup = _.find(dropdown.groups, function(group) {
+                        _.each(fetchedDropdown.groups, function (fetchedDropdownGroup) {
+                            var existingDropdownGroup = _.find(dropdown.groups, function (group) {
                                 return fetchedDropdownGroup.id === group.id;
                             });
                             if (!existingDropdownGroup) {
@@ -382,16 +382,16 @@ var ViewAssetData = AsyncData.extend({
                         });
                     }
 
-                    _.each(dropdown.groups, function(dropdownGroup) {
+                    _.each(dropdown.groups, function (dropdownGroup) {
                         var newSectionLinks = [];
 
                         if (fetchedDropdown) {
-                            var fetchedDropdownGroup = _.find(fetchedDropdown.groups, function(fetchedDropdownGroup) {
+                            var fetchedDropdownGroup = _.find(fetchedDropdown.groups, function (fetchedDropdownGroup) {
                                 return fetchedDropdownGroup.id === dropdownGroup.id;
                             });
                             if (fetchedDropdownGroup) {
-                                _.each(fetchedDropdownGroup.links, function(fetchedLink) {
-                                    var existingDropdownLink = _.find(dropdownGroup.links, function(link) {
+                                _.each(fetchedDropdownGroup.links, function (fetchedLink) {
+                                    var existingDropdownLink = _.find(dropdownGroup.links, function (link) {
                                         return fetchedLink.id === link.id;
                                     });
                                     if (!existingDropdownLink) {
@@ -454,13 +454,13 @@ var ViewAssetData = AsyncData.extend({
         changedData.updated.groups["view.issue.opsbar"].sort();
     },
 
-    _mergeToolsLinks: function(fetchedLinkGroups, cached, newLinkGroups, changedData, keysToRemove, comparator) {
+    _mergeToolsLinks: function (fetchedLinkGroups, cached, newLinkGroups, changedData, keysToRemove, comparator) {
         changedData.updated.groups["jira.issue.tools"] = false;
 
-        var toolsGroupContainer = _.find(cached.issue.operations.linkGroups, function(group) {
+        var toolsGroupContainer = _.find(cached.issue.operations.linkGroups, function (group) {
             return "jira.issue.tools" === group.id;
         });
-        var fetchedToolsGroupContainer = _.find(fetchedLinkGroups, function(group) {
+        var fetchedToolsGroupContainer = _.find(fetchedLinkGroups, function (group) {
             return "jira.issue.tools" === group.id;
         });
 
@@ -469,12 +469,12 @@ var ViewAssetData = AsyncData.extend({
             // There must be just one tools top-level group.
             changedData.updated.groups["jira.issue.tools"] = true;
 
-            _.each(fetchedToolsGroupContainer.links, function(link) {
+            _.each(fetchedToolsGroupContainer.links, function (link) {
                 fetchedLinkMapping[link.id] = link;
             });
 
             if (fetchedToolsGroupContainer.groups && fetchedToolsGroupContainer.groups.length > 0) {
-                _.each(fetchedToolsGroupContainer.groups[0].links, function(link) {
+                _.each(fetchedToolsGroupContainer.groups[0].links, function (link) {
                     fetchedLinkMapping[link.id] = link;
                 });
             }
@@ -484,8 +484,8 @@ var ViewAssetData = AsyncData.extend({
             var newToolsLinks = [];
 
             if (fetchedToolsGroupContainer) {
-                _.each(fetchedToolsGroupContainer.links, function(fetchedLink) {
-                    var existingLink = _.find(toolsGroupContainer.links, function(link) {
+                _.each(fetchedToolsGroupContainer.links, function (fetchedLink) {
+                    var existingLink = _.find(toolsGroupContainer.links, function (link) {
                         return fetchedLink.id === link.id;
                     });
                     if (!existingLink) {
@@ -495,7 +495,7 @@ var ViewAssetData = AsyncData.extend({
                 });
             }
 
-            _.each(toolsGroupContainer.links, function(link) {
+            _.each(toolsGroupContainer.links, function (link) {
                 if (fetchedLinkMapping[link.id]) {
                     newToolsLinks.push(fetchedLinkMapping[link.id]);
                 } else if (!_.contains(keysToRemove, link.id)) {
@@ -517,8 +517,8 @@ var ViewAssetData = AsyncData.extend({
                 var newViewLinks = [];
 
                 if (fetchedViewGroup) {
-                    _.each(fetchedViewGroup.links, function(fetchedLink) {
-                        var existingLink = _.find(viewGroup.links, function(link) {
+                    _.each(fetchedViewGroup.links, function (fetchedLink) {
+                        var existingLink = _.find(viewGroup.links, function (link) {
                             return fetchedLink.id === link.id;
                         });
                         if (!existingLink) {
@@ -528,7 +528,7 @@ var ViewAssetData = AsyncData.extend({
                     });
                 }
 
-                _.each(viewGroup.links, function(link) {
+                _.each(viewGroup.links, function (link) {
                     if (fetchedLinkMapping[link.id]) {
                         newViewLinks.push(fetchedLinkMapping[link.id]);
                     } else if (!_.contains(keysToRemove, link.id)) {
@@ -554,7 +554,7 @@ var ViewAssetData = AsyncData.extend({
         }
     },
 
-    _comparator: function(objOne, objTwo) {
+    _comparator: function (objOne, objTwo) {
         if (objOne.weight && objTwo.weight) {
             if (objOne.weight > objTwo.weight) {
                 return 1;
@@ -575,7 +575,7 @@ var ViewAssetData = AsyncData.extend({
         return 0;
     },
 
-    updateIssue: function(key, data) {
+    updateAsset: function (key, data) {
         var cached = this.getMeta(key);
         if (cached && cached.value) {
             cached.value.fields = data.fields || {};
