@@ -4,6 +4,40 @@ var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 /**
+ * Triggers a preventable event.
+ * The event will include an EventObject, and the handler can call eventObject.preventDefault() to prevent the event.
+ * @param {string} eventName Name of the event being triggered.
+ * @param {EventObject} [eventObject] EventObject used as template to construct the actual EventObject used in the event.
+ * @return {EventObject} EventObject passed to the event.
+ */
+var triggerPreventable = function (eventName, eventObject) {
+    /**
+     * EventObject passed to preventable events
+     * @typedef {Object} EventObject
+     * @property {Object} emitter Original emitter of the event.
+     * @property {boolean} isPrevented Whether the event has been prevented by the event handler.
+     * @property {Function} preventDefault Syntax sugar for set the `isPrevented` value.
+     */
+    var event = _.defaults({}, eventObject || {}, {
+        isPrevented: false,
+        emitter: this,
+        preventDefault: function () {
+            this.isPrevented = true;
+        }
+    });
+
+    this.trigger(eventName, event);
+    return event;
+};
+
+var retriggerPreventable = function (eventName, eventObject) {
+    var groupEvent = this.triggerPreventable(eventName, eventObject);
+    if (groupEvent.isPrevented) {
+        eventObject.preventDefault();
+    }
+};
+
+/**
  * A set of mixins that are designed to be used with Marionette.
  * @type {Object}
  */
@@ -31,7 +65,10 @@ var MarionetteMixins = {
                     this.trigger.apply(this, [event].concat(_.toArray(arguments)));
                 }, this);
             }, this);
-        }
+        },
+
+        triggerPreventable: triggerPreventable,
+        retriggerPreventable: retriggerPreventable
     },
 
     viewMixins: {
@@ -45,7 +82,9 @@ var MarionetteMixins = {
          * @param context an optional context to use when running the callback
          */
         addListener: function (other, event, callback, context) {
-            if (arguments.length < 3) { throw "The 'other', 'event', and 'callback' arguments are mandatory"; }
+            if (arguments.length < 3) {
+                throw "The 'other', 'event', and 'callback' arguments are mandatory";
+            }
 
             var capitalisedEvent = event.charAt(0).toUpperCase() + event.slice(1);
             var registerMethodName = "on" + capitalisedEvent;
@@ -114,7 +153,10 @@ var MarionetteMixins = {
                 // If the template is in memory
                 this.setElement(this.$el.children());
             }
-        }
+        },
+
+        triggerPreventable: triggerPreventable,
+        retriggerPreventable: retriggerPreventable
     },
 
     layoutMixins: {

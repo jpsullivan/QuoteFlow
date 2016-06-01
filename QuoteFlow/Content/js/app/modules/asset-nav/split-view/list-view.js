@@ -172,7 +172,7 @@ var SplitScreenListView = Marionette.ItemView.extend({
 
     /**
      * Display an error after a search fails.
-     * Called when an operation in <tt>searchPromise</tt> fails.     *
+     * Called when an operation in <tt>searchPromise</tt> fails.
      * @private
      */
     _onSearchFail: function () {

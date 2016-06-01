@@ -13,7 +13,6 @@ var FullScreenLayout = require('./full-screen-controller');
 var InlineLayer = require('../../../components/layer/inline-layer');
 var LineItemModel = require('../sidebar/entities/line-item');
 var SimpleAsset = require('./asset/simple-asset');
-var SplitScreenLayout = require('../split-view/layout');
 var UrlSerializer = require('../../../util/url-serializer');
 
 /**
@@ -28,7 +27,8 @@ var SearchPageModule = Brace.Model.extend({
         "quote",
         "jql",
         "searchId",
-        "selectedAsset"
+        "selectedAsset",
+        "lineItems"
     ],
 
     defaults: {
@@ -57,7 +57,7 @@ var SearchPageModule = Brace.Model.extend({
         this.registerLayout("split-view", {
             label: "Detail View",
             iconClass: 'icon-view-split',
-            view: SplitScreenLayout
+            view: require('../split-view/details')
         });
         this._onSelectedAssetChanged();
         this.on("change:selectedAsset", this._onSelectedAssetChanged, this);
@@ -105,7 +105,6 @@ var SearchPageModule = Brace.Model.extend({
 
     /**
      * Change the page layout.
-     * <p/>
      * No-op if the requested layout is already selected.
      *
      * @param {string} key The key of the layout to change to.
@@ -441,8 +440,8 @@ var SearchPageModule = Brace.Model.extend({
      * @return {jQuery.Deferred} A deferred that is resolved when the refresh completes.
      */
     updateAsset: function (assetUpdate) {
-        var isDelete = assetUpdate.action === JIRA.Issues.Actions.DELETE,
-            isFullScreen = this.fullScreenAsset.isVisible();
+        var isDelete = assetUpdate.action === JIRA.Issues.Actions.DELETE;
+        var isFullScreen = this.fullScreenAsset.isVisible();
 
         if (isDelete) {
             return this._deleteIssue(assetUpdate);
@@ -453,9 +452,9 @@ var SearchPageModule = Brace.Model.extend({
                 // Things break if these requests are made in parallel, so force them to be serial.
                 !this.standalone && this.searchResults.updateAsset(assetUpdate, { showMessage: false, filter: this.getQuote() });
             }, this));
-        } else {
-            return this.searchResults.updateAsset(assetUpdate, { filter: this.getQuote() });
         }
+
+        return this.searchResults.updateAsset(assetUpdate, { filter: this.getQuote() });
     },
 
     /**
@@ -466,8 +465,8 @@ var SearchPageModule = Brace.Model.extend({
      * @private
      */
     _deleteIssue: function (assetUpdate) {
-        var isFullScreen = this.fullScreenAsset.isVisible(),
-            isVisibleAsset = assetUpdate.key == QuoteFlow.application.request("assetEditor:getAssetSku");
+        var isFullScreen = this.fullScreenAsset.isVisible();
+        var isVisibleAsset = assetUpdate.key == QuoteFlow.application.request("assetEditor:getAssetSku");
 
         if (!isFullScreen) {
             return this.searchResults.updateAsset(assetUpdate);
@@ -477,10 +476,10 @@ var SearchPageModule = Brace.Model.extend({
             this.resetToBlank();
             JIRA.Issues.showNotification(assetUpdate.message, assetUpdate.key);
             return jQuery.Deferred().resolve().promise();
-        } else {
-            this.returnToSearch();
-            return this.searchResults.updateAsset(assetUpdate);
         }
+
+        this.returnToSearch();
+        return this.searchResults.updateAsset(assetUpdate);
     },
 
     /**
@@ -495,8 +494,8 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     getEffectiveAsset: function () {
-        var hasHighlightedAsset = this.searchResults.hasHighlightedAsset(),
-            hasSelectedAsset = this.searchResults.hasSelectedAsset();
+        var hasHighlightedAsset = this.searchResults.hasHighlightedAsset();
+        var hasSelectedAsset = this.searchResults.hasSelectedAsset();
 
         var asset = new SimpleAsset({
             id: QuoteFlow.application.request("assetEditor:getAssetId"),
@@ -509,9 +508,9 @@ var SearchPageModule = Brace.Model.extend({
             return this.searchResults.getSelectedAsset();
         } else if (hasHighlightedAsset) {
             return this.searchResults.getHighlightedAsset();
-        } else {
-            return asset;
         }
+
+        return asset;
     },
 
     isHighlightedAssetAccessible: function () {

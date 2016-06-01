@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 var $ = require('jquery');
+var $ui = require('jquery-ui/core');
 var _ = require('underscore');
 
 var AssetCacheManager = require('./cache/asset-cache-manager');

@@ -40,11 +40,23 @@ var AssetViewer = Marionette.Controller.extend({
         "loadError",
 
         /**
+         * @event close
+         * We should close to asset view in response to some action.
+         */
+        "close",
+
+        /**
          * @event replacedFocusedPanel
          * Triggered when the view has rendered a panel that has the focus
          * //TODO This seems to be too specific, why others needs to know about this?
          */
-        "replacedFocusedPanel"
+        "replacedFocusedPanel",
+
+        /**
+         * @event linkToAsset
+         * When a user clicks on a link to an asset.
+         */
+        "linkToAsset"
     ],
 
     /**
@@ -346,7 +358,7 @@ var AssetViewer = Marionette.Controller.extend({
      *
      * @param {boolean} [options.mergeIntoCurrent] Whether the refresh should merge the retrieved data into the current model
      * @param {function} [options.complete] a function to call after the update has finished
-     * @returns {jQuery.Promise}
+     * @return {jQuery.Promise}
      */
     refreshAsset: function (options) {
         var promise;

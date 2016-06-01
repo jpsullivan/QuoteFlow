@@ -10,10 +10,6 @@ Backbone.$ = $;
 var Events = require('./util/events');
 var Marionette = require('backbone.marionette');
 
-if (window.__agent) {
-  window.__agent.start(Backbone, Marionette);
-}
-
 // QuoteFlow Namespace (hold-over from non CommonJS method)
 var QuoteFlow = {
     application: {},
@@ -168,14 +164,14 @@ QuoteFlow.application.on("before:start", function (options) {
 
     // add some mixins to underscore
     _.mixin({
-        lambda: function(x) {
-            return function() { return x; };
+        lambda: function (x) {
+            return function () { return x; };
         },
-        isNotBlank: function(object) {
+        isNotBlank: function (object) {
             return !!object;
         },
-        bindObjectTo: function(obj, context) {
-            _.map(obj, function(value, key) {
+        bindObjectTo: function (obj, context) {
+            _.map(obj, function (value, key) {
                 if (_.isFunction(value)) {
                     obj[key] = _.bind(value, context);
                 }
@@ -187,7 +183,7 @@ QuoteFlow.application.on("before:start", function (options) {
 /**
  * Autoload any modules that may exist
  */
-//var LoadedModules = require('./autoload/modules')(QuoteFlow.application);
+// var LoadedModules = require('./autoload/modules')(QuoteFlow.application);
 
 QuoteFlow.application.on("start", function (options) {
     if (Backbone.history) {

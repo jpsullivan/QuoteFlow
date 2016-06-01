@@ -10,7 +10,9 @@ var AssetEditorAppModule = AssetViewerAppModule.extend({
 
     create: function (options) {
         options = _.defaults({}, options, {
-            showReturnToSearchOnError: function () { return false;}
+            showReturnToSearchOnError: function () {
+                return false;
+            }
         });
 
         return new AssetViewerController({

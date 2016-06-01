@@ -19,9 +19,7 @@ var QuoteSidebarController = Marionette.Controller.extend({
         this._initializeLineItemsController();
         // this._initializeFilterHeaderController();
 
-        // QuoteFlow.application.on("assetEditor:loadComplete", function (model, props) {
-        //     console.warning("hook asset events into sidebar");
-        // }, this);
+        this.searchPageModule.setLineItems(this.lineItemsCollection);
     },
 
     _initializeCollections: function (options) {

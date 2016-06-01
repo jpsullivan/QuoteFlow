@@ -1,0 +1,11 @@
+{{#compare lastPage "<" maxPagesDisplayed}}
+    {{> quote-builder/simple-asset-list/_numberLinks startIndex="0" }}
+{{else}}
+    {{#compare startPage "<" 0}}
+        {{> quote-builder/simple-asset-list/_numberLinks }}
+    {{else}}
+        {{#compare endPage ">" lastPage}}
+        {{else}}
+        {{/compare}}
+    {{/compare}}
+{{/compare}}

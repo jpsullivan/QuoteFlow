@@ -20,7 +20,7 @@ var ClauseButtonView = Brace.View.extend({
         "keydown .add-criteria": "_onKeydown"
     },
 
-    initialize: function(options) {
+    initialize: function (options) {
         _.bindAll(this,
             "_handleInteractiveChanged",
             "_showOrHideClauseButtons");
@@ -36,11 +36,11 @@ var ClauseButtonView = Brace.View.extend({
             width: "auto",
             alignment: "left",
             // Lazilly get offset target as it isn't in the DOM at this time
-            offsetTarget:function () {
+            offsetTarget: function () {
                 return instance.$el.find(instance.addCriteriaButton);
             },
             // Each time we open our dialog this function will be called to retrieve content
-            content: function() {
+            content: function () {
                 return listView.render();
             }
         });
@@ -59,11 +59,11 @@ var ClauseButtonView = Brace.View.extend({
         });
 
         // Allow the view inside of the InlineLayer to trigger hiding
-        listView.onHideRequested(function(reason) {
+        listView.onHideRequested(function (reason) {
             dialog.hide(reason);
         });
 
-        dialog.bind(InlineLayer.EVENTS.show, function(event, $layer) {
+        dialog.bind(InlineLayer.EVENTS.show, function (event, $layer) {
             jQuery("#criteria-input").focus();
             // List.js also resets the scrollTop but because the dialog is still hidden at that point, the browser won't actually do any scrolling.
             // @see JRADEV-15097
@@ -71,7 +71,7 @@ var ClauseButtonView = Brace.View.extend({
         });
     },
 
-    render: function() {
+    render: function () {
         this.$el.html(this.template({
             isSubtle: this.queryStateModel.hasSubtleMoreCriteria()
         }));
@@ -80,14 +80,14 @@ var ClauseButtonView = Brace.View.extend({
         return this.$el;
     },
 
-    _addToolTip : function() {
+    _addToolTip: function () {
         // new JIRA.Issues.Tipsy({
         //     el: this.$el.find(this.addCriteriaButton),
         //     showCondition: ":not(.active)"
         // });
     },
 
-    _showOrHideClauseButtons: function() {
+    _showOrHideClauseButtons: function () {
         var addFiltersButton = this.$(this.addCriteriaButton);
         if (this.searcherCollection.getAddMenuGroupDescriptors().length > 0) {
             addFiltersButton.show();
@@ -103,11 +103,11 @@ var ClauseButtonView = Brace.View.extend({
         event.preventDefault();
     },
 
-    _handleInteractiveChanged: function(interactive) {
+    _handleInteractiveChanged: function (interactive) {
         this.$(this.addCriteriaButton).attr("aria-disabled", (interactive) ? null : "true");
     },
 
-    _onKeydown: function(event) {
+    _onKeydown: function (event) {
         switch (event.which) {
             case AJS.$.ui.keyCode.DOWN:
                 this._showDialog(event);

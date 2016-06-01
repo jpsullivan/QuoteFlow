@@ -1,0 +1,33 @@
+{{!
+    Template to render the pagination links on issue nav page.
+    This is common to both list and split view as well as both Javascript and C#.
+    Several calculation logic has been moved in here in order to remove code duplication
+    between JS and C#
+}}
+<div class="pagination" data-displayable-total="{$displayableTotal}">
+    {{#if prevPageIsNotFirstPage}}
+        <a href="{{urlFragment}}{{prevStartIndex}}" data-start-index="{{prevStartIndex}}" class="icon icon-previous"
+                title="{{prevPageTitle}}">
+            <span>&lt;&lt; Previous</span>
+        </a>
+    {{/if}}
+
+    {call .numberLinksLogicBranch}
+        {param startPage: $pageNumber - floor($MAX_PAGES_DISPLAYED / 2) /}
+        {param endPage: $pageNumber + floor($MAX_PAGES_DISPLAYED / 2) /}
+        {param lastPage: $lastPage /}
+        {param urlFragment: $urlFragment /}
+        {param currentPage: $pageNumber + 1 /}
+        {param maxPagesDisplayed: $MAX_PAGES_DISPLAYED /}
+        {param pageSize: $pageSize /}
+        {param displayableTotal: $displayableTotal /}
+    {/call}
+
+    {{#if hasAnotherPage}}
+        <a href="{{urlFragment}}{{nextStartIndex}}" data-start-index="{{nextStartIndex}}" class="icon icon-next"
+                title="{{nextPageTitle}}">
+            <span>Next &gt;&gt;</span>
+        </a>
+    {{/if}}
+
+</div>

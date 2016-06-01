@@ -9,7 +9,7 @@ var ApplicationHelpers = {
     /**
     * Just a wrapper method to allow for Handlebars templates to register.
     */
-    initialize: function() {
+    initialize: function () {
         /**
         Determines a
 
@@ -97,7 +97,7 @@ var ApplicationHelpers = {
             // Find the selected node, if it exists, add the selected attribute to it
             if (select.children[select.selectedIndex]) {
                 select.children[select.selectedIndex].setAttribute('selected', 'selected');
-            } else { //select first option if that exists
+            } else { // select first option if that exists
                 if (select.children[0]) {
                     select.children[0].setAttribute('selected', 'selected');
                 }
@@ -178,6 +178,19 @@ var ApplicationHelpers = {
             } else {
                 return options.inverse(this);
             }
+        });
+
+        Handlebars.registerHelper("math", function (lvalue, operator, rvalue, options) {
+            lvalue = parseFloat(lvalue);
+            rvalue = parseFloat(rvalue);
+
+            return {
+                "+": lvalue + rvalue,
+                "-": lvalue - rvalue,
+                "*": lvalue * rvalue,
+                "/": lvalue / rvalue,
+                "%": lvalue % rvalue
+            }[operator];
         });
     }
 };

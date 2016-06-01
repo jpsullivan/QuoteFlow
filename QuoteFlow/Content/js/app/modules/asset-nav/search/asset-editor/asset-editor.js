@@ -8,6 +8,9 @@ var EditAssetController = require('./controllers/edit-asset');
 var EventTypes = require('../../util/types');
 var SaveInProgressManager = require('./services/save-in-progress-manager');
 
+/**
+ * A module that handles loading and showing assets in a given container.
+ */
 var AssetEditor = AssetViewer.extend({
     namedEvents: [
         /*
@@ -30,9 +33,7 @@ var AssetEditor = AssetViewer.extend({
          * .. {number} the issue id
          */
         "saveSuccess",
-
         "saveError",
-
         "editField",
 
         /**
