@@ -83,12 +83,19 @@ var AssetNavCustomRouter = Marionette.AppRouter.extend({
             return;
         }
 
-        // Remove ignored parameters (e.g. focusedCommentId).
-        var state = UrlSerializer.getStateFromURL(fragment);
-
-        if (!this._navigateToLoginIfNeeded(state)) {
-            this._navigateUsingState(state);
+        var jqlFromServer = AJS.Meta.get('jql');
+        if (jqlFromServer !== null) {
+            AJS.Meta.set('jql', null);
         }
+        var navigateOptions = {checkPermission: true, replace: true, reset: true, routerEvent: true};
+        QuoteFlow.application.execute('navigation:navigateToUrl', fragment, navigateOptions, jqlFromServer != null ? {jql: jqlFromServer} : undefined);
+
+        // // Remove ignored parameters (e.g. focusedCommentId).
+        // var state = UrlSerializer.getStateFromURL(fragment);
+        //
+        // if (!this._navigateToLoginIfNeeded(state)) {
+        //     this._navigateUsingState(state);
+        // }
     },
 
     _navigateToLoginIfNeeded: function (state, history) {

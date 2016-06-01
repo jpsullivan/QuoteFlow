@@ -155,6 +155,7 @@
     "backbone.marionette": "^2.4.3",
     "backbone.paginator": "^2.0.5",
     "backbone.subroute": "^0.4.2",
+    "deprecatejs": "^1.2.0",
     "handlebars": "^3.0.3",
     "jquery": "^2.1.1",
     "jquery-ui": "^1.10.5",

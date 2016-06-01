@@ -59,6 +59,7 @@ var AssetEditorModule = require('./modules/asset-nav/search/asset-editor/app-mod
 var AssetModule = require('./modules/asset/module');
 var AssetTableModule = require('./modules/asset-nav/module');
 var CatalogModule = require('./modules/catalog/module');
+var AssetNavigationModule = require('./modules/asset-nav/navigation/navigation-app-module');
 var PagerModule = require('./modules/pager/module');
 var QuoteStatusModule = require('./modules/quote-status/module');
 
@@ -195,6 +196,7 @@ QuoteFlow.application.module("asset", AssetModule);
 QuoteFlow.application.module("assetEditor", new AssetEditorModule().definition);
 QuoteFlow.application.module("asset-table", AssetTableModule);
 QuoteFlow.application.module("catalog", CatalogModule);
+QuoteFlow.application.module("navigation", new AssetNavigationModule().definition);
 QuoteFlow.application.module("pager", PagerModule);
 QuoteFlow.application.module("quote-status", QuoteStatusModule);
 

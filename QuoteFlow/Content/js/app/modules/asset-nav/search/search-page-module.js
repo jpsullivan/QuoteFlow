@@ -2,6 +2,7 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
+var deprecate = require('deprecatejs');
 
 var Brace = require('backbone-brace');
 var Utilities = require('../../../components/utilities');
@@ -81,6 +82,8 @@ var SearchPageModule = Brace.Model.extend({
         QuoteFlow.application.on("assetEditor:saveSuccess", function (props) {
             this.searchResults.updateAssetById({ id: props.assetId, action: "inlineEdit" }, { filter: this.getQuote() });
         }, this);
+
+        QuoteFlow.application.on("navigation:stateChanged", this.onStateChanged, this);
 
         Utilities.initializeResizeHooks();
     },
@@ -784,7 +787,6 @@ var SearchPageModule = Brace.Model.extend({
         }
     },
 
-
     _validateNavigate: function (newState) {
         var urlFromState = UrlSerializer.getURLFromState;
         return urlFromState(newState) !== urlFromState(this.getState());
@@ -794,15 +796,30 @@ var SearchPageModule = Brace.Model.extend({
         return _.extend({}, this.getState(), state);
     },
 
-    update: function (state, isReset, options) {
-        this._navigateToState(this._getUpdateState(state), isReset, options);
+    onStateChanged: function (state, options) {
+        options = _.defaults({}, options, { resetQuery: false, routerEvent: false });
+        // we do not want to operate on provided state object internally, so let's make a copy
+        var shallowStateCopy = _.clone(state);
+        if (state.isStandaloneIssue()) {
+            this.resetToStandaloneIssue(shallowStateCopy);
+        } else if (options.routerEvent) { // special treatment for router events
+            return this.applyState(shallowStateCopy, !this._isSearchStateEqual(shallowStateCopy), options);
+        } else {
+            return this.applyState(shallowStateCopy, options.resetQuery, options);
+        }
     },
 
-    reset: function (state, options) {
+    /** @deprecated use QuoteFlow.application.execute("navigation:navigate") **/
+    update: deprecate(function (state, isReset, options) {
+        this._navigateToState(this._getUpdateState(state), isReset, options);
+    }, 'use QuoteFlow.application.execute("navigation:navigate")'),
+
+    /** @deprecated use QuoteFlow.application.execute("navigation:navigate") **/
+    reset: deprecate(function (state, options) {
         var resetState = _.extend({}, this.defaults(), state);
         resetState.searchId = _.uniqueId();
         this._navigateToState(resetState, true, options);
-    },
+    }, 'use QuoteFlow.application.execute("navigation:navigate")'),
 
     _deactivateCurrentLayout: function () {
         var currentLayout = this.getCurrentLayout();
@@ -945,16 +962,16 @@ var SearchPageModule = Brace.Model.extend({
      * @return {string} the effective JQL.
      */
     getEffectiveJql: function () {
-        var filter = this.getQuote(),
-            jql = this.getJql();
+        var filter = this.getQuote();
+        var jql = this.getJql();
 
         if (_.isString(jql)) {
             return jql;
         } else if (filter) {
             return filter.getJql() || "";
-        } else {
-            return "";
         }
+
+        return "";
     },
 
     /**
@@ -1053,6 +1070,23 @@ var SearchPageModule = Brace.Model.extend({
             }, this));
             this._shownIntroDialog = true;
         }
+    },
+
+    getCurrentLayoutKey: function () {
+        var currentLayout = this.getCurrentLayout();
+        if (!currentLayout) {
+            return;
+        }
+
+        var layoutDescriptions = this.getLayouts();
+        var layoutDescription = _.find(layoutDescriptions, function (layoutDescription) {
+            return currentLayout instanceof layoutDescription.View;
+        });
+        if (!layoutDescription) {
+            return;
+        }
+
+        return layoutDescription.id;
     }
 });
 
