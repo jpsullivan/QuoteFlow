@@ -9,15 +9,14 @@ var aui = require('aui');
 AJS.Meta = require('./util/meta');
 // var auiExperimental = require('aui-experimental');
 
+var simpleClick = require('jquery-simpleClick');
+
 if (window.__agent) {
     window.__agent.start(Backbone, Marionette);
 }
 
 var App = require('./app');
 
-
-
 $(document).ready(function () {
     App.start();
-    console.log('Started');
 });

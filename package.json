@@ -22,6 +22,7 @@
     "jquery-scrollLock": "./QuoteFlow/Content/js/lib/jquery-scrolllock.min.js",
     "jquery-scroll-into-view": "./QuoteFlow/Content/js/lib/jquery.scroll-into-view.js",
     "jquery-scrollIntoView": "./QuoteFlow/Content/js/lib/jquery.scrollIntoView.js",
+    "jquery-simpleClick": "./QuoteFlow/Content/js/app/util/jquery/simple-click.js",
     "jquery-ui-sidebar": "./QuoteFlow/Content/js/app/components/jqui-widget_sidebar.js",
     "string-extensions": "./QuoteFlow/Content/js/app/extensions/string_extensions.js"
   },

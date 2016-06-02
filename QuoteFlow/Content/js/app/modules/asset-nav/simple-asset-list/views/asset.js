@@ -7,7 +7,7 @@ var AssetView = Marionette.ItemView.extend({
     template: JST["quote-builder/simple-asset-list/asset"],
 
     ui: {
-        link: 'a'
+        link: "a"
     },
 
     events: {
