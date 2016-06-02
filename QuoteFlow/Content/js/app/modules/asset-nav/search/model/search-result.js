@@ -31,8 +31,8 @@ var SearchResultModel = Backbone.Model.extend({
 
             if (data.fields) {
                 // This comes from inline edit.
-                result.summary = data.fields.summary;
-                result.status = data.fields.status.name;
+                result.summary = data.fields.name;
+                result.cost = data.fields.cost;
                 result.type = {
                     description: data.fields.issuetype.description,
                     iconUrl: data.fields.issuetype.iconUrl,
@@ -40,9 +40,9 @@ var SearchResultModel = Backbone.Model.extend({
                 };
             } else {
                 // This comes from fetching a page
-                result.status = data.status;
-                result.summary = data.summary;
-                result.type = data.type;
+                result.cost = data.cost;
+                result.summary = data.name;
+                // result.type = data.type;
             }
         }
 

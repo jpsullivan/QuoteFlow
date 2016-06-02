@@ -1047,11 +1047,11 @@ var SearchPageModule = Brace.Model.extend({
         }
 
         // Don't allow up/down navigation if dropdowns are open.
-        if (InlineLayer.current || AJS.Dropdown.current || JIRA.Dialog.current || AJS.$(".aui-dropdown2:visible").length > 0) {
+        if (InlineLayer.current || AJS.$(".aui-dropdown2:visible").length > 0) {
             return false;
         }
 
-        return this.getCurrentLayout() && !this.getCurrentLayout().isIssueViewActive();
+        return this.getCurrentLayout() && !this.getCurrentLayout().isAssetViewActive();
     },
 
     _isSearchStateEqual: function (state) {

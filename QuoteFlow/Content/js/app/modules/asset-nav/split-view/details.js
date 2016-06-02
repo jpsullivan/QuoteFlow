@@ -7,6 +7,7 @@ var URI = require('urijs');
 var ApplicationAdapter = require('./services/application-adaptor');
 var Results = require('../search/model/search-results');
 var DetailsLayout = require('../details-layout/details-layout');
+var DropdownFactory = require('../../../components/dropdown/factory');
 
 var SplitScreenDetailsView = Marionette.Object.extend({
     _buildSearchResults: function (search) {

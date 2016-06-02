@@ -88,7 +88,6 @@ var AssetHeaderLayout = Marionette.LayoutView.extend({
      * TODO This composition should be done by the AssetController
      */
     renderOpsBar: function () {
-        debugger;
         this.opsbar.show(new AssetToolbar({model: this.model}));
         // TODO This event should be thrown by the AssetController
         QuoteFlow.trigger(EventTypes.NEW_CONTENT_ADDED, [this.$el, Reasons.panelRefreshed]);

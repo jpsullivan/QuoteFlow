@@ -75,7 +75,8 @@ var AssetController = Marionette.Controller.extend({
     },
 
     /**
-     * Creates the view for rendering the header. It includes regions for the opsbar and the pager
+     * Creates the view for rendering the header. It includes regions for
+     * the opsbar and the pager.
      * @return {AssetHeaderLayout}
      * @private
      */
@@ -125,23 +126,22 @@ var AssetController = Marionette.Controller.extend({
         // When main view is rendered, inject all the subviews
         // We need to wait until the main view is rendered because otherwise the regions are not defined
         this.listenTo(this.view, "render", function () {
-            if (!this.headerView.isDestroyed) {
-                this.view.header.show(this.headerView);
-                this.view.body.show(this.bodyView);
+            this.headerView = this._createHeaderView();
+            this.view.header.show(this.headerView);
 
-                // this.bodyView.leftPanels.show(this.leftPanelsView);
-                // this.bodyView.rightPanels.show(this.rightPanelsView);
-                // this.bodyView.infoPanels.show(this.infoPanelsView);
+            this.bodyView = this._createBodyView();
+            this.view.body.show(this.bodyView);
 
-                this.trigger("render",
-                    {
-                        pager: this.view.$(this.headerView.pager.el)
-                    },
-                    {
-                        loadedFromDom: false,
-                        assetId: this.model.getId()
-                    });
-            }
+            // this.bodyView.leftPanels.show(this.leftPanelsView);
+            // this.bodyView.rightPanels.show(this.rightPanelsView);
+            // this.bodyView.infoPanels.show(this.infoPanelsView);
+
+            this.trigger("render", {
+                pager: this.view.$(this.headerView.pager.el)
+            }, {
+                loadedFromDom: false,
+                assetId: this.model.getId()
+            });
         });
     },
 
@@ -176,9 +176,7 @@ var AssetController = Marionette.Controller.extend({
             updateRegionFromDom(this.bodyView.rightPanels, this.rightPanelsView, this.bodyView.$el.find(this.bodyView.rightPanels.el));
             updateRegionFromDom(this.bodyView.infoPanels, this.infoPanelsView, this.bodyView.$el.find(this.bodyView.infoPanels.el));
 
-            this.trigger("render", {
-                pager: this.view.$(this.headerView.pager.el)
-            }, {
+            this.trigger("render", {pager: this.view.$(this.headerView.pager.el)}, {
                 loadedFromDom: true,
                 assetId: this.model.getId()
             });
@@ -202,7 +200,7 @@ var AssetController = Marionette.Controller.extend({
      * @param {Object} assetEntity The asset entity object
      */
     applyToDom: function (assetEntity) {
-        issueEntity.id = +assetEntity.id; // Ensure value grabbed from DOM is converted into a number
+        assetEntity.id = +assetEntity.id; // Ensure value grabbed from DOM is converted into a number
         this.model.updateFromEntity(assetEntity);
         this.createViewFromDom();
         this.view.applyToDom();
@@ -213,9 +211,7 @@ var AssetController = Marionette.Controller.extend({
      */
     show: function () {
         if (this.view) {
-            this.trigger("render", {
-                pager: this.view.$(this.headerView.pager.el)
-            }, {
+            this.trigger("render", {pager: this.view.$(this.headerView.pager.el)}, {
                 loadedFromDom: false,
                 assetId: this.model.getId()
             });
@@ -241,14 +237,18 @@ var AssetController = Marionette.Controller.extend({
      * Hides the loading spinner
      */
     hideLoading: function () {
-        this.view && this.view.hideLoading();
+        if (this.view) {
+            this.view.hideLoading();
+        }
     },
 
     /**
      * Shows the loading spinner
      */
     showLoading: function () {
-        this.view && this.view.showLoading();
+        if (this.view) {
+            this.view.showLoading();
+        }
     },
 
     /**
