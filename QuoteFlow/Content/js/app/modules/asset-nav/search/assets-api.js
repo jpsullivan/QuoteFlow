@@ -121,7 +121,7 @@ var AssetsApi = {
      * Open the focus shifter.
      */
     openFocusShifter: function () {
-        if (this.searchPageModule.isIssueVisible()) {
+        if (this.searchPageModule.isAssetVisible()) {
             this.searchPageModule.openFocusShifter();
         }
     },
@@ -203,8 +203,8 @@ var AssetsApi = {
     /**
      * @returns {*|boolean}
      */
-    isFullScreenIssueVisible: function () {
-        return this.searchPageModule.isFullScreenIssueVisible();
+    isFullScreenAssetVisible: function () {
+        return this.searchPageModule.isFullScreenAssetVisible();
     },
 
     /**
@@ -217,7 +217,7 @@ var AssetsApi = {
 
         var assetSku = JIRA.Issues.Api.getSelectedAssetSku();
 
-        if (!this.searchPageModule.isIssueVisible()) {
+        if (!this.searchPageModule.isAssetVisible()) {
             this.searchPageModule.update({
                 selectedAssetSku: assetSku
             });

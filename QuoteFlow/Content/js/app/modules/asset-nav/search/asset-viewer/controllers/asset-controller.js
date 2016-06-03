@@ -1,5 +1,6 @@
 "use strict";
 
+var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
 var AssetBodyLayout = require('../views/asset/asset-body-layout');
@@ -90,8 +91,8 @@ var AssetController = Marionette.Controller.extend({
             this.trigger("render", {pager: this.view.$(this.headerView.pager.el)}, {assetId: this.model.getId()});
         });
 
-        this.listenTo(view, "addToQuote", function (ev) {
-            debugger;
+        this.listenTo(view, "addToQuote", function (event) {
+            QuoteFlow.application.execute("assetEditor:addToQuote", event.model);
         });
 
         return view;

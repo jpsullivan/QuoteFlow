@@ -14,7 +14,7 @@ var SplitScreenDetailsView = Marionette.Object.extend({
         this._destroySearchResults();
 
         var searchResults = search.getResults();
-        var skus = searchResults._getAssetIdsToKeys();
+        var skus = searchResults._getAssetIdsToSkus();
         var ids = searchResults.get('assetIds');
         var assets = _.map(ids, function (id) {
             return {id: id, sku: skus[id]};
@@ -58,6 +58,7 @@ var SplitScreenDetailsView = Marionette.Object.extend({
                 }
             },
             "list:refresh": function () {
+                debugger;
                 this.search.refresh();
             },
             "list:sort": function (jql) {

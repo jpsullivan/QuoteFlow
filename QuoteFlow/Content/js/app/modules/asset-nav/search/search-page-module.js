@@ -13,6 +13,7 @@ var EventTypes = require('../util/types');
 var FullScreenLayout = require('./full-screen-controller');
 var InlineLayer = require('../../../components/layer/inline-layer');
 var LineItemModel = require('../sidebar/entities/line-item');
+var QuoteModel = require('../../../components/quotes/quote');
 var SimpleAsset = require('./asset/simple-asset');
 var UrlSerializer = require('../../../util/url-serializer');
 
@@ -269,7 +270,7 @@ var SearchPageModule = Brace.Model.extend({
 
 //        Shifter.register(SearchShifter({
 //            isBasicMode: _.bind(this.queryModule.isBasicMode, this.queryModule),
-//            isFullScreenIssue: _.bind(this.isFullScreenIssueVisible, this),
+//            isFullScreenIssue: _.bind(this.isFullScreenAssetVisible, this),
 //            searcherCollection: this.queryModule.getSearcherCollection()
 //        }).create());
     },
@@ -355,10 +356,8 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     _handleSearchResultsChange: function (model, options) {
-        options = options || {};
-        options.replace ?
-                this.assetNavRouter.replaceState(this.getState()) :
-                this.assetNavRouter.pushState(this.getState());
+        options = _.defaults({}, options, {reason: 'search-results-change'});
+        QuoteFlow.application.execute('navigation:navigate', this.searchResults.getState(), options);
     },
 
     registerSearchHeaderModule: function (searchHeaderModule) {
@@ -417,7 +416,10 @@ var SearchPageModule = Brace.Model.extend({
      * @return {Boolean}
      */
     isCurrentlyLoadingAsset: function () {
-        return QuoteFlow.application.request("assetEditor:isCurrentlyLoading");
+        if (this.fullScreenAsset.isVisible()) {
+            return this.fullScreenAsset.isLoading();
+        }
+        return this.getCurrentLayout().isLoading();
     },
 
     _overlayIsVisible: function () {
@@ -469,7 +471,7 @@ var SearchPageModule = Brace.Model.extend({
      */
     _deleteIssue: function (assetUpdate) {
         var isFullScreen = this.fullScreenAsset.isVisible();
-        var isVisibleAsset = assetUpdate.key == QuoteFlow.application.request("assetEditor:getAssetSku");
+        var isVisibleAsset = assetUpdate.key === QuoteFlow.application.request("assetEditor:getAssetSku");
 
         if (!isFullScreen) {
             return this.searchResults.updateAsset(assetUpdate);
@@ -492,8 +494,8 @@ var SearchPageModule = Brace.Model.extend({
      *
      * @return {number} The key of the currently selected asset.
      */
-    getEffectiveAssetKey: function () {
-        return this.getEffectiveAsset().getKey();
+    getEffectiveAssetSku: function () {
+        return this.getEffectiveAsset().getSku();
     },
 
     getEffectiveAsset: function () {
@@ -502,7 +504,7 @@ var SearchPageModule = Brace.Model.extend({
 
         var asset = new SimpleAsset({
             id: QuoteFlow.application.request("assetEditor:getAssetId"),
-            key: QuoteFlow.application.request("assetEditor:getAssetSku")
+            sku: QuoteFlow.application.request("assetEditor:getAssetSku")
         });
 
         if (this.standalone) {
@@ -546,11 +548,11 @@ var SearchPageModule = Brace.Model.extend({
         return this.filterModule.toggleFilterPanel();
     },
 
-    issueTableSortRequested: function (jql, startIndex) {
+    assetTableSortRequested: function (jql, startIndex) {
         this.update({ jql: jql, startIndex: startIndex });
     },
 
-    issueTableSearchError: function (response) {
+    assetTableSearchError: function (response) {
         if (response.status !== 0) {
             // if we haven't aborted the request
             // this.filterModule.filtersComponent.markFilterHeaderAsInvalid();
@@ -568,14 +570,14 @@ var SearchPageModule = Brace.Model.extend({
         }
     },
 
-    issueTableSearchSuccess: function (data) {
+    assetTableSearchSuccess: function (data) {
         this.update({
             startIndex: data.startIndex
         });
         this.queryModule.onSearchSuccess(data.warnings);
     },
 
-    issueTableStableUpdate: function (startIndex) {
+    assetTableStableUpdate: function (startIndex) {
         this.update({ startIndex: startIndex });
     },
 
@@ -597,20 +599,20 @@ var SearchPageModule = Brace.Model.extend({
         });
 
         var message = JIRA.DirtyForm.getDirtyWarning() || JIRA.Issue.getDirtyCommentWarning();
-        return !!options.ignoreDirtiness || message === undefined || options.confirm(message);
+        return Boolean(options.ignoreDirtiness) || message === undefined || options.confirm(message);
     },
 
     /**
      * @return {boolean} whether a full screen issue is visible.
      */
-    isFullScreenIssueVisible: function () {
+    isFullScreenAssetVisible: function () {
         return this.fullScreenAsset && this.fullScreenAsset.isVisible();
     },
 
-    isIssueVisible: function () {
+    isAssetVisible: function () {
         var layoutKey = JIRA.Issues.LayoutPreferenceManager.getPreferredLayoutKey();
 
-        if (this.isFullScreenIssueVisible()) {
+        if (this.isFullScreenAssetVisible()) {
             return true;
         } else if (layoutKey === "list-view") {
             return this.fullScreenAsset.isVisible();
@@ -687,11 +689,11 @@ var SearchPageModule = Brace.Model.extend({
             jQuery.event.trigger("updateOffsets.popout");
         }, this)).fail(_.bind(function (xhr) {
             if (xhr.statusText !== "abort") {
-                if (xhr.status == 400 && options.selectedAssetSku) {
+                if (xhr.status === 400 && options.selectedAssetSku) {
                     this.reset({ selectedAssetSku: options.selectedAssetSku }, { replace: true });
                 } else {
                     this.searchResults.resetFromSearch(_.extend(_.pick(options, "selectedAssetId"), this.searchResults.defaults));
-                    this.issueTableSearchError(xhr);
+                    this.assetTableSearchError(xhr);
                 }
             }
         }, this));
@@ -700,7 +702,7 @@ var SearchPageModule = Brace.Model.extend({
     },
 
     updateWindowTitle: function (model) {
-        if (this.isFullScreenIssueVisible()) {
+        if (this.isFullScreenAssetVisible()) {
             return;
         }
 
@@ -781,7 +783,7 @@ var SearchPageModule = Brace.Model.extend({
             options.replace ? this.assetNavRouter.replaceState(state) : this.assetNavRouter.pushState(state);
         }
         if (this.search.isStandAloneAsset(state)) {
-            this.resetToStandaloneIssue(state);
+            this.resetToStandaloneAsset(state);
         } else {
             return this.applyState(state, isReset, options);
         }
@@ -800,8 +802,8 @@ var SearchPageModule = Brace.Model.extend({
         options = _.defaults({}, options, { resetQuery: false, routerEvent: false });
         // we do not want to operate on provided state object internally, so let's make a copy
         var shallowStateCopy = _.clone(state);
-        if (state.isStandaloneIssue()) {
-            this.resetToStandaloneIssue(shallowStateCopy);
+        if (state.isStandaloneAsset()) {
+            this.resetToStandaloneAsset(shallowStateCopy);
         } else if (options.routerEvent) { // special treatment for router events
             return this.applyState(shallowStateCopy, !this._isSearchStateEqual(shallowStateCopy), options);
         } else {
@@ -828,24 +830,31 @@ var SearchPageModule = Brace.Model.extend({
     _deactivateCurrentLayout: function () {
         var currentLayout = this.getCurrentLayout();
         if (currentLayout) {
-            currentLayout.close && currentLayout.destroy();
+            if (currentLayout.close) {
+                currentLayout.destroy();
+            }
             this.setCurrentLayout(null);
         }
     },
 
-    resetToStandaloneIssue: function (state) {
+    resetToStandaloneAsset: function (state) {
         this._deactivateCurrentLayout();
         this.set(this.defaults());
         this.standalone = true;
         this.fullScreenAsset.show({
-            key: state.selectedAssetSku,
+            sku: state.selectedAssetSku,
             viewAssetQuery: state.viewAssetQuery
         });
     },
 
     applyState: function (state, isReset, options) {
+        options = options || {};
+        if (this.getQuote() instanceof QuoteModel && this.getQuote().getId() === state.filter) {
+            state.filter = this.getFilter();
+        }
+
         var filterRequest;
-        var shouldFetchFilter = state.filter && !(state.filter instanceof LineItemModel);
+        var shouldFetchFilter = state.filter && !(state.filter instanceof QuoteModel);
         var systemFiltersRequest = this.initSystemFilters();
 
         QuoteFlow.application.execute("assetEditor:abortPending");
@@ -869,7 +878,7 @@ var SearchPageModule = Brace.Model.extend({
 
     updateFromRouter: function (state) {
         if (this.search.isStandAloneAsset(state)) {
-            this.resetToStandaloneIssue(state);
+            this.resetToStandaloneAsset(state);
         } else {
             this.applyState(state, !this._isSearchStateEqual(state));
         }

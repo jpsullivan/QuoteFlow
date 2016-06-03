@@ -140,10 +140,12 @@ ModelUtils.EventLog.prototype.captureEvent = function (model, args) {
     var name = args[0];
 
     // We only want to trigger each type of event at most once, so they're keyed on their name.
-    this.modelEvents[model.cid] || (this.modelEvents[model.cid] = {
-        model: model,
-        events: {}
-    });
+    if (!this.modelEvents[model.cid]) {
+        this.modelEvents[model.cid] = {
+            model: model,
+            events: {}
+        };
+    }
 
     this.modelEvents[model.cid].events[name] = args;
 };
@@ -153,7 +155,7 @@ ModelUtils.EventLog.prototype.captureEvent = function (model, args) {
  */
 ModelUtils.EventLog.prototype.replayEvents = function () {
     _.each(this.modelEvents, function (item) {
-        _.each(item.events, function (args, name) {
+        _.each(item.events, function (args) {
             Backbone.Events.trigger.apply(item.model, args);
         });
     });

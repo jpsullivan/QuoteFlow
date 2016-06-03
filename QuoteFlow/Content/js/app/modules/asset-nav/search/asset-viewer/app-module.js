@@ -27,6 +27,7 @@ var AssetViewerAppModule = AppModule.extend({
             beforeShow: true,
             removeAssetMetadata: true,
             updateAssetWithQuery: true,
+            addToQuote: true,
             close: true,
             setContainer: true,
             dismiss: true

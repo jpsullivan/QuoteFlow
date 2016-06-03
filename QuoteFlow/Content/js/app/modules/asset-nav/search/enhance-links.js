@@ -141,7 +141,7 @@ var EnhanceLinks = {
             var searchResults = options.searchPageModule.searchResults;
 
             var assetSku = AJS.$(e.target).closest("a").data("asset-sku");
-            var assetIdAsString = searchResults._getAssetIdForKey(assetSku);
+            var assetIdAsString = searchResults._getAssetIdForSku(assetSku);
             var assetId = parseInt(assetIdAsString, 10);
 
             // Check if it is a link from the results table

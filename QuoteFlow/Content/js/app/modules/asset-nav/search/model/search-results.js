@@ -122,7 +122,7 @@ var SearchResults = PageableCollection.extend({
             this._loadPageAndSelect("first", null).done(_.bind(function () {
                 this.trigger("selectAssetNotInList", new Result({
                     id: isAssetId ? assetIdOrSku : undefined,
-                    key: isAssetSku ? assetIdOrSku : undefined
+                    sku: isAssetSku ? assetIdOrSku : undefined
                 }));
             }, this)).done(deferred.resolve);
         } else {
@@ -182,7 +182,7 @@ var SearchResults = PageableCollection.extend({
                     model = this.at(this.length - 1);
                     break;
                 default:
-                    model = this.findWhere({key: model});
+                    model = this.findWhere({sku: model});
                     break;
             }
         } else if (typeof model === "number") {

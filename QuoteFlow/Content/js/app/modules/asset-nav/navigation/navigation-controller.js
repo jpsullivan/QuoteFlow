@@ -34,7 +34,7 @@ var NavigationController = Marionette.Controller.extend({
      * page load. It will include this information in stateChanged event.
      * @param {State} [options.model] - the State object that the controller will use for storing state.
      */
-    initialize: function initialize (options) {
+    initialize: function (options) {
         options = _.defaults(options, {isFullPageLoad: true});
         this.state = options.model || new State();
         this.isFullPageLoad = options.isFullPageLoad;
@@ -44,9 +44,10 @@ var NavigationController = Marionette.Controller.extend({
     /**
      * Reset to blank state
      */
-    reset: function reset () {
+    reset: function () {
         this.state = new State();
     },
+
     /**
      * Process the application navigation to provided state.
      * It will check if navigation is possible and update application state accordingly.
@@ -54,7 +55,7 @@ var NavigationController = Marionette.Controller.extend({
      * @param {Object} state - object containing state properties
      * @param {NavigationOptions} options - contains navigation properties
      */
-    navigate: function navigate (state, options) {
+    navigate: function (state, options) {
         if (QuoteFlow.application.request("assetEditor:canDismissComment")) {
             this.updateState(state, options);
         }
@@ -67,7 +68,7 @@ var NavigationController = Marionette.Controller.extend({
      * @param {NavigationOptions} options - contains navigation properties
      * @param {Object} override - object containing state properties that will get overwritten in the state derived from the URL
      */
-    navigateToUrl: function navigate (url, options, override) {
+    navigateToUrl: function (url, options, override) {
         override = override || {};
         var state = _.extend(this.state.getStateFromUrl(url), override);
         this.navigate(state, options);
@@ -79,7 +80,7 @@ var NavigationController = Marionette.Controller.extend({
      * @param {Object} state - object containing state properties
      * @param {NavigationOptions} options - contains navigation properties
      */
-    updateState: function updateState (state, options) {
+    updateState: function (state, options) {
         options = options || {};
 
         var previousState = _.pick(this.state, _.keys(this.state));
@@ -94,7 +95,7 @@ var NavigationController = Marionette.Controller.extend({
         }
     },
 
-    _triggerStateChangedEvent: function _triggerStateChangedEvent (options) {
+    _triggerStateChangedEvent: function (options) {
         if (this.isFullPageLoad) {
             _.extend(options, {fullPageLoad: true});
             this.isFullPageLoad = false;
@@ -104,7 +105,7 @@ var NavigationController = Marionette.Controller.extend({
         this._processEvents();
     },
 
-    _processEvents: function _processEvents () {
+    _processEvents: function () {
         /**
          * Application state change event
          *

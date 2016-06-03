@@ -427,6 +427,10 @@ var AssetViewer = Marionette.Controller.extend({
         });
     },
 
+    addToQuote: function (asset) {
+        debugger;
+    },
+
     /**
      * Closes the AssetViewer, cleaning the model and closing all the views
      */

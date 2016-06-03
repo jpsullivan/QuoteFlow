@@ -77,6 +77,9 @@ var appAdaptor = {
             },
             "assetEditor:editField": function (field) {
                 return detailsLayout.editField(field);
+            },
+            "assetEditor:addToQuote": function (asset) {
+                return detailsLayout.addToQuote(asset);
             }
         });
     },

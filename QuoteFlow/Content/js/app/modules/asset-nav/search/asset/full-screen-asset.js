@@ -41,7 +41,7 @@ var FullScreenAsset = Marionette.ItemView.extend({
                     // JIRA.Issues.Utils.debounce(this, "_loadIssue", issue);
                     this.show({
                         id: selectedAsset.getId(),
-                        key: selectedAsset.getKey(),
+                        sku: selectedAsset.getSku(),
                         pager: searchService.getPager()
                     });
                     this.updatePager(searchService.getPager());

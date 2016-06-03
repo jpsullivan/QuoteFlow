@@ -10,7 +10,7 @@ var AssetNavigatorApi = {
          * @return {Boolean} whether issue search is visible.
          */
         isNavigator: function () {
-            return searchPageModule.isIssueVisible();
+            return searchPageModule.isAssetVisible();
         }
     },
 

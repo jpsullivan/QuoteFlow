@@ -87,7 +87,7 @@ var SearchResults = Brace.Model.extend({
                 if (prevAssetId) {
                     pager.previousAsset = {
                         id: prevAssetId,
-                        key: this._getAssetKeyForId(prevAssetId)
+                        sku: this._getAssetSkuForId(prevAssetId)
                     };
                 }
             }
@@ -96,7 +96,7 @@ var SearchResults = Brace.Model.extend({
                 if (nextAssetId) {
                     pager.nextAsset = {
                         id: nextAssetId,
-                        key: this._getAssetKeyForId(nextAssetId)
+                        sku: this._getAssetSkuForId(nextAssetId)
                     };
                 }
             }
@@ -138,7 +138,7 @@ var SearchResults = Brace.Model.extend({
         this.setTotal(this.getTotal() - 1);
         this.triggerAssetDeleted({
             id: id,
-            key: this._getAssetKeyForId(id)
+            sku: this._getAssetSkuForId(id)
         });
     },
 
@@ -219,19 +219,20 @@ var SearchResults = Brace.Model.extend({
         return this.getAssetIds().length;
     },
 
-    selectAssetByKey: function (key, options) {
-        if (!key) {
+    selectAssetBySku: function (sku, options) {
+        if (!sku) {
             this.unselectAsset();
             return;
         }
 
-        var id = this._getAssetIdForKey(key);
+        var id = this._getAssetIdForSku(sku);
 
         if (!id || id === -1) {
             this._unhighlightAsset();
 
             this.getSelectedAsset().set({
-                id: -1
+                id: -1,
+                sku: sku
             });
 
             this.triggerAssetDoesNotExist();
@@ -242,7 +243,8 @@ var SearchResults = Brace.Model.extend({
 
     _unhighlightAsset: function () {
         this.getHighlightedAsset().set({
-            id: null
+            id: null,
+            sku: null
         });
     },
 
@@ -289,7 +291,8 @@ var SearchResults = Brace.Model.extend({
         if (id !== this.getSelectedAsset().get("id")) {
             id = id ? parseInt(id, 10) : null;
             this.getSelectedAsset().set({
-                id: id
+                id: id,
+                sku: id ? this._getAssetSkuForId(id) : null
             }, options);
             this.highlightAssetById(id);
         }
@@ -311,8 +314,10 @@ var SearchResults = Brace.Model.extend({
         if (id && id !== this.getHighlightedAsset().get("id")) {
             id = id ? parseInt(id, 10) : null;
             this.getHighlightedAsset().set({
-                id: id
+                id: id,
+                sku: id ? this._getAssetSkuForId(id) : null
             }, options);
+
             if (id) {
                 this.setStartIndex(this._getStartIndexForAssetId(id));
             }
@@ -336,7 +341,7 @@ var SearchResults = Brace.Model.extend({
      */
     resetFromSearch: function (state) {
         state.resultsId = _.uniqueId();
-        this.getSelectedAsset().set({ id: null });
+        this.getSelectedAsset().set({ id: null, sku: null });
         this.set({ sortBy: null });
         this.set("startIndex", state.startIndex, { silent: true });
         this.set(_.pick(state, Object.keys(this.namedAttributes)));
@@ -346,7 +351,7 @@ var SearchResults = Brace.Model.extend({
             if (this.hasAssets()) {
                 this.highlightFirstInPage();
             } else {
-                this.getHighlightedAsset().set({ id: null });
+                this.getHighlightedAsset().set({ id: null, sku: null });
             }
         }
     },
@@ -427,7 +432,8 @@ var SearchResults = Brace.Model.extend({
         var selectedAsset = this.getSelectedAsset();
         if (selectedAsset.get("id")) {
             selectedAsset.set({
-                id: null
+                id: null,
+                sku: null
             }, options);
         }
     },
@@ -451,7 +457,7 @@ var SearchResults = Brace.Model.extend({
     getPageAssets: function () {
         // return ids and keys
         return _.map(this.getPageAssetIds(), function (id) {
-            return { id: id };
+            return { id: id, sku: this._getAssetSkuForId(id) };
         }, this);
     },
 
@@ -675,7 +681,7 @@ var SearchResults = Brace.Model.extend({
 
     getNextAssetForId: function (id) {
         var nextId = this._getNextAssetId(id);
-        return { id: nextId };
+        return { id: nextId, sku: this._getAssetSkuForId(id) };
     },
 
     getNextAssetForSelectedAsset: function () {
@@ -702,31 +708,31 @@ var SearchResults = Brace.Model.extend({
         return Math.max(0, Math.floor(assetIndex / pageSize) * pageSize);
     },
 
-    _getAssetIdForKey: function (key) {
+    _getAssetIdForSku: function (sku) {
         // this only happens if the selected asset is not in the search results (i.e. when the user
         // navigates to the selected asset directly but has a search context).
-        if (this._initialSelectedAsset && key === this._initialSelectedAsset.key) {
+        if (this._initialSelectedAsset && sku === this._initialSelectedAsset.sku) {
             return this._initialSelectedAsset.id;
         }
 
-        return this._getAssetKeysToIds()[key];
+        return this._getAssetSkusToIds()[sku];
     },
 
-    _getAssetKeyForId: function (id) {
+    _getAssetSkuForId: function (id) {
         // this only happens if the selected asset is not in the search results (i.e. when the user
         // navigates to the selected asset directly but has a search context).
         if (this._initialSelectedAsset && id === this._initialSelectedAsset.id) {
-            return this._initialSelectedAsset.key;
+            return this._initialSelectedAsset.sku;
         }
 
-        return this._getAssetIdsToKeys()[id];
+        return this._getAssetIdsToSkus()[id];
     },
 
-    _getAssetIdsToKeys: function () {
+    _getAssetIdsToSkus: function () {
         return this._assetSearchManager.assetKeys.getAllCached();
     },
 
-    _getAssetKeysToIds: function () {
+    _getAssetSkusToIds: function () {
         var obj = {};
         var idsToKeys = this._assetSearchManager.assetKeys.getAllCached();
         _.each(idsToKeys, function (value, name) {
@@ -762,8 +768,8 @@ var SearchResults = Brace.Model.extend({
             var prevPrevId = this._getPrevAssetId(prevId);
 
             this.trigger("prevAssetSelected", {
-                prevAsset: { id: prevId, key: this._getAssetKeyForId(prevId) },
-                prevPrevAsset: { id: prevPrevId, key: this._getAssetKeyForId(prevPrevId) }
+                prevAsset: { id: prevId, sku: this._getAssetSkuForId(prevId) },
+                prevPrevAsset: { id: prevPrevId, sku: this._getAssetSkuForId(prevPrevId) }
             });
         }
     },
@@ -773,8 +779,8 @@ var SearchResults = Brace.Model.extend({
             var nextNextId = this._getNextAssetId(nextId);
 
             this.trigger("nextAssetSelected", {
-                nextAsset: { id: nextId, key: this._getAssetKeyForId(nextId) },
-                nextNextAsset: { id: nextNextId, key: this._getAssetKeyForId(nextNextId) }
+                nextAsset: { id: nextId, sku: this._getAssetSkuForId(nextId) },
+                nextNextAsset: { id: nextNextId, sku: this._getAssetSkuForId(nextNextId) }
             });
         }
     }

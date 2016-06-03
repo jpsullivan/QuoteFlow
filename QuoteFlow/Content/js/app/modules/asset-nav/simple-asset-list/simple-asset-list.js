@@ -47,7 +47,7 @@ var SimpleAssetList = Marionette.Object.extend({
             "selectAsset": function (event) {
                 this.trigger("list:select", {
                     id: event.id,
-                    key: event.key,
+                    sku: event.sku,
                     absolutePosition: this.searchResults.getPositionOfAssetInSearchResults(event.id),
                     relativePosition: this.searchResults.getPositionOfAssetInPage(event.id)
                 });
@@ -94,7 +94,7 @@ var SimpleAssetList = Marionette.Object.extend({
                 }
                 this.trigger("select", {
                     id: modelId,
-                    key: selectedModel.get('key')
+                    sku: selectedModel.get('sku')
                 });
             },
             "change": function (model) {
@@ -103,10 +103,10 @@ var SimpleAssetList = Marionette.Object.extend({
         });
 
         if (assetIdOrSku) {
-            // If we are looking for a specific key, jump to the page containing that key
+            // If we are looking for a specific sku, jump to the page containing that sku
             searchResults.jumpToPageForAsset(assetIdOrSku);
         } else {
-            // If we are not looking for a specific key, just load the first page
+            // If we are not looking for a specific sku, just load the first page
             searchResults.jumpToPage("first");
         }
     },

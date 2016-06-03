@@ -13,8 +13,8 @@ var ViewLayout = require('./views/layout');
 var ViewLoading = require('./views/loading');
 
 /**
- * Utility method to create a debounced version of a function. The generated function will have
- * the properties:
+ * Utility method to create a debounced version of a function. The generated
+ * function will have the properties:
  *
  *   - Initial call will happen after <initial> ms
  *   - After the initial call, it will postpone its execution until after <cooldown> milliseconds have elapsed
@@ -429,6 +429,10 @@ var DetailsLayout = MarionetteViewManager.extend({
 
     editField: function (field) {
         return this.assetEditor.editField(field);
+    },
+
+    addToQuote: function (asset) {
+        debugger;
     }
 });
 
