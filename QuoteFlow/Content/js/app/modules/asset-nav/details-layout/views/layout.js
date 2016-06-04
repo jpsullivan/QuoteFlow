@@ -10,8 +10,8 @@ var DetailsLayoutLayout = Marionette.LayoutView.extend({
 
     regions: {
         assetsList: ".list-results-panel",
-        assetEditor: ".issue-container",
-        pager: ".pager-container"
+        assetEditor: ".asset-container",
+        tools: ".tools-container"
     },
 
     ui: {

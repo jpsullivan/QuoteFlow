@@ -44,17 +44,21 @@ var Pager = MarionetteViewManager.extend({
 
     initialize: function (options) {
         this.el = options.el;
-
         this._buildView();
     },
 
     onDestroy: function () {
-        Marionette.ViewManager.prototype.onDestroy.call(this);
+        MarionetteViewManager.prototype.onDestroy.call(this);
         this._destroySearchResults();
     },
 
     load: function (searchResults) {
         this._buildSearchResults(searchResults);
+    },
+
+    update: function (searchResults) {
+        this.load(searchResults);
+        this.getView("view").update(searchResults);
     },
 
     show: function (el) {

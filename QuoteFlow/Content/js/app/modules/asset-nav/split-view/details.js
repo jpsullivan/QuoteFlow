@@ -83,13 +83,13 @@ var SplitScreenDetailsView = Marionette.Object.extend({
             "editorLoaded": function (event) {
                 // Danger, horrible code ahead!!
                 //
-                // The scenario: before, the element '.issue-container' had the scroll for the IssueEditor. Now, the
+                // The scenario: before, the element '.asset-container' had the scroll for the IssueEditor. Now, the
                 // element with the scroll is it's parent '.detail-panel' (this helps heaps with the position of the
                 // pager).
                 //
                 // The problem(s): design flaws in other components make supporting that scenario near impossible:
                 //  *  Dropdowns in IssueEditor specify that they should get auto-closed when the user scrolls on
-                //    '.issue-container'. That's wrong because it assumes that the scroll will always happen on
+                //    '.asset-container'. That's wrong because it assumes that the scroll will always happen on
                 //    that element. We can't change this without affecting all the users of the IssueEditor.
                 //  * AJS.Dropdown creates an instance for every element marked as 'js-default-dropdown' that handles
                 //    the logic for showing/hidding the dropdown... but does not provide external access to that
@@ -99,11 +99,11 @@ var SplitScreenDetailsView = Marionette.Object.extend({
                 // The solution: when the IssueEditor is rendered, serach for all the elements with the scroll
                 // attribute ('data-hide-on-scroll') and change it so it points to '.detail-panel'. Then, rebind
                 // all the dialogs.
-                this.container.find("[data-hide-on-scroll~='.issue-container']").each(function (idx, item) {
+                this.container.find("[data-hide-on-scroll~='.asset-container']").each(function (idx, item) {
                     var $item = AJS.$(item);
                     $item.data("hasDropdown", false);
                     $item.off('click');
-                    $item.attr("data-hide-on-scroll", $item.attr("data-hide-on-scroll").replace(".issue-container", ".detail-panel"));
+                    $item.attr("data-hide-on-scroll", $item.attr("data-hide-on-scroll").replace(".asset-container", ".detail-panel"));
                 });
                 DropdownFactory.bindGenericDropdowns(this.container);
             },

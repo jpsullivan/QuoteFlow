@@ -28,7 +28,7 @@ var DropdownFactory = {
                     content: $content,
                     alignment: alignment,
                     setMaxHeightToWindow: $trigger.attr("data-contain-to-window"),
-                    hideOnScroll: $trigger.attr("data-hide-on-scroll") || ".issue-container"
+                    hideOnScroll: $trigger.attr("data-hide-on-scroll") || ".asset-container"
                 });
             }
         });
@@ -44,7 +44,7 @@ var DropdownFactory = {
         trigger.each(function () {
             var $trigger = $(this);
             var dropdownConfig = {
-                hideOnScroll: ".issue-container",
+                hideOnScroll: ".asset-container",
                 trigger: $trigger,
                 ajaxOptions: {
                     dataType: "json",

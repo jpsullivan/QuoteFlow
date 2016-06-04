@@ -6,8 +6,8 @@ var MarionetteViewManager = require('../../../mixins/marionette-viewmanager');
 
 var AssetEditorController = require('../search/asset-editor/asset-editor');
 var EmptyView = require('./views/empty');
-var Pager = require('../../pager/pager');
 var SimpleAssetList = require('../simple-asset-list/simple-asset-list');
+var Tools = require('./controllers/tools');
 var ViewContainer = require('./views/container');
 var ViewLayout = require('./views/layout');
 var ViewLoading = require('./views/loading');
@@ -161,14 +161,21 @@ var DetailsLayout = MarionetteViewManager.extend({
         });
     },
 
-    _buildPager: function () {
-        this.pager = new Pager();
-        this.listenTo(this.pager, {
-            "next": function () {
-                this.selectNext();
+    _buildTools: function () {
+        this.tools = new Tools({
+            showExpand: this.useExpand
+        });
+        this.listenTo(this.tools, {
+            "expand": function () {
+                this.trigger('expand');
             },
-            "previous": function () {
-                this.selectPrevious();
+            "pager:next": function () {
+                var data = this.selectNext();
+                this.trigger("pager:next", data);
+            },
+            "pager:previous": function () {
+                var data = this.selectPrevious();
+                this.trigger("pager:previous", data);
             }
         });
     },
@@ -227,8 +234,8 @@ var DetailsLayout = MarionetteViewManager.extend({
                     view.assetsList._ensureElement();
                     this.simpleAssetList.show(view.assetsList.$el);
 
-                    view.pager._ensureElement();
-                    this.pager.show(view.pager.$el);
+                    view.tools._ensureElement();
+                    this.tools.show(view.tools.$el);
                 },
                 "resize": function () {
                     this.adjustSize();
@@ -247,7 +254,7 @@ var DetailsLayout = MarionetteViewManager.extend({
     _buildComponents: function () {
         this._buildassetEditor();
         this._buildSimpleAssetList();
-        this._buildPager();
+        this._buildTools();
     },
 
     _buildViews: function () {
@@ -290,6 +297,7 @@ var DetailsLayout = MarionetteViewManager.extend({
         Marionette.ViewManager.prototype.onDestroy.call(this);
         this.assetEditor.close();
         this.simpleAssetList.destroy();
+        this.tools.destroy();
         this.hideView("layoutView");
         this.hideView("loadingView");
         this.hideView("emptyView");
@@ -329,7 +337,7 @@ var DetailsLayout = MarionetteViewManager.extend({
             this._showEmptyView();
         } else {
             this.simpleAssetList.load(this.searchResults, assetIdOrSku);
-            this.pager.load(this.searchResults);
+            this.tools.load(this.searchResults);
             this._showLayoutView();
         }
 
