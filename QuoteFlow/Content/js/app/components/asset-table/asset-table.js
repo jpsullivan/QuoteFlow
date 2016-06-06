@@ -17,7 +17,7 @@ var AssetTable = Marionette.Controller.extend({
         this._createSearchService(options);
         this._createTableController(options);
 
-        //JIRA.Issues.Application.on("assetEditor:loadError", this._handleIssueLoadError, this);
+        QuoteFlow.application.on("assetEditor:loadError", this._handleAssetLoadError, this);
     },
 
     _createSearchService: function (options) {
@@ -57,7 +57,6 @@ var AssetTable = Marionette.Controller.extend({
                     this.assetTableController.highlightAsset(highlightedAsset.id);
                 }
             }
-
         });
     },
 
@@ -103,19 +102,19 @@ var AssetTable = Marionette.Controller.extend({
     },
 
     show: function () {
-        if (!this.latestResults) {
-            this.searchService.updateExitingResults();
-        } else {
+        if (this.latestResults) {
             this.assetTableController.show(this.latestResults);
             this.trigger("render");
             this.assetTableView._onSearchDone(this.assetTableController.view.$el);
+        } else {
+            this.searchService.updateExitingResults();
         }
     },
 
     destroy: function () {
         this.assetTableController.destroy();
         this.stopListening(this.searchService);
-        //JIRA.Issues.Application.off("assetEditor:loadError", this._handleIssueLoadError, this);
+        QuoteFlow.application.off("assetEditor:loadError", this._handleAssetLoadError, this);
         delete this.assetTableController;
         delete this.searchService;
     },
@@ -133,7 +132,7 @@ var AssetTable = Marionette.Controller.extend({
     _handleAssetLoadError: function (entity) {
         // If the asset has been deleted, update its row in the table.
         if (entity.response.status === 404) {
-            this.assetTableController.markIssueAsInaccessible(entity.issueId);
+            this.assetTableController.markAssetAsInaccessible(entity.assetId);
         }
     }
 });

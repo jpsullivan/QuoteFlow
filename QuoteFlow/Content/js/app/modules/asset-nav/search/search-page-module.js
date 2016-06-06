@@ -61,8 +61,6 @@ var SearchPageModule = Brace.Model.extend({
             iconClass: 'icon-view-split',
             view: require('../split-view/details')
         });
-        this._onSelectedAssetChanged();
-        this.on("change:selectedAsset", this._onSelectedAssetChanged, this);
 
         QuoteFlow.application.on("assetEditor:close", this.returnToSearch, this);
         QuoteFlow.application.on("assetEditor:loadComplete", function (model, props) {
@@ -183,8 +181,8 @@ var SearchPageModule = Brace.Model.extend({
         }
     },
 
-    _onSelectedAssetChanged: function () {
-        var previousAsset = this.previous('selectedAsset');
+    _onLineItemChanged: function () {
+        var previousAsset = this.previous('lineitem');
         if (previousAsset) {
             previousAsset.off('change', this.triggerChangeSelectedAssetProps, this);
         }
